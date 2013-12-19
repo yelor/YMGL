@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<AssetArrayNodes>
+    <RootNode>
+        <nodeNo>root1</nodeNo>
+        <nodeName>root</nodeName>
+        <isLastNode>false</isLastNode>
+    </RootNode>
+    <Node>
+        <nodeNo>navNode1</nodeNo>
+        <nodeName>申领管理</nodeName>
+        <nodeIcon>nav.png</nodeIcon>
+        <linkObject>com.jskj.asset.client.panel.slgl.MainPanel</linkObject>
+        <isLastNode>true</isLastNode>
+    </Node>
+    <Node>
+        <nodeNo>navNode2</nodeNo>
+        <nodeName>疫苗管理</nodeName>
+        <linkObject>com.jskj.asset.client.panel.ymgl.MainPanel</linkObject>
+        <isLastNode>true</isLastNode>
+    </Node>
+    <Node>
+        <nodeNo>navNode3</nodeNo>
+        <nodeName>仓库管理</nodeName>
+        <linkObject>com.jskj.asset.client.panel.ckgl.MainPanel</linkObject>
+        <isLastNode>true</isLastNode>
+    </Node>
+    <Node>
+        <nodeNo>navNode4</nodeNo>
+        <nodeName>审核结算</nodeName>
+        <linkObject>com.jskj.asset.client.panel.shjs.MainPanel</linkObject>
+        <isLastNode>true</isLastNode>
+    </Node>
+    <Node>
+        <nodeNo>navNode5</nodeNo>
+        <nodeName>审批查询</nodeName>
+        <linkObject>com.jskj.asset.client.panel.spcx.MainPanel</linkObject>
+        <isLastNode>true</isLastNode>
+    </Node>
+    <Node>
+        <nodeNo>navNode6</nodeNo>
+        <nodeName>用户管理(例子)</nodeName>
+        <linkObject>com.jskj.asset.client.panel.user.UserPanel</linkObject>
+        <isLastNode>true</isLastNode>
+    </Node>
+</AssetArrayNodes>
