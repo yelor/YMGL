@@ -67,7 +67,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "疫苗采购计划分析", "Ⅰ类疫苗申报计划申请审核单", "Ⅱ类疫苗赊购计划申请审核单", "Ⅰ类疫苗领用申请审核单", "Ⅱ类疫苗采购申请审核单" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "疫苗采购计划分析", "Ⅰ类疫苗申报计划申请单", "Ⅱ类疫苗赊购计划申请单", "Ⅰ类疫苗领用申请单", "Ⅱ类疫苗采购申请单" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

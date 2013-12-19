@@ -25,11 +25,21 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
     }
 
     DateChooser dateChooser1;
-    JTextField regTextField;
+    JTextField regTextField1;
+    DateChooser dateChooser2;
+    JTextField regTextField2;
+    DateChooser dateChooser3;
+    JTextField regTextField3;
     private void init() {
-        regTextField = new JTextField();
+        regTextField1 = new JTextField();
         dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField);
+        dateChooser1.register(regTextField1);
+        regTextField2 = new JTextField();
+        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd");
+        dateChooser2.register(regTextField2);
+        regTextField3 = new JTextField();
+        dateChooser3 = DateChooser.getInstance("yyyy-MM-dd");
+        dateChooser3.register(regTextField3);
     }    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,7 +68,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = regTextField;
+        jTextField2 = regTextField1;
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
@@ -95,9 +105,9 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jTextField17 = new javax.swing.JTextField();
         jTextField18 = new javax.swing.JTextField();
         jTextField19 = new javax.swing.JTextField();
-        jTextField20 = new javax.swing.JTextField();
+        jTextField20 = regTextField2;
         jTextField21 = new javax.swing.JTextField();
-        jTextField22 = new javax.swing.JTextField();
+        jTextField22 = regTextField3;
         jTextField23 = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jTextField24 = new javax.swing.JTextField();
