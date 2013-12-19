@@ -13,6 +13,7 @@ import com.jskj.asset.client.panel.jichuxinxi.DanWeiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.GongYingDanWeiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanJDialog;
+import com.jskj.asset.client.panel.jichuxinxi.JianShaoFangShiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.YiMiaoJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.ZhiYuanJDialog;
@@ -122,6 +123,7 @@ public final class AssetClientView extends FrameView {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -262,6 +264,11 @@ public final class AssetClientView extends FrameView {
         jMenuItem13.setName("jMenuItem13"); // NOI18N
         jMenu1.add(jMenuItem13);
 
+        jMenuItem14.setAction(actionMap.get("showJianShaoFangShi")); // NOI18N
+        jMenuItem14.setText(resourceMap.getString("jMenuItem14.text")); // NOI18N
+        jMenuItem14.setName("jMenuItem14"); // NOI18N
+        jMenu1.add(jMenuItem14);
+
         menuBar.add(jMenu1);
 
         statusPanel.setName("statusPanel"); // NOI18N
@@ -330,6 +337,7 @@ public final class AssetClientView extends FrameView {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -545,6 +553,24 @@ public final class AssetClientView extends FrameView {
                 AssetClientApp.getApplication().show(danWeiJDialog);
             }
         });
+    }
+
+    @Action
+    public void showJianShaoFangShi() {
+               SwingUtilities.invokeLater(new Runnable() {
+                   private JianShaoFangShiJDialog jianShaoFangShiJDialog;
+
+            @Override
+            public void run() {
+                if (jianShaoFangShiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    jianShaoFangShiJDialog = new JianShaoFangShiJDialog(new javax.swing.JFrame(), true);
+                    jianShaoFangShiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(jianShaoFangShiJDialog);
+            }
+        });
+
     }
 
 }

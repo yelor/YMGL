@@ -92,7 +92,7 @@ public class JianShaoFangShiJDialog extends javax.swing.JDialog {
         jButton1.setName("jButton1"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JianShaoFangShiJDialog.class, this);
-        jButton4.setAction(actionMap.get("addDanWein")); // NOI18N
+        jButton4.setAction(actionMap.get("addJianShaoFangShi")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
@@ -203,18 +203,18 @@ public class JianShaoFangShiJDialog extends javax.swing.JDialog {
     }
 
     @Action
-    public void addLeiBie() {
+    public void addJianShaoFangShi() {
           SwingUtilities.invokeLater(new Runnable() {
-              private DiZhiYiHaoPinLeiBieInfoJDialog diZhiYiHaoPinLeiBieInfoJDialog;
+              private JianShaoFangShiInfoJDialog jianShaoFangShiInfoJDialog;
 
             @Override
             public void run() {
-                if (diZhiYiHaoPinLeiBieInfoJDialog == null) {
+                if (jianShaoFangShiInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    diZhiYiHaoPinLeiBieInfoJDialog = new DiZhiYiHaoPinLeiBieInfoJDialog(new javax.swing.JFrame(), true);
-                    diZhiYiHaoPinLeiBieInfoJDialog.setLocationRelativeTo(mainFrame);
+                    jianShaoFangShiInfoJDialog = new JianShaoFangShiInfoJDialog(new javax.swing.JFrame(), true);
+                    jianShaoFangShiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                AssetClientApp.getApplication().show(diZhiYiHaoPinLeiBieInfoJDialog);
+                AssetClientApp.getApplication().show(jianShaoFangShiInfoJDialog);
             }
         });
     }
