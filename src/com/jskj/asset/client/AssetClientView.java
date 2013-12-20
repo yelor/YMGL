@@ -113,7 +113,7 @@ public final class AssetClientView extends FrameView {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        jichuMenu = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -124,6 +124,21 @@ public final class AssetClientView extends FrameView {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        baobiaoMenu = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -216,23 +231,23 @@ public final class AssetClientView extends FrameView {
 
         menuBar.add(helpMenu);
 
-        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
-        jMenu1.setName("jMenu1"); // NOI18N
+        jichuMenu.setText(resourceMap.getString("jichuMenu.text")); // NOI18N
+        jichuMenu.setName("jichuMenu"); // NOI18N
 
         jMenuItem6.setAction(actionMap.get("showYiMiao")); // NOI18N
         jMenuItem6.setText(resourceMap.getString("jMenuItem6.text")); // NOI18N
         jMenuItem6.setName("jMenuItem6"); // NOI18N
-        jMenu1.add(jMenuItem6);
+        jichuMenu.add(jMenuItem6);
 
         jMenuItem7.setAction(actionMap.get("showGuDingZiChan")); // NOI18N
         jMenuItem7.setText(resourceMap.getString("jMenuItem7.text")); // NOI18N
         jMenuItem7.setName("jMenuItem7"); // NOI18N
-        jMenu1.add(jMenuItem7);
+        jichuMenu.add(jMenuItem7);
 
         jMenuItem8.setAction(actionMap.get("showDiZhiYiHaoPin")); // NOI18N
         jMenuItem8.setText(resourceMap.getString("jMenuItem8.text")); // NOI18N
         jMenuItem8.setName("jMenuItem8"); // NOI18N
-        jMenu1.add(jMenuItem8);
+        jichuMenu.add(jMenuItem8);
 
         jMenu2.setText(resourceMap.getString("jMenu2.text")); // NOI18N
         jMenu2.setName("jMenu2"); // NOI18N
@@ -247,29 +262,94 @@ public final class AssetClientView extends FrameView {
         jMenuItem10.setName("jMenuItem10"); // NOI18N
         jMenu2.add(jMenuItem10);
 
-        jMenu1.add(jMenu2);
+        jichuMenu.add(jMenu2);
 
         jMenuItem11.setAction(actionMap.get("showZhiYuan")); // NOI18N
         jMenuItem11.setText(resourceMap.getString("jMenuItem11.text")); // NOI18N
         jMenuItem11.setName("jMenuItem11"); // NOI18N
-        jMenu1.add(jMenuItem11);
+        jichuMenu.add(jMenuItem11);
 
         jMenuItem12.setAction(actionMap.get("showDanJuLeiXing")); // NOI18N
         jMenuItem12.setText(resourceMap.getString("jMenuItem12.text")); // NOI18N
         jMenuItem12.setName("jMenuItem12"); // NOI18N
-        jMenu1.add(jMenuItem12);
+        jichuMenu.add(jMenuItem12);
 
         jMenuItem13.setAction(actionMap.get("showDanWei")); // NOI18N
         jMenuItem13.setText(resourceMap.getString("jMenuItem13.text")); // NOI18N
         jMenuItem13.setName("jMenuItem13"); // NOI18N
-        jMenu1.add(jMenuItem13);
+        jichuMenu.add(jMenuItem13);
 
         jMenuItem14.setAction(actionMap.get("showJianShaoFangShi")); // NOI18N
         jMenuItem14.setText(resourceMap.getString("jMenuItem14.text")); // NOI18N
         jMenuItem14.setName("jMenuItem14"); // NOI18N
-        jMenu1.add(jMenuItem14);
+        jichuMenu.add(jMenuItem14);
 
-        menuBar.add(jMenu1);
+        menuBar.add(jichuMenu);
+
+        baobiaoMenu.setText(resourceMap.getString("baobiaoMenu.text")); // NOI18N
+        baobiaoMenu.setName("baobiaoMenu"); // NOI18N
+
+        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
+        jMenu1.setName("jMenu1"); // NOI18N
+
+        jMenuItem15.setText(resourceMap.getString("jMenuItem15.text")); // NOI18N
+        jMenuItem15.setName("jMenuItem15"); // NOI18N
+        jMenu1.add(jMenuItem15);
+
+        jMenuItem16.setText(resourceMap.getString("jMenuItem16.text")); // NOI18N
+        jMenuItem16.setName("jMenuItem16"); // NOI18N
+        jMenu1.add(jMenuItem16);
+
+        jMenuItem17.setText(resourceMap.getString("jMenuItem17.text")); // NOI18N
+        jMenuItem17.setName("jMenuItem17"); // NOI18N
+        jMenu1.add(jMenuItem17);
+
+        baobiaoMenu.add(jMenu1);
+
+        jMenu3.setText(resourceMap.getString("jMenu3.text")); // NOI18N
+        jMenu3.setName("jMenu3"); // NOI18N
+
+        jMenuItem18.setText(resourceMap.getString("jMenuItem18.text")); // NOI18N
+        jMenuItem18.setName("jMenuItem18"); // NOI18N
+        jMenu3.add(jMenuItem18);
+
+        jMenuItem19.setText(resourceMap.getString("jMenuItem19.text")); // NOI18N
+        jMenuItem19.setName("jMenuItem19"); // NOI18N
+        jMenu3.add(jMenuItem19);
+
+        baobiaoMenu.add(jMenu3);
+
+        jMenu4.setText(resourceMap.getString("jMenu4.text")); // NOI18N
+        jMenu4.setName("jMenu4"); // NOI18N
+
+        jMenuItem20.setText(resourceMap.getString("jMenuItem20.text")); // NOI18N
+        jMenuItem20.setName("jMenuItem20"); // NOI18N
+        jMenu4.add(jMenuItem20);
+
+        jMenuItem21.setText(resourceMap.getString("jMenuItem21.text")); // NOI18N
+        jMenuItem21.setName("jMenuItem21"); // NOI18N
+        jMenu4.add(jMenuItem21);
+
+        jMenuItem22.setText(resourceMap.getString("jMenuItem22.text")); // NOI18N
+        jMenuItem22.setName("jMenuItem22"); // NOI18N
+        jMenu4.add(jMenuItem22);
+
+        baobiaoMenu.add(jMenu4);
+
+        jMenu5.setText(resourceMap.getString("jMenu5.text")); // NOI18N
+        jMenu5.setName("jMenu5"); // NOI18N
+
+        jMenuItem23.setText(resourceMap.getString("jMenuItem23.text")); // NOI18N
+        jMenuItem23.setName("jMenuItem23"); // NOI18N
+        jMenu5.add(jMenuItem23);
+
+        jMenuItem24.setText(resourceMap.getString("jMenuItem24.text")); // NOI18N
+        jMenuItem24.setName("jMenuItem24"); // NOI18N
+        jMenu5.add(jMenuItem24);
+
+        baobiaoMenu.add(jMenu5);
+
+        menuBar.add(baobiaoMenu);
 
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -327,10 +407,14 @@ public final class AssetClientView extends FrameView {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToolBar ToolBarPanel;
+    private javax.swing.JMenu baobiaoMenu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenuDW;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -338,7 +422,17 @@ public final class AssetClientView extends FrameView {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -346,6 +440,7 @@ public final class AssetClientView extends FrameView {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu jichuMenu;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;
