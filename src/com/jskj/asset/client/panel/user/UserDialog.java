@@ -5,30 +5,63 @@
  */
 package com.jskj.asset.client.panel.user;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Usertb;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.util.DateHelper;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
  * @author 305027939
  */
 public class UserDialog extends javax.swing.JDialog {
+
+    private static final Logger logger = Logger.getLogger(UserDialog.class);
+    private final BasePanel parentPanel;
+    private Usertb usertb;
+    private boolean isNew;
+
     /**
      * Creates new form UserDialog
+     *
+     * @param parentPanel
      */
-    public UserDialog(java.awt.Frame parent) {
-        super(parent);
+    public UserDialog(BasePanel parentPanel) {
+        super(AssetClientApp.getApplication().getMainFrame());
         initComponents();
+        this.parentPanel = parentPanel;
+        isNew = true;
 
     }
 
     public void setAddOrUpdate(boolean isAdd) {
-        if (isAdd) {
+        isNew = isAdd;
+        if (isNew) {
             this.setTitle("新建用户");
+            usertb = new Usertb();
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("新建用户")); // NOI18N
         } else {
             this.setTitle("更新用户:10");
-            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新用户:10")); // NOI18N
         }
+    }
+
+    public void setUpdatedData(Usertb usertb) {
+        if(usertb==null){
+            return;
+        }
+        this.usertb = usertb;
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新用户:" + usertb.getUserId())); // NOI18N
+        jTextFieldUserName.setText(usertb.getUserName());
+        jTextFieldPasswd.setText(usertb.getUserPassword());
+        jTextFieldPhone.setText(usertb.getUserPhone());
+        jRadioButton1.setSelected(usertb.getUserSex().equals("男") ? true : false);
+        jTextFieldIDCard.setText(usertb.getUserIdentitycard());
+        //usertb.setUserEntrydate(null);
+        jTextFieldAddress.setText(usertb.getUserPosition());
     }
 
     /**
@@ -43,30 +76,30 @@ public class UserDialog extends javax.swing.JDialog {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldUserName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldPasswd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldIDCard = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTextFieldPhone = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldEmail = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldAddress = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaDesc = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        jListDepart = new javax.swing.JList();
         jComboBox1 = new javax.swing.JComboBox();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -82,14 +115,14 @@ public class UserDialog extends javax.swing.JDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
+        jTextFieldUserName.setText(resourceMap.getString("jTextFieldUserName.text")); // NOI18N
+        jTextFieldUserName.setName("jTextFieldUserName"); // NOI18N
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextField2.setText(resourceMap.getString("jTextField2.text")); // NOI18N
-        jTextField2.setName("jTextField2"); // NOI18N
+        jTextFieldPasswd.setText(resourceMap.getString("jTextFieldPasswd.text")); // NOI18N
+        jTextFieldPasswd.setName("jTextFieldPasswd"); // NOI18N
 
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
@@ -106,36 +139,36 @@ public class UserDialog extends javax.swing.JDialog {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jTextField3.setText(resourceMap.getString("jTextField3.text")); // NOI18N
-        jTextField3.setName("jTextField3"); // NOI18N
+        jTextFieldIDCard.setText(resourceMap.getString("jTextFieldIDCard.text")); // NOI18N
+        jTextFieldIDCard.setName("jTextFieldIDCard"); // NOI18N
 
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
-        jTextField4.setText(resourceMap.getString("jTextField4.text")); // NOI18N
-        jTextField4.setName("jTextField4"); // NOI18N
+        jTextFieldPhone.setText(resourceMap.getString("jTextFieldPhone.text")); // NOI18N
+        jTextFieldPhone.setName("jTextFieldPhone"); // NOI18N
 
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
-        jTextField5.setText(resourceMap.getString("jTextField5.text")); // NOI18N
-        jTextField5.setName("jTextField5"); // NOI18N
+        jTextFieldEmail.setText(resourceMap.getString("jTextFieldEmail.text")); // NOI18N
+        jTextFieldEmail.setName("jTextFieldEmail"); // NOI18N
 
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
-        jTextField6.setText(resourceMap.getString("jTextField6.text")); // NOI18N
-        jTextField6.setName("jTextField6"); // NOI18N
+        jTextFieldAddress.setText(resourceMap.getString("jTextFieldAddress.text")); // NOI18N
+        jTextFieldAddress.setName("jTextFieldAddress"); // NOI18N
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaDesc.setColumns(20);
+        jTextAreaDesc.setRows(5);
+        jTextAreaDesc.setName("jTextAreaDesc"); // NOI18N
+        jScrollPane1.setViewportView(jTextAreaDesc);
 
         jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
@@ -158,8 +191,8 @@ public class UserDialog extends javax.swing.JDialog {
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
-        jList2.setName("jList2"); // NOI18N
-        jScrollPane3.setViewportView(jList2);
+        jListDepart.setName("jListDepart"); // NOI18N
+        jScrollPane3.setViewportView(jListDepart);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通用户", "审核权", "审批权", "管理权" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
@@ -190,12 +223,12 @@ public class UserDialog extends javax.swing.JDialog {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 125, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jTextField4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jTextFieldPhone, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(18, 18, 18)
                         .add(jLabel6)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField5))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jTextField6)
+                        .add(jTextFieldEmail))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jTextFieldAddress)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 416, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                         .add(jRadioButton1)
@@ -204,13 +237,13 @@ public class UserDialog extends javax.swing.JDialog {
                         .add(18, 18, 18)
                         .add(jLabel4)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 264, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(jTextFieldIDCard, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 264, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 186, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jTextFieldUserName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 186, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel2)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jTextFieldPasswd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -218,26 +251,26 @@ public class UserDialog extends javax.swing.JDialog {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel1)
-                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTextFieldUserName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel2)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jTextFieldPasswd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel3)
                     .add(jRadioButton1)
                     .add(jRadioButton2)
                     .add(jLabel4)
-                    .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jTextFieldIDCard, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel5)
-                    .add(jTextField4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTextFieldPhone, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel6)
-                    .add(jTextField5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jTextFieldEmail, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel7)
-                    .add(jTextField6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jTextFieldAddress, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel8)
@@ -261,6 +294,7 @@ public class UserDialog extends javax.swing.JDialog {
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
+        jButton4.setAction(actionMap.get("submitForm")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
@@ -321,25 +355,65 @@ public class UserDialog extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                UserDialog dialog = new UserDialog(new javax.swing.JFrame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                UserDialog dialog = new UserDialog(new javax.swing.JFrame());
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     @Action
     public void exit() {
         this.dispose();
     }
+
+    @Action
+    public Task submitForm() {
+        if (jTextFieldUserName.getText().trim().equals("")
+                || jTextFieldPasswd.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入用户名和密码!");
+        }
+        usertb.setUserName(jTextFieldUserName.getText());
+        usertb.setUserPassword(jTextFieldPasswd.getText());
+        usertb.setUserPhone(jTextFieldPhone.getText());
+        usertb.setUserSex(jRadioButton1.isSelected() ? "男" : "女");
+        usertb.setUserIdentitycard(jTextFieldIDCard.getText());
+        //usertb.setUserEntrydate(null);
+        usertb.setUserPosition(jTextFieldAddress.getText());
+        usertb.setDepartmentId(1);
+        usertb.setUserBirthday(DateHelper.getStringtoDate("1980/01/01"));
+
+        return new SubmitFormTask(usertb);
+    }
+
+    private class SubmitFormTask extends UserUpdateTask {
+
+        SubmitFormTask(Usertb usertb) {
+            super(usertb, isNew?UserUpdateTask.ENTITY_SAVE:UserUpdateTask.ENTITY_UPDATE);
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+
+            parentPanel.reload().execute();
+            exit();
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -358,19 +432,19 @@ public class UserDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
+    private javax.swing.JList jListDepart;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextArea jTextAreaDesc;
+    private javax.swing.JTextField jTextFieldAddress;
+    private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldIDCard;
+    private javax.swing.JTextField jTextFieldPasswd;
+    private javax.swing.JTextField jTextFieldPhone;
+    private javax.swing.JTextField jTextFieldUserName;
     // End of variables declaration//GEN-END:variables
 }

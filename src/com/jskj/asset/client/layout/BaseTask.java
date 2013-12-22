@@ -23,6 +23,11 @@ public abstract class BaseTask extends Task<Object, Void> {
     // private JFrame focusComponent;
     private boolean processDisplay = true;
     public static Lock lock = new ReentrantLock();
+    
+    public final static int STATUS_OK=0;
+     public final static int STATUS_ERROR=-1;
+    
+    
     protected AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
 
     public BaseTask(Application app) {

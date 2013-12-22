@@ -10,15 +10,16 @@
  */
 package com.jskj.asset.client.panel.user;
 
-import com.jskj.asset.client.AboutBox;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Usertb;
+import com.jskj.asset.client.bean.entity.UsertbFindEntity;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -35,17 +36,28 @@ public final class UserPanel extends BasePanel {
 
     private UserDialog userDialog;
 
+    private final UserPanel userPanel;
+
+    private int pageIndex;
+
+    private int count;
+
+    private List<Usertb> users;
+
     /**
      * Creates new form NoFoundPane
      */
     public UserPanel() {
         super();
         initComponents();
+        userPanel = this;
+        pageIndex = 1;
+        count = 0;
     }
 
     @Action
     public Task reload() {
-        return new RefureTask(org.jdesktop.application.Application.getInstance(AssetClientApp.class));
+        return new RefureTask(0);
     }
 
     @Override
@@ -57,8 +69,8 @@ public final class UserPanel extends BasePanel {
 
         BindingGroup bindingGroup = new BindingGroup();
 
-        RefureTask(org.jdesktop.application.Application app) {
-            super(app);
+        RefureTask(int pageIndex) {
+            super(pageIndex);
         }
 
         @Override
@@ -71,15 +83,21 @@ public final class UserPanel extends BasePanel {
                 return;
             }
 
-            List<Usertb> usertbs = (List<Usertb>) object;
+            UsertbFindEntity usertbs = (UsertbFindEntity) object;
 
-            if (usertbs != null && usertbs.size() > 0) {
-                logger.debug("get user size:" + usertbs.size());
-                BindTableHelper<Usertb> bindTable = new BindTableHelper<Usertb>(jTableUser, usertbs);
+            if (usertbs != null && usertbs.getUsers().size() > 0) {
+                count = usertbs.getCount();
+                jLabelTotal.setText(((pageIndex - 1) * UserTask.pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get user size:" + usertbs.getUsers().size());
+
+                //存下所有的数据
+                users = usertbs.getUsers();
+
+                BindTableHelper<Usertb> bindTable = new BindTableHelper<Usertb>(jTableUser, users);
                 bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"departmentId", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
                 {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userBirthday", "生日"}, {"userPhone", "电话"}, {"userPosition", "地址"}});
                 bindTable.setIntegerType(1);
-                //bindTable.setDateType(8);
+                bindTable.setDateType(8);
                 bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 50}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);;
             }
         }
@@ -99,6 +117,10 @@ public final class UserPanel extends BasePanel {
         jButtonAdd = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jToolBar2 = new javax.swing.JToolBar();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUser = new BaseTable(null);
 
@@ -129,6 +151,7 @@ public final class UserPanel extends BasePanel {
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton1);
 
+        jButton2.setAction(actionMap.get("deleteUser")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -136,15 +159,47 @@ public final class UserPanel extends BasePanel {
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton2);
 
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
+        jToolBar2.setName("jToolBar2"); // NOI18N
+
+        jButton3.setAction(actionMap.get("pagePrev")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton3);
+
+        jButton4.setAction(actionMap.get("pageNext")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setName("jButton4"); // NOI18N
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton4);
+
+        jLabelTotal.setForeground(resourceMap.getColor("jLabelTotal.foreground")); // NOI18N
+        jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
+        jLabelTotal.setName("jLabelTotal"); // NOI18N
+
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
         ctrlPane.setLayout(ctrlPaneLayout);
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addGroup(ctrlPaneLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -168,14 +223,14 @@ public final class UserPanel extends BasePanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -186,7 +241,7 @@ public final class UserPanel extends BasePanel {
             public void run() {
                 if (userDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    userDialog = new UserDialog(mainFrame);
+                    userDialog = new UserDialog(userPanel);
                     userDialog.setLocationRelativeTo(mainFrame);
                 }
                 userDialog.setAddOrUpdate(true);
@@ -200,24 +255,87 @@ public final class UserPanel extends BasePanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+
+                Usertb user = selectedUser();
+                if (user == null) {
+                    AssetMessage.ERRORSYS("请选择用户!");
+                    return;
+                }
+
                 if (userDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    userDialog = new UserDialog(mainFrame);
+                    userDialog = new UserDialog(userPanel);
                     userDialog.setLocationRelativeTo(mainFrame);
                 }
+
                 userDialog.setAddOrUpdate(false);
+                userDialog.setUpdatedData(user);
                 AssetClientApp.getApplication().show(userDialog);
             }
         });
+    }
+
+    @Action
+    public Task deleteUser() {
+        Usertb user = selectedUser();
+        if (user == null) {
+            AssetMessage.ERRORSYS("请选择用户!");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除用户:" + user.getUserName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new DeleteUserTask(user);
+        }
+        return null;
+    }
+
+    private class DeleteUserTask extends UserUpdateTask {
+
+        DeleteUserTask(Usertb user) {
+            super(user, UserUpdateTask.ENTITY_DELETE);
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            userPanel.reload().execute();
+        }
+    }
+
+    @Action
+    public void pagePrev() {
+        pageIndex = pageIndex - 1;
+        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        new RefureTask(pageIndex).execute();
+    }
+
+    @Action
+    public void pageNext() {
+        if (UserTask.pageSize * (pageIndex) <= count) {
+            pageIndex = pageIndex + 1;
+        }
+        new RefureTask(pageIndex).execute();
+    }
+
+    public Usertb selectedUser() {
+        if (jTableUser.getSelectedRow() >= 0) {
+            if (users != null) {
+                return users.get(jTableUser.getSelectedRow());
+            }
+        }
+        return null;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUser;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables
 }

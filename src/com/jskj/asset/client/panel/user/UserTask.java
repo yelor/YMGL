@@ -4,13 +4,14 @@
  */
 package com.jskj.asset.client.panel.user;
 
-import com.jskj.asset.client.bean.entity.Usertb;
+import com.jskj.asset.client.bean.entity.UsertbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.log4j.Logger;
-import org.jdesktop.application.Application;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -19,21 +20,34 @@ import org.springframework.web.client.RestTemplate;
  */
 public class UserTask extends BaseTask {
 
-    private static Logger logger = Logger.getLogger(UserTask.class);
-    private String URI = Constants.HTTP + Constants.APPID + "user";
+    private static final Logger logger = Logger.getLogger(UserTask.class);
+    private final String URI = Constants.HTTP + Constants.APPID + "user";
+    public static final int pageSize = 10;
+    private int pageIndex = 1;
 
-    public UserTask(Application app) {
-        super(app);
+    public UserTask(int pageIndex) {
+        super();
+        this.pageIndex = pageIndex;
+    }
+
+    public UserTask() {
+        this(1);
     }
 
     @Override
     public Object doBackgrounp() {
         try {
+            Map map = new HashMap();
+            map.put("pagesize", String.valueOf(pageSize));
+            map.put("pageindex", String.valueOf(pageIndex));
+            
+            logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
             //使用Spring3 RESTful client来获取http数据
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            List<Usertb> users = restTemplate.getForObject(URI, List.class);
+            UsertbFindEntity users = restTemplate.getForObject(URI+"?pagesize="+pageSize+"&pageindex="+pageIndex, UsertbFindEntity.class);
             return users;
-        } catch (Exception e) {
+        } catch (RestClientException e) {
+            logger.error(e);
             return e;
         }
     }
