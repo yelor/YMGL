@@ -66,10 +66,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jTextField18 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField11 = regTextField3;
-        jLabel20 = new javax.swing.JLabel();
-        jTextField19 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextField20 = new javax.swing.JTextField();
@@ -161,18 +157,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
 
         jTextField18.setName("jTextField18"); // NOI18N
         jTextField18.setPreferredSize(new java.awt.Dimension(0, 30));
-
-        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
-        jLabel9.setName("jLabel9"); // NOI18N
-
-        jTextField11.setName("jTextField11"); // NOI18N
-        jTextField11.setPreferredSize(new java.awt.Dimension(0, 30));
-
-        jLabel20.setText(resourceMap.getString("jLabel20.text")); // NOI18N
-        jLabel20.setName("jLabel20"); // NOI18N
-
-        jTextField19.setName("jTextField19"); // NOI18N
-        jTextField19.setPreferredSize(new java.awt.Dimension(0, 30));
 
         jTextField12.setName("jTextField12"); // NOI18N
         jTextField12.setPreferredSize(new java.awt.Dimension(0, 30));
@@ -275,7 +259,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -290,8 +273,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                             .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, middlePanelLayout.createSequentialGroup()
                                 .addGap(0, 268, Short.MAX_VALUE)
@@ -301,17 +283,14 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel4)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, middlePanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
+                                .addComponent(jLabel19)))
                         .addGap(18, 18, 18)
                         .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jTextField15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
@@ -349,13 +328,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                     .addComponent(jLabel8)
                     .addComponent(jLabel19)
                     .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel20)
-                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
@@ -569,7 +542,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -579,11 +551,9 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
@@ -591,7 +561,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
