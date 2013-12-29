@@ -6,10 +6,20 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Kehudanweitb;
+import com.jskj.asset.client.bean.entity.KehudanweitbFindEntity;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.panel.jichuxinxi.task.KehudanweiTask;
+import com.jskj.asset.client.panel.jichuxinxi.task.KehudanweiUpdateTask;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
+import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
@@ -19,12 +29,26 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
 
     private final static Logger logger = Logger.getLogger(KeHuDanWeiJDialog.class);
 
+    private final KeHuDanWeiJDialog keHuDanWeiJDialog;
+
+    private int pageIndex;
+
+    private int count;
+
+    private List<Kehudanweitb> kehudanweis;
+
+    private KeHuDanWeiInfoJDialog keHuDanWeiInfoJDialog;
+
     /**
      * Creates new form YiMiaoJDialog
      */
     public KeHuDanWeiJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        new RefureTask(0).execute();
+        keHuDanWeiJDialog = this;
+        pageIndex = 1;
+        count = 0;
     }
 
     /**
@@ -51,7 +75,7 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
         jTree1 = new javax.swing.JTree();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableKehudanwei = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(KeHuDanWeiJDialog.class);
@@ -84,6 +108,8 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton3);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(KeHuDanWeiJDialog.class, this);
+        jButton4.setAction(actionMap.get("refresh")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -98,7 +124,6 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton5);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(KeHuDanWeiJDialog.class, this);
         jButton6.setAction(actionMap.get("addKeHuDanWei")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setFocusable(false);
@@ -107,6 +132,7 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton6);
 
+        jButton7.setAction(actionMap.get("updateKehudanwei")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -114,6 +140,7 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton7);
 
+        jButton8.setAction(actionMap.get("deleteKehudanwei")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -121,6 +148,7 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
         jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton8);
 
+        jButton9.setAction(actionMap.get("exit")); // NOI18N
         jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
         jButton9.setFocusable(false);
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -158,7 +186,7 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableKehudanwei.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -205,18 +233,18 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
                 "客户单位编号", "客户单位名称", "联系人", "电话", "传真", "单位地址", "备注"
             }
         ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(120);
-            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);
-            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-            jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title5")); // NOI18N
-            jTable1.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
-            jTable1.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
-            jTable1.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title6")); // NOI18N
-            jTable1.getColumnModel().getColumn(6).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
+        jTableKehudanwei.setName("jTableKehudanwei"); // NOI18N
+        jScrollPane2.setViewportView(jTableKehudanwei);
+        if (jTableKehudanwei.getColumnModel().getColumnCount() > 0) {
+            jTableKehudanwei.getColumnModel().getColumn(0).setPreferredWidth(120);
+            jTableKehudanwei.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTableKehudanwei.columnModel.title0")); // NOI18N
+            jTableKehudanwei.getColumnModel().getColumn(1).setPreferredWidth(120);
+            jTableKehudanwei.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTableKehudanwei.columnModel.title1")); // NOI18N
+            jTableKehudanwei.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title5")); // NOI18N
+            jTableKehudanwei.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
+            jTableKehudanwei.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
+            jTableKehudanwei.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title6")); // NOI18N
+            jTableKehudanwei.getColumnModel().getColumn(6).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -307,10 +335,59 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
         });
     }
 
+  @Action
+    public Task reload() {
+        return new RefureTask(0);
+    }
+
+    private Kehudanweitb selectedKehudanwei() {
+        if (jTableKehudanwei.getSelectedRow() >= 0) {
+            if (kehudanweis != null) {
+                return kehudanweis.get(jTableKehudanwei.getSelectedRow());
+            }
+        }
+        return null;
+    }
+
+    private class RefureTask extends KehudanweiTask {
+
+        BindingGroup bindingGroup = new BindingGroup();
+
+        RefureTask(int pageIndex) {
+            super(pageIndex);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+
+            KehudanweitbFindEntity danjuleixingtbs = (KehudanweitbFindEntity) object;
+
+            if (danjuleixingtbs != null && danjuleixingtbs.getKehudanweis().size() > 0) {
+                count = danjuleixingtbs.getCount();
+//                jLabelTotal.setText(((pageIndex - 1) * KehudanweiTask.pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get danjuleixing size:" + danjuleixingtbs.getKehudanweis().size());
+
+                //存下所有的数据
+                kehudanweis = danjuleixingtbs.getKehudanweis();
+
+                BindTableHelper<Kehudanweitb> bindTable = new BindTableHelper<Kehudanweitb>(jTableKehudanwei, kehudanweis);
+                bindTable.createTable(new String[][]{{"kehudanweiId", "编号"}, {"kehudanweiName", "名称"}, {"kehudanweiConstactperson", "联系人"}, {"kehudanweiPhone", "电话"}, {"kehudanweiFax", "传真"}, {"kehudanweiAddr", "单位地址"}, {"kehudanweiRemark", "备注"}});
+                bindTable.setIntegerType(1);
+                bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+            }
+        }
+    }
+
     @Action
     public void addKeHuDanWei() {
         SwingUtilities.invokeLater(new Runnable() {
-            private BuMenInfoJDialog buMenInfoJDialog;
             private KeHuDanWeiInfoJDialog keHuDanWeiInfoJDialog;
 
             @Override
@@ -320,9 +397,91 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
                     keHuDanWeiInfoJDialog = new KeHuDanWeiInfoJDialog(new javax.swing.JFrame(), true);
                     keHuDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
+                keHuDanWeiInfoJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(keHuDanWeiInfoJDialog);
             }
         });
+    }
+
+    @Action
+    public void updateKehudanwei() {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                Kehudanweitb danjuleixing = selectedKehudanwei();
+                if (danjuleixing == null) {
+                    AssetMessage.ERRORSYS("请选择客户单位!");
+                    return;
+                }
+
+                if (keHuDanWeiInfoJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    keHuDanWeiInfoJDialog = new KeHuDanWeiInfoJDialog(new javax.swing.JFrame(), true);
+                    keHuDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
+                }
+
+                keHuDanWeiInfoJDialog.setAddOrUpdate(false);
+                keHuDanWeiInfoJDialog.setUpdatedData(danjuleixing);
+                AssetClientApp.getApplication().show(keHuDanWeiInfoJDialog);
+            }
+        });
+    }
+
+    @Action
+    public Task deleteKehudanwei() {
+        Kehudanweitb danjuleixing = selectedKehudanwei();
+        if (danjuleixing == null) {
+            AssetMessage.ERRORSYS("请选择客户单位");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除客户单位:" + danjuleixing.getKehudanweiName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new DeleteKehudanweiTask(danjuleixing);
+        }
+        return null;
+    }
+
+    private class DeleteKehudanweiTask extends KehudanweiUpdateTask {
+
+        DeleteKehudanweiTask(Kehudanweitb danjuleixing) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeleteKehudanweiTask fields, here.
+            super(danjuleixing, ENTITY_DELETE);
+
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            keHuDanWeiJDialog.reload().execute();
+        }
+    }
+
+    @Action
+    public void pagePrev() {
+        pageIndex = pageIndex - 1;
+        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        new RefureTask(pageIndex).execute();
+    }
+
+    @Action
+    public void pageNext() {
+        if (KehudanweiTask.pageSize * (pageIndex) <= count) {
+            pageIndex = pageIndex + 1;
+        }
+        new RefureTask(pageIndex).execute();
+    }
+
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
+    @Action
+    public void refresh() {
+        keHuDanWeiJDialog.reload().execute();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -339,7 +498,7 @@ public class KeHuDanWeiJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableKehudanwei;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables

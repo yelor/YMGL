@@ -652,8 +652,8 @@ public final class AssetClientView extends FrameView {
 
     @Action
     public void showJianShaoFangShi() {
-               SwingUtilities.invokeLater(new Runnable() {
-                   private JianShaoFangShiJDialog jianShaoFangShiJDialog;
+        SwingUtilities.invokeLater(new Runnable() {
+            private JianShaoFangShiJDialog jianShaoFangShiJDialog;
 
             @Override
             public void run() {

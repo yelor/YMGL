@@ -3,13 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.ReduceTypetb;
+import com.jskj.asset.client.bean.entity.ReduceTypetbFindEntity;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.panel.jichuxinxi.task.ReduceTypeTask;
+import com.jskj.asset.client.panel.jichuxinxi.task.ReduceTypeUpdateTask;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
+import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
@@ -17,12 +27,28 @@ import org.jdesktop.application.Action;
  */
 public class JianShaoFangShiJDialog extends javax.swing.JDialog {
 
+    private static final Logger logger = Logger.getLogger(JianShaoFangShiJDialog.class);
+
+    private final JianShaoFangShiJDialog jianShaoFangShiJDialog;
+
+    private int pageIndex;
+
+    private int count;
+
+    private List<ReduceTypetb> reduceTypes;
+
+    private JianShaoFangShiInfoJDialog jianShaoFangShiInfoJDialog;
+
     /**
-     * Creates new form DanWeiJDialog
+     * Creates new form ReduceTypeJDialog
      */
     public JianShaoFangShiJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        new RefureTask(0).execute();
+        jianShaoFangShiJDialog = this;
+        pageIndex = 1;
+        count = 0;
     }
 
     /**
@@ -36,7 +62,7 @@ public class JianShaoFangShiJDialog extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableReduceType = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -54,54 +80,54 @@ public class JianShaoFangShiJDialog extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableReduceType.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "编号", "名称"
+
             }
         ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-        }
+        jTableReduceType.setName("jTableReduceType"); // NOI18N
+        jScrollPane1.setViewportView(jTableReduceType);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JianShaoFangShiJDialog.class, this);
+        jButton1.setAction(actionMap.get("exit")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JianShaoFangShiJDialog.class, this);
         jButton4.setAction(actionMap.get("addJianShaoFangShi")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
+        jButton5.setAction(actionMap.get("updateReduceType")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
 
+        jButton6.setAction(actionMap.get("deleteReduceType")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setName("jButton6"); // NOI18N
 
+        jButton7.setAction(actionMap.get("refresh")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
 
@@ -203,9 +229,59 @@ public class JianShaoFangShiJDialog extends javax.swing.JDialog {
     }
 
     @Action
+    public Task reload() {
+        return new RefureTask(0);
+    }
+
+    private ReduceTypetb selectedReduceType() {
+        if (jTableReduceType.getSelectedRow() >= 0) {
+            if (reduceTypes != null) {
+                return reduceTypes.get(jTableReduceType.getSelectedRow());
+            }
+        }
+        return null;
+    }
+
+    private class RefureTask extends ReduceTypeTask {
+
+        BindingGroup bindingGroup = new BindingGroup();
+
+        RefureTask(int pageIndex) {
+            super(pageIndex);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+
+            ReduceTypetbFindEntity reduceTypetbs = (ReduceTypetbFindEntity) object;
+
+            if (reduceTypetbs != null && reduceTypetbs.getReduceTypes().size() > 0) {
+                count = reduceTypetbs.getCount();
+//                jLabelTotal.setText(((pageIndex - 1) * ReduceTypeTask.pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get reduceType size:" + reduceTypetbs.getReduceTypes().size());
+
+                //存下所有的数据
+                reduceTypes = reduceTypetbs.getReduceTypes();
+
+                BindTableHelper<ReduceTypetb> bindTable = new BindTableHelper<ReduceTypetb>(jTableReduceType, reduceTypes);
+                bindTable.createTable(new String[][]{{"reducetypeId", "编号"}, {"reducetypeName", "名称"}});
+                bindTable.setIntegerType(1);
+                bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+            }
+        }
+    }
+
+    @Action
     public void addJianShaoFangShi() {
-          SwingUtilities.invokeLater(new Runnable() {
-              private JianShaoFangShiInfoJDialog jianShaoFangShiInfoJDialog;
+        SwingUtilities.invokeLater(new Runnable() {
+            private JianShaoFangShiInfoJDialog jianShaoFangShiInfoJDialog;
 
             @Override
             public void run() {
@@ -214,9 +290,91 @@ public class JianShaoFangShiJDialog extends javax.swing.JDialog {
                     jianShaoFangShiInfoJDialog = new JianShaoFangShiInfoJDialog(new javax.swing.JFrame(), true);
                     jianShaoFangShiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
+                jianShaoFangShiInfoJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(jianShaoFangShiInfoJDialog);
             }
         });
+    }
+
+    @Action
+    public void updateReduceType() {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                ReduceTypetb reduceType = selectedReduceType();
+                if (reduceType == null) {
+                    AssetMessage.ERRORSYS("请选择单位!");
+                    return;
+                }
+
+                if (jianShaoFangShiInfoJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    jianShaoFangShiInfoJDialog = new JianShaoFangShiInfoJDialog(new javax.swing.JFrame(), true);
+                    jianShaoFangShiInfoJDialog.setLocationRelativeTo(mainFrame);
+                }
+
+                jianShaoFangShiInfoJDialog.setAddOrUpdate(false);
+                jianShaoFangShiInfoJDialog.setUpdatedData(reduceType);
+                AssetClientApp.getApplication().show(jianShaoFangShiInfoJDialog);
+            }
+        });
+    }
+
+    @Action
+    public Task deleteReduceType() {
+        ReduceTypetb reduceType = selectedReduceType();
+        if (reduceType == null) {
+            AssetMessage.ERRORSYS("请选择用户!");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除用户:" + reduceType.getReducetypeName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new DeleteReduceTypeTask(reduceType);
+        }
+        return null;
+    }
+
+    private class DeleteReduceTypeTask extends ReduceTypeUpdateTask {
+
+        DeleteReduceTypeTask(ReduceTypetb reduceType) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeleteReduceTypeTask fields, here.
+            super(reduceType, ENTITY_DELETE);
+
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            jianShaoFangShiJDialog.reload().execute();
+        }
+    }
+
+    @Action
+    public void pagePrev() {
+        pageIndex = pageIndex - 1;
+        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        new RefureTask(pageIndex).execute();
+    }
+
+    @Action
+    public void pageNext() {
+        if (ReduceTypeTask.pageSize * (pageIndex) <= count) {
+            pageIndex = pageIndex + 1;
+        }
+        new RefureTask(pageIndex).execute();
+    }
+
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
+    @Action
+    public void refresh() {
+        jianShaoFangShiJDialog.reload().execute();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -227,6 +385,6 @@ public class JianShaoFangShiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableReduceType;
     // End of variables declaration//GEN-END:variables
 }

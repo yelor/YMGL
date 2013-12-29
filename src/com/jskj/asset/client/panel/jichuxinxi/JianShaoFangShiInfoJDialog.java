@@ -6,11 +6,23 @@
 
 package com.jskj.asset.client.panel.jichuxinxi;
 
+import com.jskj.asset.client.bean.entity.ReduceTypetb;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.panel.jichuxinxi.task.ReduceTypeUpdateTask;
+import org.apache.log4j.Logger;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
+
 /**
  *
  * @author huiqi
  */
 public class JianShaoFangShiInfoJDialog extends javax.swing.JDialog {
+    
+    private static final Logger logger = Logger.getLogger(JianShaoFangShiInfoJDialog.class);
+    private JianShaoFangShiJDialog jianShaoFangShiJDialog;
+    private ReduceTypetb reduceType;
+    private boolean isNew;
 
     /**
      * Creates new form DanWeiInfoJDialog
@@ -31,9 +43,9 @@ public class JianShaoFangShiInfoJDialog extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldReduceTypeId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldReduceTypeName = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -50,21 +62,24 @@ public class JianShaoFangShiInfoJDialog extends javax.swing.JDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
+        jTextFieldReduceTypeId.setText(resourceMap.getString("jTextFieldReduceTypeId.text")); // NOI18N
+        jTextFieldReduceTypeId.setName("jTextFieldReduceTypeId"); // NOI18N
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextField2.setText(resourceMap.getString("jTextField2.text")); // NOI18N
-        jTextField2.setName("jTextField2"); // NOI18N
+        jTextFieldReduceTypeName.setText(resourceMap.getString("jTextFieldReduceTypeName.text")); // NOI18N
+        jTextFieldReduceTypeName.setName("jTextFieldReduceTypeName"); // NOI18N
 
         jRadioButton1.setText(resourceMap.getString("jRadioButton1.text")); // NOI18N
         jRadioButton1.setName("jRadioButton1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JianShaoFangShiInfoJDialog.class, this);
+        jButton1.setAction(actionMap.get("exit")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
+        jButton2.setAction(actionMap.get("submitForm")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
@@ -84,11 +99,11 @@ public class JianShaoFangShiInfoJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1))
+                        .addComponent(jTextFieldReduceTypeId))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2)))
+                        .addComponent(jTextFieldReduceTypeName)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -97,11 +112,11 @@ public class JianShaoFangShiInfoJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldReduceTypeId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldReduceTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
@@ -172,6 +187,58 @@ public class JianShaoFangShiInfoJDialog extends javax.swing.JDialog {
         });
     }
 
+    public void setAddOrUpdate(boolean b) {
+        isNew = b;
+        if (isNew) {
+            this.setTitle("新建减小方式");
+            reduceType = new ReduceTypetb();
+        } else {
+            this.setTitle("修改减少方式");
+        }
+    }
+
+    public void setUpdatedData(ReduceTypetb reduceType) {
+        if (reduceType == null) {
+            return;
+        }
+        this.reduceType = reduceType;
+        jTextFieldReduceTypeId.setText((reduceType.getReducetypeId()).toString());
+        jTextFieldReduceTypeName.setText(reduceType.getReducetypeName());
+    }
+
+    @Action
+    public Task submitForm() {
+        if (jTextFieldReduceTypeName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入单位名称!");
+        }
+        reduceType.setReducetypeName(jTextFieldReduceTypeName.getText());
+
+        return new SubmitFormTask(reduceType);
+    }
+
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
+    private class SubmitFormTask extends ReduceTypeUpdateTask {
+
+        SubmitFormTask(ReduceTypetb reduceType) {
+            super(reduceType, isNew ? ReduceTypeUpdateTask.ENTITY_SAVE : ReduceTypeUpdateTask.ENTITY_UPDATE);
+        }
+
+        @Override
+        public void onSucceeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            exit();
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -179,7 +246,7 @@ public class JianShaoFangShiInfoJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldReduceTypeId;
+    private javax.swing.JTextField jTextFieldReduceTypeName;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,16 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.jichuxinxi;
 
+import com.jskj.asset.client.bean.entity.Supplier;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.panel.jichuxinxi.task.SupplierUpdateTask;
 import com.jskj.asset.client.panel.ymgl.*;
+import org.apache.log4j.Logger;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
  * @author huiqi
  */
 public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
+    
+    private static final Logger logger = Logger.getLogger(GongYingDanWeiInfoJDialog.class);
+    private GongYingDanWeiJDialog gongYingDanWeiJDialog;
+    private Supplier supplier;
+    private boolean isNew;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
@@ -37,8 +47,8 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldSupplierName = new javax.swing.JTextField();
+        jTextFieldSupplierId = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
@@ -104,18 +114,18 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
 
-        jTextField2.setName("jTextField2"); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldSupplierName.setName("jTextFieldSupplierName"); // NOI18N
+        jTextFieldSupplierName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextFieldSupplierNameActionPerformed(evt);
             }
         });
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldSupplierId.setText(resourceMap.getString("jTextFieldSupplierId.text")); // NOI18N
+        jTextFieldSupplierId.setName("jTextFieldSupplierId"); // NOI18N
+        jTextFieldSupplierId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldSupplierIdActionPerformed(evt);
             }
         });
 
@@ -175,7 +185,7 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldSupplierId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
@@ -185,7 +195,7 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
@@ -220,7 +230,7 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
                             .addComponent(jLabel6)
                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,7 +246,7 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldSupplierId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -522,9 +532,12 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setName("jPanel2"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GongYingDanWeiInfoJDialog.class, this);
+        jButton3.setAction(actionMap.get("submitForm")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
+        jButton4.setAction(actionMap.get("exit")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
@@ -575,13 +588,13 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldSupplierIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSupplierIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldSupplierIdActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jTextFieldSupplierNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSupplierNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jTextFieldSupplierNameActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
@@ -717,7 +730,6 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
@@ -726,7 +738,6 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField3;
@@ -734,5 +745,60 @@ public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldSupplierId;
+    private javax.swing.JTextField jTextFieldSupplierName;
     // End of variables declaration//GEN-END:variables
+
+    public void setAddOrUpdate(boolean b) {
+        isNew = b;
+        if (isNew) {
+            this.setTitle("新建供应单位");
+            supplier = new Supplier();
+        } else {
+            this.setTitle("修改供应单位");
+        }
+    }
+
+    public void setUpdatedData(Supplier supplier) {
+        if (supplier == null) {
+            return;
+        }
+        this.supplier = supplier;
+        jTextFieldSupplierId.setText((supplier.getSupplierId()).toString());
+        jTextFieldSupplierName.setText(supplier.getSupplierName());
+    }
+
+    @Action
+    public Task submitForm() {
+        if (jTextFieldSupplierName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入供应单位名称!");
+        }
+        System.out.println("供应单位");
+        supplier.setSupplierName(jTextFieldSupplierName.getText());
+
+        return new SubmitFormTask(supplier);
+    }
+
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
+    private class SubmitFormTask extends SupplierUpdateTask {
+
+        SubmitFormTask(Supplier supplier) {
+            super(supplier, isNew ? SupplierUpdateTask.ENTITY_SAVE : SupplierUpdateTask.ENTITY_UPDATE);
+        }
+
+        @Override
+        public void onSucceeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            exit();
+        }
+    }
 }

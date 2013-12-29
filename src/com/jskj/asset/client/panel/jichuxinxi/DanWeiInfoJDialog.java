@@ -3,8 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.jichuxinxi;
+
+import com.jskj.asset.client.panel.jichuxinxi.task.UnitUpdateTask;
+import com.jskj.asset.client.bean.entity.Unit;
+import com.jskj.asset.client.layout.AssetMessage;
+import org.apache.log4j.Logger;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
@@ -12,12 +18,18 @@ package com.jskj.asset.client.panel.jichuxinxi;
  */
 public class DanWeiInfoJDialog extends javax.swing.JDialog {
 
+    private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
+    private DanWeiJDialog danWeiJDialog;
+    private Unit unit;
+    private boolean isNew;
+
     /**
      * Creates new form DanWeiInfoJDialog
      */
     public DanWeiInfoJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        isNew = true;
     }
 
     /**
@@ -31,9 +43,9 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldUnitId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldUnitName = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -50,21 +62,25 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
+        jTextFieldUnitId.setEditable(false);
+        jTextFieldUnitId.setText(resourceMap.getString("jTextFieldUnitId.text")); // NOI18N
+        jTextFieldUnitId.setName("jTextFieldUnitId"); // NOI18N
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextField2.setText(resourceMap.getString("jTextField2.text")); // NOI18N
-        jTextField2.setName("jTextField2"); // NOI18N
+        jTextFieldUnitName.setText(resourceMap.getString("jTextFieldUnitName.text")); // NOI18N
+        jTextFieldUnitName.setName("jTextFieldUnitName"); // NOI18N
 
         jRadioButton1.setText(resourceMap.getString("jRadioButton1.text")); // NOI18N
         jRadioButton1.setName("jRadioButton1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(DanWeiInfoJDialog.class, this);
+        jButton1.setAction(actionMap.get("exit")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
+        jButton2.setAction(actionMap.get("submitForm")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
@@ -84,11 +100,11 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1))
+                        .addComponent(jTextFieldUnitId))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2)))
+                        .addComponent(jTextFieldUnitName)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -97,11 +113,11 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldUnitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldUnitName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
@@ -179,7 +195,60 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldUnitId;
+    private javax.swing.JTextField jTextFieldUnitName;
     // End of variables declaration//GEN-END:variables
+
+   public void setAddOrUpdate(boolean b) {
+        isNew = b;
+        if (isNew) {
+            this.setTitle("新建单位");
+            unit = new Unit();
+        } else {
+            this.setTitle("修改单位");
+        }
+    }
+
+    public void setUpdatedData(Unit unit) {
+        if (unit == null) {
+            return;
+        }
+        this.unit = unit;
+        jTextFieldUnitId.setText((unit.getUnitId()).toString());
+        jTextFieldUnitName.setText(unit.getUnitName());
+    }
+
+    @Action
+    public Task submitForm() {
+        if (jTextFieldUnitName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入单位名称!");
+        }
+        unit.setUnitName(jTextFieldUnitName.getText());
+
+        return new SubmitFormTask(unit);
+    }
+
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
+    private class SubmitFormTask extends UnitUpdateTask {
+
+        SubmitFormTask(Unit unit) {
+            super(unit, isNew ? UnitUpdateTask.ENTITY_SAVE : UnitUpdateTask.ENTITY_UPDATE);
+        }
+
+        @Override
+        public void onSucceeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            exit();
+        }
+    }
+
 }

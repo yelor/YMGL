@@ -70,12 +70,12 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTextField1" max="32767" attributes="0"/>
+                          <Component id="jTextFieldUnitId" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTextField2" max="32767" attributes="0"/>
+                          <Component id="jTextFieldUnitName" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -88,12 +88,12 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jTextFieldUnitId" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jTextFieldUnitName" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -113,10 +113,11 @@
             <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="jTextFieldUnitId">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField1.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldUnitId.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldUnitId" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -125,10 +126,10 @@
             <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="jTextFieldUnitName">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField2.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField2" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldUnitName.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldUnitName" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButton1">
@@ -139,12 +140,18 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.jichuxinxi.DanWeiInfoJDialog" id="exit" methodName="exit"/>
+            </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.jichuxinxi.DanWeiInfoJDialog" id="submitForm" methodName="submitForm"/>
+            </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
           </Properties>
