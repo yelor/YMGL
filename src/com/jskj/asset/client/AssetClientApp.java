@@ -37,8 +37,7 @@ public class AssetClientApp extends SingleFrameApplication {
         view.getFrame().setTitle(Constants.WINTITLE + "【当前登陆用户: Test1，所属工作组：防疫站】");
 
         //初始化必要的功能
-        view.initStart();
-        view.displayMainView();
+        view.loadMoudule().execute();
 
         addExitListener(new Application.ExitListener() {
 
@@ -103,6 +102,8 @@ public class AssetClientApp extends SingleFrameApplication {
             UIManager.put("ToolBar.font", font);
             UIManager.put("OptionPane.messageFont", font);
             UIManager.put("OptionPane.buttonFont", font);
+
+            // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
         } catch (Exception e) {
             e.printStackTrace();
         }

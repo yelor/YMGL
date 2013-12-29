@@ -66,6 +66,7 @@ public abstract class BaseTask extends Task<Object, Void> {
 
     @Override
     protected Object doInBackground() throws Exception {
+        clientView.getProgressBar().setIndeterminate(true);
         // System.out.println("----------->doInBackground");
         if (processDisplay) {
             startWaitingPage();
@@ -82,6 +83,7 @@ public abstract class BaseTask extends Task<Object, Void> {
         }
         onSucceeded(object);
         //System.out.println("--------------->succeeded");
+        clientView.getProgressBar().setIndeterminate(false);
     }
 
     public abstract Object doBackgrounp();
