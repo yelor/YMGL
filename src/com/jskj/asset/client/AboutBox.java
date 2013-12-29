@@ -23,7 +23,7 @@ public class AboutBox extends javax.swing.JDialog {
 
     @Action
     public void closeAboutBox() {
-        System.out.println("@@@@@@@@@@@@@hello");
+        System.out.println("ssss");
         dispose();
     }
 
