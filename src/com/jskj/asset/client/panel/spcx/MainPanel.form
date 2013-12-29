@@ -52,7 +52,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="506" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="520" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -85,7 +85,7 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="87" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -100,7 +100,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="81" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -113,7 +113,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
         </Component>
@@ -122,7 +124,9 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.spcx.MainPanel" id="YeWuLiuChengChaXunAction" methodName="YeWuLiuChengChaXunAction"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
           </Properties>
         </Component>
@@ -131,7 +135,9 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.spcx.MainPanel" id="LiChengZaiXianChaXunAction" methodName="LiChengZaiXianChaXunAction"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
           </Properties>
         </Component>
@@ -140,7 +146,9 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.spcx.MainPanel" id="YiMiaoChengBenChaXunAction" methodName="YiMiaoChengBenChaXunAction"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton4.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
           </Properties>
         </Component>
@@ -149,7 +157,9 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.spcx.MainPanel" id="TongJiChaXunAction" methodName="TongJiChaXunAction"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
           </Properties>
         </Component>

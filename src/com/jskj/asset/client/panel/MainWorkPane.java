@@ -105,15 +105,19 @@ public class MainWorkPane extends BasePanel {
 
         setName("Form"); // NOI18N
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(MainWorkPane.class);
+        jPaneMain.setBackground(resourceMap.getColor("jPaneMain.background")); // NOI18N
         jPaneMain.setName("jPaneMain"); // NOI18N
 
+        jSplitMain.setBackground(resourceMap.getColor("jSplitMain.background")); // NOI18N
         jSplitMain.setBorder(null);
         jSplitMain.setDividerLocation(220);
         jSplitMain.setDividerSize(8);
+        jSplitMain.setToolTipText(resourceMap.getString("jSplitMain.toolTipText")); // NOI18N
+        jSplitMain.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jSplitMain.setMinimumSize(new java.awt.Dimension(300, 25));
         jSplitMain.setName("jSplitMain"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(MainWorkPane.class);
         LeftPane.setBackground(resourceMap.getColor("LeftPane.background")); // NOI18N
         LeftPane.setName("LeftPane"); // NOI18N
 

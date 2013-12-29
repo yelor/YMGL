@@ -48,7 +48,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="506" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="627" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -74,20 +74,20 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jButton4" pref="185" max="32767" attributes="0"/>
                       <Component id="jButton2" max="32767" attributes="0"/>
-                      <Component id="jButton4" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton3" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton5" alignment="1" min="-2" pref="117" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jButton3" max="32767" attributes="0"/>
+                      <Component id="jButton5" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="192" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="215" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -99,9 +99,9 @@
                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -117,6 +117,7 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="selecteInvoice3Action" methodName="selecteInvoice3Action"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
@@ -126,7 +127,9 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="selecteInvoiceAction" methodName="selecteInvoiceAction"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
+            <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
           </Properties>
         </Component>
@@ -135,6 +138,7 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="selecteInvoice2Action" methodName="selecteInvoice2Action"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
             <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
           </Properties>
@@ -144,6 +148,7 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="yiMiaoYanShouAction" methodName="yiMiaoYanShouAction"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton4.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
             <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
           </Properties>
@@ -153,6 +158,7 @@
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
               <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="YiMiaoBaoSunShenHeAction" methodName="YiMiaoBaoSunShenHeAction"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
             <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
           </Properties>
