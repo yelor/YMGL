@@ -7,7 +7,7 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.util.DateChooser;
-import javax.swing.JTextField;
+import javax.swing.JTextField; 
 import org.jdesktop.application.Action;
 
 /**

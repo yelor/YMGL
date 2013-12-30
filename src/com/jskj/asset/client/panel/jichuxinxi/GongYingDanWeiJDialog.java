@@ -6,10 +6,20 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Supplier;
+import com.jskj.asset.client.bean.entity.SupplierFindEntity;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.panel.jichuxinxi.task.SupplierTask;
+import com.jskj.asset.client.panel.jichuxinxi.task.SupplierUpdateTask;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
+import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
@@ -18,6 +28,11 @@ import org.jdesktop.application.Action;
 public class GongYingDanWeiJDialog extends javax.swing.JDialog {
 
     private final static Logger logger = Logger.getLogger(GongYingDanWeiJDialog.class);
+    private int pageIndex;
+    private int count;
+    private List<Supplier> suppliers;
+    private GongYingDanWeiJDialog gongYingDanWeiJDialog;
+    private GongYingDanWeiInfoJDialog gongYingDanWeiInfoJDialog;
 
     /**
      * Creates new form YiMiaoJDialog
@@ -25,6 +40,10 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
     public GongYingDanWeiJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        new RefureTask(0).execute();
+        gongYingDanWeiJDialog = this;
+        pageIndex = 1;
+        count = 0;
     }
 
     /**
@@ -46,17 +65,15 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableSupplier = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GongYingDanWeiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
+        setResizable(false);
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setRollover(true);
@@ -83,6 +100,8 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton3);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GongYingDanWeiJDialog.class, this);
+        jButton4.setAction(actionMap.get("refresh")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -97,7 +116,6 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton5);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GongYingDanWeiJDialog.class, this);
         jButton6.setAction(actionMap.get("addGongYingDanWei")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setFocusable(false);
@@ -106,6 +124,7 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton6);
 
+        jButton7.setAction(actionMap.get("updateDanWei")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -113,6 +132,7 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton7);
 
+        jButton8.setAction(actionMap.get("deleteSupplier")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -127,94 +147,60 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
         jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton9);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-
-        jTree1.setName("jTree1"); // NOI18N
-        jScrollPane1.setViewportView(jTree1);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setName("jPanel2"); // NOI18N
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSupplier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "供应单位编号", "供应单位名称", "联系人", "电话", "传真", "单位地址", "备注"
+
             }
         ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-            jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title5")); // NOI18N
-            jTable1.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
-            jTable1.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
-            jTable1.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title6")); // NOI18N
-            jTable1.getColumnModel().getColumn(6).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
-        }
+        jTableSupplier.setName("jTableSupplier"); // NOI18N
+        jScrollPane2.setViewportView(jTableSupplier);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -222,7 +208,7 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -240,11 +226,8 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -253,9 +236,7 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -316,6 +297,7 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
                     gongYingDanWeiInfoJDialog = new GongYingDanWeiInfoJDialog(new javax.swing.JFrame(), true);
                     gongYingDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
+                gongYingDanWeiInfoJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(gongYingDanWeiInfoJDialog);
             }
         });
@@ -331,12 +313,118 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableSupplier;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
+
+    private class RefureTask extends SupplierTask {
+
+        BindingGroup bindingGroup = new BindingGroup();
+
+        public RefureTask(int pageIndex) {
+            super(pageIndex);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+
+            SupplierFindEntity suppliertbs = (SupplierFindEntity) object;
+
+            if (suppliertbs != null && suppliertbs.getSuppliers().size() > 0) {
+                count = suppliertbs.getCount();
+//                jLabelTotal.setText(((pageIndex - 1) * SupplierTask.pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get supplier size:" + suppliertbs.getSuppliers().size());
+
+                //存下所有的数据
+                suppliers = suppliertbs.getSuppliers();
+
+                BindTableHelper<Supplier> bindTable = new BindTableHelper<Supplier>(jTableSupplier, suppliers);
+                bindTable.createTable(new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}, {"supplierPhone", "电话"}, {"supplierFax", "传真"}, {"supplierAddr", "单位地址"}, {"supplierRemark", "备注"}});
+                bindTable.setIntegerType(1);
+                bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+            }
+        }
+
+    }
+
+    @Action
+    public void refresh() {
+        gongYingDanWeiJDialog.reload().execute();
+    }
+    @Action
+    public Task reload() {
+        return new RefureTask(0);
+    }
+    
+        private Supplier selectedSupplier() {
+        if (jTableSupplier.getSelectedRow() >= 0) {
+            if (suppliers != null) {
+                return suppliers.get(jTableSupplier.getSelectedRow());
+            }
+        }
+        return null;
+    }
+    
+      @Action
+    public void updateDanWei() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+
+                Supplier supplier = selectedSupplier();
+                if (supplier == null) {
+                    AssetMessage.ERRORSYS("请选择供应单位!");
+                    return;
+                }
+
+                if (gongYingDanWeiInfoJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    gongYingDanWeiInfoJDialog = new GongYingDanWeiInfoJDialog(new javax.swing.JFrame(), true);
+                    gongYingDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
+                }
+
+                gongYingDanWeiInfoJDialog.setAddOrUpdate(false);
+                gongYingDanWeiInfoJDialog.setUpdatedData(supplier);
+                AssetClientApp.getApplication().show(gongYingDanWeiInfoJDialog);
+            }
+        });
+    }
+
+    @Action
+    public Task deleteSupplier() {
+        Supplier supplier = selectedSupplier();
+        if (supplier == null) {
+            AssetMessage.ERRORSYS("请选择供应单位!");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除供应单位:" + supplier.getSupplierName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new DeleteSupplierTask(supplier);
+        }
+        return null;
+    }
+
+    private class DeleteSupplierTask extends SupplierUpdateTask {
+
+        DeleteSupplierTask(Supplier supplier) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeleteSupplierTask fields, here.
+            super(supplier, ENTITY_DELETE);
+
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            gongYingDanWeiJDialog.reload().execute();
+        }
+    }
 }

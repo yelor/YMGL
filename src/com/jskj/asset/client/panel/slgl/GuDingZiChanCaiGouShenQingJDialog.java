@@ -6,8 +6,19 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.bean.entity.ZiChanCaiGouShenQing;
 import com.jskj.asset.client.util.DateChooser;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
@@ -17,6 +28,9 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
 
     DateChooser dateChooser1;
     JTextField regTextField;
+    
+    private ZiChanCaiGouShenQing cgsq;
+    private String user = "";
     /**
      * Creates new form GuDingZiChanRuKu
      */
@@ -31,6 +45,69 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
         dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
         dateChooser1.register(regTextField);
     }
+    
+    @Action
+    public void fuzeren(){
+        user = "fuzeren";
+        JOptionPane.showMessageDialog(null, "负责人登陆成功！");
+    }
+    
+    @Action
+    public void fenguanlingdao(){
+        user = "fenguanlingdao";
+        JOptionPane.showMessageDialog(null, "分管领导登陆成功！");
+    }
+    
+    @Action
+    public void zhuyaolingdao(){
+        user = "zhuyaolingdao";
+        JOptionPane.showMessageDialog(null, "主要领导登陆成功！");
+    }
+    
+    @Action
+    public Task shenPi(){
+        return new SPTask(user);        
+    }
+    
+    private class SPTask extends ShenPiTask{
+
+        public SPTask(String user) {
+            super(user);
+        }
+        
+        @Override
+        protected void succeeded(Object result){
+            JOptionPane.showMessageDialog(null, "审批成功！");
+        }
+    }
+    
+    @Action
+    public Task submitForm(){
+        cgsq = new ZiChanCaiGouShenQing();
+        int cgsqId = 0;
+        if(!jTextField1.getText().isEmpty())
+            cgsqId = Integer.parseInt(jTextField1.getText());
+        cgsq.setCgsqId(cgsqId);
+        cgsq.setGdzcId(2);
+        cgsq.setPrice(new Float(123));
+        cgsq.setProcessId("1001");
+        cgsq.setQuantity(10);
+        
+        return new submitTask(cgsq);
+    }
+    
+    private class submitTask extends ShenQingTask{
+
+        public submitTask(ZiChanCaiGouShenQing cgsq) {
+            super(cgsq);
+        }
+        
+        @Override
+        protected void succeeded(Object result){
+            JOptionPane.showMessageDialog(null, "提交成功！");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +156,9 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
         jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanCaiGouShenQingJDialog.class);
@@ -355,7 +435,8 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanCaiGouShenQingJDialog.class, this);
+        jButton10.setAction(actionMap.get("submitForm")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
         jButton10.setName("jButton10"); // NOI18N
         jToolBar1.add(jButton10);
@@ -365,7 +446,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
         jButton11.setName("jButton11"); // NOI18N
         jToolBar1.add(jButton11);
 
-        jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
+        jButton12.setAction(actionMap.get("shenPi")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
         jButton12.setName("jButton12"); // NOI18N
         jToolBar1.add(jButton12);
@@ -383,7 +464,59 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
         jButton15.setName("jButton15"); // NOI18N
-        jToolBar1.add(jButton15);
+
+        jButton1.setAction(actionMap.get("fuzeren")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+
+        jButton2.setAction(actionMap.get("fenguanlingdao")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setName("jButton2"); // NOI18N
+
+        jButton3.setAction(actionMap.get("zhuyaolingdao")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setName("jButton3"); // NOI18N
+
+        javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
+        ctrlPane.setLayout(ctrlPaneLayout);
+        ctrlPaneLayout.setHorizontalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ctrlPaneLayout.createSequentialGroup()
+                .addComponent(jButton10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton12)
+                .addGap(2, 2, 2)
+                .addComponent(jButton13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton14)
+                .addGap(10, 10, 10)
+                .addComponent(jButton15)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        ctrlPaneLayout.setVerticalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctrlPaneLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton10)
+                    .addComponent(jButton11)
+                    .addComponent(jButton12)
+                    .addComponent(jButton13)
+                    .addComponent(jButton14)
+                    .addComponent(jButton15)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(6, 6, 6))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -477,12 +610,16 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bottomPanel;
+    private javax.swing.JPanel ctrlPane;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

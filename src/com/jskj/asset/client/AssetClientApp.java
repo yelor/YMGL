@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.EventObject;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import org.jdesktop.application.Application;
@@ -29,16 +30,14 @@ public class AssetClientApp extends SingleFrameApplication {
         show(view);
 
         //界面初始化
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();//获得屏幕大小
-        int y = screenSize.height / 2 - view.getFrame().getHeight() / 2;
-        int x = screenSize.width / 2 - view.getFrame().getWidth() / 2;
-        view.getFrame().setBounds(x, y, Constants.MAINFRAME_WIDTH, Constants.MAINFRAME_HEIGHT);
-        view.getFrame().setMinimumSize(new Dimension(Constants.MAINFRAME_WIDTH, Constants.MAINFRAME_HEIGHT));
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();//获得屏幕大小
+//        int y = screenSize.height / 2 - view.getFrame().getHeight() / 2;
+//        int x = screenSize.width / 2 - view.getFrame().getWidth() / 2;
+        view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH); ;
         view.getFrame().setTitle(Constants.WINTITLE + "【当前登陆用户: Test1，所属工作组：防疫站】");
 
         //初始化必要的功能
-        view.initStart();
-        view.displayMainView();
+        view.loadMoudule().execute();
 
         addExitListener(new Application.ExitListener() {
 
@@ -103,6 +102,8 @@ public class AssetClientApp extends SingleFrameApplication {
             UIManager.put("ToolBar.font", font);
             UIManager.put("OptionPane.messageFont", font);
             UIManager.put("OptionPane.buttonFont", font);
+
+            // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
         } catch (Exception e) {
             e.printStackTrace();
         }

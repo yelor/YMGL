@@ -23,6 +23,11 @@ public abstract class BaseTask extends Task<Object, Void> {
     // private JFrame focusComponent;
     private boolean processDisplay = true;
     public static Lock lock = new ReentrantLock();
+    
+    public final static int STATUS_OK=0;
+     public final static int STATUS_ERROR=-1;
+    
+    
     protected AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
 
     public BaseTask(Application app) {
@@ -61,6 +66,7 @@ public abstract class BaseTask extends Task<Object, Void> {
 
     @Override
     protected Object doInBackground() throws Exception {
+        clientView.getProgressBar().setIndeterminate(true);
         // System.out.println("----------->doInBackground");
         if (processDisplay) {
             startWaitingPage();
@@ -77,6 +83,7 @@ public abstract class BaseTask extends Task<Object, Void> {
         }
         onSucceeded(object);
         //System.out.println("--------------->succeeded");
+        clientView.getProgressBar().setIndeterminate(false);
     }
 
     public abstract Object doBackgrounp();

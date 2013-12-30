@@ -3,13 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Danjuleixingtb;
+import com.jskj.asset.client.bean.entity.DanjuleixingtbFindEntity;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.panel.jichuxinxi.task.DanjuleixingTask;
+import com.jskj.asset.client.panel.jichuxinxi.task.DanjuleixingUpdateTask;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
+import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
@@ -17,12 +27,28 @@ import org.jdesktop.application.Action;
  */
 public class DanJuLeiXingJDialog extends javax.swing.JDialog {
 
+    private static final Logger logger = Logger.getLogger(DanJuLeiXingJDialog.class);
+
+    private final DanJuLeiXingJDialog danJuLeiXingJDialog;
+
+    private int pageIndex;
+
+    private int count;
+
+    private List<Danjuleixingtb> danjuleixings;
+
+    private DanJuLeiXingInfoJDialog danJuLeiXingInfoJDialog;
+
     /**
      * Creates new form DanWeiJDialog
      */
     public DanJuLeiXingJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        new RefureTask(0).execute();
+        danJuLeiXingJDialog = this;
+        pageIndex = 1;
+        count = 0;
     }
 
     /**
@@ -36,7 +62,7 @@ public class DanJuLeiXingJDialog extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableDanjuleixing = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -54,54 +80,54 @@ public class DanJuLeiXingJDialog extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDanjuleixing.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "单据类型编号", "单据类型名称"
+
             }
         ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-        }
+        jTableDanjuleixing.setName("jTableDanjuleixing"); // NOI18N
+        jScrollPane1.setViewportView(jTableDanjuleixing);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(DanJuLeiXingJDialog.class, this);
+        jButton1.setAction(actionMap.get("exit")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(DanJuLeiXingJDialog.class, this);
         jButton4.setAction(actionMap.get("addDanJuLeiXing")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
+        jButton5.setAction(actionMap.get("updateDanjuleixing")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
 
+        jButton6.setAction(actionMap.get("deleteDanjuleixing")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setName("jButton6"); // NOI18N
 
+        jButton7.setAction(actionMap.get("refresh")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
 
@@ -203,9 +229,59 @@ public class DanJuLeiXingJDialog extends javax.swing.JDialog {
     }
 
     @Action
+    public Task reload() {
+        return new RefureTask(0);
+    }
+
+    private Danjuleixingtb selectedDanjuleixing() {
+        if (jTableDanjuleixing.getSelectedRow() >= 0) {
+            if (danjuleixings != null) {
+                return danjuleixings.get(jTableDanjuleixing.getSelectedRow());
+            }
+        }
+        return null;
+    }
+
+    private class RefureTask extends DanjuleixingTask {
+
+        BindingGroup bindingGroup = new BindingGroup();
+
+        RefureTask(int pageIndex) {
+            super(pageIndex);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+
+            DanjuleixingtbFindEntity danjuleixingtbs = (DanjuleixingtbFindEntity) object;
+
+            if (danjuleixingtbs != null && danjuleixingtbs.getDanjuleixings().size() > 0) {
+                count = danjuleixingtbs.getCount();
+//                jLabelTotal.setText(((pageIndex - 1) * DanjuleixingTask.pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get danjuleixing size:" + danjuleixingtbs.getDanjuleixings().size());
+
+                //存下所有的数据
+                danjuleixings = danjuleixingtbs.getDanjuleixings();
+
+                BindTableHelper<Danjuleixingtb> bindTable = new BindTableHelper<Danjuleixingtb>(jTableDanjuleixing, danjuleixings);
+                bindTable.createTable(new String[][]{{"danjuleixingId", "编号"}, {"danjuleixingName", "名称"}});
+                bindTable.setIntegerType(1);
+                bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+            }
+        }
+    }
+
+    @Action
     public void addDanJuLeiXing() {
-          SwingUtilities.invokeLater(new Runnable() {
-              private DanJuLeiXingInfoJDialog danJuLeiXingInfoJDialog;
+        SwingUtilities.invokeLater(new Runnable() {
+            private DanJuLeiXingInfoJDialog danJuLeiXingInfoJDialog;
 
             @Override
             public void run() {
@@ -214,9 +290,91 @@ public class DanJuLeiXingJDialog extends javax.swing.JDialog {
                     danJuLeiXingInfoJDialog = new DanJuLeiXingInfoJDialog(new javax.swing.JFrame(), true);
                     danJuLeiXingInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
+                danJuLeiXingInfoJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(danJuLeiXingInfoJDialog);
             }
         });
+    }
+
+    @Action
+    public void updateDanjuleixing() {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                Danjuleixingtb danjuleixing = selectedDanjuleixing();
+                if (danjuleixing == null) {
+                    AssetMessage.ERRORSYS("请选择单据类型!");
+                    return;
+                }
+
+                if (danJuLeiXingInfoJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    danJuLeiXingInfoJDialog = new DanJuLeiXingInfoJDialog(new javax.swing.JFrame(), true);
+                    danJuLeiXingInfoJDialog.setLocationRelativeTo(mainFrame);
+                }
+
+                danJuLeiXingInfoJDialog.setAddOrUpdate(false);
+                danJuLeiXingInfoJDialog.setUpdatedData(danjuleixing);
+                AssetClientApp.getApplication().show(danJuLeiXingInfoJDialog);
+            }
+        });
+    }
+
+    @Action
+    public Task deleteDanjuleixing() {
+        Danjuleixingtb danjuleixing = selectedDanjuleixing();
+        if (danjuleixing == null) {
+            AssetMessage.ERRORSYS("请选择单据类型");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除单据类型:" + danjuleixing.getDanjuleixingName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new DeleteDanjuleixingTask(danjuleixing);
+        }
+        return null;
+    }
+
+    private class DeleteDanjuleixingTask extends DanjuleixingUpdateTask {
+
+        DeleteDanjuleixingTask(Danjuleixingtb danjuleixing) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeleteDanjuleixingTask fields, here.
+            super(danjuleixing, ENTITY_DELETE);
+
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            danJuLeiXingJDialog.reload().execute();
+        }
+    }
+
+    @Action
+    public void pagePrev() {
+        pageIndex = pageIndex - 1;
+        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        new RefureTask(pageIndex).execute();
+    }
+
+    @Action
+    public void pageNext() {
+        if (DanjuleixingTask.pageSize * (pageIndex) <= count) {
+            pageIndex = pageIndex + 1;
+        }
+        new RefureTask(pageIndex).execute();
+    }
+
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
+    @Action
+    public void refresh() {
+        danJuLeiXingJDialog.reload().execute();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -227,6 +385,6 @@ public class DanJuLeiXingJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableDanjuleixing;
     // End of variables declaration//GEN-END:variables
 }
