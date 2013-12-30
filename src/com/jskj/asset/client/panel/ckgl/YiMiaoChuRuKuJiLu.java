@@ -9,7 +9,7 @@ package com.jskj.asset.client.panel.ckgl;
 /**
  *
  * @author Administrator
- */
+ */ 
 public class YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
     private boolean rk;
     public void setRk(){

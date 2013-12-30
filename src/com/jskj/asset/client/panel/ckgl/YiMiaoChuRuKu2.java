@@ -7,7 +7,7 @@
 package com.jskj.asset.client.panel.ckgl;
 
 /**
- *
+ * 
  * @author Administrator
  */
 public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
