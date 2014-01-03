@@ -5,9 +5,7 @@ package com.jskj.asset.client;
 
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.util.EventObject;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -21,6 +19,19 @@ import org.jdesktop.application.SingleFrameApplication;
  */
 public class AssetClientApp extends SingleFrameApplication {
 
+    private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AssetClientApp.class);
+
+    public static String[] DEFAULT_FONT = new String[]{
+        "Table.font", "TableHeader.font", "CheckBox.font", "Tree.font", "Viewport.font", "ProgressBar.font",
+        "RadioButtonMenuItem.font", "ToolBar.font", "ColorChooser.font", "ToggleButton.font", "Panel.font",
+        "TextArea.font", "Menu.font", "TableHeader.font" // ,"TextField.font"
+        , "OptionPane.font", "MenuBar.font", "Button.font", "Label.font", 
+        "PasswordField.font", "ScrollPane.font", "MenuItem.font", 
+        "ToolTip.font", "List.font", "EditorPane.font", "Table.font",
+        "TabbedPane.font", "RadioButton.font", "CheckBoxMenuItem.font", 
+        "TextPane.font", "PopupMenu.font", "TitledBorder.font", "ComboBox.font"
+    };
+
     /**
      * At startup create and show the main frame of the application.
      */
@@ -28,12 +39,7 @@ public class AssetClientApp extends SingleFrameApplication {
     protected void startup() {
         AssetClientView view = new AssetClientView(this);
         show(view);
-
-        //界面初始化
-//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();//获得屏幕大小
-//        int y = screenSize.height / 2 - view.getFrame().getHeight() / 2;
-//        int x = screenSize.width / 2 - view.getFrame().getWidth() / 2;
-        view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH); ;
+        view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);;
         view.getFrame().setTitle(Constants.WINTITLE + "【当前登陆用户: Test1，所属工作组：防疫站】");
 
         //初始化必要的功能
@@ -70,41 +76,14 @@ public class AssetClientApp extends SingleFrameApplication {
             ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png"));
             root.setIconImage(icon.getImage());
             Font font = Constants.GLOBAL_FONT;
-            UIManager.put("ToolTip.font", font);
-            UIManager.put("Table.font", font);
-            UIManager.put("TableHeader.font", font);
-            UIManager.put("TextField.font", font);
-            UIManager.put("ComboBox.font", font);
-            UIManager.put("TextField.font", font);
-            UIManager.put("PasswordField.font", font);
-            UIManager.put("TextArea.font", font);
-            UIManager.put("TextPane.font", font);
-            UIManager.put("EditorPane.font", font);
-            UIManager.put("FormattedTextField.font", font);
-            UIManager.put("Button.font", font);
-            UIManager.put("CheckBox.font", font);
-            UIManager.put("RadioButton.font", font);
-            UIManager.put("ToggleButton.font", font);
-            UIManager.put("ProgressBar.font", font);
-            UIManager.put("DesktopIcon.font", font);
-            UIManager.put("TitledBorder.font", font);
-            UIManager.put("Label.font", font);
-            UIManager.put("List.font", font);
-            UIManager.put("TabbedPane.font", font);
-            UIManager.put("MenuBar.font", font);
-            UIManager.put("Menu.font", font);
-            UIManager.put("MenuItem.font", font);
-            UIManager.put("PopupMenu.font", font);
-            UIManager.put("CheckBoxMenuItem.font", font);
-            UIManager.put("RadioButtonMenuItem.font", font);
-            UIManager.put("Spinner.font", font);
+            for (String DEFAULT_FONT1 : AssetClientApp.DEFAULT_FONT) {
+                UIManager.put(DEFAULT_FONT1, font);
+            }
             UIManager.put("Tree.font", Constants.TREE_FONT);
-            UIManager.put("ToolBar.font", font);
-            UIManager.put("OptionPane.messageFont", font);
-            UIManager.put("OptionPane.buttonFont", font);
 
             // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
         } catch (Exception e) {
+            logger.error(e);
             e.printStackTrace();
         }
     }
@@ -122,6 +101,16 @@ public class AssetClientApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
+//        try {
+//            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
+//            UIManager.put("ToolBar.isPaintPlainBackground", Boolean.TRUE);
+//            UIManager.put("RootPane.setupButtonVisible", false);
+//            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+//            UIManager.put("TabbedPane.tabAreaInsets", new javax.swing.plaf.InsetsUIResource(3, 20, 2, 20));
+//        } catch (Exception ex) {
+//            logger.error(ex);
+//        }
+
         launch(AssetClientApp.class, args);
     }
 }

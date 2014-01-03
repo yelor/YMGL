@@ -25,69 +25,42 @@ public class AssetTab extends JPanel {
     private final JTabbedPane jTabBed;
     private final JPanel tabPane;
     private final ActionMap actionMap = Application.getInstance(AssetClientApp.class).getContext().getActionMap(AssetTab.class, this);
-    private AssetClientView hosClientView = null;
+    private AssetClientView clientView = null;
 
     public AssetTab(JTabbedPane jTabBed, JPanel tabPane, AssetNode selectNode) {
-        super();
-        this.jTabBed = jTabBed;
-        this.tabPane = tabPane;
-        hosClientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
-        buildTab(selectNode);
+        this(jTabBed,tabPane,selectNode.getNodeName());
     }
 
     public AssetTab(JTabbedPane jTabBed, JPanel tabPane, String name) {
         super();
         this.jTabBed = jTabBed;
         this.tabPane = tabPane;
-        hosClientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
+        clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
         buildTab(name);
+        setOpaque(false);
     }
-
-    private void buildTab(AssetNode selectNode) {
-
-        javax.swing.JToolBar jToolBar = new javax.swing.JToolBar();
-        jToolBar.setFloatable(false);
-        jToolBar.setRollover(true);
-        Dimension d= new Dimension();
-        d.setSize(22, 15);
-        jToolBar.setPreferredSize(d);
-        
-        JButton tabCloseButton = new JButton();
-        tabCloseButton.setAction(actionMap.get("close"));
-        tabCloseButton.setText("×");
-        jToolBar.add(tabCloseButton);
-
-       // javax.swing.JLabel statusAnimationLabel = hosClientView.getStatusAnimationLabel();
-
-        JLabel textlabel = new JLabel(selectNode.getNodeName());
-       // this.add(statusAnimationLabel, BorderLayout.WEST);
-        this.add(textlabel, BorderLayout.CENTER);
-        this.add(jToolBar, BorderLayout.EAST);
-
-    }
-
     private void buildTab(String name) {
         javax.swing.JToolBar jToolBar = new javax.swing.JToolBar();
         jToolBar.setFloatable(false);
         jToolBar.setRollover(true);
-        Dimension d= new Dimension();
-        d.setSize(22, 15);
+        jToolBar.setOpaque(false);
+        jToolBar.setBorderPainted(false);
+        Dimension d = new Dimension();
+        d.setSize(30, 20);
         jToolBar.setPreferredSize(d);
-        
+
         JButton tabCloseButton = new JButton();
         tabCloseButton.setAction(actionMap.get("close"));
         tabCloseButton.setText("×");
+        tabCloseButton.setBorderPainted(false);
+        tabCloseButton.setOpaque(false);
         jToolBar.add(tabCloseButton);
 
        // javax.swing.JLabel statusAnimationLabel = hosClientView.getStatusAnimationLabel();
-
         JLabel textlabel = new JLabel(name);
-       // this.add(statusAnimationLabel, BorderLayout.WEST);
+        // this.add(statusAnimationLabel, BorderLayout.WEST);
         this.add(textlabel, BorderLayout.CENTER);
         this.add(jToolBar, BorderLayout.EAST);
-
-
-
 
     }
 
