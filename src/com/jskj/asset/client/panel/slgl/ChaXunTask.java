@@ -6,7 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
-import com.jskj.asset.client.bean.entity.ShenPiEntity;
+import com.jskj.asset.client.bean.entity.CaiGouShenQingFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -18,28 +18,27 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author tt
  */
-public class ShenPiTask extends BaseTask{
+public class ChaXunTask extends BaseTask{
 
-    private static final Logger logger = Logger.getLogger(ShenPiTask.class);
-    private final String SP_URI = Constants.HTTP + Constants.APPID + "cgsqsp/shenpi";
+    static final Logger logger = Logger.getLogger(ChaXunTask.class);
+    private final String CX_URI = Constants.HTTP + Constants.APPID + "cgsqsp";
     
-    private ShenPiEntity sp;
+    private String user = "";
     
-    public ShenPiTask(ShenPiEntity sp){
-        this.sp = sp;
+    public ChaXunTask(String user){
+        this.user = user;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            restTemplate.postForObject(SP_URI, sp,ShenPiEntity.class );
+            CaiGouShenQingFindEntity cgsqs = restTemplate.getForObject(CX_URI + "/" + user,CaiGouShenQingFindEntity.class);
+            return cgsqs;
         }catch (RestClientException e) {
             logger.error(e);
             return e;
         }
-        
-        return STATUS_OK;
     }
 
     @Override

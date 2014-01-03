@@ -73,12 +73,13 @@ public class MainPanel extends BasePanel {
         jPanel1.setBackground(resourceMap.getColor("jPanel1.background")); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(MainPanel.class, this);
+        jButton1.setAction(actionMap.get("selectShenPiDanAction")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setContentAreaFilled(false);
         jButton1.setName("jButton1"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(MainPanel.class, this);
         jButton2.setAction(actionMap.get("selectLingYongDanAction")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
@@ -248,4 +249,22 @@ public class MainPanel extends BasePanel {
             }
         });
     }
+    
+    @Action
+    public void selectShenPiDanAction() {
+        SwingUtilities.invokeLater(new Runnable() {
+            private ShenQingShenPiJDialog shenQingShenPiJDialog;
+
+            @Override
+            public void run() {
+                if (shenQingShenPiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    shenQingShenPiJDialog = new ShenQingShenPiJDialog(new javax.swing.JFrame(), true);
+                    shenQingShenPiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(shenQingShenPiJDialog);
+            }
+        });
+    }
+    
 }
