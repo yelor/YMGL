@@ -465,19 +465,21 @@ public class LoadModule extends BaseTask {
 
     @Action
     public void showZhiYuan() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private ZhiYuanJDialog zhiYuanJDialog;
-
-            @Override
-            public void run() {
-                if (zhiYuanJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    zhiYuanJDialog = new ZhiYuanJDialog(new javax.swing.JFrame(), true);
-                    zhiYuanJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(zhiYuanJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("职员", new UserPanel(), false);
+        task.execute();
+//        SwingUtilities.invokeLater(new Runnable() {
+//            private ZhiYuanJDialog zhiYuanJDialog;
+//
+//            @Override
+//            public void run() {
+//                if (zhiYuanJDialog == null) {
+//                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+//                    zhiYuanJDialog = new ZhiYuanJDialog(new javax.swing.JFrame(), true);
+//                    zhiYuanJDialog.setLocationRelativeTo(mainFrame);
+//                }
+//                AssetClientApp.getApplication().show(zhiYuanJDialog);
+//            }
+//        });
     }
 
     @Action

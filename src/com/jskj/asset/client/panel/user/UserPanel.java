@@ -17,6 +17,7 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.util.BindTableHelper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -43,6 +44,8 @@ public final class UserPanel extends BasePanel {
     private int count;
 
     private List<Usertb> users;
+    
+    private BindTableHelper<Usertb> bindTable;
 
     /**
      * Creates new form NoFoundPane
@@ -53,6 +56,12 @@ public final class UserPanel extends BasePanel {
         userPanel = this;
         pageIndex = 1;
         count = 0;
+        bindTable = new BindTableHelper<Usertb>(jTableUser, new ArrayList<Usertb>());
+        bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"departmentId", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
+        {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userBirthday", "生日"}, {"userPhone", "电话"}, {"userPosition", "地址"}});
+        bindTable.setIntegerType(1);
+        bindTable.setDateType(8);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 50}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);
     }
 
     @Action
@@ -85,20 +94,14 @@ public final class UserPanel extends BasePanel {
 
             UsertbFindEntity usertbs = (UsertbFindEntity) object;
 
-            if (usertbs != null && usertbs.getUsers().size() > 0) {
+            if (usertbs != null) {
                 count = usertbs.getCount();
                 jLabelTotal.setText(((pageIndex - 1) * UserTask.pageSize + 1) + "/" + count);
                 logger.debug("total:" + count + ",get user size:" + usertbs.getUsers().size());
 
                 //存下所有的数据
                 users = usertbs.getUsers();
-
-                BindTableHelper<Usertb> bindTable = new BindTableHelper<Usertb>(jTableUser, users);
-                bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"departmentId", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
-                {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userBirthday", "生日"}, {"userPhone", "电话"}, {"userPosition", "地址"}});
-                bindTable.setIntegerType(1);
-                bindTable.setDateType(8);
-                bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 50}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);;
+                bindTable.refreshData(users);
             }
         }
     }
@@ -216,6 +219,7 @@ public final class UserPanel extends BasePanel {
             }
         ));
         jTableUser.setName("jTableUser"); // NOI18N
+        jTableUser.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTableUser);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

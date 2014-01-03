@@ -4,50 +4,60 @@
   <NonVisualComponents>
     <Container class="javax.swing.JPanel" name="mainPanel">
       <Properties>
+        <Property name="background" type="java.awt.Color" resourceKey="mainPanel.background"/>
         <Property name="name" type="java.lang.String" value="mainPanel" noResource="true"/>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="ToolBarPanel" pref="546" max="32767" attributes="0"/>
+              <Component id="taskMessagePanel" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <Component id="ToolBarPanel" min="-2" pref="27" max="-2" attributes="0"/>
-                  <EmptySpace pref="281" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="taskMessagePanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="286" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JToolBar" name="ToolBarPanel">
+        <Container class="javax.swing.JPanel" name="taskMessagePanel">
           <Properties>
-            <Property name="floatable" type="boolean" value="false"/>
-            <Property name="rollover" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="ToolBarPanel" noResource="true"/>
+            <Property name="background" type="java.awt.Color" resourceKey="taskMessagePanel.background"/>
+            <Property name="name" type="java.lang.String" value="taskMessagePanel" noResource="true"/>
           </Properties>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="messageLabel" pref="526" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="messageLabel" alignment="0" pref="22" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JLabel" name="messageLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
+                <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="&#x5b8b;&#x4f53;" size="12" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" noResource="true" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="66" red="0" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" resourceKey="messageLabel.text"/>
+                <Property name="name" type="java.lang.String" value="messageLabel" noResource="true"/>
               </Properties>
             </Component>
           </SubComponents>

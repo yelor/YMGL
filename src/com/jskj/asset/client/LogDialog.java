@@ -41,6 +41,7 @@ public class LogDialog extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        jTextPaneLog.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jTextPaneLog.setName("jTextPaneLog"); // NOI18N
         jScrollPane1.setViewportView(jTextPaneLog);
 
