@@ -380,6 +380,7 @@ public class UserDialog extends javax.swing.JDialog {
         if (jTextFieldUserName.getText().trim().equals("")
                 || jTextFieldPasswd.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入用户名和密码!");
+            return null;
         }
         usertb.setUserName(jTextFieldUserName.getText());
         usertb.setUserPassword(jTextFieldPasswd.getText());
