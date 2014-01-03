@@ -207,6 +207,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog(new javax.swing.JFrame(), true);
             shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
         }
+            shenbaoPlanJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(shenbaoPlanJDialog);
         } else if(selecteIndex==2){
             if (sheGouPlanJDialog == null) {
@@ -214,6 +215,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog(new javax.swing.JFrame(), true);
             sheGouPlanJDialog.setLocationRelativeTo(mainFrame);
         }
+            sheGouPlanJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(sheGouPlanJDialog);
         } else if(selecteIndex==3){
             if (lingYongShenQingJDialog == null) {
@@ -221,6 +223,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog(new javax.swing.JFrame(), true);
             lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
         }
+            lingYongShenQingJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(lingYongShenQingJDialog);
         } else if(selecteIndex==4){
             if (caiGouShenQingJDialog == null) {
@@ -228,6 +231,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
             caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
         }
+            caiGouShenQingJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(caiGouShenQingJDialog);
         }    
         

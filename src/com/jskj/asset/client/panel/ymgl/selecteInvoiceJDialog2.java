@@ -201,6 +201,7 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
                         yiMiaoDengJi1JDialog = new YiMiaoDengJi1JDialog(new javax.swing.JFrame(), true);
                         yiMiaoDengJi1JDialog.setLocationRelativeTo(mainFrame);
                     }
+                    yiMiaoDengJi1JDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoDengJi1JDialog);
                 } else if (selecteIndex == 1) {
                     if (yiMiaoDengJi2JDialog == null) {

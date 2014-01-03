@@ -247,6 +247,7 @@ public class MainPanel extends BasePanel {
                     yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
                     yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
                 }
+                yiMiaoYanShouJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);
             }
         });
