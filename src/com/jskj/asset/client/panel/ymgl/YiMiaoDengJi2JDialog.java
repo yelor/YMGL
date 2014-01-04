@@ -12,8 +12,8 @@ import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JTextField;
-import javax.xml.ws.Action;
 import org.apache.log4j.Logger;
+import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
 /**
@@ -423,9 +423,12 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoDengJi2JDialog.class, this);
+        jButton3.setAction(actionMap.get("submitForm")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
+        jButton4.setAction(actionMap.get("exit")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 

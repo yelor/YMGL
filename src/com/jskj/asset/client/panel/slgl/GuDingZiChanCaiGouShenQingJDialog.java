@@ -42,7 +42,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
     @Action
     public Task submitForm(){
         cgsq = new ZiChanCaiGouShenQing();
-        int cgsqId = 0;
+        int cgsqId = 1;
         if(!jTextField1.getText().isEmpty())
             cgsqId = Integer.parseInt(jTextField1.getText());
         cgsq.setCgsqId(cgsqId);

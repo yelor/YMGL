@@ -205,6 +205,7 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
                         yiMiaoXiaFaJDialog = new YiMiaoXiaFaJDialog(new javax.swing.JFrame(), true);
                         yiMiaoXiaFaJDialog.setLocationRelativeTo(mainFrame);
                     }
+                    yiMiaoXiaFaJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaFaJDialog);
                 } else if(selecteIndex == 1){
                     if (yiMiaoXiaoShouJDialog == null) {
@@ -212,6 +213,7 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
                         yiMiaoXiaoShouJDialog = new YiMiaoXiaoShouJDialog(new javax.swing.JFrame(), true);
                         yiMiaoXiaoShouJDialog.setLocationRelativeTo(mainFrame);
                     }
+                    yiMiaoXiaoShouJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaoShouJDialog);
                 } else if(selecteIndex == 2){
                     if (yiMiaoXiaFaTuiKuJDialog == null) {
