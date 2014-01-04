@@ -111,7 +111,7 @@ public class MainWorkPane extends BasePanel {
 
         jSplitMain.setBackground(resourceMap.getColor("jSplitMain.background")); // NOI18N
         jSplitMain.setBorder(null);
-        jSplitMain.setDividerLocation(220);
+        jSplitMain.setDividerLocation(222);
         jSplitMain.setDividerSize(8);
         jSplitMain.setToolTipText(resourceMap.getString("jSplitMain.toolTipText")); // NOI18N
         jSplitMain.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -130,7 +130,7 @@ public class MainWorkPane extends BasePanel {
         LeftPane.setLayout(LeftPaneLayout);
         LeftPaneLayout.setHorizontalGroup(
             LeftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(leftTree, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+            .addComponent(leftTree, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
         );
         LeftPaneLayout.setVerticalGroup(
             LeftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
