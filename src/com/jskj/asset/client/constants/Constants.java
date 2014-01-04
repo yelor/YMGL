@@ -18,8 +18,8 @@ public class Constants {
     public static int OK_DELETE = 100;
     public static int HTTP_NOT_FOUND = 404;
     /*字体设置*/
-    public final static Font GLOBAL_FONT = new Font("SimSun", Font.PLAIN, 12);
-    public final static Font TREE_FONT = new Font("SimSun", Font.PLAIN, 18);
+    public final static Font GLOBAL_FONT = new Font("微软雅黑", Font.PLAIN, 14 );
+    public final static Font TREE_FONT = new Font("微软雅黑", Font.PLAIN, 18 );
     /*Global config*/
     public static String WINTITLE = "疫苗资产管理系统";
     public static int LOGIN_WIDTH = 395;
