@@ -6,8 +6,11 @@ package com.jskj.asset.client.util;
 
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JTable;
+import org.apache.log4j.Logger;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Converter;
 
@@ -17,33 +20,34 @@ import org.jdesktop.beansbinding.Converter;
  */
 public class BindTableHelper<T> {
 
-    private T bean;
-    private BindingGroup bindingGroup;
+    private final static Logger logger = Logger.getLogger(BindTableHelper.class);
+    private final BindingGroup bindingGroup;
     private org.jdesktop.swingbinding.JTableBinding jTableBinding;
-    private String undisplayString = "serialVersionUID";
-    private JTableFormat jTableFormat;
+    private final String undisplayString = "serialVersionUID";
+    private final JTableFormat jTableFormat;
     private List<T> data;
+    private String[][] bindObject;
 
-    public BindTableHelper(JTable jtable, List<T> data, T bean) {
+    private int[] savedDateColumn;
+    private int[] savedIntegerColumn;
+    private HashMap<Integer, Converter> savedCoverts;
+
+    public BindTableHelper(JTable jtable, List<T> data) {
         bindingGroup = new BindingGroup();
         jTableFormat = new JTableFormat(jtable);
         this.data = data;
-        this.bean = bean;
+        bindObject = null;
+        savedDateColumn = null;
+        savedIntegerColumn = null;
+        savedCoverts = null;
     }
 
-    public BindTableHelper(JTable jtable, List<T> data) {
-        this(jtable, data, null);
-    }
-
-//    public void columFilter(String undisplayStr){
-//       this.undisplayString = undisplayString+","+undisplayStr;
-//    }
-    public void createTable() {
+    public void createTable(Class bean) {
         try {
             jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, data, jTableFormat.getJtable());
 
             // System.out.println("data::"+data);
-            Field[] f = bean.getClass().getDeclaredFields();
+            Field[] f = bean.getDeclaredFields();
             org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = null;
 
             for (Field a : f) {
@@ -60,12 +64,14 @@ public class BindTableHelper<T> {
             }
 
         } catch (Exception e) {
+            logger.error(e);
             e.printStackTrace();
         }
     }
 
-    public void createTable(String[][] bindObject) {
+    public void createTable(String[][] bindObj) {
         try {
+            bindObject = bindObj;
             jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, data, jTableFormat.getJtable());
             // System.out.println("data::"+data);
 
@@ -82,6 +88,7 @@ public class BindTableHelper<T> {
 
             }
         } catch (Exception e) {
+            logger.error(e);
             e.printStackTrace();
         }
     }
@@ -93,15 +100,18 @@ public class BindTableHelper<T> {
      * @param converter
      */
     public void setConvert(int index, Converter converter) {
+        savedCoverts = new HashMap<Integer, Converter>();
+        savedCoverts.put(index, converter);
         jTableBinding.getColumnBinding(index - 1).setConverter(converter);
     }
 
     /**
      * integer
      *
-     * @param index
+     * @param objects
      */
     public void setIntegerType(int... objects) {
+        savedIntegerColumn = objects;
         for (int temp : objects) {
             jTableBinding.getColumnBinding(temp - 1).setColumnClass(Integer.class);
         }
@@ -113,6 +123,7 @@ public class BindTableHelper<T> {
      * @param objects
      */
     public void setDateType(int... objects) {
+        savedDateColumn = objects;
         for (int temp : objects) {
             jTableBinding.getColumnBinding(temp - 1).setColumnClass(Date.class);
         }
@@ -126,6 +137,40 @@ public class BindTableHelper<T> {
         jTableBinding.bind();
         bindingGroup.bind();
         return jTableFormat;
+    }
+
+    /**
+     * 刷新数据
+     *
+     * @param data
+     */
+    public void refreshData(List<T> data) {
+        this.data = data;
+        if (bindObject != null) {
+            createTable(bindObject);
+            if (savedDateColumn != null) {
+                setDateType(savedDateColumn);
+            }
+            if (savedIntegerColumn != null) {
+                setIntegerType(savedIntegerColumn);
+            }
+            if (savedCoverts != null && savedCoverts.size() > 0) {
+                Set<Integer> keys = savedCoverts.keySet();
+                for (Integer columnIndex : keys) {
+                    setConvert(columnIndex, savedCoverts.get(columnIndex));
+                }
+            }
+            jTableBinding.bind();
+            
+            if(jTableFormat.savedColumnWidth!=null){
+               jTableFormat.setColumnWidth(jTableFormat.savedColumnWidth);
+            }
+            
+            if(jTableFormat.savedRowHeight>=0){
+               jTableFormat.setRowHeight(jTableFormat.savedRowHeight);
+            }
+        }
+
     }
 
     /**
@@ -159,12 +204,18 @@ public class BindTableHelper<T> {
 
         private JTable jtable;
 
+        public int[][] savedColumnWidth;
+        public int savedRowHeight;
+
         JTableFormat(JTable jtable) {
             this.jtable = jtable;
+            savedColumnWidth = null;
+            savedRowHeight = -1;
         }
 
         public JTableFormat setColumnWidth(int[]  
             ... columnIndex_widths) {
+            savedColumnWidth = columnIndex_widths;
             for (int[] columnIndex_width : columnIndex_widths) {
                 getJtable().getColumnModel().getColumn(columnIndex_width[0]).setMaxWidth(columnIndex_width[1]);
                 getJtable().getColumnModel().getColumn(columnIndex_width[0]).setMinWidth(columnIndex_width[1]);
@@ -173,6 +224,7 @@ public class BindTableHelper<T> {
         }
 
         public JTableFormat setRowHeight(int rowHeight) {
+            savedRowHeight = rowHeight;
             getJtable().setRowHeight(rowHeight);
             return this;
         }

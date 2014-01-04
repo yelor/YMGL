@@ -11,7 +11,9 @@
 package com.jskj.asset.client.panel;
 
 import com.jskj.asset.client.constants.Constants;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.BaseTask;
 import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Task;
@@ -29,12 +31,6 @@ public class ToppagePane extends BasePanel {
      */
     public ToppagePane() {
         initComponents();
-        try {
-            jEditorTopPage.setPage(Constants.HTTP + "/AssetsSys/toppage.jsp");
-        } catch (IOException e) {
-            jEditorTopPage.setText(e.getMessage());
-            logger.error(e.getMessage());
-        }
     }
 
     /**
@@ -77,12 +73,32 @@ public class ToppagePane extends BasePanel {
 
     @Override
     public Task reload() {
-        return null;
+        return new SendUrlTask();
     }
 
     @Override
     public Task reload(Object param) {
         return null;
+    }
+
+    private class SendUrlTask extends BaseTask {
+
+        @Override
+        public Object doBackgrounp() {
+            try {
+                jEditorTopPage.setPage(Constants.HTTP + "/AssetsSys/toppage.jsp");
+            } catch (IOException e) {
+                jEditorTopPage.setText(e.getMessage());
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+        }
+
     }
 
 

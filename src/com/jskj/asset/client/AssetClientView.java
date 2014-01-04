@@ -22,9 +22,11 @@ public final class AssetClientView extends FrameView {
     public AssetClientView(Application app) {
         super(app);
         initComponents();
+        
+        messageLabel.setText("Test1, 您有一个未完成的审批. 用户 test2 申请领用资产0001.");
     }
 
-    public Task loadMoudule(){
+    public Task loadMoudule() {
         return new LoadModule(menuBar);
     }
 
@@ -38,9 +40,8 @@ public final class AssetClientView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        ToolBarPanel = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        taskMessagePanel = new javax.swing.JPanel();
+        messageLabel = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
@@ -48,38 +49,44 @@ public final class AssetClientView extends FrameView {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(AssetClientView.class);
+        mainPanel.setBackground(resourceMap.getColor("mainPanel.background")); // NOI18N
         mainPanel.setName("mainPanel"); // NOI18N
 
-        ToolBarPanel.setFloatable(false);
-        ToolBarPanel.setRollover(true);
-        ToolBarPanel.setName("ToolBarPanel"); // NOI18N
+        taskMessagePanel.setBackground(resourceMap.getColor("taskMessagePanel.background")); // NOI18N
+        taskMessagePanel.setName("taskMessagePanel"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(AssetClientView.class);
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        ToolBarPanel.add(jButton1);
+        messageLabel.setFont(new java.awt.Font("宋体", 0, 12)); // NOI18N
+        messageLabel.setForeground(new java.awt.Color(0, 102, 204));
+        messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        messageLabel.setText(resourceMap.getString("messageLabel.text")); // NOI18N
+        messageLabel.setName("messageLabel"); // NOI18N
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        ToolBarPanel.add(jButton2);
+        org.jdesktop.layout.GroupLayout taskMessagePanelLayout = new org.jdesktop.layout.GroupLayout(taskMessagePanel);
+        taskMessagePanel.setLayout(taskMessagePanelLayout);
+        taskMessagePanelLayout.setHorizontalGroup(
+            taskMessagePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(taskMessagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .add(messageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        taskMessagePanelLayout.setVerticalGroup(
+            taskMessagePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(messageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+        );
 
         org.jdesktop.layout.GroupLayout mainPanelLayout = new org.jdesktop.layout.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(ToolBarPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+            .add(taskMessagePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, mainPanelLayout.createSequentialGroup()
-                .add(ToolBarPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+            .add(mainPanelLayout.createSequentialGroup()
+                .add(taskMessagePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 286, Short.MAX_VALUE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -144,13 +151,13 @@ public final class AssetClientView extends FrameView {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
                 mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(ToolBarPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+                .add(taskMessagePanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                 .add(getMainViewPane(), org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
                 mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(org.jdesktop.layout.GroupLayout.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .add(ToolBarPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(taskMessagePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(getMainViewPane(), org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -173,16 +180,33 @@ public final class AssetClientView extends FrameView {
         this.MainViewPane = MainViewPane;
     }
 
+    public void setStatus(String text, int messageType) {
+        statusMessageLabel.setText(text);
+      // ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png"));
+        // statusMessageLabel.setIcon(icon);
+        Thread one1 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(10000);
+                    statusMessageLabel.setText("");
+                    statusMessageLabel.setIcon(null);
+                } catch (InterruptedException ex) {
+                }
+            }
+
+        });
+        one1.start();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToolBar ToolBarPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JLabel messageLabel;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JPanel taskMessagePanel;
     // End of variables declaration//GEN-END:variables
 
     private MainWorkPane MainViewPane;
