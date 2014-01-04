@@ -13,6 +13,8 @@ public class Yimiaodengjitb {
 
     private Integer quantity;
 
+    private Double jinjia;
+
     private Integer piqianfahegezhenno;
 
     private String source;
@@ -57,6 +59,14 @@ public class Yimiaodengjitb {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getJinjia() {
+        return jinjia;
+    }
+
+    public void setJinjia(Double jinjia) {
+        this.jinjia = jinjia;
     }
 
     public Integer getPiqianfahegezhenno() {
