@@ -31,6 +31,7 @@ public class MainWorkPane extends BasePanel {
     public MainWorkPane() {
         initComponents();
         treePanesMap = new HashMap<String, BasePanel>();
+        leftTree.setHorizontalScrollBar(null);
     }
 
     public void changeTreeView(String VIEW_TREE) {
@@ -111,10 +112,11 @@ public class MainWorkPane extends BasePanel {
 
         jSplitMain.setBackground(resourceMap.getColor("jSplitMain.background")); // NOI18N
         jSplitMain.setBorder(null);
-        jSplitMain.setDividerLocation(222);
-        jSplitMain.setDividerSize(8);
+        jSplitMain.setDividerLocation(211);
+        jSplitMain.setDividerSize(1);
         jSplitMain.setToolTipText(resourceMap.getString("jSplitMain.toolTipText")); // NOI18N
         jSplitMain.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jSplitMain.setEnabled(false);
         jSplitMain.setMinimumSize(new java.awt.Dimension(300, 25));
         jSplitMain.setName("jSplitMain"); // NOI18N
 
@@ -125,12 +127,13 @@ public class MainWorkPane extends BasePanel {
         leftTree.setBorder(null);
         leftTree.setFont(resourceMap.getFont("leftTree.font")); // NOI18N
         leftTree.setName("leftTree"); // NOI18N
+        leftTree.setWheelScrollingEnabled(false);
 
         javax.swing.GroupLayout LeftPaneLayout = new javax.swing.GroupLayout(LeftPane);
         LeftPane.setLayout(LeftPaneLayout);
         LeftPaneLayout.setHorizontalGroup(
             LeftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(leftTree, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+            .addComponent(leftTree, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         LeftPaneLayout.setVerticalGroup(
             LeftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

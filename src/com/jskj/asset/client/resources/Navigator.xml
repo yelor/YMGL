@@ -8,31 +8,45 @@
     <Node>
         <nodeNo>navNode1</nodeNo>
         <nodeName>申领管理</nodeName>
-        <nodeIcon>nav.png</nodeIcon>
+        <nodeIcon>/com/jskj/asset/client/panel/resources/slgl.png</nodeIcon>
+        <pressedIcon>/com/jskj/asset/client/panel/resources/Pslgl.png</pressedIcon>
+        <rolloverIcon>/com/jskj/asset/client/panel/resources/Mslgl.png</rolloverIcon>
         <linkObject>com.jskj.asset.client.panel.slgl.MainPanel</linkObject>
         <isLastNode>true</isLastNode>
     </Node>
     <Node>
         <nodeNo>navNode2</nodeNo>
         <nodeName>疫苗管理</nodeName>
+        <nodeIcon>/com/jskj/asset/client/panel/resources/ymgl.png</nodeIcon>
+        <pressedIcon>/com/jskj/asset/client/panel/resources/Pymgl.png</pressedIcon>
+        <rolloverIcon>/com/jskj/asset/client/panel/resources/Mymgl.png</rolloverIcon>
         <linkObject>com.jskj.asset.client.panel.ymgl.MainPanel</linkObject>
         <isLastNode>true</isLastNode>
     </Node>
     <Node>
         <nodeNo>navNode3</nodeNo>
         <nodeName>仓库管理</nodeName>
+        <nodeIcon>/com/jskj/asset/client/panel/resources/ckgl.png</nodeIcon>
+        <pressedIcon>/com/jskj/asset/client/panel/resources/Pckgl.png</pressedIcon>
+        <rolloverIcon>/com/jskj/asset/client/panel/resources/Mckgl.png</rolloverIcon>
         <linkObject>com.jskj.asset.client.panel.ckgl.MainPanel</linkObject>
         <isLastNode>true</isLastNode>
     </Node>
     <Node>
         <nodeNo>navNode4</nodeNo>
         <nodeName>审核结算</nodeName>
+        <nodeIcon>/com/jskj/asset/client/panel/resources/shjs.png</nodeIcon>
+        <pressedIcon>/com/jskj/asset/client/panel/resources/Pshjs.png</pressedIcon>
+        <rolloverIcon>/com/jskj/asset/client/panel/resources/Mshjs.png</rolloverIcon>
         <linkObject>com.jskj.asset.client.panel.shjs.MainPanel</linkObject>
         <isLastNode>true</isLastNode>
     </Node>
     <Node>
         <nodeNo>navNode5</nodeNo>
         <nodeName>审批查询</nodeName>
+        <nodeIcon>/com/jskj/asset/client/panel/resources/spcx.png</nodeIcon>
+        <pressedIcon>/com/jskj/asset/client/panel/resources/Pspcx.png</pressedIcon>
+        <rolloverIcon>/com/jskj/asset/client/panel/resources/Mspcx.png</rolloverIcon>
         <linkObject>com.jskj.asset.client.panel.spcx.MainPanel</linkObject>
         <isLastNode>true</isLastNode>
     </Node>

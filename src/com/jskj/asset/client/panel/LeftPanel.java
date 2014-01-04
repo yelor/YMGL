@@ -8,9 +8,10 @@ package com.jskj.asset.client.panel;
 import com.jskj.asset.client.layout.AssetArrayNodes;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.AssetNode;
-import com.jskj.asset.client.layout.AssetTreeModel;
 import com.jskj.asset.client.layout.AssetTreeNode;
 import com.jskj.asset.client.layout.BaseTreePane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -42,11 +43,6 @@ public class LeftPanel extends BaseTreePane {
 
         navigatorTree = new javax.swing.JTree();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(LeftPanel.class);
         navigatorTree.setFont(resourceMap.getFont("navigatorTree.font")); // NOI18N
@@ -73,86 +69,15 @@ public class LeftPanel extends BaseTreePane {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setIconTextGap(0);
-        jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setPressedIcon(resourceMap.getIcon("jButton1.pressedIcon")); // NOI18N
-        jButton1.setRolloverIcon(resourceMap.getIcon("jButton1.rolloverIcon")); // NOI18N
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setIconTextGap(0);
-        jButton2.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setPressedIcon(resourceMap.getIcon("jButton2.pressedIcon")); // NOI18N
-        jButton2.setRolloverIcon(resourceMap.getIcon("jButton2.rolloverIcon")); // NOI18N
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
-
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setIconTextGap(0);
-        jButton3.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setPressedIcon(resourceMap.getIcon("jButton3.pressedIcon")); // NOI18N
-        jButton3.setRolloverIcon(resourceMap.getIcon("jButton3.rolloverIcon")); // NOI18N
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
-
-        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setIconTextGap(0);
-        jButton4.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton4.setName("jButton4"); // NOI18N
-        jButton4.setPressedIcon(resourceMap.getIcon("jButton4.pressedIcon")); // NOI18N
-        jButton4.setRolloverIcon(resourceMap.getIcon("jButton4.rolloverIcon")); // NOI18N
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
-
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setIconTextGap(0);
-        jButton5.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setPressedIcon(resourceMap.getIcon("jButton5.pressedIcon")); // NOI18N
-        jButton5.setRolloverIcon(resourceMap.getIcon("jButton5.rolloverIcon")); // NOI18N
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
-
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -181,11 +106,6 @@ public class LeftPanel extends BaseTreePane {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTree navigatorTree;
     // End of variables declaration//GEN-END:variables
@@ -196,7 +116,34 @@ public class LeftPanel extends BaseTreePane {
         return new NavigatorPanelTask();
     }
 
+    public void openLink(AssetTreeNode selectedNode) {
+        if (selectedNode != null) {
+            Task task = new OpenTabTask(selectedNode);
+            task.execute();
+            logger.debug("------------>TabPane:" + disTabCount);
+        }
+    }
+
     class NavigatorPanelTask extends NavigatorTask {
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(LeftPanel.class);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(this);
+
+        class AssetNodeActionListener implements ActionListener {
+
+            AssetNode node;
+
+            public AssetNodeActionListener(AssetNode node) {
+                this.node = node;
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                AssetTreeNode treeNode = new AssetTreeNode(node);
+                openLink(treeNode);
+            }
+
+        }
 
         @Override
         public void onSucceeded(Object object) {
@@ -207,9 +154,44 @@ public class LeftPanel extends BaseTreePane {
             } else {
                 AssetArrayNodes nodes = (AssetArrayNodes) object;
 
-                navigatorTree.setRootVisible(false);
-                navigatorTree.setModel(new AssetTreeModel(getTreeNode(new AssetTreeNode(nodes.getTopNode()), nodes.getNodes())));
+                List<AssetNode> assetNodes = nodes.getNodes();
 
+                for (AssetNode node : assetNodes) {
+                    String icon = node.getNodeIcon();
+                    String name = node.getNodeName();
+                    logger.info("loading left button:" + name);
+                    javax.swing.JButton leftButton = new javax.swing.JButton();
+                    if (icon != null && !icon.trim().equals("")) {
+                        leftButton.setText(""); // NOI18N
+                        leftButton.setIcon(new javax.swing.ImageIcon(getClass().getResource(icon))); // NOI18N
+                        String iconPress = node.getPressedIcon();
+                        String iconRollover = node.getRolloverIcon();
+                        if (iconPress != null && !iconPress.trim().equals("")) {
+                            leftButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource(iconPress))); // NOI18N
+                        }
+                        if (iconRollover != null && !iconRollover.trim().equals("")) {
+                            leftButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource(iconRollover))); // NOI18N
+                        }
+                    } else {
+                        leftButton.setText(name); // NOI18N
+                        leftButton.setName(name);
+                    }
+                    leftButton.setBorder(null);
+                    leftButton.setBorderPainted(false);
+                    leftButton.setContentAreaFilled(false);
+                    leftButton.setFocusable(false);
+                    leftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                    leftButton.setIconTextGap(0);
+                    leftButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+                    leftButton.setName(node.getNodeNo()); // NOI18N
+                    leftButton.addActionListener(new AssetNodeActionListener(node));
+
+                    leftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                    jToolBar1.add(leftButton);
+                }
+
+//                navigatorTree.setRootVisible(false);
+//                navigatorTree.setModel(new AssetTreeModel(getTreeNode(new AssetTreeNode(nodes.getTopNode()), nodes.getNodes())));
             }
         }
 

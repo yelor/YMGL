@@ -23,6 +23,10 @@ public class AssetNode {
     @XmlElement
     private String nodeIcon;
     @XmlElement
+    private String pressedIcon;
+    @XmlElement
+    private String rolloverIcon;
+    @XmlElement
     private String linkObject;
     @XmlElement
     private boolean isLastNode;
@@ -143,6 +147,34 @@ public class AssetNode {
      */
     public void setPatientNode(AssetNode patientNode) {
         this.patientNode = patientNode;
+    }
+
+    /**
+     * @return the pressedIcon
+     */
+    public String getPressedIcon() {
+        return pressedIcon;
+    }
+
+    /**
+     * @param pressedIcon the pressedIcon to set
+     */
+    public void setPressedIcon(String pressedIcon) {
+        this.pressedIcon = pressedIcon;
+    }
+
+    /**
+     * @return the rolloverIcon
+     */
+    public String getRolloverIcon() {
+        return rolloverIcon;
+    }
+
+    /**
+     * @param rolloverIcon the rolloverIcon to set
+     */
+    public void setRolloverIcon(String rolloverIcon) {
+        this.rolloverIcon = rolloverIcon;
     }
 
 }
