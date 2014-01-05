@@ -70,6 +70,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton6.setName("jButton6"); // NOI18N
+        jButton6.setOpaque(false);
         jToolBar1.add(jButton6);
 
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
@@ -77,6 +78,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton7.setName("jButton7"); // NOI18N
+        jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
@@ -84,6 +86,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton8.setName("jButton8"); // NOI18N
+        jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
@@ -91,6 +94,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
@@ -98,6 +102,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton5.setName("jButton5"); // NOI18N
+        jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
@@ -105,6 +110,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
 
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
@@ -112,6 +118,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
@@ -119,6 +126,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
         jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
@@ -126,6 +134,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton9.setFocusable(false);
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton9.setName("jButton9"); // NOI18N
+        jButton9.setOpaque(false);
         jToolBar1.add(jButton9);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());

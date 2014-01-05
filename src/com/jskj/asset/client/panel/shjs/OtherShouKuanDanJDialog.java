@@ -90,6 +90,7 @@ public class OtherShouKuanDanJDialog extends javax.swing.JDialog {
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
@@ -97,6 +98,7 @@ public class OtherShouKuanDanJDialog extends javax.swing.JDialog {
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
@@ -104,6 +106,7 @@ public class OtherShouKuanDanJDialog extends javax.swing.JDialog {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
 
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
@@ -111,6 +114,7 @@ public class OtherShouKuanDanJDialog extends javax.swing.JDialog {
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton5.setName("jButton5"); // NOI18N
+        jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
@@ -118,6 +122,7 @@ public class OtherShouKuanDanJDialog extends javax.swing.JDialog {
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
@@ -125,6 +130,7 @@ public class OtherShouKuanDanJDialog extends javax.swing.JDialog {
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton6.setName("jButton6"); // NOI18N
+        jButton6.setOpaque(false);
         jToolBar1.add(jButton6);
 
         jPanel1.setName("jPanel1"); // NOI18N

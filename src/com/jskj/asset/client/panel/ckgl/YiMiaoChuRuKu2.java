@@ -77,6 +77,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton7.setName("jButton7"); // NOI18N
+        jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
         jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
@@ -84,6 +85,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton14.setFocusable(false);
         jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton14.setName("jButton14"); // NOI18N
+        jButton14.setOpaque(false);
         jToolBar1.add(jButton14);
 
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
@@ -91,6 +93,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton15.setFocusable(false);
         jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton15.setName("jButton15"); // NOI18N
+        jButton15.setOpaque(false);
         jToolBar1.add(jButton15);
 
         jButton16.setIcon(resourceMap.getIcon("jButton16.icon")); // NOI18N
@@ -98,6 +101,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton16.setFocusable(false);
         jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton16.setName("jButton16"); // NOI18N
+        jButton16.setOpaque(false);
         jToolBar1.add(jButton16);
 
         jButton17.setIcon(resourceMap.getIcon("jButton17.icon")); // NOI18N
@@ -105,6 +109,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton17.setFocusable(false);
         jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton17.setName("jButton17"); // NOI18N
+        jButton17.setOpaque(false);
         jToolBar1.add(jButton17);
 
         jButton18.setIcon(resourceMap.getIcon("jButton18.icon")); // NOI18N
@@ -112,6 +117,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton18.setFocusable(false);
         jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton18.setName("jButton18"); // NOI18N
+        jButton18.setOpaque(false);
         jToolBar1.add(jButton18);
 
         jButton19.setIcon(resourceMap.getIcon("jButton19.icon")); // NOI18N
@@ -119,6 +125,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton19.setFocusable(false);
         jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton19.setName("jButton19"); // NOI18N
+        jButton19.setOpaque(false);
         jToolBar1.add(jButton19);
 
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
