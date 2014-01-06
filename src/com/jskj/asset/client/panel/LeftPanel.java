@@ -8,9 +8,10 @@ package com.jskj.asset.client.panel;
 import com.jskj.asset.client.layout.AssetArrayNodes;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.AssetNode;
-import com.jskj.asset.client.layout.AssetTreeModel;
 import com.jskj.asset.client.layout.AssetTreeNode;
 import com.jskj.asset.client.layout.BaseTreePane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -41,8 +42,7 @@ public class LeftPanel extends BaseTreePane {
     private void initComponents() {
 
         navigatorTree = new javax.swing.JTree();
-
-        setName("Form"); // NOI18N
+        jToolBar1 = new javax.swing.JToolBar();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(LeftPanel.class);
         navigatorTree.setFont(resourceMap.getFont("navigatorTree.font")); // NOI18N
@@ -52,6 +52,7 @@ public class LeftPanel extends BaseTreePane {
         navigatorTree.setAlignmentY(3.0F);
         navigatorTree.setAutoscrolls(true);
         navigatorTree.setName("navigatorTree"); // NOI18N
+        navigatorTree.setRootVisible(false);
         navigatorTree.setRowHeight(25);
         navigatorTree.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -59,15 +60,24 @@ public class LeftPanel extends BaseTreePane {
             }
         });
 
+        setName("Form"); // NOI18N
+
+        jToolBar1.setBackground(resourceMap.getColor("jToolBar1.background")); // NOI18N
+        jToolBar1.setBorder(null);
+        jToolBar1.setFloatable(false);
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBar1.setRollover(true);
+        jToolBar1.setName("jToolBar1"); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(navigatorTree, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(navigatorTree, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -96,6 +106,7 @@ public class LeftPanel extends BaseTreePane {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTree navigatorTree;
     // End of variables declaration//GEN-END:variables
 
@@ -105,7 +116,34 @@ public class LeftPanel extends BaseTreePane {
         return new NavigatorPanelTask();
     }
 
+    public void openLink(AssetTreeNode selectedNode) {
+        if (selectedNode != null) {
+            Task task = new OpenTabTask(selectedNode);
+            task.execute();
+            logger.debug("------------>TabPane:" + disTabCount);
+        }
+    }
+
     class NavigatorPanelTask extends NavigatorTask {
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(LeftPanel.class);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(this);
+
+        class AssetNodeActionListener implements ActionListener {
+
+            AssetNode node;
+
+            public AssetNodeActionListener(AssetNode node) {
+                this.node = node;
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                AssetTreeNode treeNode = new AssetTreeNode(node);
+                openLink(treeNode);
+            }
+
+        }
 
         @Override
         public void onSucceeded(Object object) {
@@ -116,9 +154,44 @@ public class LeftPanel extends BaseTreePane {
             } else {
                 AssetArrayNodes nodes = (AssetArrayNodes) object;
 
-                navigatorTree.setRootVisible(false);
-                navigatorTree.setModel(new AssetTreeModel(getTreeNode(new AssetTreeNode(nodes.getTopNode()), nodes.getNodes())));
+                List<AssetNode> assetNodes = nodes.getNodes();
 
+                for (AssetNode node : assetNodes) {
+                    String icon = node.getNodeIcon();
+                    String name = node.getNodeName();
+                    logger.info("loading left button:" + name);
+                    javax.swing.JButton leftButton = new javax.swing.JButton();
+                    if (icon != null && !icon.trim().equals("")) {
+                        leftButton.setText(""); // NOI18N
+                        leftButton.setIcon(new javax.swing.ImageIcon(getClass().getResource(icon))); // NOI18N
+                        String iconPress = node.getPressedIcon();
+                        String iconRollover = node.getRolloverIcon();
+                        if (iconPress != null && !iconPress.trim().equals("")) {
+                            leftButton.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource(iconPress))); // NOI18N
+                        }
+                        if (iconRollover != null && !iconRollover.trim().equals("")) {
+                            leftButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource(iconRollover))); // NOI18N
+                        }
+                    } else {
+                        leftButton.setText(name); // NOI18N
+                        leftButton.setName(name);
+                    }
+                    leftButton.setBorder(null);
+                    leftButton.setBorderPainted(false);
+                    leftButton.setContentAreaFilled(false);
+                    leftButton.setFocusable(false);
+                    leftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                    leftButton.setIconTextGap(0);
+                    leftButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+                    leftButton.setName(node.getNodeNo()); // NOI18N
+                    leftButton.addActionListener(new AssetNodeActionListener(node));
+
+                    leftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                    jToolBar1.add(leftButton);
+                }
+
+//                navigatorTree.setRootVisible(false);
+//                navigatorTree.setModel(new AssetTreeModel(getTreeNode(new AssetTreeNode(nodes.getTopNode()), nodes.getNodes())));
             }
         }
 

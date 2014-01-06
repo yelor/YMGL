@@ -78,7 +78,7 @@
                       <Component id="jButton4" pref="185" max="32767" attributes="0"/>
                       <Component id="jButton2" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="358" max="32767" attributes="0"/>
+                  <EmptySpace pref="392" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jButton3" max="32767" attributes="0"/>
                       <Component id="jButton5" max="32767" attributes="0"/>
@@ -122,6 +122,10 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
@@ -133,6 +137,10 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
@@ -145,6 +153,10 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
           </Properties>
@@ -156,6 +168,10 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton4.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
           </Properties>
@@ -167,6 +183,10 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
           </Properties>

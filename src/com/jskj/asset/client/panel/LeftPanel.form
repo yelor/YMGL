@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.7" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.JTree" name="navigatorTree">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="navigatorTree.font"/>
+        <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
+          <TreeModel code="[Loading]"/>
+        </Property>
+        <Property name="alignmentX" type="float" value="3.0"/>
+        <Property name="alignmentY" type="float" value="3.0"/>
+        <Property name="autoscrolls" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="navigatorTree" noResource="true"/>
+        <Property name="rootVisible" type="boolean" value="false"/>
+        <Property name="rowHeight" type="int" value="25"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="navigatorTreeMouseClicked"/>
+      </Events>
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
   </Properties>
@@ -19,31 +38,29 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="navigatorTree" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="navigatorTree" pref="16" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTree" name="navigatorTree">
+    <Container class="javax.swing.JToolBar" name="jToolBar1">
       <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="navigatorTree.font"/>
-        <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
-          <TreeModel code="[Loading]"/>
+        <Property name="background" type="java.awt.Color" resourceKey="jToolBar1.background"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
         </Property>
-        <Property name="alignmentX" type="float" value="3.0"/>
-        <Property name="alignmentY" type="float" value="3.0"/>
-        <Property name="autoscrolls" type="boolean" value="true"/>
-        <Property name="name" type="java.lang.String" value="navigatorTree" noResource="true"/>
-        <Property name="rowHeight" type="int" value="25"/>
+        <Property name="floatable" type="boolean" value="false"/>
+        <Property name="orientation" type="int" value="1"/>
+        <Property name="rollover" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="navigatorTreeMouseClicked"/>
-      </Events>
-    </Component>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+    </Container>
   </SubComponents>
 </Form>

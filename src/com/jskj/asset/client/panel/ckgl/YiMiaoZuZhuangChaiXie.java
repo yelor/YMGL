@@ -367,51 +367,65 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
 
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setFocusPainted(false);
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton7.setName("jButton7"); // NOI18N
+        jButton7.setOpaque(false);
         jToolBar2.add(jButton7);
 
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
+        jButton10.setFocusPainted(false);
         jButton10.setFocusable(false);
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton10.setName("jButton10"); // NOI18N
+        jButton10.setOpaque(false);
         jToolBar2.add(jButton10);
 
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
+        jButton13.setFocusPainted(false);
         jButton13.setFocusable(false);
         jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton13.setName("jButton13"); // NOI18N
+        jButton13.setOpaque(false);
         jToolBar2.add(jButton13);
 
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setFocusPainted(false);
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton8.setName("jButton8"); // NOI18N
+        jButton8.setOpaque(false);
         jToolBar2.add(jButton8);
 
         jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
         jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
+        jButton9.setFocusPainted(false);
         jButton9.setFocusable(false);
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton9.setName("jButton9"); // NOI18N
+        jButton9.setOpaque(false);
         jToolBar2.add(jButton9);
 
         jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
         jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
+        jButton11.setFocusPainted(false);
         jButton11.setFocusable(false);
         jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton11.setName("jButton11"); // NOI18N
+        jButton11.setOpaque(false);
         jToolBar2.add(jButton11);
 
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
+        jButton12.setFocusPainted(false);
         jButton12.setFocusable(false);
         jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton12.setName("jButton12"); // NOI18N
+        jButton12.setOpaque(false);
         jToolBar2.add(jButton12);
 
         jTextField20.setName("jTextField20"); // NOI18N

@@ -209,22 +209,29 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends javax.swing.JDialog {
         );
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setFocusable(false);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setFocusable(false);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -234,22 +241,30 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends javax.swing.JDialog {
 
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setFocusable(false);
         jButton6.setName("jButton6"); // NOI18N
+        jButton6.setOpaque(false);
         jToolBar1.add(jButton6);
 
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setFocusable(false);
         jButton5.setName("jButton5"); // NOI18N
+        jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
+        jButton10.setFocusable(false);
         jButton10.setName("jButton10"); // NOI18N
+        jButton10.setOpaque(false);
         jToolBar1.add(jButton10);
 
         middlePanel.setName("middlePanel"); // NOI18N
