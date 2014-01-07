@@ -3,7 +3,7 @@ package com.jskj.asset.client.bean.entity;
 public class Sale_detail_tb {
     private Integer saleDetailId;
 
-    private Integer saleId;
+    private String saleId;
 
     private Integer yimiaoId;
 
@@ -21,12 +21,12 @@ public class Sale_detail_tb {
         this.saleDetailId = saleDetailId;
     }
 
-    public Integer getSaleId() {
+    public String getSaleId() {
         return saleId;
     }
 
-    public void setSaleId(Integer saleId) {
-        this.saleId = saleId;
+    public void setSaleId(String saleId) {
+        this.saleId = saleId == null ? null : saleId.trim();
     }
 
     public Integer getYimiaoId() {
