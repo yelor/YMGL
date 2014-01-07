@@ -8,6 +8,11 @@ package com.jskj.asset.client;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.ToppagePane;
+import com.jskj.asset.client.panel.baobiao.caigou.DizhiyihaocaigoumingxiJDialog;
+import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiJDialog;
+import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiJDialog;
+import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunJDialog;
+import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoxiaoshoumingxiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.BuMenJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DanJuLeiXingJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DanWeiJDialog;
@@ -190,14 +195,17 @@ public class LoadModule extends BaseTask {
         jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
         jMenu1.setName("jMenu1"); // NOI18N
 
+        jMenuItem15.setAction(actionMap.get("showYimiaocaigoumingxi"));
         jMenuItem15.setText(resourceMap.getString("jMenuItem15.text")); // NOI18N
         jMenuItem15.setName("jMenuItem15"); // NOI18N
         jMenu1.add(jMenuItem15);
 
+        jMenuItem16.setAction(actionMap.get("showGudingzichancaigoumingxi"));
         jMenuItem16.setText(resourceMap.getString("jMenuItem16.text")); // NOI18N
         jMenuItem16.setName("jMenuItem16"); // NOI18N
         jMenu1.add(jMenuItem16);
 
+        jMenuItem17.setAction(actionMap.get("showDizhiyihaocaigoumingxi"));
         jMenuItem17.setText(resourceMap.getString("jMenuItem17.text")); // NOI18N
         jMenuItem17.setName("jMenuItem17"); // NOI18N
         jMenu1.add(jMenuItem17);
@@ -211,6 +219,7 @@ public class LoadModule extends BaseTask {
         jMenuItem18.setName("jMenuItem18"); // NOI18N
         jMenu3.add(jMenuItem18);
 
+        jMenuItem19.setAction(actionMap.get("showYimiaoxiaoshoumingxi"));
         jMenuItem19.setText(resourceMap.getString("jMenuItem19.text")); // NOI18N
         jMenuItem19.setName("jMenuItem19"); // NOI18N
         jMenu3.add(jMenuItem19);
@@ -220,6 +229,7 @@ public class LoadModule extends BaseTask {
         jMenu4.setText(resourceMap.getString("jMenu4.text")); // NOI18N
         jMenu4.setName("jMenu4"); // NOI18N
 
+        jMenuItem20.setAction(actionMap.get("showYimiaokucun"));
         jMenuItem20.setText(resourceMap.getString("jMenuItem20.text")); // NOI18N
         jMenuItem20.setName("jMenuItem20"); // NOI18N
         jMenu4.add(jMenuItem20);
@@ -532,5 +542,95 @@ public class LoadModule extends BaseTask {
             }
         });
 
+    }
+
+    @Action
+    public void showYimiaocaigoumingxi() {
+        SwingUtilities.invokeLater(new Runnable() {
+            private YimiaocaigoumingxiJDialog yimiaocaigoumingxiJDialog;
+
+            @Override
+            public void run() {
+                if (yimiaocaigoumingxiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    yimiaocaigoumingxiJDialog = new YimiaocaigoumingxiJDialog(new javax.swing.JFrame(), true);
+                    yimiaocaigoumingxiJDialog.setTitle("疫苗采购明细表");
+                    yimiaocaigoumingxiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(yimiaocaigoumingxiJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void showGudingzichancaigoumingxi() {
+        SwingUtilities.invokeLater(new Runnable() {
+            private GudingzichancaigoumingxiJDialog gudingzichancaigoumingxiJDialog;
+
+            @Override
+            public void run() {
+                if (gudingzichancaigoumingxiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    gudingzichancaigoumingxiJDialog = new GudingzichancaigoumingxiJDialog(new javax.swing.JFrame(), true);
+                    gudingzichancaigoumingxiJDialog.setTitle("固定资产采购明细表");
+                    gudingzichancaigoumingxiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(gudingzichancaigoumingxiJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void showDizhiyihaocaigoumingxi() {
+        SwingUtilities.invokeLater(new Runnable() {
+            private DizhiyihaocaigoumingxiJDialog dizhiyihaocaigoumingxiJDialog;
+
+            @Override
+            public void run() {
+                if (dizhiyihaocaigoumingxiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    dizhiyihaocaigoumingxiJDialog = new DizhiyihaocaigoumingxiJDialog(new javax.swing.JFrame(), true);
+                    dizhiyihaocaigoumingxiJDialog.setTitle("低值易耗品采购明细表");
+                    dizhiyihaocaigoumingxiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(dizhiyihaocaigoumingxiJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void showYimiaoxiaoshoumingxi() {
+        SwingUtilities.invokeLater(new Runnable() {
+            private YimiaoxiaoshoumingxiJDialog yimiaoxiaoshoumingxiJDialog;
+
+            @Override
+            public void run() {
+                if (yimiaoxiaoshoumingxiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    yimiaoxiaoshoumingxiJDialog = new YimiaoxiaoshoumingxiJDialog(new javax.swing.JFrame(), true);
+                    yimiaoxiaoshoumingxiJDialog.setTitle("疫苗销售明细表");
+                    yimiaoxiaoshoumingxiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(yimiaoxiaoshoumingxiJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void showYimiaokucun() {
+        SwingUtilities.invokeLater(new Runnable() {
+            private YimiaokucunJDialog yimiaokucunJDialog;
+
+            @Override
+            public void run() {
+                if (yimiaokucunJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    yimiaokucunJDialog = new YimiaokucunJDialog(new javax.swing.JFrame(), true);
+                    yimiaokucunJDialog.setTitle("疫苗库存表");
+                    yimiaokucunJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(yimiaokucunJDialog);
+            }
+        });
     }
 }

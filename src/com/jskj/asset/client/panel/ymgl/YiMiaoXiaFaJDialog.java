@@ -9,6 +9,7 @@ import com.jskj.asset.client.bean.entity.Sale_detail_tb;
 import com.jskj.asset.client.bean.entity.Saletb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.panel.ymgl.task.Sale_detailUpdateTask;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,8 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         super(parent, modal);
         init();
         initComponents();
+        jTextFieldXiafaId.setText(DanHao.getDanHao("YMXF"));
+        jTextFieldXiafaId.setEditable(false);
     }
 
     DateChooser dateChooser1;
@@ -646,6 +649,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         isNew = b;
         if (isNew) {
             this.setTitle("Ⅰ类疫苗下发单");
+            sale=new Saletb();
             sale_detail = new Sale_detail_tb();
         } else {
             this.setTitle("Ⅰ类疫苗下发单");
@@ -669,16 +673,20 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         }else if(jTextFieldXiafadanwei.getText().trim().equals("")){
             AssetMessage.ERRORSYS("请输入下发单位!");
             return null;
+        }else if(jTable4.getValueAt(1, 0)==null||jTable4.getValueAt(1, 1)==null){
+            AssetMessage.ERRORSYS("请输入下发疫苗!");
+            return null;
         }
-        sale_detail.setSaleId(11);
+        sale.setCustomerId(3);
+        sale.setDepartmentId(4);
+        sale.setSaleId("ee");
+//        sale.setDanjutype("下发单据");
+        sale_detail.setSaleId(jTextFieldXiafaId.getText());
         sale_detail.setYimiaoId(11);
-//        System.out.println(dateformate.parse(jTextFieldYouxiaoqi.getText()));
-//        System.out.println(Integer.parseInt(jTextFieldQuantity.getText()));
         dateformate=new SimpleDateFormat("yyyy-MM-dd");
-//        sale.setSaleDate(dateformate.parse(jTextFieldXiafaDate.getText()));
-//        sale_detail.setQuantity(Integer.parseInt(jTable4.getValueAt(1, 7).toString()));
-        sale_detail.setQuantity(34);
-        return new SubmitFormTask(sale_detail);
+        sale.setSaleDate(dateformate.parse(jTextFieldXiafaDate.getText()));
+        sale_detail.setQuantity(345);
+        return new SubmitFormTask(sale_detail,sale);
     }
 
     @Action
@@ -688,8 +696,8 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 
     private class SubmitFormTask extends Sale_detailUpdateTask {
 
-        SubmitFormTask(Sale_detail_tb sale_detail) {
-            super(sale_detail, isNew ? Sale_detailUpdateTask.ENTITY_SAVE : Sale_detailUpdateTask.ENTITY_UPDATE);
+        SubmitFormTask(Sale_detail_tb sale_detail,Saletb sale) {
+            super(sale_detail,sale, isNew ? Sale_detailUpdateTask.ENTITY_SAVE : Sale_detailUpdateTask.ENTITY_UPDATE);
         }
 
         @Override
