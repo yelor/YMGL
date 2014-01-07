@@ -688,10 +688,11 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
 //        System.out.println(dateformate.parse(jTextFieldYouxiaoqi.getText()));
 //        System.out.println(Integer.parseInt(jTextFieldQuantity.getText()));
         dateformate=new SimpleDateFormat("yyyy-MM-dd");
-        sale.setSaleDate(dateformate.parse(jTextFieldXiaoshouDate.getText()));
-        int q=Integer.parseInt(jTable4.getValueAt(1, 7).toString());
+//        sale.setSaleDate(dateformate.parse(jTextFieldXiaoshouDate.getText()));
+        System.out.println(jTable4.getValueAt(0, 8));
+        int q=Integer.parseInt(jTable4.getValueAt(0, 7).toString());
         sale_detail.setQuantity(q);
-        float f=Float.parseFloat(jTable4.getValueAt(1, 7).toString());
+        float f=Float.parseFloat(jTable4.getValueAt(0, 8).toString());
         sale_detail.setPrice(f);
         float totalprice=f*q;
         sale_detail.setTotalprice(totalprice);

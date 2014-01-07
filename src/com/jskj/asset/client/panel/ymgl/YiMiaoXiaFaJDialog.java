@@ -675,7 +675,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 //        System.out.println(dateformate.parse(jTextFieldYouxiaoqi.getText()));
 //        System.out.println(Integer.parseInt(jTextFieldQuantity.getText()));
         dateformate=new SimpleDateFormat("yyyy-MM-dd");
-        sale.setSaleDate(dateformate.parse(jTextFieldXiafaDate.getText()));
+//        sale.setSaleDate(dateformate.parse(jTextFieldXiafaDate.getText()));
 //        sale_detail.setQuantity(Integer.parseInt(jTable4.getValueAt(1, 7).toString()));
         sale_detail.setQuantity(34);
         return new SubmitFormTask(sale_detail);
