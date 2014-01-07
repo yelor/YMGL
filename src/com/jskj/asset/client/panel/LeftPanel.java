@@ -189,6 +189,8 @@ public class LeftPanel extends BaseTreePane {
                     leftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
                     jToolBar1.add(leftButton);
                 }
+                repaint();
+                validate();
 
 //                navigatorTree.setRootVisible(false);
 //                navigatorTree.setModel(new AssetTreeModel(getTreeNode(new AssetTreeNode(nodes.getTopNode()), nodes.getNodes())));

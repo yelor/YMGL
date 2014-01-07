@@ -93,6 +93,34 @@ public class BindTableHelper<T> {
         }
     }
 
+    public void createTable() {
+        try {
+            jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, data, jTableFormat.getJtable());
+
+            T rowData = data.get(0);
+            if (rowData == null) {
+                return;
+            }
+            //Pojo转成hashmap
+            HashMap map = (HashMap) rowData;
+            Set keys = map.keySet();
+            org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = null;
+            for (Object key : keys) {
+                if (key instanceof String) {
+                    String name = key.toString();
+                    String temp = "${" + name + "}";
+                    // System.out.println("bind object:"+temp);
+                    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create(temp));
+                    columnBinding.setColumnName(name);
+                    columnBinding.setColumnClass(String.class);
+                }
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            e.printStackTrace();
+        }
+    }
+
     /**
      * for conversion
      *
@@ -161,13 +189,13 @@ public class BindTableHelper<T> {
                 }
             }
             jTableBinding.bind();
-            
-            if(jTableFormat.savedColumnWidth!=null){
-               jTableFormat.setColumnWidth(jTableFormat.savedColumnWidth);
+
+            if (jTableFormat.savedColumnWidth != null) {
+                jTableFormat.setColumnWidth(jTableFormat.savedColumnWidth);
             }
-            
-            if(jTableFormat.savedRowHeight>=0){
-               jTableFormat.setRowHeight(jTableFormat.savedRowHeight);
+
+            if (jTableFormat.savedRowHeight >= 0) {
+                jTableFormat.setRowHeight(jTableFormat.savedRowHeight);
             }
         }
 
