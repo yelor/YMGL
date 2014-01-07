@@ -1,6 +1,8 @@
 package com.jskj.asset.client.bean.entity;
 
 public class Sale_detail_tb {
+    private Integer saleDetailId;
+
     private Integer saleId;
 
     private Integer yimiaoId;
@@ -10,6 +12,14 @@ public class Sale_detail_tb {
     private Float price;
 
     private Float totalprice;
+
+    public Integer getSaleDetailId() {
+        return saleDetailId;
+    }
+
+    public void setSaleDetailId(Integer saleDetailId) {
+        this.saleDetailId = saleDetailId;
+    }
 
     public Integer getSaleId() {
         return saleId;
