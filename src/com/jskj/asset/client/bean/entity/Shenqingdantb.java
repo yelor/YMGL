@@ -3,7 +3,7 @@ package com.jskj.asset.client.bean.entity;
 import java.util.Date;
 
 public class Shenqingdantb {
-    private Integer shenqingdanId;
+    private String shenqingdanId;
 
     private Date shenqingdanDate;
 
@@ -15,12 +15,12 @@ public class Shenqingdantb {
 
     private Integer zhidanrenId;
 
-    public Integer getShenqingdanId() {
+    public String getShenqingdanId() {
         return shenqingdanId;
     }
 
-    public void setShenqingdanId(Integer shenqingdanId) {
-        this.shenqingdanId = shenqingdanId;
+    public void setShenqingdanId(String shenqingdanId) {
+        this.shenqingdanId = shenqingdanId == null ? null : shenqingdanId.trim();
     }
 
     public Date getShenqingdanDate() {

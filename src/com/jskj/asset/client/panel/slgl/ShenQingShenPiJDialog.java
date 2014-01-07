@@ -52,6 +52,11 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     }
     
     @Action
+    public void exit() {
+        this.dispose();
+    }
+    
+    @Action
     public Task reload() {
         return new RefreshTask(user);
     }
@@ -225,6 +230,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton13.setOpaque(false);
         jToolBar1.add(jButton13);
 
+        jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
         jButton15.setFocusable(false);
@@ -316,9 +322,9 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

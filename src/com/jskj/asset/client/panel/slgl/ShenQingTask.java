@@ -6,7 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
-import com.jskj.asset.client.bean.entity.ZiChanCaiGouShenQing;
+import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -23,9 +23,9 @@ public class ShenQingTask extends BaseTask{
     private static final Logger logger = Logger.getLogger(ShenQingTask.class);
     private final String ADD_URI = Constants.HTTP + Constants.APPID + "cgsq/add";
     
-    private final ZiChanCaiGouShenQing cgsq;
+    private final ShenQingDetailEntity cgsq;
     
-    public ShenQingTask(ZiChanCaiGouShenQing cgsq) {
+    public ShenQingTask(ShenQingDetailEntity cgsq) {
         this.cgsq = cgsq;
     }
     
@@ -33,7 +33,7 @@ public class ShenQingTask extends BaseTask{
     public Object doBackgrounp() {
         try{
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            restTemplate.postForObject(ADD_URI, cgsq, ZiChanCaiGouShenQing.class);
+            restTemplate.postForObject(ADD_URI, cgsq, ShenQingDetailEntity.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;
