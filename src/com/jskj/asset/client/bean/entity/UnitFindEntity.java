@@ -4,7 +4,6 @@
 
 package com.jskj.asset.client.bean.entity;
 
-
 import java.util.List;
 
 /**
