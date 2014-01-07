@@ -8,13 +8,12 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
-import com.jskj.asset.client.bean.entity.ZiChanCaiGouShenQing;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -70,8 +69,9 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
         for(int i = 0; i < 3; i ++){
             ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
             zclb.setCgsqId(jTextField1.getText());
-            zclb.setGdzcId(i);
+            zclb.setGdzcId(i+1000);
             zclb.setQuantity(3);
+            zc.add(zclb);
         }
         
         cgsq.setSqd(sqd);
@@ -87,13 +87,14 @@ public class GuDingZiChanCaiGouShenQingJDialog extends javax.swing.JDialog {
         }
         
         @Override
-        public void onSucceeded(Object object) {
-            int result = (Integer)object;
-            if(result == 0){
-                JOptionPane.showMessageDialog(null, "提交成功！");
-            }else{
-                JOptionPane.showMessageDialog(null, "提交失败！");
+        protected void succeeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
             }
+            JOptionPane.showMessageDialog(null, "提交成功！");
         }
     }
     
