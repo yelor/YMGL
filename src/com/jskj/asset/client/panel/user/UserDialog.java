@@ -5,11 +5,15 @@
  */
 package com.jskj.asset.client.panel.user;
 
-import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Usertb;
+import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.BaseTextFiled;
+import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DateHelper;
+import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -18,7 +22,7 @@ import org.jdesktop.application.Task;
  *
  * @author 305027939
  */
-public class UserDialog extends javax.swing.JDialog {
+public class UserDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(UserDialog.class);
     private final BasePanel parentPanel;
@@ -31,11 +35,57 @@ public class UserDialog extends javax.swing.JDialog {
      * @param parentPanel
      */
     public UserDialog(BasePanel parentPanel) {
-        super(AssetClientApp.getApplication().getMainFrame());
+        super();
         initComponents();
         this.parentPanel = parentPanel;
         isNew = true;
 
+        /*为一个textfiled注册一个popup，注意需要有popup textfiled的dialog，需要extends BaseDialog*/
+        /*
+         registerPopup需要IPopupBuilder，IPopupBuilder需要以下的参数，请完善那些接口方法即可
+         getType：目前就2个，一个是点鼠标左键弹出的日期的popup>>TYPE_DATE_CLICK,一个是点回车弹出的popup>>TYPE_POPUP_TEXT
+         getWebServiceURI:webservice URL接口。这个很重要，就是弹出popup，将要访问哪个接口。在服务端定义这个接口的时候，记得返回的bean，
+         一定有2个参数，一个是 （int）count，另一个是（List）result。
+         getConditionSQL:这里的SQL语句注意是数据库的字段名，不是entity名。 
+         displayColumns：popup弹出来后，显示的内容
+         setBindedMap:点击popup返回的值，自己把object的值类型强制转化成自己需要。和你在regiter的时候，传入的URL返回bean有关。
+         */
+        ((BaseTextFiled) jTextFieldUserName).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "user";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldUserName.getText().trim().equals("")) {
+                    sql = "user_name like \"%" + jTextFieldUserName.getText() + "%\"";
+                }
+                if (!sql.equals("") && !jTextFieldIDCard.getText().trim().equals("")) {
+                    sql += " and ";
+                }
+                if (!jTextFieldIDCard.getText().trim().equals("")) {
+                    sql += "user_identityCard =" + jTextFieldIDCard.getText();
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"userName", "用户名"}, {"userPassword", "密码"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldUserName.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
+                    jTextFieldPasswd.setText(bindedMap.get("userPassword") == null ? "" : bindedMap.get("userPassword").toString());
+                    jTextFieldPhone.setText(bindedMap.get("userPhone") == null ? "" : bindedMap.get("userPhone").toString());
+                    jTextFieldIDCard.setText(bindedMap.get("userIdentitycard") == null ? "" : bindedMap.get("userIdentitycard").toString());
+                }
+            }
+        });
     }
 
     public void setAddOrUpdate(boolean isAdd) {
@@ -50,7 +100,7 @@ public class UserDialog extends javax.swing.JDialog {
     }
 
     public void setUpdatedData(Usertb usertb) {
-        if(usertb==null){
+        if (usertb == null) {
             return;
         }
         this.usertb = usertb;
@@ -76,7 +126,7 @@ public class UserDialog extends javax.swing.JDialog {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextFieldUserName = new javax.swing.JTextField();
+        jTextFieldUserName = new BaseTextFiled();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldPasswd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -229,7 +279,6 @@ public class UserDialog extends javax.swing.JDialog {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jTextFieldEmail))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jTextFieldAddress)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 416, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                         .add(jRadioButton1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
@@ -243,7 +292,8 @@ public class UserDialog extends javax.swing.JDialog {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel2)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextFieldPasswd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jTextFieldPasswd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -398,7 +448,7 @@ public class UserDialog extends javax.swing.JDialog {
     private class SubmitFormTask extends UserUpdateTask {
 
         SubmitFormTask(Usertb usertb) {
-            super(usertb, isNew?UserUpdateTask.ENTITY_SAVE:UserUpdateTask.ENTITY_UPDATE);
+            super(usertb, isNew ? UserUpdateTask.ENTITY_SAVE : UserUpdateTask.ENTITY_UPDATE);
         }
 
         @Override

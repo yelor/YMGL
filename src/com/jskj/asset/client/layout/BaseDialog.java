@@ -5,16 +5,19 @@
  */
 package com.jskj.asset.client.layout;
 
+import com.jskj.asset.client.AssetClientApp;
 import javax.swing.JDialog;
 
 /**
  *
  * @author 305027939
  */
-public class BaseDialog extends JDialog {
+public abstract class BaseDialog extends JDialog {
+
 
     public BaseDialog() {
-        super();
+        super(AssetClientApp.getApplication().getMainFrame());
     }
+
 
 }

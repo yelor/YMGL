@@ -97,10 +97,10 @@ public final class UserPanel extends BasePanel {
             if (usertbs != null) {
                 count = usertbs.getCount();
                 jLabelTotal.setText(((pageIndex - 1) * UserTask.pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get user size:" + usertbs.getUsers().size());
+                logger.debug("total:" + count + ",get user size:" + usertbs.getResult().size());
 
                 //存下所有的数据
-                users = usertbs.getUsers();
+                users = usertbs.getResult();
                 bindTable.refreshData(users);
             }
         }
