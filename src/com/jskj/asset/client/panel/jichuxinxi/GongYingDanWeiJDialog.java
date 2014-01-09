@@ -346,13 +346,13 @@ public class GongYingDanWeiJDialog extends javax.swing.JDialog {
 
             SupplierFindEntity suppliertbs = (SupplierFindEntity) object;
 
-            if (suppliertbs != null && suppliertbs.getSuppliers().size() > 0) {
+            if (suppliertbs != null && suppliertbs.getResult().size() > 0) {
                 count = suppliertbs.getCount();
 //                jLabelTotal.setText(((pageIndex - 1) * SupplierTask.pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get supplier size:" + suppliertbs.getSuppliers().size());
+                logger.debug("total:" + count + ",get supplier size:" + suppliertbs.getResult().size());
 
                 //存下所有的数据
-                suppliers = suppliertbs.getSuppliers();
+                suppliers = suppliertbs.getResult();
 
                 BindTableHelper<Supplier> bindTable = new BindTableHelper<Supplier>(jTableSupplier, suppliers);
                 bindTable.createTable(new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}, {"supplierPhone", "电话"}, {"supplierFax", "传真"}, {"supplierAddr", "单位地址"}, {"supplierRemark", "备注"}});

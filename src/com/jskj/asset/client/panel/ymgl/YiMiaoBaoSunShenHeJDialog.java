@@ -3,29 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import static com.jskj.asset.client.AssetClientApp.getApplication;
 import com.jskj.asset.client.AssetClientView;
+import com.jskj.asset.client.bean.entity.Yimiaobaosuntb;
+import com.jskj.asset.client.bean.entity.YimiaobaosuntbFindEntity;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.OpenTabTask;
+import com.jskj.asset.client.panel.ymgl.task.YimiaobaosunTask;
+import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTabbedPane;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
+import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
  * @author huiqi
  */
 public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
+
+    private static final Logger logger = Logger.getLogger(YiMiaoBaoSunShenHeJDialog.class);
     private ArrayList disTabCount;
     private AssetClientView assetClientView;
-    
-
+    private int count;
+    private List<Yimiaobaosuntb> yimiaobaosuns;
     /**
      * Creates new form YiMiaoBaoSunShenHeJDialog
      */
@@ -53,7 +62,7 @@ public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
         jButton10 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableYimiaobaosun = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoBaoSunShenHeJDialog.class);
@@ -108,6 +117,8 @@ public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
         jButton7.setName("jButton7"); // NOI18N
         jToolBar1.add(jButton7);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoBaoSunShenHeJDialog.class, this);
+        jButton10.setAction(actionMap.get("cancelAction")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
         jButton10.setFocusable(false);
@@ -119,7 +130,7 @@ public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableYimiaobaosun.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -146,16 +157,16 @@ public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
                 "单据编号", "制单日期", "经办人", "合价", "制单人", "单据状态"
             }
         ));
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-            jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
-            jTable1.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title12")); // NOI18N
-            jTable1.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
-            jTable1.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
+        jTableYimiaobaosun.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        jTableYimiaobaosun.setName("jTableYimiaobaosun"); // NOI18N
+        jScrollPane1.setViewportView(jTableYimiaobaosun);
+        if (jTableYimiaobaosun.getColumnModel().getColumnCount() > 0) {
+            jTableYimiaobaosun.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTableYimiaobaosun.columnModel.title0")); // NOI18N
+            jTableYimiaobaosun.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTableYimiaobaosun.columnModel.title1")); // NOI18N
+            jTableYimiaobaosun.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTableYimiaobaosun.columnModel.title2")); // NOI18N
+            jTableYimiaobaosun.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title12")); // NOI18N
+            jTableYimiaobaosun.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
+            jTableYimiaobaosun.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -235,20 +246,57 @@ public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
     }
 
     @Action
-    public void selectedAction() {
+    public void refresh() {
+        this.reload().execute();
+    }
 
-        dispose();
-        
+    @Action
+    public Task reload() {
+        return new RefureTask(0);
+    }
+
+    private class RefureTask extends YimiaobaosunTask {
+
+        BindingGroup bindingGroup = new BindingGroup();
+
+        RefureTask(int pageIndex) {
+            super(pageIndex);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+
+            YimiaobaosuntbFindEntity yimiaobaosuntbs = (YimiaobaosuntbFindEntity) object;
+
+            if (yimiaobaosuntbs != null && yimiaobaosuntbs.getResult().size() > 0) {
+                count = yimiaobaosuntbs.getCount();
+//                jLabelTotal.setText(((pageIndex - 1) * UnitTask.pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get unit size:" + yimiaobaosuntbs.getResult().size());
+
+                //存下所有的数据
+                yimiaobaosuns = yimiaobaosuntbs.getResult();
+
+                BindTableHelper<Yimiaobaosuntb> bindTable = new BindTableHelper<Yimiaobaosuntb>(jTableYimiaobaosun, yimiaobaosuns);
+                bindTable.createTable(new String[][]{{"unitId", "单位编号"}, {"unitName", "单位名称"}});
+                bindTable.setIntegerType(1);
+                bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+            }
+        }
     }
 
     @Action
     public void cancelAction() {
         dispose();
-        
+
     }
 
-
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton10;
@@ -260,7 +308,7 @@ public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableYimiaobaosun;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

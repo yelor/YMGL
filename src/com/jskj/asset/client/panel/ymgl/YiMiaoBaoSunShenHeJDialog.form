@@ -111,6 +111,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton10">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoBaoSunShenHeJDialog" id="cancelAction" methodName="cancelAction"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton10.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton10.text"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -155,7 +158,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="jTableYimiaobaosun">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="6" rowCount="20">
@@ -171,17 +174,17 @@
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title resourceKey="jTable1.columnModel.title0"/>
+                      <Title resourceKey="jTableYimiaobaosun.columnModel.title0"/>
                       <Editor/>
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title resourceKey="jTable1.columnModel.title1"/>
+                      <Title resourceKey="jTableYimiaobaosun.columnModel.title1"/>
                       <Editor/>
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title resourceKey="jTable1.columnModel.title2"/>
+                      <Title resourceKey="jTableYimiaobaosun.columnModel.title2"/>
                       <Editor/>
                       <Renderer/>
                     </Column>
@@ -202,7 +205,7 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
-                <Property name="name" type="java.lang.String" value="jTable1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jTableYimiaobaosun" noResource="true"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>

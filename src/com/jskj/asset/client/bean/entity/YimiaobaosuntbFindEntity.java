@@ -1,7 +1,6 @@
 /*
  * 2014 Chengdu JunChen Technology
  */
-
 package com.jskj.asset.client.bean.entity;
 
 import java.util.List;
@@ -10,10 +9,11 @@ import java.util.List;
  *
  * @author huiqi
  */
-public class SupplierFindEntity extends Supplier{
-     private int count;
-    
-    private  List<Supplier> result;
+public class YimiaobaosuntbFindEntity extends Yimiaobaosuntb {
+
+    private int count;
+
+    private List<Yimiaobaosuntb> result;
 
     public int getCount() {
         return count;
@@ -23,14 +23,12 @@ public class SupplierFindEntity extends Supplier{
         this.count = count;
     }
 
-    public List<Supplier> getResult() {
+    public List<Yimiaobaosuntb> getResult() {
         return result;
     }
 
-    public void setResult(List<Supplier> suppliers) {
+    public void setResult(List<Yimiaobaosuntb> result) {
         this.result = result;
     }
-    
-    
-    
+
 }

@@ -202,7 +202,7 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
                 if (selecteIndex == 0) {
                     if (yiMiaoXiaFaJDialog == null) {
                         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                        yiMiaoXiaFaJDialog = new YiMiaoXiaFaJDialog(new javax.swing.JFrame(), true);
+                        yiMiaoXiaFaJDialog = new YiMiaoXiaFaJDialog();
                         yiMiaoXiaFaJDialog.setLocationRelativeTo(mainFrame);
                     }
                     yiMiaoXiaFaJDialog.setAddOrUpdate(true);
