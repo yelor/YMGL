@@ -11,11 +11,7 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.panel.*;
 import com.jskj.asset.client.layout.BasePanel;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
@@ -26,6 +22,15 @@ import org.jdesktop.application.Task;
  * @author woderchen
  */
 public class MainPanel extends BasePanel {
+    
+    private selectCaiGouDanJDialog selectCaiGouDanJDialog;
+
+    private selectLingYongDanJDialog selectLingYongDanJDialog;
+
+    private selectYanShouDengJiDanJDialog selectYanShouDengJiDanJDialog;
+
+    private selectWeiXiuDiaoBoDanJDialog selectWeiXiuDiaoBoDanJDialog;
+
 
     /**
      * Creates new form NoFoundPane
@@ -196,8 +201,6 @@ public class MainPanel extends BasePanel {
     @Action
     public void selectCaiGouDanAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private selectCaiGouDanJDialog selectCaiGouDanJDialog;
-
             @Override
             public void run() {
                 if (selectCaiGouDanJDialog == null) {
@@ -213,9 +216,6 @@ public class MainPanel extends BasePanel {
     @Action
     public void selectLingYongDanAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private selectCaiGouDanJDialog selectCaiGouDanJDialog;
-            private selectLingYongDanJDialog selectLingYongDanJDialog;
-
             @Override
             public void run() {
                 if (selectLingYongDanJDialog == null) {
@@ -231,8 +231,6 @@ public class MainPanel extends BasePanel {
     @Action
     public void selectYanShouDengJiDanAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private selectYanShouDengJiDanJDialog selectYanShouDengJiDanJDialog;
-
             @Override
             public void run() {
                 if (selectYanShouDengJiDanJDialog == null) {
@@ -248,7 +246,6 @@ public class MainPanel extends BasePanel {
     @Action
     public void selecteWeiXiuDiaoBoDanAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private selectWeiXiuDiaoBoDanJDialog selectWeiXiuDiaoBoDanJDialog;
             @Override
             public void run() {
                 if (selectWeiXiuDiaoBoDanJDialog == null) {
@@ -264,16 +261,12 @@ public class MainPanel extends BasePanel {
     @Action
     public void selectShenPiDanAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private ShenQingShenPiJDialog shenQingShenPiJDialog;
-
             @Override
             public void run() {
-                if (shenQingShenPiJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    shenQingShenPiJDialog = new ShenQingShenPiJDialog(new javax.swing.JFrame(), true);
+                    ShenQingShenPiJDialog shenQingShenPiJDialog = new ShenQingShenPiJDialog(new javax.swing.JFrame(), true);
                     shenQingShenPiJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(shenQingShenPiJDialog);
+                    AssetClientApp.getApplication().show(shenQingShenPiJDialog);
             }
         });
     }

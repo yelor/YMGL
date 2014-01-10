@@ -7,26 +7,14 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import static com.jskj.asset.client.AssetClientApp.getApplication;
-import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.panel.OpenTabTask;
-import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.FrameView;
-import org.jdesktop.application.Task;
 
 /**
  *
  * @author huiqi
  */
 public class selectWeiXiuDiaoBoDanJDialog extends javax.swing.JDialog {
-    private GuDingZiChanWeiXiuShenQingJDialog guDingZiChanWeiXiuShenQingJDialog;
-    private GuDingZiChanWeiXiuJDialog guDingZiChanWeiXiuJDialog;
-    private GuDingZiChanDiaoBoJDialog guDingZiChanDiaoBoJDialog;
 
     /**
      * Creates new form selecteInvoiceJDialog
@@ -192,27 +180,20 @@ public class selectWeiXiuDiaoBoDanJDialog extends javax.swing.JDialog {
         dispose();
         int selecteIndex = jComboBox1.getSelectedIndex();
         if (selecteIndex == 0) {
-            if (guDingZiChanWeiXiuShenQingJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                guDingZiChanWeiXiuShenQingJDialog = new GuDingZiChanWeiXiuShenQingJDialog(mainFrame);
+                GuDingZiChanWeiXiuShenQingJDialog guDingZiChanWeiXiuShenQingJDialog = new GuDingZiChanWeiXiuShenQingJDialog(mainFrame);
                 guDingZiChanWeiXiuShenQingJDialog.setLocationRelativeTo(mainFrame);
-            }
-
-            AssetClientApp.getApplication().show(guDingZiChanWeiXiuShenQingJDialog);
+                AssetClientApp.getApplication().show(guDingZiChanWeiXiuShenQingJDialog);
         } else if (selecteIndex == 1) {
-            if (guDingZiChanWeiXiuJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                guDingZiChanWeiXiuJDialog = new GuDingZiChanWeiXiuJDialog(mainFrame);
+                GuDingZiChanWeiXiuJDialog guDingZiChanWeiXiuJDialog = new GuDingZiChanWeiXiuJDialog(mainFrame);
                 guDingZiChanWeiXiuJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(guDingZiChanWeiXiuJDialog);
+                AssetClientApp.getApplication().show(guDingZiChanWeiXiuJDialog);
         } else if (selecteIndex == 2) {
-            if (guDingZiChanDiaoBoJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                guDingZiChanDiaoBoJDialog = new GuDingZiChanDiaoBoJDialog(mainFrame);
+                GuDingZiChanDiaoBoJDialog guDingZiChanDiaoBoJDialog = new GuDingZiChanDiaoBoJDialog(mainFrame);
                 guDingZiChanDiaoBoJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(guDingZiChanDiaoBoJDialog);
+                AssetClientApp.getApplication().show(guDingZiChanDiaoBoJDialog);
         } 
 
     }

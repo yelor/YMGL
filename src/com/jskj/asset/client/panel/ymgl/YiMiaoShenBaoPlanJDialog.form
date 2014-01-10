@@ -433,7 +433,7 @@
         <Property name="name" type="java.lang.String" value="jTextFieldshenqingren" noResource="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextFiled()"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldYimiaoshenbaodanId">
@@ -489,7 +489,7 @@
         <Property name="name" type="java.lang.String" value="jTextFieldSupplierName" noResource="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextFiled()"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel14">

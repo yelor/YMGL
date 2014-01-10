@@ -7,37 +7,14 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import static com.jskj.asset.client.AssetClientApp.getApplication;
-import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.panel.OpenTabTask;
-import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.FrameView;
-import org.jdesktop.application.Task;
 
 /**
  *
  * @author huiqi
  */
 public class selectLingYongDanJDialog extends javax.swing.JDialog {
-
-    private YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog;
-    private YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog;
-    private YiMiaoSheGouPlanJDialog sheGouPlanJDialog;
-    private YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog;
-    private YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog;
-    private GuDingZiChanCaiGouJiHuaJDialog guDingZiChanCaiGouJiHuaJDialog;
-    private GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog;
-    private DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog;
-    private PTGuDingZiChanLingYongShenQingJDialog pTGuDingZiChanLingYongShenQingJDialog;
-    private ITGuDingZiChanLingYongShenQingJDialog iTGuDingZiChanLingYongShenQingJDialog;
-    private DiZhiYiHaoPinLingYongShenQingJDialog diZhiYiHaoPinLingYongShenQingJDialog;
-    private GuDingZiChanLingYongTuiKuJDialog guDingZiChanTuiKuJDialog;
-    private DiZhiYiHaoPinLingYongTuiKuJDialog diZhiYiHaoPinLingYongTuiKuJDialog;
 
     /**
      * Creates new form selecteInvoiceJDialog
@@ -203,48 +180,35 @@ public class selectLingYongDanJDialog extends javax.swing.JDialog {
         dispose();
         int selecteIndex = jComboBox1.getSelectedIndex();
         if (selecteIndex == 0) {
-            if (pTGuDingZiChanLingYongShenQingJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                pTGuDingZiChanLingYongShenQingJDialog = new PTGuDingZiChanLingYongShenQingJDialog(mainFrame);
+                PTGuDingZiChanLingYongShenQingJDialog pTGuDingZiChanLingYongShenQingJDialog = new PTGuDingZiChanLingYongShenQingJDialog(mainFrame);
                 pTGuDingZiChanLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
-            }
-
-            AssetClientApp.getApplication().show(pTGuDingZiChanLingYongShenQingJDialog);
+                AssetClientApp.getApplication().show(pTGuDingZiChanLingYongShenQingJDialog);
         } else if (selecteIndex == 1) {
-            if (iTGuDingZiChanLingYongShenQingJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                iTGuDingZiChanLingYongShenQingJDialog = new ITGuDingZiChanLingYongShenQingJDialog(mainFrame);
+                ITGuDingZiChanLingYongShenQingJDialog iTGuDingZiChanLingYongShenQingJDialog = new ITGuDingZiChanLingYongShenQingJDialog(mainFrame);
                 iTGuDingZiChanLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(iTGuDingZiChanLingYongShenQingJDialog);
+                AssetClientApp.getApplication().show(iTGuDingZiChanLingYongShenQingJDialog);
         } else if (selecteIndex == 2) {
-            if (diZhiYiHaoPinLingYongShenQingJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                diZhiYiHaoPinLingYongShenQingJDialog = new DiZhiYiHaoPinLingYongShenQingJDialog(mainFrame);
+                DiZhiYiHaoPinLingYongShenQingJDialog diZhiYiHaoPinLingYongShenQingJDialog = new DiZhiYiHaoPinLingYongShenQingJDialog(mainFrame);
                 diZhiYiHaoPinLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongShenQingJDialog);
+                AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongShenQingJDialog);
         } else if (selecteIndex == 3) {
-            if (diZhiYiHaoPinCaiGouSQSHJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
+                DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
                 diZhiYiHaoPinCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(diZhiYiHaoPinCaiGouSQSHJDialog);
+                AssetClientApp.getApplication().show(diZhiYiHaoPinCaiGouSQSHJDialog);
         } else if (selecteIndex == 4) {
-            if (guDingZiChanTuiKuJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                guDingZiChanTuiKuJDialog = new GuDingZiChanLingYongTuiKuJDialog(mainFrame);
+                GuDingZiChanLingYongTuiKuJDialog guDingZiChanTuiKuJDialog = new GuDingZiChanLingYongTuiKuJDialog(mainFrame);
                 guDingZiChanTuiKuJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(guDingZiChanTuiKuJDialog);
+                AssetClientApp.getApplication().show(guDingZiChanTuiKuJDialog);
         } else if (selecteIndex == 5) {
-            if (diZhiYiHaoPinLingYongTuiKuJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                diZhiYiHaoPinLingYongTuiKuJDialog = new DiZhiYiHaoPinLingYongTuiKuJDialog(mainFrame);
+                DiZhiYiHaoPinLingYongTuiKuJDialog diZhiYiHaoPinLingYongTuiKuJDialog = new DiZhiYiHaoPinLingYongTuiKuJDialog(mainFrame);
                 diZhiYiHaoPinLingYongTuiKuJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongTuiKuJDialog);
+                AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongTuiKuJDialog);
         }
 
     }

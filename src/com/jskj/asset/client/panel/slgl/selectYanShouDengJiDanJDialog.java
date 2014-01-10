@@ -7,28 +7,14 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import static com.jskj.asset.client.AssetClientApp.getApplication;
-import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.panel.OpenTabTask;
-import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.FrameView;
-import org.jdesktop.application.Task;
 
 /**
  *
  * @author huiqi
  */
 public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
-    private GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog;
-    private PTGuDingZiChanDengJiJDialog pTGuDingZiChanDengJiJDialog;
-    private ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog;
-    private GuDingZiChanLingYongTuiKuJDialog guDingZiChanTuiKuJDialog;
-    private DiZhiYiHaoPinDengJiJDialog diZhiYiHaoPinDengJiJDialog;
 
     /**
      * Creates new form selecteInvoiceJDialog
@@ -194,34 +180,25 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
         dispose();
         int selecteIndex = jComboBox1.getSelectedIndex();
         if (selecteIndex == 0) {
-            if (guDingZiChanYanShouJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog(mainFrame);
+                GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog(mainFrame);
                 guDingZiChanYanShouJDialog.setLocationRelativeTo(mainFrame);
-            }
-
-            AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
+                AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
         } else if (selecteIndex == 1) {
-            if (pTGuDingZiChanDengJiJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                pTGuDingZiChanDengJiJDialog = new PTGuDingZiChanDengJiJDialog(mainFrame);
+                PTGuDingZiChanDengJiJDialog pTGuDingZiChanDengJiJDialog = new PTGuDingZiChanDengJiJDialog(mainFrame);
                 pTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(pTGuDingZiChanDengJiJDialog);
+                AssetClientApp.getApplication().show(pTGuDingZiChanDengJiJDialog);
         } else if (selecteIndex == 2) {
-            if (iTGuDingZiChanDengJiJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog(mainFrame);
+                ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog(mainFrame);
                 iTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
+                AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
         } else if (selecteIndex == 3) {
-            if (diZhiYiHaoPinDengJiJDialog == null) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                diZhiYiHaoPinDengJiJDialog = new DiZhiYiHaoPinDengJiJDialog(mainFrame);
+                DiZhiYiHaoPinDengJiJDialog diZhiYiHaoPinDengJiJDialog = new DiZhiYiHaoPinDengJiJDialog(mainFrame);
                 diZhiYiHaoPinDengJiJDialog.setLocationRelativeTo(mainFrame);
-            }
-            AssetClientApp.getApplication().show(diZhiYiHaoPinDengJiJDialog);
+                AssetClientApp.getApplication().show(diZhiYiHaoPinDengJiJDialog);
         }
 
     }

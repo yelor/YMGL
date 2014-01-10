@@ -6,8 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
-import com.jskj.asset.client.util.DateChooser;
-import javax.swing.JTextField;
+import org.jdesktop.application.Action;
 
 /**
  *
@@ -21,6 +20,11 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
     public GuDingZiChanCaiGouJiHuaJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
+    }
+        
+    @Action
+    public void exit() {
+        this.dispose();
     }
 
     /**
@@ -36,9 +40,6 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
@@ -114,30 +115,6 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
-        jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
-        jButton10.setFocusable(false);
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton10.setName("jButton10"); // NOI18N
-        jButton10.setOpaque(false);
-        jToolBar1.add(jButton10);
-
-        jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
-        jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
-        jButton11.setFocusable(false);
-        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton11.setName("jButton11"); // NOI18N
-        jButton11.setOpaque(false);
-        jToolBar1.add(jButton11);
-
-        jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
-        jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
-        jButton12.setFocusable(false);
-        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton12.setName("jButton12"); // NOI18N
-        jButton12.setOpaque(false);
-        jToolBar1.add(jButton12);
-
         jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
         jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
         jButton14.setFocusable(false);
@@ -154,6 +131,8 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jButton13.setOpaque(false);
         jToolBar1.add(jButton13);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanCaiGouJiHuaJDialog.class, this);
+        jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
         jButton15.setFocusable(false);
@@ -244,9 +223,6 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;

@@ -10,7 +10,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.layout.BaseTextFiled;
+import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DateHelper;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class UserDialog extends BaseDialog {
          displayColumns：popup弹出来后，显示的内容
          setBindedMap:点击popup返回的值，自己把object的值类型强制转化成自己需要。和你在regiter的时候，传入的URL返回bean有关。
          */
-        ((BaseTextFiled) jTextFieldUserName).registerPopup(new IPopupBuilder() {
+        ((BaseTextField) jTextFieldUserName).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
@@ -126,7 +126,7 @@ public class UserDialog extends BaseDialog {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextFieldUserName = new BaseTextFiled();
+        jTextFieldUserName = new BaseTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldPasswd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
