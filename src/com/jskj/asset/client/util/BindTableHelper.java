@@ -5,12 +5,10 @@
 package com.jskj.asset.client.util;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
 import org.apache.log4j.Logger;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -32,9 +30,7 @@ public class BindTableHelper<T> {
 
     private int[] savedDateColumn;
     private int[] savedIntegerColumn;
-    private final HashMap<Integer, Converter> savedCoverts;
-    private final List<Integer> savedCanEdit;
-    private final HashMap<String[], Class<?>> savedEmptyColumns;
+    private HashMap<Integer, Converter> savedCoverts;
 
     public BindTableHelper(JTable jtable, List<T> data) {
         bindingGroup = new BindingGroup();
@@ -43,9 +39,7 @@ public class BindTableHelper<T> {
         bindObject = null;
         savedDateColumn = null;
         savedIntegerColumn = null;
-        savedCoverts = new HashMap<Integer, Converter>();
-        savedCanEdit = new ArrayList<Integer>();
-        savedEmptyColumns = new HashMap<String[], Class<?>>();
+        savedCoverts = null;
     }
 
     public void createTable(Class bean) {
@@ -54,7 +48,8 @@ public class BindTableHelper<T> {
 
             // System.out.println("data::"+data);
             Field[] f = bean.getDeclaredFields();
-            int i = 0;
+            org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = null;
+
             for (Field a : f) {
                 String name = a.getName();
                 if (undisplayString.indexOf(name) > -1) {
@@ -62,10 +57,9 @@ public class BindTableHelper<T> {
                 } else {
                     String temp = "${" + name + "}";
                     // System.out.println("bind object:"+temp);
-                    jTableBinding.addColumnBinding(i, org.jdesktop.beansbinding.ELProperty.create(temp))
-                            .setColumnName(name)
-                            .setColumnClass(String.class).setEditable(false);
-                    i++;
+                    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create(temp));
+                    columnBinding.setColumnName(name);
+                    columnBinding.setColumnClass(String.class);
                 }
             }
 
@@ -80,13 +74,16 @@ public class BindTableHelper<T> {
             bindObject = bindObj;
             jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, data, jTableFormat.getJtable());
             // System.out.println("data::"+data);
+
+            org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = null;
+
             if (bindObject != null && bindObject.length > 0) {
                 for (int i = 0; i < bindObject.length; i++) {
                     String temp = bindObject[i][0];
                     String name = bindObject[i][1];
-                    jTableBinding.addColumnBinding(i, org.jdesktop.beansbinding.ELProperty.create("${" + temp + "}"))
-                            .setColumnName(name)
-                            .setColumnClass(String.class).setEditable(false);
+                    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${" + temp + "}"));
+                    columnBinding.setColumnName(name);
+                    columnBinding.setColumnClass(String.class);
                 }
 
             }
@@ -107,17 +104,15 @@ public class BindTableHelper<T> {
             //Pojo转成hashmap
             HashMap map = (HashMap) rowData;
             Set keys = map.keySet();
-            int i = 0;
+            org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = null;
             for (Object key : keys) {
                 if (key instanceof String) {
                     String name = key.toString();
                     String temp = "${" + name + "}";
                     // System.out.println("bind object:"+temp);
-                    jTableBinding.addColumnBinding(i, org.jdesktop.beansbinding.ELProperty.create(temp))
-                            .setColumnName(name)
-                            .setColumnClass(String.class).setEditable(false);
-                    i++;
-
+                    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create(temp));
+                    columnBinding.setColumnName(name);
+                    columnBinding.setColumnClass(String.class);
                 }
             }
         } catch (Exception e) {
@@ -133,18 +128,9 @@ public class BindTableHelper<T> {
      * @param converter
      */
     public void setConvert(int index, Converter converter) {
+        savedCoverts = new HashMap<Integer, Converter>();
         savedCoverts.put(index, converter);
         jTableBinding.getColumnBinding(index - 1).setConverter(converter);
-    }
-
-    public void setColumnEditable(boolean editable, int startIndex, int endIndex) {
-
-        for (int i = startIndex; i <= endIndex; i++) {
-            jTableBinding.getColumnBinding(i - 1).setEditable(editable);
-            if (editable) {
-                savedCanEdit.add(i);
-            }
-        }
     }
 
     /**
@@ -171,16 +157,8 @@ public class BindTableHelper<T> {
         }
     }
 
-    public BindTableHelper addEmptyColumn(String[] headerName, Class<?> columnClass) {
-        savedEmptyColumns.put(headerName, columnClass);
-        jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${" + headerName[0] + "}")).setColumnName(headerName[1]).setColumnClass(columnClass).setEditable(true);
-        return this;
-    }
-
     /**
      * finish bind
-     *
-     * @return
      */
     public JTableFormat bind() {
         bindingGroup.addBinding(jTableBinding);
@@ -207,18 +185,7 @@ public class BindTableHelper<T> {
             if (savedCoverts != null && savedCoverts.size() > 0) {
                 Set<Integer> keys = savedCoverts.keySet();
                 for (Integer columnIndex : keys) {
-                    jTableBinding.getColumnBinding(columnIndex - 1).setConverter(savedCoverts.get(columnIndex));
-                }
-            }
-            if (savedCanEdit != null && savedCanEdit.size() > 0) {
-                for (Integer index : savedCanEdit) {
-                    jTableBinding.getColumnBinding(index - 1).setEditable(true);
-                }
-            }
-            if (savedEmptyColumns != null && savedEmptyColumns.size() > 0) {
-                Set<String[]> keys = savedEmptyColumns.keySet();
-                for (String[] headerName : keys) {
-                    jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${" + headerName[0] + "}")).setColumnName(headerName[1]).setColumnClass(savedEmptyColumns.get(headerName)).setEditable(true);
+                    setConvert(columnIndex, savedCoverts.get(columnIndex));
                 }
             }
             jTableBinding.bind();
@@ -230,15 +197,6 @@ public class BindTableHelper<T> {
             if (jTableFormat.savedRowHeight >= 0) {
                 jTableFormat.setRowHeight(jTableFormat.savedRowHeight);
             }
-
-            if (jTableFormat.savedCellEditor != null && jTableFormat.savedCellEditor.size() > 0) {
-                Set<Integer> keys = jTableFormat.savedCellEditor.keySet();
-                for (Integer columnIndex : keys) {
-                    DefaultCellEditor celleditor = jTableFormat.savedCellEditor.get(columnIndex);
-                    jTableFormat.getJtable().getColumnModel().getColumn(columnIndex).setCellEditor(celleditor);
-                }
-            }
-
         }
 
     }
@@ -272,18 +230,15 @@ public class BindTableHelper<T> {
      */
     public class JTableFormat {
 
-        private final JTable jtable;
+        private JTable jtable;
 
         public int[][] savedColumnWidth;
         public int savedRowHeight;
-        public HashMap<Integer, DefaultCellEditor> savedCellEditor;
 
         JTableFormat(JTable jtable) {
             this.jtable = jtable;
             savedColumnWidth = null;
             savedRowHeight = -1;
-            savedCellEditor = new HashMap<Integer, DefaultCellEditor>();
-
         }
 
         public JTableFormat setColumnWidth(int[]  
@@ -301,6 +256,7 @@ public class BindTableHelper<T> {
             getJtable().setRowHeight(rowHeight);
             return this;
         }
+
         /**
          * @return the jtable
          */

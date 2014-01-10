@@ -27,7 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  *
  * @author 305027939
  */
-public abstract class BasePopup extends BasePanel implements KeyListener {
+public class BasePopup extends BasePanel implements KeyListener {
 
     private final static Logger logger = Logger.getLogger(BasePopup.class);
     private String key;
@@ -37,15 +37,18 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
     private final int pageSize;
     private int count;
     private BindTableHelper<HashMap> bindTable;
+    private final BaseTextFiled parentComponent;
     private final IPopupBuilder popBuilder;
 
     /**
      * Creates new form BasePopup
      *
+     * @param parentComponent
      * @param popBuilder
      */
-    public BasePopup(IPopupBuilder popBuilder) {
+    public BasePopup(BaseTextFiled parentComponent, IPopupBuilder popBuilder) {
         initComponents();
+        this.parentComponent = parentComponent;
         this.popBuilder = popBuilder;
 
         // setBorder(BorderFactory.createLineBorder(Color.blue));
@@ -95,7 +98,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
             if (bindTable != null) {
                 HashMap map = bindTable.getSelectedBean();
                 popBuilder.setBindedMap(map);
-                closePopup();
+                parentComponent.hidePanel();
             }
         }
 
@@ -125,7 +128,6 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
                             .queryParam("pagesize", pageSize).queryParam("pageindex", pageIndex);
 
                     String sql = popBuilder.getConditionSQL();
-                    logger.debug("search condition Sql:"+sql);
                     if (sql != null && !sql.trim().equals("")) {
                         builder.queryParam("conditionSql", sql);
                     }
@@ -326,7 +328,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         if (bindTable != null) {
             HashMap map = bindTable.getSelectedBean();
             popBuilder.setBindedMap(map);
-            closePopup();
+            parentComponent.hidePanel();
         }
     }//GEN-LAST:event_jTableResultMouseClicked
 
@@ -371,6 +373,4 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         logger.debug("new value:" + key + ",old value:" + oldKey);
         changeSupport.firePropertyChange(new PropertyChangeEvent(this, "KEY_CHANGE", oldKey, key));
     }
-    
-    public abstract void closePopup();
 }

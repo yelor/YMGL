@@ -15,6 +15,7 @@ import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.bean.entity.UsertbFindEntity;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public final class UserPanel extends BasePanel {
     private int count;
 
     private List<Usertb> users;
-
+    
     private BindTableHelper<Usertb> bindTable;
 
     /**
@@ -60,10 +61,7 @@ public final class UserPanel extends BasePanel {
         {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userBirthday", "生日"}, {"userPhone", "电话"}, {"userPosition", "地址"}});
         bindTable.setIntegerType(1);
         bindTable.setDateType(8);
-        bindTable.setColumnEditable(true, 2, 4);
-        // bindTable.setColumnEditable(true, 11, 11);
-        BindTableHelper.JTableFormat tableFormat = bindTable.bind();
-        tableFormat.setColumnWidth(new int[]{0, 100}, new int[]{1, 50}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 50}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);
     }
 
     @Action
@@ -127,7 +125,7 @@ public final class UserPanel extends BasePanel {
         jButton4 = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableUser = new javax.swing.JTable();
+        jTableUser = new BaseTable(null);
 
         setName("Form"); // NOI18N
 
