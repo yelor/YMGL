@@ -7,15 +7,19 @@ package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
+import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextFiled;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -29,9 +33,13 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoShenBaoPlanJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
+    private YimiaoshenqingdantbFindEntity yimiaoshenbao;
     private Shenqingdantb shenqingdan;
     private SimpleDateFormat dateformate;
     private boolean isNew;
+
+    DateChooser dateChooser1;
+    JTextField regTextField;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -40,6 +48,8 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         super(parent, modal);
         init();
         initComponents();
+        jTextFieldYimiaoshenbaodanId.setText(DanHao.getDanHao("YMSB"));
+        jTextFieldYimiaoshenbaodanId.setEditable(false);
         ((BaseTextFiled) jTextFieldshenqingren).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
@@ -64,7 +74,9 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
                     jTextFieldshenqingren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
+                    jTextFieldzhidanren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
                     jTextFielddepartment.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
+                    shenqingdan.setZhidanrenId((Integer) bindedMap.get("userName"));
                 }
             }
         });
@@ -87,20 +99,18 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}};
+                return new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
+                    shenqingdan.setSupplierId((Integer) (bindedMap.get("supplierId")));
                     jTextFieldSupplierName.setText(bindedMap.get("supplierName") == null ? "" : bindedMap.get("supplierName").toString());
                     jTextFieldConstactperson.setText(bindedMap.get("supplierConstactperson") == null ? "" : bindedMap.get("supplierConstactperson").toString());
                 }
             }
         });
     }
-
-    DateChooser dateChooser1;
-    JTextField regTextField;
 
     private void init() {
         regTextField = new JTextField();
@@ -131,31 +141,19 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        jTextFieldzhidanren = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaRemark = new javax.swing.JTextArea();
         jLabel25 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldshenqingren = new BaseTextFiled();
-        jTextFieldYimiaoshenqingdanId = new javax.swing.JTextField();
+        jTextFieldYimiaoshenbaodanId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -277,43 +275,12 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
-        jLabel5.setName("jLabel5"); // NOI18N
-
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jTextField3.setName("jTextField3"); // NOI18N
-
-        jTextField6.setName("jTextField6"); // NOI18N
-
-        jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
-        jLabel12.setName("jLabel12"); // NOI18N
-
-        jTextField8.setName("jTextField8"); // NOI18N
-
-        jTextField7.setName("jTextField7"); // NOI18N
-
-        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
-        jLabel7.setName("jLabel7"); // NOI18N
-
-        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
-        jLabel8.setName("jLabel8"); // NOI18N
-
-        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
-        jLabel10.setName("jLabel10"); // NOI18N
-
-        jTextField10.setName("jTextField10"); // NOI18N
-
-        jTextField9.setName("jTextField9"); // NOI18N
+        jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
 
         jTextField11.setName("jTextField11"); // NOI18N
-
-        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
-        jLabel9.setName("jLabel9"); // NOI18N
-
-        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
-        jLabel11.setName("jLabel11"); // NOI18N
 
         jTextField12.setName("jTextField12"); // NOI18N
 
@@ -367,10 +334,10 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(2);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaRemark.setColumns(20);
+        jTextAreaRemark.setRows(2);
+        jTextAreaRemark.setName("jTextAreaRemark"); // NOI18N
+        jScrollPane1.setViewportView(jTextAreaRemark);
 
         jLabel25.setText(resourceMap.getString("jLabel25.text")); // NOI18N
         jLabel25.setName("jLabel25"); // NOI18N
@@ -381,8 +348,8 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jTextFieldshenqingren.setText(resourceMap.getString("jTextFieldshenqingren.text")); // NOI18N
         jTextFieldshenqingren.setName("jTextFieldshenqingren"); // NOI18N
 
-        jTextFieldYimiaoshenqingdanId.setText(resourceMap.getString("jTextFieldYimiaoshenqingdanId.text")); // NOI18N
-        jTextFieldYimiaoshenqingdanId.setName("jTextFieldYimiaoshenqingdanId"); // NOI18N
+        jTextFieldYimiaoshenbaodanId.setText(resourceMap.getString("jTextFieldYimiaoshenbaodanId.text")); // NOI18N
+        jTextFieldYimiaoshenbaodanId.setName("jTextFieldYimiaoshenbaodanId"); // NOI18N
 
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
@@ -423,40 +390,11 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel11))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9)))
-                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -477,7 +415,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                                 .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldshenqingren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldYimiaoshenqingdanId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jTextFieldYimiaoshenbaodanId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel14)
@@ -490,7 +428,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                             .addComponent(jTextFielddepartment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldConstactperson, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -498,7 +436,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldYimiaoshenqingdanId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldYimiaoshenbaodanId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldYimiaoshenqingdanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -521,33 +459,12 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel8)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel11)
-                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel10))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -604,6 +521,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         isNew = b;
         if (isNew) {
             this.setTitle("Ⅰ类疫苗申报计划申请单");
+            shenqingdan = new Shenqingdantb();
             yimiaoshenqingdan = new Yimiaoshenqingdantb();
         } else {
             this.setTitle("Ⅰ类疫苗申报计划申请单");
@@ -615,7 +533,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
             return;
         }
         this.yimiaoshenqingdan = yimiaoshenqingdan;
-        jTextFieldYimiaoshenqingdanId.setText((yimiaoshenqingdan.getShenqingdanId()).toString());
+        jTextFieldYimiaoshenbaodanId.setText((yimiaoshenqingdan.getShenqingdanId()).toString());
         jTextFieldSupplierName.setText((shenqingdan.getSupplierId()).toString());
 
     }
@@ -626,17 +544,26 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入供应单位名称!");
             return null;
         }
-//        shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldYimiaoshenqingdanDate.getText()));
-        yimiaoshenqingdan.setDanjuleixingId(11);
-        yimiaoshenqingdan.setYimiaoId(11);
-        yimiaoshenqingdan.setQuantity(11);
-        yimiaoshenqingdan.setPrice(3.24f);
-        float f = yimiaoshenqingdan.getQuantity() * yimiaoshenqingdan.getPrice();
-        yimiaoshenqingdan.setTotalprice(f);
-//        shenqingdan.setJingbanrenId(1);
-//        shenqingdan.setSupplierId(Integer.parseInt(jTextFieldSupplierName.getText()));
+        yimiaoshenbao = new YimiaoshenqingdantbFindEntity();
+        shenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
+        dateformate = new SimpleDateFormat("yyyy-MM-dd");
+        shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldYimiaoshenqingdanDate.getText()));
+        shenqingdan.setDanjuleixingId(22);
+        shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
-        return new SubmitFormTask(yimiaoshenqingdan);
+        List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
+        for (int i = 0; i < 3; i++) {
+            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
+            yimiaoshenqingdan.setYimiaoId(i + 2);
+            yimiaoshenqingdan.setQuantity(33);
+            list.add(yimiaoshenqingdan);
+        }
+
+        yimiaoshenbao.setShenqingdan(shenqingdan);
+        yimiaoshenbao.setYimiaoshenqingdans(list);
+
+        return new SubmitFormTask(yimiaoshenbao);
     }
 
     @Action
@@ -646,7 +573,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
 
     private class SubmitFormTask extends YimiaoshenqingdanUpdateTask {
 
-        SubmitFormTask(Yimiaoshenqingdantb yimiaoshenqingdan) {
+        SubmitFormTask(YimiaoshenqingdantbFindEntity yimiaoshenqingdan) {
             super(yimiaoshenqingdan, isNew ? YimiaoshenqingdanUpdateTask.ENTITY_SAVE : YimiaoshenqingdanUpdateTask.ENTITY_UPDATE);
         }
 
@@ -671,20 +598,13 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -695,21 +615,16 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextArea jTextAreaRemark;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTextFieldConstactperson;
     private javax.swing.JTextField jTextFieldSupplierName;
+    private javax.swing.JTextField jTextFieldYimiaoshenbaodanId;
     private javax.swing.JTextField jTextFieldYimiaoshenqingdanDate;
-    private javax.swing.JTextField jTextFieldYimiaoshenqingdanId;
     private javax.swing.JTextField jTextFielddepartment;
     private javax.swing.JTextField jTextFieldshenqingren;
+    private javax.swing.JTextField jTextFieldzhidanren;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

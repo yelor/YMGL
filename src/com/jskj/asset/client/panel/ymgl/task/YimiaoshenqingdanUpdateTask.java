@@ -7,6 +7,7 @@
 package com.jskj.asset.client.panel.ymgl.task;
 
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
+import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -27,10 +28,10 @@ public class YimiaoshenqingdanUpdateTask extends BaseTask{
     private final String UPD_URI = Constants.HTTP + Constants.APPID + "yimiaoshenqingdan/update";
     private final String delete_URI = Constants.HTTP + Constants.APPID + "yimiaoshenqingdan/delete";
     
-    private final Yimiaoshenqingdantb yimiaoshenqingdan;
+    private final YimiaoshenqingdantbFindEntity yimiaoshenqingdan;
     private final int actionType;
 
-    public YimiaoshenqingdanUpdateTask(Yimiaoshenqingdantb yimiaoshenqingdan, int actionType) {
+    public YimiaoshenqingdanUpdateTask(YimiaoshenqingdantbFindEntity yimiaoshenqingdan, int actionType) {
         this.yimiaoshenqingdan = yimiaoshenqingdan;
         this.actionType = actionType;
     }
@@ -43,11 +44,11 @@ public class YimiaoshenqingdanUpdateTask extends BaseTask{
             //使用Spring3 RESTful client来POSThttp数据
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             if (actionType == ENTITY_SAVE) {
-                restTemplate.postForObject(ADD_URI, yimiaoshenqingdan, Yimiaoshenqingdantb.class);
+                restTemplate.postForObject(ADD_URI, yimiaoshenqingdan, YimiaoshenqingdantbFindEntity.class);
             } else if (actionType == ENTITY_UPDATE) {
-                restTemplate.postForObject(UPD_URI, yimiaoshenqingdan, Yimiaoshenqingdantb.class);
+                restTemplate.postForObject(UPD_URI, yimiaoshenqingdan, YimiaoshenqingdantbFindEntity.class);
             } else if (actionType == ENTITY_DELETE) {
-                restTemplate.postForLocation(delete_URI + "/" + yimiaoshenqingdan.getShenqingdanId(),null);
+                restTemplate.postForLocation(delete_URI + "/" + yimiaoshenqingdan.getYimiaoshenqingdans(),null);
             }
         } catch (RestClientException e) {
             logger.error(e);
