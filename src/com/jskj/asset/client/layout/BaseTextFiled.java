@@ -61,7 +61,13 @@ public class BaseTextFiled extends JTextField implements KeyListener, FocusListe
 
         addKeyListener(this);
         addFocusListener(this);
-        basePopup = new BasePopup(this, popBuilder);
+        basePopup = new BasePopup(popBuilder) {
+            @Override
+            public void closePopup() {
+                hidePanel();
+            }
+
+        };
         hasRegister = true;
     }
 
@@ -110,12 +116,17 @@ public class BaseTextFiled extends JTextField implements KeyListener, FocusListe
         if (pop != null) {
             pop.hide();
         }
-        Point show = new Point(0, this.getHeight());
-        SwingUtilities.convertPointToScreen(show, this);
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+//        Point show = new Point(0, this.getHeight());
+//        SwingUtilities.convertPointToScreen(show, this);
+//        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
-        Point mousepoint = MouseInfo.getPointerInfo().getLocation();
-        pop = PopupFactory.getSharedInstance().getPopup(this, basePopup, mousepoint.x, mousepoint.y);
+        Point p = this.getLocationOnScreen();
+
+        int selectedX = p.x;
+        int selectedY = p.y + getHeight();
+
+//        Point mousepoint = MouseInfo.getPointerInfo().getLocation();
+        pop = PopupFactory.getSharedInstance().getPopup(this, basePopup, selectedX, selectedY);
         basePopup.setKey(getText());
         pop.show();
         isShow = true;
