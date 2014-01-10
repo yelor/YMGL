@@ -56,4 +56,10 @@
         <linkObject>com.jskj.asset.client.panel.user.UserPanel</linkObject>
         <isLastNode>true</isLastNode>
     </Node>
+    <Node>
+        <nodeNo>navNode7</nodeNo>
+        <nodeName>用户表格带查询(例子)</nodeName>
+        <linkObject>com.jskj.asset.client.panel.user.UserSearchFind</linkObject>
+        <isLastNode>true</isLastNode>
+    </Node>
 </AssetArrayNodes>
