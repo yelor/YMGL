@@ -1,13 +1,15 @@
 package com.jskj.asset.client.bean.entity;
 
 public class Yimiaoshenqingdantb {
-    private Integer shenqingdanId;
+    private Integer xiangdanId;
+
+    private String shenqingdanId;
 
     private Integer yimiaoId;
 
     private Integer quantity;
 
-    private Float price;
+    private Float saleprice;
 
     private Float totalprice;
 
@@ -19,14 +21,20 @@ public class Yimiaoshenqingdantb {
 
     private Integer checkId4;
 
-    private Integer danjuleixingId;
+    public Integer getXiangdanId() {
+        return xiangdanId;
+    }
 
-    public Integer getShenqingdanId() {
+    public void setXiangdanId(Integer xiangdanId) {
+        this.xiangdanId = xiangdanId;
+    }
+
+    public String getShenqingdanId() {
         return shenqingdanId;
     }
 
-    public void setShenqingdanId(Integer shenqingdanId) {
-        this.shenqingdanId = shenqingdanId;
+    public void setShenqingdanId(String shenqingdanId) {
+        this.shenqingdanId = shenqingdanId == null ? null : shenqingdanId.trim();
     }
 
     public Integer getYimiaoId() {
@@ -45,12 +53,12 @@ public class Yimiaoshenqingdantb {
         this.quantity = quantity;
     }
 
-    public Float getPrice() {
-        return price;
+    public Float getSaleprice() {
+        return saleprice;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setSaleprice(Float saleprice) {
+        this.saleprice = saleprice;
     }
 
     public Float getTotalprice() {
@@ -91,13 +99,5 @@ public class Yimiaoshenqingdantb {
 
     public void setCheckId4(Integer checkId4) {
         this.checkId4 = checkId4;
-    }
-
-    public Integer getDanjuleixingId() {
-        return danjuleixingId;
-    }
-
-    public void setDanjuleixingId(Integer danjuleixingId) {
-        this.danjuleixingId = danjuleixingId;
     }
 }

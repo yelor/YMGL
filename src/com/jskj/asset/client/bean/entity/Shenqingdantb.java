@@ -15,6 +15,8 @@ public class Shenqingdantb {
 
     private Integer zhidanrenId;
 
+    private Integer danjuleixingId;
+
     public String getShenqingdanId() {
         return shenqingdanId;
     }
@@ -61,5 +63,13 @@ public class Shenqingdantb {
 
     public void setZhidanrenId(Integer zhidanrenId) {
         this.zhidanrenId = zhidanrenId;
+    }
+
+    public Integer getDanjuleixingId() {
+        return danjuleixingId;
+    }
+
+    public void setDanjuleixingId(Integer danjuleixingId) {
+        this.danjuleixingId = danjuleixingId;
     }
 }
