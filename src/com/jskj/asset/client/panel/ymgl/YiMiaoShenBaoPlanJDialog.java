@@ -10,7 +10,7 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.BaseTextFiled;
+import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
@@ -50,7 +50,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         initComponents();
         jTextFieldYimiaoshenbaodanId.setText(DanHao.getDanHao("YMSB"));
         jTextFieldYimiaoshenbaodanId.setEditable(false);
-        ((BaseTextFiled) jTextFieldshenqingren).registerPopup(new IPopupBuilder() {
+        ((BaseTextField) jTextFieldshenqingren).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
@@ -76,12 +76,12 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                     jTextFieldshenqingren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
                     jTextFieldzhidanren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
                     jTextFielddepartment.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
-                    shenqingdan.setZhidanrenId((Integer) bindedMap.get("userName"));
+                    shenqingdan.setZhidanrenId((Integer) bindedMap.get("userId"));
                 }
             }
         });
 //供应单位的popup
-        ((BaseTextFiled) jTextFieldSupplierName).registerPopup(new IPopupBuilder() {
+        ((BaseTextField) jTextFieldSupplierName).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
@@ -152,7 +152,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jTextAreaRemark = new javax.swing.JTextArea();
         jLabel25 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldshenqingren = new BaseTextFiled();
+        jTextFieldshenqingren = new BaseTextField();
         jTextFieldYimiaoshenbaodanId = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -160,7 +160,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jTextFielddepartment = new javax.swing.JTextField();
         jTextFieldYimiaoshenqingdanDate = regTextField;
         jLabel13 = new javax.swing.JLabel();
-        jTextFieldSupplierName = new BaseTextFiled();
+        jTextFieldSupplierName = new BaseTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextFieldConstactperson = new javax.swing.JTextField();
 

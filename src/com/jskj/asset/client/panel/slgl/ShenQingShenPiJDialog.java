@@ -12,6 +12,7 @@ import com.jskj.asset.client.bean.entity.ZiChanCaiGouShenQing;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.util.BindTableHelper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
@@ -30,25 +31,41 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
     private List<ZiChanCaiGouShenQing> cgsq;
     
+    private List<ZiChanCaiGouShenQing> display;
+    
     private String user;
     
     private ShenPiEntity shenPiEntity;
     
-    private final ShenQingShenPiJDialog spdialog;
-    
+    BindTableHelper<ZiChanCaiGouShenQing> bindTable;
     /**
      * Creates new form GuDingZiChanRuKu
+     * @param parent
+     * @param modal
      */
     public ShenQingShenPiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
-        spdialog = this;
         initComponents();
+        user = "fuzeren";
+        pageIndex = 1;
+        count = 0;
+        bindTable = new BindTableHelper<ZiChanCaiGouShenQing>(jSQTable, new ArrayList<ZiChanCaiGouShenQing>());
+        bindTable.createTable(new String[][]{{"cgsqId", "采购单号"}, {"processId", "流程编号"}, {"checkId1", "负责人"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
+//        bindTable.setIntegerType(1);
+//        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 100}).setRowHeight(30);
     }
     
     @Action
     public void login() {
         user = jTextField1.getText();
+        if(cgsq!= null){
+            cgsq.clear();            
+        }else {
+            cgsq = null;
+        }
+            
         JOptionPane.showMessageDialog(this, "登陆成功！");
+        reload();
     }
     
     @Action
@@ -57,16 +74,17 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     }
     
     @Action
-    public Task reload() {
-        return new RefreshTask(user);
+    public void reload() {
+        new RefreshTask(0).execute();
+        this.repaint();
     }
     
     private class RefreshTask extends ChaXunTask {
 
         BindingGroup bindingGroup = new BindingGroup();
 
-        RefreshTask(String user) {
-            super(user);
+        RefreshTask(int pageIndex) {
+            super(user,pageIndex);
         }
 
         @Override
@@ -81,20 +99,31 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
             CaiGouShenQingFindEntity sq = (CaiGouShenQingFindEntity) object;
 
-            if (sq != null && sq.getShenQing().size() > 0) {
+            if (sq != null) {
                 count = sq.getCount();
-//                jLabelTotal.setText(((pageIndex - 1) * UserTask.pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get user size:" +  sq.getShenQing().size());
+                jLabelTotal.setText(((pageIndex - 1) * ChaXunTask.pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get shenqing size:" +  sq.getResult().size());
 
                 //存下所有的数据
-                cgsq =  sq.getShenQing();
-                
-                BindTableHelper<ZiChanCaiGouShenQing> bindTable = new BindTableHelper<ZiChanCaiGouShenQing>(jSQTable, cgsq);
-                bindTable.createTable(new String[][]{{"cgsqId", "采购单号"}, {"gdzcId", "资产信息"}, {"quantity", "数量"}, {"price", "单价"},{"processId", "流程编号"}});
-                bindTable.setIntegerType(1);
-                bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 100}).setRowHeight(30);;
+                cgsq =  sq.getResult();
             }
+            bindTable.refreshData(cgsq);
         }
+    }
+    
+     @Action
+    public void pagePrev() {
+        pageIndex = pageIndex - 1;
+        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        new RefreshTask(pageIndex).execute();
+    }
+
+    @Action
+    public void pageNext() {
+        if (ChaXunTask.pageSize * (pageIndex) <= count) {
+            pageIndex = pageIndex + 1;
+        }
+        new RefreshTask(pageIndex).execute();
     }
     
     @Action
@@ -128,7 +157,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         @Override
         protected void succeeded(Object result){
             JOptionPane.showMessageDialog(null, "审批成功！");
-            spdialog.reload();
+            reload();
         }
     }
 
@@ -148,7 +177,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
@@ -156,6 +184,9 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabelTotal = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -177,7 +208,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
             }
         ));
-        jSQTable.setColumnSelectionAllowed(true);
         jSQTable.setName("jSQTable"); // NOI18N
         jScrollPane1.setViewportView(jSQTable);
         jSQTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -207,14 +237,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton12.setName("jButton12"); // NOI18N
         jButton12.setOpaque(false);
         jToolBar1.add(jButton12);
-
-        jButton1.setAction(actionMap.get("reload")); // NOI18N
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
 
         jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
         jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
@@ -251,6 +273,22 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
+        jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
+        jLabelTotal.setName("jLabelTotal"); // NOI18N
+
+        jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jButton3.setAction(actionMap.get("pageNext")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorder(null);
+        jButton3.setName("jButton3"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -259,18 +297,30 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(2, 2, 2))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
@@ -278,16 +328,16 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
                 .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(79, 79, 79))
         );
 
@@ -295,18 +345,15 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -322,9 +369,11 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGap(0, 510, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -381,7 +430,9 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTable jSQTable;

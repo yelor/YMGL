@@ -10,7 +10,7 @@ import com.jskj.asset.client.bean.entity.Saletb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
-import com.jskj.asset.client.layout.BaseTextFiled;
+import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.Sale_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
@@ -45,7 +45,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog{
         jTextFieldXiafaId.setText(DanHao.getDanHao("YMXF"));
         jTextFieldXiafaId.setEditable(false);
         
-        ((BaseTextFiled)jTextFieldXiafadanwei).registerPopup(new IPopupBuilder() {
+        ((BaseTextField)jTextFieldXiafadanwei).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
@@ -132,7 +132,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog{
         jTable4 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jTextFieldXiafadanwei = new BaseTextFiled();
+        jTextFieldXiafadanwei = new BaseTextField();
         jLabel13 = new javax.swing.JLabel();
         jTextFieldGongyingType = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();

@@ -10,7 +10,7 @@ public class CaiGouShenQingFindEntity extends ZiChanCaiGouShenQing{
     
     private int count;
     
-    private  List<ZiChanCaiGouShenQing> shenqing;
+    private  List<ZiChanCaiGouShenQing> result;
 
     public int getCount() {
         return count;
@@ -20,12 +20,12 @@ public class CaiGouShenQingFindEntity extends ZiChanCaiGouShenQing{
         this.count = count;
     }
 
-    public List<ZiChanCaiGouShenQing> getShenQing() {
-        return shenqing;
+    public List<ZiChanCaiGouShenQing> getResult() {
+        return result;
     }
 
-    public void setShenQing(List<ZiChanCaiGouShenQing> shenqing) {
-        this.shenqing = shenqing;
+    public void setResult(List<ZiChanCaiGouShenQing> result) {
+        this.result = result;
     }
     
 }

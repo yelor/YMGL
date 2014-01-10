@@ -8,31 +8,14 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import static com.jskj.asset.client.AssetClientApp.getApplication;
-import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.panel.OpenTabTask;
-import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.FrameView;
-import org.jdesktop.application.Task;
 
 /**
  *
  * @author huiqi
  */
 public class selectCaiGouDanJDialog extends javax.swing.JDialog {
-    private YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog;
-    private YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog;
-    private YiMiaoSheGouPlanJDialog sheGouPlanJDialog;
-    private YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog;
-    private YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog;
-    private GuDingZiChanCaiGouJiHuaJDialog guDingZiChanCaiGouJiHuaJDialog;
-    private GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog;
-    private DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog;
     
 
     /**
@@ -198,26 +181,20 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
     public void selectedAction() {        
         dispose();
         int selecteIndex=jComboBox1.getSelectedIndex();
-        if (selecteIndex==0) {
-            if (guDingZiChanCaiGouJiHuaJDialog == null) {
+        if (selecteIndex==0) {            
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            guDingZiChanCaiGouJiHuaJDialog = new GuDingZiChanCaiGouJiHuaJDialog(new javax.swing.JFrame(), true);
+            GuDingZiChanCaiGouJiHuaJDialog guDingZiChanCaiGouJiHuaJDialog = new GuDingZiChanCaiGouJiHuaJDialog(new javax.swing.JFrame(), true);
             guDingZiChanCaiGouJiHuaJDialog.setLocationRelativeTo(mainFrame);
-        }
             AssetClientApp.getApplication().show(guDingZiChanCaiGouJiHuaJDialog);
         } else if(selecteIndex==1){
-            if (guDingZiChanCaiGouSQSHJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
+            GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
             guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
-        }
             AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
         } else if(selecteIndex==2){
-            if (diZhiYiHaoPinCaiGouSQSHJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
+            DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
             diZhiYiHaoPinCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
-        }
             AssetClientApp.getApplication().show(diZhiYiHaoPinCaiGouSQSHJDialog);
         }    
         
