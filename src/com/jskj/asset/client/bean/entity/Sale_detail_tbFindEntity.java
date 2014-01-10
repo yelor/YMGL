@@ -1,7 +1,6 @@
 /*
  * 2014 Chengdu JunChen Technology
  */
-
 package com.jskj.asset.client.bean.entity;
 
 import java.util.List;
@@ -10,10 +9,21 @@ import java.util.List;
  *
  * @author huiqi
  */
-public class Sale_detail_tbFindEntity extends Sale_detail_tb{
-     private int count;
-    
-    private  List<Sale_detail_tb> sale_details;
+public class Sale_detail_tbFindEntity {
+
+    private Saletb sale;
+
+    private int count;
+
+    private List<Sale_detail_tb> sale_details;
+
+    public Saletb getSale() {
+        return sale;
+    }
+
+    public void setSale(Saletb sale) {
+        this.sale = sale;
+    }
 
     public int getCount() {
         return count;
@@ -30,7 +40,5 @@ public class Sale_detail_tbFindEntity extends Sale_detail_tb{
     public void setSale_details(List<Sale_detail_tb> sale_details) {
         this.sale_details = sale_details;
     }
-    
-    
-    
+
 }
