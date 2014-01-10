@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.util.DateChooser;
 import javax.swing.JTextField;
+import org.jdesktop.application.Action;
 
 /**
  *
@@ -26,12 +26,13 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
 
     DateChooser dateChooser1;
     JTextField regTextField;
+
     private void init() {
         regTextField = new JTextField();
         dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
         dateChooser1.register(regTextField);
-    }    
-    
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,10 +78,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         jTextField14 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -186,6 +183,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoTiaoJiaJDialog.class, this);
+        jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setFocusable(false);
@@ -275,12 +274,12 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
         );
 
         jTextField3.setText(resourceMap.getString("jTextField3.text")); // NOI18N
@@ -299,16 +298,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
-        jTextField6.setName("jTextField6"); // NOI18N
-
-        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
-        jLabel7.setName("jLabel7"); // NOI18N
-
-        jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
-        jLabel8.setName("jLabel8"); // NOI18N
-
-        jTextField7.setName("jTextField7"); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -321,14 +310,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -337,7 +319,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                             .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,8 +333,9 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField14, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                                     .addComponent(jTextField2)
-                                    .addComponent(jTextField5))))))
-                .addContainerGap())
+                                    .addComponent(jTextField5)))
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -384,16 +366,9 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,8 +393,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -471,6 +446,11 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         });
     }
 
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -487,8 +467,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -508,8 +486,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables

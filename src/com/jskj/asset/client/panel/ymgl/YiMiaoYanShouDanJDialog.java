@@ -74,9 +74,8 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -203,13 +202,13 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-        jToolBar1.add(jButton2);
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
+        jToolBar1.add(jButton3);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
@@ -218,14 +217,6 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
-
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setOpaque(false);
-        jToolBar1.add(jButton3);
 
         jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
@@ -460,7 +451,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                             .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(149, 149, 149)
+                        .addGap(167, 167, 167)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -762,7 +753,6 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
