@@ -73,7 +73,7 @@ public class AboutBox extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTextPane1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("jPanel2.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("jPanel2.border.titleFont"))); // NOI18N
-        jPanel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jPanel2.setFont(new java.awt.Font("宋体", 0, 11)); // NOI18N
         jPanel2.setName("jPanel2"); // NOI18N
 
         jLabel7.setFont(resourceMap.getFont("jLabel7.font")); // NOI18N

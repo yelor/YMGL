@@ -724,7 +724,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入客户单位!");
             return null;
         }
-        sale.setSaleId(jTextFieldXiaoshouId.getText());
+        sale.setSaleId(Integer.parseInt(jTextFieldXiaoshouId.getText()));
         sale.setCustomerId(3);
         sale.setDepartmentId(4);
         sale.setGongyingtype("ddddd");

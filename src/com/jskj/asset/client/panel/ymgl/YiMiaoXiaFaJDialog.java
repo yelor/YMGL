@@ -715,7 +715,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog{
         }
         sale.setCustomerId(3);
         sale.setDepartmentId(4);
-        sale.setSaleId("ee");
+        sale.setSaleId(Integer.parseInt(jTextFieldXiafaId.getText()));
 //        sale.setDanjutype("下发单据");
         sale_detail.setSaleId(jTextFieldXiafaId.getText());
         sale_detail.setYimiaoId(11);
