@@ -48,7 +48,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         init();
         initComponents();
         
-        jTextField1.setText(DanHao.getDanHao("cgsq"));
+        jTextField1.setText(DanHao.getDanHao("gdzc"));
         jTextField1.setEditable(false);
 //        shenqingDialog = this;
         
@@ -135,12 +135,15 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setShenqingdanRemark(jTextArea1.getText());
+        sqd.setDanjuleixingId(0);  //单据类型0，固定资产
         
         List<ZiChanLieBiaotb> zc = new ArrayList<ZiChanLieBiaotb>();
+        
+        //插入假数据
         for(int i = 0; i < 3; i ++){
             ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
             zclb.setCgsqId(jTextField1.getText());
-            zclb.setGdzcId(i+1000);
+            zclb.setCgzcId(i+1000);
             zclb.setQuantity(3);
             zc.add(zclb);
         }

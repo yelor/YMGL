@@ -52,7 +52,8 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         bindTable = new BindTableHelper<ZiChanCaiGouShenQing>(jSQTable, new ArrayList<ZiChanCaiGouShenQing>());
         bindTable.createTable(new String[][]{{"cgsqId", "采购单号"}, {"processId", "流程编号"}, {"checkId1", "负责人"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
 //        bindTable.setIntegerType(1);
-//        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 100}).setRowHeight(30);
+        bindTable.bind().setRowHeight(30);
+        new RefreshTask(0).execute();
     }
     
     @Action
@@ -172,7 +173,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jSQTable = new BaseTable(null);
+        jSQTable = new javax.swing.JTable();
         ctrlPane = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton11 = new javax.swing.JButton();
@@ -189,6 +190,8 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ShenQingShenPiJDialog.class);
+        setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
@@ -209,6 +212,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
             }
         ));
         jSQTable.setName("jSQTable"); // NOI18N
+        jSQTable.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jSQTable);
         jSQTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -222,7 +226,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(ShenQingShenPiJDialog.class, this);
         jButton11.setAction(actionMap.get("shenPiN")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ShenQingShenPiJDialog.class);
         jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
         jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
         jButton11.setFocusable(false);

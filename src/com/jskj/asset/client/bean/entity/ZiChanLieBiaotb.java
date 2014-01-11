@@ -3,7 +3,7 @@ package com.jskj.asset.client.bean.entity;
 public class ZiChanLieBiaotb {
     private String cgsqId;
 
-    private Integer gdzcId;
+    private Integer cgzcId;
 
     private Integer quantity;
 
@@ -15,12 +15,12 @@ public class ZiChanLieBiaotb {
         this.cgsqId = cgsqId == null ? null : cgsqId.trim();
     }
 
-    public Integer getGdzcId() {
-        return gdzcId;
+    public Integer getCgzcId() {
+        return cgzcId;
     }
 
-    public void setGdzcId(Integer gdzcId) {
-        this.gdzcId = gdzcId;
+    public void setCgzcId(Integer cgzcId) {
+        this.cgzcId = cgzcId;
     }
 
     public Integer getQuantity() {
