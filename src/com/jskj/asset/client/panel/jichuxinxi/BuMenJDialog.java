@@ -6,10 +6,23 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.DepartmentFindEntity;
+import com.jskj.asset.client.bean.entity.Departmenttb;
+import com.jskj.asset.client.bean.entity.Usertb;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
+import com.jskj.asset.client.panel.jichuxinxi.task.BumenUpdateTask;
+import com.jskj.asset.client.panel.user.UserPanel;
+import com.jskj.asset.client.panel.user.UserUpdateTask;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
@@ -18,6 +31,10 @@ import org.jdesktop.application.Action;
 public class BuMenJDialog extends javax.swing.JDialog {
 
     private final static Logger logger = Logger.getLogger(BuMenJDialog.class);
+    private BindTableHelper<Departmenttb> bindTable;
+    int resultCount = 0;
+    private List<Departmenttb> departments;
+    private BuMenInfoJDialog buMenInfoJDialog;
 
     /**
      * Creates new form YiMiaoJDialog
@@ -25,6 +42,44 @@ public class BuMenJDialog extends javax.swing.JDialog {
     public BuMenJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        bindTable = new BindTableHelper<Departmenttb>(jTableDp, new ArrayList<Departmenttb>());
+        bindTable.createTable(new String[][]{{"departmentId", "部门编号"}, {"departmentName", "部门名称"}, {"userId", "部门主管"}, {"tel", "电话"},
+        {"fax", "传真"}});
+        bindTable.setIntegerType(1);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(25);
+
+        //刷新部门列表
+        new ReloadTask().execute();
+    }
+
+    private class ReloadTask extends BuMenTask {
+
+        ReloadTask() {
+            super();
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+
+            DepartmentFindEntity dps = (DepartmentFindEntity) object;
+
+            if (dps != null) {
+                resultCount = dps.getCount();
+                logger.debug("total:" + resultCount + ",get user size:" + dps.getResult().size());
+
+                //存下所有的数据
+                departments = dps.getResult();
+                bindTable.refreshData(departments);
+            }
+        }
     }
 
     /**
@@ -48,12 +103,15 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton9 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableDp = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BuMenJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
+        setMaximumSize(new java.awt.Dimension(643, 520));
+        setMinimumSize(new java.awt.Dimension(643, 520));
         setName("Form"); // NOI18N
+        setResizable(false);
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
@@ -70,6 +128,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton6.setOpaque(false);
         jToolBar1.add(jButton6);
 
+        jButton7.setAction(actionMap.get("uploadPop")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setFocusable(false);
@@ -78,6 +137,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
+        jButton8.setAction(actionMap.get("deleteDeps")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setFocusable(false);
@@ -86,6 +146,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
+        jButton4.setAction(actionMap.get("reload")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setFocusable(false);
@@ -126,6 +187,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton9.setAction(actionMap.get("close")); // NOI18N
         jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
         jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
         jButton9.setFocusable(false);
@@ -139,64 +201,64 @@ public class BuMenJDialog extends javax.swing.JDialog {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "部门编号", "部门名称", "部门主管", "电话", "传真", "备注"
+
             }
         ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(120);
-            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);
-            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-            jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title5")); // NOI18N
-            jTable1.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
-            jTable1.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
-            jTable1.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
+        jTableDp.setName("jTableDp"); // NOI18N
+        jScrollPane2.setViewportView(jTableDp);
+        if (jTableDp.getColumnModel().getColumnCount() > 0) {
+            jTableDp.getColumnModel().getColumn(0).setPreferredWidth(120);
+            jTableDp.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTableDp.columnModel.title0")); // NOI18N
+            jTableDp.getColumnModel().getColumn(1).setPreferredWidth(120);
+            jTableDp.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTableDp.columnModel.title1")); // NOI18N
+            jTableDp.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title5")); // NOI18N
+            jTableDp.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
+            jTableDp.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
+            jTableDp.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -220,7 +282,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -279,19 +341,82 @@ public class BuMenJDialog extends javax.swing.JDialog {
 
     @Action
     public void addBuMen() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private BuMenInfoJDialog buMenInfoJDialog;
 
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 if (buMenInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    buMenInfoJDialog = new BuMenInfoJDialog(new javax.swing.JFrame(), true);
+                    buMenInfoJDialog = new BuMenInfoJDialog(BuMenJDialog.this);
                     buMenInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
+                buMenInfoJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(buMenInfoJDialog);
             }
         });
+    }
+
+    @Action
+    public void uploadPop() {
+         SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (buMenInfoJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    buMenInfoJDialog = new BuMenInfoJDialog(BuMenJDialog.this);
+                    buMenInfoJDialog.setLocationRelativeTo(mainFrame);
+                }
+                buMenInfoJDialog.setAddOrUpdate(false);
+                buMenInfoJDialog.setUpdatedData(selectedDps());
+                AssetClientApp.getApplication().show(buMenInfoJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void close() {
+        this.dispose();
+    }
+
+    @Action
+    public Task reload() {
+        //刷新部门列表
+        return new ReloadTask();
+    }
+
+    @Action
+    public Task deleteDeps() {
+        Departmenttb dps = selectedDps();
+        if (dps == null) {
+            AssetMessage.ERRORSYS("请选择部门!");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM(this, "确定删除部门:" + dps.getDepartmentName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new DeleteDpsTask(dps);
+        }
+        return null;
+    }
+
+    public Departmenttb selectedDps() {
+        if (jTableDp.getSelectedRow() >= 0) {
+            if (departments != null) {
+                return departments.get(jTableDp.getSelectedRow());
+            }
+        }
+        return null;
+    }
+
+    private class DeleteDpsTask extends BumenUpdateTask {
+
+        DeleteDpsTask(Departmenttb dpments) {
+            super(dpments, BumenUpdateTask.ENTITY_DELETE);
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            reload().execute();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -306,7 +431,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableDp;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

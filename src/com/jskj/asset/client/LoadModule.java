@@ -66,7 +66,6 @@ public class LoadModule extends BaseTask {
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -120,7 +119,6 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jMenuDW = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
@@ -259,6 +257,18 @@ public class LoadModule extends BaseTask {
 
         menuBar.add(baobiaoMenu);
 
+        jMenuItem2.setAction(actionMap.get("showBuMen")); // NOI18N
+        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        jMenuDW.add(jMenuItem2);
+
+        jMenuItem4.setAction(actionMap.get("showUserAdmin")); // NOI18N
+        jMenuItem4.setText(resourceMap.getString("jMenuItem4.text")); // NOI18N
+        jMenuItem4.setName("jMenuItem4"); // NOI18N
+        jMenuDW.add(jMenuItem4);
+
+        menuBar.add(jMenuDW);
+
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
@@ -281,22 +291,6 @@ public class LoadModule extends BaseTask {
 
         jMenuDW.setText(resourceMap.getString("jMenuDW.text")); // NOI18N
         jMenuDW.setName("jMenuDW"); // NOI18N
-
-        jMenuItem2.setAction(actionMap.get("showBuMen")); // NOI18N
-        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        jMenuDW.add(jMenuItem2);
-
-        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
-        jMenuItem3.setName("jMenuItem3"); // NOI18N
-        jMenuDW.add(jMenuItem3);
-
-        jMenuItem4.setAction(actionMap.get("showUserAdmin")); // NOI18N
-        jMenuItem4.setText(resourceMap.getString("jMenuItem4.text")); // NOI18N
-        jMenuItem4.setName("jMenuItem4"); // NOI18N
-        jMenuDW.add(jMenuItem4);
-
-        menuBar.add(jMenuDW);
 
         //加载日志分析器
         logger.info("加载日志分析器");
