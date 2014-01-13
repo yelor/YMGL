@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Saletb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.Sale_detailUpdateTask;
@@ -48,8 +49,8 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         initComponents();
         jTextFieldXiafaId.setText(DanHao.getDanHao("YMXF"));
         jTextFieldXiafaId.setEditable(false);
-        
-        ((BaseTextField)jTextFieldXiafadanwei).registerPopup(new IPopupBuilder() {
+
+        ((BaseTextField) jTextFieldXiafadanwei).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
@@ -77,6 +78,49 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
                     jTextFieldAddr.setText(bindedMap.get("kehudanweiAddr") == null ? "" : bindedMap.get("kehudanweiAddr").toString());
                     sale.setCustomerId((Integer) bindedMap.get("kehudanweiId"));
                 }
+            }
+        });
+
+        final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableYimiao).createSingleEditModel(new String[][]{
+            {"userId", "疫苗编号"}, {"userPassword", "疫苗名称", "false"}, {"userName", "规格", "true"},
+            {"total", "剂型", "true"}, {"newcolumn", "生产企业", "true"}, {"newcolumn", "单位", "true"}, {"newcolumn", "有效期至", "true"},
+            {"newcolumn", "数量", "true"}});
+
+        editTable.registerPopup(2, new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TABLE;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "user";
+            }
+
+            public String getConditionSQL() {
+                int selectedColumn = jTable1.getSelectedColumn();
+                int selectedRow = jTable1.getSelectedRow();
+                Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
+                String sql = "";
+                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
+                    sql = "user_name like \"%" + newColumnObj.toString() + "%\"";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"userName", "用户名"}, {"userPassword", "密码"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    Object id = bindedMap.get("userId");
+                    Object userPass = bindedMap.get("userPassword");
+                    Object userName = bindedMap.get("userName");
+
+                    editTable.insertValue(0, id);
+                    editTable.insertValue(1, userPass);
+                    editTable.insertValue(2, userName);
+                }
+
             }
         });
 
@@ -134,7 +178,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         jTextArea1 = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        jTableYimiao = new BaseTable(null);
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jTextFieldXiafadanwei = new BaseTextField();
@@ -313,7 +357,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        jTableYimiao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -340,18 +384,18 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
                 "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "有效期至", "数量"
             }
         ));
-        jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        jTable4.setName("jTable4"); // NOI18N
-        jScrollPane5.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable4.columnModel.title0")); // NOI18N
-            jTable4.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable4.columnModel.title1")); // NOI18N
-            jTable4.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable4.columnModel.title2")); // NOI18N
-            jTable4.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable4.columnModel.title3")); // NOI18N
-            jTable4.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTable4.columnModel.title4")); // NOI18N
-            jTable4.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable4.columnModel.title5")); // NOI18N
-            jTable4.getColumnModel().getColumn(6).setHeaderValue(resourceMap.getString("jTable4.columnModel.title6")); // NOI18N
-            jTable4.getColumnModel().getColumn(7).setHeaderValue(resourceMap.getString("jTable4.columnModel.title7")); // NOI18N
+        jTableYimiao.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        jTableYimiao.setName("jTableYimiao"); // NOI18N
+        jScrollPane5.setViewportView(jTableYimiao);
+        if (jTableYimiao.getColumnModel().getColumnCount() > 0) {
+            jTableYimiao.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title0")); // NOI18N
+            jTableYimiao.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title1")); // NOI18N
+            jTableYimiao.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title2")); // NOI18N
+            jTableYimiao.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title3")); // NOI18N
+            jTableYimiao.getColumnModel().getColumn(4).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title4")); // NOI18N
+            jTableYimiao.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title5")); // NOI18N
+            jTableYimiao.getColumnModel().getColumn(6).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title6")); // NOI18N
+            jTableYimiao.getColumnModel().getColumn(7).setHeaderValue(resourceMap.getString("jTableYimiao.columnModel.title7")); // NOI18N
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -611,6 +655,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入下发单位!");
             return null;
         }
+        yimiaoxiafa = new Sale_detail_tbFindEntity();
         sale.setCustomerId(3);
         sale.setDepartmentId(4);
         sale.setSaleId(jTextFieldXiafaId.getText());
@@ -624,7 +669,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
         for (int i = 0; i < 3; i++) {
             sale_detail.setSaleId(jTextFieldXiafaId.getText());
-            sale_detail.setYimiaoId(1000+i);
+            sale_detail.setYimiaoId(1000 + i);
             sale_detail.setQuantity(345);
             list.add(sale_detail);
         }
@@ -657,6 +702,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         }
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -688,7 +734,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTableYimiao;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;

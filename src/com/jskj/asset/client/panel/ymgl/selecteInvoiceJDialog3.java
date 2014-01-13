@@ -28,8 +28,6 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
     private final static Logger logger = Logger.getLogger(selecteInvoiceJDialog3.class);
 
     private AssetClientView assetClientView;
-    private YiMiaoXiaoShouJDialog yiMiaoXiaoShouJDialog;
-    private YiMiaoXiaFaJDialog yiMiaoXiaFaJDialog;
 
     /**
      * Creates new form selecteInvoiceJDialog
@@ -200,35 +198,27 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
                 dispose();
                 int selecteIndex = jComboBox1.getSelectedIndex();
                 if (selecteIndex == 0) {
-                    if (yiMiaoXiaFaJDialog == null) {
-                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                        yiMiaoXiaFaJDialog = new YiMiaoXiaFaJDialog();
-                        yiMiaoXiaFaJDialog.setLocationRelativeTo(mainFrame);
-                    }
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoXiaFaJDialog yiMiaoXiaFaJDialog = new YiMiaoXiaFaJDialog();
+                    yiMiaoXiaFaJDialog.setLocationRelativeTo(mainFrame);
                     yiMiaoXiaFaJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaFaJDialog);
-                } else if(selecteIndex == 1){
-                    if (yiMiaoXiaoShouJDialog == null) {
-                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                        yiMiaoXiaoShouJDialog = new YiMiaoXiaoShouJDialog(new javax.swing.JFrame(), true);
-                        yiMiaoXiaoShouJDialog.setLocationRelativeTo(mainFrame);
-                    }
+                } else if (selecteIndex == 1) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoXiaoShouJDialog yiMiaoXiaoShouJDialog = new YiMiaoXiaoShouJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoXiaoShouJDialog.setLocationRelativeTo(mainFrame);
                     yiMiaoXiaoShouJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaoShouJDialog);
-                } else if(selecteIndex == 2){
-                    if (yiMiaoXiaFaTuiKuJDialog == null) {
-                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                        yiMiaoXiaFaTuiKuJDialog = new YiMiaoXiaFaTuiKuJDialog(new javax.swing.JFrame(), true);
-                        yiMiaoXiaFaTuiKuJDialog.setLocationRelativeTo(mainFrame);
-                    }
+                } else if (selecteIndex == 2) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoXiaFaTuiKuJDialog yiMiaoXiaFaTuiKuJDialog = new YiMiaoXiaFaTuiKuJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoXiaFaTuiKuJDialog.setLocationRelativeTo(mainFrame);
                     yiMiaoXiaFaTuiKuJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaFaTuiKuJDialog);
-                }else {
-                    if (yiMiaoXiaoShouTuiHuoJDialog == null) {
-                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                        yiMiaoXiaoShouTuiHuoJDialog = new YiMiaoXiaoShouTuiHuoJDialog(new javax.swing.JFrame(), true);
-                        yiMiaoXiaoShouTuiHuoJDialog.setLocationRelativeTo(mainFrame);
-                    }
+                } else {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoXiaoShouTuiHuoJDialog yiMiaoXiaoShouTuiHuoJDialog = new YiMiaoXiaoShouTuiHuoJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoXiaoShouTuiHuoJDialog.setLocationRelativeTo(mainFrame);
                     yiMiaoXiaoShouTuiHuoJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaoShouTuiHuoJDialog);
                 }
