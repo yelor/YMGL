@@ -391,14 +391,14 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
  
             YiMiaotbFindEntity yimiaotbs = (YiMiaotbFindEntity) object;
 
-            if (yimiaotbs != null && yimiaotbs.getYimiaos().size() > 0) {
+            if (yimiaotbs != null && yimiaotbs.getResult().size() > 0) {
                 count = yimiaotbs.getCount();
                 //             jLabelTotal.setText(((pageIndex - 1) * YiMiaoTask.pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get yimao size:" + yimiaotbs.getYimiaos().size());
+                logger.debug("total:" + count + ",get yimao size:" + yimiaotbs.getResult().size());
 
 
                 //存下所有的数据
-                yimiaos = yimiaotbs.getYimiaos();
+                yimiaos = yimiaotbs.getResult();
 
                 BindTableHelper<YiMiaotb> bindTable = new BindTableHelper<YiMiaotb>(jTableYiMiao, yimiaos);
                 bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"yimiaoId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}, {"yimiaoTiaoxingma", "条形码"}});
