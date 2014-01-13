@@ -3,6 +3,8 @@
  */
 package com.jskj.asset.client;
 
+import com.jskj.asset.client.bean.UserSessionEntity;
+import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import java.awt.Font;
@@ -18,35 +20,59 @@ import org.jdesktop.application.SingleFrameApplication;
  * The main class of the application.
  */
 public class AssetClientApp extends SingleFrameApplication {
-
+    
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AssetClientApp.class);
-
+    
+    private static UserSessionEntity sessionMap;
+    
+    private static JFrame loginWindow;
+    
     public static String[] DEFAULT_FONT = new String[]{
         "Table.font", "TableHeader.font", "CheckBox.font", "Tree.font", "Viewport.font", "ProgressBar.font",
         "RadioButtonMenuItem.font", "ToolBar.font", "ColorChooser.font", "ToggleButton.font", "Panel.font",
         "TextArea.font", "Menu.font", "TableHeader.font" // ,"TextField.font"
-        , "OptionPane.font", "MenuBar.font", "Button.font", "Label.font", 
-        "PasswordField.font", "ScrollPane.font", "MenuItem.font", 
+        , "OptionPane.font", "MenuBar.font", "Button.font", "Label.font",
+        "PasswordField.font", "ScrollPane.font", "MenuItem.font",
         "ToolTip.font", "List.font", "EditorPane.font", "Table.font",
-        "TabbedPane.font", "RadioButton.font", "CheckBoxMenuItem.font", 
+        "TabbedPane.font", "RadioButton.font", "CheckBoxMenuItem.font",
         "TextPane.font", "PopupMenu.font", "TitledBorder.font", "ComboBox.font"
     };
+
+    /**
+     * @return the sessionMap
+     */
+    public static UserSessionEntity getSessionMap() {
+        return sessionMap;
+    }
+
+    /**
+     * @param aSessionMap the sessionMap to set
+     */
+    public static void setSessionMap(UserSessionEntity aSessionMap) {
+        sessionMap = aSessionMap;
+    }
 
     /**
      * At startup create and show the main frame of the application.
      */
     @Override
     protected void startup() {
+        
+        if (getSessionMap() == null || getSessionMap().getUsertb() == null) {
+            System.err.println("session is null, please re-login.");
+            return;
+        }
+        
         AssetClientView view = new AssetClientView(this);
         show(view);
         view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);;
-        view.getFrame().setTitle(Constants.WINTITLE + "【当前登陆用户: Test1，所属工作组：防疫站】");
+        view.getFrame().setTitle(Constants.WINTITLE + "【当前登陆用户: " + getSessionMap().getUsertb().getUserName() + "，角色：" + getSessionMap().getUsertb().getUserRoles() + "】");
 
         //初始化必要的功能
         view.loadMoudule().execute();
-
+        
         addExitListener(new Application.ExitListener() {
-
+            
             @Override
             public boolean canExit(EventObject event) {
                 int res = AssetMessage.CONFIRM("确定退出程序吗？");
@@ -56,7 +82,7 @@ public class AssetClientApp extends SingleFrameApplication {
                     return false;
                 }
             }
-
+            
             @Override
             public void willExit(EventObject event) {
             }
@@ -110,7 +136,19 @@ public class AssetClientApp extends SingleFrameApplication {
 //        } catch (Exception ex) {
 //            logger.error(ex);
 //        }
-
+        UserSessionEntity session = new UserSessionEntity();
+        Usertb usertb = new Usertb();
+        usertb.setUserName("Debug User");
+        usertb.setUserRoles("管理用户");
+        session.setUsertb(usertb);
+        AssetClientApp.setSessionMap(session);
+        
+        launch(AssetClientApp.class, args);
+    }
+    
+    public static void startupApplication(String[] args, JFrame window, UserSessionEntity aSessionMap) {
+        loginWindow = window;
+        sessionMap = aSessionMap;
         launch(AssetClientApp.class, args);
     }
 }

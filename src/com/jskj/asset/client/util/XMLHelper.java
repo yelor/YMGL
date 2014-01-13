@@ -4,9 +4,8 @@
  */
 package com.jskj.asset.client.util;
 
-
-
 import java.io.File;
+import java.io.InputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -25,17 +24,27 @@ public class XMLHelper<T> {
         this.xmlPath = xmlPath;
         this.xmlBean = xmlBean;
     }
+
     public XMLHelper(T xmlBean) {
-        this(System.getProperty("java.io.tmpdir")+"AssetClient"+File.separator+xmlBean.getClass().getSimpleName()+".xml",xmlBean);
+        this(System.getProperty("java.io.tmpdir") + "AssetClient" + File.separator + xmlBean.getClass().getSimpleName() + ".xml", xmlBean);
+    }
+    public XMLHelper() {
     }
 
-    private File file(String xmlPath){
-          File temp = new File(xmlPath);
-          File parentFile = new File(temp.getParent());
-          if(!parentFile.exists()){
-              parentFile.mkdirs();
-          }
-          return temp;
+    public T read(InputStream inputStream, T xmlBean) throws JAXBException {
+        JAXBContext jc = JAXBContext.newInstance(new Class[]{xmlBean.getClass()});
+        Unmarshaller unmarshaller = jc.createUnmarshaller();
+        T newxmllBean = (T) unmarshaller.unmarshal(inputStream);
+        return newxmllBean;
+    }
+
+    private File file(String xmlPath) {
+        File temp = new File(xmlPath);
+        File parentFile = new File(temp.getParent());
+        if (!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+        return temp;
     }
 
     public T read() throws JAXBException {
@@ -100,6 +109,6 @@ public class XMLHelper<T> {
 //        } catch (JAXBException ex) {
 //            Logger.getLogger(XMLHelper.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-     
+
     }
 }
