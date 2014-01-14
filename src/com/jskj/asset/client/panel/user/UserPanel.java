@@ -12,6 +12,7 @@ package com.jskj.asset.client.panel.user;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Usertb;
+import com.jskj.asset.client.bean.entity.UsertbAll;
 import com.jskj.asset.client.bean.entity.UsertbFindEntity;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -43,9 +44,9 @@ public final class UserPanel extends BasePanel {
 
     private int count;
 
-    private List<Usertb> users;
+    private List<UsertbAll> users;
     
-    private BindTableHelper<Usertb> bindTable;
+    private BindTableHelper<UsertbAll> bindTable;
 
     /**
      * Creates new form NoFoundPane
@@ -56,12 +57,11 @@ public final class UserPanel extends BasePanel {
         userPanel = this;
         pageIndex = 1;
         count = 0;
-        bindTable = new BindTableHelper<Usertb>(jTableUser, new ArrayList<Usertb>());
-        bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"departmentId", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
-        {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userBirthday", "生日"}, {"userPhone", "电话"}, {"userPosition", "地址"}});
+        bindTable = new BindTableHelper<UsertbAll>(jTableUser, new ArrayList<UsertbAll>());
+        bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"department.departmentName", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
+        {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"},{"userPhone", "电话"}});
         bindTable.setIntegerType(1);
-        bindTable.setDateType(8);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 50}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);
     }
 
     @Action

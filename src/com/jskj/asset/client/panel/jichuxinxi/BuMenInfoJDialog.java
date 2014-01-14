@@ -6,9 +6,13 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.bean.entity.Departmenttb;
-import com.jskj.asset.client.bean.entity.Usertb;
+import com.jskj.asset.client.bean.entity.DepartmenttbAll;
+import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.jichuxinxi.task.BumenUpdateTask;
+import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -18,7 +22,7 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class BuMenInfoJDialog extends javax.swing.JDialog {
-
+    
     private static final Logger logger = Logger.getLogger(BuMenInfoJDialog.class);
     private boolean isNew = false;
     Departmenttb dpstb = null;
@@ -34,8 +38,52 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
         initComponents();
         isNew = true;
         this.parent = parent;
-    }
 
+        /*为一个textfiled注册一个popup，注意需要有popup textfiled的dialog，需要extends BaseDialog*/
+        /*
+         registerPopup需要IPopupBuilder，IPopupBuilder需要以下的参数，请完善那些接口方法即可
+         getType：目前就2个，一个是点鼠标左键弹出的日期的popup>>TYPE_DATE_CLICK,一个是点回车弹出的popup>>TYPE_POPUP_TEXT
+         getWebServiceURI:webservice URL接口。这个很重要，就是弹出popup，将要访问哪个接口。在服务端定义这个接口的时候，记得返回的bean，
+         一定有2个参数，一个是 （int）count，另一个是（List）result。
+         getConditionSQL:这里的SQL语句注意是数据库的字段名，不是entity名。 
+         displayColumns：popup弹出来后，显示的内容
+         setBindedMap:点击popup返回的值，自己把object的值类型强制转化成自己需要。和你在regiter的时候，传入的URL返回bean有关。
+         */
+        ((BaseTextField) jTextFieldBoss).registerPopup(new IPopupBuilder() {
+            @Override
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            @Override
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "user";
+            }
+
+            @Override
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldBoss.getText().trim().equals("")) {
+                    sql = "user_name like \"%" + jTextFieldBoss.getText() + "%\"";
+                }
+                return sql;
+            }
+            
+            @Override
+            public String[][] displayColumns() {
+                return new String[][]{{"userName", "用户名"}, {"userPassword", "密码"}};
+            }
+            
+            @Override
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldBoss.setText(bindedMap.get("userName").toString());
+                    jTextBossId.setText(bindedMap.get("userId").toString());
+                }
+            }
+        });
+    }
+    
     public void setAddOrUpdate(boolean isAdd) {
         isNew = isAdd;
         if (isNew) {
@@ -47,17 +95,20 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
             jTextFieldTel.setText("");
             jTextFieldFax.setText("");
             jTextAreaDesc.setText("");
+            jTextBossId.setText("1");
             jTextFieldID.setEditable(false);
             dpstb = new Departmenttb();
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("新建部门")); // NOI18N
+            jButton2.setText("新增");
         } else {
             this.setTitle("更新部门:10");
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
+             jButton2.setText("更新");
         }
     }
-
-    public void setUpdatedData(Departmenttb dpstb) {
+    
+    public void setUpdatedData(DepartmenttbAll dpstb) {
         if (dpstb == null) {
             return;
         }
@@ -65,11 +116,11 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新用户:" + dpstb.getDepartmentId())); // NOI18N
         jTextFieldID.setText(dpstb.getDepartmentId().toString());
         jTextFieldName.setText(dpstb.getDepartmentName());
-        //jTextFieldBoss.setText(dpstb.getUserPhone());
+        jTextFieldBoss.setText((dpstb.getOwner()==null?"":dpstb.getOwner().getUserName()));
         jTextFieldTel.setText(dpstb.getTel());
         jTextFieldFax.setText(dpstb.getFax());
-        //usertb.setUserEntrydate(null);
         jTextAreaDesc.setText(dpstb.getDepartmentRemark());
+        jTextBossId.setText(String.valueOf(dpstb.getUserId()));
     }
 
     /**
@@ -81,6 +132,7 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextBossId = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldID = new javax.swing.JTextField();
@@ -89,7 +141,7 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldBoss = new javax.swing.JTextField();
+        jTextFieldBoss = new BaseTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldTel = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -99,8 +151,12 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
         jTextAreaDesc = new javax.swing.JTextArea();
         jCheckBoxCont = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jTextBossId.setEditable(false);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BuMenInfoJDialog.class);
+        jTextBossId.setText(resourceMap.getString("jTextBossId.text")); // NOI18N
+        jTextBossId.setName("jTextBossId"); // NOI18N
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -173,31 +229,30 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
                         .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldFax, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldBoss, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel2))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextFieldTel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldFax, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldBoss, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -291,44 +346,47 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
 //            }
 //        });
     }
-
+    
     @Action
     public void close() {
         this.dispose();
     }
-
+    
     @Action
     public Task newDepartmentTask() {
         dpstb.setDepartmentName(jTextFieldName.getText());
         dpstb.setDepartmentRemark(jTextAreaDesc.getText());
         dpstb.setFax(jTextFieldFax.getText());
         dpstb.setTel(jTextFieldTel.getText());
-        //dpstb.setUserId(WIDTH);
+        String bossId = jTextBossId.getText();
+        if (!bossId.trim().equals("")) {
+            dpstb.setUserId(Integer.parseInt(bossId));
+        }
         return new NewDepartmentTaskTask(dpstb);
     }
-
+    
     private class NewDepartmentTaskTask extends BumenUpdateTask {
-
+        
         NewDepartmentTaskTask(Departmenttb dpments) {
             super(dpments, isNew ? BumenUpdateTask.ENTITY_SAVE : BumenUpdateTask.ENTITY_UPDATE);
         }
-
+        
         @Override
         public void onSucceeded(Object result) {
-
+            
             if (result instanceof Exception) {
                 Exception e = (Exception) result;
                 AssetMessage.ERRORSYS(e.getMessage());
                 logger.error(e);
                 return;
             }
-
+            
             parent.reload().execute();
             if (!jCheckBoxCont.isSelected()) {
                 close();
             }
         }
-
+        
     }
 
 
@@ -345,6 +403,7 @@ public class BuMenInfoJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaDesc;
+    private javax.swing.JTextField jTextBossId;
     private javax.swing.JTextField jTextFieldBoss;
     private javax.swing.JTextField jTextFieldFax;
     private javax.swing.JTextField jTextFieldID;

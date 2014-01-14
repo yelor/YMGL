@@ -10,9 +10,9 @@ import java.util.List;
  *
  * @author 305027939
  */
-public class DepartmentFindEntity extends Departmenttb{
+public class DepartmentFindEntity {
     private int count;
-    private List<Departmenttb> result;
+    private List<DepartmenttbAll> result;
 
     /**
      * @return the count
@@ -31,14 +31,14 @@ public class DepartmentFindEntity extends Departmenttb{
     /**
      * @return the result
      */
-    public List<Departmenttb> getResult() {
+    public List<DepartmenttbAll> getResult() {
         return result;
     }
 
     /**
      * @param result the result to set
      */
-    public void setResult(List<Departmenttb> result) {
+    public void setResult(List<DepartmenttbAll> result) {
         this.result = result;
     }
     

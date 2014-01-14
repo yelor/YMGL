@@ -8,12 +8,12 @@ package com.jskj.asset.client.panel.jichuxinxi;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.DepartmentFindEntity;
 import com.jskj.asset.client.bean.entity.Departmenttb;
+import com.jskj.asset.client.bean.entity.DepartmenttbAll;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.BumenUpdateTask;
-import com.jskj.asset.client.panel.user.UserPanel;
-import com.jskj.asset.client.panel.user.UserUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +31,9 @@ import org.jdesktop.application.Task;
 public class BuMenJDialog extends javax.swing.JDialog {
 
     private final static Logger logger = Logger.getLogger(BuMenJDialog.class);
-    private BindTableHelper<Departmenttb> bindTable;
+    private BindTableHelper<DepartmenttbAll> bindTable;
     int resultCount = 0;
-    private List<Departmenttb> departments;
+    private List<DepartmenttbAll> departments;
     private BuMenInfoJDialog buMenInfoJDialog;
 
     /**
@@ -43,8 +43,8 @@ public class BuMenJDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        bindTable = new BindTableHelper<Departmenttb>(jTableDp, new ArrayList<Departmenttb>());
-        bindTable.createTable(new String[][]{{"departmentId", "部门编号"}, {"departmentName", "部门名称"}, {"userId", "部门主管"}, {"tel", "电话"},
+        bindTable = new BindTableHelper<DepartmenttbAll>(jTableDp, new ArrayList<DepartmenttbAll>());
+        bindTable.createTable(new String[][]{{"departmentId", "部门编号"}, {"departmentName", "部门名称"}, {"owner.userName", "部门主管"}, {"tel", "电话"},
         {"fax", "传真"}});
         bindTable.setIntegerType(1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(25);
@@ -103,7 +103,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton9 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableDp = new javax.swing.JTable();
+        jTableDp = new BaseTable(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BuMenJDialog.class);
@@ -358,7 +358,12 @@ public class BuMenJDialog extends javax.swing.JDialog {
 
     @Action
     public void uploadPop() {
-         SwingUtilities.invokeLater(new Runnable() {
+        DepartmenttbAll dps = selectedDps();
+        if (dps == null) {
+            AssetMessage.ERRORSYS("请选择用户!");
+            return;
+        }
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 if (buMenInfoJDialog == null) {
@@ -398,7 +403,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
         return null;
     }
 
-    public Departmenttb selectedDps() {
+    public DepartmenttbAll selectedDps() {
         if (jTableDp.getSelectedRow() >= 0) {
             if (departments != null) {
                 return departments.get(jTableDp.getSelectedRow());

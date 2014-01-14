@@ -23,13 +23,13 @@ public class AssetMessage {
     public static final int WARN_MESSAGE = 2;
 
     public static void ERROR(String text) {
-        // JOptionPane.showMessageDialog(AssetClientApp.getApplication().getMainFrame(), text, "错误", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(AssetClientApp.getApplication().getMainFrame(), text, "错误", JOptionPane.ERROR_MESSAGE);
         AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
         clientView.setStatus(text, ERROR_MESSAGE);
     }
 
     public static void ERRORSYS(String text) {
-        // JOptionPane.showMessageDialog(AssetClientApp.getApplication().getMainFrame(), text, "错误", JOptionPane.ERROR_MESSAGE);
+         JOptionPane.showMessageDialog(AssetClientApp.getApplication().getMainFrame(), text, "错误", JOptionPane.ERROR_MESSAGE);
         AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
         clientView.setStatus(text, ERROR_MESSAGE);
     }
