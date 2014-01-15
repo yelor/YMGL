@@ -13,7 +13,7 @@ import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiJDialo
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiJDialog;
 import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunJDialog;
 import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoxiaoshoumingxiJDialog;
-import com.jskj.asset.client.panel.jichuxinxi.BuMenJDialog;
+import com.jskj.asset.client.panel.jichuxinxi.BuMenPanel;
 import com.jskj.asset.client.panel.jichuxinxi.DanJuLeiXingJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DanWeiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinJDialog;
@@ -354,7 +354,7 @@ public class LoadModule extends BaseTask {
 
     @Action
     public void showUserAdmin() {
-        OpenTabTask task = new OpenTabTask("用户管理", new UserPanel(), false);
+        OpenTabTask task = new OpenTabTask("用户", new UserPanel(), false);
         task.execute();
     }
 
@@ -452,19 +452,22 @@ public class LoadModule extends BaseTask {
     @Action
     public void showBuMen() {
 
-        SwingUtilities.invokeLater(new Runnable() {
-            private BuMenJDialog buMenJDialog;
-
-            @Override
-            public void run() {
-                if (buMenJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    buMenJDialog = new BuMenJDialog(new javax.swing.JFrame(), true);
-                    buMenJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(buMenJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("部门", new BuMenPanel(), false);
+        task.execute();
+        
+//        SwingUtilities.invokeLater(new Runnable() {
+//            private BuMenJDialog buMenJDialog;
+//
+//            @Override
+//            public void run() {
+//                if (buMenJDialog == null) {
+//                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+//                    buMenJDialog = new BuMenJDialog(new javax.swing.JFrame(), true);
+//                    buMenJDialog.setLocationRelativeTo(mainFrame);
+//                }
+//                AssetClientApp.getApplication().show(buMenJDialog);
+//            }
+//        });
     }
 
     @Action

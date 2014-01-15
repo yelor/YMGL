@@ -9,6 +9,7 @@ import com.jskj.asset.client.bean.entity.Departmenttb;
 import com.jskj.asset.client.bean.entity.DepartmenttbAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.jichuxinxi.task.BumenUpdateTask;
@@ -21,20 +22,20 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class BuMenInfoJDialog extends javax.swing.JDialog {
+public class BuMenInfoJDialog extends BaseDialog {
     
     private static final Logger logger = Logger.getLogger(BuMenInfoJDialog.class);
     private boolean isNew = false;
     Departmenttb dpstb = null;
-    BuMenJDialog parent = null;
+    BuMenPanel parent = null;
 
     /**
      * Creates new form DanWeiInfoJDialog
      *
      * @param parent
      */
-    public BuMenInfoJDialog(BuMenJDialog parent) {
-        super(parent);
+    public BuMenInfoJDialog(BuMenPanel parent) {
+        super();
         initComponents();
         isNew = true;
         this.parent = parent;

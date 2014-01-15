@@ -9,8 +9,8 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.DepartmentFindEntity;
 import com.jskj.asset.client.bean.entity.Departmenttb;
 import com.jskj.asset.client.bean.entity.DepartmenttbAll;
-import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.BumenUpdateTask;
@@ -28,9 +28,9 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class BuMenJDialog extends javax.swing.JDialog {
+public class BuMenPanel extends BasePanel {
 
-    private final static Logger logger = Logger.getLogger(BuMenJDialog.class);
+    private final static Logger logger = Logger.getLogger(BuMenPanel.class);
     private BindTableHelper<DepartmenttbAll> bindTable;
     int resultCount = 0;
     private List<DepartmenttbAll> departments;
@@ -39,8 +39,8 @@ public class BuMenJDialog extends javax.swing.JDialog {
     /**
      * Creates new form YiMiaoJDialog
      */
-    public BuMenJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public BuMenPanel() {
+        super();
         initComponents();
 
         bindTable = new BindTableHelper<DepartmenttbAll>(jTableDp, new ArrayList<DepartmenttbAll>());
@@ -49,8 +49,11 @@ public class BuMenJDialog extends javax.swing.JDialog {
         bindTable.setIntegerType(1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(25);
 
-        //刷新部门列表
-        new ReloadTask().execute();
+    }
+
+    @Override
+    public Task reload(Object param) {
+        return null;
     }
 
     private class ReloadTask extends BuMenTask {
@@ -100,26 +103,19 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableDp = new BaseTable(null);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BuMenJDialog.class);
-        setTitle(resourceMap.getString("Form.title")); // NOI18N
-        setMaximumSize(new java.awt.Dimension(643, 520));
-        setMinimumSize(new java.awt.Dimension(643, 520));
         setName("Form"); // NOI18N
-        setResizable(false);
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(BuMenJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(BuMenPanel.class, this);
         jButton6.setAction(actionMap.get("addBuMen")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BuMenPanel.class);
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setFocusable(false);
@@ -187,18 +183,6 @@ public class BuMenJDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton9.setAction(actionMap.get("close")); // NOI18N
-        jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
-        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton9.setName("jButton9"); // NOI18N
-        jButton9.setOpaque(false);
-        jToolBar1.add(jButton9);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setName("jPanel2"); // NOI18N
-
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         jTableDp.setModel(new javax.swing.table.DefaultTableModel(
@@ -261,82 +245,62 @@ public class BuMenJDialog extends javax.swing.JDialog {
             jTableDp.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable1.columnModel.title4")); // NOI18N
         }
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                BuMenJDialog dialog = new BuMenJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(BuMenJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                BuMenJDialog dialog = new BuMenJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     @Action
@@ -347,7 +311,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
             public void run() {
                 if (buMenInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    buMenInfoJDialog = new BuMenInfoJDialog(BuMenJDialog.this);
+                    buMenInfoJDialog = new BuMenInfoJDialog(BuMenPanel.this);
                     buMenInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
                 buMenInfoJDialog.setAddOrUpdate(true);
@@ -368,7 +332,7 @@ public class BuMenJDialog extends javax.swing.JDialog {
             public void run() {
                 if (buMenInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    buMenInfoJDialog = new BuMenInfoJDialog(BuMenJDialog.this);
+                    buMenInfoJDialog = new BuMenInfoJDialog(BuMenPanel.this);
                     buMenInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
                 buMenInfoJDialog.setAddOrUpdate(false);
@@ -380,10 +344,11 @@ public class BuMenJDialog extends javax.swing.JDialog {
 
     @Action
     public void close() {
-        this.dispose();
+        //this.dispose();
     }
 
     @Action
+    @Override
     public Task reload() {
         //刷新部门列表
         return new ReloadTask();
@@ -433,8 +398,6 @@ public class BuMenJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableDp;
     private javax.swing.JToolBar jToolBar1;
