@@ -5,15 +5,20 @@
  */
 package com.jskj.asset.client.panel.user;
 
+import com.jskj.asset.client.bean.entity.DepartmentFindEntity;
+import com.jskj.asset.client.bean.entity.DepartmenttbAll;
 import com.jskj.asset.client.bean.entity.Usertb;
-import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.layout.BaseListModel;
 import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.layout.BaseTextField;
-import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
 import com.jskj.asset.client.util.DateHelper;
-import java.util.HashMap;
+import com.jskj.asset.client.util.IdcardUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -28,6 +33,7 @@ public class UserDialog extends BaseDialog {
     private final BasePanel parentPanel;
     private Usertb usertb;
     private boolean isNew;
+    private List<DepartmenttbAll> departments;
 
     /**
      * Creates new form UserDialog
@@ -43,6 +49,9 @@ public class UserDialog extends BaseDialog {
 
     public void setAddOrUpdate(boolean isAdd) {
         isNew = isAdd;
+        jListRoles.setModel(new BaseListModel<String>(new ArrayList(), ""));
+        //得到部门和角色
+        new BumenTask().execute();
         if (isNew) {
             this.setTitle("新建用户");
             jTextFieldUserName.setText("");
@@ -50,12 +59,17 @@ public class UserDialog extends BaseDialog {
             jTextFieldPhone.setText("");
             jRadioButton1.setSelected(true);
             jTextFieldIDCard.setText("");
-            //usertb.setUserEntrydate(null);
             jTextFieldAddress.setText("");
+            jTextFieldEmail.setText("");
+            jTextAreaDesc.setText("");
+            jCheckBox1.setEnabled(true);
+            jCheckBox1.setSelected(false);
             usertb = new Usertb();
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("新建用户")); // NOI18N
         } else {
             this.setTitle("更新用户:10");
+            jCheckBox1.setEnabled(false);
+            jCheckBox1.setSelected(false);
         }
     }
 
@@ -68,10 +82,65 @@ public class UserDialog extends BaseDialog {
         jTextFieldUserName.setText(usertb.getUserName());
         jTextFieldPasswd.setText(usertb.getUserPassword());
         jTextFieldPhone.setText(usertb.getUserPhone());
-        jRadioButton1.setSelected(usertb.getUserSex().equals("男") ? true : false);
+        jRadioButton1.setSelected(usertb.getUserSex().equals("男"));
         jTextFieldIDCard.setText(usertb.getUserIdentitycard());
-        //usertb.setUserEntrydate(null);
         jTextFieldAddress.setText(usertb.getUserPosition());
+
+        String rolesStr = usertb.getUserRoles();
+
+        if (rolesStr != null && !rolesStr.equals("")) {
+            String[] rolesArr = rolesStr.split(",");
+            List arrayList = new ArrayList(Arrays.asList(rolesArr));
+            jListRoles.setModel(new BaseListModel<String>(arrayList, ""));
+        }
+
+    }
+
+    private class BumenTask extends BuMenTask {
+
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            if (object != null && object instanceof DepartmentFindEntity) {
+                DepartmentFindEntity depart = (DepartmentFindEntity) object;
+                departments = depart.getResult();
+                jListBumen.setModel(new BaseListModel<DepartmenttbAll>(departments, "getDepartmentName"));
+
+                if (usertb != null && usertb.getDepartmentId() != null && usertb.getDepartmentId() > 0) {
+                    jListBumen.setSelectedValue(getNameByDepartmentID(usertb.getDepartmentId()), true);
+                }
+
+            } else {
+                logger.error("BumenTask returns null or not a DepartmentFindEntity object.");
+            }
+        }
+    }
+
+    public String getNameByDepartmentID(int depID) {
+        if (departments != null) {
+            for (DepartmenttbAll dep : departments) {
+                if (dep.getDepartmentId() == depID) {
+                    return dep.getDepartmentName();
+                }
+            }
+        }
+        return "";
+    }
+
+    public int getIDByDepartmentName(String name) {
+        if (departments != null) {
+            for (DepartmenttbAll dep : departments) {
+                if (dep.getDepartmentName().equalsIgnoreCase(name)) {
+                    return dep.getDepartmentId();
+                }
+            }
+        }
+        return 0;
     }
 
     /**
@@ -108,13 +177,14 @@ public class UserDialog extends BaseDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListBumen = new javax.swing.JList();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboBoxRole = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jListDepart = new javax.swing.JList();
+        jListRoles = new javax.swing.JList();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
@@ -217,7 +287,7 @@ public class UserDialog extends BaseDialog {
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                             .add(jTextFieldPasswd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                     .add(jScrollPane1)
-                    .add(jTextFieldAddress, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 373, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jTextFieldAddress))
                 .add(0, 10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -269,30 +339,29 @@ public class UserDialog extends BaseDialog {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "财务部", "采购部", "行政部", "办公室" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setName("jList1"); // NOI18N
-        jScrollPane2.setViewportView(jList1);
+        jListBumen.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListBumen.setName("jListBumen"); // NOI18N
+        jScrollPane2.setViewportView(jListBumen);
 
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通用户", "审核权", "审批权", "管理权" }));
-        jComboBox1.setName("jComboBox1"); // NOI18N
+        jComboBoxRole.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通用户", "审核权", "审批权", "管理权" }));
+        jComboBoxRole.setName("jComboBoxRole"); // NOI18N
 
+        jButton1.setAction(actionMap.get("addRole")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
+        jButton2.setAction(actionMap.get("removeRole")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
 
-        jListDepart.setName("jListDepart"); // NOI18N
-        jScrollPane3.setViewportView(jListDepart);
+        jListRoles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListRoles.setName("jListRoles"); // NOI18N
+        jScrollPane3.setViewportView(jListRoles);
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -304,15 +373,15 @@ public class UserDialog extends BaseDialog {
                     .add(jLabel10)
                     .add(jLabel9))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jPanel2Layout.createSequentialGroup()
                         .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jComboBoxRole, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jButton1)
                             .add(jButton2))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 125, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 125, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jScrollPane2))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -325,7 +394,7 @@ public class UserDialog extends BaseDialog {
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel2Layout.createSequentialGroup()
                         .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jComboBoxRole, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jLabel10))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton1)
@@ -335,22 +404,25 @@ public class UserDialog extends BaseDialog {
                 .add(0, 0, Short.MAX_VALUE))
         );
 
+        jCheckBox1.setText(resourceMap.getString("jCheckBox1.text")); // NOI18N
+        jCheckBox1.setName("jCheckBox1"); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(layout.createSequentialGroup()
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(jButton4)
-                        .add(18, 18, 18)
-                        .add(jButton3)))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jCheckBox1)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jButton4)
+                .add(18, 18, 18)
+                .add(jButton3)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -362,8 +434,10 @@ public class UserDialog extends BaseDialog {
                     .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton3)
-                    .add(jButton4))
+                    .add(jCheckBox1)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jButton3)
+                        .add(jButton4)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -421,18 +495,55 @@ public class UserDialog extends BaseDialog {
     public Task submitForm() {
         if (jTextFieldUserName.getText().trim().equals("")
                 || jTextFieldPasswd.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入用户名和密码!");
+            AssetMessage.ERRORSYS("请输入用户名和密码.");
             return null;
         }
+
+        String idcard = jTextFieldIDCard.getText();
+        if (!idcard.trim().equals("")) {
+            if (IdcardUtils.validateCard(idcard)) {
+                usertb.setUserIdentitycard(idcard);
+                usertb.setUserBirthday(DateHelper.getStringtoDate(IdcardUtils.getBirthByIdCard(idcard), "yyyyMMdd"));
+            } else {
+                AssetMessage.ERRORSYS("身份证号码有误，请检查.");
+                return null;
+            }
+        } else {
+            AssetMessage.ERRORSYS("请输入身份证号码.");
+            return null;
+        }
+
+        Object selectObj = jListBumen.getSelectedValue();
+        if (selectObj != null) {
+            usertb.setDepartmentId(getIDByDepartmentName(selectObj.toString()));
+        } else {
+            AssetMessage.ERRORSYS("请选择部门.");
+            return null;
+        }
+
         usertb.setUserName(jTextFieldUserName.getText());
         usertb.setUserPassword(jTextFieldPasswd.getText());
         usertb.setUserPhone(jTextFieldPhone.getText());
         usertb.setUserSex(jRadioButton1.isSelected() ? "男" : "女");
         usertb.setUserIdentitycard(jTextFieldIDCard.getText());
-        //usertb.setUserEntrydate(null);
+        usertb.setUserEmail(jTextFieldEmail.getText());
+        if (isNew) {
+            usertb.setUserEntrydate(new Date());
+        }
         usertb.setUserPosition(jTextFieldAddress.getText());
-        usertb.setDepartmentId(1);
-        usertb.setUserBirthday(DateHelper.getStringtoDate("1980/01/01"));
+
+        BaseListModel<String> mode = (BaseListModel<String>) jListRoles.getModel();
+        List<String> source = mode.getSource();
+        String roles = "";
+        if (source != null && source.size() > 0) {
+            for (int i = 0; i < source.size(); i++) {
+                roles += source.get(i);
+                if (i < (source.size() - 1)) {
+                    roles += ",";
+                }
+            }
+        }
+        usertb.setUserRoles(roles);
 
         return new SubmitFormTask(usertb);
     }
@@ -453,8 +564,43 @@ public class UserDialog extends BaseDialog {
             }
 
             parentPanel.reload().execute();
-            exit();
+            if (!jCheckBox1.isSelected()) {
+                exit();
+            } else {
+                jTextFieldUserName.setText("");
+                jTextFieldIDCard.setText("");
+            }
         }
+    }
+
+    @Action
+    public void addRole() {
+        Object item = jComboBoxRole.getSelectedItem();
+        if (item != null) {
+            BaseListModel<String> mode = (BaseListModel<String>) jListRoles.getModel();
+            List source = mode.getSource();
+
+            if (source.contains(item)) {
+                return;
+            }
+
+            source.add(item);
+            BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+            jListRoles.setModel(newMode);
+        }
+    }
+
+    @Action
+    public void removeRole() {
+        Object selectedValue = jListRoles.getSelectedValue();
+        if (selectedValue == null) {
+            return;
+        }
+        BaseListModel<String> mode = (BaseListModel<String>) jListRoles.getModel();
+        List<String> source = mode.getSource();
+        source.remove(selectedValue.toString());
+        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+        jListRoles.setModel(newMode);
     }
 
 
@@ -464,7 +610,8 @@ public class UserDialog extends BaseDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox jComboBoxRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -475,8 +622,8 @@ public class UserDialog extends BaseDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList1;
-    private javax.swing.JList jListDepart;
+    private javax.swing.JList jListBumen;
+    private javax.swing.JList jListRoles;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
