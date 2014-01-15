@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -20,13 +21,13 @@ import org.jdesktop.application.SingleFrameApplication;
  * The main class of the application.
  */
 public class AssetClientApp extends SingleFrameApplication {
-    
+
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AssetClientApp.class);
-    
+
     private static UserSessionEntity sessionMap;
-    
+
     private static JFrame loginWindow;
-    
+
     public static String[] DEFAULT_FONT = new String[]{
         "Table.font", "TableHeader.font", "CheckBox.font", "Tree.font", "Viewport.font", "ProgressBar.font",
         "RadioButtonMenuItem.font", "ToolBar.font", "ColorChooser.font", "ToggleButton.font", "Panel.font",
@@ -57,12 +58,12 @@ public class AssetClientApp extends SingleFrameApplication {
      */
     @Override
     protected void startup() {
-        
+
         if (getSessionMap() == null || getSessionMap().getUsertb() == null) {
             System.err.println("session is null, please re-login.");
             return;
         }
-        
+
         AssetClientView view = new AssetClientView(this);
         show(view);
         view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);;
@@ -70,9 +71,9 @@ public class AssetClientApp extends SingleFrameApplication {
 
         //初始化必要的功能
         view.loadMoudule().execute();
-        
+
         addExitListener(new Application.ExitListener() {
-            
+
             @Override
             public boolean canExit(EventObject event) {
                 int res = AssetMessage.CONFIRM("确定退出程序吗？");
@@ -82,7 +83,7 @@ public class AssetClientApp extends SingleFrameApplication {
                     return false;
                 }
             }
-            
+
             @Override
             public void willExit(EventObject event) {
             }
@@ -105,8 +106,6 @@ public class AssetClientApp extends SingleFrameApplication {
             for (String DEFAULT_FONT1 : AssetClientApp.DEFAULT_FONT) {
                 UIManager.put(DEFAULT_FONT1, font);
             }
-            UIManager.put("Tree.font", Constants.TREE_FONT);
-
             // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
         } catch (Exception e) {
             logger.error(e);
@@ -127,6 +126,19 @@ public class AssetClientApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
+        UserSessionEntity session = new UserSessionEntity();
+        Usertb usertb = new Usertb();
+        usertb.setUserName("Debug User");
+        usertb.setUserRoles("管理用户");
+        session.setUsertb(usertb);
+        AssetClientApp.setSessionMap(session);
+
+        launch(AssetClientApp.class, args);
+    }
+
+    public static void startupApplication(String[] args, JFrame window, UserSessionEntity aSessionMap) {
+        loginWindow = window;
+        sessionMap = aSessionMap;
 //        try {
 //            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
 //            UIManager.put("ToolBar.isPaintPlainBackground", Boolean.TRUE);
@@ -136,19 +148,6 @@ public class AssetClientApp extends SingleFrameApplication {
 //        } catch (Exception ex) {
 //            logger.error(ex);
 //        }
-        UserSessionEntity session = new UserSessionEntity();
-        Usertb usertb = new Usertb();
-        usertb.setUserName("Debug User");
-        usertb.setUserRoles("管理用户");
-        session.setUsertb(usertb);
-        AssetClientApp.setSessionMap(session);
-        
-        launch(AssetClientApp.class, args);
-    }
-    
-    public static void startupApplication(String[] args, JFrame window, UserSessionEntity aSessionMap) {
-        loginWindow = window;
-        sessionMap = aSessionMap;
         launch(AssetClientApp.class, args);
     }
 }

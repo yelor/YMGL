@@ -87,6 +87,7 @@ public class LoadModule extends BaseTask {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(LoadModule.class);
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem switchUserMenuItem = new javax.swing.JMenuItem();
         jichuMenu = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -129,6 +130,10 @@ public class LoadModule extends BaseTask {
         exitMenuItem.setText(resourceMap.getString("exitMenuItem.text")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
+        
+        switchUserMenuItem.setText("其他用户");
+        switchUserMenuItem.setName("switchUserMenuItem"); // NOI18N
+        fileMenu.add(switchUserMenuItem);
 
         menuBar.add(fileMenu);
 

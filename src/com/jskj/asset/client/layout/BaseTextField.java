@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.layout;
 
+import com.jskj.asset.client.util.DateChooser;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -41,8 +42,35 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
     }
 
-    /*为一个textfiled注册一个popup
-     registerPopup需要IPopupBuilder
+    /**
+     * 为一个textfiled注册一带有图标的POPUP_TYPE,PARAMETER为扩展参数
+     * 1.如果是TYPE_DATE_CLICK：可以用这个参数来表示时间格式"yyyy-MM-dd"
+     * 2....
+     * @param POPUP_TYPE
+     * @param PARAMETER 
+     */
+    public void registerPopup(int POPUP_TYPE,String PARAMETER) {
+        switch (POPUP_TYPE) {
+            case IPopupBuilder.TYPE_DATE_CLICK:
+                icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_DATE));
+                break;
+            case IPopupBuilder.TYPE_POPUP_TEXT:
+                icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TEXT));
+                break;
+            default:
+                icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TABLE));
+        }
+        if (POPUP_TYPE == IPopupBuilder.TYPE_DATE_CLICK) {
+            DateChooser dateChooser1 = DateChooser.getInstance(PARAMETER);
+            dateChooser1.register(this);
+        }
+        hasRegister = true;
+    }
+
+    /**
+     * 为一个textfiled注册一个popup
+     * registerPopup需要IPopupBuilder
+     * @param popBuilder 
      */
     public void registerPopup(IPopupBuilder popBuilder) {
         switch (popBuilder.getType()) {
@@ -104,7 +132,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
     }
 
-    public void hidePanel() {
+    private void hidePanel() {
         if (pop != null) {
             isShow = false;
             pop.hide();
