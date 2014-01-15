@@ -129,56 +129,69 @@ public final class UserPanel extends BasePanel {
 
         setName("Form"); // NOI18N
 
-        ctrlPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         ctrlPane.setName("ctrlPane"); // NOI18N
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(UserPanel.class, this);
         jButtonAdd.setAction(actionMap.get("addUser")); // NOI18N
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(UserPanel.class);
         jButtonAdd.setIcon(resourceMap.getIcon("jButtonAdd.icon")); // NOI18N
         jButtonAdd.setText(resourceMap.getString("jButtonAdd.text")); // NOI18N
+        jButtonAdd.setBorderPainted(false);
         jButtonAdd.setFocusable(false);
         jButtonAdd.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButtonAdd.setName("jButtonAdd"); // NOI18N
+        jButtonAdd.setOpaque(false);
         jToolBar1.add(jButtonAdd);
 
         jButton1.setAction(actionMap.get("updateUser")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
         jButton2.setAction(actionMap.get("deleteUser")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
+        jToolBar2.setBorderPainted(false);
         jToolBar2.setName("jToolBar2"); // NOI18N
+        jToolBar2.setOpaque(false);
 
         jButton3.setAction(actionMap.get("pagePrev")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar2.add(jButton3);
 
         jButton4.setAction(actionMap.get("pageNext")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setOpaque(false);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar2.add(jButton4);
 
@@ -234,7 +247,7 @@ public final class UserPanel extends BasePanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
