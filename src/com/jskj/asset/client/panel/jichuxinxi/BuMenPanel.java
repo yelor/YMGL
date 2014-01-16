@@ -157,6 +157,7 @@ public class BuMenPanel extends BasePanel {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
+        jButton5.setAction(actionMap.get("print")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setBorderPainted(false);
@@ -166,6 +167,7 @@ public class BuMenPanel extends BasePanel {
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
+        jButton3.setAction(actionMap.get("print")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setBorderPainted(false);
@@ -175,6 +177,7 @@ public class BuMenPanel extends BasePanel {
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
 
+        jButton2.setAction(actionMap.get("print")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
@@ -397,6 +400,11 @@ public class BuMenPanel extends BasePanel {
         protected void succeeded(Object result) {
             reload().execute();
         }
+    }
+
+    @Action
+    public Task print() {
+        return bindTable.createPrinter("部门信息").buildInBackgound();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

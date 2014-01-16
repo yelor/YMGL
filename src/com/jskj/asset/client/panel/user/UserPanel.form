@@ -20,7 +20,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="ctrlPane" alignment="0" max="32767" attributes="0"/>
-          <Component id="jScrollPane1" alignment="1" pref="534" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -43,8 +43,8 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jToolBar1" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabelTotal" min="-2" pref="81" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jToolBar2" min="-2" max="-2" attributes="0"/>
@@ -110,6 +110,34 @@
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
                 <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonReload">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="reload" methodName="reload"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jButtonReload.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButtonReload.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
+                <Property name="name" type="java.lang.String" value="jButtonReload" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonPrint">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="print" methodName="print"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jButtonPrint.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButtonPrint.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
+                <Property name="name" type="java.lang.String" value="jButtonPrint" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>

@@ -26,7 +26,6 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
-import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
@@ -41,12 +40,12 @@ public final class UserPanel extends BasePanel {
     private final UserPanel userPanel;
 
     private int pageIndex;
-
+    public int pageSize;
     private int count;
 
     private List<UsertbAll> users;
-    
-    private BindTableHelper<UsertbAll> bindTable;
+
+    private final BindTableHelper<UsertbAll> bindTable;
 
     /**
      * Creates new form NoFoundPane
@@ -56,17 +55,18 @@ public final class UserPanel extends BasePanel {
         initComponents();
         userPanel = this;
         pageIndex = 1;
+        pageSize = 10;
         count = 0;
         bindTable = new BindTableHelper<UsertbAll>(jTableUser, new ArrayList<UsertbAll>());
         bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"department.departmentName", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
-        {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"},{"userPhone", "电话"}});
-        bindTable.setIntegerType(1);
+        {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userPhone", "电话"}});
+        bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 50}).setRowHeight(30);
     }
 
     @Action
     public Task reload() {
-        return new RefureTask(0);
+        return new RefureTask(0, 10);
     }
 
     @Override
@@ -76,10 +76,8 @@ public final class UserPanel extends BasePanel {
 
     private class RefureTask extends UserTask {
 
-        BindingGroup bindingGroup = new BindingGroup();
-
-        RefureTask(int pageIndex) {
-            super(pageIndex);
+        RefureTask(int pageIndex, int pageSize) {
+            super(pageIndex, pageSize);
         }
 
         @Override
@@ -96,7 +94,7 @@ public final class UserPanel extends BasePanel {
 
             if (usertbs != null) {
                 count = usertbs.getCount();
-                jLabelTotal.setText(((pageIndex - 1) * UserTask.pageSize + 1) + "/" + count);
+                jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
                 logger.debug("total:" + count + ",get user size:" + usertbs.getResult().size());
 
                 //存下所有的数据
@@ -120,6 +118,8 @@ public final class UserPanel extends BasePanel {
         jButtonAdd = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButtonReload = new javax.swing.JButton();
+        jButtonPrint = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -169,6 +169,26 @@ public final class UserPanel extends BasePanel {
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
+        jButtonReload.setAction(actionMap.get("reload")); // NOI18N
+        jButtonReload.setIcon(resourceMap.getIcon("jButtonReload.icon")); // NOI18N
+        jButtonReload.setText(resourceMap.getString("jButtonReload.text")); // NOI18N
+        jButtonReload.setBorderPainted(false);
+        jButtonReload.setFocusable(false);
+        jButtonReload.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonReload.setName("jButtonReload"); // NOI18N
+        jButtonReload.setOpaque(false);
+        jToolBar1.add(jButtonReload);
+
+        jButtonPrint.setAction(actionMap.get("print")); // NOI18N
+        jButtonPrint.setIcon(resourceMap.getIcon("jButtonPrint.icon")); // NOI18N
+        jButtonPrint.setText(resourceMap.getString("jButtonPrint.text")); // NOI18N
+        jButtonPrint.setBorderPainted(false);
+        jButtonPrint.setFocusable(false);
+        jButtonPrint.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonPrint.setName("jButtonPrint"); // NOI18N
+        jButtonPrint.setOpaque(false);
+        jToolBar1.add(jButtonPrint);
+
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
         jToolBar2.setBorderPainted(false);
@@ -205,8 +225,8 @@ public final class UserPanel extends BasePanel {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -240,7 +260,7 @@ public final class UserPanel extends BasePanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,15 +342,15 @@ public final class UserPanel extends BasePanel {
     public void pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
-        new RefureTask(pageIndex).execute();
+        new RefureTask(pageIndex, pageSize).execute();
     }
 
     @Action
     public void pageNext() {
-        if (UserTask.pageSize * (pageIndex) <= count) {
+        if (pageSize * (pageIndex) <= count) {
             pageIndex = pageIndex + 1;
         }
-        new RefureTask(pageIndex).execute();
+        new RefureTask(pageIndex, pageSize).execute();
     }
 
     public Usertb selectedUser() {
@@ -342,6 +362,30 @@ public final class UserPanel extends BasePanel {
         return null;
     }
 
+    @Action
+    public Task print() {
+        Task printData = new UserTask(0, count) {
+            @Override
+            public void onSucceeded(Object object) {
+                if (object instanceof Exception) {
+                    Exception e = (Exception) object;
+                    AssetMessage.ERRORSYS(e.getMessage());
+                    logger.error(e);
+                    return;
+                }
+                UsertbFindEntity usertbs = (UsertbFindEntity) object;
+                if (usertbs != null) {
+                    bindTable.createPrinter("职员信息", usertbs.getResult()).buildInBackgound().execute();
+                } else {
+                    bindTable.createPrinter("职员信息").buildInBackgound().execute();
+                }
+
+            }
+
+        };
+        return printData;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
@@ -349,6 +393,8 @@ public final class UserPanel extends BasePanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonPrint;
+    private javax.swing.JButton jButtonReload;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUser;

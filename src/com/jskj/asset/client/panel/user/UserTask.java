@@ -22,16 +22,17 @@ public class UserTask extends BaseTask {
 
     private static final Logger logger = Logger.getLogger(UserTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "user";
-    public static final int pageSize = 10;
+    private int pageSize = 20;
     private int pageIndex = 1;
 
-    public UserTask(int pageIndex) {
+    public UserTask(int pageIndex,int pageSize) {
         super();
         this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
     }
 
     public UserTask() {
-        this(1);
+        this(1,20);
     }
 
     @Override
