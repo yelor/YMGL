@@ -6,17 +6,20 @@
 
 package com.jskj.asset.client.panel.baobiao.caigou;
 
+import com.jskj.asset.client.layout.BasePanel;
+import org.jdesktop.application.Task;
+
 /**
  *
  * @author huiqi
  */
-public class YimiaocaigoumingxiJDialog extends javax.swing.JDialog {
+public class DizhiyihaocaigoumingxiPanel extends BasePanel {
 
     /**
      * Creates new form YimiaocaigoumingxiJDialog
      */
-    public YimiaocaigoumingxiJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DizhiyihaocaigoumingxiPanel() {
+        super();
         initComponents();
     }
 
@@ -40,15 +43,13 @@ public class YimiaocaigoumingxiJDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
-        setResizable(false);
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaocaigoumingxiJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DizhiyihaocaigoumingxiPanel.class);
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -119,7 +120,7 @@ public class YimiaocaigoumingxiJDialog extends javax.swing.JDialog {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "制单日期", "单据类别", "单据编号", "供应单位", "经办人", "部门", "制单人", "备注"
+                "制单日期", "单据类别", "单据编号", "供应商名称", "经办人", "部门", "制单人", "备注"
             }
         ));
         jTable1.setName("jTable1"); // NOI18N
@@ -135,8 +136,8 @@ public class YimiaocaigoumingxiJDialog extends javax.swing.JDialog {
             jTable1.getColumnModel().getColumn(7).setHeaderValue(resourceMap.getString("jTable1.columnModel.title7")); // NOI18N
         }
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -155,8 +156,6 @@ public class YimiaocaigoumingxiJDialog extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -176,29 +175,29 @@ public class YimiaocaigoumingxiJDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YimiaocaigoumingxiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DizhiyihaocaigoumingxiPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YimiaocaigoumingxiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DizhiyihaocaigoumingxiPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YimiaocaigoumingxiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DizhiyihaocaigoumingxiPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YimiaocaigoumingxiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DizhiyihaocaigoumingxiPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                YimiaocaigoumingxiJDialog dialog = new YimiaocaigoumingxiJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                DizhiyihaocaigoumingxiJDialog dialog = new DizhiyihaocaigoumingxiJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -213,4 +212,14 @@ public class YimiaocaigoumingxiJDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public Task reload() {
+        return null;
+    }
+
+    @Override
+    public Task reload(Object param) {
+        return null;
+    }
 }

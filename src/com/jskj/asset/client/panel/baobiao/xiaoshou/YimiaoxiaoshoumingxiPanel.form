@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
-    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
-  <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
-  </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
@@ -29,7 +23,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jToolBar1" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" pref="639" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="599" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -41,7 +35,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jToolBar1" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="299" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="275" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -106,6 +100,24 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="jButton6">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton7">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -121,28 +133,17 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="18" rowCount="15">
-                <Column editable="true" title="&#x75ab;&#x82d7;&#x7f16;&#x53f7;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x75ab;&#x82d7;&#x540d;&#x79f0;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x75ab;&#x82d7;&#x7c7b;&#x522b;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x89c4;&#x683c;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x5242;&#x578b;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x751f;&#x4ea7;&#x4f01;&#x4e1a;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x6279;&#x51c6;&#x6587;&#x53f7;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x6279;&#x53f7;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x6709;&#x6548;&#x671f;&#x81f3;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x5355;&#x4f4d;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x5355;&#x4ef7;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x6279;&#x7b7e;&#x53d1;&#x5408;&#x683c;&#x8bc1;&#x7f16;&#x53f7;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x5904;&#x65b9;&#x6807;&#x8bb0;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x56fd;&#x4ea7;/&#x8fdb;&#x53e3;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x8fdb;&#x53e3;&#x901a;&#x5173;&#x5355;&#x7f16;&#x53f7;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x5e93;&#x5b58;&#x6570;&#x91cf;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x5e93;&#x5b58;&#x4e0b;&#x9650;" type="java.lang.Object"/>
-                <Column editable="true" title="&#x5e93;&#x5b58;&#x4e0a;&#x9650;" type="java.lang.Object"/>
+              <Table columnCount="8" rowCount="15">
+                <Column editable="true" title="&#x5236;&#x5355;&#x65e5;&#x671f;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x5355;&#x636e;&#x7c7b;&#x522b;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x5355;&#x636e;&#x7f16;&#x53f7;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x5ba2;&#x6237;&#x5355;&#x4f4d;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x7ecf;&#x529e;&#x4eba;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x90e8;&#x95e8;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x5236;&#x5355;&#x4eba;" type="java.lang.Object"/>
+                <Column editable="true" title="&#x5907;&#x6ce8;" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="autoResizeMode" type="int" value="0"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -161,12 +162,12 @@
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title4"/>
+                  <Title resourceKey="jTable1.columnModel.title3"/>
                   <Editor/>
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title3"/>
+                  <Title resourceKey="jTable1.columnModel.title4"/>
                   <Editor/>
                   <Renderer/>
                 </Column>
@@ -182,56 +183,6 @@
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title resourceKey="jTable1.columnModel.title7"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title8"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title9"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title17"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title11"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title12"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title13"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title14"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title10"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title15"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title16"/>
                   <Editor/>
                   <Renderer/>
                 </Column>

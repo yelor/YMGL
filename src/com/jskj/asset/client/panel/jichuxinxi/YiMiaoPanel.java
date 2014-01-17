@@ -6,12 +6,15 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.UsertbAll;
 import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.bean.entity.YiMiaotbFindEntity;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.jichuxinxi.task.YiMiaoTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.YiMiaoUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,36 +28,41 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author huiqi
  */
-public class YiMiaoJDialog extends javax.swing.JDialog {
+public class YiMiaoPanel extends BasePanel {
 
-    private final static Logger logger = Logger.getLogger(YiMiaoJDialog.class);
+    private final static Logger logger = Logger.getLogger(YiMiaoPanel.class);
     private YiMiaoInfoJDialog yiMiaoInfoJDialog;
 
-    private final YiMiaoJDialog yiMiaoJDialog;
+    private final YiMiaoPanel yiMiaoJDialog;
 
     private int pageIndex;
 
     private int count;
 
     private List<YiMiaotb> yimiaos;
-    
-    private YiMiaotb yimiao;
-    
-    
 
-    /**
-     * Creates new form YiMiaoJDialog
-     */
-    public YiMiaoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    private YiMiaotb yimiao;
+
+    private final BindTableHelper<YiMiaotb> bindTable;
+              /**
+             * Creates new form YiMiaoJDialog
+             */
+
+    public YiMiaoPanel() {
+        super();
         initComponents();
-        new RefureTask(0).execute();
         yiMiaoJDialog = this;
         pageIndex = 1;
         count = 0;
+
+        bindTable = new BindTableHelper<YiMiaotb>(jTableYiMiao, new ArrayList<YiMiaotb>());
+        bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"yimiaoId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}, {"yimiaoTiaoxingma", "条形码"}});
+        bindTable.setIntegerType(1);
+        bindTable.bind().setColumnWidth(new int[]{0, 80}).setRowHeight(30);;
     }
 
     @Action
+    @Override
     public Task reload() {
         return new RefureTask(0);
     }
@@ -91,21 +99,22 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableYiMiao = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoJDialog.class);
-        setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
-        setResizable(false);
 
-        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoPanel.class, this);
         jButton6.setAction(actionMap.get("addYiMiao")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoPanel.class);
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setBorder(null);
+        jButton6.setBorderPainted(false);
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton6.setName("jButton6"); // NOI18N
@@ -115,6 +124,8 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
         jButton7.setAction(actionMap.get("updateYiMiao")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setBorder(null);
+        jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton7.setName("jButton7"); // NOI18N
@@ -123,15 +134,18 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
 
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setBorder(null);
+        jButton8.setBorderPainted(false);
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton8.setName("jButton8"); // NOI18N
-        jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
         jButton4.setAction(actionMap.get("reflesh")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorder(null);
+        jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton4.setName("jButton4"); // NOI18N
@@ -140,6 +154,8 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
 
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorder(null);
+        jButton5.setBorderPainted(false);
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton5.setName("jButton5"); // NOI18N
@@ -148,6 +164,8 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorder(null);
+        jButton3.setBorderPainted(false);
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton3.setName("jButton3"); // NOI18N
@@ -156,6 +174,8 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
 
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setName("jButton2"); // NOI18N
@@ -164,6 +184,8 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
@@ -173,6 +195,8 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
         jButton9.setAction(actionMap.get("exit")); // NOI18N
         jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
         jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
+        jButton9.setBorder(null);
+        jButton9.setBorderPainted(false);
         jButton9.setFocusable(false);
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton9.setName("jButton9"); // NOI18N
@@ -184,61 +208,6 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTableYiMiao.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "疫苗编号", "疫苗名称", "疫苗类别", "规格", "剂型", "单位", "库存下限", "库存上限", "条形码"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         jTableYiMiao.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTableYiMiao.setName("jTableYiMiao"); // NOI18N
         jScrollPane2.setViewportView(jTableYiMiao);
@@ -271,8 +240,8 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
@@ -286,8 +255,6 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -307,29 +274,29 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                YiMiaoJDialog dialog = new YiMiaoJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                YiMiaoJDialog dialog = new YiMiaoJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     @Action
@@ -341,7 +308,7 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
             public void run() {
                 if (yiMiaoInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yiMiaoInfoJDialog = new YiMiaoInfoJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoInfoJDialog = new YiMiaoInfoJDialog();
                     yiMiaoInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
                 yiMiaoInfoJDialog.setAddOrUpdate(true);
@@ -371,6 +338,11 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public Task reload(Object param) {
+        return null;
+    }
+
     private class RefureTask extends YiMiaoTask {
 
         BindingGroup bindingGroup = new BindingGroup();
@@ -388,7 +360,7 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
- 
+
             YiMiaotbFindEntity yimiaotbs = (YiMiaotbFindEntity) object;
 
             if (yimiaotbs != null && yimiaotbs.getResult().size() > 0) {
@@ -396,14 +368,11 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
                 //             jLabelTotal.setText(((pageIndex - 1) * YiMiaoTask.pageSize + 1) + "/" + count);
                 logger.debug("total:" + count + ",get yimao size:" + yimiaotbs.getResult().size());
 
-
                 //存下所有的数据
                 yimiaos = yimiaotbs.getResult();
 
-                BindTableHelper<YiMiaotb> bindTable = new BindTableHelper<YiMiaotb>(jTableYiMiao, yimiaos);
-                bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"yimiaoId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}, {"yimiaoTiaoxingma", "条形码"}});
-                bindTable.setIntegerType(1);
-                bindTable.bind().setColumnWidth(new int[]{0, 80}).setRowHeight(30);;
+                bindTable.refreshData(yimiaos);
+                
             }
         }
     }
@@ -422,7 +391,7 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
 
                 if (yiMiaoInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yiMiaoInfoJDialog = new YiMiaoInfoJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoInfoJDialog = new YiMiaoInfoJDialog();
                     yiMiaoInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
 
@@ -463,10 +432,9 @@ public class YiMiaoJDialog extends javax.swing.JDialog {
         }
     }
 
-
     @Action
     public void exit() {
-        this.dispose();
+
     }
 
     @Action

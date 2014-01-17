@@ -102,7 +102,7 @@ public class BuMenInfoJDialog extends BaseDialog {
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("新建部门")); // NOI18N
             jButton2.setText("新增");
         } else {
-            this.setTitle("更新部门:10");
+            this.setTitle("更新部门");
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
              jButton2.setText("更新");
@@ -114,7 +114,7 @@ public class BuMenInfoJDialog extends BaseDialog {
             return;
         }
         this.dpstb = dpstb;
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新用户:" + dpstb.getDepartmentId())); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新部门:" + dpstb.getDepartmentId())); // NOI18N
         jTextFieldID.setText(dpstb.getDepartmentId().toString());
         jTextFieldName.setText(dpstb.getDepartmentName());
         jTextFieldBoss.setText((dpstb.getOwner()==null?"":dpstb.getOwner().getUserName()));

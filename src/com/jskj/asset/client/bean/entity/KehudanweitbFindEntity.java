@@ -13,7 +13,7 @@ import java.util.List;
 public class KehudanweitbFindEntity extends Kehudanweitb{
      private int count;
     
-    private  List<Kehudanweitb> kehudanweis;
+    private  List<Kehudanweitb> result;
 
     public int getCount() {
         return count;
@@ -23,12 +23,12 @@ public class KehudanweitbFindEntity extends Kehudanweitb{
         this.count = count;
     }
 
-    public List<Kehudanweitb> getKehudanweis() {
-        return kehudanweis;
+    public List<Kehudanweitb> getResult() {
+        return result;
     }
 
-    public void setKehudanweis(List<Kehudanweitb> kehudanweis) {
-        this.kehudanweis = kehudanweis;
+    public void setResult(List<Kehudanweitb> result) {
+        this.result = result;
     }
     
     

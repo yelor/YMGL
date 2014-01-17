@@ -7,6 +7,7 @@ package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.jichuxinxi.task.YiMiaoUpdateTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import org.apache.log4j.Logger;
@@ -17,18 +18,18 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoInfoJDialog extends javax.swing.JDialog {
+public class YiMiaoInfoJDialog extends BaseDialog {
     
     private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
-    private YiMiaoJDialog yiMiaoJDialog;
+    private YiMiaoPanel yiMiaoJDialog;
     private YiMiaotb yimiao;
     private boolean isNew;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
      */
-    public YiMiaoInfoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoInfoJDialog() {
+        super();
         initComponents();
     }
 

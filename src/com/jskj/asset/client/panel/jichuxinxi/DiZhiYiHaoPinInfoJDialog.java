@@ -6,19 +6,20 @@
 
 package com.jskj.asset.client.panel.jichuxinxi;
 
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.ymgl.*;
 
 /**
  *
  * @author huiqi
  */
-public class DiZhiYiHaoPinInfoJDialog extends javax.swing.JDialog {
+public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
      */
-    public DiZhiYiHaoPinInfoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DiZhiYiHaoPinInfoJDialog() {
+        super();
         initComponents();
     }
 
@@ -219,12 +220,13 @@ public class DiZhiYiHaoPinInfoJDialog extends javax.swing.JDialog {
                                     .addComponent(jLabel8)
                                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel14))))
+                                        .addComponent(jLabel14))
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel10))))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jButton7)

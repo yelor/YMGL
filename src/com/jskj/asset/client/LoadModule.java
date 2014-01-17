@@ -8,20 +8,20 @@ package com.jskj.asset.client;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.ToppagePane;
-import com.jskj.asset.client.panel.baobiao.caigou.DizhiyihaocaigoumingxiJDialog;
-import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiJDialog;
-import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiJDialog;
-import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunJDialog;
-import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoxiaoshoumingxiJDialog;
+import com.jskj.asset.client.panel.baobiao.caigou.DizhiyihaocaigoumingxiPanel;
+import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiPanel;
+import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel;
+import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
+import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoxiaoshoumingxiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.BuMenPanel;
 import com.jskj.asset.client.panel.jichuxinxi.DanJuLeiXingJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DanWeiJDialog;
-import com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinJDialog;
-import com.jskj.asset.client.panel.jichuxinxi.GongYingDanWeiJDialog;
-import com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanJDialog;
+import com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinPanel;
+import com.jskj.asset.client.panel.jichuxinxi.GongYingDanWeiPanel;
+import com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanPanel;
 import com.jskj.asset.client.panel.jichuxinxi.JianShaoFangShiJDialog;
-import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiJDialog;
-import com.jskj.asset.client.panel.jichuxinxi.YiMiaoJDialog;
+import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel;
+import com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel;
 import com.jskj.asset.client.panel.jichuxinxi.ZhiYuanJDialog;
 import com.jskj.asset.client.panel.user.UserPanel;
 import com.jskj.asset.client.util.LogPaneAppender;
@@ -130,7 +130,7 @@ public class LoadModule extends BaseTask {
         exitMenuItem.setText(resourceMap.getString("exitMenuItem.text")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
-        
+
         switchUserMenuItem.setText("其他用户");
         switchUserMenuItem.setName("switchUserMenuItem"); // NOI18N
         fileMenu.add(switchUserMenuItem);
@@ -169,11 +169,6 @@ public class LoadModule extends BaseTask {
         jMenu2.add(jMenuItem10);
 
         jichuMenu.add(jMenu2);
-
-        jMenuItem11.setAction(actionMap.get("showZhiYuan")); // NOI18N
-        jMenuItem11.setText(resourceMap.getString("jMenuItem11.text")); // NOI18N
-        jMenuItem11.setName("jMenuItem11"); // NOI18N
-        jichuMenu.add(jMenuItem11);
 
         jMenuItem12.setAction(actionMap.get("showDanJuLeiXing")); // NOI18N
         jMenuItem12.setText(resourceMap.getString("jMenuItem12.text")); // NOI18N
@@ -359,7 +354,7 @@ public class LoadModule extends BaseTask {
 
     @Action
     public void showUserAdmin() {
-        OpenTabTask task = new OpenTabTask("用户", new UserPanel(), false);
+        OpenTabTask task = new OpenTabTask("单位信息-员工", new UserPanel(), false);
         task.execute();
     }
 
@@ -371,127 +366,39 @@ public class LoadModule extends BaseTask {
 
     @Action
     public void showYiMiao() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private YiMiaoJDialog yiMiaoJDialog;
-
-            @Override
-            public void run() {
-                if (yiMiaoJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yiMiaoJDialog = new YiMiaoJDialog(new javax.swing.JFrame(), true);
-                    yiMiaoJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(yiMiaoJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("基础数据-疫苗", new YiMiaoPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showGuDingZiChan() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private GuDingZiChanJDialog guDingZiChanJDialog;
-
-            @Override
-            public void run() {
-                if (guDingZiChanJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    guDingZiChanJDialog = new GuDingZiChanJDialog(new javax.swing.JFrame(), true);
-                    guDingZiChanJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(guDingZiChanJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("基础数据-固定资产", new GuDingZiChanPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showDiZhiYiHaoPin() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private DiZhiYiHaoPinJDialog diZhiYiHaoPinJDialog;
-
-            @Override
-            public void run() {
-                if (diZhiYiHaoPinJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    diZhiYiHaoPinJDialog = new DiZhiYiHaoPinJDialog(new javax.swing.JFrame(), true);
-                    diZhiYiHaoPinJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(diZhiYiHaoPinJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("基础数据-低值易耗品", new DiZhiYiHaoPinPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showGongYingDanWei() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private GongYingDanWeiJDialog gongYingDanWeiJDialog;
-
-            @Override
-            public void run() {
-                if (gongYingDanWeiJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    gongYingDanWeiJDialog = new GongYingDanWeiJDialog(new javax.swing.JFrame(), true);
-                    gongYingDanWeiJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(gongYingDanWeiJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("基础数据-供应单位", new GongYingDanWeiPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showKeHuDanWei() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private KeHuDanWeiJDialog keHuDanWeiJDialog;
-
-            @Override
-            public void run() {
-                if (keHuDanWeiJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    keHuDanWeiJDialog = new KeHuDanWeiJDialog(new javax.swing.JFrame(), true);
-                    keHuDanWeiJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(keHuDanWeiJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("基础数据-客户单位", new KeHuDanWeiPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showBuMen() {
 
-        OpenTabTask task = new OpenTabTask("部门", new BuMenPanel(), false);
+        OpenTabTask task = new OpenTabTask("单位信息-部门", new BuMenPanel(), false);
         task.execute();
-        
-//        SwingUtilities.invokeLater(new Runnable() {
-//            private BuMenJDialog buMenJDialog;
-//
-//            @Override
-//            public void run() {
-//                if (buMenJDialog == null) {
-//                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-//                    buMenJDialog = new BuMenJDialog(new javax.swing.JFrame(), true);
-//                    buMenJDialog.setLocationRelativeTo(mainFrame);
-//                }
-//                AssetClientApp.getApplication().show(buMenJDialog);
-//            }
-//        });
-    }
-
-    @Action
-    public void showZhiYuan() {
-        OpenTabTask task = new OpenTabTask("职员", new UserPanel(), false);
-        task.execute();
-//        SwingUtilities.invokeLater(new Runnable() {
-//            private ZhiYuanJDialog zhiYuanJDialog;
-//
-//            @Override
-//            public void run() {
-//                if (zhiYuanJDialog == null) {
-//                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-//                    zhiYuanJDialog = new ZhiYuanJDialog(new javax.swing.JFrame(), true);
-//                    zhiYuanJDialog.setLocationRelativeTo(mainFrame);
-//                }
-//                AssetClientApp.getApplication().show(zhiYuanJDialog);
-//            }
-//        });
     }
 
     @Action
@@ -548,91 +455,31 @@ public class LoadModule extends BaseTask {
 
     @Action
     public void showYimiaocaigoumingxi() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private YimiaocaigoumingxiJDialog yimiaocaigoumingxiJDialog;
-
-            @Override
-            public void run() {
-                if (yimiaocaigoumingxiJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yimiaocaigoumingxiJDialog = new YimiaocaigoumingxiJDialog(new javax.swing.JFrame(), true);
-                    yimiaocaigoumingxiJDialog.setTitle("疫苗采购明细表");
-                    yimiaocaigoumingxiJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(yimiaocaigoumingxiJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("报表-疫苗采购明细表", new YimiaocaigoumingxiPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showGudingzichancaigoumingxi() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private GudingzichancaigoumingxiJDialog gudingzichancaigoumingxiJDialog;
-
-            @Override
-            public void run() {
-                if (gudingzichancaigoumingxiJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    gudingzichancaigoumingxiJDialog = new GudingzichancaigoumingxiJDialog(new javax.swing.JFrame(), true);
-                    gudingzichancaigoumingxiJDialog.setTitle("固定资产采购明细表");
-                    gudingzichancaigoumingxiJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(gudingzichancaigoumingxiJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("报表-固定资产采购明细表", new GudingzichancaigoumingxiPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showDizhiyihaocaigoumingxi() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private DizhiyihaocaigoumingxiJDialog dizhiyihaocaigoumingxiJDialog;
-
-            @Override
-            public void run() {
-                if (dizhiyihaocaigoumingxiJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    dizhiyihaocaigoumingxiJDialog = new DizhiyihaocaigoumingxiJDialog(new javax.swing.JFrame(), true);
-                    dizhiyihaocaigoumingxiJDialog.setTitle("低值易耗品采购明细表");
-                    dizhiyihaocaigoumingxiJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(dizhiyihaocaigoumingxiJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("报表-低值易耗品采购明细表", new DizhiyihaocaigoumingxiPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showYimiaoxiaoshoumingxi() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private YimiaoxiaoshoumingxiJDialog yimiaoxiaoshoumingxiJDialog;
-
-            @Override
-            public void run() {
-                if (yimiaoxiaoshoumingxiJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yimiaoxiaoshoumingxiJDialog = new YimiaoxiaoshoumingxiJDialog(new javax.swing.JFrame(), true);
-                    yimiaoxiaoshoumingxiJDialog.setTitle("疫苗销售明细表");
-                    yimiaoxiaoshoumingxiJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(yimiaoxiaoshoumingxiJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("报表-疫苗销售明细表", new YimiaoxiaoshoumingxiPanel(), false);
+        task.execute();
     }
 
     @Action
     public void showYimiaokucun() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private YimiaokucunJDialog yimiaokucunJDialog;
-
-            @Override
-            public void run() {
-                if (yimiaokucunJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yimiaokucunJDialog = new YimiaokucunJDialog(new javax.swing.JFrame(), true);
-                    yimiaokucunJDialog.setTitle("疫苗库存表");
-                    yimiaokucunJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(yimiaokucunJDialog);
-            }
-        });
+        OpenTabTask task = new OpenTabTask("报表-疫苗库存表", new YimiaokucunPanel(), false);
+        task.execute();
     }
 }

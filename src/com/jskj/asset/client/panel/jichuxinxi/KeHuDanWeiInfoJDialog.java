@@ -8,6 +8,7 @@ package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.bean.entity.Kehudanweitb;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.jichuxinxi.task.KehudanweiUpdateTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import org.apache.log4j.Logger;
@@ -18,18 +19,18 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class KeHuDanWeiInfoJDialog extends javax.swing.JDialog {
+public class KeHuDanWeiInfoJDialog extends BaseDialog {
     
     private static final Logger logger = Logger.getLogger(KeHuDanWeiInfoJDialog.class);
-    private KeHuDanWeiJDialog keHuDanWeiJDialog;
+    private KeHuDanWeiPanel keHuDanWeiJDialog;
     private Kehudanweitb kehudanwei;
     private boolean isNew;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
      */
-    public KeHuDanWeiInfoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public KeHuDanWeiInfoJDialog() {
+        super();
         initComponents();
     }
 
