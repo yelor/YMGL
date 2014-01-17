@@ -521,6 +521,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTable(null)"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -533,7 +536,9 @@
             </Property>
             <Property name="floatable" type="boolean" value="false"/>
             <Property name="rollover" type="boolean" value="true"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
@@ -545,6 +550,7 @@
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton10.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton10.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jButton10" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
@@ -554,6 +560,7 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton14.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton14.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jButton14" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
@@ -563,6 +570,7 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton13.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton13.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jButton13" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
@@ -575,6 +583,7 @@
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton15.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton15.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jButton15" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>

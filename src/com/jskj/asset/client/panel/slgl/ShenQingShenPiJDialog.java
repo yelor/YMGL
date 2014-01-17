@@ -6,11 +6,11 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaiGouShenQingFindEntity;
+import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
-import com.jskj.asset.client.bean.entity.ZiChanCaiGouShenQing;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +29,13 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
     private int count;
 
-    private List<ZiChanCaiGouShenQing> cgsq;
-    
-    private List<ZiChanCaiGouShenQing> display;
+    private List<CaigoushenqingDetailEntity> cgsq;
     
     private String user;
     
     private ShenPiEntity shenPiEntity;
     
-    BindTableHelper<ZiChanCaiGouShenQing> bindTable;
+    BindTableHelper<CaigoushenqingDetailEntity> bindTable;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -46,27 +44,16 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     public ShenQingShenPiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
-        user = "fuzeren";
+        user = AssetClientApp.getSessionMap().getUsertb().getUserName();
         pageIndex = 1;
         count = 0;
-        bindTable = new BindTableHelper<ZiChanCaiGouShenQing>(jSQTable, new ArrayList<ZiChanCaiGouShenQing>());
-        bindTable.createTable(new String[][]{{"cgsqId", "采购单号"}, {"processId", "流程编号"}, {"checkId1", "负责人"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
+        bindTable = new BindTableHelper<CaigoushenqingDetailEntity>(jSQTable, new ArrayList<CaigoushenqingDetailEntity>());
+        bindTable.createTable(new String[][]{{"cgsqId", "采购单号"}, {"jingbanren", "经办人"}, {"shenqingdanDate", "申请日期"}, {"shenqingdanRemark", "备注"},
+            {"checkId1", "负责人"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
 //        bindTable.setIntegerType(1);
-        bindTable.bind().setRowHeight(30);
+        bindTable.setDateType(3);
+        bindTable.bind().setColumnWidth(new int[]{0, 150}).setRowHeight(30);
         new RefreshTask(0).execute();
-    }
-    
-    @Action
-    public void login() {
-        user = jTextField1.getText();
-        if(cgsq!= null){
-            cgsq.clear();            
-        }else {
-            cgsq = null;
-        }
-            
-        JOptionPane.showMessageDialog(this, "登陆成功！");
-        reload();
     }
     
     @Action
@@ -129,7 +116,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     
     @Action
     public Task shenPiY(){
-        ZiChanCaiGouShenQing cgsqdan = cgsq.get(jSQTable.getSelectedRow());
+        CaigoushenqingDetailEntity cgsqdan = cgsq.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(cgsqdan.getCgsqId().toString());
         shenPiEntity.setResult("同意");
@@ -140,7 +127,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     
     @Action
     public Task shenPiN(){
-        ZiChanCaiGouShenQing cgsqdan = cgsq.get(jSQTable.getSelectedRow());
+        CaigoushenqingDetailEntity cgsqdan = cgsq.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(cgsqdan.getCgsqId().toString());
         shenPiEntity.setResult("拒绝");
@@ -182,9 +169,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -222,12 +206,15 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(ShenQingShenPiJDialog.class, this);
         jButton11.setAction(actionMap.get("shenPiN")); // NOI18N
         jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
         jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
+        jButton11.setBorderPainted(false);
         jButton11.setFocusable(false);
         jButton11.setName("jButton11"); // NOI18N
         jButton11.setOpaque(false);
@@ -236,6 +223,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton12.setAction(actionMap.get("shenPiY")); // NOI18N
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
+        jButton12.setBorderPainted(false);
         jButton12.setFocusable(false);
         jButton12.setName("jButton12"); // NOI18N
         jButton12.setOpaque(false);
@@ -243,6 +231,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
         jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
         jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
+        jButton14.setBorderPainted(false);
         jButton14.setFocusable(false);
         jButton14.setName("jButton14"); // NOI18N
         jButton14.setOpaque(false);
@@ -250,6 +239,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
+        jButton13.setBorderPainted(false);
         jButton13.setFocusable(false);
         jButton13.setName("jButton13"); // NOI18N
         jButton13.setOpaque(false);
@@ -258,23 +248,14 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
+        jButton15.setBorderPainted(false);
         jButton15.setFocusable(false);
         jButton15.setName("jButton15"); // NOI18N
         jButton15.setOpaque(false);
         jToolBar1.add(jButton15);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setName("jPanel1"); // NOI18N
-
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
-
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        jButton2.setAction(actionMap.get("login")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
+        jPanel1.setOpaque(false);
 
         jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
         jLabelTotal.setName("jLabelTotal"); // NOI18N
@@ -282,28 +263,26 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jButton3.setAction(actionMap.get("pageNext")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setBorder(null);
+        jButton3.setBorderPainted(false);
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addContainerGap(283, Short.MAX_VALUE)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
@@ -313,15 +292,10 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -331,7 +305,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -432,15 +406,12 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTable jSQTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

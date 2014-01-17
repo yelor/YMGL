@@ -113,7 +113,9 @@
             </Property>
             <Property name="floatable" type="boolean" value="false"/>
             <Property name="rollover" type="boolean" value="true"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
@@ -122,6 +124,7 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton14.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton14.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
                 <Property name="name" type="java.lang.String" value="jButton14" noResource="true"/>
@@ -132,6 +135,7 @@
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton13.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton13.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
                 <Property name="name" type="java.lang.String" value="jButton13" noResource="true"/>
@@ -145,6 +149,7 @@
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton15.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton15.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
                 <Property name="name" type="java.lang.String" value="jButton15" noResource="true"/>
@@ -155,12 +160,8 @@
         </Container>
         <Container class="javax.swing.JPanel" name="ctrlPane">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-                <EtchetBorder/>
-              </Border>
-            </Property>
             <Property name="name" type="java.lang.String" value="ctrlPane" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
           <Layout>
@@ -197,9 +198,11 @@
                       <action class="com.jskj.asset.client.panel.slgl.GuDingZiChanCaiGouJiHuaJDialog" id="pagePrev" methodName="pagePrev"/>
                     </Property>
                     <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
+                    <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
+                    <Property name="opaque" type="boolean" value="false"/>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                 </Component>
@@ -209,9 +212,11 @@
                       <action class="com.jskj.asset.client.panel.user.UserPanel" id="pageNext" methodName="pageNext"/>
                     </Property>
                     <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
+                    <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
+                    <Property name="opaque" type="boolean" value="false"/>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                 </Component>

@@ -31,6 +31,7 @@ public class MainPanel extends BasePanel {
 
     private selectWeiXiuDiaoBoDanJDialog selectWeiXiuDiaoBoDanJDialog;
 
+    private selectShenHeDanJDialog selectShenHeDanJDialog;
 
     /**
      * Creates new form NoFoundPane
@@ -263,10 +264,12 @@ public class MainPanel extends BasePanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                if (selectShenHeDanJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ShenQingShenPiJDialog shenQingShenPiJDialog = new ShenQingShenPiJDialog(new javax.swing.JFrame(), true);
-                    shenQingShenPiJDialog.setLocationRelativeTo(mainFrame);
-                    AssetClientApp.getApplication().show(shenQingShenPiJDialog);
+                    selectShenHeDanJDialog = new selectShenHeDanJDialog(new javax.swing.JFrame(), true);
+                    selectShenHeDanJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selectShenHeDanJDialog);
             }
         });
     }

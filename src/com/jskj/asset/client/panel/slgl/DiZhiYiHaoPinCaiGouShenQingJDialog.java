@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
@@ -36,6 +37,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
     private ShenQingDetailEntity cgsq;
     private int userId;
     private int supplierId;
+    private List<ZiChanLieBiaotb> zc;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -45,6 +47,8 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
         super(parent,modal);
         init();
         initComponents();
+        
+        zc = new ArrayList<ZiChanLieBiaotb>();
         
         jTextField1.setText(DanHao.getDanHao("dzyh"));
         jTextField1.setEditable(false);
@@ -108,6 +112,60 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
                 }
             }
         });
+        
+        final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
+            {"gdzcId", "物品编号"}, {"gdzcName", "物品名称"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
+            {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"},{"totalPrice", "合价", "false"}});
+
+        editTable.registerPopup(1, new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TABLE;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "gdzc";
+            }
+
+            public String getConditionSQL() {
+                int selectedColumn = jTable1.getSelectedColumn();
+                int selectedRow = jTable1.getSelectedRow();
+                Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
+                String sql = "";
+                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
+                    sql = "gdzc_name like \"%" + newColumnObj.toString() + "%\"";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"gdzcId", "物品ID"},{"gdzcName", "物品名称"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    Object gdzcId = bindedMap.get("gdzcId");
+                    Object gdzcName = bindedMap.get("gdzcName");
+                    Object gdzcType = bindedMap.get("gdzcType");
+                    Object gdzcPinpai = bindedMap.get("gdzcPinpai");
+                    Object gdzcValue = bindedMap.get("gdzcValue");
+
+                    editTable.insertValue(0, gdzcId);
+                    editTable.insertValue(1, gdzcName);
+                    editTable.insertValue(2, gdzcType);
+                    editTable.insertValue(3, gdzcPinpai);
+                    editTable.insertValue(4, gdzcValue);
+                    editTable.insertValue(5, 3);
+                    editTable.insertValue(6, (Double)gdzcValue * 3);
+
+                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+                    zclb.setCgsqId(jTextField1.getText());
+                    zclb.setCgzcId((Integer)gdzcId);
+                    zclb.setQuantity(3);
+                    zc.add(zclb);
+                }
+
+            }
+        });
     }
 
     private void init() {
@@ -123,6 +181,22 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
     
     @Action
     public Task submitForm(){
+        if(jTextFieldSupplier.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入供应单位！");
+            return null;
+        }
+        if(jTextField2.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入制单日期！");
+            return null;
+        }
+        if(jTextFieldUser.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入经办人！");
+            return null;
+        }
+        if(zc.size() < 1){
+            JOptionPane.showMessageDialog(null, "请选择要采购的资产！");
+            return null;
+        }
         cgsq = new ShenQingDetailEntity();
         Shenqingdantb sqd = new Shenqingdantb();
         sqd.setShenqingdanId(jTextField1.getText());
@@ -131,18 +205,6 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setShenqingdanRemark(jTextArea1.getText());
-        sqd.setDanjuleixingId(1);//单据类型为1，代表低值易耗品
-        
-        List<ZiChanLieBiaotb> zc = new ArrayList<ZiChanLieBiaotb>();
-        
-        //插入假数据
-        for(int i = 0; i < 3; i ++){
-            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-            zclb.setCgsqId(jTextField1.getText());
-            zclb.setCgzcId(i+1000);
-            zclb.setQuantity(3);
-            zc.add(zclb);
-        }
         
         cgsq.setSqd(sqd);
         cgsq.setZc(zc);        
@@ -192,7 +254,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable1 = new BaseTable(null);
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -370,12 +432,15 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(DiZhiYiHaoPinCaiGouShenQingJDialog.class, this);
         jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
         jButton1.setFocusPainted(false);
         jButton1.setFocusable(false);
         jButton1.setName("jButton1"); // NOI18N
@@ -384,6 +449,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
 
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorderPainted(false);
         jButton5.setFocusPainted(false);
         jButton5.setFocusable(false);
         jButton5.setName("jButton5"); // NOI18N
@@ -392,6 +458,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorderPainted(false);
         jButton4.setFocusPainted(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
@@ -401,6 +468,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
         jButton10.setAction(actionMap.get("exit")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
+        jButton10.setBorderPainted(false);
         jButton10.setFocusPainted(false);
         jButton10.setFocusable(false);
         jButton10.setName("jButton10"); // NOI18N

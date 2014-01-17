@@ -151,10 +151,13 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
         jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
         jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
+        jButton14.setBorderPainted(false);
         jButton14.setFocusable(false);
         jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton14.setName("jButton14"); // NOI18N
@@ -163,6 +166,7 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
 
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
+        jButton13.setBorderPainted(false);
         jButton13.setFocusable(false);
         jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton13.setName("jButton13"); // NOI18N
@@ -173,14 +177,15 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
+        jButton15.setBorderPainted(false);
         jButton15.setFocusable(false);
         jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton15.setName("jButton15"); // NOI18N
         jButton15.setOpaque(false);
         jToolBar1.add(jButton15);
 
-        ctrlPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         ctrlPane.setName("ctrlPane"); // NOI18N
+        ctrlPane.setOpaque(false);
 
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
@@ -188,17 +193,21 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
 
         jButton3.setAction(actionMap.get("pagePrev")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar3.add(jButton3);
 
         jButton4.setAction(actionMap.get("pageNext")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setOpaque(false);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar3.add(jButton4);
 
