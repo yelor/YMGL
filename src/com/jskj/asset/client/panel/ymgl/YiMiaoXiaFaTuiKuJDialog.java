@@ -194,8 +194,6 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -206,7 +204,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldXiafaId = new javax.swing.JTextField();
         jTextFieldZhidanDate = regTextField;
-        jTextFieldjingbanren = new javax.swing.JTextField();
+        jTextFieldjingbanren = new BaseTextField();
         jTextFielddepartment = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -214,10 +212,10 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         jTextArea1 = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTableyimiao = new javax.swing.JTable();
+        jTableyimiao = new BaseTable(null);
         jLabel4 = new javax.swing.JLabel();
         jTextFieldzhidanren = new javax.swing.JTextField();
-        jTextFieldXiafadanwei = new javax.swing.JTextField();
+        jTextFieldXiafadanwei = new BaseTextField();
         jLabel13 = new javax.swing.JLabel();
         jTextFieldContactPerson = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -300,22 +298,6 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         jButton8.setName("jButton8"); // NOI18N
         jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
-
-        jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setBorderPainted(false);
-        jButton7.setFocusable(false);
-        jButton7.setName("jButton7"); // NOI18N
-        jButton7.setOpaque(false);
-        jToolBar1.add(jButton7);
-
-        jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setBorderPainted(false);
-        jButton6.setFocusable(false);
-        jButton6.setName("jButton6"); // NOI18N
-        jButton6.setOpaque(false);
-        jToolBar1.add(jButton6);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
@@ -694,8 +676,6 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;

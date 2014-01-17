@@ -202,8 +202,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -316,22 +314,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         jButton8.setName("jButton8"); // NOI18N
         jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
-
-        jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setBorderPainted(false);
-        jButton6.setFocusable(false);
-        jButton6.setName("jButton6"); // NOI18N
-        jButton6.setOpaque(false);
-        jToolBar1.add(jButton6);
-
-        jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setBorderPainted(false);
-        jButton7.setFocusable(false);
-        jButton7.setName("jButton7"); // NOI18N
-        jButton7.setOpaque(false);
-        jToolBar1.add(jButton7);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
@@ -718,6 +700,15 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         sale.setDepartmentId(4);
 
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
+          for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
+            sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
+            sale_detail.setPrice(Float.parseFloat((String) yimiaotable.getValue(i, "price")));
+            sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
+            list.add(sale_detail);
+        }
         for (int i = 0; i < 3; i++) {
             sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
             sale_detail.setYimiaoId(1000 + i);
@@ -762,8 +753,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;

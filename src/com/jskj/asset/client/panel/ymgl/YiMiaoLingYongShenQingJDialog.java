@@ -600,11 +600,18 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         shenqingdan.setDanjuleixingId(22);
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaolingyongdanId.getText());
-            yimiaoshenqingdan.setYimiaoId(i + 2);
-            yimiaoshenqingdan.setQuantity(33);
+            System.out.println(yimiaotable.getValue(i, "yimiaoId"));
+            yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            System.out.println(yimiaotable.getValue(i, "quantity"));
+            if (yimiaotable.getValue(i, "quantity").equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗申报数量!");
+                return null;
+            }
+            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
             list.add(yimiaoshenqingdan);
         }
         yimiaolingyong.setShenqingdan(shenqingdan);

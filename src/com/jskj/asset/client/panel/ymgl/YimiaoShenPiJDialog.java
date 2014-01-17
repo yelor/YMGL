@@ -47,11 +47,11 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
     public YimiaoShenPiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
-        user = "fenguanlingdao";
+        user = "";
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<Yimiaoshenpiliucheng>(jSQTable, new ArrayList<Yimiaoshenpiliucheng>());
-        bindTable.createTable(new String[][]{{"danjuId", "单据单号"}, {"processId", "流程编号"}, {"checkId", "负责人"}});
+        bindTable.createTable(new String[][]{{"danjuId", "单据单号"}, {"processId", "流程编号"}, {"checkId1", "负责人"}, {"checkId2", "财务科"}, {"checkId3", "分管领导"}, {"checkId4", "主要领导"}});
 //        bindTable.setIntegerType(1);
         bindTable.bind().setRowHeight(30);
         new RefreshTask(0).execute();

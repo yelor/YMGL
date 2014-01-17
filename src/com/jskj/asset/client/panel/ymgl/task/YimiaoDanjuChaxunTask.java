@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 public class YimiaoDanjuChaxunTask extends BaseTask{
 
     public static final Logger logger = Logger.getLogger(YimiaoDanjuChaxunTask.class);
-    private final String CX_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshou";
+    private final String CX_URI = Constants.HTTP + Constants.APPID + "yimiaoshenqing";
     public static final int pageSize = 10;
     private int pageIndex = 1;    
     private String user = "";
@@ -41,8 +41,8 @@ public class YimiaoDanjuChaxunTask extends BaseTask{
         try{
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            YimiaoShenpiFindEntity yimiaoxiaoshou = restTemplate.getForObject(CX_URI + "/" + user +"?pagesize="+pageSize+"&pageindex="+pageIndex,YimiaoShenpiFindEntity.class);
-            return yimiaoxiaoshou;
+            YimiaoShenpiFindEntity yimiaoshenpi = restTemplate.getForObject(CX_URI + "/" + user +"?pagesize="+pageSize+"&pageindex="+pageIndex,YimiaoShenpiFindEntity.class);
+            return yimiaoshenpi;
         }catch (RestClientException e) {
             logger.error(e);
             return e;

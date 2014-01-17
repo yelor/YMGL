@@ -146,24 +146,6 @@
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
-            <Property name="borderPainted" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton6">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton6.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
-            <Property name="borderPainted" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>

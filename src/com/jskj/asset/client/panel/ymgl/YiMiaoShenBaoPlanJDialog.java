@@ -83,6 +83,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                     jTextFieldzhidanren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
                     jTextFielddepartment.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
                     shenqingdan.setZhidanrenId((Integer) bindedMap.get("userId"));
+                    shenqingdan.setJingbanrenId((Integer) bindedMap.get("userId"));
                 }
             }
         });
@@ -590,6 +591,10 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入申请人名称!");
             return null;
         }
+        if (jTextFieldYimiaoshenqingdanDate.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入制单日期!");
+            return null;
+        }
         yimiaoshenbao = new YimiaoshenqingdantbFindEntity();
         shenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -598,7 +603,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
-        for (int i = 0; i < jTableyimiao.getRowCount(); i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount()-1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());

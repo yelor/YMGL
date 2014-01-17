@@ -75,6 +75,7 @@ public class YiMiaoSheGouPlanJDialog extends javax.swing.JDialog {
                     jTextFieldzhidanren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
                     jTextFielddepartment.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
                     shenqingdan.setZhidanrenId((Integer) bindedMap.get("userId"));
+                    shenqingdan.setJingbanrenId((Integer) bindedMap.get("userId"));
                 }
             }
         });
@@ -108,10 +109,10 @@ public class YiMiaoSheGouPlanJDialog extends javax.swing.JDialog {
                 }
             }
         });
-        
+
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},{"yimiaoJixing", "剂型", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"price", "单价", "true"}, {"totalprice", "合价", "true"}, {"saleprice", "预售价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -156,7 +157,6 @@ public class YiMiaoSheGouPlanJDialog extends javax.swing.JDialog {
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
                     editTable.insertValue(9, saleprice);
-                    
 
                 }
 
@@ -610,18 +610,24 @@ public class YiMiaoSheGouPlanJDialog extends javax.swing.JDialog {
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshegoudanId.getText());
-            yimiaoshenqingdan.setYimiaoId(i + 100001);
-            yimiaoshenqingdan.setQuantity(33);
-            yimiaoshenqingdan.setSaleprice(435f);
-
+            System.out.println(yimiaotable.getValue(i, "yimiaoId"));
+            yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            System.out.println(yimiaotable.getValue(i, "quantity"));
+            if (yimiaotable.getValue(i, "quantity").equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗申报数量!");
+                return null;
+            }
+            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
+            yimiaoshenqingdan.setSaleprice(Float.parseFloat((String) yimiaotable.getValue(i, "saleprice")));
             list.add(yimiaoshenqingdan);
         }
         yimiaoshegou.setShenqingdan(shenqingdan);
         yimiaoshegou.setYimiaoshenqingdans(list);
-        
+
         return new SubmitFormTask(yimiaoshegou);
     }
 
