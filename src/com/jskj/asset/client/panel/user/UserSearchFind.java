@@ -28,7 +28,7 @@ public class UserSearchFind extends BasePanel {
     public UserSearchFind() {
         initComponents();
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"userId", "用户ID"}, {"userPassword", "密码", "false"}, {"userName", "用户名字", "true"},
+            {"userId", "用户ID"}, {"userPassword", "密码", "false"}, {"userName", "用户名字"},
             {"total", "总数", "true"}, {"newcolumn", "新增加列", "true"}});
 
         editTable.registerPopup(2, new IPopupBuilder() {

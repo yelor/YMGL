@@ -95,11 +95,15 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteInvoiceJDialog3.class, this);
         jButton1.setAction(actionMap.get("selectedAction")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
 
         jButton2.setAction(actionMap.get("cancelAction")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

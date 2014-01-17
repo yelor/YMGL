@@ -40,7 +40,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     private Shenqingdantb shenqingdan;
     private SimpleDateFormat dateformate;
     private boolean isNew;
-    List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
+
     DateChooser dateChooser1;
     JTextField regTextField;
 
@@ -55,6 +55,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jTextFieldYimiaoshenbaodanId.setText(DanHao.getDanHao("YMSB"));
         jTextFieldYimiaoshenbaodanId.setEditable(false);
 
+//        申请人popup
         ((BaseTextField) jTextFieldshenqingren).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
@@ -117,7 +118,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         });
 //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -161,13 +162,6 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
 
-                    for (int i = 0; i < 3; i++) {
-                        Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
-                        yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
-                        yimiaoshenqingdan.setYimiaoId(i + 2);
-                        yimiaoshenqingdan.setQuantity(33);
-                        list.add(yimiaoshenqingdan);
-                    }
                 }
 
             }
@@ -197,8 +191,6 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -281,33 +273,23 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoShenBaoPlanJDialog.class, this);
         jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-        jToolBar1.add(jButton2);
-
-        jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setFocusable(false);
-        jButton6.setName("jButton6"); // NOI18N
-        jButton6.setOpaque(false);
-        jToolBar1.add(jButton6);
-
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
@@ -315,6 +297,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
         jButton3.setFocusable(false);
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
@@ -322,6 +305,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
 
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
         jButton7.setName("jButton7"); // NOI18N
         jButton7.setOpaque(false);
@@ -330,6 +314,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorderPainted(false);
         jButton5.setFocusable(false);
         jButton5.setName("jButton5"); // NOI18N
         jButton5.setOpaque(false);
@@ -601,6 +586,10 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入供应单位名称!");
             return null;
         }
+        if (jTextFieldshenqingren.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入申请人名称!");
+            return null;
+        }
         yimiaoshenbao = new YimiaoshenqingdantbFindEntity();
         shenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -608,6 +597,21 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         shenqingdan.setDanjuleixingId(22);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
+        List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
+        for (int i = 0; i < jTableyimiao.getRowCount(); i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
+            System.out.println(yimiaotable.getValue(i, "yimiaoId"));
+            yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            System.out.println(yimiaotable.getValue(i, "quantity"));
+            if (yimiaotable.getValue(i, "quantity").equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗申报数量!");
+                return null;
+            }
+            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
+            list.add(yimiaoshenqingdan);
+        }
         yimiaoshenbao.setShenqingdan(shenqingdan);
         yimiaoshenbao.setYimiaoshenqingdans(list);
 
@@ -640,11 +644,9 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
