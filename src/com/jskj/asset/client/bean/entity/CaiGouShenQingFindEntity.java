@@ -6,11 +6,11 @@ import java.util.List;
  *
  * @author tt
  */
-public class CaiGouShenQingFindEntity extends ZiChanCaiGouShenQing{
+public class CaiGouShenQingFindEntity {
     
     private int count;
     
-    private  List<ZiChanCaiGouShenQing> result;
+    private  List<CaigoushenqingDetailEntity> result;
 
     public int getCount() {
         return count;
@@ -20,11 +20,11 @@ public class CaiGouShenQingFindEntity extends ZiChanCaiGouShenQing{
         this.count = count;
     }
 
-    public List<ZiChanCaiGouShenQing> getResult() {
+    public List<CaigoushenqingDetailEntity> getResult() {
         return result;
     }
 
-    public void setResult(List<ZiChanCaiGouShenQing> result) {
+    public void setResult(List<CaigoushenqingDetailEntity> result) {
         this.result = result;
     }
     
