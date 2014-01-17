@@ -160,7 +160,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
     @Action
     public Task submitForm(){
         if(jTextField12.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入购置日期！");
+            JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
         }
         if(jTextFieldZichan.getText().isEmpty()){
@@ -459,6 +459,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
