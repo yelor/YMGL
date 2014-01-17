@@ -704,17 +704,12 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         sale.setSaleId(jTextFieldXiafaId.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
         sale.setSaleDate(dateformate.parse(jTextFieldXiafaDate.getText()));
-        sale.setDepartmentId(4);
-//        sale.setDanjutype("下发单据");
-        sale_detail.setSaleId(jTextFieldXiafaId.getText());
-        sale_detail.setYimiaoId(11);
-        sale.setDepartmentId(4);
 
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
         for (int i = 0; i < 3; i++) {
             sale_detail.setSaleId(jTextFieldXiafaId.getText());
             sale_detail.setYimiaoId(1000 + i);
-            sale_detail.setQuantity(345);
+            sale_detail.setQuantity(345+i);
             list.add(sale_detail);
         }
 

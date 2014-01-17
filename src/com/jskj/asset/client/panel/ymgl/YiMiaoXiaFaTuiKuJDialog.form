@@ -250,7 +250,7 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jTextFieldXiafaId" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <Component id="jTextField4" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldjingbanren" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -263,8 +263,8 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jTextFieldZhidanDate" pref="160" max="32767" attributes="0"/>
-                              <Component id="jTextField5" max="32767" attributes="0"/>
-                              <Component id="jTextField14" max="32767" attributes="0"/>
+                              <Component id="jTextFielddepartment" max="32767" attributes="0"/>
+                              <Component id="jTextFieldContactPerson" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -276,7 +276,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTextField3" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="jTextFieldzhidanren" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -301,7 +301,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField4" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTextFieldjingbanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -312,12 +312,12 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField14" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTextFieldContactPerson" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTextFielddepartment" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -331,7 +331,7 @@
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jTextFieldzhidanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -376,16 +376,16 @@
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="jTextFieldjingbanren">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField4.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField4" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldjingbanren.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldjingbanren" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField5">
+        <Component class="javax.swing.JTextField" name="jTextFielddepartment">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField5.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField5" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFielddepartment.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFielddepartment" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
@@ -454,7 +454,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable4">
+                <Component class="javax.swing.JTable" name="jTableyimiao">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="8" rowCount="15">
@@ -472,48 +472,48 @@
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title0"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title0"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title1"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title1"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title2"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title2"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title3"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title3"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title4"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title4"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title5"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title5"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title6"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title6"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title resourceKey="jTable4.columnModel.title7"/>
+                          <Title resourceKey="jTableyimiao.columnModel.title7"/>
                           <Editor/>
                           <Renderer/>
                         </Column>
                       </TableColumnModel>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="jTable4" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="jTableyimiao" noResource="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
@@ -529,10 +529,10 @@
             <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="jTextFieldzhidanren">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField3.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField3" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldzhidanren.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldzhidanren" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldXiafadanwei">
@@ -546,9 +546,9 @@
             <Property name="name" type="java.lang.String" value="jLabel13" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField14">
+        <Component class="javax.swing.JTextField" name="jTextFieldContactPerson">
           <Properties>
-            <Property name="name" type="java.lang.String" value="jTextField14" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldContactPerson" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
