@@ -73,57 +73,73 @@ public class YiMiaoBaoSunShenHeJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setBorderPainted(false);
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton8.setName("jButton8"); // NOI18N
+        jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setBorderPainted(false);
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton6.setName("jButton6"); // NOI18N
+        jButton6.setOpaque(false);
         jToolBar1.add(jButton6);
 
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorderPainted(false);
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton5.setName("jButton5"); // NOI18N
+        jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
 
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton7.setName("jButton7"); // NOI18N
+        jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoBaoSunShenHeJDialog.class, this);
         jButton10.setAction(actionMap.get("cancelAction")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
+        jButton10.setBorderPainted(false);
         jButton10.setFocusable(false);
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton10.setName("jButton10"); // NOI18N
+        jButton10.setOpaque(false);
         jToolBar1.add(jButton10);
 
         jPanel1.setName("jPanel1"); // NOI18N

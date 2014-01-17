@@ -3,7 +3,7 @@ package com.jskj.asset.client.bean.entity;
 import java.util.Date;
 
 public class Yimiaoyanshoutb {
-    private Integer ymysId;
+    private String ymysId;
 
     private Date ymysDate;
 
@@ -43,11 +43,11 @@ public class Yimiaoyanshoutb {
 
     private String ymysArriveaddr;
 
-    public Integer getYmysId() {
+    public String getYmysId() {
         return ymysId;
     }
 
-    public void setYmysId(Integer ymysId) {
+    public void setYmysId(String ymysId) {
         this.ymysId = ymysId;
     }
 

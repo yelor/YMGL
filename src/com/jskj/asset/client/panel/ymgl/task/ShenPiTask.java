@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.ymgl.task;
 
-import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
+import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -18,22 +18,22 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author tt
  */
-public class ShenQingTask extends BaseTask{
+public class ShenPiTask extends BaseTask{
 
-    public static final Logger logger = Logger.getLogger(ShenQingTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "cgsq/add";
+    private static final Logger logger = Logger.getLogger(ShenPiTask.class);
+    private final String SP_URI = Constants.HTTP + Constants.APPID + "yimiaoshenpi/shenpi";
     
-    private final ShenQingDetailEntity cgsq;
+    private ShenPiEntity yimiaosp;
     
-    public ShenQingTask(ShenQingDetailEntity cgsq) {
-        this.cgsq = cgsq;
+    public ShenPiTask(ShenPiEntity yimiaosp){
+        this.yimiaosp = yimiaosp;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            restTemplate.postForObject(ADD_URI, cgsq, ShenQingDetailEntity.class);
+            restTemplate.postForObject(SP_URI, yimiaosp,ShenPiEntity.class );
         }catch (RestClientException e) {
             logger.error(e);
             return e;

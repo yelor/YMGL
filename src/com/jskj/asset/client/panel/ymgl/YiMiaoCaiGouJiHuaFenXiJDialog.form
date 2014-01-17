@@ -139,7 +139,9 @@
         </Property>
         <Property name="floatable" type="boolean" value="false"/>
         <Property name="rollover" type="boolean" value="true"/>
+        <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
@@ -148,6 +150,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton6.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
@@ -157,6 +160,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
@@ -166,6 +170,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton4.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
@@ -175,6 +180,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
@@ -184,6 +190,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
@@ -196,6 +203,7 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
@@ -265,6 +273,7 @@
           </Border>
         </Property>
         <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout>
@@ -309,6 +318,7 @@
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton8">
@@ -318,6 +328,7 @@
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
             <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

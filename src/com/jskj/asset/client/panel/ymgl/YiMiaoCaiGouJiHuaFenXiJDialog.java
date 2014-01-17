@@ -8,6 +8,7 @@ package com.jskj.asset.client.panel.ymgl;
 import com.jskj.asset.client.bean.entity.YimiaoCaigoujihuaFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigoujihuaEntity;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoCaigoujihuaTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author huiqi
  */
-public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
+public class YiMiaoCaiGouJiHuaFenXiJDialog extends BaseDialog {
 
     private final static Logger logger = Logger.getLogger(YiMiaoCaiGouJiHuaFenXiJDialog.class);
 
@@ -36,7 +37,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
      * Creates new form yimiaoyanshouJDialog
      */
     public YiMiaoCaiGouJiHuaFenXiJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super();
         initComponents();
         pageIndex = 1;
         count = 0;
@@ -186,10 +187,13 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setBorderPainted(false);
         jButton6.setFocusable(false);
         jButton6.setName("jButton6"); // NOI18N
         jButton6.setOpaque(false);
@@ -197,6 +201,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
 
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
         jButton3.setFocusable(false);
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
@@ -204,6 +209,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
@@ -211,6 +217,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
@@ -218,6 +225,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
 
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorderPainted(false);
         jButton5.setFocusable(false);
         jButton5.setName("jButton5"); // NOI18N
         jButton5.setOpaque(false);
@@ -227,6 +235,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
         jButton7.setAction(actionMap.get("exit")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
         jButton7.setName("jButton7"); // NOI18N
         jButton7.setOpaque(false);
@@ -280,6 +289,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setOpaque(false);
 
         jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
         jLabelTotal.setName("jLabelTotal"); // NOI18N
@@ -287,10 +297,12 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends javax.swing.JDialog {
         jButton2.setAction(actionMap.get("pagePrev")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
 
         jButton8.setAction(actionMap.get("pageNext")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setName("jButton8"); // NOI18N
+        jButton8.setOpaque(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
