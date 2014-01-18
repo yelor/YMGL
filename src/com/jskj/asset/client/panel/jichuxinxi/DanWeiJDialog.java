@@ -96,6 +96,8 @@ public class DanWeiJDialog extends javax.swing.JDialog {
                 //存下所有的数据
                 units = unittbs.getUnits();
 
+                
+                
                 BindTableHelper<Unit> bindTable = new BindTableHelper<Unit>(jTableUnit, units);
                 bindTable.createTable(new String[][]{{"unitId", "单位编号"}, {"unitName", "单位名称"}});
                 bindTable.setIntegerType(1);

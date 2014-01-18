@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.ymgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.YimiaoShenpiFindEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
@@ -47,7 +48,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
     public YimiaoShenPiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
-        user = "";
+        user = AssetClientApp.getSessionMap().getUsertb().getUserName();
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<Yimiaoshenpiliucheng>(jSQTable, new ArrayList<Yimiaoshenpiliucheng>());
@@ -57,18 +58,6 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         new RefreshTask(0).execute();
     }
     
-    @Action
-    public void login() {
-        user = jTextField1.getText();
-        if(yimiaoshenpiList!= null){
-            yimiaoshenpiList.clear();            
-        }else {
-            yimiaoshenpiList = null;
-        }
-            
-        JOptionPane.showMessageDialog(this, "登陆成功！");
-        reload();
-    }
     
     @Action
     public void exit() {
@@ -206,9 +195,6 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -298,18 +284,6 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         jPanel1.setName("jPanel1"); // NOI18N
         jPanel1.setOpaque(false);
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
-
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        jButton2.setAction(actionMap.get("login")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-
         jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
         jLabelTotal.setName("jLabelTotal"); // NOI18N
 
@@ -331,13 +305,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addContainerGap(283, Short.MAX_VALUE)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
@@ -347,15 +315,10 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -466,15 +429,12 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTable jSQTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

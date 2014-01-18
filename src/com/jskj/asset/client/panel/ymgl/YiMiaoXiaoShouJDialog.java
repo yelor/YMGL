@@ -692,7 +692,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入疫苗数量!");
             return null;
         }
-
+        yimiaoxiaoshou = new Sale_detail_tbFindEntity();
         sale.setSaleId(jTextFieldXiaoshouId.getText());
         sale.setGongyingtype(jTextFieldgongyingType.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -700,7 +700,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         sale.setDepartmentId(4);
 
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
-          for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
             sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
@@ -709,15 +709,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
             list.add(sale_detail);
         }
-        for (int i = 0; i < 3; i++) {
-            sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
-            sale_detail.setYimiaoId(1000 + i);
-            sale_detail.setQuantity(345);
-            sale_detail.setPrice(12.4f);
-            sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
-            list.add(sale_detail);
-        }
-
         yimiaoxiaoshou.setSale(sale);
         yimiaoxiaoshou.setSale_details(list);
         return new SubmitFormTask(yimiaoxiaoshou);

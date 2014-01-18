@@ -50,7 +50,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel10 = new javax.swing.JLabel();
         jTextFieldYiMiaoName = new javax.swing.JTextField();
         jTextFieldYiMiaoId = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldGuige = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jTextField18 = new javax.swing.JTextField();
@@ -63,7 +63,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jComboBoxYiMiaoJiXing = new javax.swing.JComboBox();
         jComboBoxUnit = new javax.swing.JComboBox();
         jLabel19 = new javax.swing.JLabel();
-        jTextField20 = new javax.swing.JTextField();
+        jTextFieldShengchanqiye = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -132,10 +132,10 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             }
         });
 
-        jTextField3.setName("jTextField3"); // NOI18N
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldGuige.setName("jTextFieldGuige"); // NOI18N
+        jTextFieldGuige.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jTextFieldGuigeActionPerformed(evt);
             }
         });
 
@@ -180,10 +180,10 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel19.setText(resourceMap.getString("jLabel19.text")); // NOI18N
         jLabel19.setName("jLabel19"); // NOI18N
 
-        jTextField20.setName("jTextField20"); // NOI18N
-        jTextField20.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldShengchanqiye.setName("jTextFieldShengchanqiye"); // NOI18N
+        jTextFieldShengchanqiye.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField20ActionPerformed(evt);
+                jTextFieldShengchanqiyeActionPerformed(evt);
             }
         });
 
@@ -215,7 +215,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -239,7 +239,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addGap(18, 18, 18)
@@ -269,7 +269,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                                     .addComponent(jLabel10)
                                     .addComponent(jComboBoxYiMiaoJiXing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel19)
-                                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jButton7)
@@ -289,7 +289,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -600,9 +600,9 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldYiMiaoNameActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jTextFieldGuigeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldGuigeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jTextFieldGuigeActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
@@ -636,9 +636,9 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldHuansuanlvActionPerformed
 
-    private void jTextField20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField20ActionPerformed
+    private void jTextFieldShengchanqiyeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldShengchanqiyeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField20ActionPerformed
+    }//GEN-LAST:event_jTextFieldShengchanqiyeActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
@@ -703,17 +703,31 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         this.yimiao = yimiao;
         jTextFieldYiMiaoId.setText((yimiao.getYimiaoId()).toString());
         jTextFieldYiMiaoName.setText(yimiao.getYimiaoName());
+        jTextFieldShengchanqiye.setText(yimiao.getYimiaoShengchanqiye());
+        jTextFieldGuige.setText(yimiao.getYimiaoGuige());
     }
 
     @Action
     public Task submitForm() {
         if (jTextFieldYiMiaoName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗名称!");
+            return null;
+        }else if (jTextFieldGuige.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入疫苗规格!");
+            return null;
+        }else if (jTextFieldShengchanqiye.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入生产企业!");
+            return null;
+        }else if (jComboBoxYiMiaoJiXing.getSelectedItem().toString().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入疫苗剂型!");
+            return null;
         }
         yimiao.setYimiaoName(jTextFieldYiMiaoName.getText());
         yimiao.setYimiaoType((jComboBoxYiMiaoType.getSelectedItem()).toString());
         yimiao.setYimiaoJixing((jComboBoxYiMiaoJiXing.getSelectedItem()).toString());
         yimiao.setUnitId(jComboBoxUnit.getSelectedIndex());
+        yimiao.setYimiaoShengchanqiye(jTextFieldShengchanqiye.getText());
+        yimiao.setYimiaoGuige(jTextFieldGuige.getText());
         yimiao.setYimiaoFuzhuunit(jComboBoxFuzhuunit.getSelectedItem().toString());
         yimiao.setYimiaoHuansuanlv(100);
 
@@ -785,13 +799,13 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldHuansuanlv;
+    private javax.swing.JTextField jTextFieldShengchanqiye;
     private javax.swing.JTextField jTextFieldYiMiaoId;
     private javax.swing.JTextField jTextFieldYiMiaoName;
     // End of variables declaration//GEN-END:variables

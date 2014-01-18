@@ -29,10 +29,22 @@ public class AssetMessage {
 
     }
 
+    public static void ERROR(String text,Component parentComponent) {
+        AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
+        clientView.setStatus(text, ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parentComponent, text, "错误", JOptionPane.ERROR_MESSAGE);
+
+    }
     public static void ERRORSYS(String text) {
         AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
         clientView.setStatus(text, ERROR_MESSAGE);
         JOptionPane.showMessageDialog(AssetClientApp.getApplication().getMainFrame(), text, "错误", JOptionPane.ERROR_MESSAGE);
+
+    }
+     public static void ERRORSYS(String text,Component parentComponent) {
+        AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
+        clientView.setStatus(text, ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parentComponent, text, "错误", JOptionPane.ERROR_MESSAGE);
 
     }
 
@@ -40,6 +52,12 @@ public class AssetMessage {
         AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
         clientView.setStatus(text, INFO_MESSAGE);
         JOptionPane.showMessageDialog(AssetClientApp.getApplication().getMainFrame(), text, "信息", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+    public static void INFO(String text,Component parentComponent) {
+        AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
+        clientView.setStatus(text, INFO_MESSAGE);
+        JOptionPane.showMessageDialog(parentComponent, text, "信息", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
