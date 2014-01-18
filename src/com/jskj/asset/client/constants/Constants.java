@@ -13,7 +13,7 @@ import java.awt.Font;
 public class Constants {
 
     /*HTTP conifg*/
-    public static String HTTP = "http://127.0.0.1:8084";
+    public static String HTTP = "";
     public static String APPID = "/AssetsSys/service/";
     public static int OK_DELETE = 100;
     public static int HTTP_NOT_FOUND = 404;
@@ -22,8 +22,8 @@ public class Constants {
     public final static Font TREE_FONT = new Font("微软雅黑", Font.PLAIN, 18 );
     /*Global config*/
     public static String WINTITLE = "疫苗资产管理系统";
-    public static int LOGIN_WIDTH = 395;
-    public static int LOGIN_HEIGHT = 270;
+    public static int LOGIN_WIDTH = 385;
+    public static int LOGIN_HEIGHT = 320;
 
     /*左边树*/
     public final static String VIEW_TABLES_TREE = "com.jskj.asset.client.panel.LeftPanel";
@@ -39,4 +39,9 @@ public class Constants {
     /*后台功能配置*/
     /*plus*/
     public static String PLUS_EXEC = "Main-Class";
+    
+    /*用于登陆设置*/
+    public static void setHTTPHost(String ip,String port){
+       HTTP = "http://"+ip+":"+port;
+    }
 }

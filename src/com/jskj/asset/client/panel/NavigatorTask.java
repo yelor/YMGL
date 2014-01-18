@@ -5,13 +5,10 @@
 package com.jskj.asset.client.panel;
 
 import com.jskj.asset.client.layout.AssetArrayNodes;
-import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.AssetNode;
-import com.jskj.asset.client.layout.AssetTreeModel;
-import com.jskj.asset.client.layout.AssetTreeNode;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.XMLHelper;
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -21,7 +18,7 @@ import javax.xml.bind.JAXBException;
 public class NavigatorTask extends BaseTask {
 
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NavigatorTask.class);
-    private final String NAVIGATOR_XML = "/com/jskj/asset/client/resources/Navigator.xml";
+    private final String NAVIGATOR_XML = "com/jskj/asset/client/resources/Navigator.xml";
 
     public NavigatorTask() {
         super();
@@ -31,9 +28,9 @@ public class NavigatorTask extends BaseTask {
     @Override
     public Object doBackgrounp() {
         AssetArrayNodes nodes = new AssetArrayNodes();
-        XMLHelper<AssetArrayNodes> help = new XMLHelper<AssetArrayNodes>(this.getClass().getResource(NAVIGATOR_XML).getPath(), nodes);
+        XMLHelper<AssetArrayNodes> help = new XMLHelper<AssetArrayNodes>();
         try {
-            nodes = help.read();
+            nodes = help.read(this.getClass().getClassLoader().getResourceAsStream(NAVIGATOR_XML),nodes);
         } catch (JAXBException ex) {
             return ex;
         }

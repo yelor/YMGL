@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public class ShenQingTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(ShenQingTask.class);
+    public static final Logger logger = Logger.getLogger(ShenQingTask.class);
     private final String ADD_URI = Constants.HTTP + Constants.APPID + "cgsq/add";
     
     private final ShenQingDetailEntity cgsq;

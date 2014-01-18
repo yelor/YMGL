@@ -7,6 +7,7 @@ package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.bean.entity.Supplier;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.jichuxinxi.task.SupplierUpdateTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import org.apache.log4j.Logger;
@@ -17,18 +18,18 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class GongYingDanWeiInfoJDialog extends javax.swing.JDialog {
+public class GongYingDanWeiInfoJDialog extends BaseDialog {
     
     private static final Logger logger = Logger.getLogger(GongYingDanWeiInfoJDialog.class);
-    private GongYingDanWeiJDialog gongYingDanWeiJDialog;
+    private GongYingDanWeiPanel gongYingDanWeiJDialog;
     private Supplier supplier;
     private boolean isNew;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
      */
-    public GongYingDanWeiInfoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public GongYingDanWeiInfoJDialog() {
+        super();
         initComponents();
     }
 

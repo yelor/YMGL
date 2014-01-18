@@ -3,7 +3,9 @@ package com.jskj.asset.client.bean.entity;
 import java.util.Date;
 
 public class Yimiaoyanshou_detail_tb {
-    private Integer ymysId;
+    private Integer detailId;
+
+    private String ymysId;
 
     private Integer yimiaoId;
 
@@ -13,16 +15,26 @@ public class Yimiaoyanshou_detail_tb {
 
     private Integer piqianfahegeno;
 
+    private Integer quantity;
+
     private String fuheyuan;
 
     private String fahuoyuan;
 
-    public Integer getYmysId() {
+    public Integer getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(Integer detailId) {
+        this.detailId = detailId;
+    }
+
+    public String getYmysId() {
         return ymysId;
     }
 
-    public void setYmysId(Integer ymysId) {
-        this.ymysId = ymysId;
+    public void setYmysId(String ymysId) {
+        this.ymysId = ymysId == null ? null : ymysId.trim();
     }
 
     public Integer getYimiaoId() {
@@ -55,6 +67,14 @@ public class Yimiaoyanshou_detail_tb {
 
     public void setPiqianfahegeno(Integer piqianfahegeno) {
         this.piqianfahegeno = piqianfahegeno;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getFuheyuan() {

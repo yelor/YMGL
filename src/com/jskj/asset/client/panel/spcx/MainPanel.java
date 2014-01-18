@@ -14,6 +14,7 @@ import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.*;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.swing.JDialog;
@@ -74,6 +75,8 @@ public class MainPanel extends BasePanel {
         jPanel1.setBackground(resourceMap.getColor("jPanel1.background")); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(MainPanel.class, this);
+        jButton1.setAction(actionMap.get("selectYimiaoShenPiDanAction")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorder(null);
@@ -82,7 +85,6 @@ public class MainPanel extends BasePanel {
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton1.setName("jButton1"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(MainPanel.class, this);
         jButton2.setAction(actionMap.get("YeWuLiuChengChaXunAction")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
@@ -262,6 +264,19 @@ public class MainPanel extends BasePanel {
                 AssetClientApp.getApplication().show(selecteTongJiInvoiceJDialog);
             }
 
+        });
+    }
+    
+    @Action
+    public void selectYimiaoShenPiDanAction() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YimiaoShenPiJDialog yimiaoShenPiJDialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(), true);
+                    yimiaoShenPiJDialog.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
+            }
         });
     }
 }

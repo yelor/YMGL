@@ -28,7 +28,7 @@ import org.jdesktop.application.Task;
  */
 public class MainPanel extends BasePanel {
 
-    
+    private selecteInvoiceJDialog selecteInvoiceJDialog;
     private selecteInvoiceJDialog2 selecteInvoiceJDialog2;
     private selecteInvoiceJDialog3 selecteInvoiceJDialog3;
 
@@ -182,7 +182,6 @@ public class MainPanel extends BasePanel {
     @Action
     public void selecteInvoiceAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private selecteInvoiceJDialog selecteInvoiceJDialog;
             public void run() {
                 if (selecteInvoiceJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();

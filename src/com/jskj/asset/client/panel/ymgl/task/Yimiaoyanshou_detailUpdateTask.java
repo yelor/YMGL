@@ -7,6 +7,7 @@
 package com.jskj.asset.client.panel.ymgl.task;
 
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tb;
+import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -27,11 +28,11 @@ public class Yimiaoyanshou_detailUpdateTask extends BaseTask{
     private final String UPD_URI = Constants.HTTP + Constants.APPID + "yimiaoyanshou_detail/update";
     private final String delete_URI = Constants.HTTP + Constants.APPID + "yimiaoyanshou_detail/delete";
     
-    private final Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
+    private final Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity;
     private final int actionType;
 
-    public Yimiaoyanshou_detailUpdateTask(Yimiaoyanshou_detail_tb yimiaoyanshou_detail, int actionType) {
-        this.yimiaoyanshou_detail = yimiaoyanshou_detail;
+    public Yimiaoyanshou_detailUpdateTask(Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity, int actionType) {
+        this.yimiaoyanshouEntity = yimiaoyanshouEntity;
         this.actionType = actionType;
     }
     
@@ -43,11 +44,11 @@ public class Yimiaoyanshou_detailUpdateTask extends BaseTask{
             //使用Spring3 RESTful client来POSThttp数据
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             if (actionType == ENTITY_SAVE) {
-                restTemplate.postForObject(ADD_URI, yimiaoyanshou_detail, Yimiaoyanshou_detail_tb.class);
+                restTemplate.postForObject(ADD_URI, yimiaoyanshouEntity, Yimiaoyanshou_detail_tbFindEntity.class);
             } else if (actionType == ENTITY_UPDATE) {
-                restTemplate.postForObject(UPD_URI, yimiaoyanshou_detail, Yimiaoyanshou_detail_tb.class);
+                restTemplate.postForObject(UPD_URI, yimiaoyanshouEntity, Yimiaoyanshou_detail_tbFindEntity.class);
             } else if (actionType == ENTITY_DELETE) {
-                restTemplate.postForLocation(delete_URI + "/" + yimiaoyanshou_detail.getYmysId(),null);
+                restTemplate.postForLocation(delete_URI + "/" + yimiaoyanshouEntity.getYimiaoyanshou().getYmysId(),null);
             }
         } catch (RestClientException e) {
             logger.error(e);

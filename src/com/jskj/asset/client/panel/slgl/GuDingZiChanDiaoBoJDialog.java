@@ -6,8 +6,20 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
+import com.jskj.asset.client.bean.entity.Zichanweixiudantb;
+import com.jskj.asset.client.constants.Constants;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
+import com.jskj.asset.client.util.DateHelper;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
@@ -17,6 +29,11 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
 
     DateChooser dateChooser1;
     JTextField regTextField1;
+    
+    private int zcId;
+    private int yichurenId;
+    private int jieshourenId;
+    private Zichandiaobodantb diaobodan;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -24,12 +41,173 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         super(parent);
         init();
         initComponents();
+        
+        jTextField1.setText(DanHao.getDanHao("zcdb"));
+        jTextField1.setEditable(false);
+        
+        ((BaseTextField) jTextFieldZichan).registerPopup(new IPopupBuilder() {
+
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "gdzc";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldZichan.getText().trim().equals("")) {
+                    sql = "gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldZichan.setText(bindedMap.get("gdzcName") == null ? "" : bindedMap.get("gdzcName").toString());
+                    jTextField3.setText(bindedMap.get("gdzcId") == null ? "" : bindedMap.get("gdzcId").toString());
+                    jTextFieldXinghao.setText(bindedMap.get("gdzcXinghao") == null ? "" : bindedMap.get("gdzcXinghao").toString());
+                    jTextFieldGuige.setText(bindedMap.get("gdzcGuige") == null ? "" : bindedMap.get("gdzcGuige").toString());
+                    jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
+                    jTextField4.setText(bindedMap.get("gdzcType") == null ? "" : bindedMap.get("gdzcType").toString());
+                    
+                    zcId = (Integer)bindedMap.get("gdzcId");
+                }
+            }
+        });
+        
+        ((BaseTextField) jTextFieldYichuren).registerPopup(new IPopupBuilder() {
+
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "user";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldYichuren.getText().trim().equals("")) {
+                    sql = "user_name like \"%" + jTextFieldYichuren.getText() + "%\"";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"userId", "用户ID"},{"userName", "用户名"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldYichuren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
+                    jTextFieldYichubumen.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
+                    
+                    yichurenId = (Integer)bindedMap.get("userId");
+                }
+            }
+        });
+        
+        ((BaseTextField) jTextFieldJieshouren).registerPopup(new IPopupBuilder() {
+
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "user";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldJieshouren.getText().trim().equals("")) {
+                    sql = "user_name like \"%" + jTextFieldJieshouren.getText() + "%\"";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"userId", "用户ID"},{"userName", "用户名"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldJieshouren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
+                    jTextFieldJieshoubumen.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
+                    
+                    jieshourenId = (Integer)bindedMap.get("userId");
+                }
+            }
+        });
     }
 
     private void init() {
         regTextField1 = new JTextField();
         dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
         dateChooser1.register(regTextField1);
+    }
+    
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+    
+    @Action
+    public Task submitForm(){
+        if(jTextField12.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入制单日期！");
+            return null;
+        }
+        if(jTextFieldZichan.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入资产名称！");
+            return null;
+        }
+        if(jTextFieldYichuren.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入移出人！");
+            return null;
+        }
+        if(jTextFieldJieshouren.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入接收人！");
+            return null;
+        }
+        if(jTextField14.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "请输入存放地点！");
+            return null;
+        }
+        diaobodan = new Zichandiaobodantb();
+        diaobodan.setCundangdidian(jTextField14.getText());
+        diaobodan.setDiaoboDate(DateHelper.getStringtoDate(jTextField12.getText(), "yyyy-MM-dd"));
+        diaobodan.setJieshourenId(jieshourenId);
+        diaobodan.setRemark(jTextArea1.getText());
+        diaobodan.setYichurenId(yichurenId);
+        diaobodan.setZcId(zcId);
+        diaobodan.setZcdbId(jTextField1.getText());
+        
+        return new submitTask(diaobodan);
+    }
+    
+    private class submitTask extends DiaoboTask{
+
+        public submitTask(Zichandiaobodantb zcdb) {
+            super(zcdb);
+        }
+        
+        @Override
+        protected void succeeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "提交成功！");
+            exit();
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,24 +227,24 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldGuige = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        jTextFieldXinghao = new javax.swing.JTextField();
+        jTextFieldUnit = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        jTextFieldYichubumen = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        jTextFieldYichuren = new BaseTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        jTextFieldJieshoubumen = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        jTextFieldZichan = new BaseTextField();
         jTextField12 = regTextField1;
         jLabel13 = new javax.swing.JLabel();
         jTextField14 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        jTextFieldJieshouren = new BaseTextField();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -105,29 +283,29 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
-        jTextField5.setName("jTextField5"); // NOI18N
+        jTextFieldGuige.setName("jTextFieldGuige"); // NOI18N
 
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
-        jTextField6.setName("jTextField6"); // NOI18N
+        jTextFieldXinghao.setName("jTextFieldXinghao"); // NOI18N
 
-        jTextField7.setName("jTextField7"); // NOI18N
+        jTextFieldUnit.setName("jTextFieldUnit"); // NOI18N
 
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
-        jTextField8.setName("jTextField8"); // NOI18N
+        jTextFieldYichubumen.setName("jTextFieldYichubumen"); // NOI18N
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
-        jTextField9.setName("jTextField9"); // NOI18N
+        jTextFieldYichuren.setName("jTextFieldYichuren"); // NOI18N
 
         jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
 
-        jTextField10.setName("jTextField10"); // NOI18N
+        jTextFieldJieshoubumen.setName("jTextFieldJieshoubumen"); // NOI18N
 
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
@@ -135,7 +313,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
         jLabel11.setName("jLabel11"); // NOI18N
 
-        jTextField11.setName("jTextField11"); // NOI18N
+        jTextFieldZichan.setName("jTextFieldZichan"); // NOI18N
 
         jTextField12.setName("jTextField12"); // NOI18N
 
@@ -147,7 +325,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
 
-        jTextField15.setName("jTextField15"); // NOI18N
+        jTextFieldJieshouren.setName("jTextFieldJieshouren"); // NOI18N
 
         jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
         jLabel16.setName("jLabel16"); // NOI18N
@@ -171,7 +349,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldYichubumen, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
@@ -186,7 +364,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField6)
+                                    .addComponent(jTextFieldXinghao)
                                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -194,7 +372,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
                                     .addComponent(jLabel14))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField10)
+                                    .addComponent(jTextFieldJieshoubumen)
                                     .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -206,11 +384,11 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
                             .addComponent(jLabel13))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField15)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField7)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField9)
+                            .addComponent(jTextFieldJieshouren)
+                            .addComponent(jTextFieldZichan, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldUnit)
+                            .addComponent(jTextFieldGuige)
+                            .addComponent(jTextFieldYichuren)
                             .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
@@ -232,31 +410,31 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldZichan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldYichubumen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldYichuren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldJieshoubumen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldJieshouren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -272,18 +450,28 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanDiaoBoJDialog.class, this);
+        jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton2.setAction(actionMap.get("exit")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -367,18 +555,18 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldGuige;
+    private javax.swing.JTextField jTextFieldJieshoubumen;
+    private javax.swing.JTextField jTextFieldJieshouren;
+    private javax.swing.JTextField jTextFieldUnit;
+    private javax.swing.JTextField jTextFieldXinghao;
+    private javax.swing.JTextField jTextFieldYichubumen;
+    private javax.swing.JTextField jTextFieldYichuren;
+    private javax.swing.JTextField jTextFieldZichan;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

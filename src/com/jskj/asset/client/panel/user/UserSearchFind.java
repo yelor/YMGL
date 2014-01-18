@@ -28,7 +28,7 @@ public class UserSearchFind extends BasePanel {
     public UserSearchFind() {
         initComponents();
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"userId", "用户ID"}, {"userPassword", "密码", "false"}, {"userName", "用户名字", "true"},
+            {"userId", "用户ID"}, {"userPassword", "密码", "false"}, {"userName", "用户名字","true"},
             {"total", "总数", "true"}, {"newcolumn", "新增加列", "true"}});
 
         editTable.registerPopup(2, new IPopupBuilder() {
@@ -123,6 +123,12 @@ public class UserSearchFind extends BasePanel {
         ));
         jTable1.setName("jTable1"); // NOI18N
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
+            jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
+            jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
+            jTable1.getColumnModel().getColumn(3).setHeaderValue(resourceMap.getString("jTable1.columnModel.title3")); // NOI18N
+        }
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(UserSearchFind.class, this);
         jButton1.setAction(actionMap.get("submitTable")); // NOI18N

@@ -24,11 +24,6 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class selecteInvoiceJDialog extends javax.swing.JDialog {
-    private YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog;
-    private YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog;
-    private YiMiaoSheGouPlanJDialog sheGouPlanJDialog;
-    private YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog;
-    private YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog;
     
 
     /**
@@ -97,11 +92,15 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteInvoiceJDialog.class, this);
         jButton1.setAction(actionMap.get("selectedAction")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
 
         jButton2.setAction(actionMap.get("cancelAction")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -195,42 +194,32 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
         dispose();
         int selecteIndex=jComboBox1.getSelectedIndex();
         if (selecteIndex==0) {
-            if (yiMiaoCaiGouJiHuaFenXiJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            yiMiaoCaiGouJiHuaFenXiJDialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
+            YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
             yiMiaoCaiGouJiHuaFenXiJDialog.setLocationRelativeTo(mainFrame);
-        }
             AssetClientApp.getApplication().show(yiMiaoCaiGouJiHuaFenXiJDialog);
         } else if(selecteIndex==1){
-            if (shenbaoPlanJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog(new javax.swing.JFrame(), true);
+            YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog(new javax.swing.JFrame(), true);
             shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
-        }
             shenbaoPlanJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(shenbaoPlanJDialog);
         } else if(selecteIndex==2){
-            if (sheGouPlanJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog(new javax.swing.JFrame(), true);
+            YiMiaoSheGouPlanJDialog sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog(new javax.swing.JFrame(), true);
             sheGouPlanJDialog.setLocationRelativeTo(mainFrame);
-        }
             sheGouPlanJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(sheGouPlanJDialog);
         } else if(selecteIndex==3){
-            if (lingYongShenQingJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog(new javax.swing.JFrame(), true);
+            YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog(new javax.swing.JFrame(), true);
             lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
-        }
             lingYongShenQingJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(lingYongShenQingJDialog);
         } else if(selecteIndex==4){
-            if (caiGouShenQingJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
+            YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
             caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
-        }
             caiGouShenQingJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(caiGouShenQingJDialog);
         }    

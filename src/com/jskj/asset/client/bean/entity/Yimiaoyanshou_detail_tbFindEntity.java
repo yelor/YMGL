@@ -10,10 +10,20 @@ import java.util.List;
  *
  * @author huiqi
  */
-public class Yimiaoyanshou_detail_tbFindEntity extends Yimiaoyanshou_detail_tb{
+public class Yimiaoyanshou_detail_tbFindEntity {
+    private Yimiaoyanshoutb yimiaoyanshou;
+    
      private int count;
     
-    private  List<Yimiaoyanshou_detail_tb> yimiaoyanshou_details;
+    private  List<Yimiaoyanshou_detail_tb> result;
+
+    public Yimiaoyanshoutb getYimiaoyanshou() {
+        return yimiaoyanshou;
+    }
+
+    public void setYimiaoyanshou(Yimiaoyanshoutb yimiaoyanshou) {
+        this.yimiaoyanshou = yimiaoyanshou;
+    }
 
     public int getCount() {
         return count;
@@ -23,12 +33,12 @@ public class Yimiaoyanshou_detail_tbFindEntity extends Yimiaoyanshou_detail_tb{
         this.count = count;
     }
 
-    public List<Yimiaoyanshou_detail_tb> getYimiaoyanshou_details() {
-        return yimiaoyanshou_details;
+    public List<Yimiaoyanshou_detail_tb> getResult() {
+        return result;
     }
 
-    public void setYimiaoyanshou_details(List<Yimiaoyanshou_detail_tb> yimiaoyanshou_details) {
-        this.yimiaoyanshou_details = yimiaoyanshou_details;
+    public void setResult(List<Yimiaoyanshou_detail_tb> result) {
+        this.result = result;
     }
     
     

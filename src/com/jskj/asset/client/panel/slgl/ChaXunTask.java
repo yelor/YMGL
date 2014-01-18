@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public class ChaXunTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(ChaXunTask.class);
+    public static final Logger logger = Logger.getLogger(ChaXunTask.class);
     private final String CX_URI = Constants.HTTP + Constants.APPID + "cgsqsp";
     public static final int pageSize = 10;
     private int pageIndex = 1;    

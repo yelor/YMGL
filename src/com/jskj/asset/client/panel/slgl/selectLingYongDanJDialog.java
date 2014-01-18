@@ -196,15 +196,10 @@ public class selectLingYongDanJDialog extends javax.swing.JDialog {
                 AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongShenQingJDialog);
         } else if (selecteIndex == 3) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
-                diZhiYiHaoPinCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(diZhiYiHaoPinCaiGouSQSHJDialog);
-        } else if (selecteIndex == 4) {
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 GuDingZiChanLingYongTuiKuJDialog guDingZiChanTuiKuJDialog = new GuDingZiChanLingYongTuiKuJDialog(mainFrame);
                 guDingZiChanTuiKuJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(guDingZiChanTuiKuJDialog);
-        } else if (selecteIndex == 5) {
+        } else if (selecteIndex == 4) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 DiZhiYiHaoPinLingYongTuiKuJDialog diZhiYiHaoPinLingYongTuiKuJDialog = new DiZhiYiHaoPinLingYongTuiKuJDialog(mainFrame);
                 diZhiYiHaoPinLingYongTuiKuJDialog.setLocationRelativeTo(mainFrame);

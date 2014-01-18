@@ -14,7 +14,16 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTask;
+import de.erichseifert.gral.data.DataTable;
+import de.erichseifert.gral.plots.PiePlot;
+import de.erichseifert.gral.plots.colors.LinearGradient;
+import de.erichseifert.gral.ui.InteractivePanel;
+import de.erichseifert.gral.util.Insets2D;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.io.IOException;
+import java.util.Random;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Task;
 
@@ -45,6 +54,7 @@ public class ToppagePane extends BasePanel {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorTopPage = new javax.swing.JEditorPane();
+        jPanelGph = new javax.swing.JPanel();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ToppagePane.class);
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
@@ -59,15 +69,35 @@ public class ToppagePane extends BasePanel {
         jEditorTopPage.setName("jEditorTopPage"); // NOI18N
         jScrollPane1.setViewportView(jEditorTopPage);
 
+        jPanelGph.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelGph.setMaximumSize(new java.awt.Dimension(337, 516));
+        jPanelGph.setMinimumSize(new java.awt.Dimension(337, 516));
+        jPanelGph.setName("jPanelGph"); // NOI18N
+
+        javax.swing.GroupLayout jPanelGphLayout = new javax.swing.GroupLayout(jPanelGph);
+        jPanelGph.setLayout(jPanelGphLayout);
+        jPanelGphLayout.setHorizontalGroup(
+            jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 364, Short.MAX_VALUE)
+        );
+        jPanelGphLayout.setVerticalGroup(
+            jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 512, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelGph, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addComponent(jPanelGph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -97,6 +127,84 @@ public class ToppagePane extends BasePanel {
 
         @Override
         public void onSucceeded(Object object) {
+            new GraphicTask().execute();
+        }
+
+    }
+
+    private class GraphicTask extends BaseTask {
+
+        private final Color COLOR1 = new Color(55, 170, 200);
+        /**
+         * Second corporate color used as signal color
+         */
+        private final Color COLOR2 = new Color(200, 80, 75);
+        private static final int SAMPLE_COUNT = 10;
+        /**
+         * Instance to generate random data values.
+         */
+        private Random random = new Random();
+
+        @Override
+        public Object doBackgrounp() {
+            // Create data
+            DataTable data = new DataTable(Integer.class);
+            for (int i = 0; i < SAMPLE_COUNT; i++) {
+                int val = random.nextInt(8) + 2;
+                data.add((random.nextDouble() <= 0.15) ? -val : val);
+            }
+
+            // Create new pie plot
+            PiePlot plot = new PiePlot(data);
+
+            // Format plot
+            plot.getTitle().setText("疫苗采购统计");
+            // Change relative size of pie
+            plot.setRadius(0.9);
+            // Display a legend
+            plot.setLegendVisible(true);
+            // Add some margin to the plot area
+            plot.setInsets(new Insets2D.Double(20.0, 40.0, 40.0, 40.0));
+
+            PiePlot.PieSliceRenderer pointRenderer
+                    = (PiePlot.PieSliceRenderer) plot.getPointRenderer(data);
+            // Change relative size of inner region
+            pointRenderer.setInnerRadius(0.4);
+            // Change the width of gaps between segments
+            pointRenderer.setGap(0.2);
+            // Change the colors
+            LinearGradient colors = new LinearGradient(COLOR1, COLOR2);
+            pointRenderer.setColor(colors);
+            // Show labels
+            pointRenderer.setValueVisible(true);
+            pointRenderer.setValueColor(Color.WHITE);
+            pointRenderer.setValueFont(Font.decode(null).deriveFont(Font.BOLD));
+            return new InteractivePanel(plot);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+
+            if (object instanceof InteractivePanel) {
+                InteractivePanel panelGrx = (InteractivePanel)object;
+                javax.swing.GroupLayout jPanelGphLayout = new javax.swing.GroupLayout(jPanelGph);
+                jPanelGph.setLayout(jPanelGphLayout);
+                jPanelGphLayout.setHorizontalGroup(
+                        jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelGphLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(panelGrx, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(2, Short.MAX_VALUE))
+                );
+                jPanelGphLayout.setVerticalGroup(
+                        jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelGphLayout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(panelGrx, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(118, Short.MAX_VALUE))
+                );
+            }
+
         }
 
     }
@@ -105,6 +213,7 @@ public class ToppagePane extends BasePanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JEditorPane jEditorTopPage;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanelGph;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 

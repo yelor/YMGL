@@ -14,7 +14,7 @@ public class UsertbFindEntity extends Usertb{
     
     private int count;
     
-    private  List<Usertb> result;
+    private  List<UsertbAll> result;
 
     /**
      * @return the count
@@ -31,16 +31,16 @@ public class UsertbFindEntity extends Usertb{
     }
 
     /**
-     * @return the result
+     * @return the users
      */
-    public List<Usertb> getResult() {
+    public List<UsertbAll> getResult() {
         return result;
     }
 
     /**
      * @param result the users to set
      */
-    public void setResult(List<Usertb> result) {
+    public void setResult(List<UsertbAll> result) {
         this.result = result;
     }
     
