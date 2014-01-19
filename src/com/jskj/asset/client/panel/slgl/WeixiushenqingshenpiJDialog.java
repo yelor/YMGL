@@ -120,7 +120,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         Weixiushenqingdantb wxsqdan = wxsq.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(wxsqdan.getWxsqId().toString());
-        shenPiEntity.setResult("批准");
+        shenPiEntity.setResult("同意");
         shenPiEntity.setUser(user);
         wxsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
@@ -131,7 +131,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         Weixiushenqingdantb wxsqdan = wxsq.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(wxsqdan.getWxsqId().toString());
-        shenPiEntity.setResult("驳回");
+        shenPiEntity.setResult("拒绝");
         shenPiEntity.setUser(user);
         wxsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
