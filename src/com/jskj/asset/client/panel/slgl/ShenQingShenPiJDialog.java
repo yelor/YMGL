@@ -31,9 +31,9 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
     private List<CaigoushenqingDetailEntity> cgsq;
     
-    private String user;
-    
     private ShenPiEntity shenPiEntity;
+    
+    private final int userId;
     
     BindTableHelper<CaigoushenqingDetailEntity> bindTable;
     /**
@@ -44,12 +44,12 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     public ShenQingShenPiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
-        user = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<CaigoushenqingDetailEntity>(jSQTable, new ArrayList<CaigoushenqingDetailEntity>());
         bindTable.createTable(new String[][]{{"cgsqId", "采购单号"}, {"jingbanren", "经办人"}, {"shenqingdanDate", "申请日期"}, {"shenqingdanRemark", "备注"},
-            {"checkId1", "负责人"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
+            {"checkId1", "直接领导"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
 //        bindTable.setIntegerType(1);
         bindTable.setDateType(3);
         bindTable.bind().setColumnWidth(new int[]{0, 150}).setRowHeight(30);
@@ -72,7 +72,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         BindingGroup bindingGroup = new BindingGroup();
 
         RefreshTask(int pageIndex) {
-            super(user,pageIndex);
+            super(""+userId,pageIndex);
         }
 
         @Override
@@ -120,7 +120,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(cgsqdan.getCgsqId().toString());
         shenPiEntity.setResult("同意");
-        shenPiEntity.setUser(user);
+        shenPiEntity.setUser(""+ userId);
         cgsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
@@ -131,7 +131,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(cgsqdan.getCgsqId().toString());
         shenPiEntity.setResult("拒绝");
-        shenPiEntity.setUser(user);
+        shenPiEntity.setUser(""+ userId);
         cgsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
