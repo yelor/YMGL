@@ -13,7 +13,7 @@ import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
 import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoxiaoshoumingxiPanel;
-import com.jskj.asset.client.panel.jichuxinxi.BuMenPanel;
+import com.jskj.asset.client.panel.user.BuMenPanel;
 import com.jskj.asset.client.panel.jichuxinxi.DanJuLeiXingJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DanWeiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinPanel;
@@ -22,7 +22,7 @@ import com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanPanel;
 import com.jskj.asset.client.panel.jichuxinxi.JianShaoFangShiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel;
-import com.jskj.asset.client.panel.jichuxinxi.ZhiYuanJDialog;
+import com.jskj.asset.client.panel.user.ParamPanel;
 import com.jskj.asset.client.panel.user.UserPanel;
 import com.jskj.asset.client.util.LogPaneAppender;
 import javax.swing.JDialog;
@@ -40,41 +40,10 @@ import org.jdesktop.application.Action;
 public class LoadModule extends BaseTask {
 
     private final static Logger logger = Logger.getLogger(LoadModule.class);
-    private JMenuBar menuBar;
+    private final JMenuBar menuBar;
     private LogDialog logBox;
     private JDialog aboutBox;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenuDW;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JMenu jichuMenu;
-    private javax.swing.JMenu baobiaoMenu;
-
+ 
     public LoadModule(JMenuBar menuBar) {
         this.menuBar = menuBar;
     }
@@ -88,39 +57,39 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem switchUserMenuItem = new javax.swing.JMenuItem();
-        jichuMenu = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        baobiaoMenu = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
-        jMenuItem22 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem23 = new javax.swing.JMenuItem();
-        jMenuItem24 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jichuMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem6 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem7 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem8 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu2 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem9 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem10 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem11 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem12 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem13 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem14 = new javax.swing.JMenuItem();
+        javax.swing.JMenu baobiaoMenu = new javax.swing.JMenu();
+        javax.swing.JMenu jMenu1 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem15 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem16 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem17 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu3 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem18 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem19 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenu4 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem20 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem21 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem22 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu5 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem23 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem24 = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem5 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
-        jMenuDW = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenuDW = new javax.swing.JMenu();
+        javax.swing.JMenuItem  jMenuItem2 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem  jMenuItem4 = new javax.swing.JMenuItem();
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
@@ -257,6 +226,13 @@ public class LoadModule extends BaseTask {
 
         menuBar.add(baobiaoMenu);
 
+        javax.swing.JMenuItem  jMenuItemAppparm = new javax.swing.JMenuItem();
+        jMenuItemAppparm.setAction(actionMap.get("showAppparam")); // NOI18N
+        jMenuItemAppparm.setText(resourceMap.getString("jMenuItemAppparm.text")); // NOI18N
+        jMenuItemAppparm.setName("jMenuItemAppparm"); // NOI18N
+        jMenuDW.add(jMenuItemAppparm);
+        
+        
         jMenuItem2.setAction(actionMap.get("showBuMen")); // NOI18N
         jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
         jMenuItem2.setName("jMenuItem2"); // NOI18N
@@ -354,7 +330,7 @@ public class LoadModule extends BaseTask {
 
     @Action
     public void showUserAdmin() {
-        OpenTabTask task = new OpenTabTask("单位信息-员工", new UserPanel(), false);
+        OpenTabTask task = new OpenTabTask("系统设置-员工", new UserPanel(), false);
         task.execute();
     }
 
@@ -397,7 +373,13 @@ public class LoadModule extends BaseTask {
     @Action
     public void showBuMen() {
 
-        OpenTabTask task = new OpenTabTask("单位信息-部门", new BuMenPanel(), false);
+        OpenTabTask task = new OpenTabTask("系统设置-部门", new BuMenPanel(), false);
+        task.execute();
+    }
+
+    @Action
+    public void showAppparam() {
+        OpenTabTask task = new OpenTabTask("系统设置-参数配置", new ParamPanel(), false);
         task.execute();
     }
 

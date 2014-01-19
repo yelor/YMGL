@@ -139,15 +139,15 @@ public class AssetClientApp extends SingleFrameApplication {
     public static void startupApplication(String[] args, JFrame window, UserSessionEntity aSessionMap) {
         loginWindow = window;
         sessionMap = aSessionMap;
-        try {
-            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
-            UIManager.put("ToolBar.isPaintPlainBackground", Boolean.TRUE);
-            UIManager.put("RootPane.setupButtonVisible", false);
-            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-            UIManager.put("TabbedPane.tabAreaInsets", new javax.swing.plaf.InsetsUIResource(3, 20, 2, 20));
-        } catch (Exception ex) {
-            logger.error(ex);
-        }
+//        try {
+//            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
+//            UIManager.put("ToolBar.isPaintPlainBackground", Boolean.TRUE);
+//            UIManager.put("RootPane.setupButtonVisible", false);
+//            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+//            UIManager.put("TabbedPane.tabAreaInsets", new javax.swing.plaf.InsetsUIResource(3, 20, 2, 20));
+//        } catch (Exception ex) {
+//            logger.error(ex);
+//        }
         launch(AssetClientApp.class, args);
     }
 }

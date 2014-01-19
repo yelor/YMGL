@@ -10,13 +10,15 @@
  */
 package com.jskj.asset.client.panel.user;
 
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.Usertb;
-import com.jskj.asset.client.bean.entity.UsertbAll;
-import com.jskj.asset.client.bean.entity.UsertbFindEntity;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommFindTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,42 +33,39 @@ import org.jdesktop.application.Task;
  *
  * @author woderchen
  */
-public final class UserPanel extends BasePanel {
+public final class ParamPanel extends BasePanel {
 
-    private final static Logger logger = Logger.getLogger(UserPanel.class);
+    private final static Logger logger = Logger.getLogger(ParamPanel.class);
 
-    private UserDialog userDialog;
-
-    private final UserPanel userPanel;
-
+    private ParamDialog childDialog;
     private int pageIndex;
     public int pageSize;
     private int count;
 
-    private List<UsertbAll> users;
+    private List<Appparam> currentPageData;
 
-    private final BindTableHelper<UsertbAll> bindTable;
+    private final BindTableHelper<Appparam> bindTable;
 
     /**
      * Creates new form NoFoundPane
      */
-    public UserPanel() {
+    public ParamPanel() {
         super();
         initComponents();
-        userPanel = this;
         pageIndex = 1;
         pageSize = 10;
         count = 0;
-        bindTable = new BindTableHelper<UsertbAll>(jTableUser, new ArrayList<UsertbAll>());
-        bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"department.departmentName", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
-        {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userPhone", "电话"}});
-        bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 50}, new int[]{6, 220}, new int[]{7, 150}).setRowHeight(30);
+        bindTable = new BindTableHelper<Appparam>(jTableParam, new ArrayList<Appparam>());
+        bindTable.createTable(new String[][]{{"appparamId", "参数ID"}, {"appparamPid", "参数父ID"}, {"appparamType", "参数类型"}, {"appparamName", "参数名"}, {"systemparam", "系统参数"},
+        {"appparamDesc", "描述"}});
+        bindTable.setColumnType(Integer.class, 1, 2, 5);
+        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 80}, new int[]{2, 100}, new int[]{3, 150}, new int[]{4, 100}).setRowHeight(25);
     }
 
     @Action
+    @Override
     public Task reload() {
-        return new RefureTask(0, 10);
+        return new RefreshTask(0, 1000);
     }
 
     @Override
@@ -74,33 +73,23 @@ public final class UserPanel extends BasePanel {
         return null;
     }
 
-    private class RefureTask extends UserTask {
+    private class RefreshTask extends ParamFindTask {
 
-        RefureTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize);
+        RefreshTask(int pageIndex, int pageSize) {
+            super(pageIndex, pageSize, "appparam/","");
         }
 
         @Override
-        public void onSucceeded(Object object) {
+        public void responseResult(CommFindEntity<Appparam> response) {
 
-            if (object instanceof Exception) {
-                Exception e = (Exception) object;
-                AssetMessage.ERRORSYS(e.getMessage());
-                logger.error(e);
-                return;
-            }
+            count = response.getCount();
+            jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+            logger.debug("total:" + count + ",get current size:" + response.getResult().size());
 
-            UsertbFindEntity usertbs = (UsertbFindEntity) object;
+            //存下所有的数据
+            currentPageData = response.getResult();
+            bindTable.refreshData(currentPageData);
 
-            if (usertbs != null) {
-                count = usertbs.getCount();
-                jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get user size:" + usertbs.getResult().size());
-
-                //存下所有的数据
-                users = usertbs.getResult();
-                bindTable.refreshData(users);
-            }
         }
     }
 
@@ -125,7 +114,7 @@ public final class UserPanel extends BasePanel {
         jButton4 = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableUser = new BaseTable(null);
+        jTableParam = new BaseTable(null);
 
         setName("Form"); // NOI18N
 
@@ -137,9 +126,9 @@ public final class UserPanel extends BasePanel {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(UserPanel.class, this);
-        jButtonAdd.setAction(actionMap.get("addUser")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(UserPanel.class);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(ParamPanel.class, this);
+        jButtonAdd.setAction(actionMap.get("add")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ParamPanel.class);
         jButtonAdd.setIcon(resourceMap.getIcon("jButtonAdd.icon")); // NOI18N
         jButtonAdd.setText(resourceMap.getString("jButtonAdd.text")); // NOI18N
         jButtonAdd.setBorderPainted(false);
@@ -149,7 +138,7 @@ public final class UserPanel extends BasePanel {
         jButtonAdd.setOpaque(false);
         jToolBar1.add(jButtonAdd);
 
-        jButton1.setAction(actionMap.get("updateUser")); // NOI18N
+        jButton1.setAction(actionMap.get("update")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
@@ -159,7 +148,7 @@ public final class UserPanel extends BasePanel {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton2.setAction(actionMap.get("deleteUser")); // NOI18N
+        jButton2.setAction(actionMap.get("delete")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
@@ -239,14 +228,14 @@ public final class UserPanel extends BasePanel {
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+            .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTableUser.setModel(new javax.swing.table.DefaultTableModel(
+        jTableParam.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -257,10 +246,10 @@ public final class UserPanel extends BasePanel {
 
             }
         ));
-        jTableUser.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jTableUser.setName("jTableUser"); // NOI18N
-        jTableUser.setShowVerticalLines(false);
-        jScrollPane1.setViewportView(jTableUser);
+        jTableParam.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        jTableParam.setName("jTableParam"); // NOI18N
+        jTableParam.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(jTableParam);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -274,82 +263,77 @@ public final class UserPanel extends BasePanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     @Action
-    public void addUser() {
+    public void add() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if (userDialog == null) {
+                if (childDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    userDialog = new UserDialog(userPanel);
-                    userDialog.setLocationRelativeTo(mainFrame);
+                    childDialog = new ParamDialog(ParamPanel.this);
+                    childDialog.setLocationRelativeTo(mainFrame);
                 }
-                userDialog.setAddOrUpdate(true);
-                AssetClientApp.getApplication().show(userDialog);
+                childDialog.setUpdatedData(new Appparam());
+                AssetClientApp.getApplication().show(childDialog);
             }
         });
     }
 
     @Action
-    public void updateUser() {
+    public void update() {
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-
-                Usertb user = selectedUser();
-                if (user == null) {
-                    AssetMessage.ERRORSYS("请选择用户!");
+                Appparam selectedData = selectedDataFromTable();
+                if (selectedData == null) {
+                    AssetMessage.ERRORSYS("请选择一条数据!");
                     return;
                 }
-
-                if (userDialog == null) {
+                if (childDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    userDialog = new UserDialog(userPanel);
-                    userDialog.setLocationRelativeTo(mainFrame);
+                    childDialog = new ParamDialog(ParamPanel.this);
+                    childDialog.setLocationRelativeTo(mainFrame);
                 }
-
-                userDialog.setAddOrUpdate(false);
-                userDialog.setUpdatedData(user);
-                AssetClientApp.getApplication().show(userDialog);
+                childDialog.setUpdatedData(selectedData);
+                AssetClientApp.getApplication().show(childDialog);
             }
         });
     }
 
     @Action
-    public Task deleteUser() {
-        Usertb user = selectedUser();
-        if (user == null) {
-            AssetMessage.ERRORSYS("请选择用户!");
+    public Task delete() {
+        Appparam selectedData = selectedDataFromTable();
+        if (selectedData == null) {
+            AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
-        int result = AssetMessage.CONFIRM("确定删除用户:" + user.getUserName());
+        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getAppparamName()+"\r\n注:将在下次系统重启后生效.");
         if (result == JOptionPane.OK_OPTION) {
-            return new DeleteUserTask(user);
+            return new CommUpdateTask<Appparam>(selectedData, "appparam/delete/" + selectedData.getAppparamId()) {
+                @Override
+                public void responseResult(ComResponse<Appparam> response) {
+                    if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                        reload().execute();
+                    } else {
+                        AssetMessage.ERROR(response.getErrorMessage(), ParamPanel.this);
+                    }
+                }
+
+            };
         }
         return null;
-    }
-
-    private class DeleteUserTask extends UserUpdateTask {
-
-        DeleteUserTask(Usertb user) {
-            super(user, UserUpdateTask.ENTITY_DELETE);
-        }
-
-        @Override
-        protected void succeeded(Object result) {
-            userPanel.reload().execute();
-        }
     }
 
     @Action
     public void pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
-        new RefureTask(pageIndex, pageSize).execute();
+        new RefreshTask(pageIndex, pageSize).execute();
     }
 
     @Action
@@ -357,13 +341,17 @@ public final class UserPanel extends BasePanel {
         if (pageSize * (pageIndex) <= count) {
             pageIndex = pageIndex + 1;
         }
-        new RefureTask(pageIndex, pageSize).execute();
+        new RefreshTask(pageIndex, pageSize).execute();
     }
 
-    public Usertb selectedUser() {
-        if (jTableUser.getSelectedRow() >= 0) {
-            if (users != null) {
-                return users.get(jTableUser.getSelectedRow());
+    public List<Appparam> getTableData() {
+        return currentPageData;
+    }
+
+    public Appparam selectedDataFromTable() {
+        if (jTableParam.getSelectedRow() >= 0) {
+            if (currentPageData != null) {
+                return currentPageData.get(jTableParam.getSelectedRow());
             }
         }
         return null;
@@ -371,24 +359,11 @@ public final class UserPanel extends BasePanel {
 
     @Action
     public Task print() {
-        Task printData = new UserTask(0, count) {
+        ParamFindTask printData = new ParamFindTask(0, count, "appparam/","") {
             @Override
-            public void onSucceeded(Object object) {
-                if (object instanceof Exception) {
-                    Exception e = (Exception) object;
-                    AssetMessage.ERRORSYS(e.getMessage());
-                    logger.error(e);
-                    return;
-                }
-                UsertbFindEntity usertbs = (UsertbFindEntity) object;
-                if (usertbs != null) {
-                    bindTable.createPrinter("职员信息", usertbs.getResult()).buildInBackgound().execute();
-                } else {
-                    bindTable.createPrinter("职员信息").buildInBackgound().execute();
-                }
-
+            public void responseResult(CommFindEntity response) {
+                bindTable.createPrinter("系统参数配置信息", response.getResult()).buildInBackgound().execute();
             }
-
         };
         return printData;
     }
@@ -404,7 +379,7 @@ public final class UserPanel extends BasePanel {
     private javax.swing.JButton jButtonReload;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableUser;
+    private javax.swing.JTable jTableParam;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables

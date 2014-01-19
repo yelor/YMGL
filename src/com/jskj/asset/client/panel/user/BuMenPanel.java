@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.panel.jichuxinxi;
+package com.jskj.asset.client.panel.user;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.DepartmentFindEntity;
@@ -47,7 +47,7 @@ public class BuMenPanel extends BasePanel {
         bindTable.createTable(new String[][]{{"departmentId", "部门编号"}, {"departmentName", "部门名称"}, {"owner.userName", "部门主管"}, {"tel", "电话"},
         {"fax", "传真"}});
         bindTable.setIntegerType(1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 100},new int[]{1, 180},new int[]{2, 180},new int[]{3, 200},new int[]{4, 200}).setRowHeight(25);
 
     }
 
@@ -245,6 +245,7 @@ public class BuMenPanel extends BasePanel {
 
             }
         ));
+        jTableDp.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTableDp.setName("jTableDp"); // NOI18N
         jScrollPane2.setViewportView(jTableDp);
         if (jTableDp.getColumnModel().getColumnCount() > 0) {
@@ -268,9 +269,10 @@ public class BuMenPanel extends BasePanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

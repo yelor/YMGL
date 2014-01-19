@@ -146,12 +146,23 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         }
 //        Point show = new Point(0, this.getHeight());
 //        SwingUtilities.convertPointToScreen(show, this);
-//        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 
         Point p = this.getLocationOnScreen();
 
         int selectedX = p.x;
         int selectedY = p.y + getHeight();
+        
+        int popHeight = basePopup.getHeight();
+        int popWitdh = basePopup.getWidth();
+        
+        if((selectedY+popHeight)>size.getHeight()){
+           selectedY = p.y-basePopup.getHeight();
+        }
+        
+        if((selectedX+popWitdh)>size.getWidth()){
+           selectedX =  p.x-basePopup.getWidth();
+        }
 
 //        Point mousepoint = MouseInfo.getPointerInfo().getLocation();
         pop = PopupFactory.getSharedInstance().getPopup(this, basePopup, selectedX, selectedY);

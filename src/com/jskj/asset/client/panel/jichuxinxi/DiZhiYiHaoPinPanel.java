@@ -6,7 +6,14 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Dizhiyihaopin;
+import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.jichuxinxi.task.DizhiyihaopinFindTask;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
@@ -20,6 +27,13 @@ import org.jdesktop.application.Task;
 public class DiZhiYiHaoPinPanel extends BasePanel {
 
     private final static Logger logger = Logger.getLogger(DiZhiYiHaoPinPanel.class);
+    private int pageIndex;
+    public int pageSize;
+    private int count;
+
+    private List<Dizhiyihaopin> currentPageData;
+
+    private final BindTableHelper<Dizhiyihaopin> bindTable;
 
     /**
      * Creates new form YiMiaoJDialog
@@ -27,8 +41,74 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     public DiZhiYiHaoPinPanel() {
         super();
         initComponents();
+        pageIndex = 1;
+        pageSize = 10;
+        count = 0;
+        bindTable = new BindTableHelper<Dizhiyihaopin>(jTable1, new ArrayList<Dizhiyihaopin>());
+        bindTable.createTable(new String[][]{{"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称"}, {"dzyhpType", "物品类别"}, {"dzyhpGuige", "规格"},
+        {"dzyhpXinghao", "型号"}, {"unitId", "单位"}, {"unitId", "库存上限"}, {"unitId", "库存下限"}, {"dzyhpBarcode", "条形码"}});
+        bindTable.setColumnType(Integer.class, 1);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
     }
 
+    private class RefreshTask extends DizhiyihaopinFindTask {
+
+        RefreshTask(int pageIndex, int pageSize) {
+            super(pageIndex, pageSize,"dizhiyihaopin/","");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<Dizhiyihaopin> response){
+                count = response.getCount();
+                jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get total size:" + response.getResult().size());
+
+                //存下所有的数据
+                currentPageData = response.getResult();
+                bindTable.refreshData(currentPageData);
+        }
+    }
+    
+    
+    @Action
+    public void pagePrev() {
+        pageIndex = pageIndex - 1;
+        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        new RefreshTask(pageIndex, pageSize).execute();
+    }
+
+    @Action
+    public void pageNext() {
+        if (pageSize * (pageIndex) <= count) {
+            pageIndex = pageIndex + 1;
+        }
+        new RefreshTask(pageIndex, pageSize).execute();
+    }
+
+    public List<Dizhiyihaopin> getTableData() {
+        return currentPageData;
+    }
+
+    public Dizhiyihaopin selectedDataFromTable() {
+        if (jTable1.getSelectedRow() >= 0) {
+            if (currentPageData != null) {
+                return currentPageData.get(jTable1.getSelectedRow());
+            }
+        }
+        return null;
+    }
+
+    @Action
+    public Task print() {
+        DizhiyihaopinFindTask printData = new DizhiyihaopinFindTask(0, count, "dizhiyihaopin/","") {
+            @Override
+            public void responseResult(CommFindEntity<Dizhiyihaopin> response) {
+                bindTable.createPrinter("低值易耗品", response.getResult()).buildInBackgound().execute();
+            }
+        };
+        return printData;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +118,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ctrlPane = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -47,12 +128,16 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        jToolBar2 = new javax.swing.JToolBar();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jLabelTotal = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setName("Form"); // NOI18N
+
+        ctrlPane.setName("ctrlPane"); // NOI18N
 
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
@@ -144,66 +229,107 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
-        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
-        jButton9.setBorder(null);
-        jButton9.setBorderPainted(false);
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton9.setName("jButton9"); // NOI18N
-        jButton9.setOpaque(false);
-        jToolBar1.add(jButton9);
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
+        jToolBar2.setBorderPainted(false);
+        jToolBar2.setName("jToolBar2"); // NOI18N
+        jToolBar2.setOpaque(false);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setName("jPanel2"); // NOI18N
+        jButton10.setAction(actionMap.get("pagePrev")); // NOI18N
+        jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
+        jButton10.setBorderPainted(false);
+        jButton10.setFocusable(false);
+        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.setMaximumSize(new java.awt.Dimension(60, 25));
+        jButton10.setMinimumSize(new java.awt.Dimension(60, 25));
+        jButton10.setName("jButton10"); // NOI18N
+        jButton10.setOpaque(false);
+        jButton10.setPreferredSize(new java.awt.Dimension(60, 25));
+        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton10);
+
+        jButton11.setAction(actionMap.get("pageNext")); // NOI18N
+        jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
+        jButton11.setBorderPainted(false);
+        jButton11.setFocusable(false);
+        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton11.setMaximumSize(new java.awt.Dimension(60, 25));
+        jButton11.setMinimumSize(new java.awt.Dimension(60, 25));
+        jButton11.setName("jButton11"); // NOI18N
+        jButton11.setOpaque(false);
+        jButton11.setPreferredSize(new java.awt.Dimension(60, 25));
+        jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton11);
+
+        jLabelTotal.setForeground(resourceMap.getColor("jLabelTotal.foreground")); // NOI18N
+        jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelTotal.setName("jLabelTotal"); // NOI18N
+
+        javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
+        ctrlPane.setLayout(ctrlPaneLayout);
+        ctrlPaneLayout.setHorizontalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ctrlPaneLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        ctrlPaneLayout.setVerticalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+        );
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "物品编号", "物品名称", "物品类别", "规格", "型号", "单位", "库存下限", "库存上限", "条形码"
+
             }
         ));
         jTable1.setName("jTable1"); // NOI18N
@@ -220,37 +346,19 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
             jTable1.getColumnModel().getColumn(8).setHeaderValue(resourceMap.getString("jTable1.columnModel.title8")); // NOI18N
         }
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -296,8 +404,6 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
 //        });
     }
 
-
-
     @Action
     public void addDiZhiYiHaoPin() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -316,7 +422,10 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -324,16 +433,16 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public Task reload() {
-        return null;
+        return new RefreshTask(0,20);
     }
 
     @Override

@@ -314,8 +314,20 @@ public class BindTableHelper<T> {
                         T bean = sourceData.get(i);
                         for (int j = 0; j < columnParameter.length; j++) {
                             try {
-                                Object temp = getObject(columnParameter[j],bean,jTableBinding.getColumnBinding(j).getColumnClass());
-                                values[j] = temp == null ? "" : temp;
+                                Object temp = getObject(columnParameter[j], bean, jTableBinding.getColumnBinding(j).getColumnClass());
+                                if (temp == null) {
+                                    ColumnBinding binder = jTableBinding.getColumnBinding(i);
+                                    if (binder.getColumnClass() == String.class) {
+                                        temp = "";
+                                    } else if (binder.getColumnClass() == Data.class) {
+                                        temp = new Date();
+                                    }  else if (binder.getColumnClass() == Boolean.class) {
+                                        temp = false;
+                                    }else {
+                                        temp = -1;
+                                    }
+                                }
+                                values[j] = temp;
                             } catch (Exception ex) {
                                 logger.error(ex);
                                 values[j] = "[error:" + columnParameter[j] + "]";
@@ -328,7 +340,7 @@ public class BindTableHelper<T> {
             return dataSource;
         }
 
-        private Object getObject(String paramater, Object bean, Class finalClass) throws Exception{
+        private Object getObject(String paramater, Object bean, Class finalClass) throws Exception {
             if (paramater != null && !paramater.equals("")) {
                 String[] ps = paramater.split("\\.");
                 String firstPara = ps[0];
@@ -338,15 +350,15 @@ public class BindTableHelper<T> {
                 }
                 String tempTitle = getIs + firstPara.substring(0, 1).toUpperCase() + firstPara.substring(1);
                 try {
-                    if(bean==null){
-                       return "";
+                    if (bean == null) {
+                        return "";
                     }
                     Method method = bean.getClass().getMethod(tempTitle, new Class[0]);
                     Object temp = method.invoke(bean, new Object[0]);
                     if (ps.length == 1) {
                         return temp;
                     }
-                    return getObject(paramater.substring(firstPara.length()+1), temp, finalClass);
+                    return getObject(paramater.substring(firstPara.length() + 1), temp, finalClass);
                 } catch (Exception ex) {
                     throw ex;
                 }
