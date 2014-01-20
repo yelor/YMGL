@@ -13,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -65,10 +64,24 @@ public class AssetClientApp extends SingleFrameApplication {
         }
 
         AssetClientView view = new AssetClientView(this);
+
         show(view);
         view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);;
-        view.getFrame().setTitle(Constants.WINTITLE + "【当前登陆用户: " + getSessionMap().getUsertb().getUserName() + "，角色：" + getSessionMap().getUsertb().getUserRoles() + "】");
+        view.getFrame().setTitle(Constants.WINTITLE + " " + Constants.VERSION);
 
+        StringBuilder message = new StringBuilder();
+        message.append("用户:").append(sessionMap.getUsertb().getUserName());
+        if (sessionMap.getUsertb().getUserRoles() != null) {
+            message.append(",角色:[").append(sessionMap.getUsertb().getUserRoles() == null ? "" : sessionMap.getUsertb().getUserRoles()).append("]");
+        }
+        if (sessionMap.getDepartment() != null) {
+            if (sessionMap.getDepartment().getDepartmentName() != null) {
+                message.append(",所属部门:[").append(sessionMap.getDepartment().getDepartmentName()).append("]");
+            }
+        }
+        //得到message
+        view.setMessage(message.toString());
+        
         //初始化必要的功能
         view.loadMoudule().execute();
 
@@ -149,5 +162,12 @@ public class AssetClientApp extends SingleFrameApplication {
 //            logger.error(ex);
 //        }
         launch(AssetClientApp.class, args);
+    }
+    
+    public static void resetLoginWindow(){
+        if(loginWindow!=null){
+          loginWindow.setVisible(true);
+          getApplication().getMainFrame().dispose();
+        }
     }
 }

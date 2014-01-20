@@ -161,7 +161,6 @@ public class ParamDialog extends BaseDialog {
         setMaximumSize(new java.awt.Dimension(454, 355));
         setMinimumSize(new java.awt.Dimension(454, 355));
         setName("Form"); // NOI18N
-        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N

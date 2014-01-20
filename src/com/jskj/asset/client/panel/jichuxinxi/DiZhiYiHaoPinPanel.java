@@ -7,16 +7,17 @@ package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Dizhiyihaopin;
-import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
-import com.jskj.asset.client.bean.entity.Gudingzichantb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.DizhiyihaopinFindTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -44,7 +45,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         super();
         initComponents();
         pageIndex = 1;
-        pageSize = 10;
+        pageSize = 20;
         count = 0;
         bindTable = new BindTableHelper<Dizhiyihaopin>(jTable1, new ArrayList<Dizhiyihaopin>());
         bindTable.createTable(new String[][]{{"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称"}, {"dzyhpType", "物品类别"}, {"dzyhpGuige", "规格"},
@@ -171,6 +172,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
+        jButton8.setAction(actionMap.get("delete")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorder(null);
@@ -181,6 +183,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
+        jButton4.setAction(actionMap.get("reload")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorder(null);
@@ -191,6 +194,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
+        jButton5.setAction(actionMap.get("print")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setBorder(null);
@@ -201,6 +205,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
+        jButton3.setAction(actionMap.get("print")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setBorder(null);
@@ -211,6 +216,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
 
+        jButton2.setAction(actionMap.get("print")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorder(null);
@@ -447,6 +453,30 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         });
     }
 
+    @Action
+    public Task delete() {
+        Dizhiyihaopin selectedData = selectedDataFromTable();
+        if (selectedData == null) {
+            AssetMessage.ERRORSYS("请选择一条数据!");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getDzyhpName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new CommUpdateTask<Dizhiyihaopin>(selectedData, "dizhiyihaopin/delete/" + selectedData.getDzyhpId()) {
+                @Override
+                public void responseResult(ComResponse<Dizhiyihaopin> response) {
+                    if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                        reload().execute();
+                    } else {
+                        AssetMessage.ERROR(response.getErrorMessage(), DiZhiYiHaoPinPanel.this);
+                    }
+                }
+
+            };
+        }
+        return null;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
@@ -467,6 +497,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     // End of variables declaration//GEN-END:variables
 
     @Override
+    @Action
     public Task reload() {
         return new RefreshTask(0, 20);
     }

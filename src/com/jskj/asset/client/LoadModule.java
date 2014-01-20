@@ -23,6 +23,7 @@ import com.jskj.asset.client.panel.jichuxinxi.JianShaoFangShiJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel;
 import com.jskj.asset.client.panel.user.ParamPanel;
+import com.jskj.asset.client.panel.user.PkPanel;
 import com.jskj.asset.client.panel.user.UserPanel;
 import com.jskj.asset.client.util.LogPaneAppender;
 import javax.swing.JDialog;
@@ -43,7 +44,7 @@ public class LoadModule extends BaseTask {
     private final JMenuBar menuBar;
     private LogDialog logBox;
     private JDialog aboutBox;
- 
+
     public LoadModule(JMenuBar menuBar) {
         this.menuBar = menuBar;
     }
@@ -88,8 +89,8 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenuDW = new javax.swing.JMenu();
-        javax.swing.JMenuItem  jMenuItem2 = new javax.swing.JMenuItem();
-        javax.swing.JMenuItem  jMenuItem4 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
@@ -100,7 +101,8 @@ public class LoadModule extends BaseTask {
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
 
-        switchUserMenuItem.setText("其他用户");
+        switchUserMenuItem.setAction(actionMap.get("switchUser"));
+        switchUserMenuItem.setText(resourceMap.getString("switchUserMenuItem.text"));
         switchUserMenuItem.setName("switchUserMenuItem"); // NOI18N
         fileMenu.add(switchUserMenuItem);
 
@@ -226,13 +228,18 @@ public class LoadModule extends BaseTask {
 
         menuBar.add(baobiaoMenu);
 
-        javax.swing.JMenuItem  jMenuItemAppparm = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItemAppparm = new javax.swing.JMenuItem();
         jMenuItemAppparm.setAction(actionMap.get("showAppparam")); // NOI18N
         jMenuItemAppparm.setText(resourceMap.getString("jMenuItemAppparm.text")); // NOI18N
         jMenuItemAppparm.setName("jMenuItemAppparm"); // NOI18N
         jMenuDW.add(jMenuItemAppparm);
-        
-        
+
+        javax.swing.JMenuItem jMenuItemPk= new javax.swing.JMenuItem();
+        jMenuItemPk.setAction(actionMap.get("showPkTable")); // NOI18N
+        jMenuItemPk.setText(resourceMap.getString("jMenuItemPk.text")); // NOI18N
+        jMenuItemPk.setName("jMenuItemPk"); // NOI18N
+        jMenuDW.add(jMenuItemPk);
+
         jMenuItem2.setAction(actionMap.get("showBuMen")); // NOI18N
         jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
         jMenuItem2.setName("jMenuItem2"); // NOI18N
@@ -463,5 +470,16 @@ public class LoadModule extends BaseTask {
     public void showYimiaokucun() {
         OpenTabTask task = new OpenTabTask("报表-疫苗库存表", new YimiaokucunPanel(), false);
         task.execute();
+    }
+
+    @Action
+    public void showPkTable() {
+        OpenTabTask task = new OpenTabTask("系统设置-主键策略", new PkPanel(), false);
+        task.execute();
+    }
+
+    @Action
+    public void switchUser() {
+        AssetClientApp.resetLoginWindow();
     }
 }

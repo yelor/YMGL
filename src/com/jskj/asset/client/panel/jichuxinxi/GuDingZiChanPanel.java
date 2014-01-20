@@ -6,15 +6,20 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
 import com.jskj.asset.client.bean.entity.Gudingzichantb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.GudingzichanFindTask;
+import com.jskj.asset.client.panel.user.ParamPanel;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -44,7 +49,7 @@ public class GuDingZiChanPanel extends BasePanel {
         initComponents();
 
         pageIndex = 1;
-        pageSize = 10;
+        pageSize = 20;
         count = 0;
         bindTable = new BindTableHelper<Gudingzichantb>(jTable1, new ArrayList<Gudingzichantb>());
         bindTable.createTable(new String[][]{{"gdzcId", "固定资产编号"}, {"gdzcName", "固定资产名称"}, {"gdzcType", "资产类型"}, {"gdzcGuige", "规格"},
@@ -132,6 +137,7 @@ public class GuDingZiChanPanel extends BasePanel {
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
+        jButton8.setAction(actionMap.get("delete")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorder(null);
@@ -415,6 +421,30 @@ public class GuDingZiChanPanel extends BasePanel {
                 AssetClientApp.getApplication().show(guDingZhiChanInfoJDialog);
             }
         });
+    }
+    
+    @Action
+    public Task delete() {
+        Gudingzichantb selectedData = selectedDataFromTable();
+        if (selectedData == null) {
+            AssetMessage.ERRORSYS("请选择一条数据!");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getGdzcName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new CommUpdateTask<Gudingzichantb>(selectedData, "gdzc/delete/" + selectedData.getGdzcId()) {
+                @Override
+                public void responseResult(ComResponse<Gudingzichantb> response) {
+                    if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                        reload().execute();
+                    } else {
+                        AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanPanel.this);
+                    }
+                }
+
+            };
+        }
+        return null;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
