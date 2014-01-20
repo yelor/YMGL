@@ -93,6 +93,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton7">
               <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinPanel" id="updateDiZhiYiHaoPin" methodName="updateDiZhiYiHaoPin"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

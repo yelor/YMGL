@@ -8,6 +8,8 @@ package com.jskj.asset.client.panel.jichuxinxi;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Dizhiyihaopin;
 import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
+import com.jskj.asset.client.bean.entity.Gudingzichantb;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.jichuxinxi.task.DizhiyihaopinFindTask;
@@ -54,22 +56,21 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     private class RefreshTask extends DizhiyihaopinFindTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize,"dizhiyihaopin/","");
+            super(pageIndex, pageSize, "dizhiyihaopin/", "");
         }
 
         @Override
-        public void responseResult(CommFindEntity<Dizhiyihaopin> response){
-                count = response.getCount();
-                jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get total size:" + response.getResult().size());
+        public void responseResult(CommFindEntity<Dizhiyihaopin> response) {
+            count = response.getCount();
+            jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+            logger.debug("total:" + count + ",get total size:" + response.getResult().size());
 
-                //存下所有的数据
-                currentPageData = response.getResult();
-                bindTable.refreshData(currentPageData);
+            //存下所有的数据
+            currentPageData = response.getResult();
+            bindTable.refreshData(currentPageData);
         }
     }
-    
-    
+
     @Action
     public void pagePrev() {
         pageIndex = pageIndex - 1;
@@ -100,7 +101,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
 
     @Action
     public Task print() {
-        DizhiyihaopinFindTask printData = new DizhiyihaopinFindTask(0, count, "dizhiyihaopin/","") {
+        DizhiyihaopinFindTask printData = new DizhiyihaopinFindTask(0, count, "dizhiyihaopin/", "") {
             @Override
             public void responseResult(CommFindEntity<Dizhiyihaopin> response) {
                 bindTable.createPrinter("低值易耗品", response.getResult()).buildInBackgound().execute();
@@ -108,7 +109,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         };
         return printData;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,6 +160,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton6.setOpaque(false);
         jToolBar1.add(jButton6);
 
+        jButton7.setAction(actionMap.get("updateDiZhiYiHaoPin")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setBorder(null);
@@ -413,9 +415,33 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
             public void run() {
                 if (diZhiYiHaoPinInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    diZhiYiHaoPinInfoJDialog = new DiZhiYiHaoPinInfoJDialog();
+                    diZhiYiHaoPinInfoJDialog = new DiZhiYiHaoPinInfoJDialog(DiZhiYiHaoPinPanel.this);
                     diZhiYiHaoPinInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
+                diZhiYiHaoPinInfoJDialog.setUpdatedData(new Dizhiyihaopin());
+                AssetClientApp.getApplication().show(diZhiYiHaoPinInfoJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void updateDiZhiYiHaoPin() {
+        Dizhiyihaopin dps = selectedDataFromTable();
+        if (dps == null) {
+            AssetMessage.ERRORSYS("请选择一条数据!");
+            return;
+        }
+        SwingUtilities.invokeLater(new Runnable() {
+            private DiZhiYiHaoPinInfoJDialog diZhiYiHaoPinInfoJDialog;
+
+            @Override
+            public void run() {
+                if (diZhiYiHaoPinInfoJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    diZhiYiHaoPinInfoJDialog = new DiZhiYiHaoPinInfoJDialog(DiZhiYiHaoPinPanel.this);
+                    diZhiYiHaoPinInfoJDialog.setLocationRelativeTo(mainFrame);
+                }
+                diZhiYiHaoPinInfoJDialog.setUpdatedData(selectedDataFromTable());
                 AssetClientApp.getApplication().show(diZhiYiHaoPinInfoJDialog);
             }
         });
@@ -442,7 +468,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
 
     @Override
     public Task reload() {
-        return new RefreshTask(0,20);
+        return new RefreshTask(0, 20);
     }
 
     @Override
