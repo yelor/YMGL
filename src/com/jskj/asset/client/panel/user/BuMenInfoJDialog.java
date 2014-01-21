@@ -12,6 +12,8 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.BumenUpdateTask;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
@@ -23,7 +25,7 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class BuMenInfoJDialog extends BaseDialog {
-    
+
     private static final Logger logger = Logger.getLogger(BuMenInfoJDialog.class);
     private boolean isNew = false;
     Departmenttb dpstb = null;
@@ -69,12 +71,12 @@ public class BuMenInfoJDialog extends BaseDialog {
                 }
                 return sql;
             }
-            
+
             @Override
             public String[][] displayColumns() {
                 return new String[][]{{"userName", "用户名"}, {"userPassword", "密码"}};
             }
-            
+
             @Override
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
@@ -84,7 +86,7 @@ public class BuMenInfoJDialog extends BaseDialog {
             }
         });
     }
-    
+
     public void setAddOrUpdate(boolean isAdd) {
         isNew = isAdd;
         if (isNew) {
@@ -105,10 +107,10 @@ public class BuMenInfoJDialog extends BaseDialog {
             this.setTitle("更新部门");
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
-             jButton2.setText("更新");
+            jButton2.setText("更新");
         }
     }
-    
+
     public void setUpdatedData(DepartmenttbAll dpstb) {
         if (dpstb == null) {
             return;
@@ -117,7 +119,7 @@ public class BuMenInfoJDialog extends BaseDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新部门:" + dpstb.getDepartmentId())); // NOI18N
         jTextFieldID.setText(dpstb.getDepartmentId().toString());
         jTextFieldName.setText(dpstb.getDepartmentName());
-        jTextFieldBoss.setText((dpstb.getOwner()==null?"":dpstb.getOwner().getUserName()));
+        jTextFieldBoss.setText((dpstb.getOwner() == null ? "" : dpstb.getOwner().getUserName()));
         jTextFieldTel.setText(dpstb.getTel());
         jTextFieldFax.setText(dpstb.getFax());
         jTextAreaDesc.setText(dpstb.getDepartmentRemark());
@@ -347,12 +349,12 @@ public class BuMenInfoJDialog extends BaseDialog {
 //            }
 //        });
     }
-    
+
     @Action
     public void close() {
         this.dispose();
     }
-    
+
     @Action
     public Task newDepartmentTask() {
         dpstb.setDepartmentName(jTextFieldName.getText());
@@ -363,31 +365,50 @@ public class BuMenInfoJDialog extends BaseDialog {
         if (!bossId.trim().equals("")) {
             dpstb.setUserId(Integer.parseInt(bossId));
         }
-        return new NewDepartmentTaskTask(dpstb);
+
+        String serviceId = "dp/add";
+        if (dpstb.getDepartmentId() != null && dpstb.getDepartmentId() > 0) {
+            serviceId = "dp/update";
+        }
+
+        return new CommUpdateTask<Departmenttb>(dpstb, serviceId) {
+            @Override
+            public void responseResult(ComResponse<Departmenttb> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    parent.reload().execute();
+                    if (!jCheckBoxCont.isSelected()) {
+                        close();
+                    }
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), BuMenInfoJDialog.this);
+                }
+            }
+
+        };
     }
-    
+
     private class NewDepartmentTaskTask extends BumenUpdateTask {
-        
+
         NewDepartmentTaskTask(Departmenttb dpments) {
             super(dpments, isNew ? BumenUpdateTask.ENTITY_SAVE : BumenUpdateTask.ENTITY_UPDATE);
         }
-        
+
         @Override
         public void onSucceeded(Object result) {
-            
+
             if (result instanceof Exception) {
                 Exception e = (Exception) result;
                 AssetMessage.ERRORSYS(e.getMessage());
                 logger.error(e);
                 return;
             }
-            
+
             parent.reload().execute();
             if (!jCheckBoxCont.isSelected()) {
                 close();
             }
         }
-        
+
     }
 
 

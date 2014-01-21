@@ -2,18 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.util;
+package com.jskj.asset.client.layout;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.PathCacheBean;
 import com.jskj.asset.client.bean.PathCacheBean.PathBean;
-import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.util.XMLHelper;
 import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 import org.apache.log4j.Logger;
 
@@ -21,36 +22,40 @@ import org.apache.log4j.Logger;
  *
  * @author woderchen
  */
-public class HosFileChoose extends JFileChooser {
+public class BaseFileChoose extends JFileChooser {
 
-    private static Logger logger = Logger.getLogger(HosFileChoose.class);
+    private static Logger logger = Logger.getLogger(BaseFileChoose.class);
     private Component parent;
     private PathCacheBean pathCacheVO;
     private XMLHelper<PathCacheBean> xmlhelper;
     private List<PathBean> pathBeans;
     private String currentDialogPath;
 
-    public HosFileChoose(String title, String[] filters, Component parent) {
+    public BaseFileChoose(String title, String[] filters, Component parent) {
         super();
         setDialogTitle(title);
 
-        addChoosableFileFilter(new HosFileFilter(filters));
+        if (filters != null) {
+            setAcceptAllFileFilterUsed(false);
+            setFileFilter(new FileNameExtensionFilter("", filters));
+        }
 
+       //addChoosableFileFilter(new BaseFileFilter(filters));
         this.parent = parent;
         pathCacheVO = new PathCacheBean();
         xmlhelper = new XMLHelper<PathCacheBean>(pathCacheVO);
         currentDialogPath = setCurrentDirectoryPlus();
     }
 
-    public HosFileChoose(Component parent) {
+    public BaseFileChoose(Component parent) {
         this("浏览", null, parent);
     }
 
-    public HosFileChoose(String filter, Component parent) {
+    public BaseFileChoose(String filter, Component parent) {
         this("浏览", new String[]{filter}, parent);
     }
 
-    public HosFileChoose(String[] filters, Component parent) {
+    public BaseFileChoose(String[] filters, Component parent) {
         this("浏览", filters, parent);
     }
 
@@ -95,6 +100,7 @@ public class HosFileChoose extends JFileChooser {
 
     /**
      * 打开保存对话框
+     *
      * @return
      */
     public String showSaveDialog() {
@@ -122,6 +128,7 @@ public class HosFileChoose extends JFileChooser {
 
     /**
      * 打开保存对话框
+     *
      * @return
      */
     public String showSaveDialogWithFile(boolean verify) {
@@ -159,6 +166,7 @@ public class HosFileChoose extends JFileChooser {
 
     /**
      * 选择文件
+     *
      * @return
      */
     public String openDialog() {

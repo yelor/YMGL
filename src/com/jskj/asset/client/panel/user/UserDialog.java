@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.user;
 
+import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.bean.entity.DepartmentFindEntity;
 import com.jskj.asset.client.bean.entity.DepartmenttbAll;
 import com.jskj.asset.client.bean.entity.Usertb;
@@ -12,6 +13,8 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseListModel;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
 import com.jskj.asset.client.util.DateHelper;
 import com.jskj.asset.client.util.IdcardUtils;
@@ -545,33 +548,51 @@ public class UserDialog extends BaseDialog {
         }
         usertb.setUserRoles(roles);
 
-        return new SubmitFormTask(usertb);
-    }
-
-    private class SubmitFormTask extends UserUpdateTask {
-
-        SubmitFormTask(Usertb usertb) {
-            super(usertb, isNew ? UserUpdateTask.ENTITY_SAVE : UserUpdateTask.ENTITY_UPDATE);
+        String serviceId = "user/add";
+        if (usertb.getUserId() != null && usertb.getUserId() > 0) {
+            serviceId = "user/update";
         }
 
-        @Override
-        protected void succeeded(Object result) {
-            if (result instanceof Exception) {
-                Exception e = (Exception) result;
-                AssetMessage.ERRORSYS(e.getMessage());
-                logger.error(e);
-                return;
+        return new CommUpdateTask<Usertb>(usertb, serviceId) {
+            @Override
+            public void responseResult(ComResponse<Usertb> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    parentPanel.reload().execute();
+                    if (!jCheckBox1.isSelected()) {
+                         exit();
+                    }
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), UserDialog.this);
+                }
             }
 
-            parentPanel.reload().execute();
-            if (!jCheckBox1.isSelected()) {
-                exit();
-            } else {
-                jTextFieldUserName.setText("");
-                jTextFieldIDCard.setText("");
-            }
-        }
+        };
     }
+
+//    private class SubmitFormTask extends UserUpdateTask {
+//
+//        SubmitFormTask(Usertb usertb) {
+//            super(usertb, isNew ? UserUpdateTask.ENTITY_SAVE : UserUpdateTask.ENTITY_UPDATE);
+//        }
+//
+//        @Override
+//        protected void succeeded(Object result) {
+//            if (result instanceof Exception) {
+//                Exception e = (Exception) result;
+//                AssetMessage.ERRORSYS(e.getMessage());
+//                logger.error(e);
+//                return;
+//            }
+//
+//            parentPanel.reload().execute();
+//            if (!jCheckBox1.isSelected()) {
+//                exit();
+//            } else {
+//                jTextFieldUserName.setText("");
+//                jTextFieldIDCard.setText("");
+//            }
+//        }
+//    }
 
     @Action
     public void addRole() {
