@@ -378,6 +378,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jTextFieldYimiaoyanshouId.setText(resourceMap.getString("jTextFieldYimiaoyanshouId.text")); // NOI18N
         jTextFieldYimiaoyanshouId.setName("jTextFieldYimiaoyanshouId"); // NOI18N
 
+        jTextFieldYimiaoyanshou_detailDate.setEditable(false);
         jTextFieldYimiaoyanshou_detailDate.setText(resourceMap.getString("jTextFieldYimiaoyanshou_detailDate.text")); // NOI18N
         jTextFieldYimiaoyanshou_detailDate.setName("jTextFieldYimiaoyanshou_detailDate"); // NOI18N
         jTextFieldYimiaoyanshou_detailDate.addActionListener(new java.awt.event.ActionListener() {
@@ -488,6 +489,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jTextFieldBefmiles.setText(resourceMap.getString("jTextFieldBefmiles.text")); // NOI18N
         jTextFieldBefmiles.setName("jTextFieldBefmiles"); // NOI18N
 
+        jTextField18.setEditable(false);
         jTextField18.setText(resourceMap.getString("jTextField18.text")); // NOI18N
         jTextField18.setName("jTextField18"); // NOI18N
 
@@ -509,6 +511,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jLabel24.setText(resourceMap.getString("jLabel24.text")); // NOI18N
         jLabel24.setName("jLabel24"); // NOI18N
 
+        jTextField24.setEditable(false);
         jTextField24.setText(resourceMap.getString("jTextField24.text")); // NOI18N
         jTextField24.setName("jTextField24"); // NOI18N
 
