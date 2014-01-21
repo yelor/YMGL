@@ -14,10 +14,12 @@ public class YiMiaoChuRuKu1 extends javax.swing.JDialog {
     private boolean rk;
     public void setRk(){
         setTitle("Ⅰ类疫苗入库");
+        jButton7.setText("入库");
         rk = true;
     }
     public void setCk(){
         setTitle("Ⅰ类疫苗出库");
+        jButton7.setText("发货");
         rk = false;
     }
     /**
