@@ -7,6 +7,7 @@ package com.jskj.asset.client.panel;
 
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTask;
+import java.io.File;
 import javax.swing.ImageIcon;
 import org.jdesktop.application.Action;
 
@@ -16,16 +17,26 @@ import org.jdesktop.application.Action;
  */
 public class ImagePreview extends BaseDialog {
 
+    boolean isDeleteAfterPreview = false;
+    String imagePath;
+
     /**
      * Creates new form ImagePreview
      *
      * @param parent
+     * @param isDeleteAfterPreview
      * @param imagePath
      */
-    public ImagePreview(String imagePath) {
+    public ImagePreview(String imagePath, boolean isDeleteAfterPreview) {
         super();
         initComponents();
+        this.isDeleteAfterPreview = isDeleteAfterPreview;
+        this.imagePath = imagePath;
         new PreviewTask(imagePath).execute();
+    }
+
+    public ImagePreview(String imagePath) {
+        this(imagePath, false);
     }
 
     class PreviewTask extends BaseTask {
@@ -163,7 +174,13 @@ public class ImagePreview extends BaseDialog {
 
     @Action
     public void close() {
+        if (isDeleteAfterPreview) {
+            //我们这里需要把他删除掉，要不然以后临时文件越来越多
+            File tem = new File(imagePath);
+            tem.delete();
+        }
         this.dispose();
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

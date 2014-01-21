@@ -14,8 +14,10 @@ import com.jskj.asset.client.layout.BaseListModel;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -81,11 +83,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
     }
 
     @Action
-    public void close() {
-        this.dispose();
-    }
-
-    @Action
     public Task save() {
 
         super.copyToBean(appParam, jPanel3);
@@ -121,7 +118,13 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
                     if (!jCheckBoxCont.isSelected()) {
-                        close();
+                        dispose();
+                    } else {
+                        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+                        List<String> source = mode.getSource();
+                        source.clear();
+                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+                        gdzcPhoto.setModel(newMode);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanInfoJDialog.this);
@@ -535,50 +538,108 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
     }
 
     @Action
-    public void uploadPic() {
+    public Task uploadPic() {
         BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
         String selectedPath = fileChoose.openDialog();
         if (!selectedPath.trim().equals("")) {
-            BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
-            List source = mode.getSource();
-            if (source.contains(selectedPath)) {
-                return;
-            }
-            source.add(selectedPath);
-            BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-            gdzcPhoto.setModel(newMode);
-
+            addObjectToList("uploading...");
+            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "gudingzhichan") {
+                @Override
+                public void responseResult(String file) {
+                    removeObjectFromList("uploading...");
+                    BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+                    List source = mode.getSource();
+                    if (source.contains(file)) {
+                        return;
+                    }
+                    source.add(file);
+                    BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+                    gdzcPhoto.setModel(newMode);
+                }
+            };
         }
-
+        return null;
     }
 
-    @Action
-    public void deletePic() {
-        Object selectedValue = gdzcPhoto.getSelectedValue();
-        if (selectedValue == null) {
+    private void addObjectToList(String name) {
+
+        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+        List source = mode.getSource();
+        if (source.contains(name)) {
             return;
         }
+        source.add(name);
+        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+        gdzcPhoto.setModel(newMode);
+    }
+
+    private void removeObjectFromList(String name) {
         BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
         List<String> source = mode.getSource();
-        source.remove(selectedValue.toString());
+        source.remove(name);
         BaseListModel<String> newMode = new BaseListModel<String>(source, "");
         gdzcPhoto.setModel(newMode);
     }
 
     @Action
-    public void imagePreview() {
+    public Task deletePic() {
+        Object selectedValue = gdzcPhoto.getSelectedValue();
+        if (selectedValue == null) {
+            return null;
+        }
+        removeObjectFromList(selectedValue.toString());
+        if (!selectedValue.toString().equals("")) {
+            return new FileTask(FileTask.TYPE_DELETE, selectedValue.toString(), "gudingzhichan") {
+                @Override
+                public void responseResult(String file) {
+                    
+                }
+            };
+        }
+        return null;
+    }
+
+    @Action
+    public void close() {
+        this.dispose();
+
+        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+        List<String> source = mode.getSource();
+        if (source.size() > 0) {
+            for (int i = 0; i < source.size(); i++) {
+                if (!source.get(i).equals("")) {
+                    FileTask task = new FileTask(FileTask.TYPE_DELETE, source.get(i), "gudingzhichan") {
+                        @Override
+                        public void responseResult(String file) {
+                            removeObjectFromList(file);
+                        }
+                    };
+                    task.execute();
+                }
+            }
+        }
+    }
+
+    @Action
+    public Task imagePreview() {
         final Object obj = gdzcPhoto.getSelectedValue();
         if (obj != null) {
-            SwingUtilities.invokeLater(new Runnable() {
+            return new FileTask(FileTask.TYPE_DOWNLOAD, obj.toString(), "gudingzhichan") {
                 @Override
-                public void run() {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ImagePreview imagePreview = new ImagePreview(obj.toString());
-                    imagePreview.setLocationRelativeTo(mainFrame);
-                    AssetClientApp.getApplication().show(imagePreview);
+                public void responseResult(final String file) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                            ImagePreview imagePreview = new ImagePreview(file,true);
+                            imagePreview.setLocationRelativeTo(mainFrame);
+                            AssetClientApp.getApplication().show(imagePreview);    
+                        }
+                    });
                 }
-            });
+            };
         }
+        return null;
     }
 
 
