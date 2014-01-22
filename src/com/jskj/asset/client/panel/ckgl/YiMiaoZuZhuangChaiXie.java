@@ -218,12 +218,8 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jTextField5 = new javax.swing.JTextField();
         jToolBar3 = new javax.swing.JToolBar();
         jLabel12 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
         jTextFieldjingbanren = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
         jTextFieldDanjuId = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
         jTextField15 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -241,8 +237,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jLabel22 = new javax.swing.JLabel();
         jToolBar2 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
@@ -389,20 +383,10 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
         jLabel12.setName("jLabel12"); // NOI18N
 
-        jTextField11.setName("jTextField11"); // NOI18N
-
         jTextFieldjingbanren.setEditable(false);
         jTextFieldjingbanren.setName("jTextFieldjingbanren"); // NOI18N
 
-        jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
-        jLabel13.setName("jLabel13"); // NOI18N
-
-        jTextField13.setName("jTextField13"); // NOI18N
-
         jTextFieldDanjuId.setName("jTextFieldDanjuId"); // NOI18N
-
-        jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
-        jLabel14.setName("jLabel14"); // NOI18N
 
         jTextField15.setName("jTextField15"); // NOI18N
 
@@ -498,24 +482,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jButton7.setOpaque(false);
         jToolBar2.add(jButton7);
 
-        jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
-        jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
-        jButton10.setFocusPainted(false);
-        jButton10.setFocusable(false);
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton10.setName("jButton10"); // NOI18N
-        jButton10.setOpaque(false);
-        jToolBar2.add(jButton10);
-
-        jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
-        jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
-        jButton13.setFocusPainted(false);
-        jButton13.setFocusable(false);
-        jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton13.setName("jButton13"); // NOI18N
-        jButton13.setOpaque(false);
-        jToolBar2.add(jButton13);
-
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setFocusPainted(false);
@@ -584,7 +550,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             }
         });
         jTableyimiao2.setName("jTableyimiao2"); // NOI18N
-        jTableyimiao2.setOpaque(false);
         jTableyimiao2.setShowHorizontalLines(false);
         jTableyimiao2.setShowVerticalLines(false);
         jScrollPane5.setViewportView(jTableyimiao2);
@@ -613,14 +578,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                         .addComponent(jLabel18)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel13)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel12)
@@ -694,11 +652,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -758,10 +712,8 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -773,8 +725,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
@@ -802,8 +752,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextAreaRemark;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField19;
