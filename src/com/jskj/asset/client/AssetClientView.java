@@ -22,13 +22,16 @@ public final class AssetClientView extends FrameView {
     public AssetClientView(Application app) {
         super(app);
         initComponents();
-        
-        messageLabel.setText("Test1, 您有一个未完成的审批. 用户 test2 申请领用资产0001.");
     }
 
     public Task loadMoudule() {
         return new LoadModule(menuBar);
     }
+    
+    public void setMessage(String message){
+        messageLabel.setText(message);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,10 +59,8 @@ public final class AssetClientView extends FrameView {
         taskMessagePanel.setBackground(resourceMap.getColor("taskMessagePanel.background")); // NOI18N
         taskMessagePanel.setName("taskMessagePanel"); // NOI18N
 
-        messageLabel.setFont(new java.awt.Font("宋体", 0, 12)); // NOI18N
+        messageLabel.setFont(new java.awt.Font("宋体", 1, 12)); // NOI18N
         messageLabel.setForeground(new java.awt.Color(0, 102, 204));
-        messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        messageLabel.setText(resourceMap.getString("messageLabel.text")); // NOI18N
         messageLabel.setName("messageLabel"); // NOI18N
 
         org.jdesktop.layout.GroupLayout taskMessagePanelLayout = new org.jdesktop.layout.GroupLayout(taskMessagePanel);

@@ -13,7 +13,7 @@ package com.jskj.asset.client.panel;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.Attach;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.util.HosFileChoose;
+import com.jskj.asset.client.layout.BaseFileChoose;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.File;
@@ -120,7 +120,7 @@ public class DisplayCellPane extends javax.swing.JDialog {
 
     @Action
     public void browseDirectory() {
-        HosFileChoose hosFileChoose = new HosFileChoose(this);
+        BaseFileChoose hosFileChoose = new BaseFileChoose(this);
         String filePath = hosFileChoose.showSaveDialogWithFile(true);
         if (!filePath.equals("")) {
             jTextField1.setText(filePath);

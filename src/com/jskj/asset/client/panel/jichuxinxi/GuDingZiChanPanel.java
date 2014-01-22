@@ -6,14 +6,20 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
 import com.jskj.asset.client.bean.entity.Gudingzichantb;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.GudingzichanFindTask;
+import com.jskj.asset.client.panel.user.ParamPanel;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -43,11 +49,11 @@ public class GuDingZiChanPanel extends BasePanel {
         initComponents();
 
         pageIndex = 1;
-        pageSize = 10;
+        pageSize = 20;
         count = 0;
         bindTable = new BindTableHelper<Gudingzichantb>(jTable1, new ArrayList<Gudingzichantb>());
         bindTable.createTable(new String[][]{{"gdzcId", "固定资产编号"}, {"gdzcName", "固定资产名称"}, {"gdzcType", "资产类型"}, {"gdzcGuige", "规格"},
-        {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"unitId", "库存上限"},{"unitId", "库存下限"}, {"gdzcSequence", "条形码"}});
+        {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"unitId", "库存上限"}, {"unitId", "库存下限"}, {"gdzcSequence", "条形码"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
     }
@@ -55,18 +61,18 @@ public class GuDingZiChanPanel extends BasePanel {
     private class RefreshTask extends GudingzichanFindTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize,"gdzc","");
+            super(pageIndex, pageSize, "gdzc", "");
         }
 
         @Override
-        public void responseResult(GudingzichanFindEntity response){
-                count = response.getCount();
-                jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get total size:" + response.getResult().size());
+        public void responseResult(GudingzichanFindEntity response) {
+            count = response.getCount();
+            jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+            logger.debug("total:" + count + ",get total size:" + response.getResult().size());
 
-                //存下所有的数据
-                currentPageData = response.getResult();
-                bindTable.refreshData(currentPageData);
+            //存下所有的数据
+            currentPageData = response.getResult();
+            bindTable.refreshData(currentPageData);
         }
     }
 
@@ -120,6 +126,7 @@ public class GuDingZiChanPanel extends BasePanel {
         jButton6.setOpaque(false);
         jToolBar1.add(jButton6);
 
+        jButton7.setAction(actionMap.get("updateGuDingZhiChan")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setBorder(null);
@@ -130,6 +137,7 @@ public class GuDingZiChanPanel extends BasePanel {
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
+        jButton8.setAction(actionMap.get("delete")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorder(null);
@@ -328,8 +336,7 @@ public class GuDingZiChanPanel extends BasePanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -384,12 +391,60 @@ public class GuDingZiChanPanel extends BasePanel {
             public void run() {
                 if (guDingZhiChanInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    guDingZhiChanInfoJDialog = new GuDingZiChanInfoJDialog();
+                    guDingZhiChanInfoJDialog = new GuDingZiChanInfoJDialog(GuDingZiChanPanel.this);
                     guDingZhiChanInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
+                guDingZhiChanInfoJDialog.setUpdatedData(new Gudingzichantb());
                 AssetClientApp.getApplication().show(guDingZhiChanInfoJDialog);
             }
         });
+    }
+
+    @Action
+    public void updateGuDingZhiChan() {
+        Gudingzichantb dps = selectedDataFromTable();
+        if (dps == null) {
+            AssetMessage.ERRORSYS("请选择一条数据!");
+            return;
+        }
+        SwingUtilities.invokeLater(new Runnable() {
+            private GuDingZiChanInfoJDialog guDingZhiChanInfoJDialog;
+
+            @Override
+            public void run() {
+                if (guDingZhiChanInfoJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    guDingZhiChanInfoJDialog = new GuDingZiChanInfoJDialog(GuDingZiChanPanel.this);
+                    guDingZhiChanInfoJDialog.setLocationRelativeTo(mainFrame);
+                }
+                guDingZhiChanInfoJDialog.setUpdatedData(selectedDataFromTable());
+                AssetClientApp.getApplication().show(guDingZhiChanInfoJDialog);
+            }
+        });
+    }
+    
+    @Action
+    public Task delete() {
+        Gudingzichantb selectedData = selectedDataFromTable();
+        if (selectedData == null) {
+            AssetMessage.ERRORSYS("请选择一条数据!");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getGdzcName());
+        if (result == JOptionPane.OK_OPTION) {
+            return new CommUpdateTask<Gudingzichantb>(selectedData, "gdzc/delete/" + selectedData.getGdzcId()) {
+                @Override
+                public void responseResult(ComResponse<Gudingzichantb> response) {
+                    if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                        reload().execute();
+                    } else {
+                        AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanPanel.this);
+                    }
+                }
+
+            };
+        }
+        return null;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -414,16 +469,14 @@ public class GuDingZiChanPanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
-        return new RefreshTask(0,20);
+        return new RefreshTask(0, 20);
     }
-
 
     @Override
     public Task reload(Object param) {
         return null;
     }
-    
-    
+
     @Action
     public void pagePrev() {
         pageIndex = pageIndex - 1;
@@ -454,7 +507,7 @@ public class GuDingZiChanPanel extends BasePanel {
 
     @Action
     public Task print() {
-        GudingzichanFindTask printData = new GudingzichanFindTask(0, count, "gdzc/","") {
+        GudingzichanFindTask printData = new GudingzichanFindTask(0, count, "gdzc/", "") {
             @Override
             public void responseResult(GudingzichanFindEntity response) {
                 bindTable.createPrinter("固定资产", response.getResult()).buildInBackgound().execute();

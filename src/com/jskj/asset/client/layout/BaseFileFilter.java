@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.util;
+package com.jskj.asset.client.layout;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
@@ -11,11 +11,15 @@ import javax.swing.filechooser.FileFilter;
  *
  * @author woderchen
  */
-public class HosFileFilter extends FileFilter {
+public class BaseFileFilter extends FileFilter {
 
     private String[] suffixs;
 
-    public HosFileFilter(String[] suffixs) {
+    public BaseFileFilter(){
+      super();
+    }
+    
+    public BaseFileFilter(String[] suffixs) {
         this.suffixs = suffixs;
     }
 
