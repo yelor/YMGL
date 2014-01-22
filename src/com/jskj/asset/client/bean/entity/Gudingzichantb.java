@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Gudingzichantb {
     private Integer gdzcId;
 
@@ -28,6 +30,14 @@ public class Gudingzichantb {
     private String gdzcRemark;
 
     private String gdzcPhoto;
+
+    private Integer deportId;
+
+    private Integer supplierId;
+
+    private Integer kucunxiaxian;
+
+    private Integer kucunshangxian;
 
     public Integer getGdzcId() {
         return gdzcId;
@@ -131,5 +141,37 @@ public class Gudingzichantb {
 
     public void setGdzcPhoto(String gdzcPhoto) {
         this.gdzcPhoto = gdzcPhoto == null ? null : gdzcPhoto.trim();
+    }
+
+    public Integer getDeportId() {
+        return deportId;
+    }
+
+    public void setDeportId(Integer deportId) {
+        this.deportId = deportId;
+    }
+
+    public Integer getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(Integer supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public Integer getKucunxiaxian() {
+        return kucunxiaxian;
+    }
+
+    public void setKucunxiaxian(Integer kucunxiaxian) {
+        this.kucunxiaxian = kucunxiaxian;
+    }
+
+    public Integer getKucunshangxian() {
+        return kucunshangxian;
+    }
+
+    public void setKucunshangxian(Integer kucunshangxian) {
+        this.kucunshangxian = kucunshangxian;
     }
 }
