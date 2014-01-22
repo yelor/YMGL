@@ -3,6 +3,8 @@ package com.jskj.asset.client.bean.entity;
 import java.util.Date;
 
 public class Yimiaobaosuntb {
+    private Integer id;
+
     private String baosunId;
 
     private Integer kucunId;
@@ -16,6 +18,14 @@ public class Yimiaobaosuntb {
     private String xiaohuitype;
 
     private String xiaohuireason;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getBaosunId() {
         return baosunId;
