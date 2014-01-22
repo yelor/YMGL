@@ -12,6 +12,8 @@ import java.awt.Font;
  */
 public class Constants {
 
+    public final static String VERSION = "v1.00";
+    
     /*HTTP conifg*/
     public static String HTTP = "";
     public static String APPID = "/AssetsSys/service/";
