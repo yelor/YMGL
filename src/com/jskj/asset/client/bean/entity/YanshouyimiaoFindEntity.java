@@ -1,6 +1,7 @@
 /*
  * 2014 Chengdu JunChen Technology
  */
+
 package com.jskj.asset.client.bean.entity;
 
 import java.util.List;
@@ -9,21 +10,10 @@ import java.util.List;
  *
  * @author huiqi
  */
-public class YimiaobaosuntbFindEntity {
-    
-    private Baosuntb baosun;
-
+public class YanshouyimiaoFindEntity {
     private int count;
-
-    private List<Yimiaobaosuntb> result;
-
-    public Baosuntb getBaosun() {
-        return baosun;
-    }
-
-    public void setBaosun(Baosuntb baosun) {
-        this.baosun = baosun;
-    }
+    
+    private  List<YanshouyimiaoEntity> result;
 
     public int getCount() {
         return count;
@@ -33,12 +23,13 @@ public class YimiaobaosuntbFindEntity {
         this.count = count;
     }
 
-    public List<Yimiaobaosuntb> getResult() {
+    public List<YanshouyimiaoEntity> getResult() {
         return result;
     }
 
-    public void setResult(List<Yimiaobaosuntb> result) {
+    public void setResult(List<YanshouyimiaoEntity> result) {
         this.result = result;
     }
-
+    
+    
 }
