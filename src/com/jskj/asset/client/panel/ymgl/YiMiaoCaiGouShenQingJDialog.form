@@ -213,7 +213,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldYimiaocaigoudanDate" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldzhidanDate" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -260,7 +260,7 @@
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldYimiaocaigoudanId" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldYimiaocaigoudanDate" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jTextFieldzhidanDate" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -314,18 +314,20 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldYimiaocaigoudanId">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldYimiaocaigoudanId.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldYimiaocaigoudanId" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldYimiaocaigoudanDate">
+        <Component class="javax.swing.JTextField" name="jTextFieldzhidanDate">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextFieldYimiaocaigoudanDate.text"/>
-            <Property name="name" type="java.lang.String" value="jTextFieldYimiaocaigoudanDate" noResource="true"/>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldzhidanDate.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldzhidanDate" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextFieldYimiaocaigoudanDateMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldYimiaocaigoudanDateActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextFieldzhidanDateMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldzhidanDateActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField"/>
@@ -333,15 +335,14 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldjingbanren">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldjingbanren.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldjingbanren" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFielddepartment">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFielddepartment.text"/>
             <Property name="name" type="java.lang.String" value="jTextFielddepartment" noResource="true"/>
           </Properties>
@@ -368,11 +369,11 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
+            <Component class="javax.swing.JTextArea" name="jTextAreaRemark">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="2"/>
-                <Property name="name" type="java.lang.String" value="jTextArea1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jTextAreaRemark" noResource="true"/>
               </Properties>
             </Component>
           </SubComponents>

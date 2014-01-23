@@ -269,7 +269,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jTextField15" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Component id="jTextFieldzhidanren" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -283,7 +283,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextField17" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldzuzhuangfeiyong" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                                   <Component id="jTextFieldDanjuId" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                                   <Component id="jTextFieldjingbanren" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
@@ -292,7 +292,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jTextField19" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldfeiyongType" min="-2" pref="160" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
@@ -334,7 +334,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField17" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jTextFieldzuzhuangfeiyong" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -350,7 +350,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField19" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jTextFieldfeiyongType" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -367,7 +367,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField15" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jTextFieldzhidanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -392,9 +392,10 @@
         <Property name="name" type="java.lang.String" value="jTextFieldDanjuId" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField15">
+    <Component class="javax.swing.JTextField" name="jTextFieldzhidanren">
       <Properties>
-        <Property name="name" type="java.lang.String" value="jTextField15" noResource="true"/>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="jTextFieldzhidanren" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel15">
@@ -409,12 +410,12 @@
         <Property name="name" type="java.lang.String" value="jLabel16" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField17">
+    <Component class="javax.swing.JTextField" name="jTextFieldzuzhuangfeiyong">
       <Properties>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="&#x6587;&#x672c;&#x5149;&#x6807;"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="jTextField17" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="jTextFieldzuzhuangfeiyong" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldzhidanDate">
@@ -560,9 +561,9 @@
         <Property name="name" type="java.lang.String" value="jLabel21" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField19">
+    <Component class="javax.swing.JTextField" name="jTextFieldfeiyongType">
       <Properties>
-        <Property name="name" type="java.lang.String" value="jTextField19" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="jTextFieldfeiyongType" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel22">

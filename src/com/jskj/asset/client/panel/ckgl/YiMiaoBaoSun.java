@@ -465,10 +465,10 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         baosun.setBaosunId(jTextFieldBaosunId.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
         baosun.setBaosunDate(dateformate.parse(jTextFieldzhidanDate.getText()));
-        baosun.setDeport(2);
+        baosun.setDeport("冻库");
         System.out.println(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        baosun.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        baosun.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        baosun.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        baosun.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserName());
 
         List<Yimiaobaosuntb> list = new ArrayList<Yimiaobaosuntb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {

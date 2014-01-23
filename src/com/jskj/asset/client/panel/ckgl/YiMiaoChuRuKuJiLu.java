@@ -143,7 +143,7 @@ public class YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {"22", "22",  new Long(2), "2", "2", "2", "2", "2", "2", "2", "2", "2", null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null},

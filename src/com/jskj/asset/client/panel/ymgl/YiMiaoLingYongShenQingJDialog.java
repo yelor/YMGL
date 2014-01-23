@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.ymgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
@@ -19,6 +20,7 @@ import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JTextField;
@@ -49,37 +51,12 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         initComponents();
         jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao("YMLY"));
         jTextFieldYimiaolingyongdanId.setEditable(false);
-        ((BaseTextField) jTextFieldjingbanren).registerPopup(new IPopupBuilder() {
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
 
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
+        jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
+        jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
 
-            public String getConditionSQL() {
-                String sql = "";
-                if (!jTextFieldjingbanren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldjingbanren.getText() + "%\"";
-                }
-                return sql;
-            }
-
-            public String[][] displayColumns() {
-                return new String[][]{{"userName", "用户名"}, {"departmentId", "部门编号"}};
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    jTextFieldjingbanren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    jTextFieldzhidanren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    jTextFielddepartment.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
-                    shenqingdan.setZhidanrenId((Integer) bindedMap.get("userId"));
-                    shenqingdan.setJingbanrenId((Integer) bindedMap.get("userId"));
-                }
-            }
-        });
 //供应单位的popup
         ((BaseTextField) jTextFieldSupplierName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -198,13 +175,13 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldYimiaolingyongdanId = new javax.swing.JTextField();
-        jTextFieldYimiaolingyongdanDate = regTextField;
+        jTextFieldzhidanDate = regTextField;
         jTextFieldjingbanren = new BaseTextField();
         jTextFielddepartment = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaRemark = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableyimiao = new BaseTable(null);
@@ -331,20 +308,24 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
+        jTextFieldYimiaolingyongdanId.setEditable(false);
         jTextFieldYimiaolingyongdanId.setText(resourceMap.getString("jTextFieldYimiaolingyongdanId.text")); // NOI18N
         jTextFieldYimiaolingyongdanId.setName("jTextFieldYimiaolingyongdanId"); // NOI18N
 
-        jTextFieldYimiaolingyongdanDate.setText(resourceMap.getString("jTextFieldYimiaolingyongdanDate.text")); // NOI18N
-        jTextFieldYimiaolingyongdanDate.setName("jTextFieldYimiaolingyongdanDate"); // NOI18N
-        jTextFieldYimiaolingyongdanDate.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldzhidanDate.setEditable(false);
+        jTextFieldzhidanDate.setText(resourceMap.getString("jTextFieldzhidanDate.text")); // NOI18N
+        jTextFieldzhidanDate.setName("jTextFieldzhidanDate"); // NOI18N
+        jTextFieldzhidanDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldYimiaolingyongdanDateActionPerformed(evt);
+                jTextFieldzhidanDateActionPerformed(evt);
             }
         });
 
+        jTextFieldjingbanren.setEditable(false);
         jTextFieldjingbanren.setText(resourceMap.getString("jTextFieldjingbanren.text")); // NOI18N
         jTextFieldjingbanren.setName("jTextFieldjingbanren"); // NOI18N
 
+        jTextFielddepartment.setEditable(false);
         jTextFielddepartment.setText(resourceMap.getString("jTextFielddepartment.text")); // NOI18N
         jTextFielddepartment.setName("jTextFielddepartment"); // NOI18N
 
@@ -356,10 +337,10 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(2);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaRemark.setColumns(20);
+        jTextAreaRemark.setRows(2);
+        jTextAreaRemark.setName("jTextAreaRemark"); // NOI18N
+        jScrollPane1.setViewportView(jTextAreaRemark);
 
         jPanel2.setName("jPanel2"); // NOI18N
 
@@ -422,6 +403,7 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
         jLabel15.setName("jLabel15"); // NOI18N
 
+        jTextFieldzhidanren.setEditable(false);
         jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -445,7 +427,7 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 395, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextFieldYimiaolingyongdanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextFieldjingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -475,7 +457,7 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
                     .addComponent(jTextFieldYimiaolingyongdanId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldYimiaolingyongdanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -520,9 +502,9 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldYimiaolingyongdanDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYimiaolingyongdanDateActionPerformed
+    private void jTextFieldzhidanDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldzhidanDateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldYimiaolingyongdanDateActionPerformed
+    }//GEN-LAST:event_jTextFieldzhidanDateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -596,8 +578,11 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         yimiaolingyong = new YimiaoshenqingdantbFindEntity();
         shenqingdan.setShenqingdanId(jTextFieldYimiaolingyongdanId.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
-        shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldYimiaolingyongdanDate.getText()));
+        shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setDanjuleixingId(22);
+        shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
@@ -667,13 +652,13 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTableyimiao;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaRemark;
     private javax.swing.JTextField jTextFieldConstactperson;
     private javax.swing.JTextField jTextFieldSupplierName;
-    private javax.swing.JTextField jTextFieldYimiaolingyongdanDate;
     private javax.swing.JTextField jTextFieldYimiaolingyongdanId;
     private javax.swing.JTextField jTextFielddepartment;
     private javax.swing.JTextField jTextFieldjingbanren;
+    private javax.swing.JTextField jTextFieldzhidanDate;
     private javax.swing.JTextField jTextFieldzhidanren;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables

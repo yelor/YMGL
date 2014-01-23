@@ -241,7 +241,7 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jTextFielddepartment" pref="160" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldTiaojiaDate" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldzhidanDate" max="32767" attributes="0"/>
                                       <Component id="jTextFieldJine" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -260,7 +260,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jTextFieldTiaojiaId" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jTextFieldTiaojiaDate" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jTextFieldzhidanDate" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -331,17 +331,19 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTiaojiaId">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldTiaojiaId.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldTiaojiaId" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldTiaojiaDate">
+        <Component class="javax.swing.JTextField" name="jTextFieldzhidanDate">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jTextFieldTiaojiaDate.text"/>
-            <Property name="name" type="java.lang.String" value="jTextFieldTiaojiaDate" noResource="true"/>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldzhidanDate.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldzhidanDate" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTiaojiaDateActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldzhidanDateActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField"/>
@@ -502,11 +504,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldjingbanren">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldjingbanren" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
@@ -516,6 +516,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFielddepartment">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFielddepartment" noResource="true"/>
           </Properties>
         </Component>
