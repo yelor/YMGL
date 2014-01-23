@@ -36,7 +36,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
     private Yimiaotiaojia_detail_tbFindEntity yimiaotiaojiaEntity;
     private Yimiaotiaojia_detail_tb yimiaotiaojia_detail;
     private Yimiaotiaojiatb yimiaotiaojia;
-    private SimpleDateFormat dateformate;
+    private SimpleDateFormat dateformate= new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
 
     /**
@@ -107,13 +107,10 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         });
     }
 
-    DateChooser dateChooser1;
     JTextField regTextField;
 
     private void init() {
         regTextField = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField);
     }
 
     /**
@@ -359,6 +356,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
         );
 
+        jTextFieldzhidanren.setEditable(false);
         jTextFieldzhidanren.setText(resourceMap.getString("jTextFieldzhidanren.text")); // NOI18N
         jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
 

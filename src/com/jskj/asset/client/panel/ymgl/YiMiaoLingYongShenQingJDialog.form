@@ -339,9 +339,6 @@
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldjingbanren.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldjingbanren" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFielddepartment">
           <Properties>

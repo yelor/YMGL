@@ -38,7 +38,7 @@ public class YiMiaoCaiGouShenQingJDialog extends javax.swing.JDialog {
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaocaigou;
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate;
+    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");;
     private boolean isNew;
 
     /**
@@ -50,10 +50,12 @@ public class YiMiaoCaiGouShenQingJDialog extends javax.swing.JDialog {
         initComponents();
         jTextFieldYimiaocaigoudanId.setText(DanHao.getDanHao("YMCG"));
         jTextFieldYimiaocaigoudanId.setEditable(false);
+        
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
+
 //供应单位的popup
         ((BaseTextField) jTextFieldSupplierName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -139,13 +141,10 @@ public class YiMiaoCaiGouShenQingJDialog extends javax.swing.JDialog {
         });
     }
 
-    DateChooser dateChooser1;
     JTextField regTextField;
 
     private void init() {
         regTextField = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField);
     }
 
     /**

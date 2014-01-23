@@ -39,7 +39,7 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
     private YimiaoshenqingdantbFindEntity yimiaolingyong;
 
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate;
+    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");;
     private boolean isNew;
 
     /**
@@ -140,13 +140,10 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         });
     }
 
-    DateChooser dateChooser1;
     JTextField regTextField;
 
     private void init() {
         regTextField = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField);
     }
 
     /**
@@ -176,7 +173,7 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldYimiaolingyongdanId = new javax.swing.JTextField();
         jTextFieldzhidanDate = regTextField;
-        jTextFieldjingbanren = new BaseTextField();
+        jTextFieldjingbanren = new javax.swing.JTextField();
         jTextFielddepartment = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();

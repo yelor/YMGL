@@ -40,7 +40,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaoshenbao;
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate;
+    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
 
     DateChooser dateChooser1;
@@ -143,10 +143,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     }
 
     private void init() {
-        regTextField = new BaseTextField();
-//        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-//        dateChooser1.register(regTextField);
-        ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
+        regTextField = new JTextField();
     }
 
     /**

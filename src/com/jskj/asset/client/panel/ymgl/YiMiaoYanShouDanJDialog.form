@@ -269,7 +269,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jTextFieldYimiaoyanshou_detailDate" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="jTextFieldzhidanDate" min="-2" pref="160" max="-2" attributes="0"/>
                               <Component id="jTextField5" min="-2" pref="160" max="-2" attributes="0"/>
                               <Component id="jTextFieldEquipment" min="-2" pref="160" max="-2" attributes="0"/>
                               <Component id="jTextFieldStoragetype" min="-2" pref="160" max="-2" attributes="0"/>
@@ -298,7 +298,7 @@
                                           <Component id="jTextFieldArrivetime" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                                           <Component id="jTextFieldBackmiles" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jTextField24" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldjingbanren" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -328,7 +328,7 @@
                               <Component id="jTextFieldYimiaoyanshouId" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldYimiaoyanshou_detailDate" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTextFieldzhidanDate" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -419,7 +419,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField24" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTextFieldjingbanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jTextField18" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -467,14 +467,14 @@
             <Property name="name" type="java.lang.String" value="jTextFieldYimiaoyanshouId" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldYimiaoyanshou_detailDate">
+        <Component class="javax.swing.JTextField" name="jTextFieldzhidanDate">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" resourceKey="jTextFieldYimiaoyanshou_detailDate.text"/>
-            <Property name="name" type="java.lang.String" value="jTextFieldYimiaoyanshou_detailDate" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldzhidanDate.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldzhidanDate" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldYimiaoyanshou_detailDateActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldzhidanDateActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField1"/>
@@ -482,12 +482,10 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFielddepartment">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFielddepartment.text"/>
             <Property name="name" type="java.lang.String" value="jTextFielddepartment" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldsongmiaoren">
           <Properties>
@@ -739,11 +737,11 @@
             <Property name="name" type="java.lang.String" value="jLabel24" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField24">
+        <Component class="javax.swing.JTextField" name="jTextFieldjingbanren">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" resourceKey="jTextField24.text"/>
-            <Property name="name" type="java.lang.String" value="jTextField24" noResource="true"/>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldjingbanren.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldjingbanren" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel25">
