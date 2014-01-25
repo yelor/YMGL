@@ -4,7 +4,7 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi.task;
 
-import com.jskj.asset.client.bean.entity.Dizhiyihaopin;
+import com.jskj.asset.client.bean.entity.DizhiyihaopinAll;
 import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -59,10 +59,10 @@ public abstract class DizhiyihaopinFindTask extends BaseTask {
             //使用Spring3 RESTful client来获取http数据
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
 //            CommFindEntity<T> response = restTemplate.getForObject(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, CommFindEntity.class);
-            CommFindEntity<Dizhiyihaopin> response = restTemplate.exchange(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex,
+            CommFindEntity<DizhiyihaopinAll> response = restTemplate.exchange(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex,
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<CommFindEntity<Dizhiyihaopin>>() {
+                    new ParameterizedTypeReference<CommFindEntity<DizhiyihaopinAll>>() {
                     }).getBody();
             return response;
         } catch (RestClientException e) {
@@ -84,11 +84,11 @@ public abstract class DizhiyihaopinFindTask extends BaseTask {
             return;
         }
         if (object instanceof CommFindEntity) {
-            responseResult((CommFindEntity<Dizhiyihaopin>) object);
+            responseResult((CommFindEntity<DizhiyihaopinAll>) object);
         } else {
             clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
         }
     }
 
-    public abstract void responseResult(CommFindEntity<Dizhiyihaopin> response);
+    public abstract void responseResult(CommFindEntity<DizhiyihaopinAll> response);
 }

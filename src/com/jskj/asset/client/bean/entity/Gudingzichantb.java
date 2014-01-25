@@ -15,7 +15,7 @@ public class Gudingzichantb {
 
     private String gdzcXinghao;
 
-    private Integer unitId;
+    private String unitId;
 
     private String gdzcPinpai;
 
@@ -79,12 +79,12 @@ public class Gudingzichantb {
         this.gdzcXinghao = gdzcXinghao == null ? null : gdzcXinghao.trim();
     }
 
-    public Integer getUnitId() {
+    public String getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(Integer unitId) {
-        this.unitId = unitId;
+    public void setUnitId(String unitId) {
+        this.unitId = unitId == null ? null : unitId.trim();
     }
 
     public String getGdzcPinpai() {

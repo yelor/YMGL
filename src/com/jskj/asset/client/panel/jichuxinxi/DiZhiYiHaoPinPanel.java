@@ -6,7 +6,7 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.Dizhiyihaopin;
+import com.jskj.asset.client.bean.entity.DizhiyihaopinAll;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
@@ -34,9 +34,9 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     public int pageSize;
     private int count;
 
-    private List<Dizhiyihaopin> currentPageData;
+    private List<DizhiyihaopinAll> currentPageData;
 
-    private final BindTableHelper<Dizhiyihaopin> bindTable;
+    private final BindTableHelper<DizhiyihaopinAll> bindTable;
 
     /**
      * Creates new form YiMiaoJDialog
@@ -47,9 +47,9 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 20;
         count = 0;
-        bindTable = new BindTableHelper<Dizhiyihaopin>(jTable1, new ArrayList<Dizhiyihaopin>());
+        bindTable = new BindTableHelper<DizhiyihaopinAll>(jTable1, new ArrayList<DizhiyihaopinAll>());
         bindTable.createTable(new String[][]{{"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称"}, {"dzyhpType", "物品类别"}, {"dzyhpGuige", "规格"},
-        {"dzyhpXinghao", "型号"}, {"unitId", "单位"}, {"unitId", "库存上限"}, {"unitId", "库存下限"}, {"dzyhpBarcode", "条形码"}});
+        {"dzyhpXinghao", "型号"}, {"unitId", "单位"}, {"dzyhpKucunshangxian", "库存上限"}, {"dzyhpKucunxiaxian", "库存下限"}, {"dzyhpBarcode", "条形码"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
     }
@@ -61,7 +61,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         }
 
         @Override
-        public void responseResult(CommFindEntity<Dizhiyihaopin> response) {
+        public void responseResult(CommFindEntity<DizhiyihaopinAll> response) {
             count = response.getCount();
             jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
             logger.debug("total:" + count + ",get total size:" + response.getResult().size());
@@ -87,11 +87,11 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         new RefreshTask(pageIndex, pageSize).execute();
     }
 
-    public List<Dizhiyihaopin> getTableData() {
+    public List<DizhiyihaopinAll> getTableData() {
         return currentPageData;
     }
 
-    public Dizhiyihaopin selectedDataFromTable() {
+    public DizhiyihaopinAll selectedDataFromTable() {
         if (jTable1.getSelectedRow() >= 0) {
             if (currentPageData != null) {
                 return currentPageData.get(jTable1.getSelectedRow());
@@ -104,7 +104,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     public Task print() {
         DizhiyihaopinFindTask printData = new DizhiyihaopinFindTask(0, count, "dizhiyihaopin/", "") {
             @Override
-            public void responseResult(CommFindEntity<Dizhiyihaopin> response) {
+            public void responseResult(CommFindEntity<DizhiyihaopinAll> response) {
                 bindTable.createPrinter("低值易耗品", response.getResult()).buildInBackgound().execute();
             }
         };
@@ -424,7 +424,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
                     diZhiYiHaoPinInfoJDialog = new DiZhiYiHaoPinInfoJDialog(DiZhiYiHaoPinPanel.this);
                     diZhiYiHaoPinInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                diZhiYiHaoPinInfoJDialog.setUpdatedData(new Dizhiyihaopin());
+                diZhiYiHaoPinInfoJDialog.setUpdatedData(new DizhiyihaopinAll());
                 AssetClientApp.getApplication().show(diZhiYiHaoPinInfoJDialog);
             }
         });
@@ -432,7 +432,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
 
     @Action
     public void updateDiZhiYiHaoPin() {
-        Dizhiyihaopin dps = selectedDataFromTable();
+        DizhiyihaopinAll dps = selectedDataFromTable();
         if (dps == null) {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return;
@@ -455,16 +455,16 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
 
     @Action
     public Task delete() {
-        Dizhiyihaopin selectedData = selectedDataFromTable();
+        DizhiyihaopinAll selectedData = selectedDataFromTable();
         if (selectedData == null) {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
         int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getDzyhpName());
         if (result == JOptionPane.OK_OPTION) {
-            return new CommUpdateTask<Dizhiyihaopin>(selectedData, "dizhiyihaopin/delete/" + selectedData.getDzyhpId()) {
+            return new CommUpdateTask<DizhiyihaopinAll>(selectedData, "dizhiyihaopin/delete/" + selectedData.getDzyhpId()) {
                 @Override
-                public void responseResult(ComResponse<Dizhiyihaopin> response) {
+                public void responseResult(ComResponse<DizhiyihaopinAll> response) {
                     if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                         reload().execute();
                     } else {

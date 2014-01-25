@@ -19,7 +19,7 @@ public class CaigoujihuaChaxunEntity {
 
     private String gdzcXinghao;
 
-    private Integer unitId;
+    private String unitId;
 
     private String gdzcPinpai;
     
@@ -49,7 +49,7 @@ public class CaigoujihuaChaxunEntity {
         return gdzcXinghao;
     }
 
-    public Integer getUnitId() {
+    public String getUnitId() {
         return unitId;
     }
 
@@ -89,7 +89,7 @@ public class CaigoujihuaChaxunEntity {
         this.gdzcXinghao = gdzcXinghao;
     }
 
-    public void setUnitId(Integer unitId) {
+    public void setUnitId(String unitId) {
         this.unitId = unitId;
     }
 

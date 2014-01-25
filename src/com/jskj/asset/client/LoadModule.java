@@ -13,6 +13,7 @@ import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
 import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoxiaoshoumingxiPanel;
+import com.jskj.asset.client.panel.jichuxinxi.CangkuPanel;
 import com.jskj.asset.client.panel.user.BuMenPanel;
 import com.jskj.asset.client.panel.jichuxinxi.DanJuLeiXingJDialog;
 import com.jskj.asset.client.panel.jichuxinxi.DanWeiJDialog;
@@ -111,6 +112,13 @@ public class LoadModule extends BaseTask {
         jichuMenu.setText(resourceMap.getString("jichuMenu.text")); // NOI18N
         jichuMenu.setName("jichuMenu"); // NOI18N
 
+        javax.swing.JMenuItem jMenuItemCangku = new javax.swing.JMenuItem();
+        
+        jMenuItemCangku.setAction(actionMap.get("showCangku")); // NOI18N
+        jMenuItemCangku.setText(resourceMap.getString("jMenuItemCangku.text")); // NOI18N
+        jMenuItemCangku.setName("jMenuItemCangku"); // NOI18N
+        jichuMenu.add(jMenuItemCangku);
+        
         jMenuItem6.setAction(actionMap.get("showYiMiao")); // NOI18N
         jMenuItem6.setText(resourceMap.getString("jMenuItem6.text")); // NOI18N
         jMenuItem6.setName("jMenuItem6"); // NOI18N
@@ -481,5 +489,11 @@ public class LoadModule extends BaseTask {
     @Action
     public void switchUser() {
         AssetClientApp.resetLoginWindow();
+    }
+    
+    @Action
+    public void showCangku(){
+        OpenTabTask task = new OpenTabTask("基础数据-仓库管理", new CangkuPanel(), false);
+        task.execute();
     }
 }

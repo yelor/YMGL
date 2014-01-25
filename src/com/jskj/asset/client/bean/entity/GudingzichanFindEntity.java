@@ -14,13 +14,13 @@ public class GudingzichanFindEntity {
     
     private int count;
     
-    private  List<Gudingzichantb> result;
+    private  List<GudingzichanAll> result;
 
     public int getCount() {
         return count;
     }
 
-    public List<Gudingzichantb> getResult() {
+    public List<GudingzichanAll> getResult() {
         return result;
     }
 
@@ -28,7 +28,7 @@ public class GudingzichanFindEntity {
         this.count = count;
     }
 
-    public void setResult(List<Gudingzichantb> result) {
+    public void setResult(List<GudingzichanAll> result) {
         this.result = result;
     }
     

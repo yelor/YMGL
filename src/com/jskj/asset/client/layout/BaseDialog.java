@@ -9,10 +9,13 @@ import com.jskj.asset.client.AssetClientApp;
 import java.awt.Component;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -51,6 +54,35 @@ public abstract class BaseDialog extends JDialog {
         return "";
     }
 
+    private Set<Field> getClassAllFields(Class clazz, Set<Field> allGenericFields) {
+
+        // 如果clazz为空则直接返回    
+        if (clazz == null) {
+            return allGenericFields;
+        }
+
+        Object parent = clazz.getGenericSuperclass();
+        // 如果有父类并且父类不是Object 则递归调用    
+        if (parent != null && !((Class) parent).getName().equals("Object")) {
+            getClassAllFields((Class) parent, allGenericFields);
+        }
+
+        Field[] fields = clazz.getDeclaredFields();
+        if (fields != null) {// 如果clazz存在声明的属性    
+            for (int i = 0; i < fields.length; i++) {
+                allGenericFields.add(fields[i]);
+            }
+        }
+        // 存在父类则递归调用    
+        return allGenericFields;
+    }
+
+    private Set<Field> getClassAllFields(Class clazz) {
+        Set<Field> allGenericFields = new HashSet<Field>();
+//      List<Field> allGenericFields = new ArrayList<Field>();  
+        return getClassAllFields(clazz, allGenericFields);
+    }
+
     private void setObject(String paramater, Object bean, String value) throws Exception {
         if (paramater != null && !paramater.equals("")) {
             String[] ps = paramater.split("\\$");
@@ -65,35 +97,41 @@ public abstract class BaseDialog extends JDialog {
                     return;
                 }
                 if (ps.length == 1) {
-                    Field field = bean.getClass().getDeclaredField(firstPara);
-                    Class[] paramClasses = new Class[1];
-                    paramClasses[0] = field.getType();
-                    Method method = bean.getClass().getMethod(tempTitle, paramClasses);
-                    if (paramClasses[0] == String.class) {
-                        method.invoke(bean, value);
-                    } else if (paramClasses[0] == Integer.class) {
-                        if (!value.trim().equals("")) {
-                            method.invoke(bean, Integer.parseInt(value));
-                        }
-                    } else if (paramClasses[0] == Double.class) {
-                        if (!value.trim().equals("")) {
-                            method.invoke(bean, Double.parseDouble(value));
-                        }
-                    }else if (paramClasses[0] == Float.class) {
-                        if (!value.trim().equals("")) {
-                            method.invoke(bean, Float.parseFloat(value));
-                        }
-                    }else if (paramClasses[0] == Boolean.class) {
-                        if (!value.trim().equals("")) {
-                            method.invoke(bean, Boolean.parseBoolean(value));
-                        }
-                    }else if (paramClasses[0] == Long.class) {
-                        if (!value.trim().equals("")) {
-                            method.invoke(bean, Long.parseLong(value));
-                        }
-                    }else if (paramClasses[0] == Long.class) {
-                        if (!value.trim().equals("")) {
-                            method.invoke(bean, Long.parseLong(value));
+                    Set<Field> fields = getClassAllFields(bean.getClass());
+                    for (Field field : fields) {
+                        if (field.getName() == firstPara) {
+                            //Field field = bean.getClass().getField(firstPara);
+                            Class[] paramClasses = new Class[1];
+                            paramClasses[0] = field.getType();
+                            Method method = bean.getClass().getMethod(tempTitle, paramClasses);
+                            if (paramClasses[0] == String.class) {
+                                method.invoke(bean, value);
+                            } else if (paramClasses[0] == Integer.class) {
+                                if (!value.trim().equals("")) {
+                                    method.invoke(bean, Integer.parseInt(value));
+                                }
+                            } else if (paramClasses[0] == Double.class) {
+                                if (!value.trim().equals("")) {
+                                    method.invoke(bean, Double.parseDouble(value));
+                                }
+                            } else if (paramClasses[0] == Float.class) {
+                                if (!value.trim().equals("")) {
+                                    method.invoke(bean, Float.parseFloat(value));
+                                }
+                            } else if (paramClasses[0] == Boolean.class) {
+                                if (!value.trim().equals("")) {
+                                    method.invoke(bean, Boolean.parseBoolean(value));
+                                }
+                            } else if (paramClasses[0] == Long.class) {
+                                if (!value.trim().equals("")) {
+                                    method.invoke(bean, Long.parseLong(value));
+                                }
+                            } else if (paramClasses[0] == Long.class) {
+                                if (!value.trim().equals("")) {
+                                    method.invoke(bean, Long.parseLong(value));
+                                }
+                            }
+                            break;
                         }
                     }
                 } else {
@@ -115,6 +153,30 @@ public abstract class BaseDialog extends JDialog {
         for (Component c : coms) {
             if (c instanceof JPanel) {
                 copyToBean(targetBean, (JPanel) c);
+            } else if (c instanceof JScrollPane) {
+                JScrollPane ccc = (JScrollPane) c;
+                if (ccc.getViewport() != null) {
+                    Component com = ccc.getViewport().getView();
+                    if (com != null) {
+                        if (com instanceof JTextArea) {
+                            try {
+                                String value = ((JTextArea) com).getText();
+                                setObject(com.getName(), targetBean, value);
+                            } catch (Exception ex) {
+                                logger.error(ex);
+                            }
+                        } else if (com instanceof javax.swing.JList) {
+                            try {
+                                Object value = ((javax.swing.JList) com).getSelectedValue();
+                                if (value != null) {
+                                    setObject(com.getName(), targetBean, value.toString());
+                                }
+                            } catch (Exception ex) {
+                                logger.error(ex);
+                            }
+                        }
+                    }
+                }
             } else if (c instanceof JTextField) {
                 try {
                     String value = ((JTextField) c).getText();
@@ -149,6 +211,7 @@ public abstract class BaseDialog extends JDialog {
                     logger.error(ex);
                 }
             }
+
         }
 
     }
@@ -163,6 +226,36 @@ public abstract class BaseDialog extends JDialog {
         for (Component c : coms) {
             if (c instanceof JPanel) {
                 bind(sourceBean, (JPanel) c);
+            } else if (c instanceof JScrollPane) {
+                JScrollPane ccc = (JScrollPane) c;
+                if (ccc.getViewport() != null) {
+                    Component com = ccc.getViewport().getView();
+                    if (com != null) {
+                        if (com instanceof JTextArea) {
+                            try {
+                                Object temp = getObject(com.getName(), sourceBean);
+                                if (temp != null) {
+                                    ((JTextArea) com).setText(temp.toString());
+                                } else {
+                                    ((JTextArea) com).setText("");
+                                }
+                            } catch (Exception ex) {
+                                logger.error(ex);
+                            }
+                        } else if (com instanceof javax.swing.JList) {
+                            try {
+                                Object temp = getObject(com.getName(), sourceBean);
+                                if (temp != null) {
+                                    ((JList) com).setSelectedValue(temp, true);
+                                } else {
+                                    //((JList) c).setText("");
+                                }
+                            } catch (Exception ex) {
+                                logger.error(ex);
+                            }
+                        }
+                    }
+                }
             } else if (c instanceof JTextField) {
                 try {
                     Object temp = getObject(c.getName(), sourceBean);

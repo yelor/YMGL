@@ -6,7 +6,7 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.Appparam;
+import com.jskj.asset.client.bean.entity.GudingzichanAll;
 import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
 import com.jskj.asset.client.bean.entity.Gudingzichantb;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -14,7 +14,6 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.GudingzichanFindTask;
-import com.jskj.asset.client.panel.user.ParamPanel;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +36,9 @@ public class GuDingZiChanPanel extends BasePanel {
     public int pageSize;
     private int count;
 
-    private List<Gudingzichantb> currentPageData;
+    private List<GudingzichanAll> currentPageData;
 
-    private final BindTableHelper<Gudingzichantb> bindTable;
+    private final BindTableHelper<GudingzichanAll> bindTable;
 
     /**
      * Creates new form YiMiaoJDialog
@@ -51,9 +50,9 @@ public class GuDingZiChanPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 20;
         count = 0;
-        bindTable = new BindTableHelper<Gudingzichantb>(jTable1, new ArrayList<Gudingzichantb>());
+        bindTable = new BindTableHelper<GudingzichanAll>(jTable1, new ArrayList<GudingzichanAll>());
         bindTable.createTable(new String[][]{{"gdzcId", "固定资产编号"}, {"gdzcName", "固定资产名称"}, {"gdzcType", "资产类型"}, {"gdzcGuige", "规格"},
-        {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"unitId", "库存上限"}, {"unitId", "库存下限"}, {"gdzcSequence", "条形码"}});
+        {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"kucunshangxian", "库存上限"}, {"kucunxiaxian", "库存下限"}, {"gdzcSequence", "条形码"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
     }
@@ -394,7 +393,7 @@ public class GuDingZiChanPanel extends BasePanel {
                     guDingZhiChanInfoJDialog = new GuDingZiChanInfoJDialog(GuDingZiChanPanel.this);
                     guDingZhiChanInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                guDingZhiChanInfoJDialog.setUpdatedData(new Gudingzichantb());
+                guDingZhiChanInfoJDialog.setUpdatedData(new GudingzichanAll());
                 AssetClientApp.getApplication().show(guDingZhiChanInfoJDialog);
             }
         });
@@ -425,16 +424,16 @@ public class GuDingZiChanPanel extends BasePanel {
     
     @Action
     public Task delete() {
-        Gudingzichantb selectedData = selectedDataFromTable();
+        GudingzichanAll selectedData = selectedDataFromTable();
         if (selectedData == null) {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
         int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getGdzcName());
         if (result == JOptionPane.OK_OPTION) {
-            return new CommUpdateTask<Gudingzichantb>(selectedData, "gdzc/delete/" + selectedData.getGdzcId()) {
+            return new CommUpdateTask<GudingzichanAll>(selectedData, "gdzc/delete/" + selectedData.getGdzcId()) {
                 @Override
-                public void responseResult(ComResponse<Gudingzichantb> response) {
+                public void responseResult(ComResponse<GudingzichanAll> response) {
                     if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                         reload().execute();
                     } else {
@@ -492,11 +491,11 @@ public class GuDingZiChanPanel extends BasePanel {
         new RefreshTask(pageIndex, pageSize).execute();
     }
 
-    public List<Gudingzichantb> getTableData() {
+    public List<GudingzichanAll> getTableData() {
         return currentPageData;
     }
 
-    public Gudingzichantb selectedDataFromTable() {
+    public GudingzichanAll selectedDataFromTable() {
         if (jTable1.getSelectedRow() >= 0) {
             if (currentPageData != null) {
                 return currentPageData.get(jTable1.getSelectedRow());
