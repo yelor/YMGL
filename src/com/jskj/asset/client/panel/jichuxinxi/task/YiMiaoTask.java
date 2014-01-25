@@ -24,16 +24,17 @@ import org.springframework.web.client.RestTemplate;
 public class YiMiaoTask extends BaseTask {
     private static final Logger logger = Logger.getLogger(YiMiaoTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "yimiao";
-    public static final int pageSize = 10;
-    private int pageIndex = 1;
+    private int pageSize;
+    private int pageIndex;
 
     public YiMiaoTask() {
-        this(1);
+        this(0,20);
     }
 
-    public YiMiaoTask(int pageIndex) {
+    public YiMiaoTask(int pageIndex,int pageSize) {
         super();
         this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
     }
     
     

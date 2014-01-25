@@ -13,7 +13,7 @@ import java.util.List;
 public class YiMiaotbFindEntity {
     private int count;
     
-    private  List<YiMiaotb> result;
+    private  List<YimiaoAll> result;
 
     public int getCount() {
         return count;
@@ -23,11 +23,11 @@ public class YiMiaotbFindEntity {
         this.count = count;
     }
 
-    public List<YiMiaotb> getResult() {
+    public List<YimiaoAll> getResult() {
         return result;
     }
 
-    public void setResult(List<YiMiaotb> result) {
+    public void setResult(List<YimiaoAll> result) {
         this.result = result;
     }
     

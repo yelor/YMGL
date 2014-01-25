@@ -1,5 +1,8 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class YiMiaotb {
     private Integer yimiaoId;
 
@@ -15,7 +18,7 @@ public class YiMiaotb {
 
     private String yimiaoPizhunwenhao;
 
-    private Integer unitId;
+    private String unitId;
 
     private Float yimiaoYushoujia;
 
@@ -27,7 +30,7 @@ public class YiMiaotb {
 
     private Integer yimiaoStockdown;
 
-    private String yimiaoMorencangku;
+    private Integer yimiaoMorencangku;
 
     private Integer supplierId;
 
@@ -95,12 +98,12 @@ public class YiMiaotb {
         this.yimiaoPizhunwenhao = yimiaoPizhunwenhao == null ? null : yimiaoPizhunwenhao.trim();
     }
 
-    public Integer getUnitId() {
+    public String getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(Integer unitId) {
-        this.unitId = unitId;
+    public void setUnitId(String unitId) {
+        this.unitId = unitId == null ? null : unitId.trim();
     }
 
     public Float getYimiaoYushoujia() {
@@ -143,12 +146,12 @@ public class YiMiaotb {
         this.yimiaoStockdown = yimiaoStockdown;
     }
 
-    public String getYimiaoMorencangku() {
+    public Integer getYimiaoMorencangku() {
         return yimiaoMorencangku;
     }
 
-    public void setYimiaoMorencangku(String yimiaoMorencangku) {
-        this.yimiaoMorencangku = yimiaoMorencangku == null ? null : yimiaoMorencangku.trim();
+    public void setYimiaoMorencangku(Integer yimiaoMorencangku) {
+        this.yimiaoMorencangku = yimiaoMorencangku;
     }
 
     public Integer getSupplierId() {

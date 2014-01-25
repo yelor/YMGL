@@ -99,7 +99,7 @@ public abstract class BaseDialog extends JDialog {
                 if (ps.length == 1) {
                     Set<Field> fields = getClassAllFields(bean.getClass());
                     for (Field field : fields) {
-                        if (field.getName() == firstPara) {
+                        if (field.getName().equalsIgnoreCase(firstPara)) {
                             //Field field = bean.getClass().getField(firstPara);
                             Class[] paramClasses = new Class[1];
                             paramClasses[0] = field.getType();

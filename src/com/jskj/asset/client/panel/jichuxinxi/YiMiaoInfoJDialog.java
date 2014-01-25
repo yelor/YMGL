@@ -5,11 +5,26 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi;
 
-import com.jskj.asset.client.bean.entity.YiMiaotb;
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.YimiaoAll;
+import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
-import com.jskj.asset.client.panel.jichuxinxi.task.YiMiaoUpdateTask;
+import com.jskj.asset.client.layout.BaseFileChoose;
+import com.jskj.asset.client.layout.BaseListModel;
+import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.panel.FileTask;
+import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -19,18 +34,88 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class YiMiaoInfoJDialog extends BaseDialog {
-    
-    private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
-    private YiMiaoPanel yiMiaoJDialog;
-    private YiMiaotb yimiao;
-    private boolean isNew;
 
+    private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
+    private YimiaoAll appParam;
+    private BasePanel parentPanel;
     /**
      * Creates new form YiMiaoDengJi1JDialog
+     * @param parentPanel
      */
-    public YiMiaoInfoJDialog() {
+    public YiMiaoInfoJDialog(BasePanel parentPanel) {
         super();
         initComponents();
+        this.parentPanel = parentPanel;
+        setTitle("疫苗信息");
+        ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
+
+            @Override
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            @Override
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "cangku/";
+            }
+
+            @Override
+            public String getConditionSQL() {
+                String sql = "";
+                if (!depottb$depotName.getText().trim().equals("")) {
+                    sql = "depot_name like \"%" + depottb$depotName.getText() + "%\"";
+                }
+                return sql;
+            }
+
+            @Override
+            public String[][] displayColumns() {
+                return new String[][]{{"depotName", "仓库名"}, {"depotArea", "面积"}};
+            }
+
+            @Override
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    depottb$depotName.setText(bindedMap.get("depotName").toString());
+                    jTextFieldDepotID.setText(bindedMap.get("depotId").toString());
+                }
+            }
+        });
+
+        ((BaseTextField) suppliertb$supplierName).registerPopup(new IPopupBuilder() {
+
+            @Override
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            @Override
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "supplier/";
+            }
+
+            @Override
+            public String getConditionSQL() {
+                String sql = "";
+                if (!suppliertb$supplierName.getText().trim().equals("")) {
+                    sql = "supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"";
+                }
+                return sql;
+            }
+
+            @Override
+            public String[][] displayColumns() {
+                return new String[][]{{"supplierName", "供应商"}, {"supplierConstactperson", "联系人"}};
+            }
+
+            @Override
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    suppliertb$supplierName.setText(bindedMap.get("supplierName").toString());
+                    jTextFieldSupplier.setText(bindedMap.get("supplierId").toString());
+                }
+            }
+        });
     }
 
     /**
@@ -42,71 +127,71 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jTextFieldDepotID = new javax.swing.JTextField();
+        jTextFieldSupplier = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextFieldYiMiaoName = new javax.swing.JTextField();
-        jTextFieldYiMiaoId = new javax.swing.JTextField();
-        jTextFieldGuige = new javax.swing.JTextField();
+        yimiaoName = new javax.swing.JTextField();
+        yimiaoGuige = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jTextField18 = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        yimiaoYushoujia = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jComboBoxYiMiaoType = new javax.swing.JComboBox();
+        yimiaoType = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
-        jComboBoxYiMiaoJiXing = new javax.swing.JComboBox();
-        jComboBoxUnit = new javax.swing.JComboBox();
+        yimiaoJixing = new javax.swing.JComboBox();
+        unitId = new javax.swing.JComboBox();
         jLabel19 = new javax.swing.JLabel();
-        jTextFieldShengchanqiye = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        yimiaoShengchanqiye = new javax.swing.JTextField();
+        yimiaoPizhunwenhao = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        yimiaoPicture = new javax.swing.JList();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        yimiaoStockdown = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        yimiaoStockup = new javax.swing.JTextField();
+        depottb$depotName = new BaseTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        suppliertb$supplierName = new BaseTextField();
         jButton5 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        yimiaoRemark = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        yimiaoChufangbiaoji = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
+        yimiaoTiaoxingma = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jComboBoxFuzhuunit = new javax.swing.JComboBox();
+        yimiaoFuzhuunit = new javax.swing.JComboBox();
         jLabel13 = new javax.swing.JLabel();
-        jTextFieldHuansuanlv = new javax.swing.JTextField();
+        yimiaoHuansuanlv = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jCheckBoxCont = new javax.swing.JCheckBox();
+        jButton3 = new javax.swing.JButton();
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoInfoJDialog.class);
+        jTextFieldDepotID.setText(resourceMap.getString("jTextFieldDepotID.text")); // NOI18N
+        jTextFieldDepotID.setName("jTextFieldDepotID"); // NOI18N
+
+        jTextFieldSupplier.setText(resourceMap.getString("jTextFieldSupplier.text")); // NOI18N
+        jTextFieldSupplier.setName("jTextFieldSupplier"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoInfoJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setName("jPanel1"); // NOI18N
-
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel3.border.title"))); // NOI18N
         jPanel3.setName("jPanel3"); // NOI18N
-
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
 
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
@@ -117,27 +202,9 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
 
-        jTextFieldYiMiaoName.setName("jTextFieldYiMiaoName"); // NOI18N
-        jTextFieldYiMiaoName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldYiMiaoNameActionPerformed(evt);
-            }
-        });
+        yimiaoName.setName("yimiaoName"); // NOI18N
 
-        jTextFieldYiMiaoId.setText(resourceMap.getString("jTextFieldYiMiaoId.text")); // NOI18N
-        jTextFieldYiMiaoId.setName("jTextFieldYiMiaoId"); // NOI18N
-        jTextFieldYiMiaoId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldYiMiaoIdActionPerformed(evt);
-            }
-        });
-
-        jTextFieldGuige.setName("jTextFieldGuige"); // NOI18N
-        jTextFieldGuige.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldGuigeActionPerformed(evt);
-            }
-        });
+        yimiaoGuige.setName("yimiaoGuige"); // NOI18N
 
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
@@ -145,160 +212,130 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel18.setText(resourceMap.getString("jLabel18.text")); // NOI18N
         jLabel18.setName("jLabel18"); // NOI18N
 
-        jTextField18.setName("jTextField18"); // NOI18N
-        jTextField18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField18ActionPerformed(evt);
-            }
-        });
+        yimiaoYushoujia.setName("yimiaoYushoujia"); // NOI18N
 
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setName("jTextArea2"); // NOI18N
-        jScrollPane2.setViewportView(jTextArea2);
-
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoInfoJDialog.class, this);
+        jButton6.setAction(actionMap.get("deletePic")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setName("jButton6"); // NOI18N
 
+        jButton7.setAction(actionMap.get("uploadPic")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
 
-        jComboBoxYiMiaoType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ⅰ类疫苗", "Ⅱ类疫苗" }));
-        jComboBoxYiMiaoType.setName("jComboBoxYiMiaoType"); // NOI18N
+        yimiaoType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ⅰ类疫苗", "Ⅱ类疫苗" }));
+        yimiaoType.setName("yimiaoType"); // NOI18N
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
-        jComboBoxYiMiaoJiXing.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "液体剂型", "冻干剂型", "糖丸剂型" }));
-        jComboBoxYiMiaoJiXing.setName("jComboBoxYiMiaoJiXing"); // NOI18N
+        yimiaoJixing.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "液体剂型", "冻干剂型", "糖丸剂型" }));
+        yimiaoJixing.setName("yimiaoJixing"); // NOI18N
 
-        jComboBoxUnit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxUnit.setName("jComboBoxUnit"); // NOI18N
+        unitId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        unitId.setName("unitId"); // NOI18N
 
         jLabel19.setText(resourceMap.getString("jLabel19.text")); // NOI18N
         jLabel19.setName("jLabel19"); // NOI18N
 
-        jTextFieldShengchanqiye.setName("jTextFieldShengchanqiye"); // NOI18N
-        jTextFieldShengchanqiye.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldShengchanqiyeActionPerformed(evt);
-            }
-        });
+        yimiaoShengchanqiye.setName("yimiaoShengchanqiye"); // NOI18N
 
-        jTextField5.setName("jTextField5"); // NOI18N
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
+        yimiaoPizhunwenhao.setName("yimiaoPizhunwenhao"); // NOI18N
 
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
+
+        jButton1.setAction(actionMap.get("imagePreview")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        yimiaoPicture.setName("yimiaoPicture"); // NOI18N
+        jScrollPane3.setViewportView(yimiaoPicture);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldYiMiaoId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(yimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(yimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(yimiaoGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldYiMiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBoxYiMiaoJiXing, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel10))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(yimiaoShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                            .addComponent(yimiaoYushoujia))
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBoxUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton7)
+                            .addComponent(jButton6)
+                            .addComponent(jButton1)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBoxYiMiaoType, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(yimiaoType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jTextFieldYiMiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jComboBoxYiMiaoType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jComboBoxYiMiaoJiXing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel19)
-                                    .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jButton7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton6)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(jLabel7))
-                            .addComponent(jComboBoxUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(yimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(yimiaoType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextFieldYiMiaoId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(yimiaoGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel18)
-                                .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel14)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                            .addComponent(jLabel10)
+                            .addComponent(yimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18)
+                            .addComponent(yimiaoYushoujia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19)
+                            .addComponent(yimiaoShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton7)
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
@@ -307,29 +344,14 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
         jLabel15.setName("jLabel15"); // NOI18N
 
-        jTextField15.setName("jTextField15"); // NOI18N
-        jTextField15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField15ActionPerformed(evt);
-            }
-        });
+        yimiaoStockdown.setName("yimiaoStockdown"); // NOI18N
 
         jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
         jLabel16.setName("jLabel16"); // NOI18N
 
-        jTextField16.setName("jTextField16"); // NOI18N
-        jTextField16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField16ActionPerformed(evt);
-            }
-        });
+        yimiaoStockup.setName("yimiaoStockup"); // NOI18N
 
-        jTextField4.setName("jTextField4"); // NOI18N
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
+        depottb$depotName.setName("depottb$depotName"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
@@ -337,16 +359,9 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
 
-        jTextField9.setName("jTextField9"); // NOI18N
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
+        suppliertb$supplierName.setName("suppliertb$supplierName"); // NOI18N
 
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
-        jLabel5.setName("jLabel5"); // NOI18N
-
+        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
 
@@ -355,30 +370,20 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(2);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        yimiaoRemark.setColumns(20);
+        yimiaoRemark.setRows(2);
+        yimiaoRemark.setName("yimiaoRemark"); // NOI18N
+        jScrollPane1.setViewportView(yimiaoRemark);
 
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
-        jTextField6.setName("jTextField6"); // NOI18N
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
+        yimiaoChufangbiaoji.setName("yimiaoChufangbiaoji"); // NOI18N
 
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
-        jTextField17.setName("jTextField17"); // NOI18N
-        jTextField17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField17ActionPerformed(evt);
-            }
-        });
+        yimiaoTiaoxingma.setName("yimiaoTiaoxingma"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -387,79 +392,61 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(47, 47, 47)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(depottb$depotName)
+                            .addComponent(suppliertb$supplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yimiaoChufangbiaoji, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel17)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yimiaoTiaoxingma))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yimiaoStockdown, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel16)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane1))
-                .addGap(57, 57, 57)
-                .addComponent(jLabel5)
-                .addGap(29, 29, 29)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yimiaoStockup, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jButton5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(depottb$depotName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel15)
+                    .addComponent(yimiaoStockdown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(yimiaoStockup, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suppliertb$supplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel6)
+                    .addComponent(yimiaoChufangbiaoji, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
+                    .addComponent(yimiaoTiaoxingma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel5.border.title"))); // NOI18N
@@ -468,17 +455,13 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
         jLabel12.setName("jLabel12"); // NOI18N
 
-        jComboBoxFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxFuzhuunit.setName("jComboBoxFuzhuunit"); // NOI18N
+        yimiaoFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yimiaoFuzhuunit.setName("yimiaoFuzhuunit"); // NOI18N
 
         jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
         jLabel13.setName("jLabel13"); // NOI18N
 
-        jTextFieldHuansuanlv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldHuansuanlvActionPerformed(evt);
-            }
-        });
+        yimiaoHuansuanlv.setName("yimiaoHuansuanlv"); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -488,11 +471,11 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBoxFuzhuunit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(yimiaoFuzhuunit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13)
                 .addGap(18, 18, 18)
-                .addComponent(jTextFieldHuansuanlv, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(yimiaoHuansuanlv, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -501,148 +484,82 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jComboBoxFuzhuunit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yimiaoFuzhuunit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextFieldHuansuanlv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yimiaoHuansuanlv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel3.getAccessibleContext().setAccessibleName(resourceMap.getString("jPanel3.AccessibleContext.accessibleName")); // NOI18N
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setName("jPanel2"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoInfoJDialog.class, this);
+        jButton4.setAction(actionMap.get("close")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setName("jButton4"); // NOI18N
+
+        jCheckBoxCont.setText(resourceMap.getString("jCheckBoxCont.text")); // NOI18N
+        jCheckBoxCont.setName("jCheckBoxCont"); // NOI18N
+
         jButton3.setAction(actionMap.get("submitForm")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
-
-        jButton4.setAction(actionMap.get("exit")); // NOI18N
-        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setName("jButton4"); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jCheckBoxCont)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 634, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jCheckBoxCont)
+                .addComponent(jButton3)
+                .addComponent(jButton4))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(2, 2, 2))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
+        jPanel3.getAccessibleContext().setAccessibleName(resourceMap.getString("jPanel3.AccessibleContext.accessibleName")); // NOI18N
+
         getAccessibleContext().setAccessibleName(resourceMap.getString("Form.AccessibleContext.accessibleName")); // NOI18N
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextFieldYiMiaoIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYiMiaoIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldYiMiaoIdActionPerformed
-
-    private void jTextFieldYiMiaoNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYiMiaoNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldYiMiaoNameActionPerformed
-
-    private void jTextFieldGuigeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldGuigeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldGuigeActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
-
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void jTextField15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
-
-    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField16ActionPerformed
-
-    private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField18ActionPerformed
-
-    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField17ActionPerformed
-
-    private void jTextFieldHuansuanlvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHuansuanlvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldHuansuanlvActionPerformed
-
-    private void jTextFieldShengchanqiyeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldShengchanqiyeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldShengchanqiyeActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -686,88 +603,242 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         });
     }
 
-    public void setAddOrUpdate(boolean b) {
-        isNew = b;
-        if (isNew) {
-            this.setTitle("新建单位");
-            yimiao = new YiMiaotb();
-        } else {
-            this.setTitle("修改单位");
-        }
-    }
-
-    public void setUpdatedData(YiMiaotb yimiao) {
-        if (yimiao == null) {
+    public void setUpdatedData(YimiaoAll paramData) {
+        this.appParam = paramData;
+        if (paramData == null) {
             return;
         }
-        this.yimiao = yimiao;
-        jTextFieldYiMiaoId.setText((yimiao.getYimiaoId()).toString());
-        jTextFieldYiMiaoName.setText(yimiao.getYimiaoName());
-        jTextFieldShengchanqiye.setText(yimiao.getYimiaoShengchanqiye());
-        jTextFieldGuige.setText(yimiao.getYimiaoGuige());
+
+        yimiaoPicture.setModel(new BaseListModel<String>(new ArrayList(), ""));
+        jTextFieldDepotID.setText("");
+        jTextFieldSupplier.setText("");
+        //自动帮定所有的值
+        super.bind(paramData, jPanel3);
+        super.bind(paramData, jPanel4);
+        super.bind(paramData, jPanel5);
+
+        if (appParam.getYimiaoId() == null || appParam.getYimiaoId() <= 0) { //新建
+            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("疫苗信息")); // NOI18N
+            //jCheckBox2.setSelected(false);
+            jCheckBoxCont.setEnabled(true);
+        } else {//更新
+            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("更新疫苗:" + appParam.getYimiaoId())); // NOI18N
+            jCheckBoxCont.setSelected(false);
+            jCheckBoxCont.setEnabled(false);
+
+            if (appParam.getSupplierId() != null) {
+                int supplierId = appParam.getSupplierId();
+                if (supplierId > 0) {
+                    jTextFieldSupplier.setText(String.valueOf(supplierId));
+                }
+            }
+            if (appParam.getYimiaoId() != null) {
+                int deportId = appParam.getYimiaoId();
+                if (deportId > 0) {
+                    jTextFieldDepotID.setText(String.valueOf(deportId));
+                }
+            }
+
+            String imagePaths = paramData.getYimiaoPicture();
+            if (imagePaths != null && !imagePaths.trim().equals("")) {
+                BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+                List source = mode.getSource();
+                String[] images = imagePaths.split(";");
+                for (String m : images) {
+                    source.add(m);
+                }
+                BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+                yimiaoPicture.setModel(newMode);
+            }
+        }
+
     }
 
     @Action
     public Task submitForm() {
-        if (jTextFieldYiMiaoName.getText().trim().equals("")) {
+        if (yimiaoName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗名称!");
             return null;
-        }else if (jTextFieldGuige.getText().trim().equals("")) {
+        } else if (yimiaoGuige.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗规格!");
             return null;
-        }else if (jTextFieldShengchanqiye.getText().trim().equals("")) {
+        } else if (yimiaoShengchanqiye.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入生产企业!");
             return null;
-        }else if (jComboBoxYiMiaoJiXing.getSelectedItem().toString().trim().equals("")) {
+        } else if (yimiaoJixing.getSelectedItem().toString().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗剂型!");
             return null;
         }
-        yimiao.setYimiaoName(jTextFieldYiMiaoName.getText());
-        yimiao.setYimiaoType((jComboBoxYiMiaoType.getSelectedItem()).toString());
-        yimiao.setYimiaoJixing((jComboBoxYiMiaoJiXing.getSelectedItem()).toString());
-        yimiao.setUnitId(jComboBoxUnit.getSelectedIndex());
-        yimiao.setYimiaoShengchanqiye(jTextFieldShengchanqiye.getText());
-        yimiao.setYimiaoGuige(jTextFieldGuige.getText());
-        yimiao.setYimiaoFuzhuunit(jComboBoxFuzhuunit.getSelectedItem().toString());
-        yimiao.setYimiaoHuansuanlv(100);
+       
+        super.copyToBean(appParam, jPanel3);
+        super.copyToBean(appParam, jPanel4);
+        super.copyToBean(appParam, jPanel5);
 
-        return new SubmitFormTask(yimiao);
+        String depotId = jTextFieldDepotID.getText();
+        String supplierId = jTextFieldSupplier.getText();
+
+        if (!depotId.trim().equals("")) {
+            appParam.setYimiaoMorencangku(Integer.parseInt(depotId));
+        }
+        if (!supplierId.trim().equals("")) {
+            appParam.setSupplierId(Integer.parseInt(supplierId));
+        }
+        
+        /*得到图片路径*/
+        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+        List source = mode.getSource();
+        String imgPaths = "";
+        for (int i = 0; i < source.size(); i++) {
+            if (i == (source.size() - 1)) {
+                imgPaths += source.get(i).toString();
+            } else {
+                imgPaths += source.get(i) + ";";
+            }
+        }
+        appParam.setYimiaoPicture(imgPaths);
+
+        String serviceId = "yimiao/add";
+        if (appParam.getYimiaoId() != null && appParam.getYimiaoId() > 0) {
+            serviceId = "yimiao/update";
+        }
+        
+        return  new CommUpdateTask<YimiaoAll>(appParam, serviceId) {
+            @Override
+            public void responseResult(ComResponse<YimiaoAll> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    parentPanel.reload().execute();
+                    if (!jCheckBoxCont.isSelected()) {
+                        dispose();
+                    } else {
+                        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+                        List<String> source = mode.getSource();
+                        source.clear();
+                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+                        yimiaoPicture.setModel(newMode);
+                    }
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoInfoJDialog.this);
+                }
+            }
+
+        };
+    }
+    
+    @Action
+    public Task uploadPic() {
+        BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
+        String selectedPath = fileChoose.openDialog();
+        if (!selectedPath.trim().equals("")) {
+            addObjectToList("uploading...");
+            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "yimiao") {
+                @Override
+                public void responseResult(String file) {
+                    removeObjectFromList("uploading...");
+                    BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+                    List source = mode.getSource();
+                    if (source.contains(file)) {
+                        return;
+                    }
+                    source.add(file);
+                    BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+                    yimiaoPicture.setModel(newMode);
+                }
+            };
+        }
+        return null;
+    }
+
+    private void addObjectToList(String name) {
+
+        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+        List source = mode.getSource();
+        if (source.contains(name)) {
+            return;
+        }
+        source.add(name);
+        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+        yimiaoPicture.setModel(newMode);
+    }
+
+    private void removeObjectFromList(String name) {
+        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+        List<String> source = mode.getSource();
+        source.remove(name);
+        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+        yimiaoPicture.setModel(newMode);
     }
 
     @Action
-    public void exit() {
+    public Task deletePic() {
+        Object selectedValue = yimiaoPicture.getSelectedValue();
+        if (selectedValue == null) {
+            return null;
+        }
+        removeObjectFromList(selectedValue.toString());
+        if (!selectedValue.toString().equals("")) {
+            return new FileTask(FileTask.TYPE_DELETE, selectedValue.toString(), "yimiao") {
+                @Override
+                public void responseResult(String file) {
+                }
+            };
+        }
+        return null;
+    }
+
+   
+    @Action
+    public void close() {
         this.dispose();
-    }
 
-    private class SubmitFormTask extends YiMiaoUpdateTask {
-
-        SubmitFormTask(YiMiaotb yimiao) {
-            super(yimiao, isNew ? YiMiaoUpdateTask.ENTITY_SAVE : YiMiaoUpdateTask.ENTITY_UPDATE);
-        }
-
-        @Override
-        public void onSucceeded(Object result) {
-            if (result instanceof Exception) {
-                Exception e = (Exception) result;
-                AssetMessage.ERRORSYS(e.getMessage());
-                logger.error(e);
-                return;
+        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+        List<String> source = mode.getSource();
+        if (source.size() > 0) {
+            for (int i = 0; i < source.size(); i++) {
+                if (!source.get(i).equals("")) {
+                    FileTask task = new FileTask(FileTask.TYPE_DELETE, source.get(i), "yimiao") {
+                        @Override
+                        public void responseResult(String file) {
+                            removeObjectFromList(file);
+                        }
+                    };
+                    task.execute();
+                }
             }
-            exit();
         }
     }
+
+    @Action
+    public Task imagePreview() {
+        final Object obj = yimiaoPicture.getSelectedValue();
+        if (obj != null) {
+            return new FileTask(FileTask.TYPE_DOWNLOAD, obj.toString(), "yimiao") {
+                @Override
+                public void responseResult(final String file) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                            ImagePreview imagePreview = new ImagePreview(file, true);
+                            imagePreview.setLocationRelativeTo(mainFrame);
+                            AssetClientApp.getApplication().show(imagePreview);
+                        }
+                    });
+                }
+            };
+        }
+        return null;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField depottb$depotName;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox jComboBoxFuzhuunit;
-    private javax.swing.JComboBox jComboBoxUnit;
-    private javax.swing.JComboBox jComboBoxYiMiaoJiXing;
-    private javax.swing.JComboBox jComboBoxYiMiaoType;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JCheckBox jCheckBoxCont;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -781,32 +852,34 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField9;
-    private javax.swing.JTextField jTextFieldGuige;
-    private javax.swing.JTextField jTextFieldHuansuanlv;
-    private javax.swing.JTextField jTextFieldShengchanqiye;
-    private javax.swing.JTextField jTextFieldYiMiaoId;
-    private javax.swing.JTextField jTextFieldYiMiaoName;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTextFieldDepotID;
+    private javax.swing.JTextField jTextFieldSupplier;
+    private javax.swing.JTextField suppliertb$supplierName;
+    private javax.swing.JComboBox unitId;
+    private javax.swing.JTextField yimiaoChufangbiaoji;
+    private javax.swing.JComboBox yimiaoFuzhuunit;
+    private javax.swing.JTextField yimiaoGuige;
+    private javax.swing.JTextField yimiaoHuansuanlv;
+    private javax.swing.JComboBox yimiaoJixing;
+    private javax.swing.JTextField yimiaoName;
+    private javax.swing.JList yimiaoPicture;
+    private javax.swing.JTextField yimiaoPizhunwenhao;
+    private javax.swing.JTextArea yimiaoRemark;
+    private javax.swing.JTextField yimiaoShengchanqiye;
+    private javax.swing.JTextField yimiaoStockdown;
+    private javax.swing.JTextField yimiaoStockup;
+    private javax.swing.JTextField yimiaoTiaoxingma;
+    private javax.swing.JComboBox yimiaoType;
+    private javax.swing.JTextField yimiaoYushoujia;
     // End of variables declaration//GEN-END:variables
 }
