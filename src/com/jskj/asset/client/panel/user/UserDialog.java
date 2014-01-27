@@ -511,10 +511,7 @@ public class UserDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("身份证号码有误，请检查.");
                 return null;
             }
-        } else {
-            AssetMessage.ERRORSYS("请输入身份证号码.");
-            return null;
-        }
+        } 
 
         Object selectObj = jListBumen.getSelectedValue();
         if (selectObj != null) {

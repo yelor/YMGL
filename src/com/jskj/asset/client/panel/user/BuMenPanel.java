@@ -99,9 +99,7 @@ public class BuMenPanel extends BasePanel {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableDp = new BaseTable(null);
@@ -157,16 +155,6 @@ public class BuMenPanel extends BasePanel {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jButton5.setAction(actionMap.get("print")); // NOI18N
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
-
         jButton3.setAction(actionMap.get("print")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
@@ -176,16 +164,6 @@ public class BuMenPanel extends BasePanel {
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
-
-        jButton2.setAction(actionMap.get("print")); // NOI18N
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-        jToolBar1.add(jButton2);
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -329,7 +307,7 @@ public class BuMenPanel extends BasePanel {
                     buMenInfoJDialog = new BuMenInfoJDialog(BuMenPanel.this);
                     buMenInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                buMenInfoJDialog.setAddOrUpdate(true);
+                buMenInfoJDialog.setUpdatedData(new DepartmenttbAll());
                 AssetClientApp.getApplication().show(buMenInfoJDialog);
             }
         });
@@ -350,7 +328,6 @@ public class BuMenPanel extends BasePanel {
                     buMenInfoJDialog = new BuMenInfoJDialog(BuMenPanel.this);
                     buMenInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                buMenInfoJDialog.setAddOrUpdate(false);
                 buMenInfoJDialog.setUpdatedData(selectedDps());
                 AssetClientApp.getApplication().show(buMenInfoJDialog);
             }
@@ -378,6 +355,7 @@ public class BuMenPanel extends BasePanel {
         }
         int result = AssetMessage.CONFIRM(this, "确定删除部门:" + dps.getDepartmentName());
         if (result == JOptionPane.OK_OPTION) {
+            /*注意删除也不用这种方式了，只需要用ComUpdateTask就可以了*/
             return new DeleteDpsTask(dps);
         }
         return null;
@@ -411,10 +389,8 @@ public class BuMenPanel extends BasePanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;

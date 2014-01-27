@@ -20,7 +20,7 @@ public class BuMenTask extends BaseTask {
 
     private static final Logger logger = Logger.getLogger(BuMenTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "dp";
-    public static final int pageSize = 10;
+    public static final int pageSize = 1000;
     private int pageIndex = 1;
 
     public BuMenTask(int pageIndex) {

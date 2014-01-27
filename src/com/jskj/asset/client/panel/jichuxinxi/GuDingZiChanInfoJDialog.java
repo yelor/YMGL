@@ -43,6 +43,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
+     *
      * @param parentPanel
      */
     public GuDingZiChanInfoJDialog(BasePanel parentPanel) {
@@ -143,13 +144,17 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
 
-            int supplierId = appParam.getSupplierId();
-            if (supplierId > 0) {
-                jTextFieldSupplier.setText(String.valueOf(supplierId));
+            if (appParam.getSupplierId() != null) {
+                int supplierId = appParam.getSupplierId();
+                if (supplierId > 0) {
+                    jTextFieldSupplier.setText(String.valueOf(supplierId));
+                }
             }
-            int deportId = appParam.getDeportId();
-            if (deportId > 0) {
-                jTextFieldDepotID.setText(String.valueOf(deportId));
+            if (appParam.getDeportId() != null) {
+                int deportId = appParam.getDeportId();
+                if (deportId > 0) {
+                    jTextFieldDepotID.setText(String.valueOf(deportId));
+                }
             }
 
             String imagePaths = paramData.getGdzcPhoto();

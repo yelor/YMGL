@@ -10,7 +10,9 @@ import com.jskj.asset.client.util.RightItem;
 import com.jskj.asset.client.util.RightMouseAdapter;
 import com.jskj.asset.client.util.UIRunnable;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
@@ -72,7 +74,7 @@ public class BaseTable extends JTable {
 
     private void _mouseClicked(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2) { //是双//击事件。
-            openCellPane();
+            // openCellPane();
         }
     }
 
@@ -115,7 +117,19 @@ public class BaseTable extends JTable {
             basePopup = new BasePopup(popBuilder) {
                 @Override
                 public void closePopup() {
+                    getCellEditor(selectedRow, columnPopupIndex).stopCellEditing();
                     hidePanel();
+
+                    //如果是最后一行，编辑后，增加新行
+                    if (table.getSelectedRow() == (table.getRowCount() - 1)) {
+                        AssetTableModel tableMode = (AssetTableModel) table.getModel();
+                        List newRow = new ArrayList();
+                        for (int i = 0; i < table.getColumnCount(); i++) {
+                            newRow.add("");
+                        }
+                        tableMode.getDataVector().add(newRow);
+                        table.updateUI();
+                    }
                 }
             };
             logger.debug("register popup for column:" + columnPopupIndex + ",row:" + selectedRow);
@@ -153,6 +167,8 @@ public class BaseTable extends JTable {
             int selectedColumn = getSelectedColumn();
             selectedRow = getSelectedRow();
 
+            Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
             int selectedColumnX = p.x;
             int selectedColumnY = p.y + (selectedRow + 1) * table.getRowHeight();
 
@@ -160,6 +176,17 @@ public class BaseTable extends JTable {
                 for (int i = 0; i < selectedColumn; i++) {
                     selectedColumnX += table.getColumnModel().getColumn(i).getWidth();
                 }
+            }
+
+            int popHeight = basePopup.getHeight();
+            int popWitdh = basePopup.getWidth();
+
+            if ((selectedColumnY + popHeight) > size.getHeight()) {
+                selectedColumnY = p.y - basePopup.getHeight();
+            }
+
+            if ((selectedColumnX + popWitdh) > size.getWidth()) {
+                selectedColumnX = p.x - basePopup.getWidth();
             }
 
             pop = PopupFactory.getSharedInstance().getPopup(table, basePopup, selectedColumnX, selectedColumnY);
@@ -199,17 +226,8 @@ public class BaseTable extends JTable {
 
                 logger.debug("ENTER for column:" + selectedColumn + ",row:" + selectedRow);
 
-                //如果是最后一行，编辑后，增加新行
-                if (table.getSelectedRow() == (table.getRowCount() - 1)) {
-                    AssetTableModel tableMode = (AssetTableModel) table.getModel();
-                    List newRow = new ArrayList();
-                    for (int i = 0; i < table.getColumnCount(); i++) {
-                        newRow.add("");
-                    }
-                    tableMode.getDataVector().add(newRow);
-                }
-
                 if (selectedColumn == columnPopupIndex) {
+
                     table.getCellEditor(selectedRow, selectedColumn).stopCellEditing();
 
                     if (isShow) {
@@ -228,11 +246,12 @@ public class BaseTable extends JTable {
             boolean toggle, boolean extend) {
         super.changeSelection(rowIndex, columnIndex, toggle, extend);
         super.editCellAt(rowIndex, columnIndex, null);
-        // System.out.println("changeSelection,rowIndex:" + rowIndex + ",columnIndex:" + columnIndex + ",toggle:" + toggle + ",extend" + extend);
+        //System.out.println("changeSelection,rowIndex:" + rowIndex + ",columnIndex:" + columnIndex + ",toggle:" + toggle + ",extend" + extend);
         if (singleEditRowTable != null && singleEditRowTable.hasRegister == true) {
             int selectedColumn = getSelectedColumn();
             int selectedRow = getSelectedRow();
             if (selectedColumn == singleEditRowTable.columnPopupIndex) {
+                //getCellEditor(selectedRow, selectedColumn).stopCellEditing();
                 singleEditRowTable.showPanel();
             } else {
                 singleEditRowTable.hidePanel();

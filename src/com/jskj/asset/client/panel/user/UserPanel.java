@@ -55,7 +55,7 @@ public final class UserPanel extends BasePanel {
         initComponents();
         userPanel = this;
         pageIndex = 1;
-        pageSize = 10;
+        pageSize = 20;
         count = 0;
         bindTable = new BindTableHelper<UsertbAll>(jTableUser, new ArrayList<UsertbAll>());
         bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"department.departmentName", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
@@ -66,7 +66,7 @@ public final class UserPanel extends BasePanel {
 
     @Action
     public Task reload() {
-        return new RefureTask(0, 10);
+        return new RefureTask(0, pageSize);
     }
 
     @Override

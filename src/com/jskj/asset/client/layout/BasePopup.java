@@ -47,13 +47,14 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
     public BasePopup(IPopupBuilder popBuilder) {
         initComponents();
         this.popBuilder = popBuilder;
+        this.setSize(299, 328);
 
         // setBorder(BorderFactory.createLineBorder(Color.blue));
         jPanelTop.setBackground(new Color(160, 185, 215));
         pageIndex = 1;
         pageSize = 10;
         count = 0;
-        key = "";
+        key = "     ";
         oldKey = "";
         bindTable = null;
         changeSupport = new PropertyChangeSupport(this);
@@ -120,12 +121,12 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
                 try {
                     //使用Spring3 RESTful client来获取http数据
                     RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-  
+
                     UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(popBuilder.getWebServiceURI())
                             .queryParam("pagesize", pageSize).queryParam("pageindex", pageIndex);
 
                     String sql = popBuilder.getConditionSQL();
-                    logger.debug("search condition Sql:"+sql);
+                    logger.debug("search condition Sql:" + sql);
                     if (sql != null && !sql.trim().equals("")) {
                         builder.queryParam("conditionSql", sql);
                     }
@@ -324,9 +325,9 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
 
     private void jTableResultMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResultMouseClicked
         if (bindTable != null) {
+            closePopup();
             HashMap map = bindTable.getSelectedBean();
             popBuilder.setBindedMap(map);
-            closePopup();
         }
     }//GEN-LAST:event_jTableResultMouseClicked
 
@@ -371,6 +372,10 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         logger.debug("new value:" + key + ",old value:" + oldKey);
         changeSupport.firePropertyChange(new PropertyChangeEvent(this, "KEY_CHANGE", oldKey, key));
     }
-    
+
+    public String getKey() {
+        return key;
+    }
+
     public abstract void closePopup();
 }

@@ -155,7 +155,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         
         int popHeight = basePopup.getHeight();
         int popWitdh = basePopup.getWidth();
-        
+     
         if((selectedY+popHeight)>size.getHeight()){
            selectedY = p.y-basePopup.getHeight();
         }
