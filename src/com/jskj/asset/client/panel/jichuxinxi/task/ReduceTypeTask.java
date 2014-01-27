@@ -22,16 +22,17 @@ import org.springframework.web.client.RestTemplate;
 public class ReduceTypeTask extends BaseTask {
     private static final Logger logger = Logger.getLogger(ReduceTypeTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "reduceType";
-    public static final int pageSize = 10;
-    private int pageIndex = 1;
+    private int pageSize;
+    private int pageIndex;
 
     public ReduceTypeTask() {
-        this(1);
+        this(1,20);
     }
 
-    public ReduceTypeTask(int pageIndex) {
+    public ReduceTypeTask(int pageIndex,int pageSize) {
         super();
         this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
     }
     
     

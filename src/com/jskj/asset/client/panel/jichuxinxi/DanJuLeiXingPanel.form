@@ -20,7 +20,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="ctrlPane" alignment="0" max="32767" attributes="0"/>
-          <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -28,7 +28,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="ctrlPane" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="390" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="333" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,28 +43,25 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jToolBar1" pref="542" max="32767" attributes="0"/>
+                  <Component id="jToolBar1" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabelTotal" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="jLabelTotal" min="-2" pref="81" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jToolBar3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jToolBar2" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jToolBar3" alignment="0" max="32767" attributes="0"/>
+              <Component id="jToolBar1" pref="0" max="32767" attributes="0"/>
+              <Component id="jToolBar2" pref="38" max="32767" attributes="0"/>
               <Component id="jLabelTotal" alignment="0" max="32767" attributes="0"/>
-              <Component id="jToolBar1" alignment="0" pref="41" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JToolBar" name="jToolBar1">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
-            </Property>
             <Property name="floatable" type="boolean" value="false"/>
             <Property name="rollover" type="boolean" value="true"/>
             <Property name="borderPainted" type="boolean" value="false"/>
@@ -74,98 +71,27 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton6">
+            <Component class="javax.swing.JButton" name="jButtonAdd">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiJDialog" id="addKeHuDanWei" methodName="addKeHuDanWei"/>
+                  <action class="com.jskj.asset.client.panel.user.ParamPanel" id="add" methodName="add"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton6.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jButtonAdd.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButtonAdd.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
-                <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton7">
-              <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiJDialog" id="updateKehudanwei" methodName="updateKehudanwei"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="4"/>
-                <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton8">
-              <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiJDialog" id="deleteKehudanwei" methodName="deleteKehudanwei"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton8.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="4"/>
-                <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton4">
-              <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel" id="reload" methodName="reload"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton4.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="4"/>
-                <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
-              <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel" id="print" methodName="print"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="4"/>
-                <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jButtonAdd" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.user.ParamPanel" id="update" methodName="update"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -173,25 +99,68 @@
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JButton" name="jButton2">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.user.ParamPanel" id="delete" methodName="delete"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="jButton2.toolTipText"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
+                <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonReload">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="reload" methodName="reload"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jButtonReload.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButtonReload.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
+                <Property name="name" type="java.lang.String" value="jButtonReload" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonPrint">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="print" methodName="print"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="jButtonPrint.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButtonPrint.text"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
+                <Property name="name" type="java.lang.String" value="jButtonPrint" noResource="true"/>
+                <Property name="opaque" type="boolean" value="false"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JToolBar" name="jToolBar3">
+        <Container class="javax.swing.JToolBar" name="jToolBar2">
           <Properties>
             <Property name="floatable" type="boolean" value="false"/>
             <Property name="rollover" type="boolean" value="true"/>
             <Property name="borderPainted" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="jToolBar3" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jToolBar2" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton18">
+            <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel" id="pagePrev" methodName="pagePrev"/>
+                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="pagePrev" methodName="pagePrev"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="jButton18.text"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -201,7 +170,7 @@
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 25]"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="jButton18" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 25]"/>
@@ -209,12 +178,12 @@
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton19">
+            <Component class="javax.swing.JButton" name="jButton4">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.GongYingDanWeiPanel" id="pageNext" methodName="pageNext"/>
+                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="pageNext" methodName="pageNext"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="jButton19.text"/>
+                <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -224,7 +193,7 @@
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 25]"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="jButton19" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 25]"/>
@@ -236,16 +205,15 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabelTotal">
           <Properties>
-            <Property name="foreground" type="java.awt.Color" resourceKey="jLabelTotal.foreground"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jLabelTotal" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
-        <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
       </Properties>
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -253,55 +221,24 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTableKehudanwei">
+        <Component class="javax.swing.JTable" name="jTableDanjuleixing">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="0" rowCount="40"/>
+              <Table columnCount="0" rowCount="4"/>
             </Property>
+            <Property name="autoResizeMode" type="int" value="0"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="true">
-                  <Title resourceKey="jTableKehudanwei.columnModel.title0"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="true">
-                  <Title resourceKey="jTableKehudanwei.columnModel.title1"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title5"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title2"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title3"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title6"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title resourceKey="jTable1.columnModel.title4"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
+              <TableColumnModel selectionModel="0"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="jTableKehudanwei" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jTableDanjuleixing" noResource="true"/>
+            <Property name="showVerticalLines" type="boolean" value="false"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTable(null)"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

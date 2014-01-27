@@ -22,16 +22,17 @@ import org.springframework.web.client.RestTemplate;
 public class SupplierTask extends BaseTask {
     private static final Logger logger = Logger.getLogger(SupplierTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "supplier";
-    public static final int pageSize = 10;
+    private int pageSize = 10;
     private int pageIndex = 1;
 
     public SupplierTask() {
-        this(1);
+        this(1,20);
     }
 
-    public SupplierTask(int pageIndex) {
+    public SupplierTask(int pageIndex,int pageSize) {
         super();
         this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
     }
     
     
@@ -43,7 +44,6 @@ public class SupplierTask extends BaseTask {
             //使用Spring3 RESTful client来获取http数据
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             SupplierFindEntity suppliers = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, SupplierFindEntity.class);
-            System.out.println("supplier");
             return suppliers;
         } catch (RestClientException e) {
             logger.error(e);

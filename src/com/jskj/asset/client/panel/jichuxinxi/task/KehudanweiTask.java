@@ -22,16 +22,17 @@ import org.springframework.web.client.RestTemplate;
 public class KehudanweiTask extends BaseTask {
     private static final Logger logger = Logger.getLogger(KehudanweiTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "kehudanwei";
-    public static final int pageSize = 10;
+    private int pageSize = 20;
     private int pageIndex = 1;
 
     public KehudanweiTask() {
-        this(1);
+        this(1,20);
     }
 
-    public KehudanweiTask(int pageIndex) {
+    public KehudanweiTask(int pageIndex,int pageSize) {
         super();
         this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
     }
     
     

@@ -7,7 +7,10 @@ package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.bean.entity.Danjuleixingtb;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.panel.jichuxinxi.task.DanjuleixingUpdateTask;
+import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -16,19 +19,21 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
+public class DanJuLeiXingInfoJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(DanJuLeiXingInfoJDialog.class);
-    private DanJuLeiXingJDialog danJuLeiXingJDialog;
-    private Danjuleixingtb danjuleixing;
-    private boolean isNew;
+    private Danjuleixingtb paramData;
+    private final BasePanel parentPanel;
 
     /**
      * Creates new form DanWeiInfoJDialog
+     * @param parentPanel
      */
-    public DanJuLeiXingInfoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DanJuLeiXingInfoJDialog(BasePanel parentPanel) {
+        super();
         initComponents();
+        setTitle("单据类型");
+        this.parentPanel = parentPanel;
     }
 
     /**
@@ -41,13 +46,11 @@ public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldDanjuleixingId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldDanjuleixingName = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        danjuleixingName = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jCheckBoxCont = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DanJuLeiXingInfoJDialog.class);
@@ -55,23 +58,14 @@ public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
-
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        jTextFieldDanjuleixingId.setText(resourceMap.getString("jTextFieldDanjuleixingId.text")); // NOI18N
-        jTextFieldDanjuleixingId.setName("jTextFieldDanjuleixingId"); // NOI18N
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextFieldDanjuleixingName.setText(resourceMap.getString("jTextFieldDanjuleixingName.text")); // NOI18N
-        jTextFieldDanjuleixingName.setName("jTextFieldDanjuleixingName"); // NOI18N
-
-        jRadioButton1.setText(resourceMap.getString("jRadioButton1.text")); // NOI18N
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
+        danjuleixingName.setText(resourceMap.getString("danjuleixingName.text")); // NOI18N
+        danjuleixingName.setName("danjuleixingName"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(DanJuLeiXingInfoJDialog.class, this);
         jButton1.setAction(actionMap.get("exit")); // NOI18N
@@ -82,6 +76,9 @@ public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
+        jCheckBoxCont.setText(resourceMap.getString("jCheckBoxCont.text")); // NOI18N
+        jCheckBoxCont.setName("jCheckBoxCont"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -90,19 +87,15 @@ public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldDanjuleixingId))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldDanjuleixingName)))
+                        .addComponent(danjuleixingName))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jCheckBoxCont)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -110,18 +103,14 @@ public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldDanjuleixingId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldDanjuleixingName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addComponent(danjuleixingName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap())
+                    .addComponent(jButton2)
+                    .addComponent(jCheckBoxCont))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,49 +159,69 @@ public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(DanJuLeiXingInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                DanJuLeiXingInfoJDialog dialog = new DanJuLeiXingInfoJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                DanJuLeiXingInfoJDialog dialog = new DanJuLeiXingInfoJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
-    public void setAddOrUpdate(boolean b) {
-        isNew = b;
-        if (isNew) {
-            this.setTitle("新建单据类型");
-            danjuleixing = new Danjuleixingtb();
-        } else {
-            this.setTitle("修改单据类型");
-        }
-    }
 
-    public void setUpdatedData(Danjuleixingtb danjuleixing) {
-        if (danjuleixing == null) {
+    public void setUpdatedData(Danjuleixingtb paramData) {
+         this.paramData = paramData;
+        if (paramData == null) {
             return;
+        }  
+        //自动帮定所有的值
+        super.bind(paramData, jPanel1);
+ 
+         if (paramData.getDanjuleixingId() == null || paramData.getDanjuleixingId() <= 0) { //新建
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("单据类型")); // NOI18N
+            jCheckBoxCont.setEnabled(true);
+        } else {//更新
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新单据类型:" + paramData.getDanjuleixingId())); // NOI18N
+            jCheckBoxCont.setSelected(false);
+            jCheckBoxCont.setEnabled(false);
         }
-        this.danjuleixing = danjuleixing;
-        jTextFieldDanjuleixingId.setText((danjuleixing.getDanjuleixingId()).toString());
-        jTextFieldDanjuleixingName.setText(danjuleixing.getDanjuleixingName());
+        
     }
 
     @Action
     public Task submitForm() {
-        if (jTextFieldDanjuleixingName.getText().trim().equals("")) {
+        if (danjuleixingName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入单据类型名称!");
         }
-        danjuleixing.setDanjuleixingName(jTextFieldDanjuleixingName.getText());
 
-        return new SubmitFormTask(danjuleixing);
+        super.copyToBean(paramData, jPanel1);
+ 
+        String serviceId = "danjuleixing/add";
+        if (paramData.getDanjuleixingId() != null && paramData.getDanjuleixingId() > 0) {
+            serviceId = "danjuleixing/update";
+        }
+
+        return new CommUpdateTask<Danjuleixingtb>(paramData, serviceId) {
+            @Override
+            public void responseResult(ComResponse<Danjuleixingtb> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    parentPanel.reload().execute();
+                    if (!jCheckBoxCont.isSelected()) {
+                        dispose();
+                    } 
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), DanJuLeiXingInfoJDialog.this);
+                }
+            }
+
+        };
     }
 
     @Action
@@ -220,32 +229,12 @@ public class DanJuLeiXingInfoJDialog extends javax.swing.JDialog {
         this.dispose();
     }
 
-    private class SubmitFormTask extends DanjuleixingUpdateTask {
-
-        SubmitFormTask(Danjuleixingtb danjuleixing) {
-            super(danjuleixing, isNew ? DanjuleixingUpdateTask.ENTITY_SAVE : DanjuleixingUpdateTask.ENTITY_UPDATE);
-        }
-
-        @Override
-        public void onSucceeded(Object result) {
-            if (result instanceof Exception) {
-                Exception e = (Exception) result;
-                AssetMessage.ERRORSYS(e.getMessage());
-                logger.error(e);
-                return;
-            }
-            exit();
-        }
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField danjuleixingName;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JCheckBox jCheckBoxCont;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JTextField jTextFieldDanjuleixingId;
-    private javax.swing.JTextField jTextFieldDanjuleixingName;
     // End of variables declaration//GEN-END:variables
 }

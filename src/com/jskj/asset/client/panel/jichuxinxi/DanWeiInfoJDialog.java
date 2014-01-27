@@ -5,9 +5,12 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi;
 
-import com.jskj.asset.client.panel.jichuxinxi.task.UnitUpdateTask;
 import com.jskj.asset.client.bean.entity.Unit;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -16,20 +19,22 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class DanWeiInfoJDialog extends javax.swing.JDialog {
+public class DanWeiInfoJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
-    private DanWeiJDialog danWeiJDialog;
-    private Unit unit;
-    private boolean isNew;
+    private Unit paramData;
+    private final BasePanel parentPanel;
 
     /**
      * Creates new form DanWeiInfoJDialog
+     *
+     * @param parentPanel
      */
-    public DanWeiInfoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public DanWeiInfoJDialog(BasePanel parentPanel) {
+        super();
         initComponents();
-        isNew = true;
+        setTitle("单位");
+        this.parentPanel = parentPanel;
     }
 
     /**
@@ -42,13 +47,11 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldUnitId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldUnitName = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        unitName = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jCheckBoxCont = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DanWeiInfoJDialog.class);
@@ -56,24 +59,14 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
-
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        jTextFieldUnitId.setEditable(false);
-        jTextFieldUnitId.setText(resourceMap.getString("jTextFieldUnitId.text")); // NOI18N
-        jTextFieldUnitId.setName("jTextFieldUnitId"); // NOI18N
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextFieldUnitName.setText(resourceMap.getString("jTextFieldUnitName.text")); // NOI18N
-        jTextFieldUnitName.setName("jTextFieldUnitName"); // NOI18N
-
-        jRadioButton1.setText(resourceMap.getString("jRadioButton1.text")); // NOI18N
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
+        unitName.setText(resourceMap.getString("unitName.text")); // NOI18N
+        unitName.setName("unitName"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(DanWeiInfoJDialog.class, this);
         jButton1.setAction(actionMap.get("exit")); // NOI18N
@@ -84,6 +77,9 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
+        jCheckBoxCont.setText(resourceMap.getString("jCheckBoxCont.text")); // NOI18N
+        jCheckBoxCont.setName("jCheckBoxCont"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -92,19 +88,15 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldUnitId))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldUnitName)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(unitName))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jCheckBoxCont)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,18 +104,14 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldUnitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldUnitName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addComponent(unitName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
+                    .addComponent(jButton2)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap())
+                    .addComponent(jCheckBoxCont))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,105 +138,100 @@ public class DanWeiInfoJDialog extends javax.swing.JDialog {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                DanWeiInfoJDialog dialog = new DanWeiInfoJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(DanWeiInfoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                DanWeiInfoJDialog dialog = new DanWeiInfoJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JCheckBox jCheckBoxCont;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JTextField jTextFieldUnitId;
-    private javax.swing.JTextField jTextFieldUnitName;
+    private javax.swing.JTextField unitName;
     // End of variables declaration//GEN-END:variables
 
-   public void setAddOrUpdate(boolean b) {
-        isNew = b;
-        if (isNew) {
-            this.setTitle("新建单位");
-            unit = new Unit();
-        } else {
-            this.setTitle("修改单位");
-        }
-    }
-
-    public void setUpdatedData(Unit unit) {
-        if (unit == null) {
+    public void setUpdatedData(Unit paramData) {
+        this.paramData = paramData;
+        if (paramData == null) {
             return;
         }
-        this.unit = unit;
-        jTextFieldUnitId.setText((unit.getUnitId()).toString());
-        jTextFieldUnitName.setText(unit.getUnitName());
+        //自动帮定所有的值
+        super.bind(paramData, jPanel1);
+         if (paramData.getUnitId() == null || paramData.getUnitId() <= 0) { //新建
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("单位信息")); // NOI18N
+            jCheckBoxCont.setEnabled(true);
+        } else {//更新
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新单位:" + paramData.getUnitId())); // NOI18N
+            jCheckBoxCont.setSelected(false);
+            jCheckBoxCont.setEnabled(false);
+        }
     }
 
     @Action
     public Task submitForm() {
-        if (jTextFieldUnitName.getText().trim().equals("")) {
+        if (unitName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入单位名称!");
         }
-        unit.setUnitName(jTextFieldUnitName.getText());
+         super.copyToBean(paramData, jPanel1);
+ 
+        String serviceId = "unit/add";
+        if (paramData.getUnitId() != null && paramData.getUnitId() > 0) {
+            serviceId = "unit/update";
+        }
 
-        return new SubmitFormTask(unit);
+        return new CommUpdateTask<Unit>(paramData, serviceId) {
+            @Override
+            public void responseResult(ComResponse<Unit> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    parentPanel.reload().execute();
+                    if (!jCheckBoxCont.isSelected()) {
+                        dispose();
+                    } 
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), DanWeiInfoJDialog.this);
+                }
+            }
+
+        };
     }
 
     @Action
     public void exit() {
         this.dispose();
     }
-
-    private class SubmitFormTask extends UnitUpdateTask {
-
-        SubmitFormTask(Unit unit) {
-            super(unit, isNew ? UnitUpdateTask.ENTITY_SAVE : UnitUpdateTask.ENTITY_UPDATE);
-        }
-
-        @Override
-        public void onSucceeded(Object result) {
-            if (result instanceof Exception) {
-                Exception e = (Exception) result;
-                AssetMessage.ERRORSYS(e.getMessage());
-                logger.error(e);
-                return;
-            }
-            exit();
-        }
-    }
-
 }

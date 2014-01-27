@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.panel.jichuxinxi;
+package com.jskj.asset.client.panel.jichuxinxi.task;
 
 import com.jskj.asset.client.panel.user.*;
 import com.jskj.asset.client.bean.entity.Appparam;

@@ -22,16 +22,17 @@ import org.springframework.web.client.RestTemplate;
 public class DanjuleixingTask extends BaseTask {
     private static final Logger logger = Logger.getLogger(DanjuleixingTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "danjuleixing";
-    public static final int pageSize = 10;
+    private int pageSize = 20;
     private int pageIndex = 1;
 
     public DanjuleixingTask() {
-        this(1);
+        this(1,20);
     }
 
-    public DanjuleixingTask(int pageIndex) {
+    public DanjuleixingTask(int pageIndex,int pageSize) {
         super();
         this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
     }
     
     

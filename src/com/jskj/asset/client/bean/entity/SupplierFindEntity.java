@@ -27,7 +27,7 @@ public class SupplierFindEntity extends Supplier{
         return result;
     }
 
-    public void setResult(List<Supplier> suppliers) {
+    public void setResult(List<Supplier> result) {
         this.result = result;
     }
     

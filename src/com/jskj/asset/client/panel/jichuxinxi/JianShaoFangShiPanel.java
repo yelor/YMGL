@@ -10,15 +10,15 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi;
 
-import com.jskj.asset.client.panel.jichuxinxi.task.CangkuFindTask;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.layout.ws.CommFindEntity;
-import com.jskj.asset.client.bean.entity.DepotALL;
+import com.jskj.asset.client.bean.entity.ReduceTypetb;
+import com.jskj.asset.client.bean.entity.ReduceTypetbFindEntity;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.panel.jichuxinxi.task.ReduceTypeTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,39 +33,38 @@ import org.jdesktop.application.Task;
  *
  * @author woderchen
  */
-public final class CangkuPanel extends BasePanel {
+public final class JianShaoFangShiPanel extends BasePanel {
 
-    private final static Logger logger = Logger.getLogger(CangkuPanel.class);
+    private final static Logger logger = Logger.getLogger(JianShaoFangShiPanel.class);
 
-    private CangkuDialog childDialog;
+    private JianShaoFangShiInfoJDialog childDialog;
     private int pageIndex;
     public int pageSize;
     private int count;
 
-    private List<DepotALL> currentPageData;
+    private List<ReduceTypetb> currentPageData;
 
-    private final BindTableHelper<DepotALL> bindTable;
+    private final BindTableHelper<ReduceTypetb> bindTable;
 
     /**
      * Creates new form NoFoundPane
      */
-    public CangkuPanel() {
+    public JianShaoFangShiPanel() {
         super();
         initComponents();
         pageIndex = 1;
-        pageSize = 10;
+        pageSize = 20;
         count = 0;
-        bindTable = new BindTableHelper<DepotALL>(jTableParam, new ArrayList<DepotALL>());
-        bindTable.createTable(new String[][]{{"depotId", "仓库ID"}, {"depotName", "仓库名"}, {"depotArea", "面积"}, {"usertb.userName", "负责人"},
-        {"depotAddr", "仓库地址"}});
+        bindTable = new BindTableHelper<ReduceTypetb>(jTableDanjuleixing, new ArrayList<ReduceTypetb>());
+        bindTable.createTable(new String[][]{{"reducetypeId", "编号"}, {"reducetypeName", "名称"}});
         bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 50}, new int[]{1, 200}, new int[]{2, 80}, new int[]{3, 150}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 300}).setRowHeight(30);
     }
 
     @Action
     @Override
     public Task reload() {
-        return new RefreshTask(0, 1000);
+        return new RefreshTask(0, pageSize);
     }
 
     @Override
@@ -73,23 +72,33 @@ public final class CangkuPanel extends BasePanel {
         return null;
     }
 
-    private class RefreshTask extends CangkuFindTask {
+    private class RefreshTask extends ReduceTypeTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize, "cangku/","");
+            super(pageIndex, pageSize);
         }
 
         @Override
-        public void responseResult(CommFindEntity<DepotALL> response) {
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            
+            ReduceTypetbFindEntity reduceTypetbs = (ReduceTypetbFindEntity) object;
 
-            count = response.getCount();
-            jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
-            logger.debug("total:" + count + ",get current size:" + response.getResult().size());
+            if (reduceTypetbs != null && reduceTypetbs.getReduceTypes().size() > 0) {
+                count = reduceTypetbs.getCount();
+                jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+                logger.debug("total:" + count + ",get reduceType size:" + reduceTypetbs.getReduceTypes().size());
 
-            //存下所有的数据
-            currentPageData = response.getResult();
-            bindTable.refreshData(currentPageData);
-
+                //存下所有的数据
+                currentPageData = reduceTypetbs.getReduceTypes();
+                bindTable.refreshData(currentPageData);
+            }
+            
         }
     }
 
@@ -114,7 +123,7 @@ public final class CangkuPanel extends BasePanel {
         jButton4 = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableParam = new BaseTable(null);
+        jTableDanjuleixing = new BaseTable(null);
 
         setName("Form"); // NOI18N
 
@@ -126,9 +135,9 @@ public final class CangkuPanel extends BasePanel {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(CangkuPanel.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JianShaoFangShiPanel.class, this);
         jButtonAdd.setAction(actionMap.get("add")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(CangkuPanel.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(JianShaoFangShiPanel.class);
         jButtonAdd.setIcon(resourceMap.getIcon("jButtonAdd.icon")); // NOI18N
         jButtonAdd.setText(resourceMap.getString("jButtonAdd.text")); // NOI18N
         jButtonAdd.setBorderPainted(false);
@@ -199,6 +208,7 @@ public final class CangkuPanel extends BasePanel {
         jToolBar2.add(jButton3);
 
         jButton4.setAction(actionMap.get("pageNext")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -233,7 +243,7 @@ public final class CangkuPanel extends BasePanel {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTableParam.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDanjuleixing.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -244,10 +254,10 @@ public final class CangkuPanel extends BasePanel {
 
             }
         ));
-        jTableParam.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        jTableParam.setName("jTableParam"); // NOI18N
-        jTableParam.setShowVerticalLines(false);
-        jScrollPane1.setViewportView(jTableParam);
+        jTableDanjuleixing.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTableDanjuleixing.setName("jTableDanjuleixing"); // NOI18N
+        jTableDanjuleixing.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(jTableDanjuleixing);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -272,10 +282,10 @@ public final class CangkuPanel extends BasePanel {
             public void run() {
                 if (childDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    childDialog = new CangkuDialog(CangkuPanel.this);
+                    childDialog = new JianShaoFangShiInfoJDialog(JianShaoFangShiPanel.this);
                     childDialog.setLocationRelativeTo(mainFrame);
                 }
-                childDialog.setUpdatedData(new DepotALL());
+                childDialog.setUpdatedData(new ReduceTypetb());
                 AssetClientApp.getApplication().show(childDialog);
             }
         });
@@ -287,14 +297,14 @@ public final class CangkuPanel extends BasePanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                DepotALL selectedData = selectedDataFromTable();
+                ReduceTypetb selectedData = selectedDataFromTable();
                 if (selectedData == null) {
                     AssetMessage.ERRORSYS("请选择一条数据!");
                     return;
                 }
                 if (childDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    childDialog = new CangkuDialog(CangkuPanel.this);
+                    childDialog = new JianShaoFangShiInfoJDialog(JianShaoFangShiPanel.this);
                     childDialog.setLocationRelativeTo(mainFrame);
                 }
                 childDialog.setUpdatedData(selectedData);
@@ -305,20 +315,20 @@ public final class CangkuPanel extends BasePanel {
 
     @Action
     public Task delete() {
-        DepotALL selectedData = selectedDataFromTable();
+        ReduceTypetb selectedData = selectedDataFromTable();
         if (selectedData == null) {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
-        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getDepotName()+"");
+        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getReducetypeName() + "");
         if (result == JOptionPane.OK_OPTION) {
-            return new CommUpdateTask<DepotALL>(selectedData, "cangku/delete/" + selectedData.getDepotId()) {
+            return new CommUpdateTask<ReduceTypetb>(selectedData, "reduceType/delete/" + selectedData.getReducetypeId()) {
                 @Override
-                public void responseResult(ComResponse<DepotALL> response) {
+                public void responseResult(ComResponse<ReduceTypetb> response) {
                     if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                         reload().execute();
                     } else {
-                        AssetMessage.ERROR(response.getErrorMessage(), CangkuPanel.this);
+                        AssetMessage.ERROR(response.getErrorMessage(), JianShaoFangShiPanel.this);
                     }
                 }
 
@@ -342,14 +352,14 @@ public final class CangkuPanel extends BasePanel {
         new RefreshTask(pageIndex, pageSize).execute();
     }
 
-    public List<DepotALL> getTableData() {
+    public List<ReduceTypetb> getTableData() {
         return currentPageData;
     }
 
-    public DepotALL selectedDataFromTable() {
-        if (jTableParam.getSelectedRow() >= 0) {
+    public ReduceTypetb selectedDataFromTable() {
+        if (jTableDanjuleixing.getSelectedRow() >= 0) {
             if (currentPageData != null) {
-                return currentPageData.get(jTableParam.getSelectedRow());
+                return currentPageData.get(jTableDanjuleixing.getSelectedRow());
             }
         }
         return null;
@@ -357,10 +367,19 @@ public final class CangkuPanel extends BasePanel {
 
     @Action
     public Task print() {
-        CangkuFindTask printData = new CangkuFindTask(0, count, "cangku/","") {
+        ReduceTypeTask printData = new ReduceTypeTask(0, count) {
             @Override
-            public void responseResult(CommFindEntity response) {
-                bindTable.createPrinter("仓库信息", response.getResult()).buildInBackgound().execute();
+            public void onSucceeded(Object object) {
+                if (object instanceof Exception) {
+                    Exception e = (Exception) object;
+                    AssetMessage.ERRORSYS(e.getMessage());
+                    logger.error(e);
+                    return;
+                }
+                ReduceTypetbFindEntity reduceTypetbs = (ReduceTypetbFindEntity) object;
+                if (reduceTypetbs != null && reduceTypetbs.getReduceTypes() != null && reduceTypetbs.getReduceTypes().size() > 0) {
+                    bindTable.createPrinter("减少方式", reduceTypetbs.getReduceTypes()).buildInBackgound().execute();
+                }
             }
         };
         return printData;
@@ -377,7 +396,7 @@ public final class CangkuPanel extends BasePanel {
     private javax.swing.JButton jButtonReload;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableParam;
+    private javax.swing.JTable jTableDanjuleixing;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables

@@ -6,15 +6,12 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.DizhiyihaopinAll;
 import com.jskj.asset.client.bean.entity.YiMiaotbFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
-import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
-import com.jskj.asset.client.panel.jichuxinxi.task.DizhiyihaopinFindTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.YiMiaoTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;

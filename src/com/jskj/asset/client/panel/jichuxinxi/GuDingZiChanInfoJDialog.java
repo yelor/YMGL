@@ -43,6 +43,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
+     * @param parentPanel
      */
     public GuDingZiChanInfoJDialog(BasePanel parentPanel) {
         super();

@@ -22,16 +22,17 @@ import org.springframework.web.client.RestTemplate;
 public class UnitTask extends BaseTask {
     private static final Logger logger = Logger.getLogger(UnitTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "unit";
-    public static final int pageSize = 10;
+    private int pageSize = 20;
     private int pageIndex = 1;
 
     public UnitTask() {
-        this(1);
+        this(1,20);
     }
 
-    public UnitTask(int pageIndex) {
+    public UnitTask(int pageIndex, int pageSize) {
         super();
         this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
     }
     
     

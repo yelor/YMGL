@@ -6,10 +6,13 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.GudingzichanAll;
 import com.jskj.asset.client.bean.entity.Supplier;
 import com.jskj.asset.client.bean.entity.SupplierFindEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.SupplierTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.SupplierUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
@@ -21,7 +24,6 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
-import org.jdesktop.beansbinding.BindingGroup;
 
 /**
  *
@@ -33,9 +35,9 @@ public class GongYingDanWeiPanel extends BasePanel {
     private int pageIndex;
     private int count;
     private List<Supplier> suppliers;
-    private final GongYingDanWeiPanel gongYingDanWeiJDialog;
     private GongYingDanWeiInfoJDialog gongYingDanWeiInfoJDialog;
     private final BindTableHelper<Supplier> bindTable;
+    private final int pageSize;
 
     /**
      * Creates new form YiMiaoJDialog
@@ -43,9 +45,9 @@ public class GongYingDanWeiPanel extends BasePanel {
     public GongYingDanWeiPanel() {
         super();
         initComponents();
-        gongYingDanWeiJDialog = this;
         pageIndex = 1;
         count = 0;
+        pageSize = 20;
 
         bindTable = new BindTableHelper<Supplier>(jTableSupplier, new ArrayList<Supplier>());
         bindTable.createTable(new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}, {"supplierPhone", "电话"}, {"supplierFax", "传真"}, {"supplierAddr", "单位地址"}, {"supplierRemark", "备注"}});
@@ -62,21 +64,62 @@ public class GongYingDanWeiPanel extends BasePanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ctrlPane = new javax.swing.JPanel();
+        jToolBar3 = new javax.swing.JToolBar();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
+        jLabelTotal = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableSupplier = new javax.swing.JTable();
 
         setName("Form"); // NOI18N
+
+        ctrlPane.setName("ctrlPane"); // NOI18N
+
+        jToolBar3.setFloatable(false);
+        jToolBar3.setRollover(true);
+        jToolBar3.setBorderPainted(false);
+        jToolBar3.setName("jToolBar3"); // NOI18N
+        jToolBar3.setOpaque(false);
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GongYingDanWeiPanel.class, this);
+        jButton18.setAction(actionMap.get("pagePrev")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GongYingDanWeiPanel.class);
+        jButton18.setText(resourceMap.getString("jButton18.text")); // NOI18N
+        jButton18.setBorderPainted(false);
+        jButton18.setFocusable(false);
+        jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton18.setMaximumSize(new java.awt.Dimension(60, 25));
+        jButton18.setMinimumSize(new java.awt.Dimension(60, 25));
+        jButton18.setName("jButton18"); // NOI18N
+        jButton18.setOpaque(false);
+        jButton18.setPreferredSize(new java.awt.Dimension(60, 25));
+        jButton18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(jButton18);
+
+        jButton19.setAction(actionMap.get("pageNext")); // NOI18N
+        jButton19.setText(resourceMap.getString("jButton19.text")); // NOI18N
+        jButton19.setBorderPainted(false);
+        jButton19.setFocusable(false);
+        jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton19.setMaximumSize(new java.awt.Dimension(60, 25));
+        jButton19.setMinimumSize(new java.awt.Dimension(60, 25));
+        jButton19.setName("jButton19"); // NOI18N
+        jButton19.setOpaque(false);
+        jButton19.setPreferredSize(new java.awt.Dimension(60, 25));
+        jButton19.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(jButton19);
+
+        jLabelTotal.setForeground(resourceMap.getColor("jLabelTotal.foreground")); // NOI18N
+        jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelTotal.setName("jLabelTotal"); // NOI18N
 
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
@@ -85,9 +128,7 @@ public class GongYingDanWeiPanel extends BasePanel {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GongYingDanWeiPanel.class, this);
         jButton6.setAction(actionMap.get("addGongYingDanWei")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GongYingDanWeiPanel.class);
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setBorder(null);
@@ -120,7 +161,7 @@ public class GongYingDanWeiPanel extends BasePanel {
         jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
-        jButton4.setAction(actionMap.get("refresh")); // NOI18N
+        jButton4.setAction(actionMap.get("reload")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorder(null);
@@ -131,16 +172,7 @@ public class GongYingDanWeiPanel extends BasePanel {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
-
+        jButton3.setAction(actionMap.get("print")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setBorder(null);
@@ -150,16 +182,6 @@ public class GongYingDanWeiPanel extends BasePanel {
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
-
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-        jToolBar1.add(jButton2);
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -171,18 +193,23 @@ public class GongYingDanWeiPanel extends BasePanel {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
-        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
-        jButton9.setBorder(null);
-        jButton9.setBorderPainted(false);
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton9.setName("jButton9"); // NOI18N
-        jButton9.setOpaque(false);
-        jToolBar1.add(jButton9);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setName("jPanel2"); // NOI18N
+        javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
+        ctrlPane.setLayout(ctrlPaneLayout);
+        ctrlPaneLayout.setHorizontalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ctrlPaneLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        ctrlPaneLayout.setVerticalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+        );
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -236,40 +263,19 @@ public class GongYingDanWeiPanel extends BasePanel {
         jTableSupplier.setName("jTableSupplier"); // NOI18N
         jScrollPane2.setViewportView(jTableSupplier);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -324,29 +330,30 @@ public class GongYingDanWeiPanel extends BasePanel {
             public void run() {
                 if (gongYingDanWeiInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    gongYingDanWeiInfoJDialog = new GongYingDanWeiInfoJDialog();
+                    gongYingDanWeiInfoJDialog = new GongYingDanWeiInfoJDialog(GongYingDanWeiPanel.this);
                     gongYingDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                gongYingDanWeiInfoJDialog.setAddOrUpdate(true);
+                gongYingDanWeiInfoJDialog.setUpdatedData(new Supplier());
                 AssetClientApp.getApplication().show(gongYingDanWeiInfoJDialog);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableSupplier;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar3;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -354,12 +361,9 @@ public class GongYingDanWeiPanel extends BasePanel {
         return null;
     }
 
-    private class RefureTask extends SupplierTask {
-
-        BindingGroup bindingGroup = new BindingGroup();
-
-        public RefureTask(int pageIndex) {
-            super(pageIndex);
+    private class RefreshTask extends SupplierTask {
+        public RefreshTask(int pageIndex, int pageSize) {
+            super(pageIndex, pageSize);
         }
 
         @Override
@@ -373,9 +377,11 @@ public class GongYingDanWeiPanel extends BasePanel {
 
             SupplierFindEntity suppliertbs = (SupplierFindEntity) object;
 
-            if (suppliertbs != null && suppliertbs.getResult()!=null&&suppliertbs.getResult().size() > 0) {
+            if (suppliertbs != null && suppliertbs.getResult() != null && suppliertbs.getResult().size() > 0) {
                 count = suppliertbs.getCount();
-//                jLabelTotal.setText(((pageIndex - 1) * SupplierTask.pageSize + 1) + "/" + count);
+
+                jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+
                 logger.debug("total:" + count + ",get supplier size:" + suppliertbs.getResult().size());
 
                 //存下所有的数据
@@ -389,14 +395,24 @@ public class GongYingDanWeiPanel extends BasePanel {
     }
 
     @Action
-    public void refresh() {
-        gongYingDanWeiJDialog.reload().execute();
+    @Override
+    public Task reload() {
+        return new RefreshTask(0, 20);
     }
 
     @Action
-    @Override
-    public Task reload() {
-        return new RefureTask(0);
+    public void pagePrev() {
+        pageIndex = pageIndex - 1;
+        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        new RefreshTask(pageIndex, pageSize).execute();
+    }
+
+    @Action
+    public void pageNext() {
+        if (pageSize * (pageIndex) <= count) {
+            pageIndex = pageIndex + 1;
+        }
+        new RefreshTask(pageIndex, pageSize).execute();
     }
 
     private Supplier selectedSupplier() {
@@ -422,11 +438,9 @@ public class GongYingDanWeiPanel extends BasePanel {
 
                 if (gongYingDanWeiInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    gongYingDanWeiInfoJDialog = new GongYingDanWeiInfoJDialog();
+                    gongYingDanWeiInfoJDialog = new GongYingDanWeiInfoJDialog(GongYingDanWeiPanel.this);
                     gongYingDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-
-                gongYingDanWeiInfoJDialog.setAddOrUpdate(false);
                 gongYingDanWeiInfoJDialog.setUpdatedData(supplier);
                 AssetClientApp.getApplication().show(gongYingDanWeiInfoJDialog);
             }
@@ -442,24 +456,42 @@ public class GongYingDanWeiPanel extends BasePanel {
         }
         int result = AssetMessage.CONFIRM("确定删除供应单位:" + supplier.getSupplierName());
         if (result == JOptionPane.OK_OPTION) {
-            return new DeleteSupplierTask(supplier);
+            return new CommUpdateTask<Supplier>(supplier, "supplier/delete/" + supplier.getSupplierId()) {
+                @Override
+                public void responseResult(ComResponse<Supplier> response) {
+                    if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                        reload().execute();
+                    } else {
+                        AssetMessage.ERROR(response.getErrorMessage(), GongYingDanWeiPanel.this);
+                    }
+                }
+
+            };
         }
         return null;
     }
 
-    private class DeleteSupplierTask extends SupplierUpdateTask {
-
-        DeleteSupplierTask(Supplier supplier) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to DeleteSupplierTask fields, here.
-            super(supplier, ENTITY_DELETE);
-
+    @Action
+    public Task print() {
+        SupplierTask printData = new SupplierTask(0, count) {
+            
+       @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                logger.error(e);
+                return;
+            }
+            SupplierFindEntity suppliertbs = (SupplierFindEntity) object;
+            if (suppliertbs != null && suppliertbs.getResult() != null && suppliertbs.getResult().size() > 0) {
+                //存下所有的数据
+                suppliers = suppliertbs.getResult();
+                bindTable.createPrinter("供应单位", suppliertbs.getResult()).buildInBackgound().execute();
+            }
         }
 
-        @Override
-        protected void succeeded(Object result) {
-            gongYingDanWeiJDialog.reload().execute();
-        }
+            
+        };
+        return printData;
     }
 }
