@@ -182,11 +182,11 @@ public class BaseTable extends JTable {
             int popWitdh = basePopup.getWidth();
 
             if ((selectedColumnY + popHeight) > size.getHeight()) {
-                selectedColumnY = p.y - basePopup.getHeight();
+                selectedColumnY = selectedColumnY - basePopup.getHeight()-table.getRowHeight();
             }
 
             if ((selectedColumnX + popWitdh) > size.getWidth()) {
-                selectedColumnX = p.x - basePopup.getWidth();
+                selectedColumnX = selectedColumnX - basePopup.getWidth();
             }
 
             pop = PopupFactory.getSharedInstance().getPopup(table, basePopup, selectedColumnX, selectedColumnY);
