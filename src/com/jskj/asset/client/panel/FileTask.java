@@ -22,7 +22,7 @@ public abstract class FileTask extends BaseTask {
     public final static int TYPE_DOWNLOAD = 1;
     public final static int TYPE_DELETE = 2;
 
-    private final static String tempAttchedPath = System.getProperty("java.io.tmpdir") + "AssetClient" + File.separator + "TempAttchment" + File.separator;
+    public final static String tempAttchedPath = System.getProperty("java.io.tmpdir") + "AssetClient" + File.separator + "TempAttchment" + File.separator;
 
     private final int type;
     private final String uploadFilePathOrDownloadFileName;

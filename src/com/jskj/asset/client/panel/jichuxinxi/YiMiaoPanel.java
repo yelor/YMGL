@@ -104,9 +104,7 @@ public class YiMiaoPanel extends BasePanel {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jToolBar3 = new javax.swing.JToolBar();
         jButton17 = new javax.swing.JButton();
@@ -150,6 +148,7 @@ public class YiMiaoPanel extends BasePanel {
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
+        jButton8.setAction(actionMap.get("deleteYiMiaotb")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorder(null);
@@ -170,17 +169,6 @@ public class YiMiaoPanel extends BasePanel {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jButton5.setAction(actionMap.get("print")); // NOI18N
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
-
         jButton3.setAction(actionMap.get("print")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
@@ -191,17 +179,6 @@ public class YiMiaoPanel extends BasePanel {
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
-
-        jButton2.setAction(actionMap.get("print")); // NOI18N
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-        jToolBar1.add(jButton2);
 
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -365,10 +342,8 @@ public class YiMiaoPanel extends BasePanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -462,7 +437,7 @@ public class YiMiaoPanel extends BasePanel {
         }
         return null;
     }
-    
+  
      @Action
     public Task print() {
         YiMiaoTask printData = new YiMiaoTask(0, count) {

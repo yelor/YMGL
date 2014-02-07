@@ -4,8 +4,6 @@
  */
 package com.jskj.asset.client.panel.baobiao.caigou;
 
-import com.jskj.asset.client.panel.user.*;
-import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.bean.report.CaigouReport;
 import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
@@ -13,10 +11,8 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
 import java.util.HashMap;
-import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -27,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public abstract class ReportCaiGouFindTask extends BaseTask {
 
-    private static final Logger logger = Logger.getLogger(ParamFindTask.class);
+    private static final Logger logger = Logger.getLogger(ReportCaiGouFindTask.class);
     private final String URI = Constants.HTTP + Constants.APPID;
     private String serviceId;
     private HashMap map;
@@ -45,20 +41,26 @@ public abstract class ReportCaiGouFindTask extends BaseTask {
     @Override
     public Object doBackgrounp() {
         try {
-//            HashMap map = new HashMap();
-//            map.put("pagesize", String.valueOf(pageSize));
-//            map.put("pageindex", String.valueOf(pageIndex));
-//            map.put("startDate", null);
-//            map.put("endDate", null);
-//            map.put("idflag", "");
+            StringBuilder paramater = new StringBuilder();
+            if (map.get("idflag") != null && !map.get("idflag").toString().trim().equals("")) {
+                paramater.append("idflag=").append(map.get("idflag")).append("&");
+            }
+            if (map.get("startDate") != null && !map.get("startDate").toString().trim().equals("")) {
+                paramater.append("startDate=").append(map.get("startDate")).append("&");
+            }
+            if (map.get("endDate") != null && !map.get("endDate").toString().trim().equals("")) {
+                paramater.append("endDate=").append(map.get("endDate")).append("&");
+            }
+            paramater.deleteCharAt(paramater.length() - 1);
 
-            logger.debug("parameter map:" + map);
+            logger.debug("parameter map:" + paramater);
             //使用Spring3 RESTful client来获取http数据
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            CommFindEntity<CaigouReport> response = restTemplate.exchange(URI + serviceId, 
-                          HttpMethod.GET, 
-                          new HttpEntity<HashMap>(map), 
-                          new ParameterizedTypeReference<CommFindEntity<CaigouReport>>(){}).getBody();
+            CommFindEntity<CaigouReport> response = restTemplate.exchange(URI + serviceId + "?" + paramater,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<CommFindEntity<CaigouReport>>() {
+                    }).getBody();
             return response;
         } catch (RestClientException e) {
             logger.error(e);

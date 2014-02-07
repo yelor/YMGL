@@ -64,6 +64,8 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
             DateChooser dateChooser1 = DateChooser.getInstance(PARAMETER);
             dateChooser1.register(this);
         }
+        Insets insets = new Insets(0, 20, 0, 0);
+        this.setMargin(insets);
         hasRegister = true;
     }
 

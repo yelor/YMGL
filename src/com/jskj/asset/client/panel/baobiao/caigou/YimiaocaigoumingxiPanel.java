@@ -6,13 +6,19 @@
 package com.jskj.asset.client.panel.baobiao.caigou;
 
 import com.jskj.asset.client.bean.report.CaigouReport;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.util.BindTableHelper;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -52,9 +58,10 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         parameterMap = new HashMap();
         parameterMap.put("pagesize", String.valueOf(pageSize));
         parameterMap.put("pageindex", String.valueOf(pageIndex));
-        parameterMap.put("startDate", null);
-        parameterMap.put("endDate", null);
-        parameterMap.put("idflag", "YMSB");
+        parameterMap.put("idflag", "YMS");
+
+        ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
+        ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
     }
 
     /**
@@ -66,11 +73,13 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jLabelImg = new javax.swing.JLabel();
+        jpanel2 = new javax.swing.JPanel();
         ctrlPane = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
-        jButton10 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jToolBar3 = new javax.swing.JToolBar();
         jButton17 = new javax.swing.JButton();
@@ -78,8 +87,38 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldStart = new BaseTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldEnd = new BaseTextField();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton15 = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
+
+        jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.RIGHT);
+        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaocaigoumingxiPanel.class);
+        jScrollPane2.setBackground(resourceMap.getColor("jScrollPane2.background")); // NOI18N
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jLabelImg.setBackground(resourceMap.getColor("jLabelImg.background")); // NOI18N
+        jLabelImg.setForeground(resourceMap.getColor("jLabelImg.foreground")); // NOI18N
+        jLabelImg.setText(resourceMap.getString("jLabelImg.text")); // NOI18N
+        jLabelImg.setName("jLabelImg"); // NOI18N
+        jScrollPane2.setViewportView(jLabelImg);
+
+        jTabbedPane1.addTab(resourceMap.getString("jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
+
+        jpanel2.setName("jpanel2"); // NOI18N
 
         ctrlPane.setName("ctrlPane"); // NOI18N
 
@@ -91,17 +130,6 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         jToolBar2.setOpaque(false);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaocaigoumingxiPanel.class, this);
-        jButton10.setAction(actionMap.get("reload")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaocaigoumingxiPanel.class);
-        jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
-        jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
-        jButton10.setBorderPainted(false);
-        jButton10.setFocusable(false);
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton10.setName("jButton10"); // NOI18N
-        jButton10.setOpaque(false);
-        jToolBar2.add(jButton10);
-
         jButton12.setAction(actionMap.get("print")); // NOI18N
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
@@ -112,15 +140,7 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         jButton12.setOpaque(false);
         jToolBar2.add(jButton12);
 
-        jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
-        jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
-        jButton14.setBorderPainted(false);
-        jButton14.setFocusable(false);
-        jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton14.setName("jButton14"); // NOI18N
-        jButton14.setOpaque(false);
-        jToolBar2.add(jButton14);
-
+        jButton1.setAction(actionMap.get("disDetail")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorder(null);
@@ -172,7 +192,7 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,9 +200,9 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -223,43 +243,161 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
             jTable1.getColumnModel().getColumn(7).setHeaderValue(resourceMap.getString("jTable1.columnModel.title7")); // NOI18N
         }
 
+        javax.swing.GroupLayout jpanel2Layout = new javax.swing.GroupLayout(jpanel2);
+        jpanel2.setLayout(jpanel2Layout);
+        jpanel2Layout.setHorizontalGroup(
+            jpanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+        );
+        jpanel2Layout.setVerticalGroup(
+            jpanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel2Layout.createSequentialGroup()
+                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab(resourceMap.getString("jpanel2.TabConstraints.tabTitle"), jpanel2); // NOI18N
+
+        jPanel2.setName("jPanel2"); // NOI18N
+
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jTextFieldStart.setText(resourceMap.getString("jTextFieldStart.text")); // NOI18N
+        jTextFieldStart.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldStart.setName("jTextFieldStart"); // NOI18N
+
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jTextFieldEnd.setText(resourceMap.getString("jTextFieldEnd.text")); // NOI18N
+        jTextFieldEnd.setName("jTextFieldEnd"); // NOI18N
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
+        jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
+
+        jButton15.setAction(actionMap.get("reload")); // NOI18N
+        jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
+        jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
+        jButton15.setBorder(null);
+        jButton15.setBorderPainted(false);
+        jButton15.setFocusable(false);
+        jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton15.setName("jButton15"); // NOI18N
+        jButton15.setOpaque(false);
+        jButton15.setRolloverEnabled(true);
+        jToolBar1.add(jButton15);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ctrlPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        if (((JTabbedPane) evt.getSource()).getSelectedIndex() == 1) {
+            parameterMap.put("pageindex", 0);
+            new RefreshTask(parameterMap).execute();
+        }
+    }//GEN-LAST:event_jTabbedPane1StateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelImg;
     private javax.swing.JLabel jLabelTotal;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldEnd;
+    private javax.swing.JTextField jTextFieldStart;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
+    private javax.swing.JPanel jpanel2;
     // End of variables declaration//GEN-END:variables
 
     @Override
     @Action
     public Task reload() {
-        parameterMap.put("pageindex", 0);
-        return new RefreshTask(parameterMap);
+        String startDate = jTextFieldStart.getText();
+        String endDate = jTextFieldEnd.getText();
+        parameterMap.put("startDate", startDate);
+        parameterMap.put("endDate", endDate);
+        parameterMap.put("idflag", "YMS");
+
+        jLabelImg.setText("loading chart...");
+        jLabelImg.setIcon(null);
+        ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
+            @Override
+            public void responseResult(File imgPath) {
+                jLabelImg.setText("");
+                if (imgPath != null && imgPath.exists()) {
+                    ImageIcon icon = new ImageIcon(imgPath.getPath());
+                    jLabelImg.setIcon(icon);
+                }
+            }
+        };
+
+        if (jTabbedPane1.getSelectedIndex() == 1) {
+            parameterMap.put("pageindex", 0);
+            new RefreshTask(parameterMap).execute();
+        }
+
+        return reportTask;
     }
 
     @Override
@@ -282,6 +420,15 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         }
         parameterMap.put("pageindex", String.valueOf(pageIndex));
         return new RefreshTask(parameterMap);
+    }
+
+    public CaigouReport selectedDataFromTable() {
+        if (jTable1.getSelectedRow() >= 0) {
+            if (currentPageData != null) {
+                return currentPageData.get(jTable1.getSelectedRow());
+            }
+        }
+        return null;
     }
 
     public List<CaigouReport> getTableData() {
@@ -313,9 +460,11 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         HashMap printMap = new HashMap();
         printMap.put("pagesize", count);
         printMap.put("pageindex", 0);
-        printMap.put("startDate", null);
-        printMap.put("endDate", null);
-        printMap.put("idflag", "YMCG");
+        String startDate = jTextFieldStart.getText();
+        String endDate = jTextFieldEnd.getText();
+        printMap.put("startDate", startDate);
+        printMap.put("endDate", endDate);
+        printMap.put("idflag", "YMS");
         ReportCaiGouFindTask printData = new ReportCaiGouFindTask(printMap, "report/list") {
             @Override
             public void responseResult(CommFindEntity response) {
@@ -323,5 +472,15 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
             }
         };
         return printData;
+    }
+
+    @Action
+    public Task disDetail() {
+        CaigouReport selectedData = selectedDataFromTable();
+        if (selectedData == null) {
+            AssetMessage.ERRORSYS("请选择一条数据!");
+            return null;
+        }
+        return new ReportCaiGouYimiaoTask(selectedData);
     }
 }
