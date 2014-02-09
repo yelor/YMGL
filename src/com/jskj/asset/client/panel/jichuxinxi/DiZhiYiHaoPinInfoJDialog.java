@@ -48,6 +48,9 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         this.parentPanel = parentPanel;
         this.setTitle("低值易耗品");
 
+        dzyhpType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("物品类别")));
+        unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
+
         ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
 
             @Override

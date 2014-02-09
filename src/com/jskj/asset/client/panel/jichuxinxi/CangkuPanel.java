@@ -199,6 +199,8 @@ public final class CangkuPanel extends BasePanel {
         jToolBar2.add(jButton3);
 
         jButton4.setAction(actionMap.get("pageNext")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setActionCommand(resourceMap.getString("jButton4.actionCommand")); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

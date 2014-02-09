@@ -61,7 +61,7 @@ public final class UserPanel extends BasePanel {
         bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"department.departmentName", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
         {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userPhone", "电话"}});
         bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 50}, new int[]{6, 220}, new int[]{7, 150}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 50},new int[]{5, 200}, new int[]{6, 220}, new int[]{7, 150}).setRowHeight(30);
     }
 
     @Action

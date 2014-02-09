@@ -167,8 +167,6 @@ public abstract class ReportChartFindTask extends BaseTask {
                                 cmp.horizontalList(
                                         itemChart, cmp.verticalList(dateChart, stateChart)),
                                 cmp.verticalGap(10))
-                        .pageFooter(
-                                ReportImageTemplates.footerComponent)
                         .setDataSource(dataSource);
                 return report;
             }

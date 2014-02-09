@@ -264,10 +264,7 @@
         <Component class="javax.swing.JComboBox" name="yimiaoType">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="&#x2160;&#x7c7b;&#x75ab;&#x82d7;"/>
-                <StringItem index="1" value="&#x2161;&#x7c7b;&#x75ab;&#x82d7;"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="yimiaoType" noResource="true"/>
           </Properties>
@@ -281,11 +278,7 @@
         <Component class="javax.swing.JComboBox" name="yimiaoJixing">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="&#x6db2;&#x4f53;&#x5242;&#x578b;"/>
-                <StringItem index="1" value="&#x51bb;&#x5e72;&#x5242;&#x578b;"/>
-                <StringItem index="2" value="&#x7cd6;&#x4e38;&#x5242;&#x578b;"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="yimiaoJixing" noResource="true"/>
           </Properties>
@@ -293,12 +286,7 @@
         <Component class="javax.swing.JComboBox" name="unitId">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="unitId" noResource="true"/>
           </Properties>
@@ -605,12 +593,7 @@
         <Component class="javax.swing.JComboBox" name="yimiaoFuzhuunit">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="yimiaoFuzhuunit" noResource="true"/>
           </Properties>

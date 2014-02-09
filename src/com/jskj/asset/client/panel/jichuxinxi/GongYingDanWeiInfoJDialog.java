@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Supplier;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
@@ -35,6 +36,7 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
         initComponents();
         setTitle("供应单位");
         this.parentPanel = parentPanel;
+        supplierQuyu.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("区域")));
     }
 
     /**
@@ -130,7 +132,6 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
 
         supplierFarendaibiao.setName("supplierFarendaibiao"); // NOI18N
 
-        supplierQuyu.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "西南", "西北", "华中", "华南", "华北", "港澳", "国外" }));
         supplierQuyu.setName("supplierQuyu"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

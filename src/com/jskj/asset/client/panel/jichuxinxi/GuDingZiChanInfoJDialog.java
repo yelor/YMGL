@@ -50,6 +50,10 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         super();
         initComponents();
         this.parentPanel = parentPanel;
+
+        gdzcType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("资产类别")));
+        unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
+
         ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
 
             @Override
@@ -278,14 +282,12 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         jLabel17 = new javax.swing.JLabel();
         gdzcSequence = new javax.swing.JTextField();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanInfoJDialog.class);
-        jTextFieldDepotID.setText(resourceMap.getString("jTextFieldDepotID.text")); // NOI18N
         jTextFieldDepotID.setName("jTextFieldDepotID"); // NOI18N
 
-        jTextFieldSupplier.setText(resourceMap.getString("jTextFieldSupplier.text")); // NOI18N
         jTextFieldSupplier.setName("jTextFieldSupplier"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanInfoJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setMaximumSize(new java.awt.Dimension(796, 418));
         setMinimumSize(new java.awt.Dimension(796, 418));
@@ -359,13 +361,11 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
 
-        gdzcType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通固定资产", "IT固定资产" }));
         gdzcType.setName("gdzcType"); // NOI18N
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
-        unitId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         unitId.setName("unitId"); // NOI18N
 
         gdzcGuige.setName("gdzcGuige"); // NOI18N

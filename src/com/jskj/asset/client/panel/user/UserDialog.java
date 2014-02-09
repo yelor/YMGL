@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.user;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.bean.entity.DepartmentFindEntity;
 import com.jskj.asset.client.bean.entity.DepartmenttbAll;
@@ -55,6 +56,7 @@ public class UserDialog extends BaseDialog {
         jListRoles.setModel(new BaseListModel<String>(new ArrayList(), ""));
         //得到部门和角色
         new BumenTask().execute();
+        jComboBoxRole.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("角色")));
         if (isNew) {
             this.setTitle("新建用户");
             jTextFieldUserName.setText("");
@@ -506,7 +508,7 @@ public class UserDialog extends BaseDialog {
         if (!idcard.trim().equals("")) {
             if (IdcardUtils.validateCard(idcard)) {
                 usertb.setUserIdentitycard(idcard);
-                usertb.setUserBirthday(DateHelper.getStringtoDate(IdcardUtils.getBirthByIdCard(idcard), "yyyyMMdd"));
+               // usertb.setUserBirthday(DateHelper.getStringtoDate(IdcardUtils.getBirthByIdCard(idcard), "yyyyMMdd"));
             } else {
                 AssetMessage.ERRORSYS("身份证号码有误，请检查.");
                 return null;

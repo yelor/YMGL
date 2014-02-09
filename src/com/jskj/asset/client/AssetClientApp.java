@@ -3,12 +3,15 @@
  */
 package com.jskj.asset.client;
 
+import com.jskj.asset.client.bean.ParamSession;
 import com.jskj.asset.client.bean.UserSessionEntity;
+import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import java.awt.Font;
 import java.util.EventObject;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -53,6 +56,33 @@ public class AssetClientApp extends SingleFrameApplication {
     }
 
     /**
+     * 得到参数表中，指定父节点对应下得所有子参数
+     * @param parentParamName
+     * @return 
+     */
+    public static List<String> getChildParamNameByParentName(String parentParamName) {
+        return ParamSession.getInstance().getChildNameByParentName(parentParamName);
+    }
+
+    /**
+     * 根据参数类型，得到所有该类型的参数名
+     * @param type
+     * @return 
+     */
+    public static String[] getParamNamesByType(String type) {
+        return ParamSession.getInstance().getParamNamesByType(type);
+    }
+
+    /**
+     * 根据参数类型，得到所有该类型的参数对象
+     * @param type
+     * @return 
+     */
+    public static List<Appparam> getParamsByType(String type) {
+        return ParamSession.getInstance().getParamsByType(type);
+    }
+
+    /**
      * At startup create and show the main frame of the application.
      */
     @Override
@@ -81,9 +111,12 @@ public class AssetClientApp extends SingleFrameApplication {
         }
         //得到message
         view.setMessage(message.toString());
-        
+
         //初始化必要的功能
         view.loadMoudule().execute();
+
+        //参数初始化
+        ParamSession.getInstance().buildParamSession().execute();
 
         addExitListener(new Application.ExitListener() {
 
@@ -163,11 +196,11 @@ public class AssetClientApp extends SingleFrameApplication {
 //        }
         launch(AssetClientApp.class, args);
     }
-    
-    public static void resetLoginWindow(){
-        if(loginWindow!=null){
-          loginWindow.setVisible(true);
-          getApplication().getMainFrame().dispose();
+
+    public static void resetLoginWindow() {
+        if (loginWindow != null) {
+            loginWindow.setVisible(true);
+            getApplication().getMainFrame().dispose();
         }
     }
 }

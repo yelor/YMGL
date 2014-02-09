@@ -213,15 +213,7 @@
         <Component class="javax.swing.JComboBox" name="supplierQuyu">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="7">
-                <StringItem index="0" value="&#x897f;&#x5357;"/>
-                <StringItem index="1" value="&#x897f;&#x5317;"/>
-                <StringItem index="2" value="&#x534e;&#x4e2d;"/>
-                <StringItem index="3" value="&#x534e;&#x5357;"/>
-                <StringItem index="4" value="&#x534e;&#x5317;"/>
-                <StringItem index="5" value="&#x6e2f;&#x6fb3;"/>
-                <StringItem index="6" value="&#x56fd;&#x5916;"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="name" type="java.lang.String" value="supplierQuyu" noResource="true"/>
           </Properties>

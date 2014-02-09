@@ -47,6 +47,12 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         initComponents();
         this.parentPanel = parentPanel;
         setTitle("疫苗信息");
+        
+        yimiaoType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("疫苗类别")));
+        yimiaoJixing.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("剂型")));
+        unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
+        yimiaoFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("辅助单位")));
+        
         ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
 
             @Override
@@ -223,16 +229,13 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
 
-        yimiaoType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ⅰ类疫苗", "Ⅱ类疫苗" }));
         yimiaoType.setName("yimiaoType"); // NOI18N
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
-        yimiaoJixing.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "液体剂型", "冻干剂型", "糖丸剂型" }));
         yimiaoJixing.setName("yimiaoJixing"); // NOI18N
 
-        unitId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         unitId.setName("unitId"); // NOI18N
 
         jLabel19.setText(resourceMap.getString("jLabel19.text")); // NOI18N
@@ -455,7 +458,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
         jLabel12.setName("jLabel12"); // NOI18N
 
-        yimiaoFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         yimiaoFuzhuunit.setName("yimiaoFuzhuunit"); // NOI18N
 
         jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
