@@ -46,9 +46,11 @@ public class LoadModule extends BaseTask {
     private final JMenuBar menuBar;
     private LogDialog logBox;
     private JDialog aboutBox;
+    private boolean disExtPanel;
 
     public LoadModule(JMenuBar menuBar) {
         this.menuBar = menuBar;
+        disExtPanel = false;
     }
 
     @Override
@@ -304,9 +306,7 @@ public class LoadModule extends BaseTask {
      */
     private void initLogAppender() {
         if (logBox == null) {
-            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            logBox = new LogDialog(mainFrame);
-            logBox.setLocationRelativeTo(mainFrame);
+            logBox = new LogDialog();
         }
 
         LogPaneAppender loghelper = new LogPaneAppender();
@@ -320,12 +320,14 @@ public class LoadModule extends BaseTask {
 
     @Action
     public void showLogBox() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                AssetClientApp.getApplication().show(logBox);
-            }
-        });
+        AssetClientView view = (AssetClientView) AssetClientApp.getApplication().getMainView();
+        if (disExtPanel == false) {
+            view.getMainViewPane().addExtPanel(logBox);
+            disExtPanel = true;
+        } else {
+            view.getMainViewPane().removeExtPanel(logBox);
+            disExtPanel = false;
+        }
     }
 
     @Action
@@ -376,7 +378,7 @@ public class LoadModule extends BaseTask {
 
     @Action
     public Task showKeHuDanWei() {
-       return new OpenTabTask("基础数据-客户单位", new KeHuDanWeiPanel(), false);
+        return new OpenTabTask("基础数据-客户单位", new KeHuDanWeiPanel(), false);
     }
 
     @Action

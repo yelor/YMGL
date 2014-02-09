@@ -6,9 +6,9 @@ package com.jskj.asset.client;
 import com.jskj.asset.client.bean.ParamSession;
 import com.jskj.asset.client.bean.UserSessionEntity;
 import com.jskj.asset.client.bean.entity.Appparam;
-import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.login.LoginMain;
 import java.awt.Font;
 import java.util.EventObject;
 import java.util.List;
@@ -57,8 +57,9 @@ public class AssetClientApp extends SingleFrameApplication {
 
     /**
      * 得到参数表中，指定父节点对应下得所有子参数
+     *
      * @param parentParamName
-     * @return 
+     * @return
      */
     public static List<String> getChildParamNameByParentName(String parentParamName) {
         return ParamSession.getInstance().getChildNameByParentName(parentParamName);
@@ -66,8 +67,9 @@ public class AssetClientApp extends SingleFrameApplication {
 
     /**
      * 根据参数类型，得到所有该类型的参数名
+     *
      * @param type
-     * @return 
+     * @return
      */
     public static String[] getParamNamesByType(String type) {
         return ParamSession.getInstance().getParamNamesByType(type);
@@ -75,8 +77,9 @@ public class AssetClientApp extends SingleFrameApplication {
 
     /**
      * 根据参数类型，得到所有该类型的参数对象
+     *
      * @param type
-     * @return 
+     * @return
      */
     public static List<Appparam> getParamsByType(String type) {
         return ParamSession.getInstance().getParamsByType(type);
@@ -170,16 +173,15 @@ public class AssetClientApp extends SingleFrameApplication {
 
     /**
      * Main method launching the application.
+     * @param args
      */
-    public static void main(String[] args) {
-        UserSessionEntity session = new UserSessionEntity();
-        Usertb usertb = new Usertb();
-        usertb.setUserName("Debug User");
-        usertb.setUserRoles("管理用户");
-        session.setUsertb(usertb);
-        AssetClientApp.setSessionMap(session);
-
-        launch(AssetClientApp.class, args);
+    public static void main(final String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new LoginMain(args).setVisible(true);
+            }
+        });
     }
 
     public static void startupApplication(String[] args, JFrame window, UserSessionEntity aSessionMap) {
@@ -200,7 +202,6 @@ public class AssetClientApp extends SingleFrameApplication {
     public static void resetLoginWindow() {
         if (loginWindow != null) {
             loginWindow.setVisible(true);
-            getApplication().getMainFrame().dispose();
         }
     }
 }
