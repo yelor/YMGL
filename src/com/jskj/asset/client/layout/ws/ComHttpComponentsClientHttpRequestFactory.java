@@ -29,23 +29,22 @@ public class ComHttpComponentsClientHttpRequestFactory extends HttpComponentsCli
         super(httpClient);
     }
 
-    @Override
-    protected HttpContext createHttpContext(HttpMethod httpMethod, URI uri) {
-        return createHttpContext();
-    }
-
-    private HttpContext createHttpContext() {
-        
-        HttpHost host = new HttpHost(Constants.SERVICE_PORT,Integer.parseInt(Constants.SERVICE_PORT));
-        
-// Create AuthCache instance       
-        AuthCache authCache = new BasicAuthCache();
-// Generate BASIC scheme object and add it to the local auth cache        
-        BasicScheme basicAuth = new BasicScheme();
-        authCache.put(host, basicAuth);
-        // Add AuthCache to the execution context       
-        BasicHttpContext localcontext = new BasicHttpContext();
-        localcontext.setAttribute(ClientContext.AUTH_CACHE, authCache);
-        return localcontext;
-    }
+//    @Override
+//    protected HttpContext createHttpContext(HttpMethod httpMethod, URI uri) {
+//        return createHttpContext();
+//    }
+//
+//    private HttpContext createHttpContext() {
+//        HttpHost host = new HttpHost(Constants.SERVICE_PORT,Integer.parseInt(Constants.SERVICE_PORT));
+//        
+//// Create AuthCache instance       
+//        AuthCache authCache = new BasicAuthCache();
+//// Generate BASIC scheme object and add it to the local auth cache        
+//        BasicScheme basicAuth = new BasicScheme();
+//        authCache.put(host, basicAuth);
+//        // Add AuthCache to the execution context       
+//        BasicHttpContext localcontext = new BasicHttpContext();
+//        localcontext.setAttribute(ClientContext.AUTH_CACHE, authCache);
+//        return localcontext;
+//    }
 }

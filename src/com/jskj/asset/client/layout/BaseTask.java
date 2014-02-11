@@ -44,14 +44,14 @@ public abstract class BaseTask extends Task<Object, Void> {
 
     public BaseTask(Application app) {
         super(app);
-        UserSessionEntity sessionEntity = AssetClientApp.getSessionMap();
-        if (sessionEntity != null && sessionEntity.getUsertb() != null) {
-            /*add http header*/
-            HttpComponentsClientHttpRequestFactory httpRequestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
-            DefaultHttpClient httpClient = (DefaultHttpClient) httpRequestFactory.getHttpClient();
-            httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, 
-                    new UsernamePasswordCredentials(sessionEntity.getUsertb().getUserName(), sessionEntity.getUsertb().getUserPassword()));
-        }
+//        UserSessionEntity sessionEntity = AssetClientApp.getSessionMap();
+//        if (sessionEntity != null && sessionEntity.getUsertb() != null) {
+//            /*add http header*/
+//            HttpComponentsClientHttpRequestFactory httpRequestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
+//            DefaultHttpClient httpClient = (DefaultHttpClient) httpRequestFactory.getHttpClient();
+//            httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, 
+//                    new UsernamePasswordCredentials(sessionEntity.getUsertb().getUserName(), sessionEntity.getUsertb().getUserPassword()));
+//        }
     }
 
     public BaseTask() {
