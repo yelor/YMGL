@@ -41,7 +41,6 @@ public class YimiaobaosunUpdateTask extends BaseTask{
     public Object doBackgrounp() {
          try {
             //使用Spring3 RESTful client来POSThttp数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             if (actionType == ENTITY_SAVE) {
                 restTemplate.postForObject(ADD_URI, yimiaobaosunEntity, YimiaobaosuntbFindEntity.class);
             } else if (actionType == ENTITY_UPDATE) {

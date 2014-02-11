@@ -15,16 +15,25 @@ import com.jskj.asset.client.layout.BaseListModel;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ReportTemplates;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
+import com.jskj.asset.client.util.DanHao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import static net.sf.dynamicreports.report.builder.DynamicReports.bcode;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.template;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -38,8 +47,10 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
     private YimiaoAll appParam;
     private BasePanel parentPanel;
+
     /**
      * Creates new form YiMiaoDengJi1JDialog
+     *
      * @param parentPanel
      */
     public YiMiaoInfoJDialog(BasePanel parentPanel) {
@@ -47,12 +58,12 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         initComponents();
         this.parentPanel = parentPanel;
         setTitle("疫苗信息");
-        
+
         yimiaoType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("疫苗类别")));
         yimiaoJixing.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("剂型")));
         unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
         yimiaoFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("辅助单位")));
-        
+
         ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
 
             @Override
@@ -364,6 +375,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         suppliertb$supplierName.setName("suppliertb$supplierName"); // NOI18N
 
+        jButton5.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
@@ -671,7 +683,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入疫苗剂型!");
             return null;
         }
-       
+
         super.copyToBean(appParam, jPanel3);
         super.copyToBean(appParam, jPanel4);
         super.copyToBean(appParam, jPanel5);
@@ -685,7 +697,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         if (!supplierId.trim().equals("")) {
             appParam.setSupplierId(Integer.parseInt(supplierId));
         }
-        
+
         /*得到图片路径*/
         BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
         List source = mode.getSource();
@@ -703,8 +715,8 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         if (appParam.getYimiaoId() != null && appParam.getYimiaoId() > 0) {
             serviceId = "yimiao/update";
         }
-        
-        return  new CommUpdateTask<YimiaoAll>(appParam, serviceId) {
+
+        return new CommUpdateTask<YimiaoAll>(appParam, serviceId) {
             @Override
             public void responseResult(ComResponse<YimiaoAll> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
@@ -725,7 +737,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         };
     }
-    
+
     @Action
     public Task uploadPic() {
         BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
@@ -787,7 +799,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         return null;
     }
 
-   
     @Action
     public void close() {
         this.dispose();
@@ -831,6 +842,30 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         return null;
     }
 
+    @Action
+    public void generatorBar() {
+
+        try {
+            report()
+                    .setTemplate(template())
+                    .title(
+                            barcode4j())
+                    .show();
+        } catch (DRException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ComponentBuilder<?, ?> barcode4j() {
+        HorizontalListBuilder list = cmp.horizontalFlowList();
+        list.setGap(10);
+        list.add(barcode("Code128", bcode.code128(DanHao.getDanHao("YM"))));
+	return list;
+    }
+
+    private ComponentBuilder<?, ?> barcode(String label, ComponentBuilder<?, ?> barcode) {
+        return cmp.verticalList(cmp.text(label).setStyle(ReportTemplates.bold12CenteredStyle), barcode);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField depottb$depotName;

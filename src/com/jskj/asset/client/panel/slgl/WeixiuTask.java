@@ -32,7 +32,6 @@ public class WeixiuTask extends BaseTask{
     @Override
     public Object doBackgrounp() {
         try{
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             restTemplate.postForObject(ADD_URI, zcwx, Zichanweixiudantb.class);
         }catch (RestClientException e) {
             logger.error(e);

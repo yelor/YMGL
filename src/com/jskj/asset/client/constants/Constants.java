@@ -17,6 +17,8 @@ public class Constants {
     /*HTTP conifg*/
     public static String HTTP = "";
     public static String APPID = "/AssetsSys/service/";
+    public static String SERVICE_IP="";
+    public static String SERVICE_PORT="";
     public static int OK_DELETE = 100;
     public static int HTTP_NOT_FOUND = 404;
     /*字体设置*/
@@ -45,5 +47,7 @@ public class Constants {
     /*用于登陆设置*/
     public static void setHTTPHost(String ip,String port){
        HTTP = "http://"+ip+":"+port;
+       SERVICE_IP = ip;
+       SERVICE_PORT = port;
     }
 }

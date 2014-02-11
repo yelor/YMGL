@@ -32,7 +32,6 @@ public class DiaoboTask extends BaseTask{
     @Override
     public Object doBackgrounp() {
         try{
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             restTemplate.postForObject(ADD_URI, zcdb, Zichandiaobodantb.class);
         }catch (RestClientException e) {
             logger.error(e);

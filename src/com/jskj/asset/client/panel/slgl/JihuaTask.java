@@ -38,7 +38,6 @@ public class JihuaTask extends BaseTask {
     public Object doBackgrounp() {
         try {
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             CaigoujihuaFindEntity jihua = restTemplate.getForObject(URI+"?pagesize="+pageSize+"&pageindex="+pageIndex, CaigoujihuaFindEntity.class);
             return jihua;
         } catch (RestClientException e) {

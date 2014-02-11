@@ -65,7 +65,6 @@ public abstract class ReportChartFindTask extends BaseTask {
         try {
 
             //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
 
             StringBuilder paramater = new StringBuilder();
             if (map.get("idflag") != null && !map.get("idflag").toString().trim().equals("")) {

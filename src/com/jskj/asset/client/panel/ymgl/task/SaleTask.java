@@ -40,8 +40,6 @@ public class SaleTask extends BaseTask {
     public Object doBackgrounp() {
         try {
             Map map = new HashMap();
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             Sale_detail_tbFindEntity sale_details = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, Sale_detail_tbFindEntity.class);
 //            System.out.println("sale_detail");
             return sale_details;

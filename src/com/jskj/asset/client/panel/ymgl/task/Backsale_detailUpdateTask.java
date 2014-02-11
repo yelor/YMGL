@@ -46,8 +46,6 @@ public class Backsale_detailUpdateTask extends BaseTask{
     @Override
     public Object doBackgrounp() {
          try {
-            //使用Spring3 RESTful client来POSThttp数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             if (actionType == ENTITY_SAVE) {
                 restTemplate.postForObject(ADD_URI2, backsale, Backsaletb.class);
                 restTemplate.postForObject(ADD_URI1, backsale_detail, Backsale_detail_tb.class);

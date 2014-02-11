@@ -41,8 +41,6 @@ public class SupplierTask extends BaseTask {
     public Object doBackgrounp() {
         try {
             Map map = new HashMap();
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             SupplierFindEntity suppliers = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, SupplierFindEntity.class);
             return suppliers;
         } catch (RestClientException e) {

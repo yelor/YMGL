@@ -43,8 +43,6 @@ public class YiMiaoTask extends BaseTask {
     public Object doBackgrounp() {
         try {
             Map map = new HashMap();
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             YiMiaotbFindEntity yimiaos = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, YiMiaotbFindEntity.class);
             return yimiaos;
         } catch (RestClientException e) {

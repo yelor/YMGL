@@ -32,7 +32,6 @@ public class ShenQingTask extends BaseTask{
     @Override
     public Object doBackgrounp() {
         try{
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             restTemplate.postForObject(ADD_URI, cgsq, ShenQingDetailEntity.class);
         }catch (RestClientException e) {
             logger.error(e);

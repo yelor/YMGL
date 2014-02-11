@@ -43,8 +43,6 @@ public class UserTask extends BaseTask {
             map.put("pageindex", String.valueOf(pageIndex));
             
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             UsertbFindEntity users = restTemplate.getForObject(URI+"?pagesize="+pageSize+"&pageindex="+pageIndex, UsertbFindEntity.class);
             return users;
         } catch (RestClientException e) {

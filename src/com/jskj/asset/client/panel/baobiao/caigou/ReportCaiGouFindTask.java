@@ -55,7 +55,6 @@ public abstract class ReportCaiGouFindTask extends BaseTask {
 
             logger.debug("parameter map:" + paramater);
             //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             CommFindEntity<CaigouReport> response = restTemplate.exchange(URI + serviceId + "?" + paramater,
                     HttpMethod.GET,
                     null,

@@ -6,7 +6,19 @@
        xsi:schemaLocation=" 
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <bean id="credentialProvider" class="org.apache.http.impl.client.BasicCredentialsProvider" />
+    
+    <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
+        <property name="credentialsProvider" ref="credentialProvider"/>
+    </bean>
+    
+    <bean id="httpClientFactory" class="com.jskj.asset.client.layout.ws.ComHttpComponentsClientHttpRequestFactory">
+        <constructor-arg ref="httpClient"/>  
+    </bean>
+    
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg ref="httpClientFactory"/>    
         <property name="messageConverters">
             <list>
                 <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
