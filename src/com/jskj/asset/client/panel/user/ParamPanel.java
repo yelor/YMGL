@@ -17,10 +17,12 @@ import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,6 +43,7 @@ public final class ParamPanel extends BasePanel {
     private int pageIndex;
     public int pageSize;
     private int count;
+    private String conditionSql;
 
     private List<Appparam> currentPageData;
 
@@ -55,11 +58,43 @@ public final class ParamPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 10;
         count = 0;
+        conditionSql="";
         bindTable = new BindTableHelper<Appparam>(jTableParam, new ArrayList<Appparam>());
         bindTable.createTable(new String[][]{{"appparamId", "参数ID"}, {"appparamPid", "参数父ID"}, {"appparamType", "参数类型"}, {"appparamName", "参数名"}, {"systemparam", "系统参数"},
         {"appparamDesc", "描述"}});
         bindTable.setColumnType(Integer.class, 1, 2, 5);
         bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 80}, new int[]{2, 100}, new int[]{3, 150}, new int[]{4, 100}).setRowHeight(25);
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{2, 3};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(2).trim().equals("")) {
+                        sql.append("appparam_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(3).trim().equals("")) {
+                        sql.append("appparam_name like \"%").append(searchKeys.get(3).trim()).append("%\"").append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     @Action
@@ -76,7 +111,7 @@ public final class ParamPanel extends BasePanel {
     private class RefreshTask extends ParamFindTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize, "appparam/","");
+            super(pageIndex, pageSize, "appparam/",conditionSql);
         }
 
         @Override

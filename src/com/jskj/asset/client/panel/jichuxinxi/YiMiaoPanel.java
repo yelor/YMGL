@@ -10,11 +10,13 @@ import com.jskj.asset.client.bean.entity.YiMiaotbFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.YiMiaoTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -35,6 +37,7 @@ public class YiMiaoPanel extends BasePanel {
     private int pageIndex;
     public int pageSize;
     private int count;
+    private String conditionSql;
 
     private List<YimiaoAll> yimiaos;
 
@@ -52,11 +55,46 @@ public class YiMiaoPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 20;
         count = 0;
+        conditionSql = "";
 
         bindTable = new BindTableHelper<YimiaoAll>(jTableYiMiao, new ArrayList<YimiaoAll>());
         bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"yimiaoId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}, {"yimiaoTiaoxingma", "条形码"}});
         bindTable.setIntegerType(1, 7, 8);
         bindTable.bind().setColumnWidth(new int[]{0, 80}).setRowHeight(30);;
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{1, 2,4};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(1).trim().equals("")) {
+                        sql.append("yimiao_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(2).trim().equals("")) {
+                        sql.append("yimiao_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(4).trim().equals("")) {
+                        sql.append("yimiao_jixing like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     @Action
@@ -362,7 +400,7 @@ public class YiMiaoPanel extends BasePanel {
     private class RefreshTask extends YiMiaoTask {
 
         public RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize);
+            super(pageIndex, pageSize,conditionSql);
         }
 
         @Override
@@ -440,7 +478,7 @@ public class YiMiaoPanel extends BasePanel {
   
      @Action
     public Task print() {
-        YiMiaoTask printData = new YiMiaoTask(0, count) {
+        YiMiaoTask printData = new YiMiaoTask(0, count,conditionSql) {
             @Override
         public void onSucceeded(Object object) {
 
