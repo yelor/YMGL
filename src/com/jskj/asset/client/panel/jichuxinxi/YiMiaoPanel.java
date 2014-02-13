@@ -66,7 +66,7 @@ public class YiMiaoPanel extends BasePanel {
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{1, 2,4};
+                return new int[]{0,1,2,4,8};
             }
 
             @Override
@@ -74,6 +74,9 @@ public class YiMiaoPanel extends BasePanel {
 
                 if (searchKeys.size() > 0) {
                     StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(0).trim().equals("")) {
+                        sql.append("yimiao_id = ").append(searchKeys.get(0).trim()).append(" and ");
+                    }
                     if (!searchKeys.get(1).trim().equals("")) {
                         sql.append("yimiao_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
                     }
@@ -82,6 +85,9 @@ public class YiMiaoPanel extends BasePanel {
                     }
                     if (!searchKeys.get(4).trim().equals("")) {
                         sql.append("yimiao_jixing like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(8).trim().equals("")) {
+                        sql.append("yimiao_tiaoxingma = ").append(searchKeys.get(8).trim()).append(" and ");
                     }
                     if (sql.length() > 0) {
                         sql.delete(sql.length() - 5, sql.length() - 1);
@@ -143,7 +149,6 @@ public class YiMiaoPanel extends BasePanel {
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jToolBar3 = new javax.swing.JToolBar();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
@@ -217,16 +222,6 @@ public class YiMiaoPanel extends BasePanel {
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
-
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
 
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
@@ -377,7 +372,6 @@ public class YiMiaoPanel extends BasePanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton3;

@@ -10,11 +10,13 @@ import com.jskj.asset.client.bean.entity.Kehudanweitb;
 import com.jskj.asset.client.bean.entity.KehudanweitbFindEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.KehudanweiTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,6 +35,7 @@ public class KeHuDanWeiPanel extends BasePanel {
 
     private final int pageSize;
     private int pageIndex;
+    private String conditionSql;
 
     private int count;
 
@@ -51,10 +54,46 @@ public class KeHuDanWeiPanel extends BasePanel {
         pageIndex = 1;
         count = 0;
         pageSize = 20;
+        conditionSql="";
         bindTable = new BindTableHelper<Kehudanweitb>(jTableKehudanwei, new ArrayList<Kehudanweitb>());
         bindTable.createTable(new String[][]{{"kehudanweiId", "编号"}, {"kehudanweiName", "名称"}, {"kehudanweiConstactperson", "联系人"}, {"kehudanweiPhone", "电话"}, {"kehudanweiFax", "传真"}, {"kehudanweiAddr", "单位地址"}, {"kehudanweiRemark", "备注"}});
         bindTable.setIntegerType(1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+        
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{0,1,2};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(0).trim().equals("")) {
+                        sql.append("kehudanwei_id =").append(searchKeys.get(0).trim()).append(" and ");
+                    }
+                    if (!searchKeys.get(1).trim().equals("")) {
+                        sql.append("kehudanwei_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(2).trim().equals("")) {
+                        sql.append("kehudanwei_constactPerson like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     /**
@@ -73,7 +112,6 @@ public class KeHuDanWeiPanel extends BasePanel {
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jToolBar3 = new javax.swing.JToolBar();
         jButton18 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
@@ -148,16 +186,6 @@ public class KeHuDanWeiPanel extends BasePanel {
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
-
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
 
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
@@ -357,7 +385,7 @@ public class KeHuDanWeiPanel extends BasePanel {
     private class RefreshTask extends KehudanweiTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize);
+            super(pageIndex, pageSize,conditionSql);
         }
 
         @Override
@@ -471,7 +499,7 @@ public class KeHuDanWeiPanel extends BasePanel {
 
     @Action
     public Task print() {
-        KehudanweiTask printData = new KehudanweiTask(0, count) {
+        KehudanweiTask printData = new KehudanweiTask(0, count,conditionSql) {
 
             @Override
             public void onSucceeded(Object object) {
@@ -493,7 +521,6 @@ public class KeHuDanWeiPanel extends BasePanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton3;

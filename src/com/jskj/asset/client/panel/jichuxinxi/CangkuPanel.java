@@ -18,9 +18,11 @@ import com.jskj.asset.client.bean.entity.DepotALL;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -43,6 +45,7 @@ public final class CangkuPanel extends BasePanel {
     private int count;
 
     private List<DepotALL> currentPageData;
+    private String conditionSql;
 
     private final BindTableHelper<DepotALL> bindTable;
 
@@ -55,11 +58,43 @@ public final class CangkuPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 10;
         count = 0;
+        conditionSql = "";
         bindTable = new BindTableHelper<DepotALL>(jTableParam, new ArrayList<DepotALL>());
         bindTable.createTable(new String[][]{{"depotId", "仓库ID"}, {"depotName", "仓库名"}, {"depotArea", "面积"}, {"usertb.userName", "负责人"},
         {"depotAddr", "仓库地址"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 50}, new int[]{1, 200}, new int[]{2, 80}, new int[]{3, 150}).setRowHeight(25);
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{1, 4};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(1).trim().equals("")) {
+                        sql.append("depot_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(4).trim().equals("")) {
+                        sql.append("depot_addr like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     @Action
@@ -76,7 +111,7 @@ public final class CangkuPanel extends BasePanel {
     private class RefreshTask extends CangkuFindTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize, "cangku/","");
+            super(pageIndex, pageSize, "cangku/", conditionSql);
         }
 
         @Override
@@ -312,7 +347,7 @@ public final class CangkuPanel extends BasePanel {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
-        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getDepotName()+"");
+        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getDepotName() + "");
         if (result == JOptionPane.OK_OPTION) {
             return new CommUpdateTask<DepotALL>(selectedData, "cangku/delete/" + selectedData.getDepotId()) {
                 @Override
@@ -359,7 +394,7 @@ public final class CangkuPanel extends BasePanel {
 
     @Action
     public Task print() {
-        CangkuFindTask printData = new CangkuFindTask(0, count, "cangku/","") {
+        CangkuFindTask printData = new CangkuFindTask(0, count, "cangku/", conditionSql) {
             @Override
             public void responseResult(CommFindEntity response) {
                 bindTable.createPrinter("仓库信息", response.getResult()).buildInBackgound().execute();
