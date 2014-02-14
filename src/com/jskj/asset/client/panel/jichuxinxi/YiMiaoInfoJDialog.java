@@ -15,7 +15,6 @@ import com.jskj.asset.client.layout.BaseListModel;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.layout.ReportTemplates;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.FileTask;
@@ -27,13 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import static net.sf.dynamicreports.report.builder.DynamicReports.bcode;
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.report;
-import static net.sf.dynamicreports.report.builder.DynamicReports.template;
-import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
-import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
-import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -398,6 +390,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
+        yimiaoTiaoxingma.setEnabled(false);
         yimiaoTiaoxingma.setName("yimiaoTiaoxingma"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -635,6 +628,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("疫苗信息")); // NOI18N
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
+            yimiaoTiaoxingma.setText(DanHao.getDanHao("YM"));
         } else {//更新
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("更新疫苗:" + appParam.getYimiaoId())); // NOI18N
             jCheckBoxCont.setSelected(false);
@@ -844,28 +838,22 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
     @Action
     public void generatorBar() {
-
-        try {
-            report()
-                    .setTemplate(template())
-                    .title(
-                            barcode4j())
-                    .show();
-        } catch (DRException e) {
-            e.printStackTrace();
+        String barcode = yimiaoTiaoxingma.getText();
+        String label = yimiaoName.getText();
+        if (barcode == null) {
+            return;
         }
+        if(label.trim().equals("")){
+          int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+          if(result != AssetMessage.OK_OPTION){
+              yimiaoName.grabFocus();
+              return;
+          }
+        }
+        DanHao.printBarCode128(label, barcode);
     }
+    
 
-    private ComponentBuilder<?, ?> barcode4j() {
-        HorizontalListBuilder list = cmp.horizontalFlowList();
-        list.setGap(10);
-        list.add(barcode("Code128", bcode.code128(DanHao.getDanHao("YM"))));
-	return list;
-    }
-
-    private ComponentBuilder<?, ?> barcode(String label, ComponentBuilder<?, ?> barcode) {
-        return cmp.verticalList(cmp.text(label).setStyle(ReportTemplates.bold12CenteredStyle), barcode);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField depottb$depotName;
