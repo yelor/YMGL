@@ -9,14 +9,12 @@ import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -40,25 +38,22 @@ public abstract class ParamFindTask extends BaseTask {
     }
 
     public ParamFindTask(String serviceId) {
-        this(1, 20, serviceId,"");
+        this(1, 20, serviceId, "");
     }
 
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            map.put("pagesize", String.valueOf(pageSize));
-            map.put("pageindex", String.valueOf(pageIndex));
-            map.put("conditionSql", conditionSql);
 
-            logger.debug("pagesize:" + pageSize + ",pageindex:" + pageIndex + ",serviceId:" + serviceId);
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
+            String urlParam = "pagesize=" + pageSize + "&pageindex=" + pageIndex + "&conditionSql=" + conditionSql;
+            logger.info("URL parameter:" + urlParam);
+            //使用Spring3 RESTful client来获取http数据            
 //            CommFindEntity<T> response = restTemplate.getForObject(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, CommFindEntity.class);
-            CommFindEntity<Appparam> response = restTemplate.exchange(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, 
-                          HttpMethod.GET, 
-                          null, 
-                          new ParameterizedTypeReference<CommFindEntity<Appparam>>(){}).getBody();
+            CommFindEntity<Appparam> response = restTemplate.exchange(URI + serviceId + "?"+urlParam,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<CommFindEntity<Appparam>>() {
+                    }).getBody();
             return response;
         } catch (RestClientException e) {
             logger.error(e);

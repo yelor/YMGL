@@ -50,7 +50,6 @@ public class ReportCaiGouGDZCTask extends BaseTask {
         try {
             logger.debug("find  id:" + selectedData.getShenqingdanId());
             //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             CommFindEntity<CaiGouZichanReport> response = restTemplate.exchange(URI + serviceId + "/" + selectedData.getShenqingdanId(),
                     HttpMethod.GET,
                     null,

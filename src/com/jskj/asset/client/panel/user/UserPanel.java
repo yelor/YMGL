@@ -17,8 +17,10 @@ import com.jskj.asset.client.bean.entity.UsertbFindEntity;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -36,12 +38,10 @@ public final class UserPanel extends BasePanel {
     private final static Logger logger = Logger.getLogger(UserPanel.class);
 
     private UserDialog userDialog;
-
-    private final UserPanel userPanel;
-
     private int pageIndex;
     public int pageSize;
     private int count;
+    private String conditionSql;
 
     private List<UsertbAll> users;
 
@@ -53,18 +53,53 @@ public final class UserPanel extends BasePanel {
     public UserPanel() {
         super();
         initComponents();
-        userPanel = this;
         pageIndex = 1;
         pageSize = 20;
+        conditionSql = "";
         count = 0;
         bindTable = new BindTableHelper<UsertbAll>(jTableUser, new ArrayList<UsertbAll>());
         bindTable.createTable(new String[][]{{"userId", "用户ID"}, {"department.departmentName", "部门"}, {"userName", "用户名字"}, {"userSex", "性别"},
         {"userEmail", "EMAIL"}, {"userRoles", "角色"}, {"userIdentitycard", "身份证"}, {"userPhone", "电话"}});
         bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 50},new int[]{5, 200}, new int[]{6, 220}, new int[]{7, 150}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 50}, new int[]{5, 200}, new int[]{6, 220}, new int[]{7, 150}).setRowHeight(30);
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{2, 4, 5};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(2).trim().equals("")) {
+                        sql.append("user_name like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(4).trim().equals("")) {
+                        sql.append("user_email like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(5).trim().equals("")) {
+                        sql.append("user_roles like \"%").append(searchKeys.get(5).trim()).append("%\"").append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     @Action
+    @Override
     public Task reload() {
         return new RefureTask(0, pageSize);
     }
@@ -72,12 +107,13 @@ public final class UserPanel extends BasePanel {
     @Override
     public Task reload(Object param) {
         return null;
+
     }
 
     private class RefureTask extends UserTask {
 
         RefureTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize);
+            super(pageIndex, pageSize, conditionSql);
         }
 
         @Override
@@ -285,7 +321,7 @@ public final class UserPanel extends BasePanel {
             public void run() {
                 if (userDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    userDialog = new UserDialog(userPanel);
+                    userDialog = new UserDialog(UserPanel.this);
                     userDialog.setLocationRelativeTo(mainFrame);
                 }
                 userDialog.setAddOrUpdate(true);
@@ -308,7 +344,7 @@ public final class UserPanel extends BasePanel {
 
                 if (userDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    userDialog = new UserDialog(userPanel);
+                    userDialog = new UserDialog(UserPanel.this);
                     userDialog.setLocationRelativeTo(mainFrame);
                 }
 
@@ -341,7 +377,7 @@ public final class UserPanel extends BasePanel {
 
         @Override
         protected void succeeded(Object result) {
-            userPanel.reload().execute();
+            reload().execute();
         }
     }
 

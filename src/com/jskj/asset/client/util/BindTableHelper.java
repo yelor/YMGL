@@ -4,17 +4,37 @@
  */
 package com.jskj.asset.client.util;
 
+import com.jskj.asset.client.layout.BaseTableHeaderPopup;
 import com.jskj.asset.client.layout.BaseTask;
+import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ReportTemplates;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import javax.xml.crypto.Data;
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
@@ -48,6 +68,13 @@ public class BindTableHelper<T> {
     private HashMap<Class, List<Integer>> savedColumnType;
     private HashMap<Integer, Converter> savedCoverts;
 
+    private HashMap<Integer, String> savedSearchKey;
+
+    private Popup tableHeaderPop;
+    private boolean isShow;
+    private BaseTableHeaderPopup baseTableHeaderPopup;
+    private final Icon searchIcon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TEXT));
+
     public BindTableHelper(JTable jtable, List<T> data) {
         bindingGroup = new BindingGroup();
         jTableFormat = new JTableFormat(jtable);
@@ -57,6 +84,119 @@ public class BindTableHelper<T> {
         savedIntegerColumn = null;
         savedColumnType = new HashMap<Class, List<Integer>>();
         savedCoverts = new HashMap<Integer, Converter>();
+        savedSearchKey = new HashMap<Integer, String>();
+    }
+
+    private void hideTableHeaderPanel() {
+        if (tableHeaderPop != null) {
+            isShow = false;
+            tableHeaderPop.hide();
+            tableHeaderPop = null;
+        }
+    }
+
+    private void showTableHeaderPanel(int selectedColumn) {
+
+        if (tableHeaderPop != null) {
+            tableHeaderPop.hide();
+        }
+
+        Point p = jTableFormat.getJtable().getLocationOnScreen();
+
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
+        int selectedColumnX = p.x;
+        int selectedColumnY = p.y;
+
+        if (selectedColumn > 0) {
+            for (int i = 0; i < selectedColumn; i++) {
+                selectedColumnX += jTableFormat.getJtable().getColumnModel().getColumn(i).getWidth();
+            }
+        }
+
+        int popHeight = baseTableHeaderPopup.getHeight();
+        int popWitdh = baseTableHeaderPopup.getWidth();
+
+        if ((selectedColumnY + popHeight) > size.getHeight()) {
+            selectedColumnY = selectedColumnY - baseTableHeaderPopup.getHeight() - jTableFormat.getJtable().getRowHeight();
+        }
+
+        if ((selectedColumnX + popWitdh) > size.getWidth()) {
+            selectedColumnX = selectedColumnX - baseTableHeaderPopup.getWidth() + jTableFormat.getJtable().getColumnModel().getColumn(selectedColumn).getWidth();
+        }
+
+        tableHeaderPop = PopupFactory.getSharedInstance().getPopup(jTableFormat.getJtable(), baseTableHeaderPopup, selectedColumnX, selectedColumnY);
+        //baseTableHeaderPopup.requestFocusInWindow();
+        baseTableHeaderPopup.setSelectedColumn(selectedColumn, savedSearchKey.get(selectedColumn));
+        baseTableHeaderPopup.getInputText().requestFocus();
+        tableHeaderPop.show();
+        isShow = true;
+    }
+
+    public void createHeaderFilter(final ITableHeaderPopupBuilder popupBuilder) {
+        baseTableHeaderPopup = new BaseTableHeaderPopup() {
+            @Override
+            public void closePopup() {
+                hideTableHeaderPanel();
+            }
+
+            @Override
+            public Task search(String key, int selectedColumn) {
+                savedSearchKey.put(selectedColumn, key);
+                hideTableHeaderPanel();
+                return popupBuilder.filterData(savedSearchKey);
+            }
+        };
+
+        /*add icon*/
+        for (int column : popupBuilder.getFilterColumnHeader()) {
+            savedSearchKey.put(column, "");
+            /*tableheader*/
+
+            TableColumn tableColumn = jTableFormat.getJtable().getColumnModel().getColumn(column);
+            tableColumn.setHeaderRenderer(new AssetHeaderRender(""));
+        }
+
+        jTableFormat.getJtable().getTableHeader().addMouseListener(new MouseListener() {
+
+            private int savedSelectedColumn = -1;
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JTableHeader tableHeader = jTableFormat.getJtable().getTableHeader();
+                int selectedColumn = tableHeader.getColumnModel().getColumnIndexAtX(e.getX());
+                for (int column : popupBuilder.getFilterColumnHeader()) {
+                    if (selectedColumn == column) {
+                        if (savedSelectedColumn != selectedColumn) {
+                            savedSelectedColumn = selectedColumn;
+                            hideTableHeaderPanel();
+                        }
+                        showTableHeaderPanel(selectedColumn);
+                        break;
+                    }
+                }
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+
+        }
+        );
+
     }
 
     public void createTable(Class bean) {
@@ -77,7 +217,9 @@ public class BindTableHelper<T> {
                 // System.out.println("bind object:"+temp);
                 columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create(temp));
                 columnBinding.setColumnName(name);
-                columnBinding.setColumnClass(String.class);
+                columnBinding
+                        .setColumnClass(String.class
+                        );
                 i++;
 
             }
@@ -102,7 +244,9 @@ public class BindTableHelper<T> {
                     String name = bindObject[i][1];
                     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${" + temp + "}"));
                     columnBinding.setColumnName(name);
-                    columnBinding.setColumnClass(String.class);
+                    columnBinding
+                            .setColumnClass(String.class
+                            );
                 }
 
             }
@@ -135,7 +279,9 @@ public class BindTableHelper<T> {
                     // System.out.println("bind object:"+temp);
                     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create(temp));
                     columnBinding.setColumnName(name);
-                    columnBinding.setColumnClass(String.class);
+                    columnBinding
+                            .setColumnClass(String.class
+                            );
                     i++;
                 }
             }
@@ -163,8 +309,10 @@ public class BindTableHelper<T> {
      */
     public void setIntegerType(int... objects) {
         savedIntegerColumn = objects;
+
         for (int temp : objects) {
-            jTableBinding.getColumnBinding(temp - 1).setColumnClass(Integer.class);
+            jTableBinding.getColumnBinding(temp - 1).setColumnClass(Integer.class
+            );
         }
     }
 
@@ -191,8 +339,10 @@ public class BindTableHelper<T> {
      */
     public void setDateType(int... objects) {
         savedDateColumn = objects;
+
         for (int temp : objects) {
-            jTableBinding.getColumnBinding(temp - 1).setColumnClass(Date.class);
+            jTableBinding.getColumnBinding(temp - 1).setColumnClass(Date.class
+            );
         }
     }
 
@@ -249,6 +399,51 @@ public class BindTableHelper<T> {
             }
         }
 
+        /*tableheader*/
+        if (savedSearchKey.size() > 0) {
+            Set keyColumns = savedSearchKey.keySet();
+            Iterator it = keyColumns.iterator();
+            while (it.hasNext()) {
+                int columnIndex = Integer.parseInt(it.next().toString());
+                TableColumn tableColumn = jTableFormat.getJtable().getColumnModel().getColumn(columnIndex);
+                tableColumn.setHeaderRenderer(new AssetHeaderRender(savedSearchKey.get(columnIndex)));
+
+            }
+        }
+
+    }
+
+    class AssetHeaderRender extends DefaultTableCellRenderer {
+
+        String key;
+
+        public AssetHeaderRender(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+            if (value instanceof String) {
+                JButton tabCloseButton = new JButton();
+                String newValue = value.toString();
+                if (!key.equals("")) {
+                    newValue = ":" + key;
+                    tabCloseButton.setForeground(Color.red);
+                }
+                tabCloseButton.setText(newValue);
+                tabCloseButton.setIcon(searchIcon);
+                tabCloseButton.setOpaque(false);
+//                tabCloseButton.setBorder(null);
+//                tabCloseButton.setBorderPainted(false);
+                tabCloseButton.setContentAreaFilled(false);
+                tabCloseButton.setToolTipText("点击查询");
+                tabCloseButton.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+                return tabCloseButton;
+            }
+
+            return this;
+        }
     }
 
     /**
@@ -281,6 +476,7 @@ public class BindTableHelper<T> {
 
     public Printer createPrinter(String reportName, List sourceData) {
         return new Printer(reportName, sourceData);
+
     }
 
     public class Printer {
@@ -321,9 +517,9 @@ public class BindTableHelper<T> {
                                         temp = "";
                                     } else if (binder.getColumnClass() == Data.class) {
                                         temp = new Date();
-                                    }  else if (binder.getColumnClass() == Boolean.class) {
+                                    } else if (binder.getColumnClass() == Boolean.class) {
                                         temp = false;
-                                    }else {
+                                    } else {
                                         temp = -1;
                                     }
                                 }

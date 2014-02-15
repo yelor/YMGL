@@ -35,8 +35,6 @@ public class BuMenTask extends BaseTask {
     @Override
     public Object doBackgrounp() {
         try {
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             DepartmentFindEntity dps = restTemplate.getForObject(URI, DepartmentFindEntity.class);
             return dps;
         } catch (RestClientException e) {

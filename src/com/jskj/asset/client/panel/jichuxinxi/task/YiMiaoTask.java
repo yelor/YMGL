@@ -15,37 +15,35 @@ import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-
-
 /**
  *
  * @author huiqi
  */
 public class YiMiaoTask extends BaseTask {
+
     private static final Logger logger = Logger.getLogger(YiMiaoTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "yimiao";
     private int pageSize;
     private int pageIndex;
+    private String conditionSql;
 
     public YiMiaoTask() {
-        this(0,20);
+        this(0, 20, "");
     }
 
-    public YiMiaoTask(int pageIndex,int pageSize) {
+    public YiMiaoTask(int pageIndex, int pageSize, String conditionSql) {
         super();
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
+        this.conditionSql = conditionSql;
     }
-    
-    
 
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            YiMiaotbFindEntity yimiaos = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, YiMiaotbFindEntity.class);
+            String urlParam = "pagesize=" + pageSize + "&pageindex=" + pageIndex + "&conditionSql=" + conditionSql;
+            logger.info("URL parameter:" + urlParam);
+            YiMiaotbFindEntity yimiaos = restTemplate.getForObject(URI + "?"+urlParam, YiMiaotbFindEntity.class);
             return yimiaos;
         } catch (RestClientException e) {
             logger.error(e);

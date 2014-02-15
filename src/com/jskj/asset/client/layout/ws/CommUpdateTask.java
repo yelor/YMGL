@@ -8,13 +8,11 @@ package com.jskj.asset.client.layout.ws;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -39,11 +37,9 @@ public abstract class CommUpdateTask<T> extends BaseTask {
         ComResponse<T> response = null;
         try {
             //使用Spring3 RESTful client来POSThttp数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-           // response = restTemplate.postForObject(URI + serviceId, requestData, ComResponse.class);
-            
-          response = restTemplate.exchange(URI + serviceId, HttpMethod.POST, new HttpEntity<T>(requestData),  new ParameterizedTypeReference<ComResponse<T>>(){}).getBody();
-            
+            response = restTemplate.exchange(URI + serviceId, HttpMethod.POST, new HttpEntity<T>(requestData), new ParameterizedTypeReference<ComResponse<T>>() {
+            }).getBody();
+
         } catch (RestClientException e) {
             logger.error(e);
             return e;

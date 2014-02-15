@@ -20,30 +20,30 @@ import org.springframework.web.client.RestTemplate;
  * @author huiqi
  */
 public class SupplierTask extends BaseTask {
+
     private static final Logger logger = Logger.getLogger(SupplierTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "supplier";
     private int pageSize = 10;
     private int pageIndex = 1;
+    private String conditionSql;
 
     public SupplierTask() {
-        this(1,20);
+        this(1, 20, "");
     }
 
-    public SupplierTask(int pageIndex,int pageSize) {
+    public SupplierTask(int pageIndex, int pageSize, String conditionSql) {
         super();
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
+        this.conditionSql = conditionSql;
     }
-    
-    
 
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            SupplierFindEntity suppliers = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, SupplierFindEntity.class);
+            String urlParam = "pagesize=" + pageSize + "&pageindex=" + pageIndex + "&conditionSql=" + conditionSql;
+            logger.info("URL parameter:" + urlParam);
+            SupplierFindEntity suppliers = restTemplate.getForObject(URI + "?" + urlParam, SupplierFindEntity.class);
             return suppliers;
         } catch (RestClientException e) {
             logger.error(e);

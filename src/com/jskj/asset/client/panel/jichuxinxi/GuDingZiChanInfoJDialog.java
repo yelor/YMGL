@@ -21,6 +21,7 @@ import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
+import com.jskj.asset.client.util.DanHao;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,6 +144,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("基本信息")); // NOI18N
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
+            gdzcSequence.setText(DanHao.getDanHao("ZC"));
         } else {//更新
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("资产编号:" + appParam.getGdzcId())); // NOI18N
             jCheckBoxCont.setSelected(false);
@@ -476,6 +478,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
 
         suppliertb$supplierName.setName("suppliertb$supplierName"); // NOI18N
 
+        jButton5.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
@@ -493,6 +496,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
+        gdzcSequence.setEnabled(false);
         gdzcSequence.setName("gdzcSequence"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -733,6 +737,22 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         return null;
     }
 
+    @Action
+    public void generatorBar() {
+        String barcode = gdzcSequence.getText();
+        String label = gdzcName.getText();
+        if (barcode == null) {
+            return;
+        }
+        if (label.trim().equals("")) {
+            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+            if (result != AssetMessage.OK_OPTION) {
+                gdzcName.grabFocus();
+                return;
+            }
+        }
+        DanHao.printBarCode128(label, barcode);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField depottb$depotName;

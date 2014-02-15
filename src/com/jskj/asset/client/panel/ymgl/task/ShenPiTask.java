@@ -32,7 +32,6 @@ public class ShenPiTask extends BaseTask{
     @Override
     public Object doBackgrounp() {
         try{
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             restTemplate.postForObject(SP_URI, yimiaosp,ShenPiEntity.class );
         }catch (RestClientException e) {
             logger.error(e);

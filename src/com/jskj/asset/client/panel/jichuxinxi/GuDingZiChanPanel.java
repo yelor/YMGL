@@ -11,11 +11,13 @@ import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
 import com.jskj.asset.client.bean.entity.Gudingzichantb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.GudingzichanFindTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -35,7 +37,7 @@ public class GuDingZiChanPanel extends BasePanel {
     private int pageIndex;
     public int pageSize;
     private int count;
-
+    private String conditionSql;
     private List<GudingzichanAll> currentPageData;
 
     private final BindTableHelper<GudingzichanAll> bindTable;
@@ -46,7 +48,7 @@ public class GuDingZiChanPanel extends BasePanel {
     public GuDingZiChanPanel() {
         super();
         initComponents();
-
+        conditionSql = "";
         pageIndex = 1;
         pageSize = 20;
         count = 0;
@@ -55,12 +57,56 @@ public class GuDingZiChanPanel extends BasePanel {
         {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"kucunshangxian", "库存上限"}, {"kucunxiaxian", "库存下限"}, {"gdzcSequence", "条形码"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
+
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{0,1, 2, 3, 4,8};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(0).trim().equals("")) {
+                        sql.append("gdzc_id =").append(searchKeys.get(0).trim()).append(" and ");
+                    }
+                    if (!searchKeys.get(1).trim().equals("")) {
+                        sql.append("gdzc_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(2).trim().equals("")) {
+                        sql.append("gdzc_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(3).trim().equals("")) {
+                        sql.append("gdzc_guige like \"%").append(searchKeys.get(3).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(4).trim().equals("")) {
+                        sql.append("gdzc_xinghao like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                     if (!searchKeys.get(8).trim().equals("")) {
+                        sql.append("gdzc_sequence = ").append(searchKeys.get(8).trim()).append(" and ");
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     private class RefreshTask extends GudingzichanFindTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize, "gdzc", "");
+            super(pageIndex, pageSize, "gdzc", conditionSql);
         }
 
         @Override
@@ -93,7 +139,6 @@ public class GuDingZiChanPanel extends BasePanel {
         jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
@@ -190,16 +235,6 @@ public class GuDingZiChanPanel extends BasePanel {
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
-
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
         jToolBar2.setBorderPainted(false);
@@ -242,8 +277,8 @@ public class GuDingZiChanPanel extends BasePanel {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -421,7 +456,7 @@ public class GuDingZiChanPanel extends BasePanel {
             }
         });
     }
-    
+
     @Action
     public Task delete() {
         GudingzichanAll selectedData = selectedDataFromTable();
@@ -448,7 +483,6 @@ public class GuDingZiChanPanel extends BasePanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
@@ -506,7 +540,7 @@ public class GuDingZiChanPanel extends BasePanel {
 
     @Action
     public Task print() {
-        GudingzichanFindTask printData = new GudingzichanFindTask(0, count, "gdzc/", "") {
+        GudingzichanFindTask printData = new GudingzichanFindTask(0, count, "gdzc/", conditionSql) {
             @Override
             public void responseResult(GudingzichanFindEntity response) {
                 bindTable.createPrinter("固定资产", response.getResult()).buildInBackgound().execute();

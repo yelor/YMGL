@@ -6,12 +6,19 @@ package com.jskj.asset.client.layout;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.AssetClientView;
+import com.jskj.asset.client.bean.UserSessionEntity;
+import com.jskj.asset.client.util.BeanFactory;
 import com.jskj.asset.client.util.ProgressPanel;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JFrame;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -23,15 +30,28 @@ public abstract class BaseTask extends Task<Object, Void> {
     // private JFrame focusComponent;
     private boolean processDisplay = true;
     public static Lock lock = new ReentrantLock();
-    
-    public final static int STATUS_OK=0;
-     public final static int STATUS_ERROR=-1;
-    
-    
+
+    public final static int STATUS_OK = 0;
+    public final static int STATUS_ERROR = -1;
+
+    protected static RestTemplate restTemplate;
+
+    static {
+        restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
+    }
+
     protected AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
 
     public BaseTask(Application app) {
         super(app);
+//        UserSessionEntity sessionEntity = AssetClientApp.getSessionMap();
+//        if (sessionEntity != null && sessionEntity.getUsertb() != null) {
+//            /*add http header*/
+//            HttpComponentsClientHttpRequestFactory httpRequestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
+//            DefaultHttpClient httpClient = (DefaultHttpClient) httpRequestFactory.getHttpClient();
+//            httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, 
+//                    new UsernamePasswordCredentials(sessionEntity.getUsertb().getUserName(), sessionEntity.getUsertb().getUserPassword()));
+//        }
     }
 
     public BaseTask() {

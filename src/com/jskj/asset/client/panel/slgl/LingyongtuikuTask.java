@@ -32,7 +32,6 @@ public class LingyongtuikuTask extends BaseTask{
     @Override
     public Object doBackgrounp() {
         try{
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             restTemplate.postForObject(ADD_URI, lytk, LingyongtuikuDetailEntity.class);
         }catch (RestClientException e) {
             logger.error(e);

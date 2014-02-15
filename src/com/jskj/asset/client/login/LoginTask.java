@@ -10,8 +10,12 @@ import com.jskj.asset.client.bean.UserSessionEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.util.BeanFactory;
 import java.util.HashMap;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -32,7 +36,16 @@ public abstract class LoginTask extends Task<Object, Void> {
     protected Object doInBackground() throws Exception {
         try {
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            UserSessionEntity session = restTemplate.postForObject(java.net.URI.create(URI), map, UserSessionEntity.class);
+
+            Object userNameObj = map.get("userName");
+            Object passwdObj = map.get("userPassword");
+            /*add http header*/
+            HttpComponentsClientHttpRequestFactory httpRequestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
+            DefaultHttpClient httpClient = (DefaultHttpClient) httpRequestFactory.getHttpClient();
+            httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY,
+                    new UsernamePasswordCredentials(userNameObj.toString(), passwdObj.toString()));
+
+            UserSessionEntity session = restTemplate.getForObject(java.net.URI.create(URI),UserSessionEntity.class);
             return session;
         } catch (Exception e) {
             e.printStackTrace();

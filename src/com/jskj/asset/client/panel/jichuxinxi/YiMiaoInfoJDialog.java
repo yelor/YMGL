@@ -20,6 +20,7 @@ import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
+import com.jskj.asset.client.util.DanHao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +39,10 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
     private YimiaoAll appParam;
     private BasePanel parentPanel;
+
     /**
      * Creates new form YiMiaoDengJi1JDialog
+     *
      * @param parentPanel
      */
     public YiMiaoInfoJDialog(BasePanel parentPanel) {
@@ -47,12 +50,12 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         initComponents();
         this.parentPanel = parentPanel;
         setTitle("疫苗信息");
-        
+
         yimiaoType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("疫苗类别")));
         yimiaoJixing.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("剂型")));
         unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
         yimiaoFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("辅助单位")));
-        
+
         ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
 
             @Override
@@ -364,6 +367,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         suppliertb$supplierName.setName("suppliertb$supplierName"); // NOI18N
 
+        jButton5.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
@@ -386,6 +390,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
+        yimiaoTiaoxingma.setEnabled(false);
         yimiaoTiaoxingma.setName("yimiaoTiaoxingma"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -623,6 +628,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("疫苗信息")); // NOI18N
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
+            yimiaoTiaoxingma.setText(DanHao.getDanHao("YM"));
         } else {//更新
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("更新疫苗:" + appParam.getYimiaoId())); // NOI18N
             jCheckBoxCont.setSelected(false);
@@ -671,7 +677,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入疫苗剂型!");
             return null;
         }
-       
+
         super.copyToBean(appParam, jPanel3);
         super.copyToBean(appParam, jPanel4);
         super.copyToBean(appParam, jPanel5);
@@ -685,7 +691,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         if (!supplierId.trim().equals("")) {
             appParam.setSupplierId(Integer.parseInt(supplierId));
         }
-        
+
         /*得到图片路径*/
         BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
         List source = mode.getSource();
@@ -703,8 +709,8 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         if (appParam.getYimiaoId() != null && appParam.getYimiaoId() > 0) {
             serviceId = "yimiao/update";
         }
-        
-        return  new CommUpdateTask<YimiaoAll>(appParam, serviceId) {
+
+        return new CommUpdateTask<YimiaoAll>(appParam, serviceId) {
             @Override
             public void responseResult(ComResponse<YimiaoAll> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
@@ -725,7 +731,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         };
     }
-    
+
     @Action
     public Task uploadPic() {
         BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
@@ -787,7 +793,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         return null;
     }
 
-   
     @Action
     public void close() {
         this.dispose();
@@ -830,6 +835,24 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         }
         return null;
     }
+
+    @Action
+    public void generatorBar() {
+        String barcode = yimiaoTiaoxingma.getText();
+        String label = yimiaoName.getText();
+        if (barcode == null) {
+            return;
+        }
+        if(label.trim().equals("")){
+          int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+          if(result != AssetMessage.OK_OPTION){
+              yimiaoName.grabFocus();
+              return;
+          }
+        }
+        DanHao.printBarCode128(label, barcode);
+    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

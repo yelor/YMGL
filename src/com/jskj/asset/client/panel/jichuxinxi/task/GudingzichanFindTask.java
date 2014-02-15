@@ -47,16 +47,11 @@ public abstract class GudingzichanFindTask extends BaseTask {
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            map.put("pagesize", String.valueOf(pageSize));
-            map.put("pageindex", String.valueOf(pageIndex));
-            map.put("conditionSql", conditionSql);
+            String urlParam = "pagesize=" + pageSize + "&pageindex=" + pageIndex + "&conditionSql=" + conditionSql;
+            logger.info("URL parameter:" + urlParam);
 
-            logger.debug("pagesize:" + pageSize + ",pageindex:" + pageIndex + ",serviceId:" + serviceId);
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
 //            CommFindEntity<T> response = restTemplate.getForObject(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, CommFindEntity.class);
-            GudingzichanFindEntity gudingzhichan = restTemplate.getForObject(URI+serviceId+ "?pagesize=" + pageSize + "&pageindex=" + pageIndex, GudingzichanFindEntity.class);
+            GudingzichanFindEntity gudingzhichan = restTemplate.getForObject(URI+serviceId+ "?"+urlParam, GudingzichanFindEntity.class);
             return gudingzhichan;
         } catch (RestClientException e) {
             logger.error(e);

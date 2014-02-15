@@ -50,16 +50,11 @@ public abstract class DizhiyihaopinFindTask extends BaseTask {
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            map.put("pagesize", String.valueOf(pageSize));
-            map.put("pageindex", String.valueOf(pageIndex));
-            map.put("conditionSql", conditionSql);
 
-            logger.debug("pagesize:" + pageSize + ",pageindex:" + pageIndex + ",serviceId:" + serviceId);
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
+            String urlParam = "pagesize=" + pageSize + "&pageindex=" + pageIndex + "&conditionSql=" + conditionSql;
+            logger.info("URL parameter:" + urlParam);
 //            CommFindEntity<T> response = restTemplate.getForObject(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, CommFindEntity.class);
-            CommFindEntity<DizhiyihaopinAll> response = restTemplate.exchange(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex,
+            CommFindEntity<DizhiyihaopinAll> response = restTemplate.exchange(URI + serviceId + "?"+urlParam,
                     HttpMethod.GET,
                     null,
                     new ParameterizedTypeReference<CommFindEntity<DizhiyihaopinAll>>() {

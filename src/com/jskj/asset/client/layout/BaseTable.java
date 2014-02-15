@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.ActionMap;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -56,6 +57,7 @@ public class BaseTable extends JTable {
         addMouseListener(rightMouseAdapter);
         setRowHeight(25);
         singleEditRowTable = null;
+        getTableHeader().setReorderingAllowed(false);
 
         addMouseListener(new java.awt.event.MouseAdapter() {
 
@@ -71,7 +73,8 @@ public class BaseTable extends JTable {
         });
 
     }
-
+    
+    
     private void _mouseClicked(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2) { //是双//击事件。
             // openCellPane();
@@ -423,5 +426,6 @@ public class BaseTable extends JTable {
         }
 
     }
+    
 
 }

@@ -119,9 +119,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
             jLabelTotal.setText("正在查询相关结果...");
             if (popBuilder.getWebServiceURI() != null && !popBuilder.getWebServiceURI().trim().equals("")) {
                 try {
-                    //使用Spring3 RESTful client来获取http数据
-                    RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-
+   
                     UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(popBuilder.getWebServiceURI())
                             .queryParam("pagesize", pageSize).queryParam("pageindex", pageIndex);
 

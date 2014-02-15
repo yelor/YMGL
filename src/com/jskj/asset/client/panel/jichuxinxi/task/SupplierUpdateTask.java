@@ -40,8 +40,6 @@ public class SupplierUpdateTask extends BaseTask{
     @Override
     public Object doBackgrounp() {
          try {
-            //使用Spring3 RESTful client来POSThttp数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             if (actionType == ENTITY_SAVE) {
                 restTemplate.postForObject(ADD_URI, supplier, Supplier.class);
             } else if (actionType == ENTITY_UPDATE) {

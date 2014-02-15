@@ -24,11 +24,17 @@ public class UserTask extends BaseTask {
     private final String URI = Constants.HTTP + Constants.APPID + "user";
     private int pageSize = 20;
     private int pageIndex = 1;
+    private String conditionSql;
 
     public UserTask(int pageIndex,int pageSize) {
+        this(pageIndex,pageSize,"");
+    }
+    
+    public UserTask(int pageIndex,int pageSize, String conditionSql) {
         super();
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
+        this.conditionSql = conditionSql;
     }
 
     public UserTask() {
@@ -38,14 +44,9 @@ public class UserTask extends BaseTask {
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            map.put("pagesize", String.valueOf(pageSize));
-            map.put("pageindex", String.valueOf(pageIndex));
-            
-            logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
-            UsertbFindEntity users = restTemplate.getForObject(URI+"?pagesize="+pageSize+"&pageindex="+pageIndex, UsertbFindEntity.class);
+            String urlParam = "pagesize="+pageSize+"&pageindex="+pageIndex+"&conditionSql="+conditionSql;
+            logger.info("URL parameter:"+urlParam);
+            UsertbFindEntity users = restTemplate.getForObject(URI+"?"+urlParam, UsertbFindEntity.class);
             return users;
         } catch (RestClientException e) {
             logger.error(e);

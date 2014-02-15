@@ -40,8 +40,6 @@ public class Yimiaoyanshou_detailTask extends BaseTask {
     public Object doBackgrounp() {
         try {
             Map map = new HashMap();
-            //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             Yimiaoyanshou_detail_tbFindEntity yimiaoyanshou_details = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, Yimiaoyanshou_detail_tbFindEntity.class);
 //            System.out.println("yimiaoyanshou_detail");
             return yimiaoyanshou_details;

@@ -20,6 +20,7 @@ import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
+import com.jskj.asset.client.util.DanHao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,6 +141,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
             jTextFieldDepotID.setText("");
+            dzyhpBarcode.setText(DanHao.getDanHao("DZ"));
         } else {//更新
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("物品编号:" + appParam.getDzyhpId())); // NOI18N
             jCheckBoxCont.setSelected(false);
@@ -481,6 +483,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
 
         suppliertb$supplierName.setName("suppliertb$supplierName"); // NOI18N
 
+        jButton5.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
@@ -498,6 +501,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
+        dzyhpBarcode.setEnabled(false);
         dzyhpBarcode.setName("dzyhpBarcode"); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -531,7 +535,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel17)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dzyhpBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(dzyhpBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5))))
         );
@@ -735,6 +739,23 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             };
         }
         return null;
+    }
+
+    @Action
+    public void generatorBar() {
+        String barcode = dzyhpBarcode.getText();
+        String label = dzyhpName.getText();
+        if (barcode == null) {
+            return;
+        }
+        if (label.trim().equals("")) {
+            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+            if (result != AssetMessage.OK_OPTION) {
+                dzyhpName.grabFocus();
+                return;
+            }
+        }
+        DanHao.printBarCode128(label, barcode);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

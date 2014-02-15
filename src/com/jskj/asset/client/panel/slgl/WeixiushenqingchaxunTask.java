@@ -41,7 +41,6 @@ public class WeixiushenqingchaxunTask extends BaseTask{
     public Object doBackgrounp() {
         try{
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             WeixiushenqingFindEntity wxsq = restTemplate.getForObject(CX_URI + "/" + user +"?pagesize="+pageSize+"&pageindex="+pageIndex,WeixiushenqingFindEntity.class);
             return wxsq;
         }catch (RestClientException e) {

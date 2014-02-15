@@ -42,7 +42,6 @@ public class DanjuleixingTask extends BaseTask {
         try {
             Map map = new HashMap();
             //使用Spring3 RESTful client来获取http数据
-            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
             DanjuleixingtbFindEntity danjuleixings = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, DanjuleixingtbFindEntity.class);
 //            System.out.println("danjuleixing");
             return danjuleixings;
