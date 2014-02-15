@@ -314,7 +314,7 @@
             <Property name="name" type="java.lang.String" value="jTextField12" noResource="true"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField1"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel12">
@@ -333,9 +333,6 @@
           <Properties>
             <Property name="name" type="java.lang.String" value="jTextFieldBaoxiuqi" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField2"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPrice">
           <Properties>
@@ -430,6 +427,7 @@
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton8.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>

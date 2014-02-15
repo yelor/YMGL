@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ZichanYanshoutb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -14,6 +15,9 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -26,9 +30,7 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
 
-    DateChooser dateChooser1,dateChooser2,dateChooser3;
-    JTextField regTextField1,regTextField2,regTextField3;
-    
+    private JTextField regTextField;
     private int zcid;
     private int caigouren_id;
     private int yanshouren_id;
@@ -36,6 +38,8 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private int jianceren_id;
     private String imageUri;
     private ZichanYanshoutb zcys;
+    private int userId;
+    private String userName;
     
     /**
      * Creates new form GuDingZiChanRuKu
@@ -44,9 +48,23 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         super(parent);
         init();
         initComponents();
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
+        userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
         jTextField1.setText(DanHao.getDanHao("zcys"));
         jTextField1.setEditable(false);
+        
+        Calendar c = Calendar.getInstance();
+        jTextField2.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        jTextField2.setEditable(false);
+        
+        jTextFieldYanshouren.setText(userName);
+        jTextFieldYanshouren.setEditable(false);
+        yanshouren_id = userId;
+        
+        jTextFieldZhidanren.setText(userName);
+        jTextFieldZhidanren.setEditable(false);
+        zhidanren_id = userId;
         
         ((BaseTextField) jTextFieldCaigouren).registerPopup(new IPopupBuilder() {
 
@@ -74,38 +92,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     jTextFieldCaigouren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
                     caigouren_id = (Integer)bindedMap.get("userId");
-                }
-            }
-        });
-        
-        ((BaseTextField) jTextFieldYanshouren).registerPopup(new IPopupBuilder() {
-
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
-
-            public String getConditionSQL() {
-                String sql = "";
-                if (!jTextFieldYanshouren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldYanshouren.getText() + "%\"";
-                }
-                return sql;
-            }
-
-            public String[][] displayColumns() {
-                return new String[][]{{"userId", "用户ID"},{"userName", "用户名"}};
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    jTextFieldYanshouren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    jTextFieldZhidanren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    caigouren_id = (Integer)bindedMap.get("userId");
-                    zhidanren_id = (Integer)bindedMap.get("userId");
                 }
             }
         });
@@ -176,15 +162,8 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     }
     
     private void init() {
-        regTextField1 = new JTextField();
-        regTextField2 = new JTextField();
-        regTextField3 = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser3 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField1);
-        dateChooser2.register(regTextField2);
-        dateChooser3.register(regTextField3);
+        regTextField = new BaseTextField();
+        ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
 
     @Action
@@ -193,31 +172,24 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     }
     
     @Action
-    public Task submitForm(){
-        if(jTextField2.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入制单日期！");
-            return null;
-        }
+    public Task submitForm() throws ParseException{
         if(jTextFieldZichan.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入资产名称！");
+            AssetMessage.ERRORSYS("请输入资产名称！",this);
             return null;
         }
         if(jTextField4.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入到货日期！");
+            AssetMessage.ERRORSYS("请输入到货日期！",this);
             return null;
         }
         if(jTextFieldCaigouren.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入采购人！");
-            return null;
-        }
-        if(jTextFieldYanshouren.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入验收人！");
+            AssetMessage.ERRORSYS("请输入采购人！",this);
             return null;
         }
         zcys = new ZichanYanshoutb();
         zcys.setZcysId(jTextField1.getText());
-        zcys.setZcysDate(DateHelper.getStringtoDate(jTextField2.getText(), "yyyy-MM-dd"));
-        zcys.setZcysDaohuodate(DateHelper.getStringtoDate(jTextField4.getText(), "yyyy-MM-dd"));
+        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        zcys.setZcysDate(dateformate.parse(jTextField2.getText()));
+        zcys.setZcysDaohuodate(dateformate.parse(jTextField4.getText()));
         zcys.setGdzcId(zcid);
         zcys.setCaigourenId(caigouren_id);
         zcys.setYanshourenId(yanshouren_id);
@@ -263,9 +235,9 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = regTextField1;
+        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField4 = regTextField2;
+        jTextField4 = regTextField;
         jLabel4 = new javax.swing.JLabel();
         jTextFieldPrice = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
@@ -276,7 +248,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jTextFieldGuige = new javax.swing.JTextField();
-        jTextFieldYanshouren = new BaseTextField();
+        jTextFieldYanshouren = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextFieldUnit = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();

@@ -7,8 +7,6 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.LingyongshenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.Lingyongshenqingdantb;
 import com.jskj.asset.client.bean.entity.WeixiushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.Weixiushenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
@@ -20,7 +18,10 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -34,12 +35,10 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
 
-    private DateChooser dateChooser1;
-    private JTextField regTextField;
-    
     private WeixiushenqingDetailEntity wxsq;
-    private int shenqingrenid;
-    private int zhidanrenid;
+    private int userId;
+    private String userName;
+    private String department;
     private List<ZiChanLieBiaotb> zc;
     private double totalPrice;
     /**
@@ -47,50 +46,22 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
      */
     public GuDingZiChanWeiXiuShenQingJDialog(java.awt.Frame parent) {
         super(parent);
-        init();
         initComponents();
         
         zc = new ArrayList<ZiChanLieBiaotb>();
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
+        userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        department = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
+        
+        jTextFieldShenqingren.setText(userName);
+        jTextFieldDept.setText(department);
         
         jTextField1.setText(DanHao.getDanHao("wxsq"));
         jTextField1.setEditable(false);
         
-        ((BaseTextField) jTextFieldShenqingren).registerPopup(new IPopupBuilder() {
-
-            @Override
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            @Override
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
-
-            @Override
-            public String getConditionSQL() {
-                String sql = "";
-                if (!jTextFieldShenqingren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldShenqingren.getText() + "%\"";
-                }
-                return sql;
-            }
-
-            @Override
-            public String[][] displayColumns() {
-                return new String[][]{{"userId", "用户ID"},{"userName", "用户名"}};
-            }
-
-            @Override
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    jTextFieldShenqingren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    jTextFieldDept.setText(bindedMap.get("departmentId") == null ? "" : bindedMap.get("departmentId").toString());
-                    shenqingrenid = (Integer)bindedMap.get("userId");
-                    zhidanrenid  = AssetClientApp.getSessionMap().getUsertb().getUserId();
-                }
-            }
-        });
+        Calendar c = Calendar.getInstance();
+        jTextField2.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        jTextField2.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
@@ -154,12 +125,6 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
         });
         
     }
-
-    private void init() {
-        regTextField = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField);
-    }
     
     @Action
     public void exit() {
@@ -167,7 +132,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
     }
     
     @Action
-    public Task submitForm(){
+    public Task submitForm() throws ParseException{
         if(jTextField2.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
@@ -183,10 +148,11 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
         wxsq = new WeixiushenqingDetailEntity();
         Weixiushenqingdantb sqd = new Weixiushenqingdantb();
         sqd.setWxsqId(jTextField1.getText());
-        sqd.setWxsqDate(DateHelper.getStringtoDate(jTextField2.getText(), "yyyy-MM-dd"));
+        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        sqd.setWxsqDate(dateformate.parse(jTextField2.getText()));
         sqd.setWxsqRemark(jTextArea1.getText());
-        sqd.setShenqingrenId(shenqingrenid);
-        sqd.setZhidanrenId(zhidanrenid);
+        sqd.setShenqingrenId(userId);
+        sqd.setZhidanrenId(userId);
         sqd.setWeixiufeiyong(totalPrice);
         
         wxsq.setWxsq(sqd);
@@ -234,12 +200,12 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = regTextField;
+        jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldDept = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextFieldShenqingren = new BaseTextField();
+        jTextFieldShenqingren = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
@@ -375,11 +341,13 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
+        jTextField2.setEditable(false);
         jTextField2.setName("jTextField2"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        jTextFieldDept.setEditable(false);
         jTextFieldDept.setName("jTextFieldDept"); // NOI18N
 
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
@@ -388,6 +356,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends javax.swing.JDialog {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
+        jTextFieldShenqingren.setEditable(false);
         jTextFieldShenqingren.setName("jTextFieldShenqingren"); // NOI18N
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N

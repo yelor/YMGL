@@ -15,6 +15,8 @@ public class ShenPiEntity {
     private String id;
     
     private String result;
+    
+    private String reason;
 
     public String getUser() {
         return user;
@@ -38,6 +40,14 @@ public class ShenPiEntity {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
        
 }

@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
@@ -15,13 +16,14 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -31,11 +33,9 @@ import org.jdesktop.application.Task;
  */
 public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
 
-    private DateChooser dateChooser1;
-    private JTextField regTextField;
-    
     private ShenQingDetailEntity cgsq;
     private int userId;
+    private String userName;
     private int supplierId;
     private List<ZiChanLieBiaotb> zc;
     /**
@@ -45,13 +45,21 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
      */
     public DiZhiYiHaoPinCaiGouShenQingJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
-        init();
         initComponents();
         
         zc = new ArrayList<ZiChanLieBiaotb>();
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
+        userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
         jTextField1.setText(DanHao.getDanHao("dzyh"));
         jTextField1.setEditable(false);
+        
+        Calendar c = Calendar.getInstance();
+        jTextField2.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        jTextField2.setEditable(false);
+        
+        jTextFieldUser.setText(userName);
+        jTextFieldUser.setEditable(false);
         
         ((BaseTextField) jTextFieldSupplier).registerPopup(new IPopupBuilder() {
 
@@ -79,36 +87,6 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     jTextFieldSupplier.setText(bindedMap.get("supplierName") == null ? "" : bindedMap.get("supplierName").toString());
                     supplierId = (Integer)bindedMap.get("supplierId");
-                }
-            }
-        });
-        
-        ((BaseTextField) jTextFieldUser).registerPopup(new IPopupBuilder() {
-
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
-
-            public String getConditionSQL() {
-                String sql = "";
-                if (!jTextFieldUser.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldUser.getText() + "%\"";
-                }
-                return sql;
-            }
-
-            public String[][] displayColumns() {
-                return new String[][]{{"userId", "用户ID"},{"userName", "用户名"}};
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    jTextFieldUser.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    userId = (Integer)bindedMap.get("userId");
                 }
             }
         });
@@ -168,39 +146,26 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
         });
     }
 
-    private void init() {
-        regTextField = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField);
-    }
-    
     @Action
     public void exit() {
         this.dispose();
     }
     
     @Action
-    public Task submitForm(){
+    public Task submitForm() throws ParseException{
         if(jTextFieldSupplier.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入供应单位！");
-            return null;
-        }
-        if(jTextField2.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入制单日期！");
-            return null;
-        }
-        if(jTextFieldUser.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入经办人！");
+            AssetMessage.ERRORSYS("请输入供应单位！",this);
             return null;
         }
         if(zc.size() < 1){
-            JOptionPane.showMessageDialog(null, "请选择要采购的资产！");
+            AssetMessage.ERRORSYS("请选择要采购的资产！",this);
             return null;
         }
         cgsq = new ShenQingDetailEntity();
         Shenqingdantb sqd = new Shenqingdantb();
         sqd.setShenqingdanId(jTextField1.getText());
-        sqd.setShenqingdanDate(DateHelper.getStringtoDate(regTextField.getText(), "yyyy-MM-dd"));
+        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        sqd.setShenqingdanDate(dateformate.parse(jTextField2.getText()));
         sqd.setSupplierId(supplierId);
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
@@ -245,9 +210,9 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = regTextField;
+        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldUser = new BaseTextField();
+        jTextFieldUser = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextFieldSupplier = new BaseTextField();
         jLabel18 = new javax.swing.JLabel();

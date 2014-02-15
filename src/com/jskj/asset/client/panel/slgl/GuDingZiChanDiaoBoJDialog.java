@@ -7,17 +7,17 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
-import com.jskj.asset.client.bean.entity.Zichanweixiudantb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -27,9 +27,6 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
 
-    DateChooser dateChooser1;
-    JTextField regTextField1;
-    
     private int zcId;
     private int yichurenId;
     private int jieshourenId;
@@ -39,11 +36,14 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
      */
     public GuDingZiChanDiaoBoJDialog(java.awt.Frame parent) {
         super(parent);
-        init();
         initComponents();
         
         jTextField1.setText(DanHao.getDanHao("zcdb"));
         jTextField1.setEditable(false);
+        
+        Calendar c = Calendar.getInstance();
+        jTextField12.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        jTextField12.setEditable(false);
         
         ((BaseTextField) jTextFieldZichan).registerPopup(new IPopupBuilder() {
 
@@ -146,19 +146,13 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         });
     }
 
-    private void init() {
-        regTextField1 = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField1);
-    }
-    
     @Action
     public void exit() {
         this.dispose();
     }
     
     @Action
-    public Task submitForm(){
+    public Task submitForm() throws ParseException{
         if(jTextField12.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
@@ -181,7 +175,8 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         }
         diaobodan = new Zichandiaobodantb();
         diaobodan.setCundangdidian(jTextField14.getText());
-        diaobodan.setDiaoboDate(DateHelper.getStringtoDate(jTextField12.getText(), "yyyy-MM-dd"));
+        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        diaobodan.setDiaoboDate(dateformate.parse(jTextField12.getText()));
         diaobodan.setJieshourenId(jieshourenId);
         diaobodan.setRemark(jTextArea1.getText());
         diaobodan.setYichurenId(yichurenId);
@@ -240,7 +235,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldZichan = new BaseTextField();
-        jTextField12 = regTextField1;
+        jTextField12 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jTextField14 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -315,6 +310,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
 
         jTextFieldZichan.setName("jTextFieldZichan"); // NOI18N
 
+        jTextField12.setEditable(false);
         jTextField12.setName("jTextField12"); // NOI18N
 
         jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
