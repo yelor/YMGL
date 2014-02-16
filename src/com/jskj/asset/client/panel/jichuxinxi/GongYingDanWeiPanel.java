@@ -6,17 +6,17 @@
 package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.GudingzichanAll;
 import com.jskj.asset.client.bean.entity.Supplier;
 import com.jskj.asset.client.bean.entity.SupplierFindEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.SupplierTask;
-import com.jskj.asset.client.panel.jichuxinxi.task.SupplierUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -38,6 +38,7 @@ public class GongYingDanWeiPanel extends BasePanel {
     private GongYingDanWeiInfoJDialog gongYingDanWeiInfoJDialog;
     private final BindTableHelper<Supplier> bindTable;
     private final int pageSize;
+    private String conditionSql;
 
     /**
      * Creates new form YiMiaoJDialog
@@ -48,11 +49,46 @@ public class GongYingDanWeiPanel extends BasePanel {
         pageIndex = 1;
         count = 0;
         pageSize = 20;
+        conditionSql="";
 
         bindTable = new BindTableHelper<Supplier>(jTableSupplier, new ArrayList<Supplier>());
         bindTable.createTable(new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}, {"supplierPhone", "电话"}, {"supplierFax", "传真"}, {"supplierAddr", "单位地址"}, {"supplierRemark", "备注"}});
         bindTable.setIntegerType(1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{0,1,2};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(0).trim().equals("")) {
+                        sql.append("supplier_id =").append(searchKeys.get(0).trim()).append(" and ");
+                    }
+                    if (!searchKeys.get(1).trim().equals("")) {
+                        sql.append("supplier_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(2).trim().equals("")) {
+                        sql.append("supplier_constactPerson like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     /**
@@ -75,7 +111,6 @@ public class GongYingDanWeiPanel extends BasePanel {
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableSupplier = new javax.swing.JTable();
 
@@ -182,16 +217,6 @@ public class GongYingDanWeiPanel extends BasePanel {
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
-
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
 
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
         ctrlPane.setLayout(ctrlPaneLayout);
@@ -341,7 +366,6 @@ public class GongYingDanWeiPanel extends BasePanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton3;
@@ -363,7 +387,7 @@ public class GongYingDanWeiPanel extends BasePanel {
 
     private class RefreshTask extends SupplierTask {
         public RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize);
+            super(pageIndex, pageSize,conditionSql);
         }
 
         @Override
@@ -473,7 +497,7 @@ public class GongYingDanWeiPanel extends BasePanel {
 
     @Action
     public Task print() {
-        SupplierTask printData = new SupplierTask(0, count) {
+        SupplierTask printData = new SupplierTask(0, count,conditionSql) {
             
        @Override
         public void onSucceeded(Object object) {

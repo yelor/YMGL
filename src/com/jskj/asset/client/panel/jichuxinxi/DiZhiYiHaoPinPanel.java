@@ -9,12 +9,14 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.DizhiyihaopinAll;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.DizhiyihaopinFindTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,6 +35,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     private int pageIndex;
     public int pageSize;
     private int count;
+    private String conditionSql;
 
     private List<DizhiyihaopinAll> currentPageData;
 
@@ -47,17 +50,61 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 20;
         count = 0;
+        conditionSql="";
         bindTable = new BindTableHelper<DizhiyihaopinAll>(jTable1, new ArrayList<DizhiyihaopinAll>());
         bindTable.createTable(new String[][]{{"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称"}, {"dzyhpType", "物品类别"}, {"dzyhpGuige", "规格"},
         {"dzyhpXinghao", "型号"}, {"unitId", "单位"}, {"dzyhpKucunshangxian", "库存上限"}, {"dzyhpKucunxiaxian", "库存下限"}, {"dzyhpBarcode", "条形码"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
+        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
+
+            @Override
+            public int[] getFilterColumnHeader() {
+                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
+                return new int[]{0,1,2,3,4,8};
+            }
+
+            @Override
+            public Task filterData(HashMap<Integer, String> searchKeys) {
+
+                if (searchKeys.size() > 0) {
+                    StringBuilder sql = new StringBuilder();
+                    if (!searchKeys.get(0).trim().equals("")) {
+                        sql.append("dzyhp_id =").append(searchKeys.get(0).trim()).append(" and ");
+                    }
+                    if (!searchKeys.get(1).trim().equals("")) {
+                        sql.append("dzyhp_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(2).trim().equals("")) {
+                        sql.append("dzyhp_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(3).trim().equals("")) {
+                        sql.append("dzyhp_guige like \"%").append(searchKeys.get(3).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(4).trim().equals("")) {
+                        sql.append("dzyhp_xinghao like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
+                    }
+                    if (!searchKeys.get(8).trim().equals("")) {
+                        sql.append("dzyhp_barcode = ").append(searchKeys.get(8).trim()).append(" and ");
+                    }
+                    if (sql.length() > 0) {
+                        sql.delete(sql.length() - 5, sql.length() - 1);
+                    }
+                    conditionSql = sql.toString();
+                } else {
+                    conditionSql = "";
+                }
+
+                return reload();
+            }
+
+        });
     }
 
     private class RefreshTask extends DizhiyihaopinFindTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize, "dizhiyihaopin/", "");
+            super(pageIndex, pageSize, "dizhiyihaopin/", conditionSql);
         }
 
         @Override
@@ -102,7 +149,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
 
     @Action
     public Task print() {
-        DizhiyihaopinFindTask printData = new DizhiyihaopinFindTask(0, count, "dizhiyihaopin/", "") {
+        DizhiyihaopinFindTask printData = new DizhiyihaopinFindTask(0, count, "dizhiyihaopin/", conditionSql) {
             @Override
             public void responseResult(CommFindEntity<DizhiyihaopinAll> response) {
                 bindTable.createPrinter("低值易耗品", response.getResult()).buildInBackgound().execute();
@@ -128,8 +175,6 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
@@ -215,27 +260,6 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
-
-        jButton2.setAction(actionMap.get("print")); // NOI18N
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-        jToolBar1.add(jButton2);
-
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
 
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
@@ -479,10 +503,8 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

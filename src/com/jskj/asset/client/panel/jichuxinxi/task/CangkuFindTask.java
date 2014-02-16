@@ -42,23 +42,21 @@ public abstract class CangkuFindTask extends BaseTask {
     }
 
     public CangkuFindTask(String serviceId) {
-        this(1, 20, serviceId,"");
+        this(1, 20, serviceId, "");
     }
 
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            map.put("pagesize", String.valueOf(pageSize));
-            map.put("pageindex", String.valueOf(pageIndex));
-            map.put("conditionSql", conditionSql);
 
-            logger.debug("pagesize:" + pageSize + ",pageindex:" + pageIndex + ",serviceId:" + serviceId);
+            String urlParam = "pagesize=" + pageSize + "&pageindex=" + pageIndex + "&conditionSql=" + conditionSql;
+            logger.info("URL parameter:" + urlParam);
 //            CommFindEntity<T> response = restTemplate.getForObject(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, CommFindEntity.class);
-            CommFindEntity<DepotALL> response = restTemplate.exchange(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, 
-                          HttpMethod.GET, 
-                          null, 
-                          new ParameterizedTypeReference<CommFindEntity<DepotALL>>(){}).getBody();
+            CommFindEntity<DepotALL> response = restTemplate.exchange(URI + serviceId + "?"+urlParam,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<CommFindEntity<DepotALL>>() {
+                    }).getBody();
             return response;
         } catch (RestClientException e) {
             logger.error(e);

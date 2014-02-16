@@ -8,40 +8,39 @@ package com.jskj.asset.client.panel.jichuxinxi.task;
 import com.jskj.asset.client.bean.entity.KehudanweitbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author huiqi
  */
 public class KehudanweiTask extends BaseTask {
+
     private static final Logger logger = Logger.getLogger(KehudanweiTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "kehudanwei";
     private int pageSize = 20;
     private int pageIndex = 1;
+    private String conditionSql;
+    
 
     public KehudanweiTask() {
-        this(1,20);
+        this(1, 20,"");
     }
 
-    public KehudanweiTask(int pageIndex,int pageSize) {
+    public KehudanweiTask(int pageIndex, int pageSize, String conditionSql) {
         super();
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
+        this.conditionSql = conditionSql;
     }
-    
-    
 
     @Override
     public Object doBackgrounp() {
         try {
-            Map map = new HashMap();
-            KehudanweitbFindEntity kehudanweis = restTemplate.getForObject(URI + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, KehudanweitbFindEntity.class);
+            String urlParam = "pagesize=" + pageSize + "&pageindex=" + pageIndex + "&conditionSql=" + conditionSql;
+            logger.info("URL parameter:" + urlParam);
+            KehudanweitbFindEntity kehudanweis = restTemplate.getForObject(URI + "?"+urlParam, KehudanweitbFindEntity.class);
 //            System.out.println("kehudanwei");
             return kehudanweis;
         } catch (RestClientException e) {

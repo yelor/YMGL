@@ -58,7 +58,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTextField12" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <Component id="jTextField" min="-2" pref="164" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -169,7 +169,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField12" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jTextField" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldBaoxiuqi" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -301,12 +301,12 @@
             <Property name="name" type="java.lang.String" value="jLabel9" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField12">
+        <Component class="javax.swing.JTextField" name="jTextField">
           <Properties>
-            <Property name="name" type="java.lang.String" value="jTextField12" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jTextField" noResource="true"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField1"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel12">
@@ -325,9 +325,6 @@
           <Properties>
             <Property name="name" type="java.lang.String" value="jTextFieldBaoxiuqi" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField2"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPrice">
           <Properties>
@@ -422,6 +419,7 @@
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton8.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>

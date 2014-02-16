@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ZichanYanshoutb;
 import com.jskj.asset.client.bean.entity.Zichanweixiudantb;
 import com.jskj.asset.client.constants.Constants;
@@ -15,6 +16,8 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -33,6 +36,8 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
     private int zcId;
     private int songxiuren_id;
     private int pizhunren_id;
+    private int userId;
+    private String userName;
     private Zichanweixiudantb weixiudan;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
@@ -41,6 +46,10 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
         super(parent);
         init();
         initComponents();
+        
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
+        userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        jTextFieldPizhunren.setText(userName);
         
         jTextField6.setText(DanHao.getDanHao("zcwx"));
         jTextField6.setEditable(false);
@@ -80,7 +89,6 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
             }
         });
         
-        
         ((BaseTextField) jTextFieldSongxiuren).registerPopup(new IPopupBuilder() {
 
             public int getType() {
@@ -111,35 +119,6 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
             }
         });
         
-        ((BaseTextField) jTextFieldPizhunren).registerPopup(new IPopupBuilder() {
-
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
-
-            public String getConditionSQL() {
-                String sql = "";
-                if (!jTextFieldPizhunren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldPizhunren.getText() + "%\"";
-                }
-                return sql;
-            }
-
-            public String[][] displayColumns() {
-                return new String[][]{{"userId", "用户ID"},{"userName", "用户名"}};
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    jTextFieldPizhunren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    pizhunren_id = (Integer)bindedMap.get("userId");
-                }
-            }
-        });
     }
 
     private void init() {
@@ -163,7 +142,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
     }
     
     @Action
-    public Task submitForm(){
+    public Task submitForm() throws ParseException{
         if(jTextFieldName.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "请输入资产名称！");
             return null;
@@ -187,16 +166,17 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
         weixiudan = new Zichanweixiudantb();
         weixiudan.setPeijianName(jTextField10.getText());
         weixiudan.setPizhunrenId(pizhunren_id);
-        weixiudan.setQuhuiDate(DateHelper.getStringtoDate(jTextField17.getText(), "yyyy-MM-dd"));
+        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        weixiudan.setQuhuiDate(dateformate.parse(jTextField17.getText()));
         weixiudan.setReturnState(jTextField19.getText());
-        weixiudan.setSongxiuDate(DateHelper.getStringtoDate(jTextField13.getText(), "yyyy-MM-dd"));
+        weixiudan.setSongxiuDate(dateformate.parse(jTextField13.getText()));
         weixiudan.setSongxiuReason(jTextField16.getText());
         weixiudan.setSongxiurenId(songxiuren_id);
         weixiudan.setWeixiuState(jTextField18.getText());
         weixiudan.setWeixiufeiyong(Double.parseDouble(jTextField15.getText()));
         weixiudan.setWxdId(jTextField6.getText());
         weixiudan.setWxzcId(zcId);
-        weixiudan.setYujiquhuiDate(DateHelper.getStringtoDate(jTextField7.getText(), "yyyy-MM-dd"));
+        weixiudan.setYujiquhuiDate(dateformate.parse(jTextField7.getText()));
         weixiudan.setZcValue(Double.parseDouble(jTextField5.getText()));
         
         return new submitTask(weixiudan);
@@ -248,7 +228,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
         jTextField10 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextFieldPizhunren = new BaseTextField();
+        jTextFieldPizhunren = new javax.swing.JTextField();
         jTextField12 = regTextField1;
         jLabel13 = new javax.swing.JLabel();
         jTextFieldSongxiuren = new BaseTextField();
@@ -329,6 +309,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
         jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
         jLabel11.setName("jLabel11"); // NOI18N
 
+        jTextFieldPizhunren.setEditable(false);
         jTextFieldPizhunren.setName("jTextFieldPizhunren"); // NOI18N
 
         jTextField12.setName("jTextField12"); // NOI18N

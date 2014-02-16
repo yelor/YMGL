@@ -330,11 +330,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPizhunren">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldPizhunren" noResource="true"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField12">
           <Properties>

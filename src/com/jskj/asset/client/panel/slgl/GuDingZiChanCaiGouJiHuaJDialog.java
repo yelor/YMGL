@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
 
 /**
@@ -98,7 +99,12 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         }
         new RefureTask(pageIndex).execute();
     }
-
+    
+    @Action
+    public void print() {
+        bindTable.createPrinter("采购计划分析",jihuas).buildInBackgound().execute();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,6 +130,7 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanCaiGouJiHuaJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
+        setAutoRequestFocus(false);
         setName("Form"); // NOI18N
         setResizable(false);
 
@@ -155,6 +162,8 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanCaiGouJiHuaJDialog.class, this);
+        jButton14.setAction(actionMap.get("print")); // NOI18N
         jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
         jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
         jButton14.setBorderPainted(false);
@@ -164,6 +173,7 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jButton14.setOpaque(false);
         jToolBar1.add(jButton14);
 
+        jButton13.setAction(actionMap.get("print")); // NOI18N
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
         jButton13.setBorderPainted(false);
@@ -173,7 +183,6 @@ public class GuDingZiChanCaiGouJiHuaJDialog extends javax.swing.JDialog {
         jButton13.setOpaque(false);
         jToolBar1.add(jButton13);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanCaiGouJiHuaJDialog.class, this);
         jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N

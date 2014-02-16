@@ -7,6 +7,7 @@
 package com.jskj.asset.client.bean.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,11 +25,15 @@ public class CaigoushenqingDetailEntity {
     
     private String shenqingdanRemark;
     
+    private String supplier;
+    
     private String checkId1;
 
     private String checkId2;
 
     private String checkId3;
+    
+    private List<ZichanliebiaoDetailEntity> zclist;
 
     public String getCgsqId() {
         return cgsqId;
@@ -92,6 +97,22 @@ public class CaigoushenqingDetailEntity {
 
     public void setCheckId3(String checkId3) {
         this.checkId3 = checkId3;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
+    public List<ZichanliebiaoDetailEntity> getZclist() {
+        return zclist;
+    }
+
+    public void setZclist(List<ZichanliebiaoDetailEntity> zclist) {
+        this.zclist = zclist;
     }
         
 }

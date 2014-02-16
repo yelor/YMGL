@@ -6,13 +6,15 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Gudingzichankucuntb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -25,13 +27,11 @@ import org.jdesktop.application.Task;
  */
 public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
 
-    DateChooser dateChooser1;
-    DateChooser dateChooser2;
-    JTextField regTextField1;
-    JTextField regTextField2;
-    
+    private JTextField regTextField;
     private String imageUri;
     private Gudingzichankucuntb zc;
+    private int userId;
+    private String userName;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -39,6 +39,8 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         super(parent);
         init();
         initComponents();
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
+        userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
         ((BaseTextField) jTextFieldName).registerPopup(new IPopupBuilder() {
 
@@ -73,22 +75,19 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                     jTextFieldPrice.setText(bindedMap.get("gdzcValue") == null ? "" : bindedMap.get("gdzcValue").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
                     jTextFieldSupplier.setText(bindedMap.get("supplier") == null ? "" : bindedMap.get("supplier").toString());
-                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : bindedMap.get("gdzcGuaranteedate").toString());
+                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : DateHelper.format(DateHelper.getStringtoDate(DateHelper.getDate(Long.parseLong(bindedMap.get("gdzcGuaranteedate").toString())),"yyyy/MM/dd HH:mm:ss"),"yyyy-MM-dd"));
                     jTextFieldXuliehao.setText(bindedMap.get("gdzcSequence") == null ? "" : bindedMap.get("gdzcSequence").toString());
                     jTextAreaRemark.setText(bindedMap.get("gdzcRemark") == null ? "" : bindedMap.get("gdzcRemark").toString());
                     imageUri = bindedMap.get("gdzcPhoto") == null ? "" : bindedMap.get("gdzcPhoto").toString();
+                    jTextFieldBaoxiuqi.setEditable(false);
                 }
             }
         });
     }
 
     private void init() {
-        regTextField1 = new JTextField();
-        regTextField2 = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField1);
-        dateChooser2.register(regTextField2);
+        regTextField = new BaseTextField();
+        ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
     
     @Action
@@ -97,22 +96,23 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     }
     
     @Action
-    public Task submitForm(){
+    public Task submitForm() throws ParseException{
         if(jTextFieldName.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入资产名称！");
+            AssetMessage.ERRORSYS("请输入资产名称！",this);
             return null;
         }
         if(jTextFieldQuantity.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入登记数量！");
+            AssetMessage.ERRORSYS("请输入登记数量！",this);
             return null;
         }
-        if(jTextField12.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入购置日期！");
+        if(jTextField.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入购置日期！",this);
             return null;
         }
         zc = new Gudingzichankucuntb();
         zc.setGdzcId(Integer.parseInt(jTextFieldZcid.getText()));
-        zc.setGouzhiDate(DateHelper.getStringtoDate(jTextField12.getText(), "yyyy-MM-dd"));
+        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        zc.setGouzhiDate(dateformate.parse(jTextField.getText()));
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         
         return new submitTask(zc);
@@ -164,10 +164,10 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jTextFieldSupplier = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField12 = regTextField1;
+        jTextField = regTextField;
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextFieldBaoxiuqi = regTextField2;
+        jTextFieldBaoxiuqi = new javax.swing.JTextField();
         jTextFieldPrice = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextFieldXuliehao = new javax.swing.JTextField();
@@ -239,7 +239,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
 
-        jTextField12.setName("jTextField12"); // NOI18N
+        jTextField.setName("jTextField"); // NOI18N
 
         jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
         jLabel12.setName("jLabel12"); // NOI18N
@@ -295,6 +295,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorderPainted(false);
+        jButton8.setEnabled(false);
         jButton8.setFocusable(false);
         jButton8.setName("jButton8"); // NOI18N
         jButton8.setOpaque(false);
@@ -337,7 +338,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
@@ -424,7 +425,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(jTextFieldBaoxiuqi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
@@ -530,7 +531,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaRemark;
-    private javax.swing.JTextField jTextField12;
+    private javax.swing.JTextField jTextField;
     private javax.swing.JTextField jTextFieldBaoxiuqi;
     private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldName;
