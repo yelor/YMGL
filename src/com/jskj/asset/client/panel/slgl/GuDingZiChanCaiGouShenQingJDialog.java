@@ -8,8 +8,6 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.GudingzichanAll;
-import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
 import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
@@ -32,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -47,10 +44,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
     private String userName;
     private int supplierId;
     private List<ZiChanLieBiaotb> zc;
-    private List<GudingzichanAll> findzc;
-    private GudingzichanAll zichan;
     CaigoushenqingDetailEntity detail;
-//    private GuDingZiChanCaiGouShenQingJDialog shenqingDialog;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -247,6 +241,10 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
+        
+        for(int i = 0; i < zc.size(); i++){
+            zc.get(i).setQuantity(Integer.parseInt((String)jTable1.getValueAt(i, 5)));
+        }
         
         cgsq.setSqd(sqd);
         cgsq.setZc(zc);        

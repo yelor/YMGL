@@ -1,5 +1,8 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yimiaoshenqingdantb {
     private Integer xiangdanId;
 
@@ -13,13 +16,9 @@ public class Yimiaoshenqingdantb {
 
     private Float totalprice;
 
-    private Integer checkId1;
+    private Integer isCompleted;
 
-    private Integer checkId2;
-
-    private Integer checkId3;
-
-    private Integer checkId4;
+    private Integer status;
 
     public Integer getXiangdanId() {
         return xiangdanId;
@@ -69,35 +68,19 @@ public class Yimiaoshenqingdantb {
         this.totalprice = totalprice;
     }
 
-    public Integer getCheckId1() {
-        return checkId1;
+    public Integer getIsCompleted() {
+        return isCompleted;
     }
 
-    public void setCheckId1(Integer checkId1) {
-        this.checkId1 = checkId1;
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
-    public Integer getCheckId2() {
-        return checkId2;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setCheckId2(Integer checkId2) {
-        this.checkId2 = checkId2;
-    }
-
-    public Integer getCheckId3() {
-        return checkId3;
-    }
-
-    public void setCheckId3(Integer checkId3) {
-        this.checkId3 = checkId3;
-    }
-
-    public Integer getCheckId4() {
-        return checkId4;
-    }
-
-    public void setCheckId4(Integer checkId4) {
-        this.checkId4 = checkId4;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

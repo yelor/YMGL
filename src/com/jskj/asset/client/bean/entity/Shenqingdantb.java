@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Shenqingdantb {
     private String shenqingdanId;
 
@@ -16,6 +18,10 @@ public class Shenqingdantb {
     private Integer zhidanrenId;
 
     private Integer danjuleixingId;
+
+    private Integer isCompleted;
+
+    private Integer isPaid;
 
     public String getShenqingdanId() {
         return shenqingdanId;
@@ -71,5 +77,21 @@ public class Shenqingdantb {
 
     public void setDanjuleixingId(Integer danjuleixingId) {
         this.danjuleixingId = danjuleixingId;
+    }
+
+    public Integer getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public Integer getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(Integer isPaid) {
+        this.isPaid = isPaid;
     }
 }

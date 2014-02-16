@@ -7,14 +7,15 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.WeixiushenqingFindEntity;
 import com.jskj.asset.client.bean.entity.Weixiushenqingdantb;
+import com.jskj.asset.client.bean.entity.WeixiuzichanDetailEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -30,13 +31,13 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
 
     private int count;
 
-    private List<Weixiushenqingdantb> wxsq;
+    private List<WeixiuzichanDetailEntity> wxsq;
     
     private String user;
     
     private ShenPiEntity shenPiEntity;
     
-    BindTableHelper<Weixiushenqingdantb> bindTable;
+    BindTableHelper<WeixiuzichanDetailEntity> bindTable;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -48,9 +49,9 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         user = AssetClientApp.getSessionMap().getUsertb().getUserName();
         pageIndex = 1;
         count = 0;
-        bindTable = new BindTableHelper<Weixiushenqingdantb>(jSQTable, new ArrayList<Weixiushenqingdantb>());
-        bindTable.createTable(new String[][]{{"wxsqId", "维修单号"}, {"shenqingrenId", "申请人ID"}, {"wxsqDate", "申请日期"}, {"wxsqRemark", "备注"},
-            {"weixiufeiyong", "维修费用"}, {"checkId1", "负责人"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
+        bindTable = new BindTableHelper<WeixiuzichanDetailEntity>(jSQTable, new ArrayList<WeixiuzichanDetailEntity>());
+        bindTable.createTable(new String[][]{{"wxsqId", "维修单号"}, {"shenqingren", "申请人"}, {"wxsqDate", "申请日期"}, {"wxsqRemark", "备注"},
+            {"weixiufeiyong", "维修费用"}, {"checkId1", "直接领导"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
 //        bindTable.setIntegerType(1);
         bindTable.setDateType(3);
         bindTable.bind().setColumnWidth(new int[]{0, 150}).setRowHeight(30);
@@ -116,7 +117,27 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
     }
     
     @Action
+    public void detail(){
+        int n = jSQTable.getSelectedRow();
+        if(n < 0){
+            AssetMessage.showMessageDialog(this, "请选择某个申请单!");
+            return;
+        }
+        this.setVisible(false);
+        WeixiuzichanDetailEntity cgsqdan = wxsq.get(n);
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        GuDingZiChanWeiXiuShenQingJDialog weixiushenqing = new GuDingZiChanWeiXiuShenQingJDialog(this,cgsqdan);
+        weixiushenqing.setLocationRelativeTo(mainFrame);
+        AssetClientApp.getApplication().show(weixiushenqing);
+    }
+    
+    @Action
     public Task shenPiY(){
+        int n = jSQTable.getSelectedRow();
+        if(n < 0){
+            AssetMessage.showMessageDialog(this, "请选择某个申请单!");
+            return null;
+        }
         Weixiushenqingdantb wxsqdan = wxsq.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(wxsqdan.getWxsqId().toString());
@@ -128,11 +149,19 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
     
     @Action
     public Task shenPiN(){
+        String reason;
+        reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
+        int n = jSQTable.getSelectedRow();
+        if(n < 0){
+            AssetMessage.showMessageDialog(this, "请选择某个申请单!");
+            return null;
+        }
         Weixiushenqingdantb wxsqdan = wxsq.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(wxsqdan.getWxsqId().toString());
         shenPiEntity.setResult("拒绝");
         shenPiEntity.setUser(user);
+        shenPiEntity.setReason(reason);
         wxsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
@@ -168,6 +197,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         jButton12 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelTotal = new javax.swing.JLabel();
@@ -246,6 +276,18 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         jButton13.setOpaque(false);
         jToolBar1.add(jButton13);
 
+        jButton2.setAction(actionMap.get("detail")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setIconTextGap(0);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
+
         jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
@@ -306,7 +348,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -323,7 +365,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
         jPanel2Layout.setVerticalGroup(
@@ -339,7 +381,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 829, Short.MAX_VALUE)
+            .addGap(0, 851, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -407,6 +449,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;

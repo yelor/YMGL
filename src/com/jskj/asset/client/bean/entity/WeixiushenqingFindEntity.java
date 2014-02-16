@@ -14,13 +14,13 @@ public class WeixiushenqingFindEntity {
     
     private int count;
     
-    private  List<Weixiushenqingdantb> result;
+    private  List<WeixiuzichanDetailEntity> result;
 
     public int getCount() {
         return count;
     }
 
-    public List<Weixiushenqingdantb> getResult() {
+    public List<WeixiuzichanDetailEntity> getResult() {
         return result;
     }
 
@@ -28,7 +28,7 @@ public class WeixiushenqingFindEntity {
         this.count = count;
     }
 
-    public void setResult(List<Weixiushenqingdantb> result) {
+    public void setResult(List<WeixiuzichanDetailEntity> result) {
         this.result = result;
     }
     
