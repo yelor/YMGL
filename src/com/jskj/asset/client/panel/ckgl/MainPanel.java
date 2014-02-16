@@ -7,13 +7,14 @@
  * NoFoundPanel.java
  *
  * Created on Feb 21, 2010, 10:42:18 PM
- */ 
+ */
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.*;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.swing.JDialog;
@@ -33,6 +34,7 @@ public class MainPanel extends BasePanel {
     private Select_YiMiaoChuRuKuJiLu ymcrkjl;
     private SelectYiMiaoChuRuKu ymcrk;
     private YiMiaoBaoSun ymbs;
+
     /**
      * Creates new form NoFoundPane
      */
@@ -122,6 +124,7 @@ public class MainPanel extends BasePanel {
         jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton4.setName("jButton4"); // NOI18N
 
+        jButton5.setAction(actionMap.get("showYimiaoyunshujilu")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setBorder(null);
@@ -251,11 +254,30 @@ public class MainPanel extends BasePanel {
         });
     }
 
-    /*@Action
-     public void ymbs_pop() {
-     ymbs ymbs = new ymbs();
-     ymbs.setVisible(true);
-     }*/
+    @Action
+    public Task showYimiaoyunshujilu() {
+        return new OpenTabTask("报表-疫苗运输记录", new YimiaoyunshujiluPanel(), false);
+    }
+
+    private class ShowYimiaoyunshujiluTask extends org.jdesktop.application.Task<Object, Void> {
+        ShowYimiaoyunshujiluTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ShowYimiaoyunshujiluTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;

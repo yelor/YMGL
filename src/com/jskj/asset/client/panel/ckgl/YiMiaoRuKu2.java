@@ -6,33 +6,41 @@
 
 package com.jskj.asset.client.panel.ckgl;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import org.jdesktop.application.Action;
 
 /**
  * 
  * @author Administrator
  */
-public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
-    private boolean rk;
-    public void setRk(){
-        setTitle("Ⅱ类疫苗入库");
-        rk = true;
-    }
-    public void setCk(){
-        setTitle("Ⅱ类疫苗出库");
-        rk = false;
-    }
+public class YiMiaoRuKu2 extends javax.swing.JDialog {
+    
+    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+    private List<YanshouyimiaoEntity> chukuyimiaolist;
+    private BindTableHelper<YanshouyimiaoEntity> bindTable;
+    
     /**
      * Creates new form ymcrk1
      */
-    public YiMiaoChuRuKu2(java.awt.Frame parent, boolean modal) {
+    public YiMiaoRuKu2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-          final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
+        jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
+
+        bindTable = new BindTableHelper<YanshouyimiaoEntity>(jTableyimiao, new ArrayList<YanshouyimiaoEntity>());
+        bindTable.createTable(new String[][]{
             {"date", "日期"}, {"quantity", "数量"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unit", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},{"price", "单价", "true"},{"totalPrice", "合价", "true"},
@@ -71,20 +79,17 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
-//                        Object pihao = bindedMap.get("pihao");
-//                        Object youxiaoqi = bindedMap.get("youxiaodate");
-//                        Object piqianfahegeno = bindedMap.get("piqianfahegeno");
 
-                    editTable.insertValue(2, yimiaoId);
-                    editTable.insertValue(3, yimiaoName);
-                    editTable.insertValue(4, yimiaoGuige);
-                    editTable.insertValue(5, yimiaoJixing);
-                    editTable.insertValue(6, shengchanqiye);
-                    editTable.insertValue(7, unit);
-//                        editTable.insertValue(6, youxiaoqi);
-//                        editTable.insertValue(8, pihao);
-//                        editTable.insertValue(10, piqianfahegeno);
-
+                    YanshouyimiaoEntity yanshouyimiao=new YanshouyimiaoEntity();
+                    yanshouyimiao.setYimiaoId((Integer) yimiaoId);
+                    yanshouyimiao.setYimiaoName((String) yimiaoName);
+                    yanshouyimiao.setYimiaoGuige((String) yimiaoGuige);
+                    yanshouyimiao.setYimiaoJixing((String) yimiaoJixing);
+                    yanshouyimiao.setYimiaoShengchanqiye((String) shengchanqiye);
+                    yanshouyimiao.setUnitId((String) unit);
+                    chukuyimiaolist=new ArrayList<YanshouyimiaoEntity>();
+                    chukuyimiaolist.add(yanshouyimiao);
+                    bindTable.refreshData(chukuyimiaolist);
                 }
             }
 
@@ -116,18 +121,19 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldtongguandanNo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableyimiao = new javax.swing.JTable();
+        jTableyimiao = new BaseTable(null);
         jLabel4 = new javax.swing.JLabel();
         jTextFieldzhidanren = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldzhidanDate = new javax.swing.JTextField();
-        jTextFieldyimiaoName = new javax.swing.JTextField();
+        jTextFieldyimiaoName = new BaseTextField();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChuRuKu2.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoRuKu2.class);
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
@@ -184,6 +190,8 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jButton18.setOpaque(false);
         jToolBar1.add(jButton18);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoRuKu2.class, this);
+        jButton19.setAction(actionMap.get("exit")); // NOI18N
         jButton19.setIcon(resourceMap.getIcon("jButton19.icon")); // NOI18N
         jButton19.setText(resourceMap.getString("jButton19.text")); // NOI18N
         jButton19.setFocusable(false);
@@ -259,6 +267,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        jTextFieldzhidanren.setEditable(false);
         jTextFieldzhidanren.setText(resourceMap.getString("jTextFieldzhidanren.text")); // NOI18N
         jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
         jTextFieldzhidanren.addActionListener(new java.awt.event.ActionListener() {
@@ -270,6 +279,7 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
+        jTextFieldzhidanDate.setEditable(false);
         jTextFieldzhidanDate.setText(resourceMap.getString("jTextFieldzhidanDate.text")); // NOI18N
         jTextFieldzhidanDate.setName("jTextFieldzhidanDate"); // NOI18N
         jTextFieldzhidanDate.addActionListener(new java.awt.event.ActionListener() {
@@ -329,14 +339,14 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
                         .addComponent(jTextFieldtongguandanNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextFieldsource, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -367,20 +377,20 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoRuKu2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoChuRuKu2 dialog = new YiMiaoChuRuKu2(new javax.swing.JFrame(), true);
+                YiMiaoRuKu2 dialog = new YiMiaoRuKu2(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -392,6 +402,11 @@ public class YiMiaoChuRuKu2 extends javax.swing.JDialog {
         });
     }
 
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;

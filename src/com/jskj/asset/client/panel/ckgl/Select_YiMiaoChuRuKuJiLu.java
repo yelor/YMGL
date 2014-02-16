@@ -7,9 +7,13 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.panel.OpenTabTask;
+import com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel;
+import com.jskj.asset.client.panel.baobiao.caigou.YimiaorukujiluPanel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
@@ -61,7 +65,7 @@ public class Select_YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(46, 46, 46))
         );
@@ -121,36 +125,17 @@ public class Select_YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
     }
 
     @Action
-    public void ymckjl_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if(ymcrkjl==null){
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrkjl = new YiMiaoChuRuKuJiLu(new javax.swing.JFrame(), true);
-                    ymcrkjl.setLocationRelativeTo(mainFrame);
-                }
-                ymcrkjl.setCk();
-                AssetClientApp.getApplication().show(ymcrkjl);
-            }
-        });
+    public Task ymckjl_pop() {
+        dispose();
+        return new OpenTabTask("报表-疫苗出库记录", new YimiaochukujiluPanel(), false);
     }
     
     @Action
-    public void ymrkjl_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if(ymcrkjl==null){
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrkjl = new YiMiaoChuRuKuJiLu(new javax.swing.JFrame(), true);
-                    ymcrkjl.setLocationRelativeTo(mainFrame);
-                }
-                ymcrkjl.setRk();
-                AssetClientApp.getApplication().show(ymcrkjl);
-            }
-        });
+    public Task ymrkjl_pop() {
+        dispose();
+        return new OpenTabTask("报表-疫苗入库记录", new YimiaorukujiluPanel(), false);
     }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

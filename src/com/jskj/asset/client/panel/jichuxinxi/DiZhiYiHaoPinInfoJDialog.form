@@ -106,7 +106,7 @@
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanInfoJDialog" id="save" methodName="save"/>
+              <action class="com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinInfoJDialog" id="save" methodName="save"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
             <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
@@ -115,7 +115,7 @@
         <Component class="javax.swing.JButton" name="jButton4">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanInfoJDialog" id="close" methodName="close"/>
+              <action class="com.jskj.asset.client.panel.jichuxinxi.DiZhiYiHaoPinInfoJDialog" id="close" methodName="close"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
             <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>

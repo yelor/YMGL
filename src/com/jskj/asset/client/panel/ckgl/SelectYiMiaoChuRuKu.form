@@ -26,16 +26,16 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="31" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
           </Group>
@@ -46,15 +46,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -63,7 +63,7 @@
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ckgl.ymcrk_select" id="ck1_pop" methodName="ck1_pop"/>
+          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu" id="ck1_pop" methodName="ck1_pop"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
         <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
@@ -72,7 +72,7 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ckgl.ymcrk_select" id="ck2_pop" methodName="ck2_pop"/>
+          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu" id="ck2_pop" methodName="ck2_pop"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
         <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
@@ -81,7 +81,7 @@
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ckgl.ymcrk_select" id="rk1_pop" methodName="rk1_pop"/>
+          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu" id="rk1_pop" methodName="rk1_pop"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
         <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
@@ -90,7 +90,7 @@
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ckgl.ymcrk_select" id="rk2_pop" methodName="rk2_pop"/>
+          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu" id="rk2_pop" methodName="rk2_pop"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
         <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>

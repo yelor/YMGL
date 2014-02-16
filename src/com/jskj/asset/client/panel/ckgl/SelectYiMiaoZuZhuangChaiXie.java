@@ -16,7 +16,7 @@ import org.jdesktop.application.Action;
  * @author Administrator
  */
 public class SelectYiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
-    YiMiaoZuZhuangChaiXie ymzzcx;
+    
     boolean zz;
     /**
      * Creates new form ymzzcx_select
@@ -122,6 +122,7 @@ public class SelectYiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
     }
     
     private void ymzzcx_pop(boolean zz){
+        YiMiaoZuZhuangChaiXie ymzzcx = null;
         if(ymzzcx==null){
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             ymzzcx = new YiMiaoZuZhuangChaiXie(new javax.swing.JFrame(), true, zz);
