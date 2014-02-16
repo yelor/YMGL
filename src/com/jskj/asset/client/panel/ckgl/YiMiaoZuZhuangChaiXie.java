@@ -6,16 +6,20 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Yimiaozuzhuangchaixie;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -28,16 +32,11 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
     boolean zz;
+    private Yimiaozuzhuangchaixie yimiaozuzhuangchaixie;
 
     /**
      * Creates new form ymzzcx
      */
-    public YiMiaoZuZhuangChaiXie(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        init();
-        initComponents();
-    }
-
     public YiMiaoZuZhuangChaiXie(java.awt.Frame parent, boolean modal, boolean zzz) {
         super(parent, modal);
         init();
@@ -55,11 +54,11 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldbumen.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
-        
-           //疫苗表1中的内容
+
+        //疫苗表1中的内容
         final BaseTable.SingleEditRowTable editTable1 = ((BaseTable) jTableyimiao1).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},{"cangku", "仓库", "true"},
-            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"},  {"saleQuantity", "数量", "true"},{"remark", "备注", "false"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"}, {"cangku", "仓库", "true"},
+            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"quantity", "数量", "true"}, {"remark", "备注", "false"}});
 
         editTable1.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -107,10 +106,10 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             }
         });
 
-              //疫苗表2中的内容
+        //疫苗表2中的内容
         final BaseTable.SingleEditRowTable editTable2 = ((BaseTable) jTableyimiao2).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},{"cangku", "仓库", "true"},
-            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"},  {"saleQuantity", "数量", "true"},{"remark", "备注", "false"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"}, {"cangku", "仓库", "true"},
+            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"quantity", "数量", "true"}, {"remark", "备注", "false"}});
 
         editTable2.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -162,12 +161,14 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
     public void setZz() {
         setTitle("疫苗组装");
         jLabel16.setText("组装费用");
+        yimiaozuzhuangchaixie = new Yimiaozuzhuangchaixie();
         zz = true;
     }
 
     public void setCx() {
         setTitle("疫苗拆卸");
         jLabel16.setText("拆卸费用");
+        yimiaozuzhuangchaixie = new Yimiaozuzhuangchaixie();
         zz = false;
     }
 
@@ -390,6 +391,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jTextFieldjingbanren.setEditable(false);
         jTextFieldjingbanren.setName("jTextFieldjingbanren"); // NOI18N
 
+        jTextFieldDanjuId.setEditable(false);
         jTextFieldDanjuId.setName("jTextFieldDanjuId"); // NOI18N
 
         jTextFieldzhidanren.setEditable(false);
@@ -478,6 +480,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jToolBar2.setRollover(true);
         jToolBar2.setName("jToolBar2"); // NOI18N
 
+        jButton7.setAction(actionMap.get("save")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setFocusPainted(false);
@@ -514,6 +517,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jButton11.setOpaque(false);
         jToolBar2.add(jButton11);
 
+        jButton12.setAction(actionMap.get("exit")); // NOI18N
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
         jButton12.setFocusPainted(false);
@@ -705,9 +709,9 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             }
         });
     }
-    
-        @Action
-    public Task submitForm() throws ParseException {
+
+    @Action
+    public Task save() throws ParseException {
         if (jTextFieldzuzhuangfeiyong.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入组装费用!");
             return null;
@@ -715,8 +719,65 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入费用类型!");
             return null;
         }
-        return null;
 
+        yimiaozuzhuangchaixie.setZuzhuangchaixieId(jTextFieldDanjuId.getText());
+        yimiaozuzhuangchaixie.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        yimiaozuzhuangchaixie.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        yimiaozuzhuangchaixie.setZuzhuangfeiyong(Double.parseDouble(jTextFieldzuzhuangfeiyong.getText()));
+        yimiaozuzhuangchaixie.setFeiyongtype(jTextFieldfeiyongType.getText());
+        yimiaozuzhuangchaixie.setRemark(jTextAreaRemark.getText());
+        BaseTable yimiaotable1 = ((BaseTable) jTableyimiao1);
+        BaseTable yimiaotable2 = ((BaseTable) jTableyimiao2);
+        yimiaozuzhuangchaixie.setYimiao1Id(Integer.parseInt(yimiaotable1.getValue(0, "yimiaoId").toString()));
+        yimiaozuzhuangchaixie.setDeport1(Integer.parseInt((String) yimiaotable1.getValue(0, "cangku")));
+        System.out.println(yimiaotable1.getValue(0, "quantity"));
+        yimiaozuzhuangchaixie.setQuantity1(Integer.parseInt((String) yimiaotable1.getValue(0, "quantity")));
+        yimiaozuzhuangchaixie.setYimiao2Id(Integer.parseInt(yimiaotable2.getValue(0, "yimiaoId").toString()));
+        yimiaozuzhuangchaixie.setDeport2(Integer.parseInt((String) yimiaotable2.getValue(0, "cangku")));
+        yimiaozuzhuangchaixie.setQuantity2(Integer.parseInt((String) yimiaotable2.getValue(0, "quantity")));
+
+        String serviceId = "yimiaozuzhuangchaixie/add";
+        if (yimiaozuzhuangchaixie.getId() != null && yimiaozuzhuangchaixie.getId() > 0) {
+            serviceId = "yimiaozuzhuangchaixie/update";
+        }
+        return new CommUpdateTask<Yimiaozuzhuangchaixie>(yimiaozuzhuangchaixie, serviceId) {
+
+            @Override
+            public void responseResult(ComResponse<Yimiaozuzhuangchaixie> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    JOptionPane.showMessageDialog(null, "提交成功！");
+                    exit();
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoZuZhuangChaiXie.this);
+                }
+            }
+
+        };
+
+    }
+
+    private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
+
+        SaveTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to SaveTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     @Action

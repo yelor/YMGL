@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
@@ -16,8 +15,8 @@ import org.jdesktop.application.Action;
  * @author Administrator
  */
 public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
-    YiMiaoChuRuKu1 ymcrk1;
-    YiMiaoChuRuKu2 ymcrk2;
+
+    YiMiaoRuKu2 ymcrk2;
 
     /**
      * Creates new form ymcrk
@@ -68,15 +67,15 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton3)
-                    .addComponent(jButton1))
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
@@ -84,13 +83,13 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
                     .addComponent(jButton4))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         pack();
@@ -143,29 +142,25 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if(ymcrk1==null){
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrk1 = new YiMiaoChuRuKu1(new javax.swing.JFrame(), true);
-                    ymcrk1.setLocationRelativeTo(mainFrame);
-                }
-                ymcrk1.setCk();
-                AssetClientApp.getApplication().show(ymcrk1);
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1(new javax.swing.JFrame(), true);
+                ymck1.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(ymck1);
             }
         });
     }
-    
+
     @Action
     public void rk1_pop() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if(ymcrk1==null){
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrk1 = new YiMiaoChuRuKu1(new javax.swing.JFrame(), true);
-                    ymcrk1.setLocationRelativeTo(mainFrame);
-                }
-                ymcrk1.setRk();
-                AssetClientApp.getApplication().show(ymcrk1);
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1(new javax.swing.JFrame(), true);
+                ymrk1.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(ymrk1);
             }
         });
     }
@@ -175,29 +170,25 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if(ymcrk2==null){
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrk2 = new YiMiaoChuRuKu2(new javax.swing.JFrame(), true);
-                    ymcrk2.setLocationRelativeTo(mainFrame);
-                }
-                ymcrk2.setCk();
-                AssetClientApp.getApplication().show(ymcrk2);
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2(new javax.swing.JFrame(), true);
+                ymck2.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(ymck2);
             }
         });
     }
-    
+
     @Action
     public void rk2_pop() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if(ymcrk2==null){
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrk2 = new YiMiaoChuRuKu2(new javax.swing.JFrame(), true);
-                    ymcrk2.setLocationRelativeTo(mainFrame);
-                }
-                ymcrk2.setRk();
-                AssetClientApp.getApplication().show(ymcrk2);
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoRuKu2 ymrk2 = new YiMiaoRuKu2(new javax.swing.JFrame(), true);
+                ymrk2.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(ymrk2);
             }
         });
     }
