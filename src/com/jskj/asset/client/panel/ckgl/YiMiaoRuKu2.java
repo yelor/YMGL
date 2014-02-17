@@ -7,18 +7,26 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Stockpiletb;
 import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
 import com.jskj.asset.client.constants.Constants;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DanHao;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  * 
@@ -29,6 +37,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
     private List<YanshouyimiaoEntity> chukuyimiaolist;
     private BindTableHelper<YanshouyimiaoEntity> bindTable;
+    private Stockpiletb stockpile;
     
     /**
      * Creates new form ymcrk1
@@ -41,7 +50,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
 
         bindTable = new BindTableHelper<YanshouyimiaoEntity>(jTableyimiao, new ArrayList<YanshouyimiaoEntity>());
         bindTable.createTable(new String[][]{
-            {"date", "日期"}, {"quantity", "数量"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"date", "日期"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unit", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},{"price", "单价", "true"},{"totalPrice", "合价", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
@@ -402,6 +411,37 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
         });
     }
 
+    @Action
+    public Task save() throws ParseException {
+        if (jTextFieldyimiaoName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入入库疫苗!");
+            return null;
+        }
+        stockpile=new Stockpiletb();
+        stockpile.setStockpileId(111);
+        stockpile.setStockpileDate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        stockpile.setDeportId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+
+        String serviceId = "yimiaoruku/add";
+        if (stockpile.getStockpileId()!= null && stockpile.getStockpileId()> 0) {
+            serviceId = "yimiaoruku/update";
+        }
+        return new CommUpdateTask<Stockpiletb>(stockpile, serviceId) {
+
+            @Override
+            public void responseResult(ComResponse<Stockpiletb> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    JOptionPane.showMessageDialog(null, "提交成功！");
+                    exit();
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoRuKu2.this);
+                }
+            }
+
+        };
+
+    }
+    
     @Action
     public void exit() {
         this.dispose();
