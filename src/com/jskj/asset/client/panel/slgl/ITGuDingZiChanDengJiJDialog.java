@@ -54,8 +54,9 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1)";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql = "gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
+                    sql = " and gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
                 }
                 return sql;
             }
@@ -75,7 +76,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                     jTextFieldPrice.setText(bindedMap.get("gdzcValue") == null ? "" : bindedMap.get("gdzcValue").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
                     jTextFieldSupplier.setText(bindedMap.get("supplier") == null ? "" : bindedMap.get("supplier").toString());
-                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : DateHelper.format(DateHelper.getStringtoDate(DateHelper.getDate(Long.parseLong(bindedMap.get("gdzcGuaranteedate").toString())),"yyyy/MM/dd HH:mm:ss"),"yyyy-MM-dd"));
+                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : bindedMap.get("gdzcGuaranteedate").toString());
                     jTextFieldXuliehao.setText(bindedMap.get("gdzcSequence") == null ? "" : bindedMap.get("gdzcSequence").toString());
                     jTextAreaRemark.setText(bindedMap.get("gdzcRemark") == null ? "" : bindedMap.get("gdzcRemark").toString());
                     imageUri = bindedMap.get("gdzcPhoto") == null ? "" : bindedMap.get("gdzcPhoto").toString();
@@ -264,9 +265,11 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jLabel16.setName("jLabel16"); // NOI18N
 
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setEnabled(false);
         jButton2.setName("jButton2"); // NOI18N
 
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setEnabled(false);
         jButton3.setName("jButton3"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -328,6 +331,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jToolBar1.add(jButton4);
 
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setEnabled(false);
         jButton1.setName("jButton1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

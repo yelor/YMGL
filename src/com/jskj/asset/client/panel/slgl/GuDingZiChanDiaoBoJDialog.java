@@ -38,7 +38,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         super(parent);
         initComponents();
         
-        jTextField1.setText(DanHao.getDanHao("zcdb"));
+        jTextField1.setText(DanHao.getDanHao("ZCDB"));
         jTextField1.setEditable(false);
         
         Calendar c = Calendar.getInstance();

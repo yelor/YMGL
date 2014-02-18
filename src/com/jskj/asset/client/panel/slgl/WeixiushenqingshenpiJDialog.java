@@ -33,7 +33,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
 
     private List<WeixiuzichanDetailEntity> wxsq;
     
-    private String user;
+    private int userId;
     
     private ShenPiEntity shenPiEntity;
     
@@ -46,7 +46,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
     public WeixiushenqingshenpiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
-        user = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<WeixiuzichanDetailEntity>(jSQTable, new ArrayList<WeixiuzichanDetailEntity>());
@@ -74,7 +74,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         BindingGroup bindingGroup = new BindingGroup();
 
         RefreshTask(int pageIndex) {
-            super(user,pageIndex);
+            super(userId,pageIndex);
         }
 
         @Override
@@ -142,7 +142,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(wxsqdan.getWxsqId().toString());
         shenPiEntity.setResult("同意");
-        shenPiEntity.setUser(user);
+        shenPiEntity.setUser("" + userId);
         wxsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
@@ -160,7 +160,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(wxsqdan.getWxsqId().toString());
         shenPiEntity.setResult("拒绝");
-        shenPiEntity.setUser(user);
+        shenPiEntity.setUser("" + userId);
         shenPiEntity.setReason(reason);
         wxsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
@@ -195,7 +195,6 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
@@ -259,14 +258,6 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         jButton12.setName("jButton12"); // NOI18N
         jButton12.setOpaque(false);
         jToolBar1.add(jButton12);
-
-        jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
-        jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
-        jButton14.setBorderPainted(false);
-        jButton14.setFocusable(false);
-        jButton14.setName("jButton14"); // NOI18N
-        jButton14.setOpaque(false);
-        jToolBar1.add(jButton14);
 
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
@@ -348,7 +339,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -365,7 +356,7 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
+            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, 914, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
         jPanel2Layout.setVerticalGroup(
@@ -373,26 +364,24 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 851, Short.MAX_VALUE)
+            .addGap(0, 914, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGap(0, 529, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -447,7 +436,6 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -7,18 +7,14 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.LingyongshenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.Lingyongshenqingdantb;
 import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
 import com.jskj.asset.client.bean.entity.Lingyongtuikudantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
-import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +23,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -57,7 +52,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jTextFieldShenqingren.setText(userName);
         jTextFieldDept.setText(department);
                 
-        jTextField1.setText(DanHao.getDanHao("lytk"));
+        jTextField1.setText(DanHao.getDanHao("LYTK"));
         jTextField1.setEditable(false);
         
         Calendar c = Calendar.getInstance();
@@ -65,8 +60,8 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jTextField2.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "物品编号"}, {"gdzcName", "物品名称"}, {"gdzcType", "物品类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"},{"totalPrice", "合价", "false"}});
+            {"gdzcId", "物品编号"}, {"gdzcName", "物品名称", "true"}, {"gdzcType", "物品类别"},{"gdzcPinpai", "品牌", "false"},
+            {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -111,7 +106,6 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
                     editTable.insertValue(3, gdzcPinpai);
                     editTable.insertValue(4, gdzcValue);
                     editTable.insertValue(5, 3);
-                    editTable.insertValue(6, (Double)gdzcValue * 3);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(jTextField1.getText());
@@ -153,6 +147,15 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         sqd.setShenqingrenId(userId);
         sqd.setZhidanrenId(userId);
         
+        for(int i = 0; i < zc.size(); i++){
+            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            zc.get(i).setSaleprice(price);
+            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
+            zc.get(i).setIsCompleted(1);
+            zc.get(i).setStatus(9);
+        }
+        
         lytk.setSqd(sqd);
         lytk.setZc(zc);        
         
@@ -191,7 +194,6 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jTable1 = new BaseTable(null);
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         middlePanel = new javax.swing.JPanel();
@@ -302,14 +304,6 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
-
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
@@ -483,7 +477,6 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;

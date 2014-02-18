@@ -9,10 +9,8 @@ package com.jskj.asset.client.panel.slgl;
 import com.jskj.asset.client.bean.entity.LingyongshenqingDetailEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *

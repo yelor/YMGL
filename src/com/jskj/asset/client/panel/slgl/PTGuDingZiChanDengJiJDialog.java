@@ -54,8 +54,9 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1)";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql = "gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
+                    sql = " and gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
                 }
                 return sql;
             }
@@ -75,9 +76,9 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                     jTextFieldPrice.setText(bindedMap.get("gdzcValue") == null ? "" : bindedMap.get("gdzcValue").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
                     jTextFieldSupplier.setText(bindedMap.get("supplier") == null ? "" : bindedMap.get("supplier").toString());
-                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : DateHelper.format(DateHelper.getStringtoDate(DateHelper.getDate(Long.parseLong(bindedMap.get("gdzcGuaranteedate").toString())),"yyyy/MM/dd HH:mm:ss"),"yyyy-MM-dd"));
+                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : bindedMap.get("gdzcGuaranteedate").toString());
                     jTextFieldXuliehao.setText(bindedMap.get("gdzcSequence") == null ? "" : bindedMap.get("gdzcSequence").toString());
-                    jTextAreaRemark.setText(bindedMap.get("gdzcRemark") == null ? "" : bindedMap.get("gdzcRemark").toString());
+                    jTextAreaRemark.setText(bindedMap.get("gdzcRemark").toString().equals("null") ? "" : bindedMap.get("gdzcRemark").toString());
                     imageUri = bindedMap.get("gdzcPhoto") == null ? "" : bindedMap.get("gdzcPhoto").toString();
                     jTextFieldBaoxiuqi.setEditable(false);
                 }
@@ -183,6 +184,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jTextFieldFile = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(PTGuDingZiChanDengJiJDialog.class);
@@ -263,9 +265,11 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jLabel16.setName("jLabel16"); // NOI18N
 
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setEnabled(false);
         jButton2.setName("jButton2"); // NOI18N
 
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setEnabled(false);
         jButton3.setName("jButton3"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -326,6 +330,10 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
+        jTextFieldFile.setEditable(false);
+        jTextFieldFile.setEnabled(false);
+        jTextFieldFile.setName("jTextFieldFile"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -382,12 +390,16 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                             .addComponent(jLabel16))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3))
-                            .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldFile, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addComponent(jButton3)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
         );
@@ -442,7 +454,8 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -533,6 +546,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextAreaRemark;
     private javax.swing.JTextField jTextField;
     private javax.swing.JTextField jTextFieldBaoxiuqi;
+    private javax.swing.JTextField jTextFieldFile;
     private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldPinpai;

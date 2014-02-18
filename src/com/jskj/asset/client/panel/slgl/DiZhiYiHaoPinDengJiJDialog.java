@@ -12,7 +12,6 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,8 +54,9 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1)";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql = "gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
+                    sql = " and gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
                 }
                 return sql;
             }
@@ -76,7 +76,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
                     jTextFieldPrice.setText(bindedMap.get("gdzcValue") == null ? "" : bindedMap.get("gdzcValue").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
                     jTextFieldSupplier.setText(bindedMap.get("supplier") == null ? "" : bindedMap.get("supplier").toString());
-                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : DateHelper.format(DateHelper.getStringtoDate(DateHelper.getDate(Long.parseLong(bindedMap.get("gdzcGuaranteedate").toString())),"yyyy/MM/dd HH:mm:ss"),"yyyy-MM-dd"));
+                    jTextFieldBaoxiuqi.setText(bindedMap.get("gdzcGuaranteedate") == null ? "" : bindedMap.get("gdzcGuaranteedate").toString());
                     jTextFieldProducer.setText(bindedMap.get("gdzcSequence") == null ? "" : bindedMap.get("gdzcSequence").toString());
                     jTextAreaRemark.setText(bindedMap.get("gdzcRemark") == null ? "" : bindedMap.get("gdzcRemark").toString());
                     imageUri = bindedMap.get("gdzcPhoto") == null ? "" : bindedMap.get("gdzcPhoto").toString();

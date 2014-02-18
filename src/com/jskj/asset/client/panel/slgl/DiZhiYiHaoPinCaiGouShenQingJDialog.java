@@ -58,7 +58,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
-        cgsqId.setText(DanHao.getDanHao("dzyh"));
+        cgsqId.setText(DanHao.getDanHao("DZYH"));
         cgsqId.setEditable(false);
         
         Calendar c = Calendar.getInstance();
@@ -99,7 +99,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         });
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "物品编号"}, {"gdzcName", "物品名称"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
+            {"gdzcId", "物品编号"}, {"gdzcName", "物品名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
             {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -239,10 +239,18 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         sqd.setSupplierId(supplierId);
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
+        sqd.setDanjuleixingId(2);
+        sqd.setIsCompleted(0);
+        sqd.setIsPaid(0);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
         for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt((String)jTable1.getValueAt(i, 5)));
+            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            zc.get(i).setSaleprice(price);
+            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
+            zc.get(i).setIsCompleted(0);
+            zc.get(i).setStatus(0);
         }
         
         cgsq.setSqd(sqd);
@@ -296,7 +304,6 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         jTable1 = new BaseTable(null);
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
 
@@ -486,15 +493,6 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
-
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -580,7 +578,6 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel18;

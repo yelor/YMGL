@@ -10,10 +10,11 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ZichanYanshoutb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseFileChoose;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import com.jskj.asset.client.util.DateHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +52,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
-        jTextField1.setText(DanHao.getDanHao("zcys"));
+        jTextField1.setText(DanHao.getDanHao("ZCYS"));
         jTextField1.setEditable(false);
         
         Calendar c = Calendar.getInstance();
@@ -138,8 +139,9 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0)";
                 if (!jTextFieldZichan.getText().trim().equals("")) {
-                    sql = "gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"";
+                    sql = " and gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"";
                 }
                 return sql;
             }
@@ -171,6 +173,22 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         this.dispose();
     }
     
+    @Action
+    public Task uploadPic() {
+        BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
+        String selectedPath = fileChoose.openDialog();
+        if (!selectedPath.trim().equals("")) {
+            jTextFieldFile.setText(selectedPath);
+            imageUri = selectedPath;
+            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "gudingzhichan") {
+                @Override
+                public void responseResult(String file) {
+                }
+            };
+        }
+        return null;
+    }
+
     @Action
     public Task submitForm() throws ParseException{
         if(jTextFieldZichan.getText().isEmpty()){
@@ -263,9 +281,9 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jTextFieldZhidanren = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jTextFieldFile = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -371,8 +389,14 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanYanShouJDialog.class, this);
+        jButton2.setAction(actionMap.get("uploadPic")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
+
+        jTextFieldFile.setEditable(false);
+        jTextFieldFile.setName("jTextFieldFile"); // NOI18N
+        jTextFieldFile.setPreferredSize(new java.awt.Dimension(0, 30));
 
         javax.swing.GroupLayout middlePanelLayout = new javax.swing.GroupLayout(middlePanel);
         middlePanel.setLayout(middlePanelLayout);
@@ -412,18 +436,20 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addGap(18, 18, 18))
-                                    .addGroup(middlePanelLayout.createSequentialGroup()
-                                        .addComponent(jTextFieldJianceren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, middlePanelLayout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(jLabel4)
                                         .addGap(18, 18, 18)))
                                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton2)
                                     .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextFieldGuige, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(middlePanelLayout.createSequentialGroup()
+                                .addComponent(jTextFieldJianceren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(201, 201, 201)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(middlePanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -498,7 +524,8 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldJianceren, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jTextFieldFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
@@ -513,7 +540,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanYanShouJDialog.class, this);
         jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -522,14 +548,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
-
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
@@ -638,7 +656,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -663,6 +680,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldCaigouren;
+    private javax.swing.JTextField jTextFieldFile;
     private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldJianceren;
     private javax.swing.JTextField jTextFieldPrice;

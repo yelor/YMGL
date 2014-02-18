@@ -58,7 +58,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
-        cgsqId.setText(DanHao.getDanHao("gdzc"));
+        cgsqId.setText(DanHao.getDanHao("GDZC"));
         cgsqId.setEditable(false);
         
         Calendar c = Calendar.getInstance();
@@ -99,7 +99,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         });
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
+            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
             {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -240,10 +240,18 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         sqd.setSupplierId(supplierId);
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
+        sqd.setDanjuleixingId(2);
+        sqd.setIsCompleted(0);
+        sqd.setIsPaid(0);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
         for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt((String)jTable1.getValueAt(i, 5)));
+            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            zc.get(i).setSaleprice(price);
+            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
+            zc.get(i).setIsCompleted(0);
+            zc.get(i).setStatus(0);
         }
         
         cgsq.setSqd(sqd);
@@ -297,7 +305,6 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         jTable1 = new BaseTable(null);
         jToolBar1 = new javax.swing.JToolBar();
         jButton10 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
 
@@ -441,14 +448,6 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         jButton10.setOpaque(false);
         jToolBar1.add(jButton10);
 
-        jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
-        jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
-        jButton14.setBorderPainted(false);
-        jButton14.setFocusable(false);
-        jButton14.setName("jButton14"); // NOI18N
-        jButton14.setOpaque(false);
-        jToolBar1.add(jButton14);
-
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
         jButton13.setBorderPainted(false);
@@ -553,7 +552,6 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
     private javax.swing.JTextField cgsqId;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;

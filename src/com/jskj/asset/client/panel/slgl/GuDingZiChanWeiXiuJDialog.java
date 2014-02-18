@@ -7,7 +7,6 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.ZichanYanshoutb;
 import com.jskj.asset.client.bean.entity.Zichanweixiudantb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -15,7 +14,6 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
-import com.jskj.asset.client.util.DateHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -51,7 +49,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         jTextFieldPizhunren.setText(userName);
         
-        jTextField6.setText(DanHao.getDanHao("zcwx"));
+        jTextField6.setText(DanHao.getDanHao("ZCWX"));
         jTextField6.setEditable(false);
         
         ((BaseTextField) jTextFieldName).registerPopup(new IPopupBuilder() {

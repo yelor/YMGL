@@ -25,15 +25,15 @@ public class WeixiushenqingchaxunTask extends BaseTask{
     private final String CX_URI = Constants.HTTP + Constants.APPID + "wxsqsp";
     public static final int pageSize = 10;
     private int pageIndex = 1;    
-    private String user = "";
+    private int user;
     
-    public WeixiushenqingchaxunTask(String user,int pageIndex){
+    public WeixiushenqingchaxunTask(int user,int pageIndex){
         super();
         this.pageIndex = pageIndex;
         this.user = user;
     }
     
-    public WeixiushenqingchaxunTask(String user){
+    public WeixiushenqingchaxunTask(int user){
         this(user,1);
     }
     

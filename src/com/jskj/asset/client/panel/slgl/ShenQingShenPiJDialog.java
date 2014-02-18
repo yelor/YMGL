@@ -198,7 +198,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
@@ -262,15 +261,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton12.setName("jButton12"); // NOI18N
         jButton12.setOpaque(false);
         jToolBar1.add(jButton12);
-
-        jButton14.setAction(actionMap.get("print")); // NOI18N
-        jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
-        jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
-        jButton14.setBorderPainted(false);
-        jButton14.setFocusable(false);
-        jButton14.setName("jButton14"); // NOI18N
-        jButton14.setOpaque(false);
-        jToolBar1.add(jButton14);
 
         jButton13.setAction(actionMap.get("print")); // NOI18N
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
@@ -451,7 +441,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
