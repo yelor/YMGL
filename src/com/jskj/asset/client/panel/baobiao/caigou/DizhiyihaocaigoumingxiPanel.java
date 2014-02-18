@@ -58,7 +58,7 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
         parameterMap = new HashMap();
         parameterMap.put("pagesize", String.valueOf(pageSize));
         parameterMap.put("pageindex", String.valueOf(pageIndex));
-        parameterMap.put("idflag", "dzyh");
+        parameterMap.put("idflag", "DZYH");
 
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
@@ -457,7 +457,7 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
         String endDate = jTextFieldEnd.getText();
         printMap.put("startDate", startDate);
         printMap.put("endDate", endDate);
-        printMap.put("idflag", "dzyh");
+        printMap.put("idflag", "DZYH");
         ReportCaiGouFindTask printData = new ReportCaiGouFindTask(printMap, "report/list") {
             @Override
             public void responseResult(CommFindEntity response) {

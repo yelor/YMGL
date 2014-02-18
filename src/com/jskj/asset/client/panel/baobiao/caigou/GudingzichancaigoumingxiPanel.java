@@ -58,7 +58,7 @@ public class GudingzichancaigoumingxiPanel extends BasePanel {
         parameterMap = new HashMap();
         parameterMap.put("pagesize", String.valueOf(pageSize));
         parameterMap.put("pageindex", String.valueOf(pageIndex));
-        parameterMap.put("idflag", "gdzc");
+        parameterMap.put("idflag", "GDZC");
 
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
@@ -369,7 +369,7 @@ public class GudingzichancaigoumingxiPanel extends BasePanel {
         String endDate = jTextFieldEnd.getText();
         parameterMap.put("startDate", startDate);
         parameterMap.put("endDate", endDate);
-        parameterMap.put("idflag", "gdzc");
+        parameterMap.put("idflag", "GDZC");
 
         jLabelImg.setText("loading chart...");
         jLabelImg.setIcon(null);
@@ -456,7 +456,7 @@ public class GudingzichancaigoumingxiPanel extends BasePanel {
         String endDate = jTextFieldEnd.getText();
         printMap.put("startDate", startDate);
         printMap.put("endDate", endDate);
-        printMap.put("idflag", "gdzc");
+        printMap.put("idflag", "GDZC");
         ReportCaiGouFindTask printData = new ReportCaiGouFindTask(printMap, "report/list") {
             @Override
             public void responseResult(CommFindEntity response) {
