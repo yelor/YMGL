@@ -7,18 +7,26 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
 import com.jskj.asset.client.constants.Constants;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DanHao;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  * 
@@ -29,6 +37,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
     private List<YanshouyimiaoEntity> chukuyimiaolist;
     private BindTableHelper<YanshouyimiaoEntity> bindTable;
+    private Churukudantb churukudan;
     
     /**
      * Creates new form ymcrk1
@@ -36,6 +45,8 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     public YiMiaoChuKu2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        churukudan = new Churukudantb();
+        
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
 
@@ -400,6 +411,34 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+    
+     @Action
+    public Task save() throws ParseException {
+        if (jTextFieldyimiaoName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入出库疫苗!");
+            return null;
+        }
+
+        churukudan.setChurukuId(DanHao.getDanHao("YMCK"));
+        churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+
+        String serviceId = "yimiaochuku/add";
+        return new CommUpdateTask<Churukudantb>(churukudan, serviceId) {
+
+            @Override
+            public void responseResult(ComResponse<Churukudantb> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    JOptionPane.showMessageDialog(null, "提交成功！");
+                    exit();
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoChuKu2.this);
+                }
+            }
+
+        };
+
     }
 
     @Action

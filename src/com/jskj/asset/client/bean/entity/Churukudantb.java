@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Churukudantb {
     private String churukuId;
 
@@ -12,6 +14,8 @@ public class Churukudantb {
     private String source;
 
     private String tongguandanno;
+
+    private Integer quantity;
 
     private String pihao;
 
@@ -63,6 +67,14 @@ public class Churukudantb {
 
     public void setTongguandanno(String tongguandanno) {
         this.tongguandanno = tongguandanno == null ? null : tongguandanno.trim();
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getPihao() {
