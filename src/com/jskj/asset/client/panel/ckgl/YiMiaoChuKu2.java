@@ -53,7 +53,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyanshouyimiao";
+                return Constants.HTTP + Constants.APPID + "addkucunyimiao";
             }
 
             public String getConditionSQL() {

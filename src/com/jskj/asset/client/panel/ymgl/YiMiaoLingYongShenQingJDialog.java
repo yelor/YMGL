@@ -107,8 +107,9 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=3 and is_completed = 1 and status = 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql = "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }
@@ -578,15 +579,16 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        shenqingdan.setDanjuleixingId(22);
+        shenqingdan.setDanjuleixingId(4);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaolingyongdanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
+            yimiaoshenqingdan.setDanjuleixingId(5);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             System.out.println(yimiaotable.getValue(i, "quantity"));
             if (yimiaotable.getValue(i, "quantity").equals("")) {

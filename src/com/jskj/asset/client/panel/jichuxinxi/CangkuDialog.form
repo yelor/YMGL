@@ -249,7 +249,7 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.user.ParamDialog" id="save" methodName="save"/>
+          <action class="com.jskj.asset.client.panel.jichuxinxi.CangkuDialog" id="save" methodName="save"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
         <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>

@@ -117,7 +117,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addkucunyimiao";
+                return Constants.HTTP + Constants.APPID + "addyimiao";
             }
 
             public String getConditionSQL() {

@@ -43,6 +43,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unit", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+        
         bindTable.refreshData(null);
         //        疫苗的popup
         ((BaseTextField) jTextFieldyimiaoName).registerPopup(new IPopupBuilder() {
@@ -51,7 +52,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyanshouyimiao";
+                return Constants.HTTP + Constants.APPID + "addkucunyimiao";
             }
 
             public String getConditionSQL() {

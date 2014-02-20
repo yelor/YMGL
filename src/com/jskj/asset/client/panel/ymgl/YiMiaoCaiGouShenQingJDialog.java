@@ -106,6 +106,7 @@ public class YiMiaoCaiGouShenQingJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                 sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=4 and is_completed = 1 and status = 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
@@ -590,7 +591,7 @@ public class YiMiaoCaiGouShenQingJDialog extends javax.swing.JDialog {
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        shenqingdan.setDanjuleixingId(22);
+        shenqingdan.setDanjuleixingId(6);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
