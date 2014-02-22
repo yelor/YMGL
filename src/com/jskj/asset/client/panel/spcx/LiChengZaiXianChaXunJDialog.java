@@ -3,23 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.spcx;
 
+import com.jskj.asset.client.bean.entity.RecordProcessEntity;
+import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.spcx.task.LichengZaixianFindTask;
 import com.jskj.asset.client.panel.ymgl.*;
+import com.jskj.asset.client.util.BindTableHelper;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.log4j.Logger;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
  * @author huiqi
  */
-public class LiChengZaiXianChaXunJDialog extends javax.swing.JDialog {
+public class LiChengZaiXianChaXunJDialog extends BaseDialog {
+
+    private final static Logger logger = Logger.getLogger(LiChengZaiXianChaXunJDialog.class);
+    private final BindTableHelper<RecordProcessEntity> bindTable;
+    int resultCount = 0;
+    private List<RecordProcessEntity> recordProcesses;
 
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public LiChengZaiXianChaXunJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public LiChengZaiXianChaXunJDialog() {
+        super();
         initComponents();
+        bindTable = new BindTableHelper<RecordProcessEntity>(jTable4, new ArrayList<RecordProcessEntity>());
+        bindTable.createTable(new String[][]{{"shenqingdanId", "单据ID"}, {"departmentName", "部门"}, {"danjuleixing", "类型"}, {"handleType", "操作"}, {"handleDate", "日期"},
+        {"jingbanren", "经办人"}, {"comments", "信息"}});
+        bindTable.setDateType(5);
+        bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 100}).setRowHeight(25);
+    }
+
+    private class RefreshTask extends LichengZaixianFindTask {
+
+        RefreshTask(String danjuId) {
+            super(danjuId);
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<RecordProcessEntity> response) {
+            logger.debug("get current size:" + response.getResult().size());
+            bindTable.refreshData(response.getResult());
+
+        }
     }
 
     /**
@@ -38,12 +72,8 @@ public class LiChengZaiXianChaXunJDialog extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton6 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        shenqingdanid = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
 
@@ -104,76 +134,56 @@ public class LiChengZaiXianChaXunJDialog extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
-        jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton6.setName("jButton6"); // NOI18N
-        jButton6.setOpaque(false);
-        jToolBar1.add(jButton6);
+        shenqingdanid.setText(resourceMap.getString("shenqingdanid.text")); // NOI18N
+        shenqingdanid.setToolTipText(resourceMap.getString("shenqingdanid.toolTipText")); // NOI18N
+        shenqingdanid.setMinimumSize(new java.awt.Dimension(6, 30));
+        shenqingdanid.setName("shenqingdanid"); // NOI18N
+        shenqingdanid.setPreferredSize(new java.awt.Dimension(6, 30));
+        jToolBar1.add(shenqingdanid);
 
-        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
-        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton4.setName("jButton4"); // NOI18N
-        jButton4.setOpaque(false);
-        jToolBar1.add(jButton4);
-
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setOpaque(false);
-        jToolBar1.add(jButton3);
-
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(LiChengZaiXianChaXunJDialog.class, this);
+        jButton1.setAction(actionMap.get("findProcess")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
-
-        jPanel1.setName("jPanel1"); // NOI18N
-
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "单据编号", "制单日期", "单据类型", "经办人", "部门", "摘要"
+
             }
         ));
-        jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         jTable4.setName("jTable4"); // NOI18N
+        jTable4.setShowVerticalLines(false);
         jScrollPane5.setViewportView(jTable4);
         if (jTable4.getColumnModel().getColumnCount() > 0) {
             jTable4.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable4.columnModel.title0")); // NOI18N
@@ -184,34 +194,21 @@ public class LiChengZaiXianChaXunJDialog extends javax.swing.JDialog {
             jTable4.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable4.columnModel.title6")); // NOI18N
         }
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(315, Short.MAX_VALUE))
+            .addComponent(jScrollPane5)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -244,28 +241,34 @@ public class LiChengZaiXianChaXunJDialog extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                YiMiaoCaiGouJiHuaFenXiJDialog dialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                YiMiaoCaiGouJiHuaFenXiJDialog dialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
+    }
+
+    @Action
+    public Task findProcess() {
+        String id = shenqingdanid.getText();
+        if (id.trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入单据ID!");
+            shenqingdanid.grabFocus();
+            return null;
+        }
+        return new RefreshTask(id);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -275,5 +278,6 @@ public class LiChengZaiXianChaXunJDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField shenqingdanid;
     // End of variables declaration//GEN-END:variables
 }
