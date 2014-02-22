@@ -91,8 +91,8 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"saleQuantity", "数量", "true"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格", "false"},
+            {"yimiao.yimiaoJixing", "剂型", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -108,26 +108,29 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                sql += " yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_id like \"%" + newColumnObj.toString() + "%\"";
+                    sql = "and yimiao_id like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
+                {"yimiao.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("shengchanqiye");
-                    Object unit = bindedMap.get("unit");
-                    Object youxiaoqi = bindedMap.get("youxiaoqi");
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
+                    Object yimiaoId = yimiao.get("yimiaoId");
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
+                    Object youxiaoqi = bindedMap.get("youxiaodate");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);

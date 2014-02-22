@@ -55,6 +55,37 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
+        
+                //供应单位的popup
+        ((BaseTextField) jTextFieldSupplierName).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "supplier";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldSupplierName.getText().trim().equals("")) {
+                    sql = "supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    yimiaoyanshou.setSupplierId((Integer) (bindedMap.get("supplierId")));
+                    jTextFieldSupplierName.setText(bindedMap.get("supplierName") == null ? "" : bindedMap.get("supplierName").toString());
+                    jTextFieldFamiaoperson.setText(bindedMap.get("supplierConstactperson") == null ? "" : bindedMap.get("supplierConstactperson").toString());
+                }
+            }
+        });
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
@@ -76,6 +107,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 0 and danjuleixing_id=5 and danjuleixing_id=6)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
@@ -801,7 +833,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
     public Task submitForm() throws ParseException {
         if (jTextFieldSupplierName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入送苗单位!");
-        } 
+        }
 
         yimiaoyanshouEntity = new Yimiaoyanshou_detail_tbFindEntity();
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -829,15 +861,21 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         yimiaoyanshou.setYmysArriveaddr("广安疾控中心");
 
         List<Yimiaoyanshou_detail_tb> list = new ArrayList<Yimiaoyanshou_detail_tb>();
-        for (int i = 0; i < 3; i++) {
-            yimiaoyanshou_detail.setYimiaoId(i + 100);
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            yimiaoyanshou_detail=new Yimiaoyanshou_detail_tb();
+            yimiaoyanshou_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             yimiaoyanshou_detail.setYmysId(jTextFieldYimiaoyanshouId.getText());
             yimiaoyanshou_detail.setYouxiaodate(new Date());
             yimiaoyanshou_detail.setPiqianfahegeno(i + 200);
             yimiaoyanshou_detail.setPihao("sff12324354677");
             yimiaoyanshou_detail.setFahuoyuan("李四");
             yimiaoyanshou_detail.setFuheyuan("张三");
-            yimiaoyanshou_detail.setQuantity((i + 1) * 10);
+            if (yimiaotable.getValue(i, "quantity").equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗申报数量!");
+                return null;
+            }
+            yimiaoyanshou_detail.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
             list.add(yimiaoyanshou_detail);
         }
         yimiaoyanshouEntity.setYimiaoyanshou(yimiaoyanshou);

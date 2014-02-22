@@ -83,9 +83,9 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
-            {"price", "单价", "true"}, {"totalprice", "合价", "true"}, {"saleprice", "预售价", "true"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
+            {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
+            {"stockpilePrice", "单价", "true"}, {"yimiao.yimiaoYushoujia", "预售价", "true"}, {"totalprice", "预售合价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -101,28 +101,31 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price>0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql = "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
+                {"yimiao.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("shengchanqiye");
-                    Object unit = bindedMap.get("unit");
-                    Object price = bindedMap.get("price");
-                    Object youxiaoqi = bindedMap.get("youxiaoqi");
-                    Object saleprice = bindedMap.get("saleprice");
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
+                    Object yimiaoId = yimiao.get("yimiaoId");
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
+                    Object price = bindedMap.get("stockpilePrice");
+                    Object youxiaoqi = bindedMap.get("youxiaodate");
+                    Object saleprice = yimiao.get("yimiaoYushoujia");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -132,7 +135,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                     editTable.insertValue(5, unit);
                     editTable.insertValue(6, youxiaoqi);
                     editTable.insertValue(8, price);
-                    editTable.insertValue(10, saleprice);
+                    editTable.insertValue(9, saleprice);
 
                 }
 
@@ -639,7 +642,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入制单日期!");
             return null;
         } else if (jTextFieldXiaoshoudanwei.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入疫苗数量!");
+            AssetMessage.ERRORSYS("请输入销售单位!");
             return null;
         }
         yimiaoxiaoshou = new Sale_detail_tbFindEntity();
@@ -656,7 +659,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
             sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
-            sale_detail.setPrice(Float.parseFloat((String) yimiaotable.getValue(i, "price")));
+            sale_detail.setPrice(Float.parseFloat((String) yimiaotable.getValue(i, "yimiao.yimiaoYushoujia")));
             sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
             list.add(sale_detail);
         }

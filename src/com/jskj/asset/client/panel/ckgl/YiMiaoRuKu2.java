@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.Stockpiletb;
+import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -29,22 +28,23 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
 /**
- * 
+ *
  * @author Administrator
  */
 public class YiMiaoRuKu2 extends javax.swing.JDialog {
-    
-    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
     private List<YanshouyimiaoEntity> chukuyimiaolist;
     private BindTableHelper<YanshouyimiaoEntity> bindTable;
-    private Stockpiletb stockpile;
-    
+    private Churukudantb churukudan;
+
     /**
      * Creates new form ymcrk1
      */
     public YiMiaoRuKu2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        churukudan = new Churukudantb();
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
 
@@ -52,7 +52,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
         bindTable.createTable(new String[][]{
             {"date", "日期"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unit", "单位", "false"},
-            {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},{"price", "单价", "true"},{"totalPrice", "合价", "true"},
+            {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"}, {"price", "单价", "true"}, {"totalPrice", "合价", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
 
         //        疫苗的popup
@@ -62,11 +62,12 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyanshouyimiao";
+                return Constants.HTTP + Constants.APPID + "addyimiao";
             }
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 3 and danjuleixing_id=6)";
                 if (!jTextFieldyimiaoName.getText().trim().equals("")) {
                     sql = "yimiao_name like \"%" + jTextFieldyimiaoName.getText() + "%\"";
                 }
@@ -82,6 +83,12 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                     jTextFieldyimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
                     jTextFieldsource.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
                     jTextFieldtongguandanNo.setText(bindedMap.get("yimiaoShengchanqiye") == null ? "" : bindedMap.get("yimiaoShengchanqiye").toString());
+                    churukudan.setYimiaoId((Integer) bindedMap.get("yimiaoId"));
+                    churukudan.setSource(null);
+                    churukudan.setTongguandanno(null);
+                    churukudan.setPihao(null);
+                    churukudan.setPiqianfahegeno(null);
+                    churukudan.setYouxiaoqi(null);
                     Object yimiaoId = bindedMap.get("yimiaoId");
                     Object yimiaoName = bindedMap.get("yimiaoName");
                     Object yimiaoGuige = bindedMap.get("yimiaoGuige");
@@ -89,14 +96,14 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
 
-                    YanshouyimiaoEntity yanshouyimiao=new YanshouyimiaoEntity();
+                    YanshouyimiaoEntity yanshouyimiao = new YanshouyimiaoEntity();
                     yanshouyimiao.setYimiaoId((Integer) yimiaoId);
                     yanshouyimiao.setYimiaoName((String) yimiaoName);
                     yanshouyimiao.setYimiaoGuige((String) yimiaoGuige);
                     yanshouyimiao.setYimiaoJixing((String) yimiaoJixing);
                     yanshouyimiao.setYimiaoShengchanqiye((String) shengchanqiye);
                     yanshouyimiao.setUnitId((String) unit);
-                    chukuyimiaolist=new ArrayList<YanshouyimiaoEntity>();
+                    chukuyimiaolist = new ArrayList<YanshouyimiaoEntity>();
                     chukuyimiaolist.add(yanshouyimiao);
                     bindTable.refreshData(chukuyimiaolist);
                 }
@@ -151,6 +158,8 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoRuKu2.class, this);
+        jButton7.setAction(actionMap.get("save")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setFocusable(false);
@@ -199,7 +208,6 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
         jButton18.setOpaque(false);
         jToolBar1.add(jButton18);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoRuKu2.class, this);
         jButton19.setAction(actionMap.get("exit")); // NOI18N
         jButton19.setIcon(resourceMap.getIcon("jButton19.icon")); // NOI18N
         jButton19.setText(resourceMap.getString("jButton19.text")); // NOI18N
@@ -417,19 +425,16 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入入库疫苗!");
             return null;
         }
-        stockpile=new Stockpiletb();
-        stockpile.setStockpileId(111);
-        stockpile.setStockpileDate(dateformate.parse(jTextFieldzhidanDate.getText()));
-        stockpile.setDeportId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+
+        churukudan.setChurukuId(DanHao.getDanHao("YMRK"));
+        churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
 
         String serviceId = "yimiaoruku/add";
-        if (stockpile.getStockpileId()!= null && stockpile.getStockpileId()> 0) {
-            serviceId = "yimiaoruku/update";
-        }
-        return new CommUpdateTask<Stockpiletb>(stockpile, serviceId) {
+        return new CommUpdateTask<Churukudantb>(churukudan, serviceId) {
 
             @Override
-            public void responseResult(ComResponse<Stockpiletb> response) {
+            public void responseResult(ComResponse<Churukudantb> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
@@ -441,12 +446,36 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
         };
 
     }
-    
+
+    private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
+
+        SaveTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to SaveTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public void exit() {
         this.dispose();
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;

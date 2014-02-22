@@ -90,6 +90,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                 }
             }
         });
+        
 //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
@@ -579,15 +580,16 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        shenqingdan.setDanjuleixingId(22);
+        shenqingdan.setDanjuleixingId(3);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
+            yimiaoshenqingdan.setDanjuleixingId(3);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             System.out.println(yimiaotable.getValue(i, "quantity"));
             if (yimiaotable.getValue(i, "quantity").equals("")) {

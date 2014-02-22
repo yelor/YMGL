@@ -45,13 +45,14 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "dengjiyimiao";
+                return Constants.HTTP + Constants.APPID + "addyimiao";
             }
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 2 and danjuleixing_id=5)";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\"";
+                    sql = "and yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\"";
                 }
                 return sql;
             }
@@ -617,9 +618,12 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入疫苗数量!");
             return null;
         }
-        yimiaodengji.setYimiaoId(11);
         yimiaodengji.setPizhunwenhao("国家准字号NDA1235465");
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
+        if (jTextFieldYouxiaoqi.getText().equals("")) {
+            AssetMessage.ERRORSYS("请输入疫苗有效期!");
+            return null;
+        }
         yimiaodengji.setYouxiaoqi(dateformate.parse(jTextFieldYouxiaoqi.getText()));
         yimiaodengji.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         yimiaodengji.setPiqianfahegezhenno(232435);

@@ -31,6 +31,8 @@ public class Yimiaozuzhuangchaixie {
 
     private Integer quantity2;
 
+    private Integer danjuleixingId;
+
     public Integer getId() {
         return id;
     }
@@ -133,5 +135,13 @@ public class Yimiaozuzhuangchaixie {
 
     public void setQuantity2(Integer quantity2) {
         this.quantity2 = quantity2;
+    }
+
+    public Integer getDanjuleixingId() {
+        return danjuleixingId;
+    }
+
+    public void setDanjuleixingId(Integer danjuleixingId) {
+        this.danjuleixingId = danjuleixingId;
     }
 }

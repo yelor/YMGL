@@ -585,7 +585,7 @@ public class YiMiaoSheGouPlanJDialog extends javax.swing.JDialog {
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        shenqingdan.setDanjuleixingId(22);
+        shenqingdan.setDanjuleixingId(4);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();

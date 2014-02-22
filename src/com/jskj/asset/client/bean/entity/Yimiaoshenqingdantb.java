@@ -8,6 +8,8 @@ public class Yimiaoshenqingdantb {
 
     private String shenqingdanId;
 
+    private Integer danjuleixingId;
+
     private Integer yimiaoId;
 
     private Integer quantity;
@@ -34,6 +36,14 @@ public class Yimiaoshenqingdantb {
 
     public void setShenqingdanId(String shenqingdanId) {
         this.shenqingdanId = shenqingdanId == null ? null : shenqingdanId.trim();
+    }
+
+    public Integer getDanjuleixingId() {
+        return danjuleixingId;
+    }
+
+    public void setDanjuleixingId(Integer danjuleixingId) {
+        this.danjuleixingId = danjuleixingId;
     }
 
     public Integer getYimiaoId() {

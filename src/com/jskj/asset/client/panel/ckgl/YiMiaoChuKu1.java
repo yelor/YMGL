@@ -6,43 +6,59 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Churukudantb;
+import com.jskj.asset.client.bean.entity.StockpiletbAll;
+import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
 import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
 import com.jskj.asset.client.bean.entity.YanshouyimiaoFindEntity;
+import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.constants.Constants;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DanHao;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
  * @author Administrator
  */
 public class YiMiaoChuKu1 extends javax.swing.JDialog {
-    
-    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
-    private List<YanshouyimiaoEntity> chukuyimiaolist;
-    private BindTableHelper<YanshouyimiaoEntity> bindTable;
-    
+
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private BindTableHelper<StockpiletbAll> bindTable;
+    private List<StockpiletbAll> chukuyimiaolist;
+    private Churukudantb churukudan;
+
     public YiMiaoChuKu1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        churukudan = new Churukudantb();
+
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
-        
-        bindTable = new BindTableHelper<YanshouyimiaoEntity>(jTableyimiao, new ArrayList<YanshouyimiaoEntity>());
+
+        bindTable = new BindTableHelper<StockpiletbAll>(jTableyimiao, new ArrayList<StockpiletbAll>());
         bindTable.createTable(new String[][]{
-            {"date", "日期"}, {"quantity", "数量"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unit", "单位", "false"},
-            {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},
+            {"date", "日期", "true"}, {"quantity", "数量", "true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
+            {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"yimiao.unitId", "单位", "false"},
+            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiao.yimiaoPizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+
         bindTable.refreshData(null);
         //        疫苗的popup
         ((BaseTextField) jTextFieldyimiaoName).registerPopup(new IPopupBuilder() {
@@ -51,42 +67,70 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyanshouyimiao";
+                return Constants.HTTP + Constants.APPID + "addkucunyimiao";
             }
 
             public String getConditionSQL() {
                 String sql = "";
+                 sql += " yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
                 if (!jTextFieldyimiaoName.getText().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + jTextFieldyimiaoName.getText() + "%\"";
+                    sql = "and yimiao_name like \"%" + jTextFieldyimiaoName.getText() + "%\"";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}};
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    jTextFieldyimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldsource.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldtongguandanNo.setText(bindedMap.get("yimiaoShengchanqiye") == null ? "" : bindedMap.get("yimiaoShengchanqiye").toString());
-                    Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-                    Object unit = bindedMap.get("unitId");
-                    
-                    YanshouyimiaoEntity yanshouyimiao=new YanshouyimiaoEntity();
-                    yanshouyimiao.setYimiaoId((Integer) yimiaoId);
-                    yanshouyimiao.setYimiaoName((String) yimiaoName);
-                    yanshouyimiao.setYimiaoGuige((String) yimiaoGuige);
-                    yanshouyimiao.setYimiaoJixing((String) yimiaoJixing);
-                    yanshouyimiao.setYimiaoShengchanqiye((String) shengchanqiye);
-                    yanshouyimiao.setUnitId((String) unit);
-                    chukuyimiaolist=new ArrayList<YanshouyimiaoEntity>();
-                    chukuyimiaolist.add(yanshouyimiao);
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
+                    jTextFieldyimiaoName.setText((String) (yimiao.get("yimiaoName") == null ? "" : yimiao.get("yimiaoName")));
+                    jTextFieldsource.setText(bindedMap.get("source") == null ? "" : bindedMap.get("source").toString());
+                    jTextFieldtongguandanNo.setText(bindedMap.get("jinkoutongguanno") == null ? "" : bindedMap.get("jinkoutongguanno").toString());
+                    churukudan.setSource(bindedMap.get("source").toString());
+                    churukudan.setTongguandanno(bindedMap.get("jinkoutongguanno").toString());
+                    churukudan.setYouxiaoqi((Date) bindedMap.get("youxiaoqi"));
+
+                    churukudan.setPiqianfahegeno((String) bindedMap.get("piqianfano"));
+                    System.out.println(yimiaomap);
+                    System.out.println(bindedMap);
+//                    System.out.println(yimiao.get("yimiaoName"));
+                    YiMiaotb yimiaoentity = new YiMiaotb();
+                    yimiaoentity.setSupplierId((Integer) yimiao.get("supplierId"));
+                    yimiaoentity.setUnitId((String) yimiao.get("unitId"));
+                    yimiaoentity.setYimiaoChufangbiaoji((String) yimiao.get("yimiaoChufangbiaoji"));
+                    yimiaoentity.setYimiaoFuzhuunit((String) yimiao.get("yimiaoFuzhuunit"));
+                    yimiaoentity.setYimiaoGuige((String) yimiao.get("yimiaoGuige"));
+                    yimiaoentity.setYimiaoId((Integer) yimiao.get("yimiaoId"));
+                    churukudan.setYimiaoId((Integer) yimiao.get("yimiaoId"));
+                    yimiaoentity.setYimiaoJixing((String) yimiao.get("yimiaoJixing"));
+                    yimiaoentity.setYimiaoMorencangku((Integer) yimiao.get("yimiaoMorencangku"));
+                    yimiaoentity.setYimiaoName((String) yimiao.get("yimiaoName"));
+                    yimiaoentity.setYimiaoPicture((String) yimiao.get("yimiaoPicture"));
+                    yimiaoentity.setYimiaoPizhunwenhao((String) yimiao.get("yimiaoPizhunwenhao"));
+                    yimiaoentity.setYimiaoRemark((String) yimiao.get("yimiaoRemark"));
+                    yimiaoentity.setYimiaoShengchanqiye((String) yimiao.get("yimiaoShengchanqiye"));
+                    yimiaoentity.setYimiaoStockdown((Integer) yimiao.get("yimiaoStockdown"));
+                    yimiaoentity.setYimiaoStockup((Integer) yimiao.get("yimiaoStockup"));
+                    yimiaoentity.setYimiaoTiaoxingma((String) yimiao.get("yimiaoTiaoxingma"));
+                    yimiaoentity.setYimiaoType((String) yimiao.get("yimiaoType"));
+//                    yimiaoentity.setYimiaoYushoujia((Float) yimiao.get("yimiaoYushoujia"));
+                    StockpiletbAll chukumiao = new StockpiletbAll();
+                    chukumiao.setYimiao(yimiaoentity);
+                    chukumiao.setPiqianfano((String) bindedMap.get("piqianfano"));
+                    try {
+                        chukumiao.setYouxiaodate(dateformate.parse((String) bindedMap.get("youxiaodate")));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(YiMiaoChuKu2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println(bindedMap.get("stockpilePrice"));
+//                    chukumiao.setStockpilePrice(Float.parseFloat((String) bindedMap.get("stockpilePrice")));
+
+                    chukuyimiaolist = new ArrayList<StockpiletbAll>();
+                    chukuyimiaolist.add(chukumiao);
                     bindTable.refreshData(chukuyimiaolist);
                 }
             }
@@ -134,6 +178,8 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoChuKu1.class, this);
+        jButton7.setAction(actionMap.get("save")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setFocusable(false);
@@ -166,7 +212,6 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         jButton11.setOpaque(false);
         jToolBar1.add(jButton11);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoChuKu1.class, this);
         jButton12.setAction(actionMap.get("exit")); // NOI18N
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
@@ -346,6 +391,57 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+
+    @Action
+    public Task save() throws ParseException {
+        if (jTextFieldyimiaoName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入出库疫苗!");
+            return null;
+        }
+
+        churukudan.setChurukuId(DanHao.getDanHao("YMCK"));
+        churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+
+        churukudan.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        churukudan.setGongyingdanwei(2);
+        churukudan.setQuantity(22);
+        
+        String serviceId = "yimiaochuku/add";
+        return new CommUpdateTask<Churukudantb>(churukudan, serviceId) {
+
+            @Override
+            public void responseResult(ComResponse<Churukudantb> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    JOptionPane.showMessageDialog(null, "提交成功！");
+                    exit();
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoChuKu1.this);
+                }
+            }
+
+        };
+
+    }
+
+    private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
+        SaveTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to SaveTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     @Action

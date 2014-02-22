@@ -6,23 +6,33 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Churukudantb;
+import com.jskj.asset.client.bean.entity.Supplier;
 import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
+import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tb;
 import com.jskj.asset.client.constants.Constants;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DanHao;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
@@ -33,6 +43,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
     private List<YanshouyimiaoEntity> chukuyimiaolist;
     private BindTableHelper<YanshouyimiaoEntity> bindTable;
+    private Churukudantb churukudan;
 
     /**
      * Creates new form ymcrk1
@@ -40,15 +51,17 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
     public YiMiaoRuKu1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        churukudan = new Churukudantb();
+        
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
 
         bindTable = new BindTableHelper<YanshouyimiaoEntity>(jTableyimiao, new ArrayList<YanshouyimiaoEntity>());
         bindTable.createTable(new String[][]{
             {"date", "日期"}, {"quantity", "数量"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"shengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unit", "单位", "false"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"yimiaoyanshou_detail.youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},
-            {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+            {"jingbanren", "经办人", "true"}, {"supplierId", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
 //                疫苗的popup
         ((BaseTextField) jTextFieldyimiaoName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -56,13 +69,14 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyanshouyimiao";
+                return Constants.HTTP + Constants.APPID + "addyimiao";
             }
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 3 and danjuleixing_id=5)";
                 if (!jTextFieldyimiaoName.getText().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + jTextFieldyimiaoName.getText() + "%\"";
+                    sql = "and yimiao_name like \"%" + jTextFieldyimiaoName.getText() + "%\"";
                 }
                 return sql;
             }
@@ -75,12 +89,13 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     jTextFieldyimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
                     jTextFieldsource.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldtongguandanNo.setText(bindedMap.get("yimiaoShengchanqiye") == null ? "" : bindedMap.get("yimiaoShengchanqiye").toString());
+                    jTextFieldtongguandanNo.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoShengchanqiye").toString());
                     Object yimiaoId = bindedMap.get("yimiaoId");
                     Object yimiaoName = bindedMap.get("yimiaoName");
                     Object yimiaoGuige = bindedMap.get("yimiaoGuige");
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
+                    Object supplierId = bindedMap.get("suppliertb.supplierId");
                     Object unit = bindedMap.get("unitId");
 
                     YanshouyimiaoEntity yanshouyimiao=new YanshouyimiaoEntity();
@@ -90,6 +105,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                     yanshouyimiao.setYimiaoJixing((String) yimiaoJixing);
                     yanshouyimiao.setYimiaoShengchanqiye((String) shengchanqiye);
                     yanshouyimiao.setUnitId((String) unit);
+                    yanshouyimiao.setSupplierId((Integer) supplierId);
                     chukuyimiaolist=new ArrayList<YanshouyimiaoEntity>();
                     chukuyimiaolist.add(yanshouyimiao);
                     bindTable.refreshData(chukuyimiaolist);
@@ -139,6 +155,8 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoRuKu1.class, this);
+        jButton7.setAction(actionMap.get("save")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setFocusable(false);
@@ -171,7 +189,6 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         jButton11.setOpaque(false);
         jToolBar1.add(jButton11);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoRuKu1.class, this);
         jButton12.setAction(actionMap.get("exit")); // NOI18N
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
@@ -387,6 +404,53 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         });
     }
 
+    @Action
+    public Task save() throws ParseException {
+        if (jTextFieldyimiaoName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入入库疫苗!");
+            return null;
+        }
+
+        churukudan.setChurukuId(DanHao.getDanHao("YMRK"));
+        churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+
+        String serviceId = "yimiaoruku/add";
+        return new CommUpdateTask<Churukudantb>(churukudan, serviceId) {
+
+            @Override
+            public void responseResult(ComResponse<Churukudantb> response) {
+                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                    JOptionPane.showMessageDialog(null, "提交成功！");
+                    exit();
+                } else {
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoRuKu1.this);
+                }
+            }
+
+        };
+
+    }
+
+    private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
+        SaveTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to SaveTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+    
     @Action
     public void exit() {
         this.dispose();
