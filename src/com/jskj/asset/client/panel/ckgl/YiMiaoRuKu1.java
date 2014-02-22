@@ -7,7 +7,9 @@ package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
+import com.jskj.asset.client.bean.entity.Supplier;
 import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
+import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -57,9 +59,9 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         bindTable = new BindTableHelper<YanshouyimiaoEntity>(jTableyimiao, new ArrayList<YanshouyimiaoEntity>());
         bindTable.createTable(new String[][]{
             {"date", "日期"}, {"quantity", "数量"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"shengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unit", "单位", "false"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"yimiaoyanshou_detail.youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},
-            {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+            {"jingbanren", "经办人", "true"}, {"supplierId", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
 //                疫苗的popup
         ((BaseTextField) jTextFieldyimiaoName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -87,12 +89,13 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     jTextFieldyimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
                     jTextFieldsource.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldtongguandanNo.setText(bindedMap.get("yimiaoShengchanqiye") == null ? "" : bindedMap.get("yimiaoShengchanqiye").toString());
+                    jTextFieldtongguandanNo.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoShengchanqiye").toString());
                     Object yimiaoId = bindedMap.get("yimiaoId");
                     Object yimiaoName = bindedMap.get("yimiaoName");
                     Object yimiaoGuige = bindedMap.get("yimiaoGuige");
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
+                    Object supplierId = bindedMap.get("suppliertb.supplierId");
                     Object unit = bindedMap.get("unitId");
 
                     YanshouyimiaoEntity yanshouyimiao=new YanshouyimiaoEntity();
@@ -102,6 +105,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                     yanshouyimiao.setYimiaoJixing((String) yimiaoJixing);
                     yanshouyimiao.setYimiaoShengchanqiye((String) shengchanqiye);
                     yanshouyimiao.setUnitId((String) unit);
+                    yanshouyimiao.setSupplierId((Integer) supplierId);
                     chukuyimiaolist=new ArrayList<YanshouyimiaoEntity>();
                     chukuyimiaolist.add(yanshouyimiao);
                     bindTable.refreshData(chukuyimiaolist);
