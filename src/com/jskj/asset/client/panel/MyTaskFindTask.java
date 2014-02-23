@@ -4,6 +4,7 @@
  */
 package com.jskj.asset.client.panel;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.user.*;
 import com.jskj.asset.client.bean.entity.MyTaskEntity;
 import com.jskj.asset.client.layout.ws.*;
@@ -11,8 +12,16 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.DateHelper;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import org.apache.log4j.Logger;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
+import org.jdesktop.application.Task;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
@@ -27,10 +36,31 @@ public class MyTaskFindTask extends BaseTask {
     private final String URI = Constants.HTTP + Constants.APPID;
     private final String serviceId = "/spfind/findmytask";
     javax.swing.JLabel messageLabel;
+    private final ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/common/icon/resources/refresh.png"));
+    private final ActionMap actionMap = Application.getInstance(AssetClientApp.class).getContext().getActionMap(MyTaskFindTask.class, this);
 
     public MyTaskFindTask(javax.swing.JLabel messageLabel) {
         super();
         this.messageLabel = messageLabel;
+        if (!messageLabel.getName().equals("attachedbutton")) {
+            messageLabel.setLayout(new BorderLayout());
+            JButton button = new JButton();
+            button.setAction(actionMap.get("refresh"));
+            button.setText("");
+            button.setIcon(icon);
+            button.setOpaque(false);
+            button.setBorder(null);
+            button.setBorderPainted(false);
+            button.setContentAreaFilled(false);
+            button.setToolTipText("刷新消息");
+            messageLabel.setName("attachedbutton");
+            messageLabel.add(button, BorderLayout.EAST);
+        }
+    }
+
+    @Action
+    public Task refresh() {
+        return new MyTaskFindTask(messageLabel);
     }
 
     @Override

@@ -11,12 +11,14 @@ import com.jskj.asset.client.bean.entity.YimiaoShenpiFindEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.panel.spcx.MessageDialog;
 import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -96,10 +98,18 @@ public class YimiaoShenPiJDialog extends BaseDialog {
                 //把时间和用户加到checkid这个字段上
                 if (yimiaoshenpiList != null) {
                     for (Yimiaoshenpiliucheng liucheng : yimiaoshenpiList) {
-                        liucheng.setCheckId1(liucheng.getCheckId1()+","+liucheng.getCheckUser1()+","+DateHelper.formatTime(liucheng.getCheckTime1()));
-                        liucheng.setCheckId2(liucheng.getCheckId2()+","+liucheng.getCheckUser2()+","+DateHelper.formatTime(liucheng.getCheckTime2()));
-                        liucheng.setCheckId3(liucheng.getCheckId3()+","+liucheng.getCheckUser3()+","+DateHelper.formatTime(liucheng.getCheckTime3()));
-                        liucheng.setCheckId4(liucheng.getCheckId4()+","+liucheng.getCheckUser4()+","+DateHelper.formatTime(liucheng.getCheckTime4()));
+                        if (liucheng.getCheckId1() != null) {
+                            liucheng.setCheckId1(liucheng.getCheckId1() + "," + liucheng.getCheckUser1() + "," + DateHelper.formatTime(liucheng.getCheckTime1()));
+                        }
+                        if (liucheng.getCheckId2() != null) {
+                            liucheng.setCheckId2(liucheng.getCheckId2() + "," + liucheng.getCheckUser2() + "," + DateHelper.formatTime(liucheng.getCheckTime2()));
+                        }
+                        if (liucheng.getCheckId3() != null) {
+                            liucheng.setCheckId3(liucheng.getCheckId3() + "," + liucheng.getCheckUser3() + "," + DateHelper.formatTime(liucheng.getCheckTime3()));
+                        }
+                        if (liucheng.getCheckId4() != null) {
+                            liucheng.setCheckId4(liucheng.getCheckId4() + "," + liucheng.getCheckUser4() + "," + DateHelper.formatTime(liucheng.getCheckTime4()));
+                        }
 
                     }
                 }
@@ -126,11 +136,11 @@ public class YimiaoShenPiJDialog extends BaseDialog {
 
     @Action
     public Task shenPiY() {
-        Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
         if (jSQTable.getSelectedRow() < 0) {
             AssetMessage.ERRORSYS("请选择一条要审批的数据!");
             return null;
         }
+        Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
         shenPiEntity.setResult("同意");
@@ -140,14 +150,29 @@ public class YimiaoShenPiJDialog extends BaseDialog {
     }
 
     @Action
-    public Task shenPiN() {
-        Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
-        shenPiEntity = new ShenPiEntity();
-        shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
-        shenPiEntity.setResult("拒绝");
-        //shenPiEntity.setUser(user);
-        yimiaoshenpiList.remove(jSQTable.getSelectedRow());
-        return new SPTask(shenPiEntity);
+    public void shenPiNMessage() {
+        if (jSQTable.getSelectedRow() < 0) {
+            AssetMessage.ERRORSYS("请选择一条要审批的数据!");
+            return;
+        }
+        //JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        MessageDialog message = new MessageDialog() {
+
+            @Override
+            public Task save(String message) {
+                Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
+                shenPiEntity = new ShenPiEntity();
+                shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
+                shenPiEntity.setResult("拒绝");
+                shenPiEntity.setReason(message);
+                //shenPiEntity.setUser(user);
+                yimiaoshenpiList.remove(jSQTable.getSelectedRow());
+                return new SPTask(shenPiEntity);
+            }
+
+        };
+        message.setLocationRelativeTo(this);
+        message.setVisible(true);
     }
 
     private class SPTask extends ShenPiTask {
@@ -176,19 +201,17 @@ public class YimiaoShenPiJDialog extends BaseDialog {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jSQTable = new javax.swing.JTable();
         ctrlPane = new javax.swing.JPanel();
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jToolBar2 = new javax.swing.JToolBar();
         jLabelTotal = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jSQTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaoShenPiJDialog.class);
@@ -198,6 +221,92 @@ public class YimiaoShenPiJDialog extends BaseDialog {
 
         jPanel2.setMinimumSize(new java.awt.Dimension(796, 577));
         jPanel2.setName("jPanel2"); // NOI18N
+
+        ctrlPane.setName("ctrlPane"); // NOI18N
+        ctrlPane.setPreferredSize(new java.awt.Dimension(796, 30));
+
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
+        jToolBar2.setBorderPainted(false);
+        jToolBar2.setName("jToolBar2"); // NOI18N
+        jToolBar2.setOpaque(false);
+
+        jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
+        jLabelTotal.setMaximumSize(new java.awt.Dimension(80, 40));
+        jLabelTotal.setMinimumSize(new java.awt.Dimension(20, 40));
+        jLabelTotal.setName("jLabelTotal"); // NOI18N
+        jLabelTotal.setPreferredSize(new java.awt.Dimension(80, 40));
+        jToolBar2.add(jLabelTotal);
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaoShenPiJDialog.class, this);
+        jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton1);
+
+        jButton3.setAction(actionMap.get("pageNext")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton3);
+
+        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
+        jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
+
+        jButton11.setAction(actionMap.get("shenPiNMessage")); // NOI18N
+        jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
+        jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
+        jButton11.setBorderPainted(false);
+        jButton11.setFocusable(false);
+        jButton11.setName("jButton11"); // NOI18N
+        jButton11.setOpaque(false);
+        jToolBar1.add(jButton11);
+
+        jButton12.setAction(actionMap.get("shenPiY")); // NOI18N
+        jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
+        jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
+        jButton12.setBorderPainted(false);
+        jButton12.setFocusable(false);
+        jButton12.setName("jButton12"); // NOI18N
+        jButton12.setOpaque(false);
+        jToolBar1.add(jButton12);
+
+        jButton15.setAction(actionMap.get("exit")); // NOI18N
+        jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
+        jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
+        jButton15.setBorderPainted(false);
+        jButton15.setFocusable(false);
+        jButton15.setName("jButton15"); // NOI18N
+        jButton15.setOpaque(false);
+        jToolBar1.add(jButton15);
+
+        javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
+        ctrlPane.setLayout(ctrlPaneLayout);
+        ctrlPaneLayout.setHorizontalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ctrlPaneLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                .addGap(323, 323, 323)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        ctrlPaneLayout.setVerticalGroup(
+            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
@@ -217,121 +326,6 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jScrollPane1.setViewportView(jSQTable);
         jSQTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        ctrlPane.setName("ctrlPane"); // NOI18N
-        ctrlPane.setPreferredSize(new java.awt.Dimension(796, 30));
-
-        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
-        jToolBar1.setBorderPainted(false);
-        jToolBar1.setName("jToolBar1"); // NOI18N
-        jToolBar1.setOpaque(false);
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaoShenPiJDialog.class, this);
-        jButton11.setAction(actionMap.get("shenPiN")); // NOI18N
-        jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
-        jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
-        jButton11.setBorderPainted(false);
-        jButton11.setFocusable(false);
-        jButton11.setName("jButton11"); // NOI18N
-        jButton11.setOpaque(false);
-        jToolBar1.add(jButton11);
-
-        jButton12.setAction(actionMap.get("shenPiY")); // NOI18N
-        jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
-        jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
-        jButton12.setBorderPainted(false);
-        jButton12.setFocusable(false);
-        jButton12.setName("jButton12"); // NOI18N
-        jButton12.setOpaque(false);
-        jToolBar1.add(jButton12);
-
-        jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
-        jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
-        jButton14.setBorderPainted(false);
-        jButton14.setFocusable(false);
-        jButton14.setName("jButton14"); // NOI18N
-        jButton14.setOpaque(false);
-        jToolBar1.add(jButton14);
-
-        jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
-        jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
-        jButton13.setBorderPainted(false);
-        jButton13.setFocusable(false);
-        jButton13.setName("jButton13"); // NOI18N
-        jButton13.setOpaque(false);
-        jToolBar1.add(jButton13);
-
-        jButton15.setAction(actionMap.get("exit")); // NOI18N
-        jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
-        jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
-        jButton15.setBorderPainted(false);
-        jButton15.setFocusable(false);
-        jButton15.setName("jButton15"); // NOI18N
-        jButton15.setOpaque(false);
-        jToolBar1.add(jButton15);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setOpaque(false);
-
-        jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
-        jLabelTotal.setName("jLabelTotal"); // NOI18N
-
-        jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        jButton3.setAction(actionMap.get("pageNext")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.setName("jButton3"); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(283, Short.MAX_VALUE)
-                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addGap(2, 2, 2))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
-        ctrlPane.setLayout(ctrlPaneLayout);
-        ctrlPaneLayout.setHorizontalGroup(
-            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        ctrlPaneLayout.setVerticalGroup(
-            ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(79, 79, 79))
-        );
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -342,29 +336,21 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 829, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 501, Short.MAX_VALUE)
         );
 
         pack();
@@ -417,15 +403,13 @@ public class YimiaoShenPiJDialog extends BaseDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabelTotal;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTable jSQTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables
 }
