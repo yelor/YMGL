@@ -15,7 +15,6 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
-import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -625,7 +623,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
-            JOptionPane.showMessageDialog(null, "提交成功！");
+            AssetMessage.INFO("提交成功！", YiMiaoShenBaoPlanJDialog.this);
             exit();
         }
     }

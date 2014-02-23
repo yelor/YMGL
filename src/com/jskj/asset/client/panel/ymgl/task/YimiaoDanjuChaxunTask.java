@@ -22,25 +22,23 @@ public class YimiaoDanjuChaxunTask extends BaseTask{
 
     public static final Logger logger = Logger.getLogger(YimiaoDanjuChaxunTask.class);
     private final String CX_URI = Constants.HTTP + Constants.APPID + "yimiaoshenqing";
-    public static final int pageSize = 10;
+    public static final int pageSize = 20;
     private int pageIndex = 1;    
-    private String user = "";
     
-    public YimiaoDanjuChaxunTask(String user,int pageIndex){
+    public YimiaoDanjuChaxunTask(int pageIndex){
         super();
         this.pageIndex = pageIndex;
-        this.user = user;
     }
     
-    public YimiaoDanjuChaxunTask(String user){
-        this(user,1);
+    public YimiaoDanjuChaxunTask(){
+        this(1);
     }
     
     @Override
     public Object doBackgrounp() {
         try{
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            YimiaoShenpiFindEntity yimiaoshenpi = restTemplate.getForObject(CX_URI + "/" + user +"?pagesize="+pageSize+"&pageindex="+pageIndex,YimiaoShenpiFindEntity.class);
+            YimiaoShenpiFindEntity yimiaoshenpi = restTemplate.getForObject(CX_URI+"?pagesize="+pageSize+"&pageindex="+pageIndex,YimiaoShenpiFindEntity.class);
             return yimiaoshenpi;
         }catch (RestClientException e) {
             logger.error(e);

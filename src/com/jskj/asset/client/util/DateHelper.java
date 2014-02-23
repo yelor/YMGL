@@ -15,21 +15,21 @@ import java.util.Date;
 public class DateHelper {
 
     /**
-
-     * 格式化输出日期
-
      *
-
+     * 格式化输出日期
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @param format
-
-     *            格式
-
+     *
+     * 格式
+     *
      * @return 返回字符型日期
-
+     *
      */
     public static String format(java.util.Date date, String format) {
         String result = "";
@@ -48,17 +48,24 @@ public class DateHelper {
     }
 
     public static String format(java.util.Date date) {
+        if (date == null) {
+            return "";
+        }
         return format(date, "yyyy/MM/dd");
 
     }
 
     public static String formatTime(java.util.Date date) {
+        if (date == null) {
+            return "";
+        }
         return format(date, "yyyy/MM/dd HH:mm:ss");
 
     }
 
     /**
      * 字符串转换成日期
+     *
      * @param stringdate 要转换的字符串(字符串格式 yyyy-MM-dd)
      * @return
      */
@@ -89,6 +96,7 @@ public class DateHelper {
 
     /**
      * 字符串转换成日期
+     *
      * @param stringdate 要转换的字符串
      * @param format 字符串的日期格式
      * @return
@@ -106,17 +114,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回年份
-
      *
-
+     * 返回年份
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回年份
-
+     *
      */
     public static int getYear(java.util.Date date) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -128,17 +136,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回月份
-
      *
-
+     * 返回月份
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回月份
-
+     *
      */
     public static int getMonth(java.util.Date date) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -150,17 +158,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回日份
-
      *
-
+     * 返回日份
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回日份
-
+     *
      */
     public static int getDay(java.util.Date date) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -172,17 +180,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回小时
-
      *
-
+     * 返回小时
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回小时
-
+     *
      */
     public static int getHour(java.util.Date date) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -194,17 +202,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回分钟
-
      *
-
+     * 返回分钟
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回分钟
-
+     *
      */
     public static int getMinute(java.util.Date date) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -216,17 +224,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回秒钟
-
      *
-
+     * 返回秒钟
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回秒钟
-
+     *
      */
     public static int getSecond(java.util.Date date) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -238,17 +246,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回毫秒
-
      *
-
+     * 返回毫秒
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回毫秒
-
+     *
      */
     public static long getMillis(java.util.Date date) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -260,17 +268,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回字符型日期
-
      *
-
+     * 返回字符型日期
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回字符型日期
-
+     *
      */
     public static String getDate(java.util.Date date) {
         return format(date, "yyyy/MM/dd");
@@ -278,17 +286,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回字符型时间
-
      *
-
+     * 返回字符型时间
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回字符型时间
-
+     *
      */
     public static String getTime(java.util.Date date) {
         return format(date, "HH:mm:ss");
@@ -296,7 +304,7 @@ public class DateHelper {
     }
 
     /**
-     * 
+     *
      * @param time
      * @return
      */
@@ -305,17 +313,17 @@ public class DateHelper {
     }
 
     /**
-
-     * 返回字符型日期时间
-
      *
-
+     * 返回字符型日期时间
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回字符型日期时间
-
+     *
      */
     public static String getDateTime(java.util.Date date) {
         return format(date, "yyyy/MM/dd HH:mm:ss");
@@ -323,21 +331,21 @@ public class DateHelper {
     }
 
     /**
-
-     * 日期相加
-
      *
-
+     * 日期相加
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @param day
-
-     *            天数
-
+     *
+     * 天数
+     *
      * @return 返回相加后的日期
-
+     *
      */
     public static java.util.Date addDate(java.util.Date date, int day) {
         java.util.Calendar c = java.util.Calendar.getInstance();
@@ -349,21 +357,21 @@ public class DateHelper {
     }
 
     /**
-
-     * 日期相减
-
      *
-
+     * 日期相减
+     *
+     *
+     *
      * @param date
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @param date1
-
-     *            日期
-
+     *
+     * 日期
+     *
      * @return 返回相减后的日期
-
+     *
      */
     public static int diffDate(java.util.Date date, java.util.Date date1) {
         return (int) ((getMillis(date) - getMillis(date1)) / (24 * 3600 * 1000));

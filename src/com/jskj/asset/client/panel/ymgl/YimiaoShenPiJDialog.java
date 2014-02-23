@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
@@ -11,14 +10,13 @@ import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.YimiaoShenpiFindEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -27,55 +25,53 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author tt
  */
-public class YimiaoShenPiJDialog extends javax.swing.JDialog {    
+public class YimiaoShenPiJDialog extends BaseDialog {
 
     private int pageIndex;
 
     private int count;
 
-    private List<Yimiaoshenpiliucheng> yimiaoshenpiList;    
-   
-    private final int userId;
-    
+    private List<Yimiaoshenpiliucheng> yimiaoshenpiList;
+
     private ShenPiEntity shenPiEntity;
-    
+
     BindTableHelper<Yimiaoshenpiliucheng> bindTable;
+
     /**
      * Creates new form GuDingZiChanRuKu
+     *
      * @param parent
      * @param modal
      */
-    public YimiaoShenPiJDialog(java.awt.Frame parent,boolean modal) {
-        super(parent,modal);
+    public YimiaoShenPiJDialog(java.awt.Frame parent, boolean modal) {
+        super();
         initComponents();
-        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<Yimiaoshenpiliucheng>(jSQTable, new ArrayList<Yimiaoshenpiliucheng>());
-        bindTable.createTable(new String[][]{{"danjuId", "单据单号"}, {"processId", "流程编号"}, {"checkId1", "负责人"}, {"checkId2", "财务科"}, {"checkId3", "分管领导"}, {"checkId4", "主要领导"}});
+        bindTable.createTable(new String[][]{{"danjuId", "单据单号"}, {"checkId1", "免规科"}, {"checkId2", "财务科"}, {"checkId3", "分管领导"}, {"checkId4", "主要领导"}});
 //        bindTable.setIntegerType(1);
-        bindTable.bind().setRowHeight(30);
+        bindTable.bind().setRowHeight(25);
         new RefreshTask(0).execute();
     }
-    
-    
+
     @Action
     public void exit() {
         this.dispose();
     }
-    
+
     @Action
     public void reload() {
         new RefreshTask(0).execute();
         this.repaint();
     }
-    
+
     private class RefreshTask extends YimiaoDanjuChaxunTask {
 
         BindingGroup bindingGroup = new BindingGroup();
 
         RefreshTask(int pageIndex) {
-            super(""+userId,pageIndex);
+            super(pageIndex);
         }
 
         @Override
@@ -93,16 +89,27 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
             if (yimiaoshenpi != null) {
                 count = yimiaoshenpi.getCount();
                 jLabelTotal.setText(((pageIndex - 1) * YimiaoDanjuChaxunTask.pageSize + 1) + "/" + count);
-                logger.debug("total:" + count + ",get shenqing size:" +  yimiaoshenpi.getResult().size());
+                logger.debug("total:" + count + ",get shenqing size:" + yimiaoshenpi.getResult().size());
 
                 //存下所有的数据
-                yimiaoshenpiList =  yimiaoshenpi.getResult();
+                yimiaoshenpiList = yimiaoshenpi.getResult();
+                //把时间和用户加到checkid这个字段上
+                if (yimiaoshenpiList != null) {
+                    for (Yimiaoshenpiliucheng liucheng : yimiaoshenpiList) {
+                        liucheng.setCheckId1(liucheng.getCheckId1()+","+liucheng.getCheckUser1()+","+DateHelper.formatTime(liucheng.getCheckTime1()));
+                        liucheng.setCheckId2(liucheng.getCheckId2()+","+liucheng.getCheckUser2()+","+DateHelper.formatTime(liucheng.getCheckTime2()));
+                        liucheng.setCheckId3(liucheng.getCheckId3()+","+liucheng.getCheckUser3()+","+DateHelper.formatTime(liucheng.getCheckTime3()));
+                        liucheng.setCheckId4(liucheng.getCheckId4()+","+liucheng.getCheckUser4()+","+DateHelper.formatTime(liucheng.getCheckTime4()));
+
+                    }
+                }
+                bindTable.refreshData(yimiaoshenpiList);
             }
-            bindTable.refreshData(yimiaoshenpiList);
+
         }
     }
-    
-     @Action
+
+    @Action
     public void pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
@@ -116,61 +123,45 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         }
         new RefreshTask(pageIndex).execute();
     }
-    
+
     @Action
-    public Task shenPiY(){
+    public Task shenPiY() {
         Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
-        if(jSQTable.getSelectedRow()<0){
+        if (jSQTable.getSelectedRow() < 0) {
             AssetMessage.ERRORSYS("请选择一条要审批的数据!");
-            return null;            
+            return null;
         }
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
         shenPiEntity.setResult("同意");
-        shenPiEntity.setUser(""+userId);
+        //shenPiEntity.setUser(user);
         yimiaoshenpiList.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
-    
+
     @Action
-    public Task shenPiN(){
+    public Task shenPiN() {
         Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
         shenPiEntity.setResult("拒绝");
-        shenPiEntity.setUser(""+userId);
+        //shenPiEntity.setUser(user);
         yimiaoshenpiList.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
 
-    private class ShenPiNTask extends org.jdesktop.application.Task<Object, Void> {
-        ShenPiNTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to ShenPiNTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-    
-    private class SPTask extends ShenPiTask{
+    private class SPTask extends ShenPiTask {
 
         public SPTask(ShenPiEntity yimiaosp) {
             super(yimiaosp);
         }
-        
+
         @Override
-        protected void succeeded(Object result){
-            JOptionPane.showMessageDialog(null, "审批成功！");
+        protected void succeeded(Object result) {
+            if (result != null && result instanceof ShenPiEntity) {
+                ShenPiEntity entity = (ShenPiEntity) result;
+                AssetMessage.INFO(entity.getResult(), YimiaoShenPiJDialog.this);
+            }
             reload();
         }
     }
@@ -409,7 +400,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YimiaoShenPiJDialog dialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(),true);
+                YimiaoShenPiJDialog dialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
