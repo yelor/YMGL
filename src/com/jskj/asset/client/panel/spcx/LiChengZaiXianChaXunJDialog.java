@@ -36,9 +36,9 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         super();
         initComponents();
         bindTable = new BindTableHelper<RecordProcessEntity>(jTable4, new ArrayList<RecordProcessEntity>());
-        bindTable.createTable(new String[][]{{"shenqingdanId", "单据ID"}, {"departmentName", "部门"}, {"danjuleixing", "类型"}, {"handleType", "操作"}, {"handleDate", "日期"},
+        bindTable.createTable(new String[][]{{"departmentName", "部门"}, {"danjuleixing", "类型"}, {"handleType", "操作"}, {"handleDate", "日期"},
         {"jingbanren", "经办人"}, {"comments", "信息"}});
-        bindTable.setDateType(5);
+        bindTable.setDateType(4);
         bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 100}).setRowHeight(25);
     }
 
@@ -72,6 +72,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
+        jLabel1 = new javax.swing.JLabel();
         shenqingdanid = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -138,6 +139,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+        jToolBar1.add(jLabel1);
+
         shenqingdanid.setText(resourceMap.getString("shenqingdanid.text")); // NOI18N
         shenqingdanid.setToolTipText(resourceMap.getString("shenqingdanid.toolTipText")); // NOI18N
         shenqingdanid.setMinimumSize(new java.awt.Dimension(6, 30));
@@ -198,10 +203,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(315, Short.MAX_VALUE))
-            .addComponent(jScrollPane5)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,6 +274,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
