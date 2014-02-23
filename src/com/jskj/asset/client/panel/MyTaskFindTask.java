@@ -11,11 +11,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.DateHelper;
-import java.awt.Component;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -82,7 +78,7 @@ public class MyTaskFindTask extends BaseTask {
             StringBuilder builder = new StringBuilder("<html>");
             int i = 1;
             for (MyTaskEntity re : results) {
-                if (i > 8) {
+                if (i > 4) {
                     builder.append("...");
                     break;
                 }
@@ -92,40 +88,79 @@ public class MyTaskFindTask extends BaseTask {
             }
             builder.append("</html>");
             messageLabel.setText(builder.toString());
+            new MySubmitFindTask(messageLabel).execute();
         }
     }
 
-    class TextChanger implements Runnable {
+    class MySubmitFindTask extends BaseTask {
 
-        private JLabel label;
+        private final Logger logger = Logger.getLogger(MySubmitFindTask.class);
+        private final String URI = Constants.HTTP + Constants.APPID;
+        private final String serviceId = "/spfind/mysubmit";
+        javax.swing.JLabel messageLabel;
 
-        public TextChanger(JLabel label) {
-            this.label = label;
+        public MySubmitFindTask(javax.swing.JLabel messageLabel) {
+            super();
+            this.messageLabel = messageLabel;
         }
 
-        public void run() {
+        @Override
+        public Object doBackgrounp() {
             try {
-                while (true) {
-                    String text = label.getText();
-                    if (text.length() > 1) {
-                        text = text.substring(1, text.length()) + text.charAt(0);
-                        label.setText(text);
+                CommFindEntity<MyTaskEntity> response = restTemplate.exchange(URI + serviceId,
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<CommFindEntity<MyTaskEntity>>() {
+                        }).getBody();
+                return response;
+            } catch (RestClientException e) {
+                logger.error(e);
+                return e;
+            }
+        }
 
-                        // Get the frame
-                        Component frame = SwingUtilities.getRoot(label);
-                        if (frame != null && (frame instanceof JFrame)) {
-                            ((JFrame) frame).setTitle(text);
-                        }
+        @Override
+        public void onSucceeded(Object object) {
+            if (object == null) {
+                clientView.setStatus("response data is null", AssetMessage.ERROR_MESSAGE);
+                return;
+            }
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                clientView.setStatus(e.getMessage(), AssetMessage.ERROR_MESSAGE);
+                logger.error(e);
+                return;
+            }
+            if (object instanceof CommFindEntity) {
+                responseResult((CommFindEntity<MyTaskEntity>) object);
 
-                        label.repaint();
+            } else {
+                clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
+            }
+        }
+
+        public void responseResult(CommFindEntity<MyTaskEntity> response) {
+            List<MyTaskEntity> results = response.getResult();
+
+            if (results != null) {
+                logger.info("获取任务数:" + response.getCount());
+                StringBuilder builder = new StringBuilder("<font color=\"blue\">");
+                int i = 1;
+                for (MyTaskEntity re : results) {
+                    if (i > 4) {
+                        builder.append("...");
+                        break;
                     }
-
-                    Thread.sleep(300);
+                    builder.append("我的申请单<").append(i).append(">: ").append(DateHelper.formatTime(re.getSubmitDate())).append("],\"")
+                            .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("],状态[").append(re.getContext()).append("]").append("<br />");
+                    i++;
                 }
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                builder.append("</font>");
+                String shenpiTask = messageLabel.getText();
+                StringBuilder sb = new StringBuilder(shenpiTask);
+                sb.insert(sb.lastIndexOf("</html>"), builder);
+                messageLabel.setText(sb.toString());
             }
         }
     }
-
 }
