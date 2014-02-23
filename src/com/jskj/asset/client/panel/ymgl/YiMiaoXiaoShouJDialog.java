@@ -123,7 +123,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
-                    Object price = bindedMap.get("stockpilePrice");
+                    Float stockpilePrice = Float.parseFloat(""+bindedMap.get("stockpilePrice")) ;
                     Object youxiaoqi = bindedMap.get("youxiaodate");
                     Object saleprice = yimiao.get("yimiaoYushoujia");
 
@@ -134,7 +134,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
                     editTable.insertValue(6, youxiaoqi);
-                    editTable.insertValue(8, price);
+                    editTable.insertValue(8, stockpilePrice);
                     editTable.insertValue(9, saleprice);
 
                 }

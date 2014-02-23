@@ -126,7 +126,8 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                         Logger.getLogger(YiMiaoChuKu2.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     System.out.println(bindedMap.get("stockpilePrice"));
-//                    chukumiao.setStockpilePrice(Float.parseFloat((String) bindedMap.get("stockpilePrice")));
+                    Float stockpilePrice = Float.parseFloat(""+bindedMap.get("stockpilePrice")) ;
+                    chukumiao.setStockpilePrice(stockpilePrice);
 
                     chukuyimiaolist = new ArrayList<StockpiletbAll>();
                     chukuyimiaolist.add(chukumiao);
