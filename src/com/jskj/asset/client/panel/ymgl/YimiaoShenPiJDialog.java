@@ -35,7 +35,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
 
     private List<Yimiaoshenpiliucheng> yimiaoshenpiList;    
    
-    private String user;
+    private final int userId;
     
     private ShenPiEntity shenPiEntity;
     
@@ -48,7 +48,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
     public YimiaoShenPiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
-        user = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<Yimiaoshenpiliucheng>(jSQTable, new ArrayList<Yimiaoshenpiliucheng>());
@@ -75,7 +75,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         BindingGroup bindingGroup = new BindingGroup();
 
         RefreshTask(int pageIndex) {
-            super(user,pageIndex);
+            super(""+userId,pageIndex);
         }
 
         @Override
@@ -127,7 +127,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
         shenPiEntity.setResult("同意");
-        shenPiEntity.setUser(user);
+        shenPiEntity.setUser(""+userId);
         yimiaoshenpiList.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
@@ -138,7 +138,7 @@ public class YimiaoShenPiJDialog extends javax.swing.JDialog {
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
         shenPiEntity.setResult("拒绝");
-        shenPiEntity.setUser(user);
+        shenPiEntity.setUser(""+userId);
         yimiaoshenpiList.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
