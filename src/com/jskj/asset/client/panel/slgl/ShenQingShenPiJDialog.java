@@ -33,7 +33,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     
     private ShenPiEntity shenPiEntity;
     
-    private final int userId;
+        private final int userId;
     
     BindTableHelper<CaigoushenqingDetailEntity> bindTable;
     /**

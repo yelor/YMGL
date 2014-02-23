@@ -57,8 +57,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"beforePrice", "调前价格", "true"}, {"lastPrice", "调后价格", "true"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格", "false"},
+            {"yimiao.yimiaoJixing", "剂型", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"stockpilePrice", "调前价格", "true"}, {"lastPrice", "调后价格", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -74,25 +74,29 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price>0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_id like \"%" + newColumnObj.toString() + "%\"";
+                    sql = "and yimiao_id like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
+                {"yimiao.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
                     Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("shengchanqiye");
-                    Object unit = bindedMap.get("unit");
+                    Float stockpilePrice = Float.parseFloat(""+bindedMap.get("stockpilePrice")) ;
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -100,6 +104,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
+                    editTable.insertValue(6, stockpilePrice);
 
                 }
 
@@ -565,11 +570,12 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         yimiaotiaojia.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         yimiaotiaojia.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         List<Yimiaotiaojia_detail_tb> list = new ArrayList<Yimiaotiaojia_detail_tb>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
-            yimiaotiaojia_detail.setKucunyimiaoId(1000 + i);
-            yimiaotiaojia_detail.setBeforeprice((float) 40);
-            yimiaotiaojia_detail.setLastprice((float) 45);
+            yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "yimiaoId"));
+            yimiaotiaojia_detail.setBeforeprice((Float) yimiaotable.getValue(i, "stockpilePrice"));
+            yimiaotiaojia_detail.setLastprice((Float) yimiaotable.getValue(i, "lastPrice"));
             list.add(yimiaotiaojia_detail);
         }
 
