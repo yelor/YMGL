@@ -11,12 +11,12 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
+public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoLingYongShenQingJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
@@ -45,8 +45,8 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoLingYongShenQingJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoLingYongShenQingJDialog() {
+        super();
         init();
         initComponents();
         jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao("YMLY"));
@@ -531,19 +531,19 @@ public class YiMiaoLingYongShenQingJDialog extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                YiMiaoLingYongShenQingJDialog dialog = new YiMiaoLingYongShenQingJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                YiMiaoLingYongShenQingJDialog dialog = new YiMiaoLingYongShenQingJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     public void setAddOrUpdate(boolean b) {

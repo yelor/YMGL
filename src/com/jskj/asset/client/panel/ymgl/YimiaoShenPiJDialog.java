@@ -150,29 +150,22 @@ public class YimiaoShenPiJDialog extends BaseDialog {
     }
 
     @Action
-    public void shenPiNMessage() {
+    public Task shenPiNMessage() {
         if (jSQTable.getSelectedRow() < 0) {
             AssetMessage.ERRORSYS("请选择一条要审批的数据!");
-            return;
+            return null;
         }
+
+        String reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
         //JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        MessageDialog message = new MessageDialog() {
-
-            @Override
-            public Task save(String message) {
-                Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
-                shenPiEntity = new ShenPiEntity();
-                shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
-                shenPiEntity.setResult("拒绝");
-                shenPiEntity.setReason(message);
-                //shenPiEntity.setUser(user);
-                yimiaoshenpiList.remove(jSQTable.getSelectedRow());
-                return new SPTask(shenPiEntity);
-            }
-
-        };
-        message.setLocationRelativeTo(this);
-        message.setVisible(true);
+        Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
+        shenPiEntity = new ShenPiEntity();
+        shenPiEntity.setId(yimiaoshenpiliucheng.getDanjuId().toString());
+        shenPiEntity.setResult("拒绝");
+        shenPiEntity.setReason(reason);
+        //shenPiEntity.setUser(user);
+        yimiaoshenpiList.remove(jSQTable.getSelectedRow());
+        return new SPTask(shenPiEntity);
     }
 
     private class SPTask extends ShenPiTask {
@@ -209,6 +202,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jSQTable = new javax.swing.JTable();
@@ -283,6 +277,14 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jButton12.setName("jButton12"); // NOI18N
         jButton12.setOpaque(false);
         jToolBar1.add(jButton12);
+
+        jButton2.setAction(actionMap.get("detailPopup")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jToolBar1.add(jButton2);
 
         jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
@@ -398,12 +400,17 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         });
     }
 
+    @Action
+    public void detailPopup() {
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel2;

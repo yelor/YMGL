@@ -187,6 +187,18 @@
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JButton" name="jButton2">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog" id="detailPopup" methodName="detailPopup"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
+                    <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="horizontalTextPosition" type="int" value="4"/>
+                    <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JButton" name="jButton15">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">

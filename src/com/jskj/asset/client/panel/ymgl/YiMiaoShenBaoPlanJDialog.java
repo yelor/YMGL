@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -32,7 +33,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
+public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoShenBaoPlanJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
@@ -47,8 +48,8 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoShenBaoPlanJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoShenBaoPlanJDialog() {
+        super();
         init();
         initComponents();
 
@@ -523,19 +524,19 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                YiMiaoShenBaoPlanJDialog dialog = new YiMiaoShenBaoPlanJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                YiMiaoShenBaoPlanJDialog dialog = new YiMiaoShenBaoPlanJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     public void setAddOrUpdate(boolean b) {
