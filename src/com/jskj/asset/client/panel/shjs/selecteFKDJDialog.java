@@ -18,9 +18,6 @@ import org.jdesktop.application.Action;
  其他付款单
  */
 public class selecteFKDJDialog extends javax.swing.JDialog {
-    private FuKuanDanJDialog fkdJDialog;
-    private OtherFuKuanDanJDialog otherfkdJDialog;
-
     /**
      * Creates new form selecteSKDJDialog
      */
@@ -185,18 +182,14 @@ public class selecteFKDJDialog extends javax.swing.JDialog {
         dispose();
         int aa=jComboBox1.getSelectedIndex();
         if (aa==0) {
-            if (fkdJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            fkdJDialog = new FuKuanDanJDialog(new javax.swing.JFrame(), true);
+            FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog(new javax.swing.JFrame(), true);
             fkdJDialog.setLocationRelativeTo(mainFrame);
-            }
             AssetClientApp.getApplication().show(fkdJDialog);
         } else {
-            if (otherfkdJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            otherfkdJDialog = new OtherFuKuanDanJDialog(new javax.swing.JFrame(), true);
+            OtherFuKuanDanJDialog otherfkdJDialog = new OtherFuKuanDanJDialog(new javax.swing.JFrame(), true);
             otherfkdJDialog.setLocationRelativeTo(mainFrame);
-            }
             AssetClientApp.getApplication().show(otherfkdJDialog);
         }
     }

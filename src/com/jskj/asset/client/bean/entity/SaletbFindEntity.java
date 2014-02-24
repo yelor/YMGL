@@ -10,10 +10,10 @@ import java.util.List;
  *
  * @author huiqi
  */
-public class SaletbFindEntity extends Saletb{
+public class SaletbFindEntity{
      private int count;
     
-    private  List<Saletb> sales;
+    private  List<SaletbAll> result;
 
     public int getCount() {
         return count;
@@ -23,12 +23,12 @@ public class SaletbFindEntity extends Saletb{
         this.count = count;
     }
 
-    public List<Saletb> getSales() {
-        return sales;
+    public List<SaletbAll> getResult() {
+        return result;
     }
 
-    public void setSales(List<Saletb> sales) {
-        this.sales = sales;
+    public void setResult(List<SaletbAll> result) {
+        this.result = result;
     }
     
     

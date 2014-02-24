@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Saletb {
     private String saleId;
 
@@ -24,6 +26,8 @@ public class Saletb {
     private Integer processId;
 
     private String remark;
+
+    private Integer isPaid;
 
     public String getSaleId() {
         return saleId;
@@ -111,5 +115,13 @@ public class Saletb {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(Integer isPaid) {
+        this.isPaid = isPaid;
     }
 }

@@ -10,10 +10,10 @@ import java.util.List;
  *
  * @author huiqi
  */
-public class ShenqingdantbFindEntity extends Shenqingdantb{
+public class ShenqingdantbFindEntity{
      private int count;
     
-    private  List<Shenqingdantb> shenqingdans;
+    private  List<ShenqingdanAll> result;
 
     public int getCount() {
         return count;
@@ -23,14 +23,12 @@ public class ShenqingdantbFindEntity extends Shenqingdantb{
         this.count = count;
     }
 
-    public List<Shenqingdantb> getYimiaoshenqingdans() {
-        return shenqingdans;
+    public List<ShenqingdanAll> getResult() {
+        return result;
     }
 
-    public void setYimiaoshenqingdans(List<Shenqingdantb> shenqingdans) {
-        this.shenqingdans = shenqingdans;
+    public void setResult(List<ShenqingdanAll> result) {
+        this.result = result;
     }
-    
-    
     
 }
