@@ -54,7 +54,7 @@ public class selecteSHDJDialog extends javax.swing.JDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "付款单审批", "其他付款单审批", "收款单审批" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "付款单审批", "其他付款单审批", "收款单审批", "其他收款单审批" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -198,9 +198,9 @@ public class selecteSHDJDialog extends javax.swing.JDialog {
             AssetClientApp.getApplication().show(skdJDialog);
         } else if(aa==3){
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            OtherFukuanShenPiJDialog otherfkdJDialog = new OtherFukuanShenPiJDialog(new javax.swing.JFrame(), true);
-            otherfkdJDialog.setLocationRelativeTo(mainFrame);
-            AssetClientApp.getApplication().show(otherfkdJDialog);
+            OtherShoukuanShenPiJDialog otherskdJDialog = new OtherShoukuanShenPiJDialog(new javax.swing.JFrame(), true);
+            otherskdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(otherskdJDialog);
         }
     }
 

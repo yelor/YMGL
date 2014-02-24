@@ -249,7 +249,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
         super.copyToBean(fkd, jPanel1);
         SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         fkd.setShoukuandanDate(dateformate.parse(shoukuandanDate.getText()));
-        fkd.setDanjuleixingId(3);
+        fkd.setDanjuleixingId(16);
         fkd.setIsCompleted(0);
         fkd.setPayType("转账");
         fkd.setSupplierId(supplierId);

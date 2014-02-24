@@ -231,7 +231,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         super.copyToBean(fkd, jPanel1);
         SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         fkd.setFukuandanDate(dateformate.parse(fukuandanDate.getText()));
-        fkd.setDanjuleixingId(3);
+        fkd.setDanjuleixingId(15);
         fkd.setIsCompleted(0);
         fkd.setPayType("转账");
         fkd.setSupplierId(supplierId);

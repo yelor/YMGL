@@ -8,15 +8,13 @@ package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.QitafukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.QitashoukuanshenqingDetailEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
-import com.jskj.asset.client.panel.shjs.task.FindQitafkdTask;
-import com.jskj.asset.client.panel.shjs.task.FindfkdTask;
+import com.jskj.asset.client.panel.shjs.task.FindQitaskdTask;
 import static com.jskj.asset.client.panel.shjs.task.FindfkdTask.pageSize;
-import com.jskj.asset.client.panel.shjs.task.FukuanShenpiTask;
-import com.jskj.asset.client.panel.shjs.task.QitafukuanShenpiTask;
+import com.jskj.asset.client.panel.shjs.task.QitashoukuanShenpiTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,30 +27,30 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author tt
  */
-public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
+public class OtherShoukuanShenPiJDialog extends javax.swing.JDialog {
 
     private int pageIndex;
 
     private int count;
 
-    private List<QitafukuanshenqingDetailEntity> fksq;
+    private List<QitashoukuanshenqingDetailEntity> sksq;
     
     private final int userId;
     
-    BindTableHelper<QitafukuanshenqingDetailEntity> bindTable;
+    BindTableHelper<QitashoukuanshenqingDetailEntity> bindTable;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
      * @param modal
      */
-    public OtherFukuanShenPiJDialog(java.awt.Frame parent,boolean modal) {
+    public OtherShoukuanShenPiJDialog(java.awt.Frame parent,boolean modal) {
         super(parent,modal);
         initComponents();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         pageIndex = 1;
         count = 0;
-        bindTable = new BindTableHelper<QitafukuanshenqingDetailEntity>(jSQTable, new ArrayList<QitafukuanshenqingDetailEntity>());
-        bindTable.createTable(new String[][]{{"fukuandanId", "付款单号"}, {"shenqingren", "经办人"}, {"fukuandanDate", "申请日期"},
+        bindTable = new BindTableHelper<QitashoukuanshenqingDetailEntity>(jSQTable, new ArrayList<QitashoukuanshenqingDetailEntity>());
+        bindTable.createTable(new String[][]{{"shoukuandanId", "收款单号"}, {"shenqingren", "经办人"}, {"fukuandanDate", "申请日期"},
             {"shenqingdanRemark", "备注"},{"totalprice", "总价"},{"checkId1", "直接领导"}, {"checkId2", "分管领导"}});
 //        bindTable.setIntegerType(1);
         bindTable.setDateType(3);
@@ -71,7 +69,7 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
         this.repaint();
     }
     
-    private class RefreshTask extends FindQitafkdTask {
+    private class RefreshTask extends FindQitaskdTask {
 
         BindingGroup bindingGroup = new BindingGroup();
 
@@ -80,14 +78,14 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
         }
 
         @Override
-        public void responseResult(CommFindEntity<QitafukuanshenqingDetailEntity> response) {
+        public void responseResult(CommFindEntity<QitashoukuanshenqingDetailEntity> response) {
             count = response.getCount();
             jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
             logger.debug("total:" + count + ",get total size:" + response.getResult().size());
 
             //存下所有的数据
-            fksq = response.getResult();
-            bindTable.refreshData(fksq);
+            sksq = response.getResult();
+            bindTable.refreshData(sksq);
         }
 
     }
@@ -115,11 +113,11 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
             return;
         }
         this.setVisible(false);
-        QitafukuanshenqingDetailEntity fksqdan = fksq.get(n);
+        QitashoukuanshenqingDetailEntity sksqdan = sksq.get(n);
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        OtherFuKuanDanJDialog fukuandan = new OtherFuKuanDanJDialog(this,fksqdan);
-        fukuandan.setLocationRelativeTo(mainFrame);
-        AssetClientApp.getApplication().show(fukuandan);
+        OtherShouKuanDanJDialog shoukuandan = new OtherShouKuanDanJDialog(this,sksqdan);
+        shoukuandan.setLocationRelativeTo(mainFrame);
+        AssetClientApp.getApplication().show(shoukuandan);
     }
     
     @Action
@@ -129,11 +127,11 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return null;
         }
-        QitafukuanshenqingDetailEntity fksqdan = fksq.get(n);
-        fksqdan.setFukuandanId(fksq.get(n).getFukuandanId());
-        fksqdan.setRejectReason("同意");
-        fksq.remove(jSQTable.getSelectedRow());
-        return new SPTask(fksqdan);
+        QitashoukuanshenqingDetailEntity sksqdan = sksq.get(n);
+        sksqdan.setShoukuandanId(sksq.get(n).getShoukuandanId());
+        sksqdan.setRejectReason("同意");
+        sksq.remove(jSQTable.getSelectedRow());
+        return new SPTask(sksqdan);
     }
     
     @Action
@@ -145,24 +143,24 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
         }
         String reason;
         reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
-        QitafukuanshenqingDetailEntity fksqdan = fksq.get(n);
-        fksqdan.setFukuandanId(fksq.get(n).getFukuandanId());
+        QitashoukuanshenqingDetailEntity sksqdan = sksq.get(n);
+        sksqdan.setShoukuandanId(sksq.get(n).getShoukuandanId());
         if(reason.isEmpty()){
             reason = "拒绝";
         }
-        fksqdan.setRejectReason(reason);
-        fksq.remove(jSQTable.getSelectedRow());
-        return new SPTask(fksqdan);
+        sksqdan.setRejectReason(reason);
+        sksq.remove(jSQTable.getSelectedRow());
+        return new SPTask(sksqdan);
     }
     
-    private class SPTask extends QitafukuanShenpiTask{
+    private class SPTask extends QitashoukuanShenpiTask{
 
-        public SPTask(QitafukuanshenqingDetailEntity sp) {
+        public SPTask(QitashoukuanshenqingDetailEntity sp) {
             super(sp);
         }
         
         @Override
-        public void responseResult(ComResponse<QitafukuanshenqingDetailEntity> response) {
+        public void responseResult(ComResponse<QitashoukuanshenqingDetailEntity> response) {
             reload();
             AssetMessage.showMessageDialog(null, "审批成功！");
         }
@@ -170,7 +168,7 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
 
     @Action
     public void print() {
-        bindTable.createPrinter("其他付款单审批",fksq).buildInBackgound().execute();
+        bindTable.createPrinter("其他收款单审批",sksq).buildInBackgound().execute();
     }
     
     /**
@@ -198,7 +196,7 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(OtherFukuanShenPiJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(OtherShoukuanShenPiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -234,7 +232,7 @@ public class OtherFukuanShenPiJDialog extends javax.swing.JDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(OtherFukuanShenPiJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(OtherShoukuanShenPiJDialog.class, this);
         jButton11.setAction(actionMap.get("shenPiN")); // NOI18N
         jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
         jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N

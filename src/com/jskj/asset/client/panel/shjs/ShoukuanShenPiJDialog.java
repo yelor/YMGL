@@ -170,7 +170,7 @@ public class ShoukuanShenPiJDialog extends javax.swing.JDialog {
 
     @Action
     public void print() {
-        bindTable.createPrinter("资产采购申请审批",fksq).buildInBackgound().execute();
+        bindTable.createPrinter("收款单审批",fksq).buildInBackgound().execute();
     }
     
     /**
