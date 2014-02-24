@@ -575,7 +575,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "yimiaoId"));
             yimiaotiaojia_detail.setBeforeprice((Float) yimiaotable.getValue(i, "stockpilePrice"));
-            yimiaotiaojia_detail.setLastprice((Float) yimiaotable.getValue(i, "lastPrice"));
+            yimiaotiaojia_detail.setLastprice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "lastPrice"))));
             list.add(yimiaotiaojia_detail);
         }
 
@@ -603,6 +603,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
+            AssetMessage.INFO("提交成功！", YiMiaoTiaoJiaJDialog.this);
             exit();
         }
     }

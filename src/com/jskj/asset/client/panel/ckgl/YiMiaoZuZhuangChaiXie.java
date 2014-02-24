@@ -81,18 +81,20 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
+                {"yimiao.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
                     Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("shengchanqiye");
-                    Object unit = bindedMap.get("unit");
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
 
                     editTable1.insertValue(0, yimiaoId);
                     editTable1.insertValue(1, yimiaoName);
@@ -142,8 +144,8 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                     Object yimiaoName = bindedMap.get("yimiaoName");
                     Object yimiaoGuige = bindedMap.get("yimiaoGuige");
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("shengchanqiye");
-                    Object unit = bindedMap.get("unit");
+                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
+                    Object unit = bindedMap.get("unitId");
 
                     editTable2.insertValue(0, yimiaoId);
                     editTable2.insertValue(1, yimiaoName);
@@ -729,10 +731,18 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         BaseTable yimiaotable1 = ((BaseTable) jTableyimiao1);
         BaseTable yimiaotable2 = ((BaseTable) jTableyimiao2);
         yimiaozuzhuangchaixie.setYimiao1Id(Integer.parseInt(yimiaotable1.getValue(0, "yimiaoId").toString()));
+        if (((String)yimiaotable1.getValue(0, "cangku")).trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入仓库1!");
+            return null;
+        }
         yimiaozuzhuangchaixie.setDeport1(Integer.parseInt((String) yimiaotable1.getValue(0, "cangku")));
         System.out.println(yimiaotable1.getValue(0, "quantity"));
         yimiaozuzhuangchaixie.setQuantity1(Integer.parseInt((String) yimiaotable1.getValue(0, "quantity")));
         yimiaozuzhuangchaixie.setYimiao2Id(Integer.parseInt(yimiaotable2.getValue(0, "yimiaoId").toString()));
+        if (((String)yimiaotable2.getValue(0, "cangku")).trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入仓库2!");
+            return null;
+        }
         yimiaozuzhuangchaixie.setDeport2(Integer.parseInt((String) yimiaotable2.getValue(0, "cangku")));
         yimiaozuzhuangchaixie.setQuantity2(Integer.parseInt((String) yimiaotable2.getValue(0, "quantity")));
 

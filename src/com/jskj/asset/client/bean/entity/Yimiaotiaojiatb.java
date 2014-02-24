@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yimiaotiaojiatb {
     private String tiaojiaId;
 
@@ -14,6 +16,8 @@ public class Yimiaotiaojiatb {
     private Float tiaojiajine;
 
     private Integer jingbanrenId;
+
+    private String tioajiaremark;
 
     public String getTiaojiaId() {
         return tiaojiaId;
@@ -61,5 +65,13 @@ public class Yimiaotiaojiatb {
 
     public void setJingbanrenId(Integer jingbanrenId) {
         this.jingbanrenId = jingbanrenId;
+    }
+
+    public String getTioajiaremark() {
+        return tioajiaremark;
+    }
+
+    public void setTioajiaremark(String tioajiaremark) {
+        this.tioajiaremark = tioajiaremark == null ? null : tioajiaremark.trim();
     }
 }

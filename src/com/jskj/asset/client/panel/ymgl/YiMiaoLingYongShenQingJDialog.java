@@ -107,7 +107,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=3 and is_completed = 1 and status = 0)";
+                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=3 and is_completed = 1 and status = 9)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql = "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
@@ -589,6 +589,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaolingyongdanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
             yimiaoshenqingdan.setDanjuleixingId(5);
+            yimiaoshenqingdan.setStatus(0);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             System.out.println(yimiaotable.getValue(i, "quantity"));
             if (yimiaotable.getValue(i, "quantity").equals("")) {

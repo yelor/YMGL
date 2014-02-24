@@ -590,6 +590,7 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
             yimiaoshenqingdan.setDanjuleixingId(3);
+            yimiaoshenqingdan.setStatus(9);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             System.out.println(yimiaotable.getValue(i, "quantity"));
             if (yimiaotable.getValue(i, "quantity").equals("")) {

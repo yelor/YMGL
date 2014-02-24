@@ -107,7 +107,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 0 and danjuleixing_id=5 and danjuleixing_id=6)";
+                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 0 and danjuleixing_id in (5,6))";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
@@ -133,7 +133,9 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                     editTable.insertValue(2, yimiaoGuige);
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, unit);
+                    editTable.insertValue(6, unit);
+                    
+                    yimiaoyanshou_detail.setPiqianfahegeno((Integer) bindedMap.get("yimiaoPizhunwenhao"));
 
                 }
 
@@ -863,14 +865,14 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         List<Yimiaoyanshou_detail_tb> list = new ArrayList<Yimiaoyanshou_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            yimiaoyanshou_detail=new Yimiaoyanshou_detail_tb();
+//            yimiaoyanshou_detail=new Yimiaoyanshou_detail_tb();
             yimiaoyanshou_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             yimiaoyanshou_detail.setYmysId(jTextFieldYimiaoyanshouId.getText());
             yimiaoyanshou_detail.setYouxiaodate(new Date());
-            yimiaoyanshou_detail.setPiqianfahegeno(i + 200);
-            yimiaoyanshou_detail.setPihao("sff12324354677");
-            yimiaoyanshou_detail.setFahuoyuan("李四");
-            yimiaoyanshou_detail.setFuheyuan("张三");
+            
+            yimiaoyanshou_detail.setPihao((String) (""+yimiaotable.getValue(i, "pihao")));
+            yimiaoyanshou_detail.setFahuoyuan((String) (""+yimiaotable.getValue(i, "fahuoyuan")));
+            yimiaoyanshou_detail.setFuheyuan((String) (""+yimiaotable.getValue(i, "fuheyuan")));
             if (yimiaotable.getValue(i, "quantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗申报数量!");
                 return null;

@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yimiaoyanshou_detail_tb {
     private Integer detailId;
 
@@ -16,6 +18,8 @@ public class Yimiaoyanshou_detail_tb {
     private Integer piqianfahegeno;
 
     private Integer quantity;
+
+    private Float price;
 
     private String fuheyuan;
 
@@ -75,6 +79,14 @@ public class Yimiaoyanshou_detail_tb {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     public String getFuheyuan() {

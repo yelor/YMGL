@@ -532,6 +532,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldzhidanren">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldzhidanren" noResource="true"/>
           </Properties>
         </Component>

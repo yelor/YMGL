@@ -94,7 +94,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"baosunQuantity", "数量", "true"}, {"price", "单价", "true"}, {"totalprice", "合价", "true"},
+            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"baosunQuantity", "数量", "true"}, {"price", "单价", "false"}, {"totalprice", "合价", "false"},
             {"xiaohuiAddr", "销毁地点", "true"}, {"xiaohuiDate", "销毁时间", "true"}, {"xiaohuiType", "销毁方式", "true"}, {"baosunReason", "报损原因", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -118,21 +118,23 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
+                {"yimiao.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
                     Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("shengchanqiye");
-                    Object unit = bindedMap.get("unit");
-                    Object price = bindedMap.get("price");
-                    Object youxiaoqi = bindedMap.get("youxiaoqi");
-                    Object baosunprice = bindedMap.get("baosunprice");
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
+                    Object price = bindedMap.get("stockpilePrice");
+                    Object youxiaoqi = bindedMap.get("youxiaodate");
+                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -142,7 +144,8 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
                     editTable.insertValue(5, unit);
                     editTable.insertValue(6, youxiaoqi);
                     editTable.insertValue(8, price);
-                    editTable.insertValue(10, baosunprice);
+                    editTable.insertValue(11, dateformate.format(new Date()).toString());
+                    
 
                 }
 
@@ -476,7 +479,10 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             yimiaobaosun.setBaosunId(jTextFieldBaosunId.getText());
             yimiaobaosun.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             yimiaobaosun.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "baosunQuantity").toString()));
-
+            yimiaobaosun.setXiaohuiaddr((String) yimiaotable.getValue(i, "xiaohuiAddr"));
+            yimiaobaosun.setXiaohuidate(dateformate.parse(jTextFieldzhidanDate.getText()));
+            yimiaobaosun.setXiaohuireason((String) yimiaotable.getValue(i, "baosunReason"));
+            yimiaobaosun.setXiaohuitype((String) yimiaotable.getValue(i, "xiaohuiType"));
             list.add(yimiaobaosun);
         }
         yimiaobaosunEntity.setBaosun(baosun);
