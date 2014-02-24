@@ -7,6 +7,7 @@ package com.jskj.asset.client.layout.ws;
 
 import com.jskj.asset.client.constants.Constants;
 import java.net.URI;
+import java.nio.charset.Charset;
 import org.apache.http.HttpHost;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.HttpClient;
@@ -36,11 +37,10 @@ public class ComHttpComponentsClientHttpRequestFactory extends HttpComponentsCli
 //
 //    private HttpContext createHttpContext() {
 //        HttpHost host = new HttpHost(Constants.SERVICE_PORT,Integer.parseInt(Constants.SERVICE_PORT));
-//        
 //// Create AuthCache instance       
 //        AuthCache authCache = new BasicAuthCache();
 //// Generate BASIC scheme object and add it to the local auth cache        
-//        BasicScheme basicAuth = new BasicScheme();
+//        BasicScheme basicAuth = new BasicScheme(Charset.forName("UTF-8"));
 //        authCache.put(host, basicAuth);
 //        // Add AuthCache to the execution context       
 //        BasicHttpContext localcontext = new BasicHttpContext();

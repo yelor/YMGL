@@ -11,13 +11,25 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTreePane;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.util.BeanFactory;
+import com.jskj.asset.client.util.UnicodeConverter;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -52,13 +64,15 @@ public abstract class LoginTask extends Task<Object, Void> {
 
             Object userNameObj = map.get("userName");;
             Object passwdObj = map.get("userPassword");
-            /*add http header*/
+
             HttpComponentsClientHttpRequestFactory httpRequestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
             DefaultHttpClient httpClient = (DefaultHttpClient) httpRequestFactory.getHttpClient();
-            httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY,
-                    new UsernamePasswordCredentials(userNameObj.toString(), passwdObj.toString()));
+            String unicodeStr = UnicodeConverter.toEncodedUnicode(userNameObj.toString(), false);
+            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(unicodeStr, passwdObj.toString());
+            httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, credentials);
 
             UserSessionEntity session = restTemplate.getForObject(java.net.URI.create(URI), UserSessionEntity.class);
+
             return session;
         } catch (Exception e) {
             e.printStackTrace();
