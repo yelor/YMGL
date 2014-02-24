@@ -13,16 +13,15 @@ import org.jdesktop.application.Action;
 /**
  *
  * @author huiqi
- 选择收款单单据类型：
- 收款单
- 其他收款单
+ 选择付款单单据类型：
+ 付款单
+ 其他付款单
  */
-public class selecteSKDJDialog extends javax.swing.JDialog {
-
+public class selecteSHDJDialog extends javax.swing.JDialog {
     /**
-     * Creates new form selecteShouKuanDanJDialog
+     * Creates new form selecteSKDJDialog
      */
-    public selecteSKDJDialog(java.awt.Frame parent, boolean modal) {
+    public selecteSHDJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -44,7 +43,7 @@ public class selecteSKDJDialog extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(selecteSKDJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(selecteSHDJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -55,7 +54,7 @@ public class selecteSKDJDialog extends javax.swing.JDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "收款单", "其他收款单" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "付款单审批", "其他付款单审批", "收款单审批" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -64,17 +63,17 @@ public class selecteSKDJDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -82,7 +81,7 @@ public class selecteSKDJDialog extends javax.swing.JDialog {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setName("jPanel2"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteSKDJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteSHDJDialog.class, this);
         jButton1.setAction(actionMap.get("ChooseAction")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
@@ -96,11 +95,11 @@ public class selecteSKDJDialog extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(53, 53, 53)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addGap(39, 39, 39))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,20 +152,20 @@ public class selecteSKDJDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(selecteSKDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteSHDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(selecteSKDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteSHDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(selecteSKDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteSHDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(selecteSKDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteSHDJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                selecteSKDJDialog dialog = new selecteSKDJDialog(new javax.swing.JFrame(), true);
+                selecteSHDJDialog dialog = new selecteSHDJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -184,16 +183,25 @@ public class selecteSKDJDialog extends javax.swing.JDialog {
         int aa=jComboBox1.getSelectedIndex();
         if (aa==0) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            ShouKuanDanJDialog skdJDialog = new ShouKuanDanJDialog(new javax.swing.JFrame(), true);
+            FukuanShenPiJDialog fkdJDialog = new FukuanShenPiJDialog(new javax.swing.JFrame(), true);
+            fkdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(fkdJDialog);
+        } else if(aa==1){
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            OtherFukuanShenPiJDialog otherfkdJDialog = new OtherFukuanShenPiJDialog(new javax.swing.JFrame(), true);
+            otherfkdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(otherfkdJDialog);
+        } else if(aa==2){
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            ShoukuanShenPiJDialog skdJDialog = new ShoukuanShenPiJDialog(new javax.swing.JFrame(), true);
             skdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(skdJDialog);
-        } else {
+        } else if(aa==3){
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            OtherShouKuanDanJDialog otherskdJDialog = new OtherShouKuanDanJDialog(new javax.swing.JFrame(), true);
-            otherskdJDialog.setLocationRelativeTo(mainFrame);
-            AssetClientApp.getApplication().show(otherskdJDialog);
+            OtherFukuanShenPiJDialog otherfkdJDialog = new OtherFukuanShenPiJDialog(new javax.swing.JFrame(), true);
+            otherfkdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(otherfkdJDialog);
         }
-        
     }
 
     @Action

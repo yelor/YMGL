@@ -36,34 +36,26 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="ctrlPane">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
         <Property name="name" type="java.lang.String" value="ctrlPane" noResource="true"/>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="messageLabel" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="messageLabel" alignment="0" pref="26" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="messageLabel">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" resourceKey="messageLabel.foreground"/>
-            <Property name="text" type="java.lang.String" resourceKey="messageLabel.text"/>
-            <Property name="name" type="java.lang.String" value="messageLabel" noResource="true"/>
-          </Properties>
-        </Component>
-      </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
@@ -104,9 +96,9 @@
                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="72" max="32767" attributes="0"/>
+                  <EmptySpace pref="70" max="32767" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="90" max="32767" attributes="0"/>
+                  <EmptySpace pref="88" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -119,6 +111,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.shjs.MainPanel" id="selecteShenpiAction" methodName="selecteShenpiAction"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

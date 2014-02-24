@@ -18,8 +18,6 @@ import org.jdesktop.application.Action;
  * 盘点单 
  */
 public class selectePDDJDialog extends javax.swing.JDialog {
-    private ShiWuPanDianJDialog shiWuPanDianJDialog;
-    private ZhangWuPanDianJDialog zhangWuPanDianJDialog;
 
     /**
      * Creates new form selecteShouKuanDanJDialog
@@ -182,23 +180,19 @@ public class selectePDDJDialog extends javax.swing.JDialog {
 
     @Action
     public void ChooseAction() {
+        dispose();
         int aa=jComboBox1.getSelectedIndex();
         if (aa==0) {
-            if (shiWuPanDianJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            shiWuPanDianJDialog = new ShiWuPanDianJDialog(new javax.swing.JFrame(), true);
+            ShiWuPanDianJDialog shiWuPanDianJDialog = new ShiWuPanDianJDialog(new javax.swing.JFrame(), true);
             shiWuPanDianJDialog.setLocationRelativeTo(mainFrame);
-            }
             AssetClientApp.getApplication().show(shiWuPanDianJDialog);
         } else {
-            if (zhangWuPanDianJDialog == null) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            zhangWuPanDianJDialog = new ZhangWuPanDianJDialog(new javax.swing.JFrame(), true);
+            ZhangWuPanDianJDialog zhangWuPanDianJDialog = new ZhangWuPanDianJDialog(new javax.swing.JFrame(), true);
             zhangWuPanDianJDialog.setLocationRelativeTo(mainFrame);
-            }
             AssetClientApp.getApplication().show(zhangWuPanDianJDialog);
         }
-        dispose();
     }
 
     @Action
