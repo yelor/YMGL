@@ -5,20 +5,23 @@
  */
 package com.jskj.asset.client.panel.ymgl;
 
-import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.YimiaoShenpiFindEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
-import com.jskj.asset.client.panel.spcx.MessageDialog;
+import com.jskj.asset.client.layout.DetailPanel;
 import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DateHelper;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -39,6 +42,8 @@ public class YimiaoShenPiJDialog extends BaseDialog {
 
     BindTableHelper<Yimiaoshenpiliucheng> bindTable;
 
+    private DetailPanel detailPanel;
+
     /**
      * Creates new form GuDingZiChanRuKu
      *
@@ -55,6 +60,8 @@ public class YimiaoShenPiJDialog extends BaseDialog {
 //        bindTable.setIntegerType(1);
         bindTable.bind().setRowHeight(25);
         new RefreshTask(0).execute();
+        detailPanel = new DetailPanel();
+
     }
 
     @Action
@@ -281,9 +288,12 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jButton2.setAction(actionMap.get("detailPopup")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
         jButton15.setAction(actionMap.get("exit")); // NOI18N
@@ -400,9 +410,79 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         });
     }
 
+    public Yimiaoshenpiliucheng selectedDataFromTable() {
+        if (jSQTable.getSelectedRow() >= 0) {
+            if (yimiaoshenpiList != null) {
+                return yimiaoshenpiList.get(jSQTable.getSelectedRow());
+            }
+        }
+        return null;
+    }
+
     @Action
     public void detailPopup() {
+        Yimiaoshenpiliucheng yimiaoshenpiliucheng = selectedDataFromTable();
+        if (yimiaoshenpiliucheng == null) {
+            AssetMessage.ERRORSYS("请选择数据!");
+            return;
+        }
+        String danjuID = yimiaoshenpiliucheng.getDanjuId();
+        if(isShow){
+           hidePanel();
+        }else{
+           showPanel(danjuID);
+        }
     }
+
+    private Popup pop;
+    private boolean isShow;
+
+    public void hidePanel() {
+        if (pop != null) {
+            isShow = false;
+            pop.hide();
+            pop = null;
+        }
+    }
+
+    public void showPanel(String danjuID) {
+        if (pop != null) {
+            pop.hide();
+        }
+        Point p = jSQTable.getLocationOnScreen();
+
+        //int selectedColumn = jSQTable.getSelectedColumn();
+        int selectedRow = jSQTable.getSelectedRow();
+
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
+        int selectedColumnX = p.x;
+        int selectedColumnY = p.y + (selectedRow + 1) * jSQTable.getRowHeight();
+
+//        if (selectedColumn > 0) {
+//            for (int i = 0; i < selectedColumn; i++) {
+//                selectedColumnX += jSQTable.getColumnModel().getColumn(i).getWidth();
+//            }
+//        }
+
+        int popHeight = detailPanel.getHeight();
+        int popWitdh = detailPanel.getWidth();
+
+        if ((selectedColumnY + popHeight) > size.getHeight()) {
+            selectedColumnY = selectedColumnY - detailPanel.getHeight() - jSQTable.getRowHeight();
+        }
+
+        if ((selectedColumnX + popWitdh) > size.getWidth()) {
+            selectedColumnX = selectedColumnX - detailPanel.getWidth();
+        }
+
+        pop = PopupFactory.getSharedInstance().getPopup(jSQTable, detailPanel, selectedColumnX, selectedColumnY);
+        detailPanel.submitTask(danjuID);
+        detailPanel.requestFocusInWindow();
+        pop.show();
+        isShow = true;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
