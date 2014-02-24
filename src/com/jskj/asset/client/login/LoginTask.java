@@ -8,6 +8,8 @@ package com.jskj.asset.client.login;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.UserSessionEntity;
 import com.jskj.asset.client.constants.Constants;
+import com.jskj.asset.client.layout.BaseTreePane;
+import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.util.BeanFactory;
 import java.util.HashMap;
 import org.apache.http.auth.AuthScope;
@@ -26,10 +28,12 @@ public abstract class LoginTask extends Task<Object, Void> {
 
     private final String URI = Constants.HTTP + Constants.APPID + "login";
     private HashMap map;
+    private boolean logined;
 
-    public LoginTask(HashMap map) {
+    public LoginTask(HashMap map, boolean logined) {
         super(Application.getInstance(AssetClientApp.class));
         this.map = map;
+        this.logined = logined;
     }
 
     @Override
@@ -37,7 +41,16 @@ public abstract class LoginTask extends Task<Object, Void> {
         try {
             RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
 
-            Object userNameObj = map.get("userName");
+            if (logined) {
+                ComResponse<String> com = restTemplate.getForObject(java.net.URI.create(Constants.HTTP + Constants.APPID + "logout"), ComResponse.class);
+                if (com.getResponseStatus() != ComResponse.STATUS_OK) {
+                    return new Exception("logout failed. ");
+                } else {
+                    BaseTreePane.disTabCount.clear();
+                }
+            }
+
+            Object userNameObj = map.get("userName");;
             Object passwdObj = map.get("userPassword");
             /*add http header*/
             HttpComponentsClientHttpRequestFactory httpRequestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
@@ -45,7 +58,7 @@ public abstract class LoginTask extends Task<Object, Void> {
             httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY,
                     new UsernamePasswordCredentials(userNameObj.toString(), passwdObj.toString()));
 
-            UserSessionEntity session = restTemplate.getForObject(java.net.URI.create(URI),UserSessionEntity.class);
+            UserSessionEntity session = restTemplate.getForObject(java.net.URI.create(URI), UserSessionEntity.class);
             return session;
         } catch (Exception e) {
             e.printStackTrace();

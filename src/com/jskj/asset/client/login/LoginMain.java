@@ -32,6 +32,7 @@ public class LoginMain extends javax.swing.JFrame {
 
     private boolean logined = false;
 
+    
     /**
      * Creates new form LoginMain
      */
@@ -395,7 +396,7 @@ public class LoginMain extends javax.swing.JFrame {
     private class SendLoginTask extends LoginTask {
 
         SendLoginTask(HashMap map) {
-            super(map);
+            super(map, logined);
         }
 
         @Override
