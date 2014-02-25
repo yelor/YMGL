@@ -3,23 +3,70 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.spcx;
 
+import com.jskj.asset.client.bean.report.Yewuliuchengdetail;
+import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.spcx.task.YewuliuchengFindTask;
 import com.jskj.asset.client.panel.ymgl.*;
+import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DateChooser;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
 
 /**
  *
  * @author huiqi
  */
-public class YeWuLiuChengChaXunJDialog extends javax.swing.JDialog {
+public class YeWuLiuChengChaXunJDialog extends BaseDialog {
+
+    private List<Yewuliuchengdetail> currentPageData;
+
+    private final BindTableHelper<Yewuliuchengdetail> bindTable;
+
+    private final HashMap parameterMap;
+    BaseTextField jTextFieldStartInit;
+    BaseTextField jTextFieldEndInit;
 
     /**
      * Creates new form yimiaoyanshouJDialog
      */
     public YeWuLiuChengChaXunJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super();
+
+        jTextFieldStartInit = new BaseTextField();
+        jTextFieldEndInit = new BaseTextField();
+        jTextFieldStartInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
+        jTextFieldEndInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
+
+        DateChooser dateChooser1 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
+        dateChooser1.register(jTextFieldStartInit);
+
+        DateChooser dateChooser2 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
+        dateChooser2.register(jTextFieldEndInit);
+
         initComponents();
+
+        parameterMap = new HashMap();
+        bindTable = new BindTableHelper<Yewuliuchengdetail>(jTable4, new ArrayList<Yewuliuchengdetail>());
+        bindTable.createTable(new String[][]{{"danjuleixingName", "单据类型"}, {"submitDate", "制单日期"}, {"wanglaidanwei", "往来单位"}, {"fuzeren", "负责人"},
+        {"bumen", "部门"}, {"zhidanren", "制单人"}, {"jiner", "金额"}, {"comments", "描述"}});
+        bindTable.setColumnType(Date.class, 2);
+        bindTable.setColumnType(Float.class, 7);
+        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}).setRowHeight(25);
+
+        Dimension dimension = new Dimension();
+        dimension.setSize(800, 600);
+        this.setMinimumSize(dimension);
+        this.setMaximumSize(dimension);
     }
 
     /**
@@ -38,15 +85,15 @@ public class YeWuLiuChengChaXunJDialog extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton6 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jTextFieldEnd = jTextFieldEndInit;
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldStart = jTextFieldStartInit;
+        jLabel1 = new javax.swing.JLabel();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -99,86 +146,74 @@ public class YeWuLiuChengChaXunJDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YeWuLiuChengChaXunJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
+        setMaximumSize(new java.awt.Dimension(804, 366));
+        setMinimumSize(new java.awt.Dimension(804, 366));
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
 
-        jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton6.setName("jButton6"); // NOI18N
-        jButton6.setOpaque(false);
-        jToolBar1.add(jButton6);
-
-        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
-        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton4.setName("jButton4"); // NOI18N
-        jButton4.setOpaque(false);
-        jToolBar1.add(jButton4);
-
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setOpaque(false);
-        jToolBar1.add(jButton3);
-
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YeWuLiuChengChaXunJDialog.class, this);
+        jButton1.setAction(actionMap.get("search")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton7.setName("jButton7"); // NOI18N
-        jButton7.setOpaque(false);
-        jToolBar1.add(jButton7);
+        jButton2.setAction(actionMap.get("print")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
 
+        jButton5.setAction(actionMap.get("close")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorder(null);
+        jButton5.setBorderPainted(false);
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton5.setName("jButton5"); // NOI18N
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
-        jPanel1.setName("jPanel1"); // NOI18N
-
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "单据编号", "制单日期", "单据类型", "往来单位", "负责人", "经办人", "部门", "金额", "制单人", "备注"
+
             }
         ));
         jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
@@ -198,34 +233,53 @@ public class YeWuLiuChengChaXunJDialog extends javax.swing.JDialog {
             jTable4.getColumnModel().getColumn(9).setHeaderValue(resourceMap.getString("jTable4.columnModel.title9")); // NOI18N
         }
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-        );
+        jTextFieldEnd.setText(resourceMap.getString("jTextFieldEnd.text")); // NOI18N
+        jTextFieldEnd.setName("jTextFieldEnd"); // NOI18N
+
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jTextFieldStart.setText(resourceMap.getString("jTextFieldStart.text")); // NOI18N
+        jTextFieldStart.setMaximumSize(new java.awt.Dimension(6, 40));
+        jTextFieldStart.setMinimumSize(new java.awt.Dimension(6, 30));
+        jTextFieldStart.setName("jTextFieldStart"); // NOI18N
+        jTextFieldStart.setPreferredSize(new java.awt.Dimension(6, 30));
+
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
         );
 
         pack();
@@ -273,14 +327,45 @@ public class YeWuLiuChengChaXunJDialog extends javax.swing.JDialog {
 //        });
     }
 
+    @Action
+    public void close() {
+        this.dispose();
+    }
+
+    @Action
+    public Task search() {
+        String startDate = jTextFieldStart.getText();
+        String endDate = jTextFieldEnd.getText();
+        parameterMap.put("startDate", startDate);
+        parameterMap.put("endDate", endDate);
+        return new YewuliuchengFindTask(parameterMap) {
+
+            @Override
+            public void responseResult(CommFindEntity<Yewuliuchengdetail> response) {
+                //存下所有的数据
+                currentPageData = response.getResult();
+                bindTable.refreshData(currentPageData);
+            }
+        };
+    }
+
+    @Action
+    public Task print() {
+        YewuliuchengFindTask printData = new YewuliuchengFindTask(parameterMap) {
+            @Override
+            public void responseResult(CommFindEntity response) {
+                bindTable.createPrinter("疫苗业务流程查询表", response.getResult()).buildInBackgound().execute();
+            }
+        };
+        return printData;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -289,6 +374,8 @@ public class YeWuLiuChengChaXunJDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTextField jTextFieldEnd;
+    private javax.swing.JTextField jTextFieldStart;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }

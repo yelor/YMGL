@@ -74,8 +74,6 @@ public class YimiaorukujiluPanel extends BasePanel {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jLabelImg = new javax.swing.JLabel();
         jpanel2 = new javax.swing.JPanel();
         ctrlPane = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
@@ -87,6 +85,8 @@ public class YimiaorukujiluPanel extends BasePanel {
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jLabelImg = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldStart = new BaseTextField();
@@ -106,18 +106,6 @@ public class YimiaorukujiluPanel extends BasePanel {
             }
         });
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaorukujiluPanel.class);
-        jScrollPane2.setBackground(resourceMap.getColor("jScrollPane2.background")); // NOI18N
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        jLabelImg.setBackground(resourceMap.getColor("jLabelImg.background")); // NOI18N
-        jLabelImg.setForeground(resourceMap.getColor("jLabelImg.foreground")); // NOI18N
-        jLabelImg.setText(resourceMap.getString("jLabelImg.text")); // NOI18N
-        jLabelImg.setName("jLabelImg"); // NOI18N
-        jScrollPane2.setViewportView(jLabelImg);
-
-        jTabbedPane1.addTab(resourceMap.getString("jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
-
         jpanel2.setName("jpanel2"); // NOI18N
 
         ctrlPane.setName("ctrlPane"); // NOI18N
@@ -131,6 +119,7 @@ public class YimiaorukujiluPanel extends BasePanel {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaorukujiluPanel.class, this);
         jButton12.setAction(actionMap.get("print")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaorukujiluPanel.class);
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
         jButton12.setBorderPainted(false);
@@ -260,6 +249,17 @@ public class YimiaorukujiluPanel extends BasePanel {
 
         jTabbedPane1.addTab(resourceMap.getString("jpanel2.TabConstraints.tabTitle"), jpanel2); // NOI18N
 
+        jScrollPane2.setBackground(resourceMap.getColor("jScrollPane2.background")); // NOI18N
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jLabelImg.setBackground(resourceMap.getColor("jLabelImg.background")); // NOI18N
+        jLabelImg.setForeground(resourceMap.getColor("jLabelImg.foreground")); // NOI18N
+        jLabelImg.setText(resourceMap.getString("jLabelImg.text")); // NOI18N
+        jLabelImg.setName("jLabelImg"); // NOI18N
+        jScrollPane2.setViewportView(jLabelImg);
+
+        jTabbedPane1.addTab(resourceMap.getString("jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
+
         jPanel2.setName("jPanel2"); // NOI18N
 
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
@@ -339,8 +339,25 @@ public class YimiaorukujiluPanel extends BasePanel {
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         if (((JTabbedPane) evt.getSource()).getSelectedIndex() == 1) {
-            parameterMap.put("pageindex", 0);
-            new RefreshTask(parameterMap).execute();
+            String startDate = jTextFieldStart.getText();
+            String endDate = jTextFieldEnd.getText();
+            parameterMap.put("startDate", startDate);
+            parameterMap.put("endDate", endDate);
+            parameterMap.put("idflag", "YMS");
+
+            jLabelImg.setText("loading chart...");
+            jLabelImg.setIcon(null);
+            ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
+                @Override
+                public void responseResult(File imgPath) {
+                    jLabelImg.setText("");
+                    if (imgPath != null && imgPath.exists()) {
+                        ImageIcon icon = new ImageIcon(imgPath.getPath());
+                        jLabelImg.setIcon(icon);
+                    }
+                }
+            };
+            reportTask.execute();
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
@@ -372,31 +389,8 @@ public class YimiaorukujiluPanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
-        String startDate = jTextFieldStart.getText();
-        String endDate = jTextFieldEnd.getText();
-        parameterMap.put("startDate", startDate);
-        parameterMap.put("endDate", endDate);
-        parameterMap.put("idflag", "YMS");
-
-        jLabelImg.setText("loading chart...");
-        jLabelImg.setIcon(null);
-        ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
-            @Override
-            public void responseResult(File imgPath) {
-                jLabelImg.setText("");
-                if (imgPath != null && imgPath.exists()) {
-                    ImageIcon icon = new ImageIcon(imgPath.getPath());
-                    jLabelImg.setIcon(icon);
-                }
-            }
-        };
-
-        if (jTabbedPane1.getSelectedIndex() == 1) {
-            parameterMap.put("pageindex", 0);
-            new RefreshTask(parameterMap).execute();
-        }
-
-        return reportTask;
+        parameterMap.put("pageindex", 0);
+        return new RefreshTask(parameterMap);
     }
 
     @Override

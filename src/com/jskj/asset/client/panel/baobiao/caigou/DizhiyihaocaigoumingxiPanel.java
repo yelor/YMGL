@@ -74,8 +74,6 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jLabelImg = new javax.swing.JLabel();
         jpanel2 = new javax.swing.JPanel();
         ctrlPane = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
@@ -87,6 +85,8 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jLabelImg = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldStart = new BaseTextField();
@@ -105,13 +105,6 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
                 jTabbedPane1StateChanged(evt);
             }
         });
-
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        jLabelImg.setName("jLabelImg"); // NOI18N
-        jScrollPane2.setViewportView(jLabelImg);
-
-        jTabbedPane1.addTab("图表", jScrollPane2);
 
         jpanel2.setName("jpanel2"); // NOI18N
 
@@ -255,6 +248,13 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
 
         jTabbedPane1.addTab("数据", jpanel2);
 
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        jLabelImg.setName("jLabelImg"); // NOI18N
+        jScrollPane2.setViewportView(jLabelImg);
+
+        jTabbedPane1.addTab("图表", jScrollPane2);
+
         jPanel2.setName("jPanel2"); // NOI18N
 
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
@@ -327,14 +327,32 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         if (((JTabbedPane) evt.getSource()).getSelectedIndex() == 1) {
-            parameterMap.put("pageindex", 0);
-            new RefreshTask(parameterMap).execute();
+
+            String startDate = jTextFieldStart.getText();
+            String endDate = jTextFieldEnd.getText();
+            parameterMap.put("startDate", startDate);
+            parameterMap.put("endDate", endDate);
+            parameterMap.put("idflag", "dzyh");
+
+            jLabelImg.setText("loading chart...");
+            jLabelImg.setIcon(null);
+            ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
+                @Override
+                public void responseResult(File imgPath) {
+                    jLabelImg.setText("");
+                    if (imgPath != null && imgPath.exists()) {
+                        ImageIcon icon = new ImageIcon(imgPath.getPath());
+                        jLabelImg.setIcon(icon);
+                    }
+                }
+            };
+            reportTask.execute();
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
@@ -366,31 +384,8 @@ public class DizhiyihaocaigoumingxiPanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
-        String startDate = jTextFieldStart.getText();
-        String endDate = jTextFieldEnd.getText();
-        parameterMap.put("startDate", startDate);
-        parameterMap.put("endDate", endDate);
-        parameterMap.put("idflag", "dzyh");
-
-        jLabelImg.setText("loading chart...");
-        jLabelImg.setIcon(null);
-        ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
-            @Override
-            public void responseResult(File imgPath) {
-                jLabelImg.setText("");
-                if (imgPath != null && imgPath.exists()) {
-                    ImageIcon icon = new ImageIcon(imgPath.getPath());
-                    jLabelImg.setIcon(icon);
-                }
-            }
-        };
-
-        if (jTabbedPane1.getSelectedIndex() == 1) {
-            parameterMap.put("pageindex", 0);
-            new RefreshTask(parameterMap).execute();
-        }
-
-        return reportTask;
+        parameterMap.put("pageindex", 0);
+        return new RefreshTask(parameterMap);
     }
 
     @Override

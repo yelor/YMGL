@@ -34,6 +34,9 @@ public class MainPanel extends BasePanel {
     public MainPanel() {
         super();
         initComponents();
+        
+        //暂时屏蔽按钮,功能未开放
+        jButton5.setEnabled(false);
     }
 
     /**

@@ -62,12 +62,36 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         }
         if (POPUP_TYPE == IPopupBuilder.TYPE_DATE_CLICK) {
             DateChooser dateChooser1 = DateChooser.getInstance(PARAMETER);
-            dateChooser1.register(this);
+            dateChooser1.register(BaseTextField.this);
         }
         Insets insets = new Insets(0, 20, 0, 0);
         this.setMargin(insets);
         hasRegister = true;
     }
+    
+    /**
+     * 为一个textfiled注册一带有图标的POPUP_TYPE,PARAMETER为扩展参数
+     * 1.如果是TYPE_DATE_CLICK：可以用这个参数来表示时间格式"yyyy-MM-dd"
+     * 2....
+     * @param POPUP_TYPE
+     * @param PARAMETER 
+     */
+    public void registerIcon(int POPUP_TYPE) {
+        switch (POPUP_TYPE) {
+            case IPopupBuilder.TYPE_DATE_CLICK:
+                icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_DATE));
+                break;
+            case IPopupBuilder.TYPE_POPUP_TEXT:
+                icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TEXT));
+                break;
+            default:
+                icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TABLE));
+        }
+        Insets insets = new Insets(0, 20, 0, 0);
+        this.setMargin(insets);
+        hasRegister = true;
+    }
+    
 
     /**
      * 为一个textfiled注册一个popup
@@ -104,6 +128,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
     @Override
     public void paintComponent(Graphics g) {
         if (!hasRegister) {
+            super.paintComponent(g);
             return;
         }
         Insets insets = getInsets();

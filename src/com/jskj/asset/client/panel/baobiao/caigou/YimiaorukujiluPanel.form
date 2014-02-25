@@ -46,31 +46,6 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-          <Properties>
-            <Property name="background" type="java.awt.Color" resourceKey="jScrollPane2.background"/>
-            <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
-          </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="&#x56fe;&#x8868;">
-                <Property name="tabTitle" type="java.lang.String" resourceKey="jScrollPane2.TabConstraints.tabTitle"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelImg">
-              <Properties>
-                <Property name="background" type="java.awt.Color" resourceKey="jLabelImg.background"/>
-                <Property name="foreground" type="java.awt.Color" resourceKey="jLabelImg.foreground"/>
-                <Property name="text" type="java.lang.String" resourceKey="jLabelImg.text"/>
-                <Property name="name" type="java.lang.String" value="jLabelImg" noResource="true"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
         <Container class="javax.swing.JPanel" name="jpanel2">
           <Properties>
             <Property name="name" type="java.lang.String" value="jpanel2" noResource="true"/>
@@ -310,6 +285,31 @@
                 </Component>
               </SubComponents>
             </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="jScrollPane2.background"/>
+            <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="&#x56fe;&#x8868;">
+                <Property name="tabTitle" type="java.lang.String" resourceKey="jScrollPane2.TabConstraints.tabTitle"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabelImg">
+              <Properties>
+                <Property name="background" type="java.awt.Color" resourceKey="jLabelImg.background"/>
+                <Property name="foreground" type="java.awt.Color" resourceKey="jLabelImg.foreground"/>
+                <Property name="text" type="java.lang.String" resourceKey="jLabelImg.text"/>
+                <Property name="name" type="java.lang.String" value="jLabelImg" noResource="true"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

@@ -339,8 +339,25 @@ public class YimiaoyunshujiluPanel extends BasePanel {
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         if (((JTabbedPane) evt.getSource()).getSelectedIndex() == 1) {
-            parameterMap.put("pageindex", 0);
-            new RefreshTask(parameterMap).execute();
+            String startDate = jTextFieldStart.getText();
+            String endDate = jTextFieldEnd.getText();
+            parameterMap.put("startDate", startDate);
+            parameterMap.put("endDate", endDate);
+            parameterMap.put("idflag", "YMS");
+
+            jLabelImg.setText("loading chart...");
+            jLabelImg.setIcon(null);
+            ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
+                @Override
+                public void responseResult(File imgPath) {
+                    jLabelImg.setText("");
+                    if (imgPath != null && imgPath.exists()) {
+                        ImageIcon icon = new ImageIcon(imgPath.getPath());
+                        jLabelImg.setIcon(icon);
+                    }
+                }
+            };
+            reportTask.execute();
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
@@ -372,31 +389,8 @@ public class YimiaoyunshujiluPanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
-        String startDate = jTextFieldStart.getText();
-        String endDate = jTextFieldEnd.getText();
-        parameterMap.put("startDate", startDate);
-        parameterMap.put("endDate", endDate);
-        parameterMap.put("idflag", "YMS");
-
-        jLabelImg.setText("loading chart...");
-        jLabelImg.setIcon(null);
-        ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
-            @Override
-            public void responseResult(File imgPath) {
-                jLabelImg.setText("");
-                if (imgPath != null && imgPath.exists()) {
-                    ImageIcon icon = new ImageIcon(imgPath.getPath());
-                    jLabelImg.setIcon(icon);
-                }
-            }
-        };
-
-        if (jTabbedPane1.getSelectedIndex() == 1) {
-            parameterMap.put("pageindex", 0);
-            new RefreshTask(parameterMap).execute();
-        }
-
-        return reportTask;
+        parameterMap.put("pageindex", 0);
+        return new RefreshTask(parameterMap);
     }
 
     @Override
