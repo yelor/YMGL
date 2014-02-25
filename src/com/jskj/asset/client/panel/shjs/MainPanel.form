@@ -58,6 +58,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="messageLabel">
           <Properties>
+            <Property name="foreground" type="java.awt.Color" resourceKey="messageLabel.foreground"/>
             <Property name="text" type="java.lang.String" resourceKey="messageLabel.text"/>
             <Property name="name" type="java.lang.String" value="messageLabel" noResource="true"/>
           </Properties>

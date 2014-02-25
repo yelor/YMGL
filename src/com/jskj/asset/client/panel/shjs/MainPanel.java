@@ -64,6 +64,7 @@ public class MainPanel extends BasePanel {
         ctrlPane.setName("ctrlPane"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(MainPanel.class);
+        messageLabel.setForeground(resourceMap.getColor("messageLabel.foreground")); // NOI18N
         messageLabel.setText(resourceMap.getString("messageLabel.text")); // NOI18N
         messageLabel.setName("messageLabel"); // NOI18N
 
