@@ -11,13 +11,17 @@ import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
+import com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.BorderLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -37,11 +41,19 @@ public class MyTaskFindTask extends BaseTask {
     private final String serviceId = "/spfind/findmytask";
     javax.swing.JLabel messageLabel;
     private final ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/common/icon/resources/refresh.png"));
+    private final ImageIcon gotoicon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/common/icon/resources/selectsource.png"));
     private final ActionMap actionMap = Application.getInstance(AssetClientApp.class).getContext().getActionMap(MyTaskFindTask.class, this);
+    private JButton shenpiButton;
+    private boolean topButtonEnable;
 
     public MyTaskFindTask(javax.swing.JLabel messageLabel) {
+        this(messageLabel, false);
+    }
+
+    public MyTaskFindTask(javax.swing.JLabel messageLabel, boolean topButtonEnable) {
         super();
         this.messageLabel = messageLabel;
+        this.topButtonEnable = topButtonEnable;
         if (!messageLabel.getName().equals("attachedbutton")) {
             messageLabel.setLayout(new BorderLayout());
             JButton button = new JButton();
@@ -53,18 +65,70 @@ public class MyTaskFindTask extends BaseTask {
             button.setBorderPainted(false);
             button.setContentAreaFilled(false);
             button.setToolTipText("刷新消息");
+
+            shenpiButton = new JButton();
+            shenpiButton.setAction(actionMap.get("gotoShenpi"));
+            shenpiButton.setText("");
+            shenpiButton.setIcon(gotoicon);
+            shenpiButton.setOpaque(false);
+            shenpiButton.setBorder(null);
+            shenpiButton.setBorderPainted(false);
+            shenpiButton.setContentAreaFilled(false);
+            shenpiButton.setToolTipText("去审批窗口");
+            shenpiButton.setEnabled(false);
+
+            shenpiButton.setMargin(new Insets(0, 0, 0, 40));
+
             messageLabel.setName("attachedbutton");
-            messageLabel.add(button, BorderLayout.EAST);
+//            messageLabel.add(button, BorderLayout.EAST);
+//            messageLabel.add(button2, BorderLayout.EAST);
+
+            javax.swing.GroupLayout messageLayout = new javax.swing.GroupLayout(messageLabel);
+            messageLabel.setLayout(messageLayout);
+            messageLayout.setHorizontalGroup(
+                    messageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, messageLayout.createSequentialGroup()
+                            .addContainerGap(100, Short.MAX_VALUE)
+                            .addComponent(shenpiButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(button)
+                            .addContainerGap())
+            );
+            messageLayout.setVerticalGroup(
+                    messageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(messageLayout.createSequentialGroup()
+                            .addGroup(messageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(shenpiButton)
+                                    .addComponent(button))
+                            .addContainerGap(0, Short.MAX_VALUE))
+            );
+
         }
     }
 
     @Action
     public Task refresh() {
-        return new MyTaskFindTask(messageLabel);
+        return new MyTaskFindTask(messageLabel,topButtonEnable);
+    }
+
+    @Action
+    public void gotoShenpi() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YimiaoShenPiJDialog yimiaoShenPiJDialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(), true);
+                yimiaoShenPiJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
+            }
+        });
     }
 
     @Override
     public Object doBackgrounp() {
+        if (shenpiButton != null) {
+            shenpiButton.setEnabled(false);
+        }
         try {
             //使用Spring3 RESTful client来获取http数据            
 //            CommFindEntity<T> response = restTemplate.getForObject(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, CommFindEntity.class);
@@ -106,7 +170,11 @@ public class MyTaskFindTask extends BaseTask {
         if (results != null) {
             logger.info("获取任务数:" + response.getCount());
             StringBuilder builder = new StringBuilder("<html>");
+            if (topButtonEnable) {
+                builder.append("<br /><br />");
+            }
             int i = 1;
+            builder.append("<font color=\"red\">");
             for (MyTaskEntity re : results) {
                 if (i > 4) {
                     builder.append("...");
@@ -116,8 +184,14 @@ public class MyTaskFindTask extends BaseTask {
                         .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("]-").append(DateHelper.formatTime(re.getSubmitDate())).append("<br />");
                 i++;
             }
+            builder.append("</font");
             builder.append("</html>");
             messageLabel.setText(builder.toString());
+            if (i >= 2) {
+                if (shenpiButton != null) {
+                    shenpiButton.setEnabled(true);
+                }
+            }
             new MySubmitFindTask(messageLabel).execute();
         }
     }

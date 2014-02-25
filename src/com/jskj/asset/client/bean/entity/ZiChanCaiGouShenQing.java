@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ZiChanCaiGouShenQing {
     private String cgsqId;
 
@@ -18,6 +20,12 @@ public class ZiChanCaiGouShenQing {
     private Date checkTime2;
 
     private Date checkTime3;
+
+    private String checkUser1;
+
+    private String checkUser2;
+
+    private String checkUser3;
 
     private String rejectReason;
 
@@ -83,6 +91,30 @@ public class ZiChanCaiGouShenQing {
 
     public void setCheckTime3(Date checkTime3) {
         this.checkTime3 = checkTime3;
+    }
+
+    public String getCheckUser1() {
+        return checkUser1;
+    }
+
+    public void setCheckUser1(String checkUser1) {
+        this.checkUser1 = checkUser1 == null ? null : checkUser1.trim();
+    }
+
+    public String getCheckUser2() {
+        return checkUser2;
+    }
+
+    public void setCheckUser2(String checkUser2) {
+        this.checkUser2 = checkUser2 == null ? null : checkUser2.trim();
+    }
+
+    public String getCheckUser3() {
+        return checkUser3;
+    }
+
+    public void setCheckUser3(String checkUser3) {
+        this.checkUser3 = checkUser3 == null ? null : checkUser3.trim();
     }
 
     public String getRejectReason() {

@@ -164,6 +164,10 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         }
 
         String reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
+        
+        if(reason==null){
+           return null;
+        }
         //JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
         Yimiaoshenpiliucheng yimiaoshenpiliucheng = yimiaoshenpiList.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
