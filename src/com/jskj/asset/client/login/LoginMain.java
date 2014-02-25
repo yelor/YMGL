@@ -49,6 +49,7 @@ public class LoginMain extends javax.swing.JFrame {
         setMinimumSize(windowPop);
         setTitle(Constants.WINTITLE);
         setResizable(false);
+        versionLabel.setText(Constants.VERSION);
         new LoginInfoTask(LoginInfoTask.READ_XML).execute();
     }
 

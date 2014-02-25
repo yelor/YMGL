@@ -35,6 +35,10 @@
                       <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="closeButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -47,7 +51,13 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="closeButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -106,7 +116,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextPane" name="jTextPane1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&#x75ab;&#x82d7;&#x7ba1;&#x7406;&#x5e73;&#x53f0;" noResource="true"/>
+                <Property name="text" type="java.lang.String" value="&#x8b66;&#x544a;&#xff1a;&#x672c;&#x8ba1;&#x7b97;&#x673a;&#x7a0b;&#x5e8f;&#x53d7;&#x8457;&#x4f5c;&#x6743;&#x6cd5;&#x548c;&#x56fd;&#x9645;&#x6761;&#x7ea6;&#x4fdd;&#x62a4;&#x3002;&#x5982;&#x672a;&#x7ecf;&#x6210;&#x90fd;&#x541b;&#x6607;&#x79d1;&#x6280;&#x6709;&#x9650;&#x516c;&#x53f8;&#x6388;&#x6743;&#x800c;&#x64c5;&#x81ea;&#x590d;&#x5236;&#x6216;&#x4f20;&#x64ad;&#x672c;&#x7a0b;&#x5e8f;&#xff08;&#x6216;&#x5176;&#x4e2d;&#x4efb;&#x4f55;&#x90e8;&#x5206;&#xff09;&#xff0c;&#x5c06;&#x53d7;&#x5230;&#x4e25;&#x5389;&#x7684;&#x6c11;&#x4e8b;&#x53ca;&#x5211;&#x4e8b;&#x5236;&#x88c1;&#xff0c;&#x5e76;&#x5c06;&#x5728;&#x6cd5;&#x5f8b;&#x8bb8;&#x53ef;&#x8303;&#x56f4;&#x5185;&#x53d7;&#x5230;&#x6700;&#x5927;&#x7a0b;&#x5ea6;&#x7684;&#x8d77;&#x8bc9;&#x3002;" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="jTextPane1" noResource="true"/>
               </Properties>
             </Component>
@@ -280,5 +290,17 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel2.text"/>
+        <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

@@ -3,6 +3,7 @@
  */
 package com.jskj.asset.client;
 
+import com.jskj.asset.client.constants.Constants;
 import java.util.Properties;
 import org.jdesktop.application.Action;
 
@@ -19,6 +20,7 @@ public class AboutBox extends javax.swing.JDialog {
         JTextJREversion.setText(props.getProperty("java.version"));
         JTextJERCOM.setText(props.getProperty("java.vendor"));
         JTextJREPATH.setText(props.getProperty("java.home"));
+        jLabel2.setText(Constants.VERSION);
     }
 
     @Action
@@ -51,6 +53,8 @@ public class AboutBox extends javax.swing.JDialog {
         JTextJREversion = new javax.swing.JLabel();
         JTextJERCOM = new javax.swing.JLabel();
         JTextJREPATH = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(AboutBox.class);
@@ -68,7 +72,7 @@ public class AboutBox extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTextPane1.setText("疫苗管理平台"); // NOI18N
+        jTextPane1.setText("警告：本计算机程序受著作权法和国际条约保护。如未经成都君昇科技有限公司授权而擅自复制或传播本程序（或其中任何部分），将受到严厉的民事及刑事制裁，并将在法律许可范围内受到最大程度的起诉。"); // NOI18N
         jTextPane1.setName("jTextPane1"); // NOI18N
         jScrollPane1.setViewportView(jTextPane1);
 
@@ -191,6 +195,12 @@ public class AboutBox extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,6 +212,10 @@ public class AboutBox extends javax.swing.JDialog {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(closeButton)
                         .addContainerGap())))
         );
@@ -210,7 +224,11 @@ public class AboutBox extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closeButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(closeButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -224,9 +242,11 @@ public class AboutBox extends javax.swing.JDialog {
     private javax.swing.JLabel JTextOSName;
     private javax.swing.JLabel JTextOSVersion;
     private javax.swing.JButton closeButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;

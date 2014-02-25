@@ -100,7 +100,7 @@ public class AssetClientApp extends SingleFrameApplication {
 
         show(view);
         view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);;
-        view.getFrame().setTitle(Constants.WINTITLE + " " + Constants.VERSION);
+        view.getFrame().setTitle(Constants.WINTITLE);
 
         StringBuilder message = new StringBuilder();
         message.append("用户:").append(sessionMap.getUsertb().getUserName());
