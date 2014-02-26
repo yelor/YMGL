@@ -15,6 +15,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
@@ -39,7 +40,8 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     private YimiaoshenqingdantbFindEntity yimiaolingyong;
 
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    ;
     private boolean isNew;
 
     /**
@@ -139,6 +141,48 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
             }
         });
+
+        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyimiao";
+            }
+
+            public String getConditionSQL() {
+                return "yimiao_tiaoxingma =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+
+                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
+
+                    Object yimiaoId = bindedMap.get("yimiaoId");
+                    Object yimiaoName = bindedMap.get("yimiaoName");
+                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
+                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
+                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
+                    Object unit = bindedMap.get("unitId");
+
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
+
+                    editTable.addNewRow();
+                }
+
+            }
+        });
     }
 
     JTextField regTextField;
@@ -165,8 +209,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton7 = new ScanButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -242,7 +285,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoLingYongShenQingJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(892, 553));
         setResizable(false);
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -269,14 +311,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
-
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.setFocusable(false);
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setOpaque(false);
-        jToolBar1.add(jButton3);
 
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
@@ -629,7 +663,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;

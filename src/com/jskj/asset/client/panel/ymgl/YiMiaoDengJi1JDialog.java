@@ -10,6 +10,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.YimiaodengjiUpdateTask;
 import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
@@ -86,6 +87,50 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                 }
             }
         });
+
+        ((ScanButton) jButton1).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyimiao";
+            }
+
+            public String getConditionSQL() {
+                return "yimiao_tiaoxingma =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    dateformate = new SimpleDateFormat("yyyy-MM-dd");
+                    jTextFieldYimiaoId.setText(bindedMap.get("yimiaoId") == null ? "" : bindedMap.get("yimiaoId").toString());
+                    jTextFieldYimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
+                    jTextFieldguige.setText(bindedMap.get("yimiaoGuige") == null ? "" : bindedMap.get("yimiaoGuige").toString());
+                    if (bindedMap.get("yimiaoJixing") == "液体剂型") {
+                        jComboBoxJixing.setSelectedIndex(1);
+                    } else if (bindedMap.get("yimiaoJixing") == "冻干剂型") {
+                        jComboBoxJixing.setSelectedIndex(2);
+                    } else if (bindedMap.get("yimiaoJixing") == "糖丸剂型") {
+                        jComboBoxJixing.setSelectedIndex(3);
+                    }
+                    jTextFieldshengchanqiye.setText(bindedMap.get("shengchanqiye") == null ? "" : bindedMap.get("shengchanqiye").toString());
+                    jTextFieldpizhunwenhao.setText(bindedMap.get("pizhunwenhao") == null ? "" : bindedMap.get("pizhunwenhao").toString());
+                    jTextFieldpihao.setText(bindedMap.get("pihao") == null ? "" : bindedMap.get("pihao").toString());
+                    jTextFieldYouxiaoqi.setText(bindedMap.get("youxiaoqi") == null ? "" : dateformate.format(bindedMap.get("youxiaoqi")));
+                    jTextFieldunit.setText(bindedMap.get("unit") == null ? "" : bindedMap.get("unit").toString());
+                    jTextFieldpiqianfahege.setText(bindedMap.get("piqianfahegezhenNo") == null ? "" : bindedMap.get("piqianfahegezhenNo").toString());
+                    jTextFieldkucunDown.setText(bindedMap.get("kucunDown") == null ? "" : bindedMap.get("kucunDown").toString());
+                    jTextFieldkucunUp.setText(bindedMap.get("kucunUp") == null ? "" : bindedMap.get("kucunUp").toString());
+                    yimiaodengji.setYimiaoId((Integer) bindedMap.get("yimiaoId"));
+                }
+
+            }
+        });
     }
 
     DateChooser dateChooser1;
@@ -140,7 +185,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jComboBoxSource = new javax.swing.JComboBox();
         jComboBoxJixing = new javax.swing.JComboBox();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
+        jButton1 = new ScanButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 

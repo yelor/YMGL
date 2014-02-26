@@ -12,11 +12,10 @@ import com.jskj.asset.client.bean.entity.Yimiaotiaojiatb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
-import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.Yimiaotiaojia_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
     private Yimiaotiaojia_detail_tbFindEntity yimiaotiaojiaEntity;
     private Yimiaotiaojia_detail_tb yimiaotiaojia_detail;
     private Yimiaotiaojiatb yimiaotiaojia;
-    private SimpleDateFormat dateformate= new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
 
     /**
@@ -91,7 +90,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
                     Object yimiaoId = bindedMap.get("yimiaoId");
-                    Float stockpilePrice = Float.parseFloat(""+bindedMap.get("stockpilePrice")) ;
+                    Float stockpilePrice = Float.parseFloat("" + bindedMap.get("stockpilePrice"));
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
@@ -110,6 +109,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
 
             }
         });
+
+    
     }
 
     JTextField regTextField;
@@ -137,8 +138,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -243,22 +242,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
-
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.setFocusable(false);
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setOpaque(false);
-        jToolBar1.add(jButton3);
-
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusable(false);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
-        jToolBar1.add(jButton2);
 
         jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
@@ -575,7 +558,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "yimiaoId"));
             yimiaotiaojia_detail.setBeforeprice((Float) yimiaotable.getValue(i, "stockpilePrice"));
-            yimiaotiaojia_detail.setLastprice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "lastPrice"))));
+            yimiaotiaojia_detail.setLastprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastPrice"))));
             list.add(yimiaotiaojia_detail);
         }
 
@@ -610,8 +593,6 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;

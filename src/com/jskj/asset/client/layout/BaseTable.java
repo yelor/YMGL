@@ -73,8 +73,7 @@ public class BaseTable extends JTable {
         });
 
     }
-    
-    
+
     private void _mouseClicked(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2) { //是双//击事件。
             // openCellPane();
@@ -125,13 +124,7 @@ public class BaseTable extends JTable {
 
                     //如果是最后一行，编辑后，增加新行
                     if (table.getSelectedRow() == (table.getRowCount() - 1)) {
-                        AssetTableModel tableMode = (AssetTableModel) table.getModel();
-                        List newRow = new ArrayList();
-                        for (int i = 0; i < table.getColumnCount(); i++) {
-                            newRow.add("");
-                        }
-                        tableMode.getDataVector().add(newRow);
-                        table.updateUI();
+                        addNewRow();
                     }
                 }
             };
@@ -185,7 +178,7 @@ public class BaseTable extends JTable {
             int popWitdh = basePopup.getWidth();
 
             if ((selectedColumnY + popHeight) > size.getHeight()) {
-                selectedColumnY = selectedColumnY - basePopup.getHeight()-table.getRowHeight();
+                selectedColumnY = selectedColumnY - basePopup.getHeight() - table.getRowHeight();
             }
 
             if ((selectedColumnX + popWitdh) > size.getWidth()) {
@@ -205,6 +198,24 @@ public class BaseTable extends JTable {
                 return;
             }
             table.setValueAt(obj, selectedRow, columnIndex);
+        }
+        
+        public void insertValue(int rowIndex,int columnIndex, Object obj) {
+            logger.debug("insert new value to table,value:" + obj + ",row:" + rowIndex + ",column:" + columnIndex);
+            if (rowIndex == -1 || columnIndex == -1) {
+                return;
+            }
+            table.setValueAt(obj, rowIndex, columnIndex);
+        }
+
+        public void addNewRow() {
+            AssetTableModel tableMode = (AssetTableModel) table.getModel();
+            List newRow = new ArrayList();
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                newRow.add("");
+            }
+            tableMode.getDataVector().add(newRow);
+            table.updateUI();
         }
 
         public void tableChanged(TableModelEvent e) {
@@ -426,6 +437,5 @@ public class BaseTable extends JTable {
         }
 
     }
-    
 
 }

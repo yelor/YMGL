@@ -109,11 +109,6 @@
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-            <EtchetBorder/>
-          </Border>
-        </Property>
         <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
       </Properties>
 
@@ -149,9 +144,7 @@
               <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="selectedAction" methodName="selectedAction"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
-            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
@@ -160,9 +153,7 @@
               <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="cancelAction" methodName="cancelAction"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
-            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

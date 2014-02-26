@@ -84,6 +84,9 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
             case IPopupBuilder.TYPE_POPUP_TEXT:
                 icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TEXT));
                 break;
+            case IPopupBuilder.TYPE_POPUP_SCAN:
+                icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_SCAN));
+                break;    
             default:
                 icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TABLE));
         }
