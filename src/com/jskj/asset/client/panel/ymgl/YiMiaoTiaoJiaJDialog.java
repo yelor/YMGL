@@ -75,7 +75,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                 String sql = "";
                 sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price>0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "and yimiao_id like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "and yimiao_id like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }

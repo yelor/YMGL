@@ -111,7 +111,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                 String sql = "";
                 sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=4 and is_completed = 1 and status = 9)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }

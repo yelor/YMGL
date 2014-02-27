@@ -109,7 +109,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                 String sql = "";
                 sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅱ类疫苗\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }

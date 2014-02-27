@@ -109,7 +109,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 String sql = "";
                 sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 0 and danjuleixing_id in (5,6))";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }
