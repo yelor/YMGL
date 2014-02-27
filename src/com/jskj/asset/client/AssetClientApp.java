@@ -9,6 +9,7 @@ import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.login.LoginMain;
+import com.jskj.asset.client.panel.MessagePanel;
 import java.awt.Font;
 import java.util.EventObject;
 import java.util.List;
@@ -40,6 +41,10 @@ public class AssetClientApp extends SingleFrameApplication {
         "TabbedPane.font", "RadioButton.font", "CheckBoxMenuItem.font",
         "TextPane.font", "PopupMenu.font", "TitledBorder.font", "ComboBox.font"
     };
+
+    public static MessagePanel getMessagePanel() {
+        return new MessagePanel();
+    }
 
     /**
      * @return the sessionMap
@@ -173,6 +178,7 @@ public class AssetClientApp extends SingleFrameApplication {
 
     /**
      * Main method launching the application.
+     *
      * @param args
      */
     public static void main(final String[] args) {
