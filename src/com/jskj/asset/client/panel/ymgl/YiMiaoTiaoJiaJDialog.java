@@ -574,7 +574,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "yimiaoId"));
-            yimiaotiaojia_detail.setBeforeprice((Float) yimiaotable.getValue(i, "stockpilePrice"));
+            yimiaotiaojia_detail.setBeforeprice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "stockpilePrice"))));
             yimiaotiaojia_detail.setLastprice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "lastPrice"))));
             list.add(yimiaotiaojia_detail);
         }
