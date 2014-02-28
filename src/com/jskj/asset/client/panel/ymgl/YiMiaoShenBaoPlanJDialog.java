@@ -40,7 +40,7 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaoshenbao;
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
 
     DateChooser dateChooser1;
@@ -90,7 +90,7 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
                 }
             }
         });
-        
+
 //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
@@ -110,9 +110,10 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "yimiao_name like \"%" + newColumnObj.toString() + "%\" and yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
+                } else {
+                    sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
                 }
                 return sql;
             }
@@ -142,8 +143,8 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
 
             }
         });
-        
-        ((ScanButton)jButton7).registerPopup(new IPopupBuilder() {
+
+        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_SCAN;
             }
@@ -169,15 +170,15 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
 
-                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount()-1, jTableyimiao.getRowCount()-1);
-                    
-                    editTable.insertValue(jTableyimiao.getSelectedRow(),0, yimiaoId);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(),1, yimiaoName);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(),2, yimiaoGuige);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(),3, yimiaoJixing);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(),4, shengchanqiye);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(),5, unit);
-                                       
+                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
+
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
+
                     editTable.addNewRow();
                 }
 
@@ -584,15 +585,15 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
     @Action
     public Task submitForm() throws ParseException {
         if (jTextFieldSupplierName.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入供应单位名称!",null);
+            AssetMessage.ERRORSYS("请输入供应单位名称!", null);
             return null;
         }
         if (jTextFieldshenqingren.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入申请人名称!",null);
+            AssetMessage.ERRORSYS("请输入申请人名称!", null);
             return null;
         }
         if (jTextFieldzhidanDate.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入制单日期!",null);
+            AssetMessage.ERRORSYS("请输入制单日期!", null);
             return null;
         }
         yimiaoshenbao = new YimiaoshenqingdantbFindEntity();

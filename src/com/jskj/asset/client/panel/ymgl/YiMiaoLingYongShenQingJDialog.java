@@ -92,7 +92,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -101,7 +101,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
+                return Constants.HTTP + Constants.APPID + "addshenbaoyimiao";
             }
 
             public String getConditionSQL() {
@@ -109,16 +109,17 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=3 and is_completed = 1 and status = 9)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "yimiao_id in (select distinct yimiaoshenqingdan.yimiao_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=3 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 9 and yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\") ";
+                } else {
+                    sql += "yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=3 and is_completed = 1 and status = 9)";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"yimiaoAll.yimiaoId", "疫苗编号"}, {"yimiaoAll.yimiaoName", "疫苗名称"}, {"yimiaoAll.yimiaoGuige", "规格"},
+                {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {

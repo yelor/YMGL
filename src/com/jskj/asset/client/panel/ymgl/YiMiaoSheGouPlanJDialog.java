@@ -90,8 +90,8 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"price", "单价", "true"}, {"totalprice", "合价", "true"}, {"yimiaoYushoujia", "预售价", "true"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","ture"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"price", "单价", "true"}, {"totalprice", "合价", "false"}, {"yimiaoYushoujia", "预售价", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -107,10 +107,10 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅱ类疫苗\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "yimiao_name like \"%" + newColumnObj.toString() + "%\" and yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅱ类疫苗\")";
                 }
+                sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅱ类疫苗\")";
                 return sql;
             }
 
@@ -626,7 +626,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshegoudanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
