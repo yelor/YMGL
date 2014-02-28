@@ -7,9 +7,8 @@ package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
-import com.jskj.asset.client.bean.entity.Supplier;
-import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
-import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tb;
+import com.jskj.asset.client.bean.entity.ChurukuyimiaoEntity;
+import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -19,18 +18,15 @@ import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -41,8 +37,8 @@ import org.jdesktop.application.Task;
 public class YiMiaoRuKu1 extends javax.swing.JDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
-    private List<YanshouyimiaoEntity> chukuyimiaolist;
-    private BindTableHelper<YanshouyimiaoEntity> bindTable;
+    private List<ChurukuyimiaoEntity> chukuyimiaolist;
+    private BindTableHelper<ChurukuyimiaoEntity> bindTable;
     private Churukudantb churukudan;
 
     /**
@@ -56,12 +52,14 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
 
-        bindTable = new BindTableHelper<YanshouyimiaoEntity>(jTableyimiao, new ArrayList<YanshouyimiaoEntity>());
+        bindTable = new BindTableHelper<ChurukuyimiaoEntity>(jTableyimiao, new ArrayList<ChurukuyimiaoEntity>());
         bindTable.createTable(new String[][]{
             {"date", "日期"}, {"quantity", "数量"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"yimiaoyanshou_detail.youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"},
-            {"piqianfaNo", "批签发合格证编号", "false"}, {"pizhunwenhao", "批准文号", "true"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"yimiaodengjitb.youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"},
+            {"yimiaodengjitb.piqianfahegezhenno", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"supplierId", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+        bindTable.setColumnType(Date.class, 7);
+        
 //                疫苗的popup
         ((BaseTextField) jTextFieldyimiaoName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -69,7 +67,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
+                return Constants.HTTP + Constants.APPID + "adddengjiyimiao";
             }
 
             public String getConditionSQL() {
@@ -87,27 +85,45 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
+                    Object dengjiyimiaomap = bindedMap.get("yimiaodengjitb");
+                    HashMap dengjiyimiao = (HashMap) dengjiyimiaomap;
                     jTextFieldyimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldsource.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldtongguandanNo.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoShengchanqiye").toString());
+                    jTextFieldsource.setText(dengjiyimiao.get("source") == null ? "" : dengjiyimiao.get("source").toString());
+                    jTextFieldtongguandanNo.setText(dengjiyimiao.get("tongguandanno") == null ? "" : dengjiyimiao.get("tongguandanno").toString());
                     Object yimiaoId = bindedMap.get("yimiaoId");
                     Object yimiaoName = bindedMap.get("yimiaoName");
                     Object yimiaoGuige = bindedMap.get("yimiaoGuige");
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-                    Object supplierId = bindedMap.get("suppliertb.supplierId");
+                    Object supplierId = bindedMap.get("supplierId");
                     Object unit = bindedMap.get("unitId");
 
-                    YanshouyimiaoEntity yanshouyimiao=new YanshouyimiaoEntity();
-                    yanshouyimiao.setYimiaoId((Integer) yimiaoId);
-                    yanshouyimiao.setYimiaoName((String) yimiaoName);
-                    yanshouyimiao.setYimiaoGuige((String) yimiaoGuige);
-                    yanshouyimiao.setYimiaoJixing((String) yimiaoJixing);
-                    yanshouyimiao.setYimiaoShengchanqiye((String) shengchanqiye);
-                    yanshouyimiao.setUnitId((String) unit);
-                    yanshouyimiao.setSupplierId((Integer) supplierId);
-                    chukuyimiaolist=new ArrayList<YanshouyimiaoEntity>();
-                    chukuyimiaolist.add(yanshouyimiao);
+                    ChurukuyimiaoEntity rukuyimiao=new ChurukuyimiaoEntity();
+                    rukuyimiao.setYimiaoId((Integer) yimiaoId);
+                    churukudan.setYimiaoId((Integer) yimiaoId);
+                    rukuyimiao.setYimiaoName((String) yimiaoName);
+                    rukuyimiao.setYimiaoGuige((String) yimiaoGuige);
+                    rukuyimiao.setYimiaoJixing((String) yimiaoJixing);
+                    rukuyimiao.setYimiaoShengchanqiye((String) shengchanqiye);
+                    rukuyimiao.setUnitId((String) unit);
+                    rukuyimiao.setSupplierId((Integer) supplierId);
+                    rukuyimiao.setYimiaoPizhunwenhao((String) bindedMap.get("yimiaoPizhunwenhao"));
+                                               
+                            
+                    Yimiaodengjitb yimiaodengjitb=new Yimiaodengjitb();
+                    yimiaodengjitb.setSource((String) dengjiyimiao.get("source"));
+                    yimiaodengjitb.setTongguandanno((Integer) dengjiyimiao.get("tongguandanno"));
+                    try {
+                        yimiaodengjitb.setYouxiaoqi(dateformate.parse(""+dengjiyimiao.get("youxiaoqi").toString()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(YiMiaoRuKu1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    yimiaodengjitb.setYimiaoId((Integer) dengjiyimiao.get("yimiaoId"));
+                    yimiaodengjitb.setJinjia((Double) dengjiyimiao.get("jinjia"));
+                    yimiaodengjitb.setPiqianfahegezhenno((Integer) dengjiyimiao.get("piqianfahegezhenno"));
+                    rukuyimiao.setYimiaodengjitb(yimiaodengjitb);
+                    chukuyimiaolist=new ArrayList<ChurukuyimiaoEntity>();
+                    chukuyimiaolist.add(rukuyimiao);
                     bindTable.refreshData(chukuyimiaolist);
                 }
             }

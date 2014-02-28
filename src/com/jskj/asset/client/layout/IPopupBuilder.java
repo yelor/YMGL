@@ -25,10 +25,12 @@ public interface IPopupBuilder {
     public static final int TYPE_DATE_CLICK = 1;
     public static final int TYPE_POPUP_TEXT = 2;
     public static final int TYPE_POPUP_TABLE = 3;
+    public static final int TYPE_POPUP_SCAN = 4;
 
     public final String ICON_DATE = "/com/jskj/asset/client/resources/date.gif";
     public final String ICON_POPUP_TEXT = "/com/jskj/asset/client/resources/search.gif";
     public final String ICON_POPUP_TABLE = "/com/jskj/asset/client/resources/tablePopup.gif";
+    public final String ICON_POPUP_SCAN = "/com/jskj/asset/client/common/icon/resources/codecreate.png";
 
     public int getType();
 

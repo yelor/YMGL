@@ -87,21 +87,16 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setName("jPanel2"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteInvoiceJDialog2.class, this);
         jButton1.setAction(actionMap.get("selectedAction")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorderPainted(false);
         jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
 
         jButton2.setAction(actionMap.get("cancelAction")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setBorderPainted(false);
         jButton2.setName("jButton2"); // NOI18N
-        jButton2.setOpaque(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,6 +201,7 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                     YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog(new javax.swing.JFrame(), true);
                     yiMiaoDengJi2JDialog.setLocationRelativeTo(mainFrame);
+                    yiMiaoDengJi2JDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoDengJi2JDialog);
                 } else {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();

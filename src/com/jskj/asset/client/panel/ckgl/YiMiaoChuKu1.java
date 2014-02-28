@@ -55,10 +55,10 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         bindTable = new BindTableHelper<StockpiletbAll>(jTableyimiao, new ArrayList<StockpiletbAll>());
         bindTable.createTable(new String[][]{
             {"date", "日期", "true"}, {"quantity", "数量", "true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
-            {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"yimiao.unitId", "单位", "false"},
+            {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"yimiao.unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiao.yimiaoPizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
-
+        bindTable.setColumnType(Date.class, 7);
         bindTable.refreshData(null);
         //        疫苗的popup
         ((BaseTextField) jTextFieldyimiaoName).registerPopup(new IPopupBuilder() {
@@ -72,9 +72,11 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                 sql += " yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
                 if (!jTextFieldyimiaoName.getText().trim().equals("")) {
-                    sql = "and yimiao_name like \"%" + jTextFieldyimiaoName.getText() + "%\"";
+                    sql += "yimiao_name like \"%" + jTextFieldyimiaoName.getText() + "%\""
+                            + "from yimiao where yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
+                } else {
+                    sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
                 }
                 return sql;
             }
@@ -407,7 +409,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         churukudan.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
         churukudan.setGongyingdanwei(2);
         churukudan.setQuantity(22);
-        
+
         String serviceId = "yimiaochuku/add";
         return new CommUpdateTask<Churukudantb>(churukudan, serviceId) {
 
@@ -426,19 +428,24 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
     }
 
     private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
+
         SaveTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to SaveTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }

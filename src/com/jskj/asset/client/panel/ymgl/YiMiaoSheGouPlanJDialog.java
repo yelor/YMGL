@@ -15,6 +15,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
@@ -38,7 +39,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaoshegou;
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
 
     /**
@@ -50,12 +51,12 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         initComponents();
         jTextFieldYimiaoshegoudanId.setText(DanHao.getDanHao("YMSG"));
         jTextFieldYimiaoshegoudanId.setEditable(false);
-        
+
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldshenqingren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
-        
+
 //供应单位的popup
         ((BaseTextField) jTextFieldSupplierName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -108,7 +109,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                 String sql = "";
                 sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅱ类疫苗\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
                 }
                 return sql;
             }
@@ -140,6 +141,48 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
 
             }
         });
+
+        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyimiao";
+            }
+
+            public String getConditionSQL() {
+                return "yimiao_tiaoxingma =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+
+                    Object yimiaoId = bindedMap.get("yimiaoId");
+                    Object yimiaoName = bindedMap.get("yimiaoName");
+                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
+                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
+                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
+                    Object unit = bindedMap.get("unitId");
+                    Object saleprice = bindedMap.get("yimiaoYushoujia");
+                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 9, saleprice);
+
+                    editTable.addNewRow();
+                }
+
+            }
+        });
     }
 
     JTextField regTextField;
@@ -166,8 +209,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton7 = new ScanButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -269,14 +311,6 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
-
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.setFocusable(false);
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setOpaque(false);
-        jToolBar1.add(jButton3);
 
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
@@ -604,8 +638,8 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
             yimiaoshenqingdan.setDanjuleixingId(4);
             yimiaoshenqingdan.setStatus(9);
-            yimiaoshenqingdan.setSaleprice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "yimiaoYushoujia"))));
-            yimiaoshenqingdan.setTotalprice(yimiaoshenqingdan.getSaleprice()*yimiaoshenqingdan.getQuantity());
+            yimiaoshenqingdan.setSaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yimiaoYushoujia"))));
+            yimiaoshenqingdan.setTotalprice(yimiaoshenqingdan.getSaleprice() * yimiaoshenqingdan.getQuantity());
             list.add(yimiaoshenqingdan);
         }
         yimiaoshegou.setShenqingdan(shenqingdan);
@@ -638,7 +672,6 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;

@@ -37,6 +37,8 @@ public abstract class BaseTableHeaderPopup extends BasePanel {
         jTextField1 = new javax.swing.JTextField();
         jButtonClose = new javax.swing.JButton();
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BaseTableHeaderPopup.class);
+        setBackground(resourceMap.getColor("Form.background")); // NOI18N
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setMaximumSize(new java.awt.Dimension(199, 35));
         setMinimumSize(new java.awt.Dimension(199, 35));
@@ -45,7 +47,6 @@ public abstract class BaseTableHeaderPopup extends BasePanel {
         setPreferredSize(new java.awt.Dimension(199, 35));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BaseTableHeaderPopup.class);
         jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
         jTextField1.setName("jTextField1"); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {

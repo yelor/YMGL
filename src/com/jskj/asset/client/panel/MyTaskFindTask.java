@@ -14,6 +14,7 @@ import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -65,6 +66,7 @@ public class MyTaskFindTask extends BaseTask {
             button.setBorderPainted(false);
             button.setContentAreaFilled(false);
             button.setToolTipText("刷新消息");
+            //button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
             shenpiButton = new JButton();
             shenpiButton.setAction(actionMap.get("gotoShenpi"));
@@ -76,6 +78,7 @@ public class MyTaskFindTask extends BaseTask {
             shenpiButton.setContentAreaFilled(false);
             shenpiButton.setToolTipText("去审批窗口");
             shenpiButton.setEnabled(false);
+            //shenpiButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
             shenpiButton.setMargin(new Insets(0, 0, 0, 40));
 

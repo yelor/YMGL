@@ -9,16 +9,19 @@ import com.jskj.asset.client.bean.report.Yimiaoxiaoshoudetail;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.RowRender;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.spcx.task.Yimiao2leichengbenFindTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DateChooser;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -73,10 +76,10 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         parameterMap.put("conditionSql", "");
         bindTable = new BindTableHelper<Yimiaoxiaoshoudetail>(jTable4, new ArrayList<Yimiaoxiaoshoudetail>());
         bindTable.createTable(new String[][]{{"saleId", "单据编号"}, {"saleDate", "制单日期"},
-        {"yimiaotb.yimiaoName", "疫苗名称"}, {"yimiaotb.yimiaoGuige", "规格"}, {"yimiaotb.yimiaoJixing", "剂型"}, {"yimiaotb.yimiaoShengchanqiye", "生产企业"}, {"yimiaotb.yimiaoPizhunwenhao", "批号"}, {"yimiaotb.yimiaoYushoujia", "预售价"}, {"price", "进价"}, {"quantity", "数量"}, {"totalprice", "销售毛利"}, {"kehudanweitb.kehudanweiName", "客户单位"}, {"zhidanren.userName", "经办人"}, {"depottb.depotName", "仓库"}});
+        {"yimiaotb.yimiaoName", "疫苗名称"}, {"quantity", "数量"}, {"totalprice", "销售总额"}, {"remark", "销售毛利"}, {"yimiaotb.yimiaoYushoujia", "预售价"}, {"price", "进价"}, {"yimiaotb.yimiaoGuige", "规格"}, {"yimiaotb.yimiaoJixing", "剂型"}, {"yimiaotb.yimiaoShengchanqiye", "生产企业"}, {"yimiaotb.yimiaoPizhunwenhao", "批号"}, {"kehudanweitb.kehudanweiName", "客户单位"}, {"zhidanren.userName", "经办人"}, {"depottb.depotName", "仓库"}});
         bindTable.setColumnType(Date.class, 2);
-        bindTable.setColumnType(Float.class, 8, 9);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}).setRowHeight(25);
+        //bindTable.setColumnType(Float.class, 8, 9);
+        bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 150}, new int[]{2, 150}).setRowHeight(25);
 
         Dimension dimension = new Dimension();
         dimension.setSize(800, 600);
@@ -132,6 +135,37 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
             //存下所有的数据
             currentPageData = response.getResult();
             bindTable.refreshData(currentPageData);
+
+            jTable4.getColumnModel().getColumn(5).setCellRenderer(new RowRender() {
+
+                @Override
+                public void setRender(JTable t, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    setBackground(Color.white);
+
+                    if(value instanceof String){
+                      String maoli = value.toString();
+                      if(maoli.startsWith("-")){
+                         setBackground(new Color(223, 131, 123));
+                      }else{
+                         setBackground(new Color(107, 209, 143));
+                      }
+                    }
+                    
+//                    int totalRow = t.getRowCount();
+//                    if (totalRow > 0) {
+//                        Object obj = t.getValueAt(row, 0);
+//
+//                        if (obj.equals("buy")) {
+//                            setBackground(new Color(107, 209, 143));
+//
+//                        } else if (obj.equals("sell")) {
+//                            setBackground(new Color(223, 131, 123));
+//                        }
+//
+//                        setIcon(null);
+//                    }
+                }
+            });
 
         }
     }
@@ -523,8 +557,8 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
 
     @Action
     public Task search() {
-        String  endDate = jTextFieldEnd.getText();
-        String  startDate= jTextFieldStart.getText();
+        String endDate = jTextFieldEnd.getText();
+        String startDate = jTextFieldStart.getText();
         parameterMap.put("startDate", startDate);
         parameterMap.put("endDate", endDate);
 

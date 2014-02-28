@@ -50,7 +50,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         this.setSize(299, 328);
 
         // setBorder(BorderFactory.createLineBorder(Color.blue));
-        jPanelTop.setBackground(new Color(160, 185, 215));
+        //jPanelTop.setBackground(new Color(160, 185, 215));
         pageIndex = 1;
         pageSize = 10;
         count = 0;
@@ -206,6 +206,9 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         prepPageBubtton = new javax.swing.JButton();
         nextPageButton = new javax.swing.JButton();
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BasePopup.class);
+        setBackground(resourceMap.getColor("Form.background")); // NOI18N
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setName("Form"); // NOI18N
 
         jPanel1.setName("jPanel1"); // NOI18N
@@ -246,13 +249,13 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
         );
 
+        jPanelTop.setBackground(resourceMap.getColor("jPanelTop.background")); // NOI18N
         jPanelTop.setName("jPanelTop"); // NOI18N
 
-        jLabelTotal.setForeground(new java.awt.Color(0, 102, 153));
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(BasePopup.class);
+        jLabelTotal.setForeground(new java.awt.Color(255, 255, 255));
         jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
         jLabelTotal.setName("jLabelTotal"); // NOI18N
 
@@ -266,6 +269,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(BasePopup.class, this);
         prepPageBubtton.setAction(actionMap.get("pagePrev")); // NOI18N
         prepPageBubtton.setFont(new java.awt.Font("宋体", 1, 14)); // NOI18N
+        prepPageBubtton.setForeground(resourceMap.getColor("prepPageBubtton.foreground")); // NOI18N
         prepPageBubtton.setText(resourceMap.getString("prepPageBubtton.text")); // NOI18N
         prepPageBubtton.setBorder(null);
         prepPageBubtton.setBorderPainted(false);
@@ -278,6 +282,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
 
         nextPageButton.setAction(actionMap.get("pageNext")); // NOI18N
         nextPageButton.setFont(new java.awt.Font("宋体", 1, 14)); // NOI18N
+        nextPageButton.setForeground(resourceMap.getColor("nextPageButton.foreground")); // NOI18N
         nextPageButton.setText(resourceMap.getString("nextPageButton.text")); // NOI18N
         nextPageButton.setBorder(null);
         nextPageButton.setBorderPainted(false);
@@ -295,7 +300,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
             jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
