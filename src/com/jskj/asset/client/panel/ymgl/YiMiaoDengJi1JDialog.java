@@ -46,44 +46,49 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
+                return Constants.HTTP + Constants.APPID + "addlingyongyimiao";
             }
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 2 and danjuleixing_id=5)";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql = "and yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\"";
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\") ";
+                } else {
+                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=5 and is_completed = 1 and status = 0)";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
+                {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
+                    Object yimiaomap = bindedMap.get("yimiaoAll");
+                    HashMap yimiaoAll = (HashMap) yimiaomap;
+                    Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
+                    HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
+
                     dateformate = new SimpleDateFormat("yyyy-MM-dd");
-                    jTextFieldYimiaoId.setText(bindedMap.get("yimiaoId") == null ? "" : bindedMap.get("yimiaoId").toString());
-                    jTextFieldYimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldguige.setText(bindedMap.get("yimiaoGuige") == null ? "" : bindedMap.get("yimiaoGuige").toString());
-                    if (bindedMap.get("yimiaoJixing") == "液体剂型") {
+                    jTextFieldYimiaoId.setText(yimiaoAll.get("yimiaoId") == null ? "" : yimiaoAll.get("yimiaoId").toString());
+                    jTextFieldYimiaoName.setText(yimiaoAll.get("yimiaoName") == null ? "" : yimiaoAll.get("yimiaoName").toString());
+                    jTextFieldguige.setText(yimiaoAll.get("yimiaoGuige") == null ? "" : yimiaoAll.get("yimiaoGuige").toString());
+                    if (yimiaoAll.get("yimiaoJixing") == "液体剂型") {
                         jComboBoxJixing.setSelectedIndex(1);
-                    } else if (bindedMap.get("yimiaoJixing") == "冻干剂型") {
+                    } else if (yimiaoAll.get("yimiaoJixing") == "冻干剂型") {
                         jComboBoxJixing.setSelectedIndex(2);
-                    } else if (bindedMap.get("yimiaoJixing") == "糖丸剂型") {
+                    } else if (yimiaoAll.get("yimiaoJixing") == "糖丸剂型") {
                         jComboBoxJixing.setSelectedIndex(3);
                     }
-                    jTextFieldshengchanqiye.setText(bindedMap.get("shengchanqiye") == null ? "" : bindedMap.get("shengchanqiye").toString());
-                    jTextFieldpizhunwenhao.setText(bindedMap.get("pizhunwenhao") == null ? "" : bindedMap.get("pizhunwenhao").toString());
-                    jTextFieldpihao.setText(bindedMap.get("pihao") == null ? "" : bindedMap.get("pihao").toString());
-                    jTextFieldYouxiaoqi.setText(bindedMap.get("youxiaoqi") == null ? "" : dateformate.format(bindedMap.get("youxiaoqi")));
-                    jTextFieldunit.setText(bindedMap.get("unit") == null ? "" : bindedMap.get("unit").toString());
-                    jTextFieldpiqianfahege.setText(bindedMap.get("piqianfahegezhenNo") == null ? "" : bindedMap.get("piqianfahegezhenNo").toString());
-                    jTextFieldkucunDown.setText(bindedMap.get("kucunDown") == null ? "" : bindedMap.get("kucunDown").toString());
-                    jTextFieldkucunUp.setText(bindedMap.get("kucunUp") == null ? "" : bindedMap.get("kucunUp").toString());
-                    yimiaodengji.setYimiaoId((Integer) bindedMap.get("yimiaoId"));
+                    jTextFieldQuantity.setText(yimiaoshenqingdan.get("quantity") == null ? "" : yimiaoshenqingdan.get("quantity").toString());
+                    jTextFieldshengchanqiye.setText(yimiaoAll.get("yimiaoShengchanqiye") == null ? "" : yimiaoAll.get("yimiaoShengchanqiye").toString());
+                    jTextFieldpizhunwenhao.setText(yimiaoAll.get("yimiaoPizhunwenhao") == null ? "" : yimiaoAll.get("yimiaoPizhunwenhao").toString());
+                    jTextFieldunit.setText(yimiaoAll.get("unitId") == null ? "" : yimiaoAll.get("unitId").toString());
+                    jTextFieldkucunDown.setText(yimiaoAll.get("yimiaoStockdown") == null ? "" : yimiaoAll.get("yimiaoStockdown").toString());
+                    jTextFieldkucunUp.setText(yimiaoAll.get("yimiaoStockup") == null ? "" : yimiaoAll.get("yimiaoStockup").toString());
+                    yimiaodengji.setYimiaoId((Integer) yimiaoAll.get("yimiaoId"));
                 }
             }
         });
@@ -241,6 +246,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
+        jTextFieldtongguandanNo.setEditable(false);
         jTextFieldtongguandanNo.setName("jTextFieldtongguandanNo"); // NOI18N
         jTextFieldtongguandanNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,6 +352,11 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
 
         jComboBoxSource.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "国产", "进口" }));
         jComboBoxSource.setName("jComboBoxSource"); // NOI18N
+        jComboBoxSource.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxSourceActionPerformed(evt);
+            }
+        });
 
         jComboBoxJixing.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "请选择剂型...", "液体剂型", "冻干剂型", "糖丸剂型" }));
         jComboBoxJixing.setName("jComboBoxJixing"); // NOI18N
@@ -593,6 +604,16 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldkucunUpActionPerformed
 
+    private void jComboBoxSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSourceActionPerformed
+        // TODO add your handling code here:
+
+        if (jComboBoxSource.getSelectedIndex() == 1) {
+            jTextFieldtongguandanNo.setEditable(true);
+        } else {
+            jTextFieldtongguandanNo.setEditable(false);
+        }
+    }//GEN-LAST:event_jComboBoxSourceActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -663,7 +684,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入疫苗数量!");
             return null;
         }
-        yimiaodengji.setPizhunwenhao("国家准字号NDA1235465");
+        yimiaodengji.setPizhunwenhao(jTextFieldpizhunwenhao.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
         if (jTextFieldYouxiaoqi.getText().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗有效期!");
@@ -671,13 +692,9 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         }
         yimiaodengji.setYouxiaoqi(dateformate.parse(jTextFieldYouxiaoqi.getText()));
         yimiaodengji.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
-        yimiaodengji.setPiqianfahegezhenno(232435);
-        if (jComboBoxSource.getSelectedIndex() == 1) {
-            yimiaodengji.setSource("进口");
-            yimiaodengji.setTongguandanno(23244545);
-        } else {
-            yimiaodengji.setSource("国产");
-        }
+        yimiaodengji.setPiqianfahegezhenno(Integer.parseInt(jTextFieldpiqianfahege.getText()));
+        yimiaodengji.setTongguandanno(Integer.parseInt(jTextFieldtongguandanNo.getText()));
+        yimiaodengji.setSource(jComboBoxSource.getName());
         return new SubmitFormTask(yimiaodengji);
     }
 

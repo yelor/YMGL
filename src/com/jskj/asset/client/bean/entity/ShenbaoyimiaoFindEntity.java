@@ -3,8 +3,6 @@
  */
 package com.jskj.asset.client.bean.entity;
 
-import com.jskj.asset.client.bean.entity.Shenqingdantb;
-import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import java.util.List;
 
 /**
@@ -15,7 +13,7 @@ public class ShenbaoyimiaoFindEntity {
 
     private int count;
 
-    private List<ShenbaoyimiaoEntity> shenbaoyimiaoEntity;
+    private List<ShenbaoyimiaoEntity> result;
 
     public int getCount() {
         return count;
@@ -25,12 +23,13 @@ public class ShenbaoyimiaoFindEntity {
         this.count = count;
     }
 
-    public List<ShenbaoyimiaoEntity> getShenbaoyimiaoEntity() {
-        return shenbaoyimiaoEntity;
+    public List<ShenbaoyimiaoEntity> getResult() {
+        return result;
     }
 
-    public void setShenbaoyimiaoEntity(List<ShenbaoyimiaoEntity> shenbaoyimiaoEntity) {
-        this.shenbaoyimiaoEntity = shenbaoyimiaoEntity;
+    public void setResult(List<ShenbaoyimiaoEntity> result) {
+        this.result = result;
     }
-
+    
+    
 }

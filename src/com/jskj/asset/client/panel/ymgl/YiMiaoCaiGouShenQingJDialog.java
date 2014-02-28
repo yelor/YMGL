@@ -92,8 +92,8 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"price", "单价", "true"}, {"totalprice", "合价", "true"}, {"yimiaoYushoujia", "预售价", "true"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"totalprice", "合价", "true"}, {"yimiaoYushoujia", "预售价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -101,7 +101,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
+                return Constants.HTTP + Constants.APPID + "addshegouyimiao";
             }
 
             public String getConditionSQL() {
@@ -109,27 +109,36 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=4 and is_completed = 1 and status = 9)";
-                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+               if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=4 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 9 and yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\") ";
+                } else {
+                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=4 and is_completed = 1 and status = 9)";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
+                {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-                    Object unit = bindedMap.get("unitId");
-                    Object saleprice = bindedMap.get("yimiaoYushoujia");
+                    Object yimiaomap = bindedMap.get("yimiaoAll");
+                    HashMap yimiaoAll = (HashMap) yimiaomap;
+                    Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
+                    HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
+                    
+                    Object yimiaoId = yimiaoAll.get("yimiaoId");
+                    Object yimiaoName = yimiaoAll.get("yimiaoName");
+                    Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
+                    Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
+                    Object unit = yimiaoAll.get("unitId");
+                    Object quantity = yimiaoshenqingdan.get("quantity");
+                    Object buyprice = yimiaoshenqingdan.get("buyprice");
+                    Object totalprice = yimiaoshenqingdan.get("totalprice");
+                    Object saleprice = yimiaoAll.get("yimiaoYushoujia");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -137,6 +146,9 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
+                    editTable.insertValue(6, quantity);
+                    editTable.insertValue(7, buyprice);
+                    editTable.insertValue(8, totalprice);
                     editTable.insertValue(9, saleprice);
 
                 }
@@ -644,15 +656,10 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setDanjuleixingId(6);
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaocaigoudanId.getText());
-            System.out.println(yimiaotable.getValue(i, "yimiaoId"));
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            System.out.println(yimiaotable.getValue(i, "quantity"));
-            if (yimiaotable.getValue(i, "quantity").equals("")) {
-                AssetMessage.ERRORSYS("请输入疫苗申报数量!");
-                return null;
-            }
-            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
-            yimiaoshenqingdan.setSaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yimiaoYushoujia"))));
+            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) (""+yimiaotable.getValue(i, "quantity"))));
+            yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
+            yimiaoshenqingdan.setTotalprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "totalprice"))));
             list.add(yimiaoshenqingdan);
         }
         yimiaocaigou.setShenqingdan(shenqingdan);
@@ -679,6 +686,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                 logger.error(e);
                 return;
             }
+            AssetMessage.INFO("提交成功！", YiMiaoCaiGouShenQingJDialog.this);
             exit();
         }
     }

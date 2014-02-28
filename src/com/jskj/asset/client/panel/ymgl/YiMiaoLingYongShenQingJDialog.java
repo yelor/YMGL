@@ -93,7 +93,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","true"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}});
+            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -110,26 +110,33 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "yimiao_id in (select distinct yimiaoshenqingdan.yimiao_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=3 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 9 and yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\") ";
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=3 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 9 and yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\") ";
                 } else {
-                    sql += "yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where danjuleixing_id=3 and is_completed = 1 and status = 9)";
+                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=3 and is_completed = 1 and status = 9)";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoAll.yimiaoId", "疫苗编号"}, {"yimiaoAll.yimiaoName", "疫苗名称"}, {"yimiaoAll.yimiaoGuige", "规格"},
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
                 {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-                    Object unit = bindedMap.get("unitId");
+                    Object yimiaomap = bindedMap.get("yimiaoAll");
+                    HashMap yimiaoAll = (HashMap) yimiaomap;
+                    Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
+                    HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
+                    
+                    Object yimiaoId = yimiaoAll.get("yimiaoId");
+                    Object yimiaoName = yimiaoAll.get("yimiaoName");
+                    Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
+                    Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
+                    Object unit = yimiaoAll.get("unitId");
+                    Object quantity = yimiaoshenqingdan.get("quantity");
+                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -137,6 +144,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
+                    editTable.insertValue(6, quantity);
 
                 }
 
@@ -627,11 +635,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setStatus(0);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             System.out.println(yimiaotable.getValue(i, "quantity"));
-            if (yimiaotable.getValue(i, "quantity").equals("")) {
-                AssetMessage.ERRORSYS("请输入疫苗申报数量!");
-                return null;
-            }
-            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
+            yimiaoshenqingdan.setQuantity((Integer) yimiaotable.getValue(i, "quantity"));
             list.add(yimiaoshenqingdan);
         }
         yimiaolingyong.setShenqingdan(shenqingdan);
@@ -658,6 +662,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                 logger.error(e);
                 return;
             }
+            AssetMessage.INFO("提交成功！", YiMiaoLingYongShenQingJDialog.this);
             exit();
         }
     }

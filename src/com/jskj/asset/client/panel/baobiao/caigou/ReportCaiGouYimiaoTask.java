@@ -62,7 +62,7 @@ public class ReportCaiGouYimiaoTask extends BaseTask {
                 for (CaiGouYimiaoReport caigouYimiao : caigouYimiaos) {
                     dataSource.add(caigouYimiao.getYimiaotb().getYimiaoName(), 
                             caigouYimiao.getQuantity() == null ? 0 : caigouYimiao.getQuantity(),
-                            new BigDecimal(caigouYimiao.getSaleprice() == null ? 0 : caigouYimiao.getSaleprice()),
+                            new BigDecimal(caigouYimiao.getBuyprice()== null ? 0 : caigouYimiao.getBuyprice()),
                             new BigDecimal(caigouYimiao.getTotalprice() == null ? 0 : caigouYimiao.getTotalprice()));
                 }
 

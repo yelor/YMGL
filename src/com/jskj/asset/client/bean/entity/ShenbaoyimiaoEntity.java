@@ -3,12 +3,6 @@
  */
 package com.jskj.asset.client.bean.entity;
 
-import com.jskj.asset.client.bean.entity.Shenqingdantb;
-import com.jskj.asset.client.bean.entity.YiMiaotb;
-import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
-import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
-import java.util.Date;
-
 /**
  *
  * @author tt

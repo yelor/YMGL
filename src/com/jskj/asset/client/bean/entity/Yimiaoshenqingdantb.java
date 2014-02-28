@@ -14,7 +14,7 @@ public class Yimiaoshenqingdantb {
 
     private Integer quantity;
 
-    private Float saleprice;
+    private Float buyprice;
 
     private Float totalprice;
 
@@ -62,12 +62,12 @@ public class Yimiaoshenqingdantb {
         this.quantity = quantity;
     }
 
-    public Float getSaleprice() {
-        return saleprice;
+    public Float getBuyprice() {
+        return buyprice;
     }
 
-    public void setSaleprice(Float saleprice) {
-        this.saleprice = saleprice;
+    public void setBuyprice(Float buyprice) {
+        this.buyprice = buyprice;
     }
 
     public Float getTotalprice() {

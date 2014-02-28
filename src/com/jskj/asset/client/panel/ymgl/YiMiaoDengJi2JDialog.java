@@ -46,20 +46,22 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
+                return Constants.HTTP + Constants.APPID + "addcaigouyimiao";
             }
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " yimiao_id in (select distinct yimiao_id from yimiaoshenqingdan where is_completed = 1 and status = 2 and danjuleixing_id=6)";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\"";
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=6 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\") ";
+                } else {
+                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=6 and is_completed = 1 and status = 0)";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
+                {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
