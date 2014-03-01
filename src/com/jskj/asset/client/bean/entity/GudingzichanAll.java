@@ -4,7 +4,6 @@
 
 package com.jskj.asset.client.bean.entity;
 
-
 /**
  *
  * @author 305027939
@@ -13,6 +12,8 @@ public class GudingzichanAll extends Gudingzichantb{
     private Depot depottb;
     
     private Supplier suppliertb;
+    
+    private int count;
 
     /**
      * @return the depottb
@@ -41,4 +42,13 @@ public class GudingzichanAll extends Gudingzichantb{
     public void setSuppliertb(Supplier suppliertb) {
         this.suppliertb = suppliertb;
     }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+    
 }
