@@ -112,15 +112,15 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                             
                     Yimiaodengjitb yimiaodengjitb=new Yimiaodengjitb();
                     yimiaodengjitb.setSource((String) dengjiyimiao.get("source"));
-                    yimiaodengjitb.setTongguandanno((Integer) dengjiyimiao.get("tongguandanno"));
+                    yimiaodengjitb.setTongguandanno((String) dengjiyimiao.get("tongguandanno"));
                     try {
                         yimiaodengjitb.setYouxiaoqi(dateformate.parse(""+dengjiyimiao.get("youxiaoqi").toString()));
                     } catch (ParseException ex) {
                         Logger.getLogger(YiMiaoRuKu1.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     yimiaodengjitb.setYimiaoId((Integer) dengjiyimiao.get("yimiaoId"));
-                    yimiaodengjitb.setJinjia((Double) dengjiyimiao.get("jinjia"));
-                    yimiaodengjitb.setPiqianfahegezhenno((Integer) dengjiyimiao.get("piqianfahegezhenno"));
+                    yimiaodengjitb.setJinjia((Float) dengjiyimiao.get("jinjia"));
+                    yimiaodengjitb.setPiqianfahegezhenno((String) dengjiyimiao.get("piqianfahegezhenno"));
                     rukuyimiao.setYimiaodengjitb(yimiaodengjitb);
                     chukuyimiaolist=new ArrayList<ChurukuyimiaoEntity>();
                     chukuyimiaolist.add(rukuyimiao);

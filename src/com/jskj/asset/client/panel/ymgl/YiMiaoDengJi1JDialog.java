@@ -60,7 +60,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "领用日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
                 {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
@@ -89,6 +89,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                     jTextFieldkucunDown.setText(yimiaoAll.get("yimiaoStockdown") == null ? "" : yimiaoAll.get("yimiaoStockdown").toString());
                     jTextFieldkucunUp.setText(yimiaoAll.get("yimiaoStockup") == null ? "" : yimiaoAll.get("yimiaoStockup").toString());
                     yimiaodengji.setYimiaoId((Integer) yimiaoAll.get("yimiaoId"));
+                    yimiaodengji.setXiangdanId((Integer) yimiaoshenqingdan.get("xiangdanId"));
                 }
             }
         });
@@ -611,6 +612,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             jTextFieldtongguandanNo.setEditable(true);
         } else {
             jTextFieldtongguandanNo.setEditable(false);
+            yimiaodengji.setTongguandanno(null);
         }
     }//GEN-LAST:event_jComboBoxSourceActionPerformed
 
@@ -684,7 +686,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入疫苗数量!");
             return null;
         }
-        yimiaodengji.setPizhunwenhao(jTextFieldpizhunwenhao.getText());
+        yimiaodengji.setPihao(jTextFieldpihao.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
         if (jTextFieldYouxiaoqi.getText().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗有效期!");
@@ -692,9 +694,17 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         }
         yimiaodengji.setYouxiaoqi(dateformate.parse(jTextFieldYouxiaoqi.getText()));
         yimiaodengji.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
-        yimiaodengji.setPiqianfahegezhenno(Integer.parseInt(jTextFieldpiqianfahege.getText()));
-        yimiaodengji.setTongguandanno(Integer.parseInt(jTextFieldtongguandanNo.getText()));
-        yimiaodengji.setSource(jComboBoxSource.getName());
+        yimiaodengji.setPiqianfahegezhenno(jTextFieldpiqianfahege.getText());
+        if (jComboBoxSource.getSelectedIndex() == 1) {
+            if (jTextFieldtongguandanNo.getText().equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗进口通关单编号!");
+                return null;
+            }
+            yimiaodengji.setTongguandanno(jTextFieldtongguandanNo.getText());
+        } else if (jComboBoxSource.getSelectedIndex() == 0) {
+            yimiaodengji.setTongguandanno(null);
+        }
+        yimiaodengji.setSource((String) jComboBoxSource.getSelectedItem());
         return new SubmitFormTask(yimiaodengji);
     }
 
@@ -717,6 +727,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
+            AssetMessage.INFO("提交成功！", YiMiaoDengJi1JDialog.this);
             exit();
         }
     }

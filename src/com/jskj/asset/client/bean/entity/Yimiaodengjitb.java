@@ -1,25 +1,29 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yimiaodengjitb {
     private Integer ymdjId;
 
     private Integer yimiaoId;
 
-    private String pizhunwenhao;
+    private String pihao;
 
     private Date youxiaoqi;
 
     private Integer quantity;
 
-    private Double jinjia;
+    private Float jinjia;
 
-    private Integer piqianfahegezhenno;
+    private String piqianfahegezhenno;
 
     private String source;
 
-    private Integer tongguandanno;
+    private String tongguandanno;
+
+    private Integer xiangdanId;
 
     public Integer getYmdjId() {
         return ymdjId;
@@ -37,12 +41,12 @@ public class Yimiaodengjitb {
         this.yimiaoId = yimiaoId;
     }
 
-    public String getPizhunwenhao() {
-        return pizhunwenhao;
+    public String getPihao() {
+        return pihao;
     }
 
-    public void setPizhunwenhao(String pizhunwenhao) {
-        this.pizhunwenhao = pizhunwenhao == null ? null : pizhunwenhao.trim();
+    public void setPihao(String pihao) {
+        this.pihao = pihao == null ? null : pihao.trim();
     }
 
     public Date getYouxiaoqi() {
@@ -61,20 +65,20 @@ public class Yimiaodengjitb {
         this.quantity = quantity;
     }
 
-    public Double getJinjia() {
+    public Float getJinjia() {
         return jinjia;
     }
 
-    public void setJinjia(Double jinjia) {
+    public void setJinjia(Float jinjia) {
         this.jinjia = jinjia;
     }
 
-    public Integer getPiqianfahegezhenno() {
+    public String getPiqianfahegezhenno() {
         return piqianfahegezhenno;
     }
 
-    public void setPiqianfahegezhenno(Integer piqianfahegezhenno) {
-        this.piqianfahegezhenno = piqianfahegezhenno;
+    public void setPiqianfahegezhenno(String piqianfahegezhenno) {
+        this.piqianfahegezhenno = piqianfahegezhenno == null ? null : piqianfahegezhenno.trim();
     }
 
     public String getSource() {
@@ -85,11 +89,19 @@ public class Yimiaodengjitb {
         this.source = source == null ? null : source.trim();
     }
 
-    public Integer getTongguandanno() {
+    public String getTongguandanno() {
         return tongguandanno;
     }
 
-    public void setTongguandanno(Integer tongguandanno) {
-        this.tongguandanno = tongguandanno;
+    public void setTongguandanno(String tongguandanno) {
+        this.tongguandanno = tongguandanno == null ? null : tongguandanno.trim();
+    }
+
+    public Integer getXiangdanId() {
+        return xiangdanId;
+    }
+
+    public void setXiangdanId(Integer xiangdanId) {
+        this.xiangdanId = xiangdanId;
     }
 }
