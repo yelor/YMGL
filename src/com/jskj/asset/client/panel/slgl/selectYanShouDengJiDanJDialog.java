@@ -52,7 +52,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "固定资产验收单", "普通固定资产登记单", "IT固定资产登记单", "低值易耗品登记单" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通固定资产登记单", "IT固定资产登记单", "低值易耗品登记单", "固定资产验收单" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -179,22 +179,22 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
     public void selectedAction() {
         dispose();
         int selecteIndex = jComboBox1.getSelectedIndex();
-        if (selecteIndex == 0) {
+        if (selecteIndex == 3) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog(mainFrame);
                 guDingZiChanYanShouJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
-        } else if (selecteIndex == 1) {
+        } else if (selecteIndex == 0) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 PTGuDingZiChanDengJiJDialog pTGuDingZiChanDengJiJDialog = new PTGuDingZiChanDengJiJDialog(mainFrame);
                 pTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(pTGuDingZiChanDengJiJDialog);
-        } else if (selecteIndex == 2) {
+        } else if (selecteIndex == 1) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog(mainFrame);
                 iTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
-        } else if (selecteIndex == 3) {
+        } else if (selecteIndex == 2) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 DiZhiYiHaoPinDengJiJDialog diZhiYiHaoPinDengJiJDialog = new DiZhiYiHaoPinDengJiJDialog(mainFrame);
                 diZhiYiHaoPinDengJiJDialog.setLocationRelativeTo(mainFrame);

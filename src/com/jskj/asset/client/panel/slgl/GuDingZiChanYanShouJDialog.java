@@ -36,7 +36,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private int caigouren_id;
     private int yanshouren_id;
     private int zhidanren_id;
-    private int jianceren_id;
     private String imageUri;
     private ZichanYanshoutb zcys;
     private int userId;
@@ -66,6 +65,9 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jTextFieldZhidanren.setText(userName);
         jTextFieldZhidanren.setEditable(false);
         zhidanren_id = userId;
+        
+        jTextFieldJianceren.setText(userName);
+        jTextFieldJianceren.setEditable(false);
         
         ((BaseTextField) jTextFieldCaigouren).registerPopup(new IPopupBuilder() {
 
@@ -97,36 +99,6 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
             }
         });
         
-        ((BaseTextField) jTextFieldJianceren).registerPopup(new IPopupBuilder() {
-
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
-
-            public String getConditionSQL() {
-                String sql = "";
-                if (!jTextFieldJianceren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldJianceren.getText() + "%\"";
-                }
-                return sql;
-            }
-
-            public String[][] displayColumns() {
-                return new String[][]{{"userId", "用户ID"},{"userName", "用户名"}};
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    jTextFieldJianceren.setText(bindedMap.get("userName") == null ? "" : bindedMap.get("userName").toString());
-                    jianceren_id = (Integer)bindedMap.get("userId");
-                }
-            }
-        });
-        
         ((BaseTextField) jTextFieldZichan).registerPopup(new IPopupBuilder() {
 
             public int getType() {
@@ -139,9 +111,9 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0)";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1)";
                 if (!jTextFieldZichan.getText().trim().equals("")) {
-                    sql = " and gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"";
+                    sql += " and gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"";
                 }
                 return sql;
             }
@@ -211,7 +183,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         zcys.setGdzcId(zcid);
         zcys.setCaigourenId(caigouren_id);
         zcys.setYanshourenId(yanshouren_id);
-        zcys.setJiancerenId(jianceren_id);
+        zcys.setJiancerenId(zhidanren_id);
         zcys.setZhidanrenId(zhidanren_id);
         zcys.setZcysJielun(jTextField13.getText());
         zcys.setZcysZhiliangjiance(jTextField14.getText());
@@ -276,7 +248,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jLabel23 = new javax.swing.JLabel();
         jTextField15 = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
-        jTextFieldJianceren = new BaseTextField();
+        jTextFieldJianceren = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldZhidanren = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();

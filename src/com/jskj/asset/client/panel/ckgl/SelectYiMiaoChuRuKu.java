@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.panel.slgl.GuDingZiChanRuKuJDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
@@ -39,6 +40,8 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectYiMiaoChuRuKu.class);
@@ -63,33 +66,47 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
+        jButton5.setAction(actionMap.get("zichanruku_pop")); // NOI18N
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setName("jButton5"); // NOI18N
+
+        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setName("jButton6"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addContainerGap(45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(59, 59, 59))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2))
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton1))
-                .addGap(62, 62, 62)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
-                .addContainerGap(54, Short.MAX_VALUE))
+                    .addComponent(jButton4)
+                    .addComponent(jButton2))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton6))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -192,10 +209,27 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             }
         });
     }
+    
+    @Action
+    public void zichanruku_pop() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(), true);
+                zichanruku.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(zichanruku);
+            }
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     // End of variables declaration//GEN-END:variables
 }

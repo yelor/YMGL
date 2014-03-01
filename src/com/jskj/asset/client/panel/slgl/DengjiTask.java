@@ -6,7 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
-import com.jskj.asset.client.bean.entity.Gudingzichankucuntb;
+import com.jskj.asset.client.bean.entity.Zichandengjitb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import org.apache.log4j.Logger;
@@ -21,16 +21,16 @@ public class DengjiTask extends BaseTask{
     static final Logger logger = Logger.getLogger(DengjiTask.class);
     private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/dengji";
     
-    private final Gudingzichankucuntb zc;
+    private final Zichandengjitb zc;
     
-    public DengjiTask(Gudingzichankucuntb zc) {
+    public DengjiTask(Zichandengjitb zc) {
         this.zc = zc;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, zc, Gudingzichankucuntb.class);
+            restTemplate.postForObject(ADD_URI, zc, Zichandengjitb.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;

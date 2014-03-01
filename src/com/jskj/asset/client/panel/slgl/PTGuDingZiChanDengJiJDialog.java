@@ -7,12 +7,11 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.Gudingzichankucuntb;
+import com.jskj.asset.client.bean.entity.Zichandengjitb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.util.DateHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
 
     private JTextField regTextField;
     private String imageUri;
-    private Gudingzichankucuntb zc;
+    private Zichandengjitb zc;
     private int userId;
     private String userName;
     /**
@@ -54,9 +53,9 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1)";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0)";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql = " and gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
+                    sql += " and gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
                 }
                 return sql;
             }
@@ -81,6 +80,8 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                     jTextAreaRemark.setText(bindedMap.get("gdzcRemark").toString().equals("null") ? "" : bindedMap.get("gdzcRemark").toString());
                     imageUri = bindedMap.get("gdzcPhoto") == null ? "" : bindedMap.get("gdzcPhoto").toString();
                     jTextFieldBaoxiuqi.setEditable(false);
+                    jTextFieldQuantity.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
+                    jTextFieldQuantity.setEditable(false);
                 }
             }
         });
@@ -110,10 +111,11 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入购置日期！",this);
             return null;
         }
-        zc = new Gudingzichankucuntb();
+        zc = new Zichandengjitb();
         zc.setGdzcId(Integer.parseInt(jTextFieldZcid.getText()));
         SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         zc.setGouzhiDate(dateformate.parse(jTextField.getText()));
+        zc.setDengjirenId(userId);
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         
         return new submitTask(zc);
@@ -121,7 +123,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     
     private class submitTask extends DengjiTask{
 
-        public submitTask(Gudingzichankucuntb zc) {
+        public submitTask(Zichandengjitb zc) {
             super(zc);
         }
         
