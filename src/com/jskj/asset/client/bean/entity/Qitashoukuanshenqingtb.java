@@ -13,13 +13,19 @@ public class Qitashoukuanshenqingtb {
 
     private String checkId2;
 
+    private String checkId3;
+
     private Date checkTime1;
 
     private Date checkTime2;
 
+    private Date checkTime3;
+
     private String checkUser1;
 
     private String checkUser2;
+
+    private String checkUser3;
 
     private String rejectReason;
 
@@ -55,6 +61,14 @@ public class Qitashoukuanshenqingtb {
         this.checkId2 = checkId2 == null ? null : checkId2.trim();
     }
 
+    public String getCheckId3() {
+        return checkId3;
+    }
+
+    public void setCheckId3(String checkId3) {
+        this.checkId3 = checkId3 == null ? null : checkId3.trim();
+    }
+
     public Date getCheckTime1() {
         return checkTime1;
     }
@@ -71,6 +85,14 @@ public class Qitashoukuanshenqingtb {
         this.checkTime2 = checkTime2;
     }
 
+    public Date getCheckTime3() {
+        return checkTime3;
+    }
+
+    public void setCheckTime3(Date checkTime3) {
+        this.checkTime3 = checkTime3;
+    }
+
     public String getCheckUser1() {
         return checkUser1;
     }
@@ -85,6 +107,14 @@ public class Qitashoukuanshenqingtb {
 
     public void setCheckUser2(String checkUser2) {
         this.checkUser2 = checkUser2 == null ? null : checkUser2.trim();
+    }
+
+    public String getCheckUser3() {
+        return checkUser3;
+    }
+
+    public void setCheckUser3(String checkUser3) {
+        this.checkUser3 = checkUser3 == null ? null : checkUser3.trim();
     }
 
     public String getRejectReason() {

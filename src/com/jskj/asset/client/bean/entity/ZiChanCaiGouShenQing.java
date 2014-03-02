@@ -15,17 +15,23 @@ public class ZiChanCaiGouShenQing {
 
     private String checkId3;
 
+    private String checkId4;
+
     private Date checkTime1;
 
     private Date checkTime2;
 
     private Date checkTime3;
 
+    private Date checkTime4;
+
     private String checkUser1;
 
     private String checkUser2;
 
     private String checkUser3;
+
+    private String checkUser4;
 
     private String rejectReason;
 
@@ -69,6 +75,14 @@ public class ZiChanCaiGouShenQing {
         this.checkId3 = checkId3 == null ? null : checkId3.trim();
     }
 
+    public String getCheckId4() {
+        return checkId4;
+    }
+
+    public void setCheckId4(String checkId4) {
+        this.checkId4 = checkId4 == null ? null : checkId4.trim();
+    }
+
     public Date getCheckTime1() {
         return checkTime1;
     }
@@ -93,6 +107,14 @@ public class ZiChanCaiGouShenQing {
         this.checkTime3 = checkTime3;
     }
 
+    public Date getCheckTime4() {
+        return checkTime4;
+    }
+
+    public void setCheckTime4(Date checkTime4) {
+        this.checkTime4 = checkTime4;
+    }
+
     public String getCheckUser1() {
         return checkUser1;
     }
@@ -115,6 +137,14 @@ public class ZiChanCaiGouShenQing {
 
     public void setCheckUser3(String checkUser3) {
         this.checkUser3 = checkUser3 == null ? null : checkUser3.trim();
+    }
+
+    public String getCheckUser4() {
+        return checkUser4;
+    }
+
+    public void setCheckUser4(String checkUser4) {
+        this.checkUser4 = checkUser4 == null ? null : checkUser4.trim();
     }
 
     public String getRejectReason() {
