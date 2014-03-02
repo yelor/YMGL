@@ -26,8 +26,8 @@ public class Sale_detailUpdateTask extends BaseTask{
     public final static int ENTITY_UPDATE = 1;
     public final static int ENTITY_DELETE = 2;
     private final String ADD_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshou/add";
-    private final String UPD_URI = Constants.HTTP + Constants.APPID + "sale_detail/update";
-    private final String delete_URI = Constants.HTTP + Constants.APPID + "sale_detail/delete";
+    private final String UPD_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshou/update";
+    private final String delete_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshou/delete";
     
     private final Sale_detail_tbFindEntity sale_detail;
     private final int actionType;

@@ -85,7 +85,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称","true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
             {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
-            {"stockpilePrice", "单价", "false"}, {"yimiao.yimiaoYushoujia", "售价", "true"}, {"totalprice", "销售合价", "true"}});
+            {"stockpilePrice", "单价", "false"}, {"yimiaoYushoujia", "售价", "true"}, {"totalprice", "销售合价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -661,7 +661,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         if (isNew) {
             this.setTitle("Ⅱ类疫苗销售单");
             sale = new Saletb();
-            sale_detail = new Sale_detail_tb();
+           
         } else {
             this.setTitle("Ⅱ类疫苗销售单");
         }
@@ -696,11 +696,13 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+             sale_detail = new Sale_detail_tb();
             sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
             sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
-            sale_detail.setPrice(Float.parseFloat((String) yimiaotable.getValue(i, "yimiao.yimiaoYushoujia")));
+            sale_detail.setPrice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "yimiaoYushoujia"))));
             sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
+            sale_detail.setStatus(0);
             list.add(sale_detail);
         }
         yimiaoxiaoshou.setSale(sale);

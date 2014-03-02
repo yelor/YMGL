@@ -7,11 +7,6 @@ package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
-import com.jskj.asset.client.bean.entity.StockpiletbAll;
-import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
-import com.jskj.asset.client.bean.entity.YanshouyimiaoEntity;
-import com.jskj.asset.client.bean.entity.YanshouyimiaoFindEntity;
-import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -19,15 +14,11 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
-import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
@@ -73,25 +64,28 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "yimiao_name like \"%" + newColumnObj.toString()  + "%\""
-                            + "from yimiao where yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
+                    sql += "sale_detail_id in (select distinct sale_detail.sale_detail_id from sale_detail,yimiao where and sale_detail.is_completed = 1 and sale_detail.status = 0 and sale_detail.price=0 and yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\") ";
                 } else {
-                    sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
+                    sql += "sale_detail_id in (select distinct sale_detail_id from sale_detail where is_completed = 1 and status = 0 and price=0 )";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
+                return new String[][]{{"saletb.saleId", "源单单号"}, {"saletb.saleDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
                 {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiaoAll");
+                    Object stockpilemap = bindedMap.get("stockpile");
+                    Object saletbmap = bindedMap.get("saletb");
+                    Object sale_detail_tbmap = bindedMap.get("sale_detail_tb");
                     HashMap yimiaoAll = (HashMap) yimiaomap;
-                    Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
-                    HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
+                    HashMap stockpile = (HashMap) stockpilemap;
+                    HashMap saletb = (HashMap) saletbmap;
+                    HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
                     
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -99,16 +93,28 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
                     Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
                     Object unit = yimiaoAll.get("unitId");
-                    Object quantity = yimiaoshenqingdan.get("quantity");
+                    Object pihao = stockpile.get("pihao");
+                    Object youxiaoqi = stockpile.get("youxiaodate");
+                    Object piqianfaNo = stockpile.get("piqianfano");
+                    Object pizhunwenhao = yimiaoAll.get("yimiaoPizhunwenhao");
+                    Object source = stockpile.get("source");
+                    Object tongguandanNo = yimiaoAll.get("jinkoutongguanno");                    
+                    Object quantity = sale_detail_tb.get("quantity");
                     
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
-                    editTable.insertValue(2, yimiaoGuige);
-                    editTable.insertValue(3, yimiaoJixing);
-                    editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, unit);
-                    editTable.insertValue(6, quantity);
+                    editTable.insertValue(2, source);
+                    editTable.insertValue(3, tongguandanNo);
+                    editTable.insertValue(4, quantity);
+                    editTable.insertValue(5, yimiaoGuige);
+                    editTable.insertValue(6, yimiaoJixing);
+                    editTable.insertValue(7, shengchanqiye);
+                    editTable.insertValue(8, pihao);
+                    editTable.insertValue(9, youxiaoqi);
+                    editTable.insertValue(10, unit);
+                    editTable.insertValue(11, piqianfaNo);
+                    editTable.insertValue(12, pizhunwenhao);
 
                 }
 
@@ -356,8 +362,20 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
 
         churukudan.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+           for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            churukudan.setPihao((String) yimiaotable.getValue(i, "pihao"));
+            churukudan.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
+            churukudan.setPrice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "yimiaoId"))));
+            churukudan.setSource((String) (""+yimiaotable.getValue(i, "source")));
+            churukudan.setTongguandanno((String) (""+yimiaotable.getValue(i, "tongguandanNo")));
+            churukudan.setYouxiaoqi(dateformate.parse((String) (""+yimiaotable.getValue(i, "youxiaodate"))));
+            churukudan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            churukudan.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
+
+            churukudan.setTotalprice(churukudan.getPrice()*churukudan.getPrice());
+        }
         churukudan.setGongyingdanwei(2);
-        churukudan.setQuantity(22);
 
         String serviceId = "yimiaochuku/add";
         return new CommUpdateTask<Churukudantb>(churukudan, serviceId) {

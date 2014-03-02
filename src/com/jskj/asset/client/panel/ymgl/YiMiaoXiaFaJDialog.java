@@ -17,7 +17,6 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.Sale_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,7 +91,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称","true"}, {"yimiao.yimiaoGuige", "规格", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称", "true"}, {"yimiao.yimiaoGuige", "规格", "false"},
             {"yimiao.yimiaoJixing", "剂型", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -165,7 +164,6 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-
                     HashMap yimiao = (HashMap) bindedMap;
                     Object yimiaoId = yimiao.get("yimiaoId");
                     Object yimiaoName = yimiao.get("yimiaoName");
@@ -647,7 +645,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         if (isNew) {
             this.setTitle("Ⅰ类疫苗下发单");
             sale = new Saletb();
-            sale_detail = new Sale_detail_tb();
+
         } else {
             this.setTitle("Ⅰ类疫苗下发单");
         }
@@ -679,10 +677,14 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         sale.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
 
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            sale_detail = new Sale_detail_tb();
             sale_detail.setSaleId(jTextFieldXiafaId.getText());
-            sale_detail.setYimiaoId(1000 + i);
-            sale_detail.setQuantity(345 + i);
+            sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
+
+            sale_detail.setStatus(0);
             list.add(sale_detail);
         }
 

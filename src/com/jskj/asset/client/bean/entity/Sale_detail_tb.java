@@ -8,6 +8,8 @@ public class Sale_detail_tb {
 
     private String saleId;
 
+    private Integer stockpileId;
+
     private Integer yimiaoId;
 
     private Integer quantity;
@@ -34,6 +36,14 @@ public class Sale_detail_tb {
 
     public void setSaleId(String saleId) {
         this.saleId = saleId == null ? null : saleId.trim();
+    }
+
+    public Integer getStockpileId() {
+        return stockpileId;
+    }
+
+    public void setStockpileId(Integer stockpileId) {
+        this.stockpileId = stockpileId;
     }
 
     public Integer getYimiaoId() {
