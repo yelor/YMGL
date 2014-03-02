@@ -1,5 +1,8 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Sale_detail_tb {
     private Integer saleDetailId;
 
@@ -12,6 +15,10 @@ public class Sale_detail_tb {
     private Float price;
 
     private Float totalprice;
+
+    private Integer isCompleted;
+
+    private Integer status;
 
     public Integer getSaleDetailId() {
         return saleDetailId;
@@ -59,5 +66,21 @@ public class Sale_detail_tb {
 
     public void setTotalprice(Float totalprice) {
         this.totalprice = totalprice;
+    }
+
+    public Integer getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -11,7 +11,9 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.DetailPanel;
+import com.jskj.asset.client.panel.ymgl.task.FindxiafaxiaoshouTask;
 import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
+import com.jskj.asset.client.panel.ymgl.task.XiaoshoushenPiTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DateHelper;
@@ -30,7 +32,7 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author tt
  */
-public class YimiaoShenPiJDialog extends BaseDialog {
+public class YimiaoxiafaxiaoshouShenPiJDialog extends BaseDialog {
 
     private int pageIndex;
 
@@ -50,7 +52,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
      * @param parent
      * @param modal
      */
-    public YimiaoShenPiJDialog(java.awt.Frame parent, boolean modal) {
+    public YimiaoxiafaxiaoshouShenPiJDialog(java.awt.Frame parent, boolean modal) {
         super();
         initComponents();
         pageIndex = 1;
@@ -75,7 +77,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         this.repaint();
     }
 
-    private class RefreshTask extends YimiaoDanjuChaxunTask {
+    private class RefreshTask extends FindxiafaxiaoshouTask {
 
         BindingGroup bindingGroup = new BindingGroup();
 
@@ -156,6 +158,25 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         return new SPTask(shenPiEntity);
     }
 
+    private class ShenPiYTask extends org.jdesktop.application.Task<Object, Void> {
+        ShenPiYTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ShenPiYTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public Task shenPiNMessage() {
         if (jSQTable.getSelectedRow() < 0) {
@@ -179,7 +200,26 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         return new SPTask(shenPiEntity);
     }
 
-    private class SPTask extends ShenPiTask {
+    private class ShenPiNMessageTask extends org.jdesktop.application.Task<Object, Void> {
+        ShenPiNMessageTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ShenPiNMessageTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
+    private class SPTask extends XiaoshoushenPiTask {
 
         public SPTask(ShenPiEntity yimiaosp) {
             super(yimiaosp);
@@ -189,7 +229,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         protected void succeeded(Object result) {
             if (result != null && result instanceof ShenPiEntity) {
                 ShenPiEntity entity = (ShenPiEntity) result;
-                AssetMessage.INFO(entity.getResult(), YimiaoShenPiJDialog.this);
+                AssetMessage.INFO(entity.getResult(), YimiaoxiafaxiaoshouShenPiJDialog.this);
             }
             reload();
         }
@@ -219,7 +259,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jSQTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaoShenPiJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaoxiafaxiaoshouShenPiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -243,7 +283,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jLabelTotal.setPreferredSize(new java.awt.Dimension(80, 40));
         jToolBar2.add(jLabelTotal);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaoShenPiJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaoxiafaxiaoshouShenPiJDialog.class, this);
         jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
@@ -389,20 +429,20 @@ public class YimiaoShenPiJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoxiafaxiaoshouShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoxiafaxiaoshouShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoxiafaxiaoshouShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoxiafaxiaoshouShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YimiaoShenPiJDialog dialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(), true);
+                YimiaoxiafaxiaoshouShenPiJDialog dialog = new YimiaoxiafaxiaoshouShenPiJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
