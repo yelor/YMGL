@@ -15,7 +15,7 @@ public class Stockpiletb {
 
     private Date youxiaodate;
 
-    private String pizhunwenhao;
+    private String pihao;
 
     private String piqianfano;
 
@@ -69,12 +69,12 @@ public class Stockpiletb {
         this.youxiaodate = youxiaodate;
     }
 
-    public String getPizhunwenhao() {
-        return pizhunwenhao;
+    public String getPihao() {
+        return pihao;
     }
 
-    public void setPizhunwenhao(String pizhunwenhao) {
-        this.pizhunwenhao = pizhunwenhao == null ? null : pizhunwenhao.trim();
+    public void setPihao(String pihao) {
+        this.pihao = pihao == null ? null : pihao.trim();
     }
 
     public String getPiqianfano() {

@@ -56,8 +56,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格", "false"},
-            {"yimiao.yimiaoJixing", "剂型", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"stockpilePrice", "调前价格", "true"}, {"lastPrice", "调后价格", "true"}});
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","true"}, {"yimiaoGuige", "规格", "false"},
+            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"stockpilePrice", "调前价格", "false"}, {"lastPrice", "调后价格", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -89,6 +89,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
+                    
                     Object yimiaoId = bindedMap.get("yimiaoId");
                     Float stockpilePrice = Float.parseFloat("" + bindedMap.get("stockpilePrice"));
                     Object yimiaoName = yimiao.get("yimiaoName");

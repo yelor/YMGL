@@ -23,6 +23,10 @@ public class Churukudantb {
 
     private String piqianfahegeno;
 
+    private Float price;
+
+    private Float totalprice;
+
     private Integer gongyingdanwei;
 
     private Integer jingbanren;
@@ -99,6 +103,22 @@ public class Churukudantb {
 
     public void setPiqianfahegeno(String piqianfahegeno) {
         this.piqianfahegeno = piqianfahegeno == null ? null : piqianfahegeno.trim();
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Float getTotalprice() {
+        return totalprice;
+    }
+
+    public void setTotalprice(Float totalprice) {
+        this.totalprice = totalprice;
     }
 
     public Integer getGongyingdanwei() {

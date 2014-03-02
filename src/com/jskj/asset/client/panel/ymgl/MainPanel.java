@@ -29,6 +29,7 @@ public class MainPanel extends BasePanel {
     private selecteInvoiceJDialog selecteInvoiceJDialog;
     private selecteInvoiceJDialog2 selecteInvoiceJDialog2;
     private selecteInvoiceJDialog3 selecteInvoiceJDialog3;
+    private selecteYimiaoshenpiInvoiceJDialog selecteYimiaoshenpiInvoiceJDialog;
 
     /**
      * Creates new form NoFoundPane
@@ -96,7 +97,7 @@ public class MainPanel extends BasePanel {
         jButton4.setContentAreaFilled(false);
         jButton4.setName("jButton4"); // NOI18N
 
-        jButton5.setAction(actionMap.get("YiMiaoBaoSunShenHeAction")); // NOI18N
+        jButton5.setAction(actionMap.get("selecteYimiaoshenqingInvoiceAction")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setBorder(null);
@@ -194,6 +195,15 @@ public class MainPanel extends BasePanel {
         AssetClientApp.getApplication().show(selecteInvoiceJDialog3);
     }
 
+    @Action
+    public void selecteYimiaoshenqingInvoiceAction() {
+        if (selecteYimiaoshenpiInvoiceJDialog == null) {
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            selecteYimiaoshenpiInvoiceJDialog = new selecteYimiaoshenpiInvoiceJDialog(new javax.swing.JFrame(), true);
+            selecteYimiaoshenpiInvoiceJDialog.setLocationRelativeTo(mainFrame);
+        }
+        AssetClientApp.getApplication().show(selecteYimiaoshenpiInvoiceJDialog);
+    }
 //    @Action
 //    public void selecteInvoice3Action() {
 //        if (selecteInvoiceJDialog3 == null) {
