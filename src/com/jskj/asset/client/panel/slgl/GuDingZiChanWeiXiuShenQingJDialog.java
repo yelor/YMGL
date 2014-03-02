@@ -68,7 +68,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         shenqingdanDate.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
+            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
             {"gdzcValue", "单价", "true"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {

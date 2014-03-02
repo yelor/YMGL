@@ -33,6 +33,8 @@ public class CaigoushenqingDetailEntity {
 
     private String checkId3;
     
+    private String checkId4;
+    
     private List<ZichanliebiaoDetailEntity> zclist;
 
     public String getCgsqId() {
@@ -114,5 +116,13 @@ public class CaigoushenqingDetailEntity {
     public void setZclist(List<ZichanliebiaoDetailEntity> zclist) {
         this.zclist = zclist;
     }
-        
+
+    public String getCheckId4() {
+        return checkId4;
+    }
+
+    public void setCheckId4(String checkId4) {
+        this.checkId4 = checkId4;
+    }
+    
 }

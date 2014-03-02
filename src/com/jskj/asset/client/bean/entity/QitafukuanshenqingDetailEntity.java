@@ -22,6 +22,8 @@ public class QitafukuanshenqingDetailEntity extends Qitafukuandantb{
     
     private String checkId2;
     
+    private String checkId3;
+
     private String rejectReason;
     
     private List<Qitafukuanliebiaotb> list;
@@ -80,6 +82,14 @@ public class QitafukuanshenqingDetailEntity extends Qitafukuandantb{
 
     public void setList(List<Qitafukuanliebiaotb> list) {
         this.list = list;
+    }
+    
+    public String getCheckId3() {
+        return checkId3;
+    }
+
+    public void setCheckId3(String checkId3) {
+        this.checkId3 = checkId3;
     }
     
 }

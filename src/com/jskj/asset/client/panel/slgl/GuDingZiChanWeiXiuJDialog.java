@@ -82,6 +82,8 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
                     jTextFieldXinghao.setText(bindedMap.get("gdzcXinghao") == null ? "" : bindedMap.get("gdzcXinghao").toString());
                     jTextFieldGuige.setText(bindedMap.get("gdzcGuige") == null ? "" : bindedMap.get("gdzcGuige").toString());
                     jTextFieldSupplier.setText(bindedMap.get("supplier") == null ? "" : bindedMap.get("supplier").toString());
+                    jTextField5.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
+                    jTextField5.setEditable(false);
                     zcId = (Integer)bindedMap.get("gdzcId");
                 }
             }

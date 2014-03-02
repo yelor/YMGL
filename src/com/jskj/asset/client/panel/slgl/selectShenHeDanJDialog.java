@@ -54,7 +54,7 @@ public class selectShenHeDanJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "资产采购申请审核单", "资产维修申请审核单" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "资产采购申请审核单", "资产维修申请审核单", "资产领用申请审核单" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -191,6 +191,11 @@ public class selectShenHeDanJDialog extends javax.swing.JDialog {
             WeixiushenqingshenpiJDialog sqsp = new WeixiushenqingshenpiJDialog(new javax.swing.JFrame(), true);
             sqsp.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(sqsp);
+        } else if(selecteIndex==2){
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            LingyongshenqingshenpiJDialog lysp = new LingyongshenqingshenpiJDialog(new javax.swing.JFrame(), true);
+            lysp.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(lysp);
         }
     }
 

@@ -8,8 +8,8 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.RukudanDetailEntity;
-import com.jskj.asset.client.bean.entity.Zichanrukudantb;
+import com.jskj.asset.client.bean.entity.ChukudanDetailEntity;
+import com.jskj.asset.client.bean.entity.Zichanchukudantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
 import com.jskj.asset.client.constants.Constants;
@@ -37,20 +37,20 @@ import org.jdesktop.application.Task;
  *
  * @author tt
  */
-public class GuDingZiChanRuKuJDialog extends BaseDialog {
+public class GuDingZiChanChuKuJDialog extends BaseDialog {
 
-    private RukudanDetailEntity cgsq;
+    private ChukudanDetailEntity cgsq;
     private int userId;
     private String userName;
     private int supplierId;
     private List<ZiChanLieBiaotb> zc;
     CaigoushenqingDetailEntity detail;
     /**
-     * Creates new form GuDingZiChanRuKu
+     * Creates new form GuDingZiChanChuKu
      * @param parent
      * @param modal
      */
-    public GuDingZiChanRuKuJDialog(java.awt.Frame parent,boolean modal) {
+    public GuDingZiChanChuKuJDialog(java.awt.Frame parent,boolean modal) {
         super();
         initComponents();
         
@@ -58,7 +58,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
-        cgsqId.setText(DanHao.getDanHao("ZCRK"));
+        cgsqId.setText(DanHao.getDanHao("ZCCK"));
         cgsqId.setEditable(false);
         
         Calendar c = Calendar.getInstance();
@@ -70,7 +70,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"}});
+            {"gdzcValue", "单价", "false"},{"quantity", "数量"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -86,7 +86,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 2)";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 7 and cgsq_id like \"%LYSQ%\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += "  and gdzc_name like \"%" + newColumnObj.toString() + "%\"";
                 }
@@ -125,7 +125,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         
     }
     
-    public GuDingZiChanRuKuJDialog(final JDialog parent,CaigoushenqingDetailEntity detail){
+    public GuDingZiChanChuKuJDialog(final JDialog parent,CaigoushenqingDetailEntity detail){
         super();
         initComponents();
         this.detail = detail;
@@ -196,14 +196,14 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
     @Action
     public Task submitForm() throws ParseException{
         if(zc.size() < 1){
-            AssetMessage.ERRORSYS("请选择要入库的资产！",this);
+            AssetMessage.ERRORSYS("请选择要采购的资产！",this);
             return null;
         }
-        cgsq = new RukudanDetailEntity();
-        Zichanrukudantb sqd = new Zichanrukudantb();
-        sqd.setRukudanId(cgsqId.getText());
+        cgsq = new ChukudanDetailEntity();
+        Zichanchukudantb sqd = new Zichanchukudantb();
+        sqd.setChukudanId(cgsqId.getText());
         SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
-        sqd.setRukudanDate(dateformate.parse(shenqingdanDate.getText()));
+        sqd.setChukudanDate(dateformate.parse(shenqingdanDate.getText()));
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(18);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
@@ -217,19 +217,19 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
             zc.get(i).setStatus(0);
         }
         
-        cgsq.setRukudan(sqd);
+        cgsq.setChukudan(sqd);
         cgsq.setZc(zc);        
         
-        String serviceId = "gdzc/ruku";
-        return new CommUpdateTask<RukudanDetailEntity>(cgsq,serviceId) {
+        String serviceId = "gdzc/chuku";
+        return new CommUpdateTask<ChukudanDetailEntity>(cgsq,serviceId) {
 
             @Override
-            public void responseResult(ComResponse<RukudanDetailEntity> response) {
+            public void responseResult(ComResponse<ChukudanDetailEntity> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     AssetMessage.showMessageDialog(null, "提交成功！");
                     exit();
                 } else {
-                    AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanRuKuJDialog.this);
+                    AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanChuKuJDialog.this);
                 }
             }
         };
@@ -263,7 +263,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         jingbanren = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanRuKuJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanChuKuJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -368,7 +368,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanRuKuJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(GuDingZiChanChuKuJDialog.class, this);
         jButton10.setAction(actionMap.get("submitForm")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
@@ -469,20 +469,20 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GuDingZiChanRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuDingZiChanChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GuDingZiChanRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuDingZiChanChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GuDingZiChanRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuDingZiChanChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GuDingZiChanRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuDingZiChanChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GuDingZiChanRuKuJDialog dialog = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(),true);
+                GuDingZiChanChuKuJDialog dialog = new GuDingZiChanChuKuJDialog(new javax.swing.JFrame(),true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

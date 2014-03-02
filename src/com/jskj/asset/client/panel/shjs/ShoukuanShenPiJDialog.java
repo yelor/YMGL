@@ -53,7 +53,7 @@ public class ShoukuanShenPiJDialog extends javax.swing.JDialog {
         count = 0;
         bindTable = new BindTableHelper<ShoukuanshenqingDetailEntity>(jSQTable, new ArrayList<ShoukuanshenqingDetailEntity>());
         bindTable.createTable(new String[][]{{"shoukuandanId", "付款单号"}, {"shenqingren", "经办人"}, {"shoukuandanDate", "申请日期"},
-            {"shenqingdanRemark", "备注"},{"totalprice", "总价"},{"checkId1", "直接领导"}, {"checkId2", "分管领导"}});
+            {"shenqingdanRemark", "备注"},{"totalprice", "总价"},{"checkId1", "财务科"}, {"checkId2", "分管领导"}, {"checkId3", "主要领导"}});
 //        bindTable.setIntegerType(1);
         bindTable.setDateType(3);
         bindTable.bind().setColumnWidth(new int[]{0, 150},new int[]{2, 80}).setRowHeight(30);

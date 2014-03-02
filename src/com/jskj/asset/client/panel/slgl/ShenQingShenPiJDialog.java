@@ -49,7 +49,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         count = 0;
         bindTable = new BindTableHelper<CaigoushenqingDetailEntity>(jSQTable, new ArrayList<CaigoushenqingDetailEntity>());
         bindTable.createTable(new String[][]{{"cgsqId", "采购单号"}, {"jingbanren", "经办人"}, {"shenqingdanDate", "申请日期"},
-            {"checkId1", "直接领导"}, {"checkId2", "分管领导"},{"checkId3", "主要领导"}});
+            {"checkId1", "采购办"}, {"checkId2", "财务科"}, {"checkId3", "分管领导"},{"checkId4", "主要领导"}});
 //        bindTable.setIntegerType(1);
         bindTable.setDateType(3);
         bindTable.bind().setColumnWidth(new int[]{0, 150},new int[]{1, 80},new int[]{2, 80}).setRowHeight(30);
