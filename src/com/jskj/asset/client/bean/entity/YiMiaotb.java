@@ -42,6 +42,8 @@ public class YiMiaotb {
 
     private String yimiaoRemark;
 
+    private String zujima;
+
     public Integer getYimiaoId() {
         return yimiaoId;
     }
@@ -192,5 +194,13 @@ public class YiMiaotb {
 
     public void setYimiaoRemark(String yimiaoRemark) {
         this.yimiaoRemark = yimiaoRemark == null ? null : yimiaoRemark.trim();
+    }
+
+    public String getZujima() {
+        return zujima;
+    }
+
+    public void setZujima(String zujima) {
+        this.zujima = zujima == null ? null : zujima.trim();
     }
 }

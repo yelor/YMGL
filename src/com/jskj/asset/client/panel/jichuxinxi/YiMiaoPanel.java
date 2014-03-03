@@ -78,7 +78,7 @@ public class YiMiaoPanel extends BasePanel {
                         sql.append("yimiao_id = ").append(searchKeys.get(0).trim()).append(" and ");
                     }
                     if (!searchKeys.get(1).trim().equals("")) {
-                        sql.append("yimiao_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                        sql.append("(yimiao_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or zujima like \"").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
                     }
                     if (!searchKeys.get(2).trim().equals("")) {
                         sql.append("yimiao_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");

@@ -75,7 +75,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql = "(yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -128,7 +128,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao2.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql = "(yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }

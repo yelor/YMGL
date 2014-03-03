@@ -114,7 +114,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "user_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "(user_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }

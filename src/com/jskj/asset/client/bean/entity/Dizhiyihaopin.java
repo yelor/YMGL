@@ -32,6 +32,8 @@ public class Dizhiyihaopin {
 
     private String dzyhpRemark;
 
+    private String zujima;
+
     public Integer getDzyhpId() {
         return dzyhpId;
     }
@@ -142,5 +144,13 @@ public class Dizhiyihaopin {
 
     public void setDzyhpRemark(String dzyhpRemark) {
         this.dzyhpRemark = dzyhpRemark == null ? null : dzyhpRemark.trim();
+    }
+
+    public String getZujima() {
+        return zujima;
+    }
+
+    public void setZujima(String zujima) {
+        this.zujima = zujima == null ? null : zujima.trim();
     }
 }

@@ -75,7 +75,7 @@ public class FuKuanDanJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "supplier_name like \"%" + supplier.getText() + "%\"";
+                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" +  supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }

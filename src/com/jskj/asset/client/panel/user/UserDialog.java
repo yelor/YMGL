@@ -19,6 +19,7 @@ import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
 import com.jskj.asset.client.util.DateHelper;
 import com.jskj.asset.client.util.IdcardUtils;
+import com.jskj.asset.client.util.PingYinUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -503,6 +504,9 @@ public class UserDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入用户名和密码.");
             return null;
         }
+        
+        String zujima = PingYinUtil.getFirstSpell(jTextFieldUserName.getText().trim());
+        usertb.setZujima(zujima);
 
         String idcard = jTextFieldIDCard.getText();
         if (!idcard.trim().equals("")) {

@@ -39,6 +39,8 @@ public class Gudingzichantb {
 
     private Integer kucunshangxian;
 
+    private String zujima;
+
     public Integer getGdzcId() {
         return gdzcId;
     }
@@ -173,5 +175,13 @@ public class Gudingzichantb {
 
     public void setKucunshangxian(Integer kucunshangxian) {
         this.kucunshangxian = kucunshangxian;
+    }
+
+    public String getZujima() {
+        return zujima;
+    }
+
+    public void setZujima(String zujima) {
+        this.zujima = zujima == null ? null : zujima.trim();
     }
 }

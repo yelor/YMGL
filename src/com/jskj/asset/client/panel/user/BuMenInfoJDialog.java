@@ -14,6 +14,7 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.util.PingYinUtil;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -65,7 +66,7 @@ public class BuMenInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!owner$userName.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + owner$userName.getText() + "%\"";
+                    sql = "(user_name like \"%" + owner$userName.getText() + "%\"" + " or zujima like \"" + owner$userName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -324,7 +325,7 @@ public class BuMenInfoJDialog extends BaseDialog {
 
     @Action
     public Task newDepartmentTask() {
-        
+
         if (!owner$userName.getText().trim().equals("")) {
             String bossId = jTextBossId.getText();
             paramData.setUserId(Integer.parseInt(bossId));
@@ -341,6 +342,9 @@ public class BuMenInfoJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入部门名!");
             return null;
         }
+
+        String zujima = PingYinUtil.getFirstSpell(departmentName.getText().trim());
+        paramData.setZujima(zujima);
 
         /*注意现在不用这种方式来set，get值了，只要继承了BaseDialog，直接bind和copyTobean，就全部自动set，get上了*/
         super.copyToBean(paramData, jPanel1);

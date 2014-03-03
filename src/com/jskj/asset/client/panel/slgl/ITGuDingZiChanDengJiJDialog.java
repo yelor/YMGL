@@ -55,7 +55,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                 String sql = "";
                 sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0)";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql += " and gdzc_name like \"%" + jTextFieldName.getText() + "%\"";
+                    sql += " and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }

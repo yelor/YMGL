@@ -82,7 +82,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldCaigouren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldCaigouren.getText() + "%\"";
+                    sql = "(user_name like \"%" + jTextFieldCaigouren.getText() + "%\"" + " or zujima like \"" + jTextFieldCaigouren.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -113,7 +113,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                 String sql = "";
                 sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1)";
                 if (!jTextFieldZichan.getText().trim().equals("")) {
-                    sql += " and gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"";
+                    sql += " and (gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"" + " or zujima like \"" + jTextFieldZichan.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }

@@ -74,7 +74,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "supplier_name like \"%" + supplier.getText() + "%\"";
+                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" +  supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -114,7 +114,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "user_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "(user_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }

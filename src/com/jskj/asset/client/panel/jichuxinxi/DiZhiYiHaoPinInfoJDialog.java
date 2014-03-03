@@ -21,6 +21,7 @@ import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.DanHao;
+import com.jskj.asset.client.util.PingYinUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +69,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!depottb$depotName.getText().trim().equals("")) {
-                    sql = "depot_name like \"%" + depottb$depotName.getText() + "%\"";
+                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \""+depottb$depotName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -103,7 +104,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!suppliertb$supplierName.getText().trim().equals("")) {
-                    sql = "supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"";
+                    sql = "(supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -178,6 +179,12 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     @Action
     public Task save() {
 
+        if (dzyhpName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入物品名称!");
+            dzyhpName.grabFocus();
+            return null;
+        } 
+        
         super.copyToBean(appParam, jPanel3);
         super.copyToBean(appParam, jPanel4);
 
@@ -191,6 +198,10 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             appParam.setSupplierId(Integer.parseInt(supplierId));
         }
 
+        
+        String zujima = PingYinUtil.getFirstSpell(dzyhpName.getText().trim());
+        appParam.setZujima(zujima);
+        
         /*得到图片路径*/
         BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
         List source = mode.getSource();

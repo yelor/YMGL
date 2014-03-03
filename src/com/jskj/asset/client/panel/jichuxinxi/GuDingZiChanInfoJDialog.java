@@ -7,7 +7,6 @@ package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.GudingzichanAll;
-import com.jskj.asset.client.bean.entity.Gudingzichantb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
@@ -22,7 +21,7 @@ import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.DanHao;
-import java.io.File;
+import com.jskj.asset.client.util.PingYinUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!depottb$depotName.getText().trim().equals("")) {
-                    sql = "depot_name like \"%" + depottb$depotName.getText() + "%\"";
+                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \""+depottb$depotName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -106,7 +105,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!suppliertb$supplierName.getText().trim().equals("")) {
-                    sql = "supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"";
+                    sql = "(supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -180,6 +179,15 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
 
     @Action
     public Task save() {
+
+        if (gdzcName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入资产名称!");
+            gdzcName.grabFocus();
+            return null;
+        }
+
+        String zujima = PingYinUtil.getFirstSpell(gdzcName.getText().trim());
+        appParam.setZujima(zujima);
 
         super.copyToBean(appParam, jPanel3);
         super.copyToBean(appParam, jPanel4);

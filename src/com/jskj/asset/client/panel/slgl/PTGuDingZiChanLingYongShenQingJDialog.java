@@ -91,7 +91,7 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
                 String sql = "";
                 sql += " gdzc_id in (select distinct gdzc_id from gudingzichankucun where quantity > 0) ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += " and gdzc_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += " and (gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }

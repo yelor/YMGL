@@ -21,6 +21,7 @@ import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.DanHao;
+import com.jskj.asset.client.util.PingYinUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +73,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!depottb$depotName.getText().trim().equals("")) {
-                    sql = "depot_name like \"%" + depottb$depotName.getText() + "%\"";
+                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \""+depottb$depotName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -107,7 +108,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!suppliertb$supplierName.getText().trim().equals("")) {
-                    sql = "supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"";
+                    sql = "(supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -678,6 +679,9 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             return null;
         }
 
+        String zujima = PingYinUtil.getFirstSpell(yimiaoName.getText().trim());
+        appParam.setZujima(zujima);
+
         super.copyToBean(appParam, jPanel3);
         super.copyToBean(appParam, jPanel4);
         super.copyToBean(appParam, jPanel5);
@@ -843,16 +847,15 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         if (barcode == null) {
             return;
         }
-        if(label.trim().equals("")){
-          int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
-          if(result != AssetMessage.OK_OPTION){
-              yimiaoName.grabFocus();
-              return;
-          }
+        if (label.trim().equals("")) {
+            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+            if (result != AssetMessage.OK_OPTION) {
+                yimiaoName.grabFocus();
+                return;
+            }
         }
         DanHao.printBarCode128(label, barcode);
     }
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

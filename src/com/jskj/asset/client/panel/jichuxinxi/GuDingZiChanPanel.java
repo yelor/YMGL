@@ -75,7 +75,7 @@ public class GuDingZiChanPanel extends BasePanel {
                         sql.append("gdzc_id =").append(searchKeys.get(0).trim()).append(" and ");
                     }
                     if (!searchKeys.get(1).trim().equals("")) {
-                        sql.append("gdzc_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                        sql.append("(gdzc_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or zujima like \"").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
                     }
                     if (!searchKeys.get(2).trim().equals("")) {
                         sql.append("gdzc_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");

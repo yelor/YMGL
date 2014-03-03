@@ -70,7 +70,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldXiafadanwei.getText().trim().equals("")) {
-                    sql = "kehudanwei_name like \"%" + jTextFieldXiafadanwei.getText() + "%\"";
+                    sql = "(kehudanwei_name like \"%" + jTextFieldXiafadanwei.getText() + "%\"" + " or kehudanwei_zujima like \"" + jTextFieldXiafadanwei.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }

@@ -68,7 +68,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldSupplierName.getText().trim().equals("")) {
-                    sql = "supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"";
+                    sql = "(supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" +  jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -107,7 +107,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id in (5,6) and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 1 and yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\") ";
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id in (5,6) and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 1 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"" + newColumnObj.toString() + "%\")) ";
                 } else {
                     sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where is_completed = 1 and status = 1 and danjuleixing_id in (5,6))";
                 }

@@ -74,7 +74,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldJingbanren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldJingbanren.getText() + "%\"";
+                    sql = "(user_name like \"%" + jTextFieldJingbanren.getText() + "%\"" + " or zujima like \"" + jTextFieldJingbanren.getText().toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -112,7 +112,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql = "(yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }

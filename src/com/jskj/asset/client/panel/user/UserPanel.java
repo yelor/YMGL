@@ -76,7 +76,7 @@ public final class UserPanel extends BasePanel {
                 if (searchKeys.size() > 0) {
                     StringBuilder sql = new StringBuilder();
                     if (!searchKeys.get(2).trim().equals("")) {
-                        sql.append("user_name like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
+                        sql.append("(user_name like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" or zujima like \"").append(searchKeys.get(2).trim().toLowerCase()).append("%\")").append(" and ");
                     }
                     if (!searchKeys.get(4).trim().equals("")) {
                         sql.append("user_email like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");

@@ -102,7 +102,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldSongxiuren.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + jTextFieldSongxiuren.getText() + "%\"";
+                    sql = "(user_name like \"%" + jTextFieldSongxiuren.getText() + "%\"" + " or zujima like \"" + jTextFieldSongxiuren.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }

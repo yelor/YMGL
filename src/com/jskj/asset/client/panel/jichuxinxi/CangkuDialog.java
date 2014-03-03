@@ -14,8 +14,8 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.util.PingYinUtil;
 import java.util.HashMap;
-import java.util.List;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -53,7 +53,7 @@ public class CangkuDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!usertb$userName.getText().trim().equals("")) {
-                    sql = "user_name like \"%" + usertb$userName.getText() + "%\"";
+                    sql = "(user_name like \"%" + usertb$userName.getText() + "%\"" + " or zujima like \"" + usertb$userName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -326,7 +326,13 @@ public class CangkuDialog extends BaseDialog {
 
     @Action
     public Task save() {
-
+        if (depotName.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入仓库名称!");
+            depotName.grabFocus();
+            return null;
+        }
+        String zujima = PingYinUtil.getFirstSpell(depotName.getText().trim());
+        appParam.setZujima(zujima);
         super.copyToBean(appParam, jPanel1);
 
         String userIdStr = jTextPID.getText();
@@ -357,19 +363,24 @@ public class CangkuDialog extends BaseDialog {
     }
 
     private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
+
         SaveTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to SaveTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }

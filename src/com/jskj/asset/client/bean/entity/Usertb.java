@@ -31,6 +31,8 @@ public class Usertb {
 
     private String userRemark;
 
+    private String zujima;
+
     public Integer getUserId() {
         return userId;
     }
@@ -133,5 +135,13 @@ public class Usertb {
 
     public void setUserRemark(String userRemark) {
         this.userRemark = userRemark == null ? null : userRemark.trim();
+    }
+
+    public String getZujima() {
+        return zujima;
+    }
+
+    public void setZujima(String zujima) {
+        this.zujima = zujima == null ? null : zujima.trim();
     }
 }

@@ -77,7 +77,7 @@ public class KeHuDanWeiPanel extends BasePanel {
                         sql.append("kehudanwei_id =").append(searchKeys.get(0).trim()).append(" and ");
                     }
                     if (!searchKeys.get(1).trim().equals("")) {
-                        sql.append("kehudanwei_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" and ");
+                        sql.append("(kehudanwei_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or kehudanwei_zujima like \"").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
                     }
                     if (!searchKeys.get(2).trim().equals("")) {
                         sql.append("kehudanwei_constactPerson like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");

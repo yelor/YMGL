@@ -21,6 +21,8 @@ public class Depot {
 
     private String depotRemark;
 
+    private String zujima;
+
     public Integer getDepotId() {
         return depotId;
     }
@@ -83,5 +85,13 @@ public class Depot {
 
     public void setDepotRemark(String depotRemark) {
         this.depotRemark = depotRemark == null ? null : depotRemark.trim();
+    }
+
+    public String getZujima() {
+        return zujima;
+    }
+
+    public void setZujima(String zujima) {
+        this.zujima = zujima == null ? null : zujima.trim();
     }
 }

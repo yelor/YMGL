@@ -13,6 +13,7 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.ymgl.*;
+import com.jskj.asset.client.util.PingYinUtil;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -55,8 +56,6 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
         supplierName = new javax.swing.JTextField();
         supplierShuilv = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        supplierZujima = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         supplierJiancheng = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         supplierFarendaibiao = new javax.swing.JTextField();
@@ -120,11 +119,6 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
-        supplierZujima.setName("supplierZujima"); // NOI18N
-
-        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
-        jLabel6.setName("jLabel6"); // NOI18N
-
         supplierJiancheng.setName("supplierJiancheng"); // NOI18N
 
         jLabel18.setText(resourceMap.getString("jLabel18.text")); // NOI18N
@@ -139,7 +133,7 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
@@ -160,12 +154,7 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(supplierFarendaibiao)
-                    .addComponent(supplierJiancheng, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(supplierZujima, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(supplierJiancheng, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,9 +163,7 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
                     .addComponent(jLabel2)
                     .addComponent(supplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(supplierJiancheng, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(supplierZujima, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(supplierJiancheng, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -423,9 +410,9 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -511,7 +498,6 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
@@ -536,7 +522,6 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
     private javax.swing.JTextField supplierTax;
     private javax.swing.JTextField supplierYewuyuan;
     private javax.swing.JTextField supplierYoubian;
-    private javax.swing.JTextField supplierZujima;
     // End of variables declaration//GEN-END:variables
 
     public void setUpdatedData(Supplier paramData) {
@@ -563,9 +548,11 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
     @Action
     public Task submitForm() {
         if (supplierName.getText().trim().equals("")) {
+            supplierName.grabFocus();
             AssetMessage.ERRORSYS("请输入供应单位名称!");
         }
-        
+        String zujima = PingYinUtil.getFirstSpell(supplierName.getText().trim());
+        paramData.setSupplierZujima(zujima);        
         super.copyToBean(paramData, jPanel3);
         super.copyToBean(paramData, jPanel4);
         super.copyToBean(paramData, jPanel5);

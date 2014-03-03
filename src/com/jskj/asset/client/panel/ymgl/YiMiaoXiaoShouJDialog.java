@@ -62,7 +62,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldXiaoshoudanwei.getText().trim().equals("")) {
-                    sql = "kehudanwei_name like \"%" + jTextFieldXiaoshoudanwei.getText() + "%\"";
+                    sql = "(kehudanwei_name like \"%" + jTextFieldXiaoshoudanwei.getText() + "%\"" + " or kehudanwei_zujima like \"" + jTextFieldXiaoshoudanwei.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -103,7 +103,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                 String sql = "";
                 sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price>0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "and yimiao_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "and (yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }

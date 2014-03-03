@@ -1,17 +1,22 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Departmenttb {
     private Integer departmentId;
 
     private String departmentName;
 
-    private Integer userId;
-
     private String tel;
 
     private String fax;
 
+    private Integer userId;
+
     private String departmentRemark;
+
+    private String zujima;
 
     public Integer getDepartmentId() {
         return departmentId;
@@ -27,14 +32,6 @@ public class Departmenttb {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName == null ? null : departmentName.trim();
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public String getTel() {
@@ -53,11 +50,27 @@ public class Departmenttb {
         this.fax = fax == null ? null : fax.trim();
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public String getDepartmentRemark() {
         return departmentRemark;
     }
 
     public void setDepartmentRemark(String departmentRemark) {
         this.departmentRemark = departmentRemark == null ? null : departmentRemark.trim();
+    }
+
+    public String getZujima() {
+        return zujima;
+    }
+
+    public void setZujima(String zujima) {
+        this.zujima = zujima == null ? null : zujima.trim();
     }
 }

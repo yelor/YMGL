@@ -88,7 +88,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 String sql = "";
                 sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 7 and cgsq_id like \"%LYSQ%\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "  and gdzc_name like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "  and (gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
