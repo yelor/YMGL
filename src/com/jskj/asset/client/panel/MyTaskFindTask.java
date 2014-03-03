@@ -177,7 +177,7 @@ public class MyTaskFindTask extends BaseTask {
                 builder.append("<br /><br />");
             }
             int i = 1;
-            builder.append("<font color=\"red\">");
+            builder.append("<font color=\"red\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
             for (MyTaskEntity re : results) {
                 if (i > 4) {
                     builder.append("...");
@@ -251,7 +251,7 @@ public class MyTaskFindTask extends BaseTask {
 
             if (results != null) {
                 logger.info("获取任务数:" + response.getCount());
-                StringBuilder builder = new StringBuilder("<font color=\"blue\">");
+                StringBuilder builder = new StringBuilder("<font color=\"blue\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
                 int i = 1;
                 for (MyTaskEntity re : results) {
                     if (i > 4) {

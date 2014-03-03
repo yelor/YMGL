@@ -31,6 +31,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 
@@ -199,8 +200,8 @@ public class BaseTable extends JTable {
             }
             table.setValueAt(obj, selectedRow, columnIndex);
         }
-        
-        public void insertValue(int rowIndex,int columnIndex, Object obj) {
+
+        public void insertValue(int rowIndex, int columnIndex, Object obj) {
             logger.debug("insert new value to table,value:" + obj + ",row:" + rowIndex + ",column:" + columnIndex);
             if (rowIndex == -1 || columnIndex == -1) {
                 return;
@@ -414,6 +415,29 @@ public class BaseTable extends JTable {
             allTemp.append(temp);
         }
         clipboard.setContents(new StringSelection(allTemp.toString()), null);
+    }
+
+    /**
+     * 复制到剪切板
+     */
+    @RightItem(value = "删除行", enable = false, hasSeparator = false)
+    @Action
+    public void zzzzzzzCSZ() {
+        TableModel tableMode = getModel();
+        if (tableMode instanceof AssetTableModel) {
+            List<List> data = ((AssetTableModel) tableMode).getDataVector();
+            int selectedRow = getSelectedRow();
+
+            if (data.size() > 1) {
+                for (int i = 0; i < data.size(); i++) {
+                    if (i == selectedRow) {
+                        data.remove(i);
+                    }
+                }
+//            ((AssetTableModel)tableMode).getDataVector().add(data);
+                updateUI();
+            }
+        }
     }
 
     class RichTableCellRenderer extends DefaultTableCellRenderer {

@@ -513,12 +513,19 @@ public class BindTableHelper<T> {
                                 Object temp = getObject(columnParameter[j], bean, jTableBinding.getColumnBinding(j).getColumnClass());
                                 if (temp == null) {
                                     ColumnBinding binder = jTableBinding.getColumnBinding(i);
-                                    if (binder.getColumnClass() == String.class) {
+                                    Class<?> classType = getFieldType(columnParameter[j],bean, binder.getClass());
+                                    if (classType == String.class) {
                                         temp = "";
-                                    } else if (binder.getColumnClass() == Data.class) {
+                                    } else if (classType == Data.class) {
                                         temp = new Date();
-                                    } else if (binder.getColumnClass() == Boolean.class) {
+                                    } else if (classType == Boolean.class) {
                                         temp = false;
+                                    } else if (classType == Float.class) {
+                                        temp = -1f;
+                                    } else if (classType == Double.class) {
+                                        temp = -1d;
+                                    }else if (classType == Long.class) {
+                                        temp = -1l;
                                     } else {
                                         temp = -1;
                                     }
@@ -562,6 +569,32 @@ public class BindTableHelper<T> {
             return "";
         }
 
+        private Class<?> getFieldType(String paramater, Object bean, Class finalClass) {
+            if (paramater != null && !paramater.equals("")) {
+                String[] ps = paramater.split("\\.");
+                String firstPara = ps[0];
+                String getIs = "get";
+                if (ps.length == 1 && finalClass == Boolean.class) {
+                    getIs = "is";
+                }
+                String tempTitle = getIs + firstPara.substring(0, 1).toUpperCase() + firstPara.substring(1);
+                try {
+                    if (bean == null) {
+                        return String.class;
+                    }
+                    Method method = bean.getClass().getMethod(tempTitle, new Class[0]);
+                    if (ps.length == 1) {
+                        return method.getReturnType();
+                    }
+                    Object temp = method.invoke(bean, new Object[0]);
+                    return getFieldType(paramater.substring(firstPara.length() + 1), temp, finalClass);
+                } catch (Exception ex) {
+                    logger.error("getClassType:"+paramater+",");
+                }
+            }
+            return String.class;
+        }
+
         public void build() throws Exception {
 
             JRDataSource dataSource = createDataSource();
@@ -572,30 +605,37 @@ public class BindTableHelper<T> {
             logger.debug("start to create report");
 
             TextColumnBuilder[] itemColumns = new TextColumnBuilder[columnParameter.length];
+            T firstRowData = null;
+            if (sourceData != null && sourceData.size() > 0) {
+                firstRowData = sourceData.get(0);
+            }
+
             for (int i = 0; i < columnParameter.length; i++) {
-                ColumnBinding binder = jTableBinding.getColumnBinding(i);
-                if (binder.getColumnClass() == String.class) {
+                 ColumnBinding binder = jTableBinding.getColumnBinding(i);
+                 Class<?> classType = getFieldType(columnParameter[i],firstRowData, binder.getClass());
+                 //System.out.println("@@@@@@@@@@@@@@@@@@@@columnParameter:"+columnParameter[i]+",classType:"+classType);
+                if (classType == String.class) {
                     TextColumnBuilder<String> itemColumn = col.column(columnString[i], columnParameter[i], type.stringType());
                     itemColumns[i] = itemColumn;
-                } else if (binder.getColumnClass() == Data.class) {
+                } else if (classType == Date.class) {
                     TextColumnBuilder<Date> itemColumn = col.column(columnString[i], columnParameter[i], type.dateType());
                     itemColumns[i] = itemColumn;
-                } else if (binder.getColumnClass() == BigDecimal.class) {
+                } else if (classType == BigDecimal.class) {
                     TextColumnBuilder<BigDecimal> itemColumn = col.column(columnString[i], columnParameter[i], type.bigDecimalType());
                     itemColumns[i] = itemColumn;
-                } else if (binder.getColumnClass() == Integer.class) {
+                } else if (classType == Integer.class || classType == int.class) {
                     TextColumnBuilder<Integer> itemColumn = col.column(columnString[i], columnParameter[i], type.integerType());
                     itemColumns[i] = itemColumn;
-                } else if (binder.getColumnClass() == Double.class) {
+                } else if (classType == Double.class || classType == double.class) {
                     TextColumnBuilder<Double> itemColumn = col.column(columnString[i], columnParameter[i], type.doubleType());
                     itemColumns[i] = itemColumn;
-                } else if (binder.getColumnClass() == Float.class) {
+                } else if (classType == Float.class || classType == float.class) {
                     TextColumnBuilder<Float> itemColumn = col.column(columnString[i], columnParameter[i], type.floatType());
                     itemColumns[i] = itemColumn;
-                } else if (binder.getColumnClass() == Boolean.class) {
+                } else if (classType == Boolean.class) {
                     TextColumnBuilder<Boolean> itemColumn = col.column(columnString[i], columnParameter[i], type.booleanType());
                     itemColumns[i] = itemColumn;
-                } else if (binder.getColumnClass() == Long.class) {
+                } else if (classType == Long.class || classType == long.class) {
                     TextColumnBuilder<Long> itemColumn = col.column(columnString[i], columnParameter[i], type.longType());
                     itemColumns[i] = itemColumn;
                 } else {
@@ -623,6 +663,7 @@ public class BindTableHelper<T> {
                     build();
                     return BaseTask.STATUS_OK;
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     return ex;
                 }
             }
