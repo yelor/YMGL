@@ -91,21 +91,34 @@ public class BaseTable extends JTable {
 
         private Popup pop;
         private boolean isShow;
-        private BasePopup basePopup;
+//        private BasePopup basePopup;
         private final BaseTable table;
-        public int columnPopupIndex = -1;
+        public int displayColumnPopupIndex = -1;
         public boolean hasRegister;
         private int selectedRow = -1;
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(this);
 
+        public HashMap<Integer, BasePopup> registerColumn;
+
         public SingleEditRowTable(BaseTable table) {
             this.table = table;
             hasRegister = false;
+            registerColumn = new HashMap<Integer, BasePopup>();
+
+            //table.setShowVerticalLines(false);
+            table.addKeyListener(this);
+            table.getModel().addTableModelListener(this);
+
+            table.getTableHeader().setReorderingAllowed(false);
+            //取消回车键
+            ActionMap am = table.getActionMap();
+            am.getParent().remove("selectNextRowCell");
+            table.setActionMap(am);
         }
 
         public void registerPopup(final int columnPopupIndex, IPopupBuilder popBuilder) {
 
-            this.columnPopupIndex = columnPopupIndex;
+//            this.columnPopupIndex = columnPopupIndex;
             ImageIcon icon = null;
             switch (popBuilder.getType()) {
                 case IPopupBuilder.TYPE_DATE_CLICK:
@@ -117,7 +130,7 @@ public class BaseTable extends JTable {
                 default:
                     icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TABLE));
             }
-            basePopup = new BasePopup(popBuilder) {
+            BasePopup basePopup = new BasePopup(popBuilder) {
                 @Override
                 public void closePopup() {
                     getCellEditor(selectedRow, columnPopupIndex).stopCellEditing();
@@ -129,28 +142,22 @@ public class BaseTable extends JTable {
                     }
                 }
             };
-            logger.debug("register popup for column:" + columnPopupIndex + ",row:" + selectedRow);
-            //table.setShowVerticalLines(false);
-            table.addKeyListener(this);
-            table.getModel().addTableModelListener(this);
-            table.getColumnModel().getColumn(columnPopupIndex).setCellRenderer(new RichTableCellRenderer(icon));
-            table.getTableHeader().setReorderingAllowed(false);
-            //取消回车键
-            ActionMap am = table.getActionMap();
-            am.getParent().remove("selectNextRowCell");
-            table.setActionMap(am);
 
+            registerColumn.put(columnPopupIndex, basePopup);
+
+            logger.debug("register popup for column:" + columnPopupIndex + ",row:" + selectedRow);
+            table.getColumnModel().getColumn(columnPopupIndex).setCellRenderer(new RichTableCellRenderer(icon));
             hasRegister = true;
 
         }
 
         public void hidePanel() {
             if (pop != null) {
-                logger.debug("hide popup panel,column:" + columnPopupIndex + ",row:" + selectedRow);
+                logger.debug("hide popup panel,column:" + displayColumnPopupIndex + ",row:" + selectedRow);
                 isShow = false;
                 pop.hide();
                 pop = null;
-                table.getCellEditor(selectedRow, columnPopupIndex).stopCellEditing();
+                table.getCellEditor(selectedRow, displayColumnPopupIndex).stopCellEditing();
             }
         }
 
@@ -158,10 +165,15 @@ public class BaseTable extends JTable {
             if (pop != null) {
                 pop.hide();
             }
-            logger.debug("show popup panel,column:" + columnPopupIndex + ",row:" + selectedRow);
+            int selectedColumn = getSelectedColumn();
+            BasePopup basePopup = registerColumn.get(selectedColumn);
+            if (basePopup == null) {
+                return;
+            }
+
+            logger.debug("show popup panel,column:" + selectedColumn + ",row:" + selectedRow);
             Point p = table.getLocationOnScreen();
 
-            int selectedColumn = getSelectedColumn();
             selectedRow = getSelectedRow();
 
             Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -187,9 +199,10 @@ public class BaseTable extends JTable {
             }
 
             pop = PopupFactory.getSharedInstance().getPopup(table, basePopup, selectedColumnX, selectedColumnY);
-            basePopup.setKey(table.getValueAt(table.getSelectedRow(), columnPopupIndex).toString());
+            basePopup.setKey(table.getValueAt(table.getSelectedRow(), selectedColumn).toString());
             basePopup.requestFocusInWindow();
             pop.show();
+            displayColumnPopupIndex = selectedColumn;
             isShow = true;
         }
 
@@ -241,14 +254,15 @@ public class BaseTable extends JTable {
 
                 logger.debug("ENTER for column:" + selectedColumn + ",row:" + selectedRow);
 
-                if (selectedColumn == columnPopupIndex) {
+                
+                if (registerColumn.containsKey(selectedColumn)) {
 
                     table.getCellEditor(selectedRow, selectedColumn).stopCellEditing();
 
                     if (isShow) {
-                        String value = table.getValueAt(table.getSelectedRow(), columnPopupIndex).toString();
+                        String value = table.getValueAt(table.getSelectedRow(), selectedColumn).toString();
                         logger.debug("set new value for popup:" + value);
-                        basePopup.setKey(value);
+                        registerColumn.get(selectedColumn).setKey(value);
                     }
                 }
             }
@@ -265,7 +279,8 @@ public class BaseTable extends JTable {
         if (singleEditRowTable != null && singleEditRowTable.hasRegister == true) {
             int selectedColumn = getSelectedColumn();
             int selectedRow = getSelectedRow();
-            if (selectedColumn == singleEditRowTable.columnPopupIndex) {
+            
+            if (singleEditRowTable.registerColumn!=null&&singleEditRowTable.registerColumn.containsKey(selectedColumn)) {
                 //getCellEditor(selectedRow, selectedColumn).stopCellEditing();
                 singleEditRowTable.showPanel();
             } else {
