@@ -9,11 +9,30 @@
     
     <bean id="credentialProvider" class="org.apache.http.impl.client.BasicCredentialsProvider" />
     
+    
     <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
+        <constructor-arg index="0">
+            <bean class="org.apache.http.impl.conn.PoolingClientConnectionManager">
+                <property name="maxTotal" value="100" />
+                <property name="defaultMaxPerRoute" value="50" />
+            </bean>
+        </constructor-arg>
         <property name="credentialsProvider" ref="credentialProvider"/>
     </bean>
     
-    <bean id="httpClientFactory" class="com.jskj.asset.client.layout.ws.ComHttpComponentsClientHttpRequestFactory">
+    <!--    <bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
+        <constructor-arg index="0">
+            <bean class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"></bean>
+        </constructor-arg>
+        <property name="params">
+            <bean class="org.apache.commons.httpclient.params.HttpClientParams">
+                <property name="soTimeout" value="30000"/>
+                <property name="connectionManagerTimeout" value="10000"/>
+            </bean>
+        </property>  
+    </bean>-->
+    
+    <bean id="httpClientFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
         <constructor-arg ref="httpClient"/>  
     </bean>
     

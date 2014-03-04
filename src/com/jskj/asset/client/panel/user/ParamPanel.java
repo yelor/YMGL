@@ -56,9 +56,9 @@ public final class ParamPanel extends BasePanel {
         super();
         initComponents();
         pageIndex = 1;
-        pageSize = 10;
+        pageSize = 20;
         count = 0;
-        conditionSql="";
+        conditionSql = "";
         bindTable = new BindTableHelper<Appparam>(jTableParam, new ArrayList<Appparam>());
         bindTable.createTable(new String[][]{{"appparamId", "参数ID"}, {"appparamPid", "参数父ID"}, {"appparamType", "参数类型"}, {"appparamName", "参数名"}, {"systemparam", "系统参数"},
         {"appparamDesc", "描述"}});
@@ -100,7 +100,7 @@ public final class ParamPanel extends BasePanel {
     @Action
     @Override
     public Task reload() {
-        return new RefreshTask(0, 1000);
+        return new RefreshTask(0, 20);
     }
 
     @Override
@@ -111,7 +111,7 @@ public final class ParamPanel extends BasePanel {
     private class RefreshTask extends ParamFindTask {
 
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize, "appparam/",conditionSql);
+            super(pageIndex, pageSize, "appparam/", conditionSql);
         }
 
         @Override
@@ -347,7 +347,11 @@ public final class ParamPanel extends BasePanel {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
-        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getAppparamName()+"\r\n注:将在下次系统重启后生效.");
+        if (selectedData.getSystemparam() == 0) {
+            AssetMessage.ERRORSYS("系统参数不能删除");
+            return null;
+        }
+        int result = AssetMessage.CONFIRM("确定删除数据:" + selectedData.getAppparamName() + "\r\n注:将在下次系统重启后生效.");
         if (result == JOptionPane.OK_OPTION) {
             return new CommUpdateTask<Appparam>(selectedData, "appparam/delete/" + selectedData.getAppparamId()) {
                 @Override
@@ -394,7 +398,7 @@ public final class ParamPanel extends BasePanel {
 
     @Action
     public Task print() {
-        ParamFindTask printData = new ParamFindTask(0, count, "appparam/","") {
+        ParamFindTask printData = new ParamFindTask(0, count, "appparam/", "") {
             @Override
             public void responseResult(CommFindEntity response) {
                 bindTable.createPrinter("系统参数配置信息", response.getResult()).buildInBackgound().execute();

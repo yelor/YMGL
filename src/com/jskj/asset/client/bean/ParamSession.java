@@ -103,7 +103,7 @@ public class ParamSession {
             for (Appparam param : currentPageData) {
                 if (param.getAppparamPid() == null || param.getAppparamPid() <= 0) {
                     pdata.add(param);
-                    System.out.println("found parent param:" + param.getAppparamName());
+                    //System.out.println("found parent param:" + param.getAppparamName());
                 }
             }
 

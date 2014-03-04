@@ -512,7 +512,7 @@ public class BindTableHelper<T> {
                             try {
                                 Object temp = getObject(columnParameter[j], bean, jTableBinding.getColumnBinding(j).getColumnClass());
                                 if (temp == null) {
-                                    ColumnBinding binder = jTableBinding.getColumnBinding(i);
+                                    ColumnBinding binder = jTableBinding.getColumnBinding(j);
                                     Class<?> classType = getFieldType(columnParameter[j],bean, binder.getClass());
                                     if (classType == String.class) {
                                         temp = "";
@@ -532,6 +532,7 @@ public class BindTableHelper<T> {
                                 }
                                 values[j] = temp;
                             } catch (Exception ex) {
+                                ex.printStackTrace();
                                 logger.error(ex);
                                 values[j] = "[error:" + columnParameter[j] + "]";
                             }
@@ -613,7 +614,7 @@ public class BindTableHelper<T> {
             for (int i = 0; i < columnParameter.length; i++) {
                  ColumnBinding binder = jTableBinding.getColumnBinding(i);
                  Class<?> classType = getFieldType(columnParameter[i],firstRowData, binder.getClass());
-                 //System.out.println("@@@@@@@@@@@@@@@@@@@@columnParameter:"+columnParameter[i]+",classType:"+classType);
+                // System.out.println("@@@@@@@@@@@@@@@@@@@@columnParameter:"+columnParameter[i]+",classType:"+classType);
                 if (classType == String.class) {
                     TextColumnBuilder<String> itemColumn = col.column(columnString[i], columnParameter[i], type.stringType());
                     itemColumns[i] = itemColumn;
