@@ -44,12 +44,12 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
     /**
      * 为一个textfiled注册一带有图标的POPUP_TYPE,PARAMETER为扩展参数
-     * 1.如果是TYPE_DATE_CLICK：可以用这个参数来表示时间格式"yyyy-MM-dd"
-     * 2....
+     * 1.如果是TYPE_DATE_CLICK：可以用这个参数来表示时间格式"yyyy-MM-dd" 2....
+     *
      * @param POPUP_TYPE
-     * @param PARAMETER 
+     * @param PARAMETER
      */
-    public void registerPopup(int POPUP_TYPE,String PARAMETER) {
+    public void registerPopup(int POPUP_TYPE, String PARAMETER) {
         switch (POPUP_TYPE) {
             case IPopupBuilder.TYPE_DATE_CLICK:
                 icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_DATE));
@@ -68,13 +68,13 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         this.setMargin(insets);
         hasRegister = true;
     }
-    
+
     /**
      * 为一个textfiled注册一带有图标的POPUP_TYPE,PARAMETER为扩展参数
-     * 1.如果是TYPE_DATE_CLICK：可以用这个参数来表示时间格式"yyyy-MM-dd"
-     * 2....
+     * 1.如果是TYPE_DATE_CLICK：可以用这个参数来表示时间格式"yyyy-MM-dd" 2....
+     *
      * @param POPUP_TYPE
-     * @param PARAMETER 
+     * @param PARAMETER
      */
     public void registerIcon(int POPUP_TYPE) {
         switch (POPUP_TYPE) {
@@ -86,7 +86,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
                 break;
             case IPopupBuilder.TYPE_POPUP_SCAN:
                 icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_SCAN));
-                break;    
+                break;
             default:
                 icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TABLE));
         }
@@ -94,12 +94,11 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         this.setMargin(insets);
         hasRegister = true;
     }
-    
 
     /**
-     * 为一个textfiled注册一个popup
-     * registerPopup需要IPopupBuilder
-     * @param popBuilder 
+     * 为一个textfiled注册一个popup registerPopup需要IPopupBuilder
+     *
+     * @param popBuilder
      */
     public void registerPopup(IPopupBuilder popBuilder) {
         switch (popBuilder.getType()) {
@@ -149,6 +148,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
+
         if (keyCode == KeyEvent.VK_ENTER) {
             if (isShow) {
                 hidePanel();
@@ -159,7 +159,16 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
     }
 
     public void keyReleased(KeyEvent e) {
-
+        int keyCode = e.getKeyCode();
+        if (keyCode != KeyEvent.VK_ENTER) {
+            if (!isShow) {
+                showPanel();
+            }else{
+               basePopup.setKey(getText());
+            }
+           // System.out.println("@@@@@@@@@@@@@@@@@@@KeyEvent:"+e);
+            //this.selectAll();
+        }
     }
 
     private void hidePanel() {
@@ -182,16 +191,16 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
         int selectedX = p.x;
         int selectedY = p.y + getHeight();
-        
+
         int popHeight = basePopup.getHeight();
         int popWitdh = basePopup.getWidth();
-     
-        if((selectedY+popHeight)>size.getHeight()){
-           selectedY = p.y-basePopup.getHeight();
+
+        if ((selectedY + popHeight) > size.getHeight()) {
+            selectedY = p.y - basePopup.getHeight();
         }
-        
-        if((selectedX+popWitdh)>size.getWidth()){
-           selectedX =  p.x-basePopup.getWidth();
+
+        if ((selectedX + popWitdh) > size.getWidth()) {
+            selectedX = p.x - basePopup.getWidth();
         }
 
 //        Point mousepoint = MouseInfo.getPointerInfo().getLocation();
