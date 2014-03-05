@@ -36,8 +36,8 @@ public class ParamSession {
         return seesion;
     }
 
-    public Task buildParamSession() {
-        return new RefreshTask();
+    public Task buildParamSession(Task afterTask) {
+        return new RefreshTask(afterTask);
     }
 
     public List<String> getChildNameByParentName(String parentParamName) {
@@ -87,8 +87,10 @@ public class ParamSession {
 
     private static class RefreshTask extends ParamFindTask {
 
-        RefreshTask() {
+        private Task afterTask;
+        RefreshTask(Task afterTask) {
             super(1, 100000, "appparam/", "");
+            this.afterTask = afterTask;
         }
 
         @Override
@@ -121,6 +123,7 @@ public class ParamSession {
 
             }
 
+            afterTask.execute();
         }
     }
 

@@ -292,11 +292,25 @@ public class LoadModule extends BaseTask {
 
         //加载主要工作区
         clientView.displayMainView();
+
         
-        /**************************************************************************************
-         * 
-         * jMenu3 jMenu4 jMenu5功能暂时屏蔽（报表）
-         ***********************************/
+        /*权限控制*/
+        if (!AssetClientApp.permissionMoudle(resourceMap.getString("jichuMenu.text"))) {
+            jichuMenu.setEnabled(false);
+        }
+        
+        if (!AssetClientApp.permissionMoudle(resourceMap.getString("baobiaoMenu.text"))) {
+            baobiaoMenu.setEnabled(false);
+        }
+        if (!AssetClientApp.permissionMoudle(resourceMap.getString("jMenuDW.text"))) {
+            jMenuDW.setEnabled(false);
+        }
+
+        /**
+         * ************************************************************************************
+         *
+         * jMenu3 jMenu4 jMenu5功能暂时屏蔽（报表） *********************************
+         */
         jMenu3.setEnabled(false);
         jMenu4.setEnabled(false);
         jMenu5.setEnabled(false);

@@ -158,16 +158,15 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode != KeyEvent.VK_ENTER) {
             if (!isShow) {
                 showPanel();
-            }else{
-               basePopup.setKey(getText());
+            } else {
+                basePopup.setKey(getText());
             }
-           // System.out.println("@@@@@@@@@@@@@@@@@@@KeyEvent:"+e);
-            //this.selectAll();
         }
     }
 

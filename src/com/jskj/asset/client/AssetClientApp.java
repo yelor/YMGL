@@ -6,6 +6,8 @@ package com.jskj.asset.client;
 import com.jskj.asset.client.bean.ParamSession;
 import com.jskj.asset.client.bean.UserSessionEntity;
 import com.jskj.asset.client.bean.entity.Appparam;
+import com.jskj.asset.client.bean.entity.Departmenttb;
+import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.login.LoginMain;
@@ -90,6 +92,63 @@ public class AssetClientApp extends SingleFrameApplication {
         return ParamSession.getInstance().getParamsByType(type);
     }
 
+    public static boolean permissionMoudle(String moudleName) {
+        List<Appparam> appparams = AssetClientApp.getParamsByType("模块权限");
+        UserSessionEntity session = AssetClientApp.getSessionMap();
+        Departmenttb department = session.getDepartment();
+        Usertb usertb = session.getUsertb();
+        
+        if (department == null || usertb == null) {
+            logger.info(moudleName+"模块: 限制访问");
+            return false;
+        }
+        if (appparams != null) //权限控制
+        {
+            boolean found=false;
+            for (Appparam app : appparams) {
+                if (app.getAppparamName().equals(moudleName)) { //模块名一致
+                    found = true;
+                    //得到权限
+                    String rest = app.getAppparamDesc();
+                    if (rest != null && !rest.trim().equals("")) {
+                        String[] ress = rest.split(";"); //部门1:角色;部门2:角色;部门3:角色
+                        for (String res : ress) {
+                            // 部门:角色1:角色2
+                            String[] departRoles = res.split(":");
+                            if (departRoles[0].equals(department.getDepartmentName())) {
+                                if (departRoles.length > 1) {
+                                    for (int i = 1; i < departRoles.length; i++) {
+                                        if (usertb.getUserRoles().indexOf(departRoles[i]) >= 0) {
+                                            logger.info(moudleName+"模块: 允许访问");
+                                            return true;
+                                        }
+                                    }
+                                } else {//只配置了部门
+                                    logger.info(moudleName+"模块: 允许访问");
+                                    return true;
+                                }
+                            }
+
+                        }
+                    } else {
+                        logger.info(moudleName+"模块: 允许访问");
+                        return true;
+                    }
+                    break;
+                }
+
+            }
+            if(!found){
+               return true;
+            }
+        } else {
+            logger.info(moudleName+"模块: 允许访问");
+            return true;
+        }
+        logger.info(moudleName+"模块: 限制访问");
+        return false;
+    }
+
     /**
      * At startup create and show the main frame of the application.
      */
@@ -120,11 +179,8 @@ public class AssetClientApp extends SingleFrameApplication {
         //得到message
         view.setMessage(message.toString());
 
-        //初始化必要的功能
-        view.loadMoudule().execute();
-
         //参数初始化
-        ParamSession.getInstance().buildParamSession().execute();
+        ParamSession.getInstance().buildParamSession(view.loadMoudule()).execute();
 
         addExitListener(new Application.ExitListener() {
 

@@ -36,6 +36,8 @@ public class MainWorkPane extends BasePanel {
         initComponents();
         treePanesMap = new HashMap<String, BasePanel>();
         leftTree.setHorizontalScrollBar(null);
+                LeftPane.setMaximumSize(new java.awt.Dimension(220, 463));
+        LeftPane.setMinimumSize(new java.awt.Dimension(220, 463));
     }
 
     public void changeTreeView(String VIEW_TREE) {
@@ -257,5 +259,9 @@ public class MainWorkPane extends BasePanel {
      */
     public javax.swing.JScrollPane getLeftTree() {
         return leftTree;
+    }
+    
+    public javax.swing.JSplitPane getSplitPane(){
+         return jSplitMain;
     }
 }

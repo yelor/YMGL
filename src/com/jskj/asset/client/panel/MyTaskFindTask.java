@@ -266,6 +266,9 @@ public class MyTaskFindTask extends BaseTask {
                 String shenpiTask = messageLabel.getText();
                 StringBuilder sb = new StringBuilder(shenpiTask);
                 sb.insert(sb.lastIndexOf("</html>"), builder);
+                if(sb.toString().indexOf("我的申请单")<0 && sb.toString().indexOf("审批任务")<0){
+                    sb.insert(sb.lastIndexOf("</html>"), "您当前没有消息.");
+                }
                 messageLabel.setText(sb.toString());
             }
         }

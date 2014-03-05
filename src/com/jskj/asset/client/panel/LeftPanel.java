@@ -5,11 +5,13 @@
  */
 package com.jskj.asset.client.panel;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.AssetArrayNodes;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.AssetNode;
 import com.jskj.asset.client.layout.AssetTreeNode;
 import com.jskj.asset.client.layout.BaseTreePane;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -156,11 +158,18 @@ public class LeftPanel extends BaseTreePane {
 
                 List<AssetNode> assetNodes = nodes.getNodes();
 
+                int i=0;
                 for (AssetNode node : assetNodes) {
                     String icon = node.getNodeIcon();
                     String name = node.getNodeName();
-                    logger.info("loading left button:" + name);
+                    logger.info("loading " + name);
+                    //权限控制
+                    if(!AssetClientApp.permissionMoudle(name)){
+                       continue;
+                    }
                     javax.swing.JButton leftButton = new javax.swing.JButton();
+                    i++;
+
                     if (icon != null && !icon.trim().equals("")) {
                         leftButton.setText(""); // NOI18N
                         leftButton.setIcon(new javax.swing.ImageIcon(getClass().getResource(icon))); // NOI18N
@@ -187,10 +196,25 @@ public class LeftPanel extends BaseTreePane {
                     leftButton.addActionListener(new AssetNodeActionListener(node));
 
                     leftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
                     jToolBar1.add(leftButton);
                 }
                 repaint();
                 validate();
+                
+                //如果只有一个模块，就直接打开他
+                if(i==1){
+                  Component[] components = jToolBar1.getComponents();
+                  if(components!=null && components.length>0){
+                     Component com = components[0];
+                     if(com instanceof javax.swing.JButton){
+                        javax.swing.JButton button = (javax.swing.JButton)com;
+                        button.doClick();
+                        
+                        super.clientView.getMainViewPane().getSplitPane().setLeftComponent(null);
+                     }
+                  }
+                }
 
 //                navigatorTree.setRootVisible(false);
 //                navigatorTree.setModel(new AssetTreeModel(getTreeNode(new AssetTreeNode(nodes.getTopNode()), nodes.getNodes())));
