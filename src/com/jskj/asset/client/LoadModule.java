@@ -296,16 +296,22 @@ public class LoadModule extends BaseTask {
         
         /*权限控制*/
         if (!AssetClientApp.permissionMoudle(resourceMap.getString("jichuMenu.text"))) {
-            jichuMenu.setEnabled(false);
+            //jichuMenu.setEnabled(false);
+            menuBar.remove(jichuMenu);
         }
         
         if (!AssetClientApp.permissionMoudle(resourceMap.getString("baobiaoMenu.text"))) {
-            baobiaoMenu.setEnabled(false);
+            //baobiaoMenu.setEnabled(false);
+            menuBar.remove(baobiaoMenu);
         }
         if (!AssetClientApp.permissionMoudle(resourceMap.getString("jMenuDW.text"))) {
-            jMenuDW.setEnabled(false);
+           // jMenuDW.setEnabled(false);
+            menuBar.remove(jMenuDW);
         }
 
+        menuBar.validate();
+        menuBar.updateUI();
+        
         /**
          * ************************************************************************************
          *

@@ -267,7 +267,11 @@ public class MyTaskFindTask extends BaseTask {
                 StringBuilder sb = new StringBuilder(shenpiTask);
                 sb.insert(sb.lastIndexOf("</html>"), builder);
                 if(sb.toString().indexOf("我的申请单")<0 && sb.toString().indexOf("审批任务")<0){
-                    sb.insert(sb.lastIndexOf("</html>"), "您当前没有消息.");
+                    StringBuilder builderNoMsg = new StringBuilder("<font style=\"FONT-FAMILY:")
+                            .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
+                    builderNoMsg.append("您当前没有消息.");
+                    builderNoMsg.append("</font>");
+                    sb.insert(sb.lastIndexOf("</html>"), builderNoMsg);
                 }
                 messageLabel.setText(sb.toString());
             }
