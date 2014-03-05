@@ -84,7 +84,9 @@ public class ParamDialog extends BaseDialog {
 
         if (appParam.getAppparamId() == null || appParam.getAppparamId() <= 0) { //新建
             //jCheckBox2.setSelected(false);
+            jTextField1.setEnabled(true);
             jCheckBox2.setEnabled(true);
+            jTextFu.setEnabled(true);
             jTextField1.setText("");
             jTextField2.setText("");
             jTextArea1.setText("");
@@ -95,6 +97,10 @@ public class ParamDialog extends BaseDialog {
             jCheckBox2.setSelected(false);
             jCheckBox2.setEnabled(false);
             jTextField1.setText(appParam.getAppparamType());
+            if(paramData.getSystemparam()==0){
+               jTextField1.setEnabled(false);
+               jTextFu.setEnabled(false);
+            }
             jTextField2.setText(appParam.getAppparamName());
             jTextArea1.setText(appParam.getAppparamDesc());
             int isSys = appParam.getSystemparam();

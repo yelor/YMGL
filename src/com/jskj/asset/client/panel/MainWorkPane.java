@@ -10,9 +10,13 @@
  */
 package com.jskj.asset.client.panel;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.UserSessionEntity;
+import com.jskj.asset.client.bean.entity.UserRolesKey;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.util.ClassHelper;
 import java.util.HashMap;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Task;
 
@@ -150,6 +154,7 @@ public class MainWorkPane extends BasePanel {
 
         rightPane.setFont(resourceMap.getFont("rightPane.font")); // NOI18N
         rightPane.setName("rightPane"); // NOI18N
+        rightPane.setRequestFocusEnabled(false);
         jSplitMain.setRightComponent(rightPane);
 
         javax.swing.GroupLayout jPaneMainLayout = new javax.swing.GroupLayout(jPaneMain);
@@ -188,6 +193,15 @@ public class MainWorkPane extends BasePanel {
 
     @Override
     public Task reload() {
+        
+        //根据用户角色打开相应的首页
+        UserSessionEntity session = AssetClientApp.getSessionMap();
+        if(session!=null){
+          List<UserRolesKey> roles = session.getRoles();
+//          if(roles.contains("")){
+//             
+//          }
+        }
         return new OpenTabTask("首页", new ToppagePane(), true);
     }
 
