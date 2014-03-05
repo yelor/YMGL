@@ -192,6 +192,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jComboBoxJixing = new javax.swing.JComboBox();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new ScanButton();
+        jButton2 = new ScanButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -508,6 +509,14 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton2.setIcon(null);
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
+
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoDengJi1JDialog.class, this);
         jButton3.setAction(actionMap.get("submitForm")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
@@ -734,6 +743,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox jComboBoxJixing;
