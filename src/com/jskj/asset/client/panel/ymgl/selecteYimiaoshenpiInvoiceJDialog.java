@@ -6,18 +6,11 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import static com.jskj.asset.client.AssetClientApp.getApplication;
 import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.panel.OpenTabTask;
-import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.Task;
 
 /**
  *
@@ -190,8 +183,6 @@ public class selecteYimiaoshenpiInvoiceJDialog extends javax.swing.JDialog {
     @Action
     public void selectedAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private YiMiaoXiaoShouTuiHuoJDialog yiMiaoXiaoShouTuiHuoJDialog;
-            private YiMiaoXiaFaTuiKuJDialog yiMiaoXiaFaTuiKuJDialog;
 
             public void run() {
                 dispose();
@@ -203,7 +194,7 @@ public class selecteYimiaoshenpiInvoiceJDialog extends javax.swing.JDialog {
                     AssetClientApp.getApplication().show(yimiaoxiaoshoushenpiJDialog);
                 } else if (selecteIndex == 1) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoBaoSunShenHeJDialog baosunshenpiJDialog = new YiMiaoBaoSunShenHeJDialog(new javax.swing.JFrame(), true);
+                    YimiaoBaosunShenPiJDialog baosunshenpiJDialog = new YimiaoBaosunShenPiJDialog(new javax.swing.JFrame(), true);
                     baosunshenpiJDialog.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(baosunshenpiJDialog);
                 } 
