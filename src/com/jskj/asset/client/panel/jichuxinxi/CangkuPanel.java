@@ -60,16 +60,16 @@ public final class CangkuPanel extends BasePanel {
         count = 0;
         conditionSql = "";
         bindTable = new BindTableHelper<DepotALL>(jTableParam, new ArrayList<DepotALL>());
-        bindTable.createTable(new String[][]{{"depotId", "仓库ID"}, {"depotName", "仓库名"}, {"depotArea", "面积"}, {"usertb.userName", "负责人"},
+        bindTable.createTable(new String[][]{{"depotId", "仓库ID"}, {"depotName", "仓库名"}, {"depotArea", "面积"},
         {"depotAddr", "仓库地址"}});
         bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 50}, new int[]{1, 200}, new int[]{2, 80}, new int[]{3, 150}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 50}, new int[]{1, 200}, new int[]{2, 80}).setRowHeight(25);
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{1, 4};
+                return new int[]{1, 3};
             }
 
             @Override
@@ -80,8 +80,8 @@ public final class CangkuPanel extends BasePanel {
                     if (!searchKeys.get(1).trim().equals("")) {
                         sql.append("(depot_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or zujima like \"").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
                     }
-                    if (!searchKeys.get(4).trim().equals("")) {
-                        sql.append("depot_addr like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
+                    if (!searchKeys.get(3).trim().equals("")) {
+                        sql.append("depot_addr like \"%").append(searchKeys.get(3).trim()).append("%\"").append(" and ");
                     }
                     if (sql.length() > 0) {
                         sql.delete(sql.length() - 5, sql.length() - 1);

@@ -539,7 +539,7 @@ public class GongYingDanWeiInfoJDialog extends BaseDialog {
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("供应单位")); // NOI18N
             jCheckBoxCont.setEnabled(true);
         } else {//更新
-            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("更新供应单位:" + paramData.getSupplierId())); // NOI18N
+            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("修改供应单位:" + paramData.getSupplierId())); // NOI18N
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
         }

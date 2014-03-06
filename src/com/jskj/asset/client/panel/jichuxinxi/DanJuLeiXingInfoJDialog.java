@@ -188,7 +188,7 @@ public class DanJuLeiXingInfoJDialog extends BaseDialog {
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("单据类型")); // NOI18N
             jCheckBoxCont.setEnabled(true);
         } else {//更新
-            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新单据类型:" + paramData.getDanjuleixingId())); // NOI18N
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("修改单据类型:" + paramData.getDanjuleixingId())); // NOI18N
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
         }
