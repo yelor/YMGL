@@ -5,9 +5,7 @@
  */
 package com.jskj.asset.client.layout;
 
-import com.jskj.asset.client.util.BeanFactory;
 import com.jskj.asset.client.util.BindTableHelper;
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -16,11 +14,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JTable;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -119,7 +117,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
             jLabelTotal.setText("正在查询相关结果...");
             if (popBuilder.getWebServiceURI() != null && !popBuilder.getWebServiceURI().trim().equals("")) {
                 try {
-   
+
                     UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(popBuilder.getWebServiceURI())
                             .queryParam("pagesize", pageSize).queryParam("pageindex", pageIndex);
 
@@ -159,9 +157,9 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
                             bindTable = new BindTableHelper<HashMap>(jTableResult, resultList);
                             bindTable.createTable(popBuilder.displayColumns());
                             bindTable.bind();
-                            if (resultList.size() > 0) {
-                                jTableResult.setRowSelectionInterval(0, 0);
-                            }
+//                            if (resultList.size() > 0) {
+//                                jTableResult.setRowSelectionInterval(0, 0);
+//                            }
                         }
                     }
                     return;
@@ -232,11 +230,6 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         jTableResult.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableResultMouseClicked(evt);
-            }
-        });
-        jTableResult.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jTableResultMouseMoved(evt);
             }
         });
         jScrollPane1.setViewportView(jTableResult);
@@ -327,24 +320,18 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableResultMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResultMouseClicked
+        setPopValueToParent();
+    }//GEN-LAST:event_jTableResultMouseClicked
+
+
+    public void setPopValueToParent(){
         if (bindTable != null) {
             closePopup();
             HashMap map = bindTable.getSelectedBean();
             popBuilder.setBindedMap(map);
         }
-    }//GEN-LAST:event_jTableResultMouseClicked
-
-    private void jTableResultMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableResultMouseMoved
-        int selectedrow = jTableResult.getSelectedRow();
-        if (selectedrow > -1) {
-            Point p = evt.getPoint();//首先获取鼠标坐标
-            int current = jTableResult.rowAtPoint(p);//根据坐标获取所在行
-            // System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@jTableResultMouseMoved:"+current);
-
-        }
-    }//GEN-LAST:event_jTableResultMouseMoved
-
-
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;
@@ -381,4 +368,8 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
     }
 
     public abstract void closePopup();
+
+    public JTable getTable() {
+        return jTableResult;
+    }
 }

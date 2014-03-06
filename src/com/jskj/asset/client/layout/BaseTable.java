@@ -244,27 +244,74 @@ public class BaseTable extends JTable {
         }
 
         public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+            int selectedColumn = table.getSelectedColumn();
+            if (registerColumn.containsKey(selectedColumn)) {
+                BasePopup basePopup = registerColumn.get(selectedColumn);
+                JTable popUptable = basePopup.getTable();
+                //禁止掉上下键
+                if (isShow) {
+                    if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+                        e.consume();
+                    }
+                }
+
+                if (keyCode == KeyEvent.VK_ENTER) {
+                    if (isShow) {
+                        int selectedrow = popUptable.getSelectedRow();
+                        if (selectedrow >= 0) {
+                            basePopup.setPopValueToParent();
+                        } else {
+                            int selectedRow = table.getSelectedRow();
+                            logger.debug("ENTER for column:" + selectedColumn + ",row:" + selectedRow);
+                            if (registerColumn.containsKey(selectedColumn)) {
+
+                                table.getCellEditor(selectedRow, selectedColumn).stopCellEditing();
+
+                                if (isShow) {
+                                    String value = table.getValueAt(table.getSelectedRow(), selectedColumn).toString();
+                                    logger.debug("set new value for popup:" + value);
+                                    registerColumn.get(selectedColumn).setKey(value);
+                                }
+                            }
+
+                        }
+                    } else {
+                        showPanel();
+                    }
+                } else if (keyCode == KeyEvent.VK_DOWN) {
+                    if (isShow) {
+                        int selectedrow = popUptable.getSelectedRow();
+                        int upRow = selectedrow + 1;
+                        //System.out.println("keyCodekeyCode:VK_DOWN:" + upRow);
+                        if (upRow < popUptable.getRowCount()) {
+                            popUptable.setRowSelectionInterval(upRow, upRow);
+                        }
+                    }
+                } else if (keyCode == KeyEvent.VK_UP) {
+                    if (isShow) {
+                        int selectedrow = popUptable.getSelectedRow();
+                        int upRow = selectedrow - 1;
+                        // System.out.println("keyCodekeyCode:VK_UP:" + upRow);
+                        if (upRow >= 0) {
+                            popUptable.setRowSelectionInterval(upRow, upRow);
+                        } else {
+                            popUptable.clearSelection();
+                        }
+                    }
+                } else {
+                    if (isShow) {
+                        popUptable.clearSelection();
+                    }
+                }
+
+            }
 
         }
 
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                int selectedColumn = table.getSelectedColumn();
-                int selectedRow = table.getSelectedRow();
 
-                logger.debug("ENTER for column:" + selectedColumn + ",row:" + selectedRow);
-
-                
-                if (registerColumn.containsKey(selectedColumn)) {
-
-                    table.getCellEditor(selectedRow, selectedColumn).stopCellEditing();
-
-                    if (isShow) {
-                        String value = table.getValueAt(table.getSelectedRow(), selectedColumn).toString();
-                        logger.debug("set new value for popup:" + value);
-                        registerColumn.get(selectedColumn).setKey(value);
-                    }
-                }
             }
         }
 
@@ -279,8 +326,8 @@ public class BaseTable extends JTable {
         if (singleEditRowTable != null && singleEditRowTable.hasRegister == true) {
             int selectedColumn = getSelectedColumn();
             int selectedRow = getSelectedRow();
-            
-            if (singleEditRowTable.registerColumn!=null&&singleEditRowTable.registerColumn.containsKey(selectedColumn)) {
+
+            if (singleEditRowTable.registerColumn != null && singleEditRowTable.registerColumn.containsKey(selectedColumn)) {
                 //getCellEditor(selectedRow, selectedColumn).stopCellEditing();
                 singleEditRowTable.showPanel();
             } else {

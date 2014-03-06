@@ -9,7 +9,6 @@ import com.jskj.asset.client.util.DateChooser;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
@@ -17,10 +16,10 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -151,9 +150,39 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
         if (keyCode == KeyEvent.VK_ENTER) {
             if (isShow) {
-                hidePanel();
+
+                JTable table = basePopup.getTable();
+                int selectedrow = table.getSelectedRow();
+                if (selectedrow >= 0) {
+                    basePopup.setPopValueToParent();
+                } else {
+                    hidePanel();
+                }
             } else {
                 showPanel();
+            }
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            if (isShow) {
+                JTable table = basePopup.getTable();
+                int selectedrow = table.getSelectedRow();
+                int upRow = selectedrow + 1;
+                //System.out.println("keyCodekeyCode:VK_DOWN:" + upRow);
+                if (upRow < table.getRowCount()) {
+                    table.setRowSelectionInterval(upRow, upRow);
+                }
+            }
+        } else if (keyCode == KeyEvent.VK_UP) {
+            if (isShow) {
+                JTable table = basePopup.getTable();
+                int selectedrow = table.getSelectedRow();
+                int upRow = selectedrow - 1;
+               // System.out.println("keyCodekeyCode:VK_UP:" + upRow);
+                if (upRow >= 0) {
+                    table.setRowSelectionInterval(upRow, upRow);
+                }else{
+                   table.clearSelection();
+                }
+                
             }
         }
     }
