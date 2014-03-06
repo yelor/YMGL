@@ -249,22 +249,6 @@ public class MainPanel extends BasePanel {
         return ctrlPane.reload();
     }
 
-    @Action
-    public void YiMiaoBaoSunShenHeAction() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private YiMiaoBaoSunShenHeJDialog yiMiaoBaoSunShenHeJDialog;
-
-            public void run() {
-                if (yiMiaoBaoSunShenHeJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yiMiaoBaoSunShenHeJDialog = new YiMiaoBaoSunShenHeJDialog(new javax.swing.JFrame(), true);
-                    yiMiaoBaoSunShenHeJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(yiMiaoBaoSunShenHeJDialog);
-            }
-
-        });
-    }
 
     @Action
     public void yiMiaoYanShouAction() {
