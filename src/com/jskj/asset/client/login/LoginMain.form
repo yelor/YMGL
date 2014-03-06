@@ -179,6 +179,7 @@
               <Connection code="Constants.GLOBAL_FONT" type="code"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="loginButton.icon"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="loginButton" noResource="true"/>
           </Properties>
         </Component>

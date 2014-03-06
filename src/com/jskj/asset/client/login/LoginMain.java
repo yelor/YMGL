@@ -102,7 +102,7 @@ public class LoginMain extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(portText, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        )
+                )
         );
         jPanelNetLayout.setVerticalGroup(
                 jPanelNetLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,13 +175,13 @@ public class LoginMain extends javax.swing.JFrame {
         }
 
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(seqGroup));
-         if (display){
-          setMinimumSize(new java.awt.Dimension(371, 326));
-          setMaximumSize(new java.awt.Dimension(371, 326));
-         }else{
-          setMinimumSize(new java.awt.Dimension(371, 274));
-          setMaximumSize(new java.awt.Dimension(371, 274));
-         }
+        if (display) {
+            setMinimumSize(new java.awt.Dimension(371, 326));
+            setMaximumSize(new java.awt.Dimension(371, 326));
+        } else {
+            setMinimumSize(new java.awt.Dimension(371, 274));
+            setMaximumSize(new java.awt.Dimension(371, 274));
+        }
         validate();
         pack();
 
@@ -238,6 +238,7 @@ public class LoginMain extends javax.swing.JFrame {
         loginButton.setAction(actionMap.get("sendLogin")); // NOI18N
         loginButton.setFont(Constants.GLOBAL_FONT);
         loginButton.setIcon(resourceMap.getIcon("loginButton.icon")); // NOI18N
+        loginButton.setEnabled(false);
         loginButton.setName("loginButton"); // NOI18N
 
         jButton1.setAction(actionMap.get("close")); // NOI18N
@@ -349,9 +350,19 @@ public class LoginMain extends javax.swing.JFrame {
 
     private void passwordFiledKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFiledKeyReleased
         int keyCode = evt.getKeyCode();
-        if (keyCode == KeyEvent.VK_ENTER) {
-            sendLogin().execute();
+
+        String password = String.valueOf(passwordFiled.getPassword());
+
+        if (password.length() > 0) {
+            loginButton.setEnabled(true);
+            if (keyCode == KeyEvent.VK_ENTER) {
+                sendLogin().execute();
+            }
+        }else{
+            loginButton.setEnabled(false);
         }
+
+
     }//GEN-LAST:event_passwordFiledKeyReleased
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
