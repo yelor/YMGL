@@ -14,6 +14,7 @@ import com.jskj.asset.client.layout.BaseTreePane;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -122,7 +123,7 @@ public class LeftPanel extends BaseTreePane {
         if (selectedNode != null) {
             Task task = new OpenTabTask(selectedNode);
             task.execute();
-            logger.debug("------------>TabPane:" + disTabCount);
+            logger.debug("OPEN TabPane:" + disTabCount);
         }
     }
 
@@ -158,17 +159,18 @@ public class LeftPanel extends BaseTreePane {
 
                 List<AssetNode> assetNodes = nodes.getNodes();
 
-                int i=0;
+                List<AssetNode> permissionArrMoudle = new ArrayList<AssetNode>();
+                int i = 0;
                 for (AssetNode node : assetNodes) {
                     String icon = node.getNodeIcon();
                     String name = node.getNodeName();
                     logger.info("loading " + name);
                     //权限控制
-                    if(!AssetClientApp.permissionMoudle(name)){
-                       continue;
+                    if (AssetClientApp.permissionMoudle(name)) {
+                        permissionArrMoudle.add(node);
+                        i++;
                     }
                     javax.swing.JButton leftButton = new javax.swing.JButton();
-                    i++;
 
                     if (icon != null && !icon.trim().equals("")) {
                         leftButton.setText(""); // NOI18N
@@ -201,19 +203,12 @@ public class LeftPanel extends BaseTreePane {
                 }
                 repaint();
                 validate();
-                
+
                 //如果只有一个模块，就直接打开他
-                if(i==1){
-                  Component[] components = jToolBar1.getComponents();
-                  if(components!=null && components.length>0){
-                     Component com = components[0];
-                     if(com instanceof javax.swing.JButton){
-                        javax.swing.JButton button = (javax.swing.JButton)com;
-                        button.doClick();
-                        
-                        super.clientView.getMainViewPane().getSplitPane().setLeftComponent(null);
-                     }
-                  }
+                if (i == 1) {
+                    AssetNode openNode = permissionArrMoudle.get(0);
+                    AssetTreeNode treeNode = new AssetTreeNode(openNode);
+                    openLink(treeNode);
                 }
 
 //                navigatorTree.setRootVisible(false);
