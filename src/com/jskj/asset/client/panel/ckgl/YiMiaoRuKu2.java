@@ -90,6 +90,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
+                    churukudan.setXiangdanId((Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId")))));
 
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -433,7 +434,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
             churukudan.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             churukudan.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             churukudan.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "price"))));
-            churukudan.setTotalprice(churukudan.getQuantity()*churukudan.getPrice());
+            churukudan.setTotalprice(churukudan.getQuantity() * churukudan.getPrice());
             churukudan.setYouxiaoqi(dateformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
         }
 

@@ -58,7 +58,7 @@ public class selecteYimiaoshenpiInvoiceJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "疫苗下发销售单审批", "疫苗报损审核" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "疫苗下发销售单审批", "疫苗报损审核", "疫苗采购申请审批" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -197,7 +197,12 @@ public class selecteYimiaoshenpiInvoiceJDialog extends javax.swing.JDialog {
                     YimiaoBaosunShenPiJDialog baosunshenpiJDialog = new YimiaoBaosunShenPiJDialog(new javax.swing.JFrame(), true);
                     baosunshenpiJDialog.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(baosunshenpiJDialog);
-                } 
+                } else if (selecteIndex == 2) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YimiaoCaigouShenPiJDialog yimiaocaigoushenpiJDialog = new YimiaoCaigouShenPiJDialog(new javax.swing.JFrame(), true);
+                    yimiaocaigoushenpiJDialog.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(yimiaocaigoushenpiJDialog);
+                }
             }
         });
 

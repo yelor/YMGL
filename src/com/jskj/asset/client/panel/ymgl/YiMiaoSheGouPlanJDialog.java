@@ -629,7 +629,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             }
             yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
             yimiaoshenqingdan.setDanjuleixingId(4);
-            yimiaoshenqingdan.setStatus(9);
+            yimiaoshenqingdan.setStatus(8);
             yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
             yimiaoshenqingdan.setTotalprice(yimiaoshenqingdan.getBuyprice()* yimiaoshenqingdan.getQuantity());
             list.add(yimiaoshenqingdan);

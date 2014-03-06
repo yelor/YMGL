@@ -164,7 +164,7 @@
                 <Component class="javax.swing.JButton" name="jButton11">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog" id="shenPiNMessage" methodName="shenPiNMessage"/>
+                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog" id="shenPiNMessage" methodName="shenPiNMessage"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="jButton11.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="jButton11.text"/>
@@ -177,7 +177,7 @@
                 <Component class="javax.swing.JButton" name="jButton12">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog" id="shenPiY" methodName="shenPiY"/>
+                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog" id="shenPiY" methodName="shenPiY"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="jButton12.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="jButton12.text"/>
@@ -190,7 +190,7 @@
                 <Component class="javax.swing.JButton" name="jButton2">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog" id="detailPopup" methodName="detailPopup"/>
+                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog" id="detailPopup" methodName="detailPopup"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
@@ -207,7 +207,7 @@
                 <Component class="javax.swing.JButton" name="jButton15">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog" id="exit" methodName="exit"/>
+                      <action class="com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog" id="exit" methodName="exit"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="jButton15.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="jButton15.text"/>

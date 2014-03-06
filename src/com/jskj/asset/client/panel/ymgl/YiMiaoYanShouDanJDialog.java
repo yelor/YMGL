@@ -33,7 +33,7 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
-
+    
     private static final Logger logger = Logger.getLogger(YiMiaoYanShouDanJDialog.class);
     private Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity;
     private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
@@ -50,7 +50,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         initComponents();
         jTextFieldYimiaoyanshouId.setText(DanHao.getDanHao("YMYS"));
         jTextFieldYimiaoyanshouId.setEditable(false);
-
+        
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
@@ -60,26 +60,26 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
-
+            
             public String getWebServiceURI() {
                 return Constants.HTTP + Constants.APPID + "supplier";
             }
-
+            
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldSupplierName.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" +  jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
+                    sql = "(supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" + jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
-
+            
             public String[][] displayColumns() {
                 return new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}};
             }
-
+            
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    yimiaoyanshou.setSupplierId(Integer.parseInt((String) (""+bindedMap.get("supplierId"))));
+                    yimiaoyanshou.setSupplierId(Integer.parseInt((String) ("" + bindedMap.get("supplierId"))));
                     jTextFieldSupplierName.setText(bindedMap.get("supplierName") == null ? "" : bindedMap.get("supplierName").toString());
                     jTextFieldFamiaoperson.setText(bindedMap.get("supplierConstactperson") == null ? "" : bindedMap.get("supplierConstactperson").toString());
                 }
@@ -91,16 +91,16 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
             {"quantity", "数量", "false"}, {"fuheyuan", "复核员", "true"}, {"fahuoyuan", "发货员", "true"}});
-
+        
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
             }
-
+            
             public String getWebServiceURI() {
                 return Constants.HTTP + Constants.APPID + "adddengjiyimiao";
             }
-
+            
             public String getConditionSQL() {
                 int selectedColumn = jTableyimiao.getSelectedColumn();
                 int selectedRow = jTableyimiao.getSelectedRow();
@@ -113,12 +113,12 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 }
                 return sql;
             }
-
+            
             public String[][] displayColumns() {
                 return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
                 {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
-
+            
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiaoAll");
@@ -133,11 +133,16 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
                     Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
-                    Object pihao = yimiaodengji.get("pihao");
+                    Object pihao;
+                    try {
+                        pihao = yimiaodengji.get("pihao");
+                    } catch (Exception e) {
+                        pihao = null;
+                    }
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
-
+                    
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
@@ -147,21 +152,25 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                     editTable.insertValue(6, unit);
                     editTable.insertValue(7, buyprice);
                     editTable.insertValue(8, quantity);
-
-                    yimiaoyanshou_detail.setPiqianfahegeno((Integer) bindedMap.get("yimiaoPizhunwenhao"));
-
+                    
+                    try {
+                        yimiaoyanshou_detail.setPiqianfahegeno((String) (""+yimiaodengji.get("piqianfahegezhenno")));
+                    } catch (Exception e) {
+                        yimiaoyanshou_detail.setPiqianfahegeno(null);
+                    }
+                    
                 }
-
+                
             }
         });
     }
-
+    
     JTextField regTextField1;
     DateChooser dateChooser2;
     JTextField regTextField2;
     DateChooser dateChooser3;
     JTextField regTextField3;
-
+    
     private void init() {
         regTextField1 = new JTextField();
         regTextField2 = new JTextField();
@@ -811,7 +820,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                
                 YiMiaoYanShouDanJDialog dialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -823,18 +832,18 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             }
         });
     }
-
+    
     public void setAddOrUpdate(boolean b) {
         isNew = b;
         if (isNew) {
             this.setTitle("疫苗验收单");
             yimiaoyanshou = new Yimiaoyanshoutb();
-            yimiaoyanshou_detail = new Yimiaoyanshou_detail_tb();
+            
         } else {
             this.setTitle("疫苗验收单");
         }
     }
-
+    
     public void setUpdatedData(Yimiaoyanshou_detail_tb yimiaoyanshou_detail) {
         if (yimiaoyanshou_detail == null) {
             return;
@@ -843,50 +852,49 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jTextFieldYimiaoyanshouId.setText((yimiaoyanshou_detail.getYmysId()).toString());
         jTextFieldzhidanDate.setText(yimiaoyanshou.getYmysDate().toString());
     }
-
+    
     @Action
     public Task submitForm() throws ParseException {
         if (jTextFieldSupplierName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入送苗单位!");
-        }else if (jTextFieldStarttime.getText().trim().equals("")) {
+        } else if (jTextFieldStarttime.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入起运时间!");
-        }else if (jTextFieldArrivetime.getText().trim().equals("")) {
+        } else if (jTextFieldArrivetime.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入到达时间!");
         }
-
+        
         yimiaoyanshouEntity = new Yimiaoyanshou_detail_tbFindEntity();
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
-
+        
         yimiaoyanshou.setYmysId(jTextFieldYimiaoyanshouId.getText());
         yimiaoyanshou.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
         yimiaoyanshou.setUserId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         yimiaoyanshou.setYmysDate(dateformate.parse(jTextFieldzhidanDate.getText()));
-        yimiaoyanshou.setYmysSendperson(jTextFieldsongmiaoren.getText()==null?"":jTextFieldsongmiaoren.getText());
-        yimiaoyanshou.setYmysEquipment(jTextFieldEquipment.getText()==null?"":jTextFieldEquipment.getText());
-        yimiaoyanshou.setYmysStoragetype(jTextFieldStoragetype.getText()==null?"":jTextFieldStoragetype.getText());
+        yimiaoyanshou.setYmysSendperson(jTextFieldsongmiaoren.getText() == null ? "" : jTextFieldsongmiaoren.getText());
+        yimiaoyanshou.setYmysEquipment(jTextFieldEquipment.getText() == null ? "" : jTextFieldEquipment.getText());
+        yimiaoyanshou.setYmysStoragetype(jTextFieldStoragetype.getText() == null ? "" : jTextFieldStoragetype.getText());
         yimiaoyanshou.setYmysStarttime(dateformate.parse(jTextFieldStarttime.getText()));
-        yimiaoyanshou.setYmysStrattemp1(Float.valueOf(jTextFieldstarttemp1.getText().trim().equals("")?"0":jTextFieldstarttemp1.getText()));
-        yimiaoyanshou.setYmysStarttemp2(Float.valueOf(jTextFieldstarttemp2.getText().trim().equals("")?"0":jTextFieldstarttemp2.getText()));
-        yimiaoyanshou.setYmysTotaltime(Float.valueOf(jTextFieldTotaltime.getText().trim().equals("")?"0":jTextFieldTotaltime.getText()));
-        yimiaoyanshou.setYmysArrivetemp1(Float.valueOf(jTextFieldArrivetemp1.getText().trim().equals("")?"0":jTextFieldArrivetemp1.getText()));
-        yimiaoyanshou.setYmysArrivetemp2(Float.valueOf(jTextFieldArrivetemp2.getText().trim().equals("")?"0":jTextFieldArrivetemp2.getText()));
+        yimiaoyanshou.setYmysStrattemp1(Float.valueOf(jTextFieldstarttemp1.getText().trim().equals("") ? "0" : jTextFieldstarttemp1.getText()));
+        yimiaoyanshou.setYmysStarttemp2(Float.valueOf(jTextFieldstarttemp2.getText().trim().equals("") ? "0" : jTextFieldstarttemp2.getText()));
+        yimiaoyanshou.setYmysTotaltime(Float.valueOf(jTextFieldTotaltime.getText().trim().equals("") ? "0" : jTextFieldTotaltime.getText()));
+        yimiaoyanshou.setYmysArrivetemp1(Float.valueOf(jTextFieldArrivetemp1.getText().trim().equals("") ? "0" : jTextFieldArrivetemp1.getText()));
+        yimiaoyanshou.setYmysArrivetemp2(Float.valueOf(jTextFieldArrivetemp2.getText().trim().equals("") ? "0" : jTextFieldArrivetemp2.getText()));
         yimiaoyanshou.setYmysArrivetime(dateformate.parse(jTextFieldArrivetime.getText()));
-        float BefMiles = Float.valueOf(jTextFieldBefmiles.getText().trim().equals("")?"0":jTextFieldBefmiles.getText());
+        float BefMiles = Float.valueOf(jTextFieldBefmiles.getText().trim().equals("") ? "0" : jTextFieldBefmiles.getText());
         yimiaoyanshou.setYmysBefmiles(BefMiles);
-        float BackMiles = Float.valueOf(jTextFieldBackmiles.getText().trim().equals("")?"0":jTextFieldBackmiles.getText());
+        float BackMiles = Float.valueOf(jTextFieldBackmiles.getText().trim().equals("") ? "0" : jTextFieldBackmiles.getText());
         yimiaoyanshou.setYmysBackmiles(BackMiles);
-        yimiaoyanshou.setYmysCarcondition(jTextFieldCarcondition.getText()==null?"":jTextFieldCarcondition.getText());
-        yimiaoyanshou.setYmysKm(Float.valueOf(jTextFieldXingshiKM.getText().trim().equals("")?"0":jTextFieldXingshiKM.getText()));
+        yimiaoyanshou.setYmysCarcondition(jTextFieldCarcondition.getText() == null ? "" : jTextFieldCarcondition.getText());
+        yimiaoyanshou.setYmysKm(Float.valueOf(jTextFieldXingshiKM.getText().trim().equals("") ? "0" : jTextFieldXingshiKM.getText()));
         yimiaoyanshou.setYmysArriveaddr("广安疾控中心");
-
+        
         List<Yimiaoyanshou_detail_tb> list = new ArrayList<Yimiaoyanshou_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            yimiaoyanshou_detail = new Yimiaoyanshou_detail_tb();
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-//            yimiaoyanshou_detail=new Yimiaoyanshou_detail_tb();
             yimiaoyanshou_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             yimiaoyanshou_detail.setYmysId(jTextFieldYimiaoyanshouId.getText());
             yimiaoyanshou_detail.setYouxiaodate(new Date());
-
             yimiaoyanshou_detail.setPihao((String) ("" + yimiaotable.getValue(i, "pihao")));
             yimiaoyanshou_detail.setFahuoyuan((String) ("" + yimiaotable.getValue(i, "fahuoyuan")));
             yimiaoyanshou_detail.setFuheyuan((String) ("" + yimiaotable.getValue(i, "fuheyuan")));
@@ -897,18 +905,18 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         yimiaoyanshouEntity.setResult(list);
         return new SubmitFormTask(yimiaoyanshouEntity);
     }
-
+    
     @Action
     public void exit() {
         this.dispose();
     }
-
+    
     private class SubmitFormTask extends Yimiaoyanshou_detailUpdateTask {
-
+        
         SubmitFormTask(Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity) {
             super(yimiaoyanshouEntity, isNew ? Yimiaoyanshou_detailUpdateTask.ENTITY_SAVE : Yimiaoyanshou_detailUpdateTask.ENTITY_UPDATE);
         }
-
+        
         @Override
         public void onSucceeded(Object result) {
             if (result instanceof Exception) {

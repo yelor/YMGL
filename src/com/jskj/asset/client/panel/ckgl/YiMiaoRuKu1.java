@@ -58,6 +58,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+        
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -93,6 +94,8 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
+                    churukudan.setXiangdanId((Integer.parseInt( (String) (""+yimiaoshenqingdan.get("xiangdanId")))));
+                    
 
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -100,12 +103,37 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                     Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
                     Object unit = yimiaoAll.get("unitId");
-                    Object pihao = yimiaodengji.get("pihao");
-                    Object source = yimiaodengji.get("source");
-                    Object youxiaoqi = yimiaodengji.get("youxiaoqi");
-                    Object piqianfahegezhenno = yimiaodengji.get("piqianfahegezhenno");
+                    Object pihao;
+                    try {
+                        pihao = yimiaodengji.get("pihao");
+                    } catch (Exception e) {
+                        pihao = null;
+                    }
+                    Object source;
+                    try {
+                        source = yimiaodengji.get("source");
+                    } catch (Exception e) {
+                        source = null;
+                    }
+                    Object youxiaoqi;
+                    try {
+                        youxiaoqi = yimiaodengji.get("youxiaoqi");
+                    } catch (Exception e) {
+                        youxiaoqi = "";
+                    }
+                    Object piqianfahegezhenno;
+                    try {
+                        piqianfahegezhenno = yimiaodengji.get("piqianfahegezhenno");
+                    } catch (Exception e) {
+                        piqianfahegezhenno = null;
+                    }
                     Object yimiaoPizhunwenhao = yimiaoAll.get("yimiaoPizhunwenhao");
-                    Object tongguandanno = yimiaodengji.get("tongguandanno");
+                    Object tongguandanno;
+                    try {
+                        tongguandanno = yimiaodengji.get("tongguandanno");
+                    } catch (Exception e) {
+                        tongguandanno = null;
+                    }
                     Object quantity = yimiaoshenqingdan.get("quantity");
 
                     editTable.insertValue(0, yimiaoId);
@@ -403,13 +431,17 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
             if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
                 AssetMessage.ERRORSYS("请输入入库疫苗!");
             }
-            churukudan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            churukudan.setPihao((String) yimiaotable.getValue(i, "pihao"));
+            churukudan.setYimiaoId(Integer.parseInt("" + yimiaotable.getValue(i, "yimiaoId").toString()));
+            churukudan.setPihao((String) ("" + yimiaotable.getValue(i, "pihao")));
             churukudan.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
-            churukudan.setQuantity((Integer) yimiaotable.getValue(i, "quantity"));
+            churukudan.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             churukudan.setSource((String) ("" + yimiaotable.getValue(i, "source")));
-            churukudan.setTongguandanno((String) ("" +yimiaotable.getValue(i, "tongguandanNo")));
-            churukudan.setYouxiaoqi(dateformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            churukudan.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
+            if (yimiaotable.getValue(i, "youxiaodate").toString().trim().equals("")) {
+                churukudan.setYouxiaoqi(null);
+            } else {
+                churukudan.setYouxiaoqi(dateformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            }
         }
 
         String serviceId = "yimiaoruku/add";
