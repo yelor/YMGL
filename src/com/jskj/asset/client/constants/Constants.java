@@ -26,8 +26,8 @@ public class Constants {
     public final static Font TREE_FONT = new Font("微软雅黑", Font.PLAIN, 18 );
     /*Global config*/
     public static String WINTITLE = "疫苗资产管理系统";
-    public static int LOGIN_WIDTH = 385;
-    public static int LOGIN_HEIGHT = 320;
+    public static int LOGIN_WIDTH = 371;
+    public static int LOGIN_HEIGHT = 274;
 
     /*左边树*/
     public final static String VIEW_TABLES_TREE = "com.jskj.asset.client.panel.LeftPanel";
