@@ -157,15 +157,15 @@ public class LoadModule extends BaseTask {
         jMenuItem12.setName("jMenuItem12"); // NOI18N
         jichuMenu.add(jMenuItem12);
 
-        jMenuItem13.setAction(actionMap.get("showDanWei")); // NOI18N
-        jMenuItem13.setText(resourceMap.getString("jMenuItem13.text")); // NOI18N
-        jMenuItem13.setName("jMenuItem13"); // NOI18N
-        jichuMenu.add(jMenuItem13);
+//        jMenuItem13.setAction(actionMap.get("showDanWei")); // NOI18N
+//        jMenuItem13.setText(resourceMap.getString("jMenuItem13.text")); // NOI18N
+//        jMenuItem13.setName("jMenuItem13"); // NOI18N
+//        jichuMenu.add(jMenuItem13);
 
-        jMenuItem14.setAction(actionMap.get("showJianShaoFangShi")); // NOI18N
-        jMenuItem14.setText(resourceMap.getString("jMenuItem14.text")); // NOI18N
-        jMenuItem14.setName("jMenuItem14"); // NOI18N
-        jichuMenu.add(jMenuItem14);
+//        jMenuItem14.setAction(actionMap.get("showJianShaoFangShi")); // NOI18N
+//        jMenuItem14.setText(resourceMap.getString("jMenuItem14.text")); // NOI18N
+//        jMenuItem14.setName("jMenuItem14"); // NOI18N
+//        jichuMenu.add(jMenuItem14);
 
         menuBar.add(jichuMenu);
 

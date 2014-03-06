@@ -494,7 +494,7 @@ public class KeHuDanWeiInfoJDialog extends BaseDialog {
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("客户单位")); // NOI18N
             jCheckBoxCont.setEnabled(true);
         } else {//更新
-            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("更新客户单位:" + paramData.getKehudanweiId())); // NOI18N
+            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("修改客户单位:" + paramData.getKehudanweiId())); // NOI18N
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
         }

@@ -187,7 +187,7 @@ public class JianShaoFangShiInfoJDialog extends BaseDialog {
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("减少方式")); // NOI18N
             jCheckBoxCont.setEnabled(true);
         } else {//更新
-            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新减少方式:" + paramData.getReducetypeId())); // NOI18N
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("修改减少方式:" + paramData.getReducetypeId())); // NOI18N
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
         }

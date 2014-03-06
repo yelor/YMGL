@@ -51,39 +51,7 @@ public class BuMenInfoJDialog extends BaseDialog {
          displayColumns：popup弹出来后，显示的内容
          setBindedMap:点击popup返回的值，自己把object的值类型强制转化成自己需要。和你在regiter的时候，传入的URL返回bean有关。
          */
-        ((BaseTextField) owner$userName).registerPopup(new IPopupBuilder() {
-            @Override
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            @Override
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
-
-            @Override
-            public String getConditionSQL() {
-                String sql = "";
-                if (!owner$userName.getText().trim().equals("")) {
-                    sql = "(user_name like \"%" + owner$userName.getText() + "%\"" + " or zujima like \"" + owner$userName.getText().toLowerCase() + "%\")";
-                }
-                return sql;
-            }
-
-            @Override
-            public String[][] displayColumns() {
-                return new String[][]{{"userName", "用户名"}};
-            }
-
-            @Override
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    owner$userName.setText(bindedMap.get("userName").toString());
-                    jTextBossId.setText(bindedMap.get("userId").toString());
-                }
-            }
-        });
+      
     }
 
     public void setUpdatedData(DepartmenttbAll paramData) {
@@ -125,8 +93,6 @@ public class BuMenInfoJDialog extends BaseDialog {
         departmentName = new javax.swing.JTextField();
         关闭 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        owner$userName = new BaseTextField();
         jLabel4 = new javax.swing.JLabel();
         tel = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -163,11 +129,6 @@ public class BuMenInfoJDialog extends BaseDialog {
         jButton2.setAction(actionMap.get("newDepartmentTask")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
-
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
-
-        owner$userName.setName("owner$userName"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
@@ -221,10 +182,7 @@ public class BuMenInfoJDialog extends BaseDialog {
                                         .addGap(18, 18, 18)
                                         .addComponent(fax, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(departmentName))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(owner$userName, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(117, 185, Short.MAX_VALUE))
                             .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
@@ -234,9 +192,7 @@ public class BuMenInfoJDialog extends BaseDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(departmentName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(owner$userName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(departmentName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -326,14 +282,6 @@ public class BuMenInfoJDialog extends BaseDialog {
     @Action
     public Task newDepartmentTask() {
 
-        if (!owner$userName.getText().trim().equals("")) {
-            String bossId = jTextBossId.getText();
-            paramData.setUserId(Integer.parseInt(bossId));
-        } else {
-            AssetMessage.ERRORSYS("请正确选择部门主管!");
-            return null;
-        }
-
         String bumenNaem = departmentName.getText();
 
         if (!bumenNaem.trim().equals("")) {
@@ -377,14 +325,12 @@ public class BuMenInfoJDialog extends BaseDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBoxCont;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextBossId;
-    private javax.swing.JTextField owner$userName;
     private javax.swing.JTextField tel;
     private javax.swing.JButton 关闭;
     // End of variables declaration//GEN-END:variables

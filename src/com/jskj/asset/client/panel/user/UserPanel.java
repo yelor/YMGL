@@ -362,6 +362,12 @@ public final class UserPanel extends BasePanel {
             AssetMessage.ERRORSYS("请选择用户!");
             return null;
         }
+        
+        Usertb usertb = AssetClientApp.getSessionMap().getUsertb();
+        if(usertb.getUserId()==user.getUserId()){
+            AssetMessage.ERRORSYS("不能删除自己!");
+            return null;
+        }
         int result = AssetMessage.CONFIRM("确定删除用户:" + user.getUserName());
         if (result == JOptionPane.OK_OPTION) {
             return new DeleteUserTask(user);

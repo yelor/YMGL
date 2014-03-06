@@ -196,7 +196,7 @@ public class DanWeiInfoJDialog extends BaseDialog {
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("单位信息")); // NOI18N
             jCheckBoxCont.setEnabled(true);
         } else {//更新
-            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新单位:" + paramData.getUnitId())); // NOI18N
+            jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("修改单位:" + paramData.getUnitId())); // NOI18N
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
         }

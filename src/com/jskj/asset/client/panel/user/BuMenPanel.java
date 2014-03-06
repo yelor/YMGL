@@ -45,10 +45,10 @@ public class BuMenPanel extends BasePanel {
         super();
         initComponents();
         bindTable = new BindTableHelper<DepartmenttbAll>(jTableDp, new ArrayList<DepartmenttbAll>());
-        bindTable.createTable(new String[][]{{"departmentId", "部门编号"}, {"departmentName", "部门名称"}, {"owner.userName", "部门主管"}, {"tel", "电话"},
+        bindTable.createTable(new String[][]{{"departmentId", "部门编号"}, {"departmentName", "部门名称"}, {"tel", "电话"},
         {"fax", "传真"}});
         bindTable.setIntegerType(1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 180}, new int[]{2, 180}, new int[]{3, 200}, new int[]{4, 200}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 180}, new int[]{2, 180}, new int[]{3, 200}).setRowHeight(25);
         
     }
 

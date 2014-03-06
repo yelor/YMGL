@@ -631,7 +631,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             jCheckBoxCont.setEnabled(true);
             yimiaoTiaoxingma.setText(DanHao.getDanHao("YM"));
         } else {//更新
-            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("更新疫苗:" + appParam.getYimiaoId())); // NOI18N
+            jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("修改疫苗:" + appParam.getYimiaoId())); // NOI18N
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
 
