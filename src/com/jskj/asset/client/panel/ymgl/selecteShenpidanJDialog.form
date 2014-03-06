@@ -94,9 +94,10 @@
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
+              <StringArray count="3">
                 <StringItem index="0" value="&#x4e0b;&#x53d1;&#x3001;&#x9500;&#x552e;&#x5355;&#x5ba1;&#x6279;"/>
                 <StringItem index="1" value="&#x75ab;&#x82d7;&#x62a5;&#x635f;&#x5ba1;&#x6279;"/>
+                <StringItem index="2" value="&#x75ab;&#x82d7;&#x91c7;&#x8d2d;&#x7533;&#x8bf7;&#x5ba1;&#x6279;"/>
               </StringArray>
             </Property>
             <Property name="name" type="java.lang.String" value="jComboBox1" noResource="true"/>
@@ -143,7 +144,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.shjs.selecteFKDJDialog" id="ChooseAction" methodName="ChooseAction"/>
+              <action class="com.jskj.asset.client.panel.ymgl.selecteShenpidanJDialog" id="ChooseAction" methodName="ChooseAction"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
@@ -152,7 +153,7 @@
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.shjs.selecteFKDJDialog" id="CancelAction" methodName="CancelAction"/>
+              <action class="com.jskj.asset.client.panel.ymgl.selecteShenpidanJDialog" id="CancelAction" methodName="CancelAction"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>

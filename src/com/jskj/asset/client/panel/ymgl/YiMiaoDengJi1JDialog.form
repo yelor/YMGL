@@ -40,7 +40,7 @@
               <Component id="jToolBar1" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -113,7 +113,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jComboBoxJixing" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="jTextFieldYimiaoJixing" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -160,7 +160,7 @@
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldguige" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxJixing" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jTextFieldYimiaoJixing" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -235,16 +235,13 @@
             <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldYimiaoName">
+        <Component class="javax.swing.JTextField" name="jTextFieldYimiaoJixing">
           <Properties>
-            <Property name="name" type="java.lang.String" value="jTextFieldYimiaoName" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldYimiaoJixing" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldYimiaoNameActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldYimiaoJixingActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -444,18 +441,16 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxSourceActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxJixing">
+        <Component class="javax.swing.JTextField" name="jTextFieldYimiaoName">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="&#x8bf7;&#x9009;&#x62e9;&#x5242;&#x578b;..."/>
-                <StringItem index="1" value="&#x6db2;&#x4f53;&#x5242;&#x578b;"/>
-                <StringItem index="2" value="&#x51bb;&#x5e72;&#x5242;&#x578b;"/>
-                <StringItem index="3" value="&#x7cd6;&#x4e38;&#x5242;&#x578b;"/>
-              </StringArray>
-            </Property>
-            <Property name="name" type="java.lang.String" value="jComboBoxJixing" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldYimiaoName" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldYimiaoNameActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

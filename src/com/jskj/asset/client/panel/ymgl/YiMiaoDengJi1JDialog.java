@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.ymgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -16,6 +17,7 @@ import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -51,8 +53,8 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\" or yimiao.zujima like \"" + jTextFieldYimiaoName.getText().toString() + "%\")) ";
+                if (!jTextFieldYimiaoJixing.getText().trim().equals("")) {
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoJixing.getText() + "%\" or yimiao.zujima like \"" + jTextFieldYimiaoJixing.getText().toString() + "%\")) ";
                 } else {
                     sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=5 and is_completed = 1 and status = 0)";
                 }
@@ -75,13 +77,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                     jTextFieldYimiaoId.setText(yimiaoAll.get("yimiaoId") == null ? "" : yimiaoAll.get("yimiaoId").toString());
                     jTextFieldYimiaoName.setText(yimiaoAll.get("yimiaoName") == null ? "" : yimiaoAll.get("yimiaoName").toString());
                     jTextFieldguige.setText(yimiaoAll.get("yimiaoGuige") == null ? "" : yimiaoAll.get("yimiaoGuige").toString());
-                    if (yimiaoAll.get("yimiaoJixing") == "液体剂型") {
-                        jComboBoxJixing.setSelectedIndex(1);
-                    } else if (yimiaoAll.get("yimiaoJixing") == "冻干剂型") {
-                        jComboBoxJixing.setSelectedIndex(2);
-                    } else if (yimiaoAll.get("yimiaoJixing") == "糖丸剂型") {
-                        jComboBoxJixing.setSelectedIndex(3);
-                    }
+                    jTextFieldYimiaoJixing.setText(yimiaoAll.get("yimiaoJixing") == null ? "" : yimiaoAll.get("yimiaoJixing").toString());                   
                     jTextFieldQuantity.setText(yimiaoshenqingdan.get("quantity") == null ? "" : yimiaoshenqingdan.get("quantity").toString());
                     jTextFieldshengchanqiye.setText(yimiaoAll.get("yimiaoShengchanqiye") == null ? "" : yimiaoAll.get("yimiaoShengchanqiye").toString());
                     jTextFieldpizhunwenhao.setText(yimiaoAll.get("yimiaoPizhunwenhao") == null ? "" : yimiaoAll.get("yimiaoPizhunwenhao").toString());
@@ -115,15 +111,9 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     dateformate = new SimpleDateFormat("yyyy-MM-dd");
                     jTextFieldYimiaoId.setText(bindedMap.get("yimiaoId") == null ? "" : bindedMap.get("yimiaoId").toString());
-                    jTextFieldYimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
+                    jTextFieldYimiaoJixing.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
                     jTextFieldguige.setText(bindedMap.get("yimiaoGuige") == null ? "" : bindedMap.get("yimiaoGuige").toString());
-                    if (bindedMap.get("yimiaoJixing") == "液体剂型") {
-                        jComboBoxJixing.setSelectedIndex(1);
-                    } else if (bindedMap.get("yimiaoJixing") == "冻干剂型") {
-                        jComboBoxJixing.setSelectedIndex(2);
-                    } else if (bindedMap.get("yimiaoJixing") == "糖丸剂型") {
-                        jComboBoxJixing.setSelectedIndex(3);
-                    }
+                   
                     jTextFieldshengchanqiye.setText(bindedMap.get("shengchanqiye") == null ? "" : bindedMap.get("shengchanqiye").toString());
                     jTextFieldpizhunwenhao.setText(bindedMap.get("pizhunwenhao") == null ? "" : bindedMap.get("pizhunwenhao").toString());
                     jTextFieldpihao.setText(bindedMap.get("pihao") == null ? "" : bindedMap.get("pihao").toString());
@@ -161,7 +151,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextFieldYimiaoId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldYimiaoName = new BaseTextField();
+        jTextFieldYimiaoJixing = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldguige = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -189,7 +179,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jTextFieldkucunUp = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jComboBoxSource = new javax.swing.JComboBox();
-        jComboBoxJixing = new javax.swing.JComboBox();
+        jTextFieldYimiaoName = new BaseTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new ScanButton();
         jButton2 = new ScanButton();
@@ -218,10 +208,10 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextFieldYimiaoName.setName("jTextFieldYimiaoName"); // NOI18N
-        jTextFieldYimiaoName.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldYimiaoJixing.setName("jTextFieldYimiaoJixing"); // NOI18N
+        jTextFieldYimiaoJixing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldYimiaoNameActionPerformed(evt);
+                jTextFieldYimiaoJixingActionPerformed(evt);
             }
         });
 
@@ -360,8 +350,12 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             }
         });
 
-        jComboBoxJixing.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "请选择剂型...", "液体剂型", "冻干剂型", "糖丸剂型" }));
-        jComboBoxJixing.setName("jComboBoxJixing"); // NOI18N
+        jTextFieldYimiaoName.setName("jTextFieldYimiaoName"); // NOI18N
+        jTextFieldYimiaoName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldYimiaoNameActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -415,7 +409,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBoxJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldYimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
@@ -452,7 +446,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldguige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBoxJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldYimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -552,7 +546,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -562,9 +556,9 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldYimiaoIdActionPerformed
 
-    private void jTextFieldYimiaoNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYimiaoNameActionPerformed
+    private void jTextFieldYimiaoJixingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYimiaoJixingActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldYimiaoNameActionPerformed
+    }//GEN-LAST:event_jTextFieldYimiaoJixingActionPerformed
 
     private void jTextFieldguigeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldguigeActionPerformed
         // TODO add your handling code here:
@@ -624,6 +618,10 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             yimiaodengji.setTongguandanno(null);
         }
     }//GEN-LAST:event_jComboBoxSourceActionPerformed
+
+    private void jTextFieldYimiaoNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldYimiaoNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldYimiaoNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -688,7 +686,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
 
     @Action
     public Task submitForm() throws ParseException {
-        if (jTextFieldYimiaoName.getText().trim().equals("")) {
+        if (jTextFieldYimiaoJixing.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗名称!");
             return null;
         } else if (jTextFieldQuantity.getText().trim().equals("")) {
@@ -746,7 +744,6 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBoxJixing;
     private javax.swing.JComboBox jComboBoxSource;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -768,6 +765,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextFieldQuantity;
     private javax.swing.JTextField jTextFieldYimiaoId;
+    private javax.swing.JTextField jTextFieldYimiaoJixing;
     private javax.swing.JTextField jTextFieldYimiaoName;
     private javax.swing.JTextField jTextFieldYouxiaoqi;
     private javax.swing.JTextField jTextFieldguige;

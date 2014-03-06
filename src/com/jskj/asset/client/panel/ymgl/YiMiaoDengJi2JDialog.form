@@ -131,7 +131,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jComboBoxJixing" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="jTextFieldYimiaoJixing" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -149,11 +149,13 @@
                       <Component id="jTextFieldYimiaoName" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldguige" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxJixing" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldguige" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jTextFieldYimiaoJixing" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -468,19 +470,6 @@
             <Property name="name" type="java.lang.String" value="jLabel18" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxJixing">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="&#x8bf7;&#x9009;&#x62e9;&#x5242;&#x578b;..."/>
-                <StringItem index="1" value="&#x6db2;&#x4f53;&#x5242;&#x578b;"/>
-                <StringItem index="2" value="&#x51bb;&#x5e72;&#x5242;&#x578b;"/>
-                <StringItem index="3" value="&#x7cd6;&#x4e38;&#x5242;&#x578b;"/>
-              </StringArray>
-            </Property>
-            <Property name="name" type="java.lang.String" value="jComboBoxJixing" noResource="true"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxSource">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -494,6 +483,12 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxSourceActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldYimiaoJixing">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldYimiaoJixing.text"/>
+            <Property name="name" type="java.lang.String" value="jTextFieldYimiaoJixing" noResource="true"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -528,9 +523,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="0" name="null"/>
-            </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>

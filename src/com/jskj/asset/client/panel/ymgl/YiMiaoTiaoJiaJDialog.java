@@ -46,7 +46,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         init();
         initComponents();
 
-        jTextFieldTiaojiaId.setText(DanHao.getDanHao("YMSB"));
+        jTextFieldTiaojiaId.setText(DanHao.getDanHao("YMTJ"));
         jTextFieldTiaojiaId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());

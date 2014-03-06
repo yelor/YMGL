@@ -15,7 +15,7 @@ public class Yimiaoyanshou_detail_tb {
 
     private Date youxiaodate;
 
-    private Integer piqianfahegeno;
+    private String piqianfahegeno;
 
     private Integer quantity;
 
@@ -65,12 +65,12 @@ public class Yimiaoyanshou_detail_tb {
         this.youxiaodate = youxiaodate;
     }
 
-    public Integer getPiqianfahegeno() {
+    public String getPiqianfahegeno() {
         return piqianfahegeno;
     }
 
-    public void setPiqianfahegeno(Integer piqianfahegeno) {
-        this.piqianfahegeno = piqianfahegeno;
+    public void setPiqianfahegeno(String piqianfahegeno) {
+        this.piqianfahegeno = piqianfahegeno == null ? null : piqianfahegeno.trim();
     }
 
     public Integer getQuantity() {

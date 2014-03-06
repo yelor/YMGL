@@ -33,6 +33,10 @@ public class Churukudantb {
 
     private Integer zhidanren;
 
+    private String remark;
+
+    private Integer xiangdanId;
+
     public String getChurukuId() {
         return churukuId;
     }
@@ -143,5 +147,21 @@ public class Churukudantb {
 
     public void setZhidanren(Integer zhidanren) {
         this.zhidanren = zhidanren;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getXiangdanId() {
+        return xiangdanId;
+    }
+
+    public void setXiangdanId(Integer xiangdanId) {
+        this.xiangdanId = xiangdanId;
     }
 }
