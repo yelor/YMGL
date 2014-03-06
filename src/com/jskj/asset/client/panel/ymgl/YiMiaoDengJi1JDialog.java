@@ -509,7 +509,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
-        jButton2.setIcon(null);
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.setFocusable(false);

@@ -151,47 +151,47 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
             }
         });
 
-        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_SCAN;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
-            }
-
-            public String getConditionSQL() {
-                return "yimiao_tiaoxingma =";
-            }
-
-            public String[][] displayColumns() {
-                return null;
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-
-                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
-
-                    Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-                    Object unit = bindedMap.get("unitId");
-
-                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
-                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
-
-                    editTable.addNewRow();
-                }
-
-            }
-        });
+//        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
+//            public int getType() {
+//                return IPopupBuilder.TYPE_POPUP_SCAN;
+//            }
+//
+//            public String getWebServiceURI() {
+//                return Constants.HTTP + Constants.APPID + "addyimiao";
+//            }
+//
+//            public String getConditionSQL() {
+//                return "yimiao_tiaoxingma =";
+//            }
+//
+//            public String[][] displayColumns() {
+//                return null;
+//            }
+//
+//            public void setBindedMap(HashMap bindedMap) {
+//                if (bindedMap != null) {
+//
+//                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
+//
+//                    Object yimiaoId = bindedMap.get("yimiaoId");
+//                    Object yimiaoName = bindedMap.get("yimiaoName");
+//                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
+//                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
+//                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
+//                    Object unit = bindedMap.get("unitId");
+//
+//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
+//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
+//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
+//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
+//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
+//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
+//
+//                    editTable.addNewRow();
+//                }
+//
+//            }
+//        });
     }
 
     JTextField regTextField;
@@ -218,7 +218,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton7 = new ScanButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -320,14 +319,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
-
-        jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setBorderPainted(false);
-        jButton7.setFocusable(false);
-        jButton7.setName("jButton7"); // NOI18N
-        jButton7.setOpaque(false);
-        jToolBar1.add(jButton7);
 
         jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
@@ -671,7 +662,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

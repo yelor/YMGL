@@ -13,7 +13,7 @@ package com.jskj.asset.client.panel.spcx;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.*;
 import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog;
+import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
@@ -271,7 +271,7 @@ public class MainPanel extends BasePanel {
             @Override
             public void run() {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YimiaoShenPiJDialog yimiaoShenPiJDialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(), true);
+                YimiaoCaigouShenPiJDialog yimiaoShenPiJDialog = new YimiaoCaigouShenPiJDialog(new javax.swing.JFrame(), true);
                 yimiaoShenPiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
             }
