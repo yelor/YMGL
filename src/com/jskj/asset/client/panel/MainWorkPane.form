@@ -131,6 +131,7 @@
             </Container>
             <Container class="javax.swing.JTabbedPane" name="rightPane">
               <Properties>
+                <Property name="background" type="java.awt.Color" resourceKey="rightPane.background"/>
                 <Property name="font" type="java.awt.Font" resourceKey="rightPane.font"/>
                 <Property name="name" type="java.lang.String" value="rightPane" noResource="true"/>
                 <Property name="requestFocusEnabled" type="boolean" value="false"/>
