@@ -11,7 +11,7 @@ import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.panel.ymgl.YimiaoShenPiJDialog;
+import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -120,7 +120,7 @@ public class MyTaskFindTask extends BaseTask {
             @Override
             public void run() {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YimiaoShenPiJDialog yimiaoShenPiJDialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(), true);
+                YimiaoCaigouShenPiJDialog yimiaoShenPiJDialog = new YimiaoCaigouShenPiJDialog(new javax.swing.JFrame(), true);
                 yimiaoShenPiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
             }

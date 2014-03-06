@@ -224,7 +224,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton2 = new ScanButton();
         jButton5 = new javax.swing.JButton();
@@ -324,14 +323,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
-
-        jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
-        jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
-        jButton8.setBorderPainted(false);
-        jButton8.setFocusable(false);
-        jButton8.setName("jButton8"); // NOI18N
-        jButton8.setOpaque(false);
-        jToolBar1.add(jButton8);
 
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
@@ -739,7 +730,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

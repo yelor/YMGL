@@ -12,7 +12,7 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.DetailPanel;
 import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
-import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
+import com.jskj.asset.client.panel.ymgl.task.YimiaoBaosunDanjuChaxunTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.Dimension;
@@ -30,7 +30,7 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author tt
  */
-public class YimiaoShenPiJDialog extends BaseDialog {
+public class YimiaoBaosunShenPiJDialog extends BaseDialog {
 
     private int pageIndex;
 
@@ -50,7 +50,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
      * @param parent
      * @param modal
      */
-    public YimiaoShenPiJDialog(java.awt.Frame parent, boolean modal) {
+    public YimiaoBaosunShenPiJDialog(java.awt.Frame parent, boolean modal) {
         super();
         initComponents();
         pageIndex = 1;
@@ -75,7 +75,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         this.repaint();
     }
 
-    private class RefreshTask extends YimiaoDanjuChaxunTask {
+    private class RefreshTask extends YimiaoBaosunDanjuChaxunTask {
 
         BindingGroup bindingGroup = new BindingGroup();
 
@@ -97,7 +97,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
 
             if (yimiaoshenpi != null) {
                 count = yimiaoshenpi.getCount();
-                jLabelTotal.setText(((pageIndex - 1) * YimiaoDanjuChaxunTask.pageSize + 1) + "/" + count);
+                jLabelTotal.setText(((pageIndex - 1) * YimiaoBaosunDanjuChaxunTask.pageSize + 1) + "/" + count);
                 logger.debug("total:" + count + ",get shenqing size:" + yimiaoshenpi.getResult().size());
 
                 //存下所有的数据
@@ -135,7 +135,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
 
     @Action
     public void pageNext() {
-        if (YimiaoDanjuChaxunTask.pageSize * (pageIndex) <= count) {
+        if (YimiaoBaosunDanjuChaxunTask.pageSize * (pageIndex) <= count) {
             pageIndex = pageIndex + 1;
         }
         new RefreshTask(pageIndex).execute();
@@ -189,7 +189,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         protected void succeeded(Object result) {
             if (result != null && result instanceof ShenPiEntity) {
                 ShenPiEntity entity = (ShenPiEntity) result;
-                AssetMessage.INFO(entity.getResult(), YimiaoShenPiJDialog.this);
+                AssetMessage.INFO(entity.getResult(), YimiaoBaosunShenPiJDialog.this);
             }
             reload();
         }
@@ -219,7 +219,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jSQTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaoShenPiJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaoBaosunShenPiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -243,7 +243,7 @@ public class YimiaoShenPiJDialog extends BaseDialog {
         jLabelTotal.setPreferredSize(new java.awt.Dimension(80, 40));
         jToolBar2.add(jLabelTotal);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaoShenPiJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaoBaosunShenPiJDialog.class, this);
         jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
@@ -389,20 +389,20 @@ public class YimiaoShenPiJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoBaosunShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoBaosunShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoBaosunShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YimiaoShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YimiaoBaosunShenPiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YimiaoShenPiJDialog dialog = new YimiaoShenPiJDialog(new javax.swing.JFrame(), true);
+                YimiaoBaosunShenPiJDialog dialog = new YimiaoBaosunShenPiJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
