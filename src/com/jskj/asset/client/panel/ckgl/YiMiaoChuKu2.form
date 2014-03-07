@@ -107,6 +107,7 @@
         </Property>
         <Property name="floatable" type="boolean" value="false"/>
         <Property name="rollover" type="boolean" value="true"/>
+        <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
       </Properties>
 
@@ -119,29 +120,10 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton12.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton14">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton14.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jButton14.text"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
-            <Property name="name" type="java.lang.String" value="jButton14" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton15">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton15.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jButton15.text"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
-            <Property name="name" type="java.lang.String" value="jButton15" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -149,6 +131,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton16.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton16.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton16" noResource="true"/>
@@ -159,6 +142,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton17.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton17.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton17" noResource="true"/>
@@ -169,6 +153,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton18.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton18.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton18" noResource="true"/>
@@ -182,6 +167,7 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton19.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton19.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton19" noResource="true"/>

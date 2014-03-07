@@ -582,6 +582,7 @@
         </Property>
         <Property name="floatable" type="boolean" value="false"/>
         <Property name="rollover" type="boolean" value="true"/>
+        <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jToolBar2" noResource="true"/>
       </Properties>
 
@@ -594,6 +595,7 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -605,6 +607,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton8.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -616,6 +619,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton9.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton9.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -627,6 +631,7 @@
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton11.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton11.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -641,6 +646,7 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton12.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton12.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>

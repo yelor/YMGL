@@ -159,12 +159,14 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoChuKu1.class, this);
         jButton7.setAction(actionMap.get("save")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton7.setName("jButton7"); // NOI18N
@@ -173,6 +175,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
         jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
         jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
+        jButton9.setBorderPainted(false);
         jButton9.setFocusable(false);
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton9.setName("jButton9"); // NOI18N
@@ -181,6 +184,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setBorderPainted(false);
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton8.setName("jButton8"); // NOI18N
@@ -189,6 +193,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
         jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
         jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
+        jButton11.setBorderPainted(false);
         jButton11.setFocusable(false);
         jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton11.setName("jButton11"); // NOI18N
@@ -198,6 +203,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         jButton12.setAction(actionMap.get("exit")); // NOI18N
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
+        jButton12.setBorderPainted(false);
         jButton12.setFocusable(false);
         jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton12.setName("jButton12"); // NOI18N

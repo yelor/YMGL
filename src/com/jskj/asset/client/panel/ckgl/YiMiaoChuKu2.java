@@ -148,8 +148,6 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
@@ -178,36 +176,23 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoChuKu2.class, this);
         jButton7.setAction(actionMap.get("save")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton7.setName("jButton7"); // NOI18N
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
-        jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
-        jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
-        jButton14.setFocusable(false);
-        jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton14.setName("jButton14"); // NOI18N
-        jButton14.setOpaque(false);
-        jToolBar1.add(jButton14);
-
-        jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
-        jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
-        jButton15.setFocusable(false);
-        jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton15.setName("jButton15"); // NOI18N
-        jButton15.setOpaque(false);
-        jToolBar1.add(jButton15);
-
         jButton16.setIcon(resourceMap.getIcon("jButton16.icon")); // NOI18N
         jButton16.setText(resourceMap.getString("jButton16.text")); // NOI18N
+        jButton16.setBorderPainted(false);
         jButton16.setFocusable(false);
         jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton16.setName("jButton16"); // NOI18N
@@ -216,6 +201,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
 
         jButton17.setIcon(resourceMap.getIcon("jButton17.icon")); // NOI18N
         jButton17.setText(resourceMap.getString("jButton17.text")); // NOI18N
+        jButton17.setBorderPainted(false);
         jButton17.setFocusable(false);
         jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton17.setName("jButton17"); // NOI18N
@@ -224,6 +210,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
 
         jButton18.setIcon(resourceMap.getIcon("jButton18.icon")); // NOI18N
         jButton18.setText(resourceMap.getString("jButton18.text")); // NOI18N
+        jButton18.setBorderPainted(false);
         jButton18.setFocusable(false);
         jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton18.setName("jButton18"); // NOI18N
@@ -233,6 +220,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jButton19.setAction(actionMap.get("exit")); // NOI18N
         jButton19.setIcon(resourceMap.getIcon("jButton19.icon")); // NOI18N
         jButton19.setText(resourceMap.getString("jButton19.text")); // NOI18N
+        jButton19.setBorderPainted(false);
         jButton19.setFocusable(false);
         jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton19.setName("jButton19"); // NOI18N
@@ -483,8 +471,6 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;

@@ -40,7 +40,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
     private List<Yimiaoyanshou_detail_tb> bindedMaplist;
     private Yimiaoyanshoutb yimiaoyanshou;
     private boolean isNew;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * Creates new form yimiaoyanshouJDialog

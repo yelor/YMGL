@@ -35,7 +35,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
     private Yimiaotiaojia_detail_tbFindEntity yimiaotiaojiaEntity;
     private Yimiaotiaojia_detail_tb yimiaotiaojia_detail;
     private Yimiaotiaojiatb yimiaotiaojia;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH：mm:ss");
     private boolean isNew;
 
     /**
