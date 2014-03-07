@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 public class ShenPiTask extends BaseTask{
 
     private static final Logger logger = Logger.getLogger(ShenPiTask.class);
-    private final String SP_URI = Constants.HTTP + Constants.APPID + "yimiaoshenpi/shenpi";
+    private final String SP_URI = Constants.HTTP + Constants.APPID + "yimiaocaigoushenpi/shenpi";
     
     private ShenPiEntity yimiaosp;
     

@@ -25,6 +25,8 @@ public class Yimiaoyanshou_detail_tb {
 
     private String fahuoyuan;
 
+    private Integer xiangdanId;
+
     public Integer getDetailId() {
         return detailId;
     }
@@ -103,5 +105,13 @@ public class Yimiaoyanshou_detail_tb {
 
     public void setFahuoyuan(String fahuoyuan) {
         this.fahuoyuan = fahuoyuan == null ? null : fahuoyuan.trim();
+    }
+
+    public Integer getXiangdanId() {
+        return xiangdanId;
+    }
+
+    public void setXiangdanId(Integer xiangdanId) {
+        this.xiangdanId = xiangdanId;
     }
 }

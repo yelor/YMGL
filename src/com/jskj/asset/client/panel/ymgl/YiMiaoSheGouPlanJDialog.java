@@ -143,47 +143,6 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             }
         });
 
-//        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_SCAN;
-//            }
-//
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "addyimiao";
-//            }
-//
-//            public String getConditionSQL() {
-//                return "yimiao_tiaoxingma =";
-//            }
-//
-//            public String[][] displayColumns() {
-//                return null;
-//            }
-//
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//
-//                    Object yimiaoId = bindedMap.get("yimiaoId");
-//                    Object yimiaoName = bindedMap.get("yimiaoName");
-//                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-//                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-//                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-//                    Object unit = bindedMap.get("unitId");
-//                    Object saleprice = bindedMap.get("yimiaoYushoujia");
-//                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 9, saleprice);
-//
-//                    editTable.addNewRow();
-//                }
-//
-//            }
-//        });
     }
 
     JTextField regTextField;
