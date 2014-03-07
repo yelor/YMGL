@@ -38,8 +38,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
     private Sale_detail_tbFindEntity yimiaoxiafa;
     private Sale_detail_tb sale_detail;
     private Saletb sale;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
-    ;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew;
 
     /**
@@ -47,7 +46,6 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
      */
     public YiMiaoXiaFaJDialog() {
         super();
-        init();
         initComponents();
         jTextFieldXiafaId.setText(DanHao.getDanHao("YMXF"));
         jTextFieldXiafaId.setEditable(false);
@@ -191,13 +189,6 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 
     }
 
-    JTextField regTextField1;
-    JTextField regTextField2;
-
-    private void init() {
-        regTextField1 = new JTextField();
-        regTextField2 = new JTextField();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -224,7 +215,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldXiafaId = new javax.swing.JTextField();
-        jTextFieldzhidanDate = regTextField1;
+        jTextFieldzhidanDate = new javax.swing.JTextField();
         jTextFieldAddr = new javax.swing.JTextField();
         jTextFieldTel = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -663,7 +654,6 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         }
         yimiaoxiafa = new Sale_detail_tbFindEntity();
         sale.setSaleId(jTextFieldXiafaId.getText());
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
         sale.setSaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         sale.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         sale.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());

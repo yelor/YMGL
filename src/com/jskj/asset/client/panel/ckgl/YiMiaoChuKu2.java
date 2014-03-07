@@ -36,9 +36,7 @@ import org.jdesktop.application.Task;
  */
 public class YiMiaoChuKu2 extends javax.swing.JDialog {
 
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
-//    private List<StockpiletbAll> chukuyimiaolist;
-//    private BindTableHelper<StockpiletbAll> bindTable;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Churukudantb churukudan;
 
     /**
@@ -47,8 +45,8 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     public YiMiaoChuKu2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        churukudan = new Churukudantb();
         
+        churukudan = new Churukudantb();        
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMCK"));
         jTextFielddanjuNo.setEditable(false);
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());

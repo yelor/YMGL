@@ -5,6 +5,7 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Shenqingdantb {
+
     private String shenqingdanId;
 
     private Date shenqingdanDate;

@@ -15,7 +15,6 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
@@ -40,7 +39,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaocaigou;
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     ;
     private boolean isNew;
 
@@ -49,7 +48,6 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
      */
     public YiMiaoCaiGouShenQingJDialog() {
         super();
-        init();
         initComponents();
         jTextFieldYimiaocaigoudanId.setText(DanHao.getDanHao("YMCG"));
         jTextFieldYimiaocaigoudanId.setEditable(false);
@@ -201,12 +199,6 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
 //        });
     }
 
-    JTextField regTextField;
-
-    private void init() {
-        regTextField = new JTextField();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -231,7 +223,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldYimiaocaigoudanId = new javax.swing.JTextField();
-        jTextFieldzhidanDate = regTextField;
+        jTextFieldzhidanDate = new javax.swing.JTextField();
         jTextFieldjingbanren = new javax.swing.JTextField();
         jTextFielddepartment = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -634,7 +626,6 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
         }
         yimiaocaigou = new YimiaoshenqingdantbFindEntity();
         shenqingdan.setShenqingdanId(jTextFieldYimiaocaigoudanId.getText());
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());

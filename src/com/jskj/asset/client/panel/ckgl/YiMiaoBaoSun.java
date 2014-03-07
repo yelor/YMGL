@@ -16,14 +16,12 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ckgl.task.YimiaobaosunUpdateTask;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -35,29 +33,24 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
 
     private Yimiaobaosuntb yimiaobaosun;
     private Baosuntb baosun;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew = true;
     private YimiaobaosuntbFindEntity yimiaobaosunEntity;
-
-    DateChooser dateChooser1;
-    JTextField regTextField;
 
     /**
      * Creates new form GuDingZiChanRuKu
      */
-    private void init() {
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
-        regTextField = new JTextField();
-    }
 
     /**
      * Creates new form ymbs
      */
     public YiMiaoBaoSun(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        init();
         initComponents();
-        regTextField.setText(dateformate.format(new Date()).toString());
+        
+        jTextFieldBaosunId.setText(DanHao.getDanHao("YMBS"));
+        jTextFieldBaosunId.setEditable(false);
+        jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldJingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
 
@@ -151,8 +144,6 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
 
             }
         });
-        jTextFieldBaosunId.setText(DanHao.getDanHao("YMBS"));
-        jTextFieldBaosunId.setEditable(false);
     }
 
     /**
@@ -174,7 +165,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         jButton8 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextFieldzhidanDate = regTextField;
+        jTextFieldzhidanDate = new javax.swing.JTextField();
         jTextFieldzhidanren = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldBaosunId = new javax.swing.JTextField();
@@ -466,7 +457,6 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         baosun = new Baosuntb();
         yimiaobaosun = new Yimiaobaosuntb();
         baosun.setBaosunId(jTextFieldBaosunId.getText());
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
         baosun.setBaosunDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         baosun.setDeport("冻库");
         System.out.println(AssetClientApp.getSessionMap().getUsertb().getUserId());

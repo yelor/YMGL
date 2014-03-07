@@ -37,7 +37,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
     private static final Logger logger = Logger.getLogger(YiMiaoXiaoShouJDialog.class);
     private Sale_detail_tb sale_detail;
     private Saletb sale;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew;
     private Sale_detail_tbFindEntity yimiaoxiaoshou;
 
@@ -46,8 +46,15 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
      */
     public YiMiaoXiaoShouJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        init();
         initComponents();
+        jTextFieldXiaoshouId.setText(DanHao.getDanHao("YMXS"));
+        jTextFieldXiaoshouId.setEditable(false);
+
+        jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
+        jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
+        
 //客户单位的popup
         ((BaseTextField) jTextFieldXiaoshoudanwei).registerPopup(new IPopupBuilder() {
 
@@ -83,7 +90,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称","true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称", "true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
             {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
             {"stockpilePrice", "单价", "false"}, {"yimiaoYushoujia", "售价", "true"}, {"totalprice", "销售合价", "true"}});
 
@@ -169,7 +176,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
-                    Float stockpilePrice = bindedMap.get("stockpilePrice")==null?0:Float.parseFloat("" + bindedMap.get("stockpilePrice"));
+                    Float stockpilePrice = bindedMap.get("stockpilePrice") == null ? 0 : Float.parseFloat("" + bindedMap.get("stockpilePrice"));
                     Object youxiaoqi = bindedMap.get("youxiaodate");
                     Object saleprice = yimiao.get("yimiaoYushoujia");
                     jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
@@ -190,21 +197,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             }
         });
 
-        jTextFieldXiaoshouId.setText(DanHao.getDanHao("YMXS"));
-        jTextFieldXiaoshouId.setEditable(false);
-
-        jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
-        jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
-        jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
-        jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
-    }
-
-    JTextField regTextField1;
-    JTextField regTextField2;
-
-    private void init() {
-        regTextField1 = new JTextField();
-        regTextField2 = new JTextField();
     }
 
     /**
@@ -232,7 +224,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldXiaoshouId = new javax.swing.JTextField();
-        jTextFieldzhidanDate = regTextField1;
+        jTextFieldzhidanDate = new javax.swing.JTextField();
         jTextFieldAddr = new javax.swing.JTextField();
         jTextFieldTel = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -652,7 +644,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         if (isNew) {
             this.setTitle("Ⅱ类疫苗销售单");
             sale = new Saletb();
-           
         } else {
             this.setTitle("Ⅱ类疫苗销售单");
         }
@@ -679,7 +670,6 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         yimiaoxiaoshou = new Sale_detail_tbFindEntity();
         sale.setSaleId(jTextFieldXiaoshouId.getText());
         sale.setGongyingtype(jTextFieldgongyingType.getText());
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
         sale.setSaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         sale.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         sale.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
@@ -687,11 +677,11 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-             sale_detail = new Sale_detail_tb();
+            sale_detail = new Sale_detail_tb();
             sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
             sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
-            sale_detail.setPrice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "yimiaoYushoujia"))));
+            sale_detail.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yimiaoYushoujia"))));
             sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
             sale_detail.setStatus(0);
             list.add(sale_detail);

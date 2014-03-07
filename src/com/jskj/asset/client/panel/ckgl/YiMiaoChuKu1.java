@@ -30,14 +30,14 @@ import org.jdesktop.application.Task;
  */
 public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Churukudantb churukudan;
 
     public YiMiaoChuKu1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
         churukudan = new Churukudantb();
-
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMCK"));
         jTextFielddanjuNo.setEditable(false);
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());

@@ -15,7 +15,6 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
@@ -40,7 +39,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     private YimiaoshenqingdantbFindEntity yimiaolingyong;
 
     private Shenqingdantb shenqingdan;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     ;
     private boolean isNew;
 
@@ -49,7 +48,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
      */
     public YiMiaoLingYongShenQingJDialog() {
         super();
-        init();
         initComponents();
         jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao("YMLY"));
         jTextFieldYimiaolingyongdanId.setEditable(false);
@@ -194,12 +192,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 //        });
     }
 
-    JTextField regTextField;
-
-    private void init() {
-        regTextField = new JTextField();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,7 +216,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldYimiaolingyongdanId = new javax.swing.JTextField();
-        jTextFieldzhidanDate = regTextField;
+        jTextFieldzhidanDate = new javax.swing.JTextField();
         jTextFieldjingbanren = new javax.swing.JTextField();
         jTextFielddepartment = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -565,19 +557,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                YiMiaoLingYongShenQingJDialog dialog = new YiMiaoLingYongShenQingJDialog(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
     }
 
     public void setAddOrUpdate(boolean b) {
@@ -585,7 +564,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         if (isNew) {
             this.setTitle("Ⅰ类疫苗领用申请单");
             shenqingdan = new Shenqingdantb();
-            yimiaoshenqingdan = new Yimiaoshenqingdantb();
         } else {
             this.setTitle("Ⅰ类疫苗领用申请单");
         }
@@ -609,7 +587,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         }
         yimiaolingyong = new YimiaoshenqingdantbFindEntity();
         shenqingdan.setShenqingdanId(jTextFieldYimiaolingyongdanId.getText());
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());

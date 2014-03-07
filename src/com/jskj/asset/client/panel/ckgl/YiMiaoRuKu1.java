@@ -7,8 +7,6 @@ package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
-import com.jskj.asset.client.bean.entity.ChurukuyimiaoEntity;
-import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -16,7 +14,6 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
-import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +33,7 @@ import org.jdesktop.application.Task;
  */
 public class YiMiaoRuKu1 extends javax.swing.JDialog {
 
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Churukudantb churukudan;
 
     /**
@@ -45,12 +42,12 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
     public YiMiaoRuKu1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        churukudan = new Churukudantb();
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMRK"));
         jTextFielddanjuNo.setEditable(false);
-
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
-        churukudan = new Churukudantb();
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
@@ -58,7 +55,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
-        
+
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -94,8 +91,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
-                    churukudan.setXiangdanId((Integer.parseInt( (String) (""+yimiaoshenqingdan.get("xiangdanId")))));
-                    
+                    churukudan.setXiangdanId((Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId")))));
 
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");

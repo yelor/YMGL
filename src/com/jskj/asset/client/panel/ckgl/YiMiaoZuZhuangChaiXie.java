@@ -30,7 +30,7 @@ import org.jdesktop.application.Task;
  */
 public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
 
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     boolean zz;
     private Yimiaozuzhuangchaixie yimiaozuzhuangchaixie;
 
