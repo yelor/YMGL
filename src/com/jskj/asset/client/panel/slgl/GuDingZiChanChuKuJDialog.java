@@ -27,6 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
@@ -45,6 +46,8 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
     private int supplierId;
     private List<ZiChanLieBiaotb> zc;
     CaigoushenqingDetailEntity detail;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private String yuandanID;
     /**
      * Creates new form GuDingZiChanChuKu
      * @param parent
@@ -61,8 +64,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         cgsqId.setText(DanHao.getDanHao("ZCCK"));
         cgsqId.setEditable(false);
         
-        Calendar c = Calendar.getInstance();
-        shenqingdanDate.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        shenqingdanDate.setText(dateformate.format(new Date()).toString());
         shenqingdanDate.setEditable(false);
         
         jingbanren.setText(userName);
@@ -94,7 +96,8 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+                return new String[][]{{"yuandanId", "源单号"},{"shenqingren", "申请人"}
+                        ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -113,10 +116,13 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     editTable.insertValue(4, gdzcValue);
                     editTable.insertValue(5, gdzcCount);
 
+                    yuandanID = (String)bindedMap.get("yuandanId");
+                    
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
                     zclb.setCgzcId((Integer)gdzcId);
                     zclb.setQuantity(Integer.parseInt("" + gdzcCount));
+                    zclb.setCgsqId(yuandanID);
                     zc.add(zclb);
                 }
 
@@ -202,7 +208,6 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         cgsq = new ChukudanDetailEntity();
         Zichanchukudantb sqd = new Zichanchukudantb();
         sqd.setChukudanId(cgsqId.getText());
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         sqd.setChukudanDate(dateformate.parse(shenqingdanDate.getText()));
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(18);
@@ -258,6 +263,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton10 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jingbanren = new javax.swing.JTextField();
@@ -386,6 +392,15 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         jButton13.setOpaque(false);
         jToolBar1.add(jButton13);
 
+        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
+        jToolBar1.add(jButton1);
+
         jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
         jButton15.setText(resourceMap.getString("jButton15.text")); // NOI18N
@@ -496,6 +511,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cgsqId;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton15;

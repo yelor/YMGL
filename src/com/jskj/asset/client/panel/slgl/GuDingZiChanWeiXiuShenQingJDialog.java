@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
@@ -45,6 +46,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
     private List<ZiChanLieBiaotb> zc;
     private double totalPrice;
     WeixiuzichanDetailEntity detail;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * Creates new form GuDingZiChanRuKu
      */
@@ -63,8 +65,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         wxsqId.setText(DanHao.getDanHao("WXSQ"));
         wxsqId.setEditable(false);
         
-        Calendar c = Calendar.getInstance();
-        shenqingdanDate.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        shenqingdanDate.setText(dateformate.format(new Date()).toString());
         shenqingdanDate.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
@@ -213,7 +214,6 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         wxsq = new WeixiushenqingDetailEntity();
         Weixiushenqingdantb sqd = new Weixiushenqingdantb();
         sqd.setWxsqId(wxsqId.getText());
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         sqd.setWxsqDate(dateformate.parse(shenqingdanDate.getText()));
         sqd.setWxsqRemark(wxsqRemark.getText());
         sqd.setShenqingrenId(userId);
@@ -271,6 +271,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         middlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -388,6 +389,15 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
+
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
 
         jButton10.setAction(actionMap.get("exit")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
@@ -553,6 +563,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
     private javax.swing.JTextField dept;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;

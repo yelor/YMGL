@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -37,6 +38,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
     private String userName;
     private String department;
     private List<ZiChanLieBiaotb> zc;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * Creates new form GuDingZiChanRuKu
      */
@@ -55,8 +57,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jTextField1.setText(DanHao.getDanHao("LYTK"));
         jTextField1.setEditable(false);
         
-        Calendar c = Calendar.getInstance();
-        jTextField2.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        jTextField2.setText(dateformate.format(new Date()).toString());
         jTextField2.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
@@ -141,7 +142,6 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         lytk = new LingyongtuikuDetailEntity();
         Lingyongtuikudantb sqd = new Lingyongtuikudantb();
         sqd.setLytkId(jTextField1.getText());
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         sqd.setLytkDate(dateformate.parse(jTextField2.getText()));
         sqd.setLytkRemark(jTextArea1.getText());
         sqd.setShenqingrenId(userId);
@@ -195,6 +195,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         middlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -312,6 +313,15 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
+
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
 
         jButton10.setAction(actionMap.get("exit")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
@@ -476,6 +486,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;

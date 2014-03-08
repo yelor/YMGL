@@ -94,10 +94,9 @@
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x91c7;&#x8d2d;&#x8ba1;&#x5212;&#x5206;&#x6790;"/>
-                <StringItem index="1" value="&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x91c7;&#x8d2d;&#x7533;&#x8bf7;&#x5355;"/>
-                <StringItem index="2" value="&#x4f4e;&#x503c;&#x6613;&#x8017;&#x54c1;&#x91c7;&#x8d2d;&#x7533;&#x8bf7;&#x5355;"/>
+              <StringArray count="2">
+                <StringItem index="0" value="&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x91c7;&#x8d2d;&#x7533;&#x8bf7;&#x5355;"/>
+                <StringItem index="1" value="&#x4f4e;&#x503c;&#x6613;&#x8017;&#x54c1;&#x91c7;&#x8d2d;&#x7533;&#x8bf7;&#x5355;"/>
               </StringArray>
             </Property>
             <Property name="name" type="java.lang.String" value="jComboBox1" noResource="true"/>

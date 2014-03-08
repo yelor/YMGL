@@ -54,7 +54,7 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "固定资产采购计划分析", "固定资产采购申请单", "低值易耗品采购申请单" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "固定资产采购申请单", "低值易耗品采购申请单" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -183,20 +183,15 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
         int selecteIndex=jComboBox1.getSelectedIndex();
         if (selecteIndex==0) {            
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            GuDingZiChanCaiGouJiHuaJDialog guDingZiChanCaiGouJiHuaJDialog = new GuDingZiChanCaiGouJiHuaJDialog(new javax.swing.JFrame(), true);
-            guDingZiChanCaiGouJiHuaJDialog.setLocationRelativeTo(mainFrame);
-            AssetClientApp.getApplication().show(guDingZiChanCaiGouJiHuaJDialog);
-        } else if(selecteIndex==1){
-            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
             guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
-        } else if(selecteIndex==2){
+        } else if(selecteIndex==1){
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
             diZhiYiHaoPinCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(diZhiYiHaoPinCaiGouSQSHJDialog);
-        }    
+        }  
         
     }
 

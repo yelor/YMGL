@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
@@ -44,6 +45,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private String department;
     private List<ZiChanLieBiaotb> zc;
     private LingyongzichanDetailEntity detail;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * Creates new form GuDingZiChanRuKu
      */
@@ -62,8 +64,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         lysqId.setText(DanHao.getDanHao("LYSQ"));
         lysqId.setEditable(false);
         
-        Calendar c = Calendar.getInstance();
-        lysqDate.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        lysqDate.setText(dateformate.format(new Date()).toString());
         lysqDate.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
@@ -213,7 +214,6 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         lysq = new LingyongshenqingDetailEntity();
         Lingyongshenqingdantb sqd = new Lingyongshenqingdantb();
         sqd.setLysqId(lysqId.getText());
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         sqd.setLysqDate(dateformate.parse(lysqDate.getText()));
         sqd.setLysqRemark(lysqRemark.getText());
         sqd.setShenqingrenId(userId);
@@ -268,6 +268,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         middlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -385,6 +386,15 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
+
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
 
         jButton10.setAction(actionMap.get("exit")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
@@ -549,6 +559,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private javax.swing.JTextField dept;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;

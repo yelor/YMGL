@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
@@ -45,6 +46,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
     private int supplierId;
     private List<ZiChanLieBiaotb> zc;
     CaigoushenqingDetailEntity detail;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -61,8 +63,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         cgsqId.setText(DanHao.getDanHao("GDZC"));
         cgsqId.setEditable(false);
         
-        Calendar c = Calendar.getInstance();
-        shenqingdanDate.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        shenqingdanDate.setText(dateformate.format(new Date()).toString());
         shenqingdanDate.setEditable(false);
         
         jingbanren.setText(userName);
@@ -235,7 +236,6 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         cgsq = new ShenQingDetailEntity();
         Shenqingdantb sqd = new Shenqingdantb();
         sqd.setShenqingdanId(cgsqId.getText());
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         sqd.setShenqingdanDate(dateformate.parse(shenqingdanDate.getText()));
         sqd.setSupplierId(supplierId);
         sqd.setJingbanrenId(userId);

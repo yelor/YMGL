@@ -29,6 +29,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
@@ -46,6 +47,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
     private int supplierId;
     private float total;
     private List<Yuandanliebiaotb> ydlb;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * Creates new form FKDJDialog
@@ -60,8 +62,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
         
         shoukuandanId.setText(DanHao.getDanHao("SKDJ"));
         
-        Calendar c = Calendar.getInstance();
-        shoukuandanDate.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        shoukuandanDate.setText(dateformate.format(new Date()).toString());
         
         ((BaseTextField) supplier).registerPopup(new IPopupBuilder() {
 
@@ -237,7 +238,6 @@ public class ShouKuanDanJDialog extends BaseDialog {
         ShoukuanDetailEntity detail = new ShoukuanDetailEntity();
         Shoukuandantb fkd = new Shoukuandantb();
         super.copyToBean(fkd, jPanel1);
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         fkd.setShoukuandanDate(dateformate.parse(shoukuandanDate.getText()));
         fkd.setDanjuleixingId(16);
         fkd.setIsCompleted(0);

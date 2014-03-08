@@ -31,6 +31,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
     private Zichandengjitb zc;
     private int userId;
     private String userName;
+    private String yuandanID;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -61,7 +62,8 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
+                        ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -82,6 +84,8 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
                     jTextFieldBaoxiuqi.setEditable(false);
                     jTextFieldQuantity.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
                     jTextFieldQuantity.setEditable(false);
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
                 }
             }
         });
@@ -117,6 +121,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
         zc.setGouzhiDate(dateformate.parse(jTextField12.getText()));
         zc.setDengjirenId(userId);
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
+        zc.setYuandanId(yuandanID);
         
         return new submitTask(zc);
     }

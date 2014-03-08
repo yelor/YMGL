@@ -166,12 +166,15 @@ public class LingyongshenqingshenpiJDialog extends javax.swing.JDialog {
     
     @Action
     public Task shenPiN(){
-        String reason;
-        reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
         int n = jSQTable.getSelectedRow();
         if(n < 0){
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return null;
+        }
+        String reason;
+        reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
+        if(reason==null){
+           return null;
         }
         LingyongzichanDetailEntity lysqdan = lysq.get(jSQTable.getSelectedRow());
         shenPiEntity = new ShenPiEntity();
@@ -217,7 +220,6 @@ public class LingyongshenqingshenpiJDialog extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -280,14 +282,6 @@ public class LingyongshenqingshenpiJDialog extends javax.swing.JDialog {
         jButton12.setName("jButton12"); // NOI18N
         jButton12.setOpaque(false);
         jToolBar1.add(jButton12);
-
-        jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
-        jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
-        jButton13.setBorderPainted(false);
-        jButton13.setFocusable(false);
-        jButton13.setName("jButton13"); // NOI18N
-        jButton13.setOpaque(false);
-        jToolBar1.add(jButton13);
 
         jButton2.setAction(actionMap.get("detail")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
@@ -457,7 +451,6 @@ public class LingyongshenqingshenpiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -19,6 +19,7 @@ import com.jskj.asset.client.util.DateHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -40,6 +41,8 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     private ZichanYanshoutb zcys;
     private int userId;
     private String userName;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private String yuandanID;
     
     /**
      * Creates new form GuDingZiChanRuKu
@@ -54,8 +57,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         jTextField1.setText(DanHao.getDanHao("ZCYS"));
         jTextField1.setEditable(false);
         
-        Calendar c = Calendar.getInstance();
-        jTextField2.setText(DateHelper.format(c.getTime(), "yyyy-MM-dd"));
+        jTextField2.setText(dateformate.format(new Date()).toString());
         jTextField2.setEditable(false);
         
         jTextFieldYanshouren.setText(userName);
@@ -119,7 +121,8 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
+                        ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -130,6 +133,8 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                     jTextFieldPrice.setText(bindedMap.get("gdzcValue") == null ? "" : bindedMap.get("gdzcValue").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
                     zcid = (Integer)bindedMap.get("gdzcId");
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
                 }
             }
         });
@@ -177,8 +182,8 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         }
         zcys = new ZichanYanshoutb();
         zcys.setZcysId(jTextField1.getText());
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         zcys.setZcysDate(dateformate.parse(jTextField2.getText()));
+        dateformate = new SimpleDateFormat("yyyy-MM-dd");
         zcys.setZcysDaohuodate(dateformate.parse(jTextField4.getText()));
         zcys.setGdzcId(zcid);
         zcys.setCaigourenId(caigouren_id);
@@ -189,6 +194,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
         zcys.setZcysZhiliangjiance(jTextField14.getText());
         zcys.setZcysShicexixngneng(jTextField15.getText());
         zcys.setImgUri(imageUri);
+        zcys.setYuandanId(yuandanID);
         
         return new submitTask(zcys);
     }
