@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ZichanYanshoutb {
     private String zcysId;
 
@@ -10,6 +12,8 @@ public class ZichanYanshoutb {
     private Date zcysDaohuodate;
 
     private Integer gdzcId;
+
+    private String yuandanId;
 
     private Integer caigourenId;
 
@@ -57,6 +61,14 @@ public class ZichanYanshoutb {
 
     public void setGdzcId(Integer gdzcId) {
         this.gdzcId = gdzcId;
+    }
+
+    public String getYuandanId() {
+        return yuandanId;
+    }
+
+    public void setYuandanId(String yuandanId) {
+        this.yuandanId = yuandanId == null ? null : yuandanId.trim();
     }
 
     public Integer getCaigourenId() {

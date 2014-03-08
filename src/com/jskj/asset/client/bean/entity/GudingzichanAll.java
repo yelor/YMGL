@@ -13,7 +13,13 @@ public class GudingzichanAll extends Gudingzichantb{
     
     private Supplier suppliertb;
     
+    private ShenqingdanAll shenqingdan;
+    
     private int count;
+    
+    private String yuandanId;
+    
+    private String shenqingren;
 
     /**
      * @return the depottb
@@ -49,6 +55,30 @@ public class GudingzichanAll extends Gudingzichantb{
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public ShenqingdanAll getShenqingdan() {
+        return shenqingdan;
+    }
+
+    public void setShenqingdan(ShenqingdanAll shenqingdan) {
+        this.shenqingdan = shenqingdan;
+    }
+
+    public String getYuandanId() {
+        return yuandanId;
+    }
+
+    public String getShenqingren() {
+        return shenqingren;
+    }
+
+    public void setYuandanId(String yuandanId) {
+        this.yuandanId = yuandanId;
+    }
+
+    public void setShenqingren(String shenqingren) {
+        this.shenqingren = shenqingren;
     }
     
 }

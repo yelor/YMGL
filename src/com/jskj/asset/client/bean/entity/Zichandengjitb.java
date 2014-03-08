@@ -5,6 +5,8 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Zichandengjitb {
+    private String yuandanId;
+
     private Integer gdzcId;
 
     private Date gouzhiDate;
@@ -12,6 +14,14 @@ public class Zichandengjitb {
     private Integer dengjirenId;
 
     private Integer quantity;
+
+    public String getYuandanId() {
+        return yuandanId;
+    }
+
+    public void setYuandanId(String yuandanId) {
+        this.yuandanId = yuandanId == null ? null : yuandanId.trim();
+    }
 
     public Integer getGdzcId() {
         return gdzcId;
