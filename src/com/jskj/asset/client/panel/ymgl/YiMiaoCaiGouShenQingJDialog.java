@@ -108,9 +108,9 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=4 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 8 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"" + newColumnObj.toString() + "%\")) ";
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=4 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 9 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"" + newColumnObj.toString() + "%\")) ";
                 } else {
-                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=4 and is_completed = 1 and status = 8)";
+                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=4 and is_completed = 1 and status = 9)";
                 }
                 return sql;
             }

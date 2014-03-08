@@ -37,7 +37,9 @@ import org.jdesktop.application.Task;
 public class YiMiaoChuKu2 extends javax.swing.JDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
+    private Churukudantb chukudan;
 
     /**
      * Creates new form ymcrk1
@@ -45,16 +47,16 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     public YiMiaoChuKu2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        churukudan = new Churukudantb();        
+
+        churukudan = new Churukudantb();
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMCK"));
         jTextFielddanjuNo.setEditable(false);
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
-        
+
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号", "false"},{"yimiaoName", "疫苗名称", "true"},{"source", "国产/出口", "false"},{"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"}, {"stockpilePrice", "单价", "true"}, {"totalPrice", "合价", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
@@ -96,6 +98,9 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                     HashMap saletb = (HashMap) saletbmap;
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
                     
+                    chukudan = new Churukudantb();
+                    chukudan.setXiangdanId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
+
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -107,11 +112,10 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                     Object piqianfaNo = stockpile.get("piqianfano");
                     Object pizhunwenhao = yimiaoAll.get("yimiaoPizhunwenhao");
                     Object source = stockpile.get("source");
-                    Object tongguandanNo = yimiaoAll.get("jinkoutongguanno");                    
+                    Object tongguandanNo = yimiaoAll.get("jinkoutongguanno");
                     Object quantity = sale_detail_tb.get("quantity");
                     Object price = sale_detail_tb.get("price");
                     Object totalPrice = sale_detail_tb.get("totalPrice");
-                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -415,17 +419,18 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
 
         churukudan.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
-          for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             churukudan.setPihao((String) yimiaotable.getValue(i, "pihao"));
             churukudan.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
-            churukudan.setPrice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "stockpilePrice"))));
-            churukudan.setSource((String) (""+yimiaotable.getValue(i, "source")));
-            churukudan.setTongguandanno((String) (""+yimiaotable.getValue(i, "tongguandanNo")));
-            churukudan.setYouxiaoqi(dateformate.parse((String) (""+yimiaotable.getValue(i, "youxiaodate"))));
-            churukudan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            churukudan.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "quantity").toString()));
-            churukudan.setTotalprice(churukudan.getPrice()*churukudan.getPrice());
+            churukudan.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "stockpilePrice"))));
+            churukudan.setSource((String) ("" + yimiaotable.getValue(i, "source")));
+            churukudan.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
+            churukudan.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            churukudan.setYimiaoId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "yimiaoId"))));
+            churukudan.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
+            churukudan.setTotalprice(churukudan.getPrice() * churukudan.getPrice());
+            churukudan.setXiangdanId(chukudan.getXiangdanId());
         }
         churukudan.setGongyingdanwei(1);
 
@@ -447,19 +452,24 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     }
 
     private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
+
         SaveTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to SaveTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }

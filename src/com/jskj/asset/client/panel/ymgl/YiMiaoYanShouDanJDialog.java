@@ -41,6 +41,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
     private Yimiaoyanshoutb yimiaoyanshou;
     private boolean isNew;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat riqi = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -92,7 +93,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
+            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
             {"quantity", "数量", "false"}, {"fuheyuan", "复核员", "true"}, {"fahuoyuan", "发货员", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -118,7 +119,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
+                return new String[][]{{"yimiaoshenqingtb.xiangdanId", "详单ID"}, {"shenqingdan.shenqingdanId", "源单单号"}, {"shenqingdan.shenqingdanDate", "申报日期"}, {"yimiaoAll.yimiaoName", "疫苗名称"},
                 {"yimiaoAll.yimiaoJixing", "剂型"}};
             }
 
@@ -142,6 +143,8 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                     } catch (Exception e) {
                         pihao = null;
                     }
+
+                    Object youxiaoqi = yimiaodengji.get("youxiaoqi");
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
@@ -152,18 +155,20 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, pihao);
-                    editTable.insertValue(6, unit);
-                    editTable.insertValue(7, buyprice);
-                    editTable.insertValue(8, quantity);
+                    editTable.insertValue(6, youxiaoqi);
+                    editTable.insertValue(7, unit);
+                    editTable.insertValue(8, buyprice);
+                    editTable.insertValue(9, quantity);
 
                     Yimiaoyanshou_detail_tb yanshou = new Yimiaoyanshou_detail_tb();
-                    try {
-                        yanshou.setPiqianfahegeno((String) ("" + yimiaodengji.get("piqianfahegezhenno")));
-                        yanshou.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
-                    } catch (Exception e) {
-                        yanshou.setPiqianfahegeno(null);
-                        yanshou.setXiangdanId(null);
-                    }
+//                    try {
+//                        yanshou.setPiqianfahegeno((String) ("" + yimiaodengji.get("piqianfahegezhenno")));
+//                    } catch (Exception e) {
+//                        yanshou.setPiqianfahegeno(null);
+//                    }
+
+                    yanshou.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
+
                     bindedMaplist.add(yanshou);
                 }
 
@@ -870,7 +875,6 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         }
 
         yimiaoyanshouEntity = new Yimiaoyanshou_detail_tbFindEntity();
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
 
         yimiaoyanshou.setYmysId(jTextFieldYimiaoyanshouId.getText());
         yimiaoyanshou.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
@@ -879,13 +883,13 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         yimiaoyanshou.setYmysSendperson(jTextFieldsongmiaoren.getText() == null ? "" : jTextFieldsongmiaoren.getText());
         yimiaoyanshou.setYmysEquipment(jTextFieldEquipment.getText() == null ? "" : jTextFieldEquipment.getText());
         yimiaoyanshou.setYmysStoragetype(jTextFieldStoragetype.getText() == null ? "" : jTextFieldStoragetype.getText());
-        yimiaoyanshou.setYmysStarttime(dateformate.parse(jTextFieldStarttime.getText()));
+        yimiaoyanshou.setYmysStarttime(riqi.parse(jTextFieldStarttime.getText()));
         yimiaoyanshou.setYmysStrattemp1(Float.valueOf(jTextFieldstarttemp1.getText().trim().equals("") ? "0" : jTextFieldstarttemp1.getText()));
         yimiaoyanshou.setYmysStarttemp2(Float.valueOf(jTextFieldstarttemp2.getText().trim().equals("") ? "0" : jTextFieldstarttemp2.getText()));
         yimiaoyanshou.setYmysTotaltime(Float.valueOf(jTextFieldTotaltime.getText().trim().equals("") ? "0" : jTextFieldTotaltime.getText()));
         yimiaoyanshou.setYmysArrivetemp1(Float.valueOf(jTextFieldArrivetemp1.getText().trim().equals("") ? "0" : jTextFieldArrivetemp1.getText()));
         yimiaoyanshou.setYmysArrivetemp2(Float.valueOf(jTextFieldArrivetemp2.getText().trim().equals("") ? "0" : jTextFieldArrivetemp2.getText()));
-        yimiaoyanshou.setYmysArrivetime(dateformate.parse(jTextFieldArrivetime.getText()));
+        yimiaoyanshou.setYmysArrivetime(riqi.parse(jTextFieldArrivetime.getText()));
         float BefMiles = Float.valueOf(jTextFieldBefmiles.getText().trim().equals("") ? "0" : jTextFieldBefmiles.getText());
         yimiaoyanshou.setYmysBefmiles(BefMiles);
         float BackMiles = Float.valueOf(jTextFieldBackmiles.getText().trim().equals("") ? "0" : jTextFieldBackmiles.getText());
@@ -900,11 +904,12 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaoyanshou_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             yimiaoyanshou_detail.setYmysId(jTextFieldYimiaoyanshouId.getText());
-            yimiaoyanshou_detail.setYouxiaodate(new Date());
+            yimiaoyanshou_detail.setYouxiaodate(riqi.parse((String) ("" + yimiaotable.getValue(i, "youxiaoqi"))));
             yimiaoyanshou_detail.setPihao((String) ("" + yimiaotable.getValue(i, "pihao")));
             yimiaoyanshou_detail.setFahuoyuan((String) ("" + yimiaotable.getValue(i, "fahuoyuan")));
             yimiaoyanshou_detail.setFuheyuan((String) ("" + yimiaotable.getValue(i, "fuheyuan")));
             yimiaoyanshou_detail.setQuantity((Integer) yimiaotable.getValue(i, "quantity"));
+            yimiaoyanshou_detail.setPrice(yimiaotable.getValue(i, "price") == null ? 0 : Float.parseFloat("" + yimiaotable.getValue(i, "price")));
             yimiaoyanshou_detail.setPiqianfahegeno(bindedMaplist.get(i).getPiqianfahegeno());
             yimiaoyanshou_detail.setXiangdanId(bindedMaplist.get(i).getXiangdanId());
             list.add(yimiaoyanshou_detail);

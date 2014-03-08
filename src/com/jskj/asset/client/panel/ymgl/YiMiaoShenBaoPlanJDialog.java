@@ -358,6 +358,7 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
@@ -634,7 +635,6 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
             yimiaoshenqingdan.setDanjuleixingId(3);
             yimiaoshenqingdan.setStatus(8);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            System.out.println(yimiaotable.getValue(i, "quantity"));
             if (yimiaotable.getValue(i, "quantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗申报数量!");
                 return null;

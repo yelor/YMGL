@@ -32,6 +32,7 @@ import org.jdesktop.application.Task;
 public class YiMiaoRuKu2 extends javax.swing.JDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
 
     /**
@@ -41,7 +42,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         churukudan = new Churukudantb();
-        
+
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMRK"));
         jTextFielddanjuNo.setEditable(false);
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -421,7 +422,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
             churukudan.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             churukudan.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "price"))));
             churukudan.setTotalprice(churukudan.getQuantity() * churukudan.getPrice());
-            churukudan.setYouxiaoqi(dateformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            churukudan.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
         }
 
         String serviceId = "yimiaoruku/add";

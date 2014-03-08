@@ -6,12 +6,9 @@
 
 package com.jskj.asset.client.panel.ckgl;
 
-import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaorukujiluPanel;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 

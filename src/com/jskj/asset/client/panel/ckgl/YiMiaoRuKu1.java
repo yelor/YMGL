@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -34,6 +32,7 @@ import org.jdesktop.application.Task;
 public class YiMiaoRuKu1 extends javax.swing.JDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
 
     /**
@@ -442,7 +441,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
             if (yimiaotable.getValue(i, "youxiaodate").toString().trim().equals("")) {
                 churukudan.setYouxiaoqi(null);
             } else {
-                churukudan.setYouxiaoqi(dateformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+                churukudan.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
             }
         }
 
