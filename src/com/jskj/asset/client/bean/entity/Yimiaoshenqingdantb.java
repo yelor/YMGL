@@ -22,6 +22,8 @@ public class Yimiaoshenqingdantb {
 
     private Integer status;
 
+    private Integer yuandanId;
+
     public Integer getXiangdanId() {
         return xiangdanId;
     }
@@ -92,5 +94,13 @@ public class Yimiaoshenqingdantb {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getYuandanId() {
+        return yuandanId;
+    }
+
+    public void setYuandanId(Integer yuandanId) {
+        this.yuandanId = yuandanId;
     }
 }
