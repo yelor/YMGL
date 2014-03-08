@@ -680,6 +680,10 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
             sale_detail = new Sale_detail_tb();
             sale_detail.setSaleId(jTextFieldXiaoshouId.getText());
             sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            if (yimiaotable.getValue(i, "saleQuantity").equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗销售数量!");
+                return null;
+            }
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
             sale_detail.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yimiaoYushoujia"))));
             sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
@@ -711,6 +715,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
+            AssetMessage.INFO("提交成功！", YiMiaoXiaoShouJDialog.this);
             exit();
         }
     }

@@ -38,6 +38,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
     private static final Logger logger = Logger.getLogger(YiMiaoCaiGouShenQingJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaocaigou;
+    private List<Yimiaoshenqingdantb> yimiaoshenqingdanlist=new ArrayList<Yimiaoshenqingdantb>();
     private Shenqingdantb shenqingdan;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     ;
@@ -127,6 +128,9 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     
+                    Yimiaoshenqingdantb yimiaoliebiao=new Yimiaoshenqingdantb();
+                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) (""+yimiaoshenqingdan.get("xiangdanId")))) );
+                    yimiaoshenqingdanlist.add(yimiaoliebiao);
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -643,6 +647,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setQuantity(Integer.parseInt((String) (""+yimiaotable.getValue(i, "quantity"))));
             yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
             yimiaoshenqingdan.setTotalprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "totalprice"))));
+            yimiaoshenqingdan.setYuandanId(yimiaoshenqingdanlist.get(i).getYuandanId());
             list.add(yimiaoshenqingdan);
         }
         yimiaocaigou.setShenqingdan(shenqingdan);

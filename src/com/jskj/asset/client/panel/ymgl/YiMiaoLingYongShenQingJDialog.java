@@ -37,7 +37,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     private static final Logger logger = Logger.getLogger(YiMiaoLingYongShenQingJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaolingyong;
-
+    private List<Yimiaoshenqingdantb> yimiaoshenqingdanlist = new ArrayList<Yimiaoshenqingdantb>();
     private Shenqingdantb shenqingdan;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     ;
@@ -70,7 +70,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldSupplierName.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" +  jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
+                    sql = "(supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" + jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -90,7 +90,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","true"}, {"yimiaoGuige", "规格", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -126,7 +126,10 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                     HashMap yimiaoAll = (HashMap) yimiaomap;
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
-                    
+
+                    Yimiaoshenqingdantb yimiaoliebiao=new Yimiaoshenqingdantb();
+                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) (""+yimiaoshenqingdan.get("xiangdanId")))) );
+                    yimiaoshenqingdanlist.add(yimiaoliebiao);
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -134,7 +137,6 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
-                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -604,6 +606,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             System.out.println(yimiaotable.getValue(i, "quantity"));
             yimiaoshenqingdan.setQuantity((Integer) yimiaotable.getValue(i, "quantity"));
+            yimiaoshenqingdan.setYuandanId(yimiaoshenqingdanlist.get(i).getYuandanId());
             list.add(yimiaoshenqingdan);
         }
         yimiaolingyong.setShenqingdan(shenqingdan);
