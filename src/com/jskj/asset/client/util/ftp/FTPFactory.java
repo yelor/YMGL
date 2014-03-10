@@ -1,5 +1,6 @@
 package com.jskj.asset.client.util.ftp;
 
+import com.jskj.asset.client.constants.Constants;
 import org.apache.log4j.Logger;
 
 public class FTPFactory {
@@ -28,7 +29,7 @@ public class FTPFactory {
         }
         //在系统中，host的所有参数都是固定的,需要看<FTPSERVER>\res\conf\ftpd-asset.xml
         Host host = new Host();
-        host.setIp("127.0.0.1");
+        host.setIp(Constants.SERVICE_IP);
         host.setPassword("zaq12wsx");
         host.setUserid("assetclient");
         if (!ftphelp.connectServer(host, path)) {
