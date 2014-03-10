@@ -7,15 +7,11 @@ package com.jskj.asset.client.panel.user;
 
 import com.jskj.asset.client.bean.entity.Departmenttb;
 import com.jskj.asset.client.bean.entity.DepartmenttbAll;
-import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
-import com.jskj.asset.client.layout.BaseTextField;
-import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.PingYinUtil;
-import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -69,12 +65,6 @@ public class BuMenInfoJDialog extends BaseDialog {
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新部门:" + paramData.getDepartmentId())); // NOI18N
             jCheckBoxCont.setSelected(false);
             jCheckBoxCont.setEnabled(false);
-        }
-
-        if (paramData.getUserId() != null && paramData.getUserId() > 0) {
-            jTextBossId.setText(String.valueOf(paramData.getUserId()));
-        } else {
-            jTextBossId.setText("");
         }
     }
 

@@ -48,13 +48,10 @@ public class CangkuDialog extends BaseDialog {
         if (appParam.getDepotId() == null || appParam.getDepotId() <= 0) { //新建
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("仓库信息")); // NOI18N
             jCheckBox2.setEnabled(true);
-            jTextPID.setText("");
-
         } else {//更新
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("修改仓库:" + appParam.getDepotId())); // NOI18N
             jCheckBox2.setSelected(false);
             jCheckBox2.setEnabled(false);
-            jTextPID.setText(String.valueOf(appParam.getUserId()));
         }
 
     }

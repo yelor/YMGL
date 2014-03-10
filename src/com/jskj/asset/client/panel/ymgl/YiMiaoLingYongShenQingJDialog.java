@@ -592,7 +592,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         shenqingdan.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        shenqingdan.setDanjuleixingId(4);
+        shenqingdan.setDanjuleixingId(5);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();

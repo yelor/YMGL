@@ -108,7 +108,7 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price>0)";
+                sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0 or stockPile_price=\"null\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += "and (yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }

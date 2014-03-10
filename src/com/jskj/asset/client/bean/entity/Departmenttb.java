@@ -12,8 +12,6 @@ public class Departmenttb {
 
     private String fax;
 
-    private Integer userId;
-
     private String departmentRemark;
 
     private String zujima;
@@ -48,14 +46,6 @@ public class Departmenttb {
 
     public void setFax(String fax) {
         this.fax = fax == null ? null : fax.trim();
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public String getDepartmentRemark() {

@@ -1,7 +1,6 @@
 package com.jskj.asset.client.bean.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Depot {
@@ -12,12 +11,6 @@ public class Depot {
     private String depotArea;
 
     private String depotAddr;
-
-    private Integer userId;
-
-    private Date depotCreatedate;
-
-    private Date depotCanceldate;
 
     private String depotRemark;
 
@@ -53,30 +46,6 @@ public class Depot {
 
     public void setDepotAddr(String depotAddr) {
         this.depotAddr = depotAddr == null ? null : depotAddr.trim();
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Date getDepotCreatedate() {
-        return depotCreatedate;
-    }
-
-    public void setDepotCreatedate(Date depotCreatedate) {
-        this.depotCreatedate = depotCreatedate;
-    }
-
-    public Date getDepotCanceldate() {
-        return depotCanceldate;
-    }
-
-    public void setDepotCanceldate(Date depotCanceldate) {
-        this.depotCanceldate = depotCanceldate;
     }
 
     public String getDepotRemark() {
