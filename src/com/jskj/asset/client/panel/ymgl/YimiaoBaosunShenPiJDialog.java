@@ -156,6 +156,25 @@ public class YimiaoBaosunShenPiJDialog extends BaseDialog {
         return new SPTask(shenPiEntity);
     }
 
+    private class ShenPiYTask extends org.jdesktop.application.Task<Object, Void> {
+        ShenPiYTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ShenPiYTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public Task shenPiNMessage() {
         if (jSQTable.getSelectedRow() < 0) {
@@ -177,6 +196,25 @@ public class YimiaoBaosunShenPiJDialog extends BaseDialog {
         //shenPiEntity.setUser(user);
         yimiaoshenpiList.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
+    }
+
+    private class ShenPiNMessageTask extends org.jdesktop.application.Task<Object, Void> {
+        ShenPiNMessageTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ShenPiNMessageTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     private class SPTask extends ShenPiTask {

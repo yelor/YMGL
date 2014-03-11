@@ -54,39 +54,9 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         jTextFieldJingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
 
-//        经办人的popup
-        ((BaseTextField) jTextFieldJingbanren).registerPopup(new IPopupBuilder() {
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "user";
-            }
-
-            public String getConditionSQL() {
-                String sql = "";
-                if (!jTextFieldJingbanren.getText().trim().equals("")) {
-                    sql = "(user_name like \"%" + jTextFieldJingbanren.getText() + "%\"" + " or zujima like \"" + jTextFieldJingbanren.getText().toString().toLowerCase() + "%\")";
-                }
-                return sql;
-            }
-
-            public String[][] displayColumns() {
-                return new String[][]{{"userName", "用户名"}, {"departmentId", "部门编号"}};
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    jTextFieldJingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
-                    jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
-
-                }
-            }
-        });
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"baosunQuantity", "数量", "true"}, {"price", "单价", "false"}, {"totalprice", "合价", "false"},
             {"xiaohuiAddr", "销毁地点", "true"}, {"xiaohuiDate", "销毁时间", "true"}, {"xiaohuiType", "销毁方式", "true"}, {"baosunReason", "报损原因", "true"}});
 
@@ -105,7 +75,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "(yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += "stockpile_id in (select distinct stockpile_id from stockpile,yimiao where stockpile.yimiao_id =yimiao.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"" + newColumnObj.toString() + "%\")) ";
                 }
                 return sql;
             }
@@ -172,7 +142,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableyimiao = new BaseTable(null);
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldJingbanren = new BaseTextField();
+        jTextFieldJingbanren = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoBaoSun.class);
@@ -466,8 +436,8 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         baosun.setBaosunDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         baosun.setDeport("冻库");
         System.out.println(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        baosun.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserName());
-        baosun.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        baosun.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        baosun.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
 
         List<Yimiaobaosuntb> list = new ArrayList<Yimiaobaosuntb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {

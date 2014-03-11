@@ -9,11 +9,13 @@ public class Baosuntb {
 
     private Date baosunDate;
 
-    private String jingbanren;
+    private Integer jingbanren;
 
     private String deport;
 
-    private String zhidanren;
+    private Integer zhidanren;
+
+    private Integer isCompleted;
 
     public String getBaosunId() {
         return baosunId;
@@ -31,12 +33,12 @@ public class Baosuntb {
         this.baosunDate = baosunDate;
     }
 
-    public String getJingbanren() {
+    public Integer getJingbanren() {
         return jingbanren;
     }
 
-    public void setJingbanren(String jingbanren) {
-        this.jingbanren = jingbanren == null ? null : jingbanren.trim();
+    public void setJingbanren(Integer jingbanren) {
+        this.jingbanren = jingbanren;
     }
 
     public String getDeport() {
@@ -47,11 +49,19 @@ public class Baosuntb {
         this.deport = deport == null ? null : deport.trim();
     }
 
-    public String getZhidanren() {
+    public Integer getZhidanren() {
         return zhidanren;
     }
 
-    public void setZhidanren(String zhidanren) {
-        this.zhidanren = zhidanren == null ? null : zhidanren.trim();
+    public void setZhidanren(Integer zhidanren) {
+        this.zhidanren = zhidanren;
+    }
+
+    public Integer getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

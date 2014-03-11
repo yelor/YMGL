@@ -19,6 +19,8 @@ public class Yimiaotiaojiatb {
 
     private String tioajiaremark;
 
+    private Integer isCompleted;
+
     public String getTiaojiaId() {
         return tiaojiaId;
     }
@@ -73,5 +75,13 @@ public class Yimiaotiaojiatb {
 
     public void setTioajiaremark(String tioajiaremark) {
         this.tioajiaremark = tioajiaremark == null ? null : tioajiaremark.trim();
+    }
+
+    public Integer getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

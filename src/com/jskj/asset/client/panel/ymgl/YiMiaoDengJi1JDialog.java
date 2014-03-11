@@ -279,6 +279,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
         jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
 
+        jTextFieldpizhunwenhao.setText(resourceMap.getString("jTextFieldpizhunwenhao.text")); // NOI18N
         jTextFieldpizhunwenhao.setName("jTextFieldpizhunwenhao"); // NOI18N
         jTextFieldpizhunwenhao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

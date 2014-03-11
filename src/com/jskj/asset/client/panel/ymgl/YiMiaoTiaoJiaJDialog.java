@@ -245,7 +245,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jButton2.setIcon(null);
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.setFocusable(false);
@@ -558,10 +558,11 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         if (jTextFieldJine.getText().trim().equals("")) {
             yimiaotiaojia.setTiaojiajine((float) 0);
         } else {
-            yimiaotiaojia.setTiaojiajine(Float.parseFloat(jTextFieldJine.getText()));
+            yimiaotiaojia.setTiaojiajine(Float.parseFloat(""+jTextFieldJine.getText()));
         }
         yimiaotiaojia.setJingbanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         yimiaotiaojia.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        yimiaotiaojia.setIsCompleted(0);
         List<Yimiaotiaojia_detail_tb> list = new ArrayList<Yimiaotiaojia_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
@@ -569,6 +570,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "yimiaoId"));
             yimiaotiaojia_detail.setBeforeprice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "stockpilePrice"))));
             yimiaotiaojia_detail.setLastprice(Float.parseFloat((String) (""+yimiaotable.getValue(i, "lastPrice"))));
+            yimiaotiaojia_detail.setIsCompleted(0);
             list.add(yimiaotiaojia_detail);
         }
 

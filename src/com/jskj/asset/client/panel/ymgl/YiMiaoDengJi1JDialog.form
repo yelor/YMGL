@@ -339,6 +339,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldpizhunwenhao">
           <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jTextFieldpizhunwenhao.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldpizhunwenhao" noResource="true"/>
           </Properties>
           <Events>

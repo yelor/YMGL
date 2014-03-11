@@ -1,5 +1,8 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yimiaotiaojia_detail_tb {
     private Integer detailId;
 
@@ -10,6 +13,8 @@ public class Yimiaotiaojia_detail_tb {
     private Float beforeprice;
 
     private Float lastprice;
+
+    private Integer isCompleted;
 
     public Integer getDetailId() {
         return detailId;
@@ -49,5 +54,13 @@ public class Yimiaotiaojia_detail_tb {
 
     public void setLastprice(Float lastprice) {
         this.lastprice = lastprice;
+    }
+
+    public Integer getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

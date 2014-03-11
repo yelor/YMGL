@@ -107,6 +107,7 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
+                    editTable.insertValue(6, 0);
 
                 }
 
@@ -635,11 +636,11 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
             yimiaoshenqingdan.setDanjuleixingId(3);
             yimiaoshenqingdan.setStatus(8);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            if (yimiaotable.getValue(i, "quantity").equals("")) {
+            if (yimiaotable.getValue(i, "quantity").equals(0)) {
                 AssetMessage.ERRORSYS("请输入疫苗申报数量!");
                 return null;
             }
-            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
+            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) (""+yimiaotable.getValue(i, "quantity"))));
             list.add(yimiaoshenqingdan);
         }
         yimiaoshenbao.setShenqingdan(shenqingdan);

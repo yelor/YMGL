@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yimiaobaosuntb {
     private Integer id;
 
@@ -18,6 +20,8 @@ public class Yimiaobaosuntb {
     private String xiaohuitype;
 
     private String xiaohuireason;
+
+    private Integer isCompleted;
 
     public Integer getId() {
         return id;
@@ -81,5 +85,13 @@ public class Yimiaobaosuntb {
 
     public void setXiaohuireason(String xiaohuireason) {
         this.xiaohuireason = xiaohuireason == null ? null : xiaohuireason.trim();
+    }
+
+    public Integer getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }
