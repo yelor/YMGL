@@ -7,8 +7,8 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.WeixiushenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.Weixiushenqingdantb;
+import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
+import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.WeixiuzichanDetailEntity;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
@@ -39,12 +39,12 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
 
-    private WeixiushenqingDetailEntity wxsq;
+    private ShenQingDetailEntity wxsq;
     private int userId;
     private String userName;
     private String department;
     private List<ZiChanLieBiaotb> zc;
-    private double totalPrice;
+    private float totalPrice;
     WeixiuzichanDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
@@ -211,18 +211,19 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
             JOptionPane.showMessageDialog(null, "请选择要维修的资产！");
             return null;
         }
-        wxsq = new WeixiushenqingDetailEntity();
-        Weixiushenqingdantb sqd = new Weixiushenqingdantb();
-        sqd.setWxsqId(wxsqId.getText());
-        sqd.setWxsqDate(dateformate.parse(shenqingdanDate.getText()));
-        sqd.setWxsqRemark(wxsqRemark.getText());
-        sqd.setShenqingrenId(userId);
+        wxsq = new ShenQingDetailEntity();
+        Shenqingdantb sqd = new Shenqingdantb();
+        sqd.setShenqingdanId(wxsqId.getText());
+        sqd.setShenqingdanDate(dateformate.parse(shenqingdanDate.getText()));
+        sqd.setShenqingdanRemark(wxsqRemark.getText());
+        sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
+        sqd.setDanjuleixingId(21);
         totalPrice = 0;
         for(int i = 0; i < zc.size(); i++){
             totalPrice += (Double.parseDouble(""+jTable1.getValueAt(i, 4)));
         }
-        sqd.setWeixiufeiyong(totalPrice);
+        sqd.setDanjujine(totalPrice);
         
         for(int i = 0; i < zc.size(); i++){
             zc.get(i).setSaleprice(Float.parseFloat(""+jTable1.getValueAt(i, 4)));
@@ -232,16 +233,16 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
             zc.get(i).setStatus(9);
         }
         
-        wxsq.setWxsq(sqd);
+        wxsq.setSqd(sqd);
         wxsq.setZc(zc);        
         
         return new submitTask(wxsq);
     }
     
-    private class submitTask extends WeixiushenqingTask{
+    private class submitTask extends ShenQingTask{
 
-        public submitTask(WeixiushenqingDetailEntity wxsq) {
-            super(wxsq);
+        public submitTask(ShenQingDetailEntity cgsq) {
+            super(cgsq);
         }
         
         @Override

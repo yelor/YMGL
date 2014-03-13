@@ -5,7 +5,6 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Shenqingdantb {
-
     private String shenqingdanId;
 
     private Date shenqingdanDate;
@@ -19,6 +18,8 @@ public class Shenqingdantb {
     private Integer zhidanrenId;
 
     private Integer danjuleixingId;
+
+    private Float danjujine;
 
     private Integer isCompleted;
 
@@ -78,6 +79,14 @@ public class Shenqingdantb {
 
     public void setDanjuleixingId(Integer danjuleixingId) {
         this.danjuleixingId = danjuleixingId;
+    }
+
+    public Float getDanjujine() {
+        return danjujine;
+    }
+
+    public void setDanjujine(Float danjujine) {
+        this.danjujine = danjujine;
     }
 
     public Integer getIsCompleted() {
