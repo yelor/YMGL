@@ -265,12 +265,16 @@ public class MainPanel extends BasePanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if (selectShenHeDanJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selectShenHeDanJDialog = new selectShenHeDanJDialog(new javax.swing.JFrame(), true);
-                    selectShenHeDanJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(selectShenHeDanJDialog);
+//                if (selectShenHeDanJDialog == null) {
+//                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+//                    selectShenHeDanJDialog = new selectShenHeDanJDialog(new javax.swing.JFrame(), true);
+//                    selectShenHeDanJDialog.setLocationRelativeTo(mainFrame);
+//                }
+//                AssetClientApp.getApplication().show(selectShenHeDanJDialog);
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                ShenQingShenPiJDialog sqsp = new ShenQingShenPiJDialog(new javax.swing.JFrame(), true);
+                sqsp.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(sqsp);
             }
         });
     }

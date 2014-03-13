@@ -10,7 +10,7 @@ public class CaiGouShenQingFindEntity {
     
     private int count;
     
-    private  List<CaigoushenqingDetailEntity> result;
+    private  List<Zichanshenpiliuchengtb> result;
 
     public int getCount() {
         return count;
@@ -20,11 +20,11 @@ public class CaiGouShenQingFindEntity {
         this.count = count;
     }
 
-    public List<CaigoushenqingDetailEntity> getResult() {
+    public List<Zichanshenpiliuchengtb> getResult() {
         return result;
     }
 
-    public void setResult(List<CaigoushenqingDetailEntity> result) {
+    public void setResult(List<Zichanshenpiliuchengtb> result) {
         this.result = result;
     }
     

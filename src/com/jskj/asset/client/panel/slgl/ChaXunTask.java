@@ -38,7 +38,7 @@ public class ChaXunTask extends BaseTask{
     public Object doBackgrounp() {
         try{
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            CaiGouShenQingFindEntity cgsqs = restTemplate.getForObject(CX_URI + "/" + user +"?pagesize="+pageSize+"&pageindex="+pageIndex,CaiGouShenQingFindEntity.class);
+            CaiGouShenQingFindEntity cgsqs = restTemplate.getForObject(CX_URI +"?pagesize="+pageSize+"&pageindex="+pageIndex,CaiGouShenQingFindEntity.class);
             return cgsqs;
         }catch (RestClientException e) {
             logger.error(e);

@@ -7,8 +7,8 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.LingyongshenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.Lingyongshenqingdantb;
+import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
+import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.LingyongzichanDetailEntity;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
@@ -24,7 +24,6 @@ import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +40,7 @@ import org.jdesktop.application.Task;
 public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(PTGuDingZiChanLingYongShenQingJDialog.class);
-    private LingyongshenqingDetailEntity lysq;
+    private ShenQingDetailEntity lysq;
     private int userId;
     private String userName;
     private String department;
@@ -209,12 +208,12 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
             JOptionPane.showMessageDialog(null, "请选择要采购的资产！");
             return null;
         }
-        lysq = new LingyongshenqingDetailEntity();
-        Lingyongshenqingdantb sqd = new Lingyongshenqingdantb();
-        sqd.setLysqId(lysqId.getText());
-        sqd.setLysqDate(dateformate.parse(lysqDate.getText()));
-        sqd.setLysqRemark(lysqRemark.getText());
-        sqd.setShenqingrenId(userId);
+        lysq = new ShenQingDetailEntity();
+        Shenqingdantb sqd = new Shenqingdantb();
+        sqd.setShenqingdanId(lysqId.getText());
+        sqd.setShenqingdanDate(dateformate.parse(lysqDate.getText()));
+        sqd.setShenqingdanRemark(lysqRemark.getText());
+        sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(20);
         
@@ -233,10 +232,10 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
         return new submitTask(lysq);
     }
     
-    private class submitTask extends LingyongshenqingTask{
+    private class submitTask extends ShenQingTask{
 
-        public submitTask(LingyongshenqingDetailEntity lysq) {
-            super(lysq);
+        public submitTask(ShenQingDetailEntity cgsq) {
+            super(cgsq);
         }
         
         @Override
