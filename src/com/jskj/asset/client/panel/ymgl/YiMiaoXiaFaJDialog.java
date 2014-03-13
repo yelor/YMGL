@@ -17,13 +17,16 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.Sale_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
+import com.jskj.asset.client.util.DateHelper;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JTextField;
+import javax.swing.JDialog;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -704,6 +707,77 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         }
     }
 
+      public YiMiaoXiaFaJDialog(final JDialog parent,Sale_detail_tbFindEntity yimiaoxiafa){
+        super();
+        initComponents();
+        this.yimiaoxiafa = yimiaoxiafa;
+        this.addWindowListener(new WindowListener(){
+
+            @Override
+            public void windowOpened(WindowEvent e) {}
+
+            @Override
+            public void windowClosing(WindowEvent e) {}
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                parent.setVisible(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) { }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+
+            @Override
+            public void windowActivated(WindowEvent e) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+            
+        });
+        
+        jButton1.setEnabled(false);
+        
+        jTextFieldXiafaId.setEditable(false);
+        jTextFieldXiafaId.setText(yimiaoxiafa.getSale().getSaleId());
+        jTextFieldzhidanDate.setText(DateHelper.format(yimiaoxiafa.getSale().getSaleDate(), "yyyy-MM-dd HH:mm:ss"));
+        jTextFieldXiafadanwei.setEditable(false);
+        jTextFieldXiafadanwei.setText(""+yimiaoxiafa.getSale().getCustomerId());
+        jTextFieldGongyingType.setEditable(false);
+        jTextFieldAddr.setEditable(false);
+        jTextFieldTel.setEditable(false);
+        jTextFielddepartment.setEditable(false);
+        jTextFieldjingbanren.setEditable(false);
+        jTextFieldjingbanren.setText(""+yimiaoxiafa.getSale().getZhidanrenId());
+        jTextArea1.setEditable(false);
+        
+        setListTable(yimiaoxiafa.getSale_details());
+    }
+    
+    public void setListTable(List<Sale_detail_tb> sale_detaillist){
+        
+        int size = sale_detaillist.size();
+        Object[][] o = new Object[size][8];
+        for( int i = 0; i < size; i++){
+            Sale_detail_tb saledetailtb = sale_detaillist.get(i);
+            o[i] = new Object[]{saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),
+            saledetailtb.getYimiaoId(),saledetailtb.getQuantity()};
+        }
+        
+        jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "有效期", "数量"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false
+            };
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
