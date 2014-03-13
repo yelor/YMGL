@@ -7,6 +7,9 @@ package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
+import com.jskj.asset.client.bean.entity.YimiaoAll;
+import com.jskj.asset.client.bean.entity.YimiaocaigouEntity;
+import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
@@ -18,12 +21,16 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
+import com.jskj.asset.client.util.DateHelper;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -38,10 +45,10 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
     private static final Logger logger = Logger.getLogger(YiMiaoCaiGouShenQingJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaocaigou;
-    private List<Yimiaoshenqingdantb> yimiaoshenqingdanlist=new ArrayList<Yimiaoshenqingdantb>();
+    private List<Yimiaoshenqingdantb> yimiaoshenqingdanlist = new ArrayList<Yimiaoshenqingdantb>();
     private Shenqingdantb shenqingdan;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    ;
+    private YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity;
     private boolean isNew;
 
     /**
@@ -71,7 +78,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldSupplierName.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" +  jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
+                    sql = "(supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" + jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -91,7 +98,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称","true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"totalprice", "合价", "true"}, {"yimiaoYushoujia", "预售价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -108,7 +115,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-               if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
+                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=4 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 8 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"" + newColumnObj.toString() + "%\")) ";
                 } else {
                     sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=4 and is_completed = 1 and status = 8)";
@@ -127,9 +134,9 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
                     HashMap yimiaoAll = (HashMap) yimiaomap;
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
-                    
-                    Yimiaoshenqingdantb yimiaoliebiao=new Yimiaoshenqingdantb();
-                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) (""+yimiaoshenqingdan.get("xiangdanId")))) );
+
+                    Yimiaoshenqingdantb yimiaoliebiao = new Yimiaoshenqingdantb();
+                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId")))));
                     yimiaoshenqingdanlist.add(yimiaoliebiao);
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -644,7 +651,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setStatus(0);
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaocaigoudanId.getText());
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) (""+yimiaotable.getValue(i, "quantity"))));
+            yimiaoshenqingdan.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
             yimiaoshenqingdan.setTotalprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "totalprice"))));
             yimiaoshenqingdan.setYuandanId(yimiaoshenqingdanlist.get(i).getYuandanId());
@@ -677,6 +684,88 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             AssetMessage.INFO("提交成功！", YiMiaoCaiGouShenQingJDialog.this);
             exit();
         }
+    }
+
+    public YiMiaoCaiGouShenQingJDialog(final JDialog parent, YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
+        super();
+        initComponents();
+        this.yimiaocaigouxiangdanEntity = yimiaocaigouxiangdanEntity;
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                parent.setVisible(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
+
+        jButton1.setEnabled(false);
+
+        jTextFieldYimiaocaigoudanId.setEditable(false);
+        jTextFieldYimiaocaigoudanId.setText(yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanId());
+        jTextFieldzhidanDate.setText(DateHelper.format(yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanDate(), "yyyy-MM-dd HH:mm:ss"));
+        jTextFieldzhidanDate.setEditable(false);
+        jTextFieldjingbanren.setEditable(false);
+        jTextFieldjingbanren.setText(yimiaocaigouxiangdanEntity.getUserAll().getUserName());
+        jTextFieldzhidanren.setEditable(false);
+        jTextFieldzhidanren.setText(yimiaocaigouxiangdanEntity.getUserAll().getUserName());
+        jTextFielddepartment.setEditable(false);
+        jTextFielddepartment.setText(yimiaocaigouxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
+        jTextFieldSupplierName.setEditable(false);
+        jTextFieldSupplierName.setText(yimiaocaigouxiangdanEntity.getSupplier().getSupplierName());
+        jTextFieldConstactperson.setEditable(false);
+        jTextFieldConstactperson.setText(yimiaocaigouxiangdanEntity.getSupplier().getSupplierConstactperson());
+        jTextAreaRemark.setEditable(false);
+        jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
+
+        setListTable(yimiaocaigouxiangdanEntity.getResult());
+    }
+
+    public void setListTable(List<YimiaocaigouEntity> yimiaocaigouEntityList) {
+
+        int size = yimiaocaigouEntityList.size();
+        Object[][] o = new Object[size][10];
+        for (int i = 0; i < size; i++) {
+            Yimiaoshenqingdantb yimiaoshenqingdantb = yimiaocaigouEntityList.get(i).getYimiaoshenqingdantb();
+            YimiaoAll yimiaoAll = yimiaocaigouEntityList.get(i).getYimiaoAll();
+            o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
+                yimiaoshenqingdantb.getQuantity(), yimiaoshenqingdantb.getBuyprice(), yimiaoshenqingdantb.getTotalprice(), yimiaoAll.getYimiaoYushoujia()};
+        }
+
+        jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "数量", "单价", "合价", "预售价"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false
+            };
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,14 +4,19 @@
 
 package com.jskj.asset.client.bean.entity;
 
+
 /**
  *
  * @author huiqi
  */
 public class SaleyimiaoEntity{
+    
     private YimiaoAll yimiaoAll;
+    
     private Stockpiletb stockpile;
+    
     private Saletb saletb;
+    
     private Sale_detail_tb sale_detail_tb;
 
     public YimiaoAll getYimiaoAll() {

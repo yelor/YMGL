@@ -6,15 +6,17 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.Sale_detail_tbFindEntity;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
+import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
 import com.jskj.asset.client.bean.entity.YimiaoShenpiFindEntity;
+import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
+import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.DetailPanel;
-import com.jskj.asset.client.panel.slgl.GuDingZiChanCaiGouShenQingJDialog;
+import com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun;
 import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
@@ -37,17 +39,17 @@ import org.jdesktop.beansbinding.BindingGroup;
  * @author tt
  */
 public class YimiaoCaigouShenPiJDialog extends BaseDialog {
-    
+
     private int pageIndex;
-    
+
     private int count;
-    
+
     private List<Yimiaoshenpiliucheng> yimiaoshenpiList;
-    
+
     private ShenPiEntity shenPiEntity;
-    
+
     BindTableHelper<Yimiaoshenpiliucheng> bindTable;
-    
+
     private DetailPanel detailPanel;
 
     /**
@@ -67,40 +69,40 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         bindTable.bind().setRowHeight(25);
         new RefreshTask(0).execute();
         detailPanel = new DetailPanel();
-        
+
     }
-    
+
     @Action
     public void exit() {
         this.dispose();
     }
-    
+
     @Action
     public void reload() {
         new RefreshTask(0).execute();
         this.repaint();
     }
-    
+
     private class RefreshTask extends YimiaoDanjuChaxunTask {
-        
+
         BindingGroup bindingGroup = new BindingGroup();
-        
+
         RefreshTask(int pageIndex) {
             super(pageIndex);
         }
-        
+
         @Override
         public void onSucceeded(Object object) {
-            
+
             if (object instanceof Exception) {
                 Exception e = (Exception) object;
                 AssetMessage.ERRORSYS(e.getMessage());
                 logger.error(e);
                 return;
             }
-            
+
             YimiaoShenpiFindEntity yimiaoshenpi = (YimiaoShenpiFindEntity) object;
-            
+
             if (yimiaoshenpi != null) {
                 count = yimiaoshenpi.getCount();
                 jLabelTotal.setText(((pageIndex - 1) * YimiaoDanjuChaxunTask.pageSize + 1) + "/" + count);
@@ -123,22 +125,22 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
                         if (liucheng.getCheckId4() != null) {
                             liucheng.setCheckId4(liucheng.getCheckId4() + "," + liucheng.getCheckUser4() + "," + DateHelper.formatTime(liucheng.getCheckTime4()));
                         }
-                        
+
                     }
                 }
                 bindTable.refreshData(yimiaoshenpiList);
             }
-            
+
         }
     }
-    
+
     @Action
     public void pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
         new RefreshTask(pageIndex).execute();
     }
-    
+
     @Action
     public void pageNext() {
         if (YimiaoDanjuChaxunTask.pageSize * (pageIndex) <= count) {
@@ -146,7 +148,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
         new RefreshTask(pageIndex).execute();
     }
-    
+
     @Action
     public Task shenPiY() {
         if (jSQTable.getSelectedRow() < 0) {
@@ -161,16 +163,16 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         yimiaoshenpiList.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
-    
+
     private class ShenPiYTask extends org.jdesktop.application.Task<Object, Void> {
-        
+
         ShenPiYTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to ShenPiYTask fields, here.
             super(app);
         }
-        
+
         @Override
         protected Object doInBackground() {
             // Your Task's code here.  This method runs
@@ -178,23 +180,23 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             // the Swing GUI from here.
             return null;  // return your result
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
     }
-    
+
     @Action
     public Task shenPiNMessage() {
         if (jSQTable.getSelectedRow() < 0) {
             AssetMessage.ERRORSYS("请选择一条要审批的数据!");
             return null;
         }
-        
+
         String reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
-        
+
         if (reason == null) {
             return null;
         }
@@ -208,16 +210,16 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         yimiaoshenpiList.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
-    
+
     private class ShenPiNMessageTask extends org.jdesktop.application.Task<Object, Void> {
-        
+
         ShenPiNMessageTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to ShenPiNMessageTask fields, here.
             super(app);
         }
-        
+
         @Override
         protected Object doInBackground() {
             // Your Task's code here.  This method runs
@@ -225,20 +227,20 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             // the Swing GUI from here.
             return null;  // return your result
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
     }
-    
+
     private class SPTask extends ShenPiTask {
-        
+
         public SPTask(ShenPiEntity yimiaosp) {
             super(yimiaosp);
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             if (result != null && result instanceof ShenPiEntity) {
@@ -467,7 +469,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             }
         });
     }
-    
+
     public Yimiaoshenpiliucheng selectedDataFromTable() {
         if (jSQTable.getSelectedRow() >= 0) {
             if (yimiaoshenpiList != null) {
@@ -476,7 +478,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
         return null;
     }
-    
+
     @Action
     public Task detail() {
         int n = jSQTable.getSelectedRow();
@@ -486,52 +488,150 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
         this.setVisible(false);
         Yimiaoshenpiliucheng shenpidan = yimiaoshenpiList.get(n);
-        if (shenpidan.getDanjuId().contains("YMXF")) {
-            return new YimiaoxiangdanTask(shenpidan.getDanjuId());            
+        if (shenpidan.getDanjuId().contains("YMXS") | shenpidan.getDanjuId().contains("YMXF")) {
+            return new YimiaosalexiangdanTask(shenpidan.getDanjuId());
+        } else if (shenpidan.getDanjuId().contains("YMSB") | shenpidan.getDanjuId().contains("YMSG") | shenpidan.getDanjuId().contains("YMLY") | shenpidan.getDanjuId().contains("YMCG")) {
+            return new YimiaocaigouxiangdanTask(shenpidan.getDanjuId());
+        } else if (shenpidan.getDanjuId().contains("YMTJ")) {
+            return new YimiaotiaojiaxiangdanTask(shenpidan.getDanjuId());
+        } else if (shenpidan.getDanjuId().contains("YMBS")) {
+            return new YimiaobaosunxiangdanTask(shenpidan.getDanjuId());
         }
         return null;
     }
 
     private class DetailTask extends org.jdesktop.application.Task<Object, Void> {
+
         DetailTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to DetailTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
     }
-    
-    private class YimiaoxiangdanTask extends YimiaoXiaoshouXiangdanTask {
-        
-        public YimiaoxiangdanTask(String xiangdanID) {
+
+    private class YimiaosalexiangdanTask extends YimiaoXiaoshouXiangdanTask {
+
+        public YimiaosalexiangdanTask(String xiangdanID) {
             super(xiangdanID);
         }
-        
+
         @Override
         protected void succeeded(Object result) {
-            Sale_detail_tbFindEntity yimiaoxiaoshouEntiy = (Sale_detail_tbFindEntity) result;
-            xiaoshouxiangdandetailshow(yimiaoxiaoshouEntiy);
+            XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntiy = (XiaoshoushenpixiangdanEntity) result;
+            xiaoshouxiangdandetailshow(yimiaoxiaoshouxiangdanEntiy, yimiaoxiaoshouxiangdanEntiy.getSaletb().getSaleId());
+
+        }
+    }
+
+    private class YimiaocaigouxiangdanTask extends YimiaoXiaoshouXiangdanTask {
+
+        public YimiaocaigouxiangdanTask(String xiangdanID) {
+            super(xiangdanID);
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntiy = (YimiaocaigouxiangdanEntity) result;
+            yimiaocaigouxiangdandetailshow(yimiaocaigouxiangdanEntiy, yimiaocaigouxiangdanEntiy.getShenqingdantb().getShenqingdanId());
+
+        }
+    }
+
+    private class YimiaobaosunxiangdanTask extends YimiaoXiaoshouXiangdanTask {
+
+        public YimiaobaosunxiangdanTask(String xiangdanID) {
+            super(xiangdanID);
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntiy = (YimiaobaosunxiangdanEntity) result;
+            yimiaobaosunxiangdanshow(yimiaobaosunxiangdanEntiy);
+
+        }
+    }
+
+    private class YimiaotiaojiaxiangdanTask extends YimiaoXiaoshouXiangdanTask {
+
+        public YimiaotiaojiaxiangdanTask(String xiangdanID) {
+            super(xiangdanID);
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            YimiaotiaojiaxiangdanEntity yimiaotiaojiaxiangdanEntiy = (YimiaotiaojiaxiangdanEntity) result;
+            yimiaotiaojiaxiangdanshow(yimiaotiaojiaxiangdanEntiy);
+
+        }
+    }
+
+    @Action
+    public void xiaoshouxiangdandetailshow(XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity, String xiangdanID) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        if (xiangdanID.contains("YMXF")) {
+            YiMiaoXiaFaJDialog yimiaoxiafaJDialog = new YiMiaoXiaFaJDialog(this, yimiaoxiaoshouxiangdanEntity);
+            yimiaoxiafaJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoxiafaJDialog);
+        } else if (xiangdanID.contains("YMXS")) {
+            YiMiaoXiaoShouJDialog yimiaoxiaoshouJDialog = new YiMiaoXiaoShouJDialog(this, yimiaoxiaoshouxiangdanEntity);
+            yimiaoxiaoshouJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoxiaoshouJDialog);
         }
     }
     
     @Action
-    public void xiaoshouxiangdandetailshow(Sale_detail_tbFindEntity yimiaoxiaoshouEntiy) {
+    public void yimiaocaigouxiangdandetailshow(YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity, String xiangdanID) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        YiMiaoXiaFaJDialog yimiaoxiafaJDialog = new YiMiaoXiaFaJDialog(this, yimiaoxiaoshouEntiy);
-        yimiaoxiafaJDialog.setLocationRelativeTo(mainFrame);
-        AssetClientApp.getApplication().show(yimiaoxiafaJDialog);
+        if (xiangdanID.contains("YMSB")) {
+            YiMiaoShenBaoPlanJDialog yimiaoshenbaoJDialog = new YiMiaoShenBaoPlanJDialog(this, yimiaocaigouxiangdanEntity);
+            yimiaoshenbaoJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoshenbaoJDialog);
+        } else if (xiangdanID.contains("YMLY")) {
+            YiMiaoLingYongShenQingJDialog yimiaolingyongJDialog = new YiMiaoLingYongShenQingJDialog(this, yimiaocaigouxiangdanEntity);
+            yimiaolingyongJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaolingyongJDialog);
+        }else if (xiangdanID.contains("YMSG")) {
+            YiMiaoSheGouPlanJDialog yimiaoshegouJDialog = new YiMiaoSheGouPlanJDialog(this, yimiaocaigouxiangdanEntity);
+            yimiaoshegouJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoshegouJDialog);
+        }else if (xiangdanID.contains("YMSG")) {
+            YiMiaoCaiGouShenQingJDialog yimiaocaigouJDialog = new YiMiaoCaiGouShenQingJDialog(this, yimiaocaigouxiangdanEntity);
+            yimiaocaigouJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaocaigouJDialog);
+        }
+    }
+
+    @Action
+    public void yimiaobaosunxiangdanshow(YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntity) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        YiMiaoBaoSun yimiaobaosunJDialog = new YiMiaoBaoSun(this, yimiaobaosunxiangdanEntity);
+        yimiaobaosunJDialog.setLocationRelativeTo(mainFrame);
+        AssetClientApp.getApplication().show(yimiaobaosunJDialog);
     }
     
+    @Action
+    public void yimiaotiaojiaxiangdanshow(YimiaotiaojiaxiangdanEntity yimiaotiaojiaxiangdanEntity) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        YiMiaoTiaoJiaJDialog yimiaotiaojiaJDialog = new YiMiaoTiaoJiaJDialog(this, yimiaotiaojiaxiangdanEntity);
+        yimiaotiaojiaJDialog.setLocationRelativeTo(mainFrame);
+        AssetClientApp.getApplication().show(yimiaotiaojiaJDialog);
+    }
+
     public Yimiaoshenpiliucheng selectedDataTable() {
         if (jSQTable.getSelectedRow() >= 0) {
             if (yimiaoshenpiList != null) {
@@ -540,7 +640,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
         return null;
     }
-    
+
     @Action
     public void detailPopup() {
         Yimiaoshenpiliucheng yimiaoshenpiliucheng = selectedDataFromTable();
@@ -555,10 +655,10 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             showPanel(danjuID);
         }
     }
-    
+
     private Popup pop;
     private boolean isShow;
-    
+
     public void hidePanel() {
         if (pop != null) {
             isShow = false;
@@ -566,7 +666,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             pop = null;
         }
     }
-    
+
     public void showPanel(String danjuID) {
         if (pop != null) {
             pop.hide();
@@ -575,9 +675,9 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
 
         //int selectedColumn = jSQTable.getSelectedColumn();
         int selectedRow = jSQTable.getSelectedRow();
-        
+
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        
+
         int selectedColumnX = p.x;
         int selectedColumnY = p.y + (selectedRow + 1) * jSQTable.getRowHeight();
 
@@ -588,15 +688,15 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
 //        }
         int popHeight = detailPanel.getHeight();
         int popWitdh = detailPanel.getWidth();
-        
+
         if ((selectedColumnY + popHeight) > size.getHeight()) {
             selectedColumnY = selectedColumnY - detailPanel.getHeight() - jSQTable.getRowHeight();
         }
-        
+
         if ((selectedColumnX + popWitdh) > size.getWidth()) {
             selectedColumnX = selectedColumnX - detailPanel.getWidth();
         }
-        
+
         pop = PopupFactory.getSharedInstance().getPopup(jSQTable, detailPanel, selectedColumnX, selectedColumnY);
         detailPanel.submitTask(danjuID);
         detailPanel.requestFocusInWindow();

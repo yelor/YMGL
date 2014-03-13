@@ -9,6 +9,10 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Sale_detail_tb;
 import com.jskj.asset.client.bean.entity.Sale_detail_tbFindEntity;
 import com.jskj.asset.client.bean.entity.Saletb;
+import com.jskj.asset.client.bean.entity.SaleyimiaoEntity;
+import com.jskj.asset.client.bean.entity.Stockpiletb;
+import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaoAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -39,6 +43,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoXiaFaJDialog.class);
     private Sale_detail_tbFindEntity yimiaoxiafa;
+    private XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity;
     private Sale_detail_tb sale_detail;
     private Saletb sale;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -109,9 +114,10 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += "and yimiao_id like \"%" + newColumnObj.toString() + "%\"";
+                } else {
+                    sql += " yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price=0)";
                 }
                 return sql;
             }
@@ -191,7 +197,6 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         });
 
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -707,17 +712,19 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
         }
     }
 
-      public YiMiaoXiaFaJDialog(final JDialog parent,Sale_detail_tbFindEntity yimiaoxiafa){
+    public YiMiaoXiaFaJDialog(final JDialog parent, XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity) {
         super();
         initComponents();
-        this.yimiaoxiafa = yimiaoxiafa;
-        this.addWindowListener(new WindowListener(){
+        this.yimiaoxiaoshouxiangdanEntity = yimiaoxiaoshouxiangdanEntity;
+        this.addWindowListener(new WindowListener() {
 
             @Override
-            public void windowOpened(WindowEvent e) {}
+            public void windowOpened(WindowEvent e) {
+            }
 
             @Override
-            public void windowClosing(WindowEvent e) {}
+            public void windowClosing(WindowEvent e) {
+            }
 
             @Override
             public void windowClosed(WindowEvent e) {
@@ -725,48 +732,59 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) { }
+            public void windowIconified(WindowEvent e) {
+            }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {
+            }
 
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {
+            }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
             }
-            
+
         });
-        
+
         jButton1.setEnabled(false);
-        
+
         jTextFieldXiafaId.setEditable(false);
-        jTextFieldXiafaId.setText(yimiaoxiafa.getSale().getSaleId());
-        jTextFieldzhidanDate.setText(DateHelper.format(yimiaoxiafa.getSale().getSaleDate(), "yyyy-MM-dd HH:mm:ss"));
+        jTextFieldXiafaId.setText(yimiaoxiaoshouxiangdanEntity.getSaletb().getSaleId());
+        jTextFieldzhidanDate.setText(DateHelper.format(yimiaoxiaoshouxiangdanEntity.getSaletb().getSaleDate(), "yyyy-MM-dd HH:mm:ss"));
         jTextFieldXiafadanwei.setEditable(false);
-        jTextFieldXiafadanwei.setText(""+yimiaoxiafa.getSale().getCustomerId());
+        jTextFieldXiafadanwei.setText("" + yimiaoxiaoshouxiangdanEntity.getKehudanwei().getKehudanweiName());
         jTextFieldGongyingType.setEditable(false);
         jTextFieldAddr.setEditable(false);
+        jTextFieldAddr.setText("" + yimiaoxiaoshouxiangdanEntity.getKehudanwei().getKehudanweiAddr());
         jTextFieldTel.setEditable(false);
+        jTextFieldTel.setText("" + yimiaoxiaoshouxiangdanEntity.getKehudanwei().getKehudanweiPhone());
         jTextFielddepartment.setEditable(false);
+        jTextFielddepartment.setText("" + yimiaoxiaoshouxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
         jTextFieldjingbanren.setEditable(false);
-        jTextFieldjingbanren.setText(""+yimiaoxiafa.getSale().getZhidanrenId());
+        jTextFieldjingbanren.setText("" + yimiaoxiaoshouxiangdanEntity.getUserAll().getUserName());
+        jTextFieldzhidanren.setEditable(false);
+        jTextFieldzhidanren.setText("" + yimiaoxiaoshouxiangdanEntity.getUserAll().getUserName());
         jTextArea1.setEditable(false);
-        
-        setListTable(yimiaoxiafa.getSale_details());
+        jTextArea1.setText("" + yimiaoxiaoshouxiangdanEntity.getSaletb().getRemark());
+
+        setListTable(yimiaoxiaoshouxiangdanEntity.getResult());
     }
-    
-    public void setListTable(List<Sale_detail_tb> sale_detaillist){
-        
-        int size = sale_detaillist.size();
+
+    public void setListTable(List<SaleyimiaoEntity> saleyimiaoEntityList) {
+
+        int size = saleyimiaoEntityList.size();
         Object[][] o = new Object[size][8];
-        for( int i = 0; i < size; i++){
-            Sale_detail_tb saledetailtb = sale_detaillist.get(i);
-            o[i] = new Object[]{saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),saledetailtb.getYimiaoId(),
-            saledetailtb.getYimiaoId(),saledetailtb.getQuantity()};
+        for (int i = 0; i < size; i++) {
+            Sale_detail_tb saledetailtb = saleyimiaoEntityList.get(i).getSale_detail_tb();
+            YimiaoAll yimiaoAll = saleyimiaoEntityList.get(i).getYimiaoAll();
+            Stockpiletb stockpile = saleyimiaoEntityList.get(i).getStockpile();
+            o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
+                stockpile.getYouxiaodate(), saledetailtb.getQuantity()};
         }
-        
+
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{

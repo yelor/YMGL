@@ -7,8 +7,12 @@ package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Baosuntb;
+import com.jskj.asset.client.bean.entity.Stockpiletb;
+import com.jskj.asset.client.bean.entity.YimiaoAll;
+import com.jskj.asset.client.bean.entity.YimiaobaosunDetailEntity;
 import com.jskj.asset.client.bean.entity.Yimiaobaosuntb;
 import com.jskj.asset.client.bean.entity.YimiaobaosuntbFindEntity;
+import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -16,12 +20,16 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ckgl.task.YimiaobaosunUpdateTask;
 import com.jskj.asset.client.util.DanHao;
+import com.jskj.asset.client.util.DateHelper;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JDialog;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -36,6 +44,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew = true;
     private YimiaobaosuntbFindEntity yimiaobaosunEntity;
+    private YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntity;
 
     /**
      * Creates new form GuDingZiChanRuKu
@@ -56,7 +65,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"stockpileId", "库存编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"baosunQuantity", "数量", "true"}, {"price", "单价", "false"}, {"totalprice", "合价", "false"},
             {"xiaohuiAddr", "销毁地点", "true"}, {"xiaohuiDate", "销毁时间", "true"}, {"xiaohuiType", "销毁方式", "true"}, {"baosunReason", "报损原因", "true"}});
 
@@ -66,6 +75,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
+//                这个URL是在Sale_detailController里面
                 return Constants.HTTP + Constants.APPID + "addkucunyimiao";
             }
 
@@ -81,7 +91,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
+                return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
                 {"yimiao.yimiaoJixing", "剂型"}};
             }
 
@@ -89,7 +99,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
-                    Object yimiaoId = bindedMap.get("yimiaoId");
+                    Object kucunId = bindedMap.get("stockpileId");
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
@@ -99,7 +109,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
                     Object youxiaoqi = bindedMap.get("youxiaodate");
                     
 
-                    editTable.insertValue(0, yimiaoId);
+                    editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
                     editTable.insertValue(3, yimiaoJixing);
@@ -443,7 +453,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaobaosun.setBaosunId(jTextFieldBaosunId.getText());
-            yimiaobaosun.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            yimiaobaosun.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "stockpileId").toString()));
             yimiaobaosun.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "baosunQuantity").toString()));
             yimiaobaosun.setXiaohuiaddr((String) yimiaotable.getValue(i, "xiaohuiAddr"));
             yimiaobaosun.setXiaohuidate(dateformate.parse(jTextFieldzhidanDate.getText()));
@@ -478,6 +488,85 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             }
             exit();
         }
+    }
+    
+    public YiMiaoBaoSun(final JDialog parent,YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntity) {
+        super();
+        initComponents();
+        this.yimiaobaosunxiangdanEntity = yimiaobaosunxiangdanEntity;
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                parent.setVisible(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
+
+        jButton2.setEnabled(false);
+
+        jTextFieldBaosunId.setEditable(false);
+        jTextFieldBaosunId.setText(yimiaobaosunxiangdanEntity.getBaosuntb().getBaosunId());
+        jTextFieldzhidanDate.setText(DateHelper.format(yimiaobaosunxiangdanEntity.getBaosuntb().getBaosunDate(), "yyyy-MM-dd HH:mm:ss"));
+        jTextFieldzhidanDate.setEditable(false);
+        jTextFieldJingbanren.setEditable(false);
+        jTextFieldJingbanren.setText(yimiaobaosunxiangdanEntity.getUserAll().getUserName());
+        jTextFieldzhidanren.setEditable(false);
+        jTextFieldzhidanren.setText(yimiaobaosunxiangdanEntity.getUserAll().getUserName());
+        jTextFieldCangku.setEditable(false);
+        jTextFieldCangku.setText("" + yimiaobaosunxiangdanEntity.getBaosuntb().getDeport());
+
+        setListTable(yimiaobaosunxiangdanEntity.getResult());
+    }
+
+    public void setListTable(List<YimiaobaosunDetailEntity> yimiaobaosunDetailEntityList) {
+
+        int size = yimiaobaosunDetailEntityList.size();
+        Object[][] o = new Object[size][15];
+        for (int i = 0; i < size; i++) {
+            Yimiaobaosuntb yimiaobaosuntb = yimiaobaosunDetailEntityList.get(i).getYimiaobaosuntb();
+            YimiaoAll yimiaoAll = yimiaobaosunDetailEntityList.get(i).getYimiaoAll();
+            Stockpiletb stockpile = yimiaobaosunDetailEntityList.get(i).getStockpileYimiao();
+            o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
+                stockpile.getYouxiaodate(), yimiaobaosuntb.getQuantity(),stockpile.getStockpilePrice(), yimiaobaosuntb.getQuantity()*stockpile.getStockpilePrice()
+            , yimiaobaosuntb.getXiaohuiaddr(),yimiaobaosuntb.getXiaohuidate(), yimiaobaosuntb.getXiaohuitype(),yimiaobaosuntb.getXiaohuireason()};
+        }
+
+        jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业","批号", "单位", "有效期", "数量", "单价", "合价"
+                        , "销毁地点", "销毁时间", "销毁方式", "报损原因"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false
+            };
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

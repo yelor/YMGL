@@ -6,9 +6,16 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Stockpiletb;
+import com.jskj.asset.client.bean.entity.YimiaoAll;
+import com.jskj.asset.client.bean.entity.YimiaobaosunDetailEntity;
+import com.jskj.asset.client.bean.entity.Yimiaobaosuntb;
+import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaotiaojiaDetailEntity;
 import com.jskj.asset.client.bean.entity.Yimiaotiaojia_detail_tb;
 import com.jskj.asset.client.bean.entity.Yimiaotiaojia_detail_tbFindEntity;
 import com.jskj.asset.client.bean.entity.Yimiaotiaojiatb;
+import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -16,12 +23,16 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.Yimiaotiaojia_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
+import com.jskj.asset.client.util.DateHelper;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -37,6 +48,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
     private Yimiaotiaojiatb yimiaotiaojia;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH：mm:ss");
     private boolean isNew;
+    private YimiaotiaojiaxiangdanEntity yimiaotiaojiaxiangdanEntity;
+    
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -601,6 +614,83 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             AssetMessage.INFO("提交成功！", YiMiaoTiaoJiaJDialog.this);
             exit();
         }
+    }
+    
+     public YiMiaoTiaoJiaJDialog(final JDialog parent,YimiaotiaojiaxiangdanEntity yimiaotiaojiaxiangdanEntity) {
+        super();
+        initComponents();
+        this.yimiaotiaojiaxiangdanEntity = yimiaotiaojiaxiangdanEntity;
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                parent.setVisible(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
+
+        jButton1.setEnabled(false);
+
+        jTextFieldTiaojiaId.setEditable(false);
+        jTextFieldTiaojiaId.setText(yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getTiaojiaId());
+        jTextFieldzhidanDate.setText(DateHelper.format(yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getZhidandate(), "yyyy-MM-dd HH:mm:ss"));
+        jTextFieldzhidanDate.setEditable(false);
+        jTextFieldjingbanren.setEditable(false);
+        jTextFieldjingbanren.setText(yimiaotiaojiaxiangdanEntity.getUserAll().getUserName());
+        jTextFieldzhidanren.setEditable(false);
+        jTextFieldzhidanren.setText(yimiaotiaojiaxiangdanEntity.getUserAll().getUserName());
+        jTextArea1.setEditable(false);
+        jTextArea1.setText("" + yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getTioajiaremark());
+
+        setListTable(yimiaotiaojiaxiangdanEntity.getResult());
+    }
+
+    public void setListTable(List<YimiaotiaojiaDetailEntity> yimiaotiaojiaDetailEntityList) {
+
+        int size = yimiaotiaojiaDetailEntityList.size();
+        Object[][] o = new Object[size][10];
+        for (int i = 0; i < size; i++) {
+            Yimiaotiaojia_detail_tb yimiaotiaojia_detailtb = yimiaotiaojiaDetailEntityList.get(i).getYimiaotiaojia_detail_tb();
+            YimiaoAll yimiaoAll = yimiaotiaojiaDetailEntityList.get(i).getYimiaoAll();
+            Stockpiletb stockpile = yimiaotiaojiaDetailEntityList.get(i).getStockpileYimiao();
+            o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
+                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforeprice(),yimiaotiaojia_detailtb.getLastprice()};
+        }
+
+        jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "疫苗编号", "疫苗名称", "规格", "剂型","批号", "单位", "有效期", "调前价", "调后价"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false
+            };
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
