@@ -111,7 +111,7 @@ public class MyTaskFindTask extends BaseTask {
 
     @Action
     public Task refresh() {
-        return new MyTaskFindTask(messageLabel,topButtonEnable);
+        return new MyTaskFindTask(messageLabel, topButtonEnable);
     }
 
     @Action
@@ -179,15 +179,15 @@ public class MyTaskFindTask extends BaseTask {
             int i = 1;
             builder.append("<font color=\"red\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
             for (MyTaskEntity re : results) {
-                if (i > 4) {
+                if (i > 8) {
                     builder.append("...");
                     break;
                 }
-                builder.append("审批任务<").append(i).append(">: ").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"")
+                builder.append("审批任务").append(i).append(": ").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"")
                         .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("]-").append(DateHelper.formatTime(re.getSubmitDate())).append("<br />");
                 i++;
             }
-            builder.append("</font");
+            builder.append("</font>");
             builder.append("</html>");
             messageLabel.setText(builder.toString());
             if (i >= 2) {
@@ -254,25 +254,28 @@ public class MyTaskFindTask extends BaseTask {
                 StringBuilder builder = new StringBuilder("<font color=\"blue\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
                 int i = 1;
                 for (MyTaskEntity re : results) {
-                    if (i > 4) {
+                    if (i > 8) {
                         builder.append("...");
                         break;
                     }
-                    builder.append("我的申请单<").append(i).append(">: ").append(DateHelper.formatTime(re.getSubmitDate())).append("],\"")
+                    builder.append("我的申请单").append(i).append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append("],\"")
                             .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("],状态[").append(re.getContext()).append("]").append("<br />");
                     i++;
                 }
                 builder.append("</font>");
                 String shenpiTask = messageLabel.getText();
                 StringBuilder sb = new StringBuilder(shenpiTask);
-                sb.insert(sb.lastIndexOf("</html>"), builder);
-                if(sb.toString().indexOf("我的申请单")<0 && sb.toString().indexOf("审批任务")<0){
+                if (builder.toString().indexOf("我的申请单") >= 0) {
+                    sb.insert(sb.lastIndexOf("</html>"), "<br />" + builder);
+                }
+                if (sb.toString().indexOf("我的申请单") < 0 && sb.toString().indexOf("审批任务") < 0) {
                     StringBuilder builderNoMsg = new StringBuilder("<font style=\"FONT-FAMILY:")
                             .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
                     builderNoMsg.append("您当前没有消息.");
                     builderNoMsg.append("</font>");
                     sb.insert(sb.lastIndexOf("</html>"), builderNoMsg);
                 }
+                // System.out.println("@@@@@@@@@@@@@@@@@@@@@messageLabel:"+sb.toString());
                 messageLabel.setText(sb.toString());
             }
         }
