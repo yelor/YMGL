@@ -38,7 +38,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
      * Creates new form YiMiaoDengJi1JDialog
      */
     public YiMiaoDengJi1JDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super();
         init();
         initComponents();
 

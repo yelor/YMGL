@@ -6,17 +6,9 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import static com.jskj.asset.client.AssetClientApp.getApplication;
-import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.panel.OpenTabTask;
-import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.Task;
 
 /**
  *
@@ -24,8 +16,6 @@ import org.jdesktop.application.Task;
  */
 public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
 
-    private ArrayList disTabCount;
-    private AssetClientView assetClientView;
 
     /**
      * Creates new form selecteInvoiceJDialog

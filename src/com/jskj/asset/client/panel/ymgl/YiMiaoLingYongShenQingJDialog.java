@@ -53,7 +53,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoLingYongShenQingJDialog() {
+    public YiMiaoLingYongShenQingJDialog(java.awt.Frame parent, boolean modal) {
         super();
         initComponents();
         jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao("YMLY"));
@@ -661,7 +661,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                parent.setVisible(false);
             }
 
             @Override

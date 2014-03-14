@@ -506,7 +506,7 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                parent.setVisible(false);
             }
 
             @Override

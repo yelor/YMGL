@@ -159,7 +159,7 @@ public class MainPanel extends BasePanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     @Action
     public void selecteInvoiceAction() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -177,42 +177,46 @@ public class MainPanel extends BasePanel {
     @Action
 
     public void selecteInvoice2Action() {
-        if (selecteInvoiceJDialog2 == null) {
-            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            selecteInvoiceJDialog2 = new selecteInvoiceJDialog2(new javax.swing.JFrame(), true);
-            selecteInvoiceJDialog2.setLocationRelativeTo(mainFrame);
-        }
-        AssetClientApp.getApplication().show(selecteInvoiceJDialog2);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (selecteInvoiceJDialog2 == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selecteInvoiceJDialog2 = new selecteInvoiceJDialog2(new javax.swing.JFrame(), true);
+                    selecteInvoiceJDialog2.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selecteInvoiceJDialog2);
+            }
+        });
+
     }
 
     @Action
     public void selecteInvoice3Action() {
-        if (selecteInvoiceJDialog3 == null) {
-            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            selecteInvoiceJDialog3 = new selecteInvoiceJDialog3(new javax.swing.JFrame(), true);
-            selecteInvoiceJDialog3.setLocationRelativeTo(mainFrame);
-        }
-        AssetClientApp.getApplication().show(selecteInvoiceJDialog3);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (selecteInvoiceJDialog3 == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selecteInvoiceJDialog3 = new selecteInvoiceJDialog3(new javax.swing.JFrame(), true);
+                    selecteInvoiceJDialog3.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selecteInvoiceJDialog3);
+            }
+        });
     }
 
     @Action
     public void selecteYimiaoshenqingInvoiceAction() {
-        if (selecteYimiaoshenpiInvoiceJDialog == null) {
-            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            selecteYimiaoshenpiInvoiceJDialog = new selecteYimiaoshenpiInvoiceJDialog(new javax.swing.JFrame(), true);
-            selecteYimiaoshenpiInvoiceJDialog.setLocationRelativeTo(mainFrame);
-        }
-        AssetClientApp.getApplication().show(selecteYimiaoshenpiInvoiceJDialog);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (selecteYimiaoshenpiInvoiceJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selecteYimiaoshenpiInvoiceJDialog = new selecteYimiaoshenpiInvoiceJDialog(new javax.swing.JFrame(), true);
+                    selecteYimiaoshenpiInvoiceJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selecteYimiaoshenpiInvoiceJDialog);
+            }
+        });
     }
-//    @Action
-//    public void selecteInvoice3Action() {
-//        if (selecteInvoiceJDialog3 == null) {
-//            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-//            selecteInvoiceJDialog3 = new selecteInvoiceJDialog3(new javax.swing.JFrame(), true);
-//            selecteInvoiceJDialog3.setLocationRelativeTo(mainFrame);
-//        }
-//        AssetClientApp.getApplication().show(selecteInvoiceJDialog3);
-//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -248,7 +252,6 @@ public class MainPanel extends BasePanel {
         );
         return ctrlPane.reload();
     }
-
 
     @Action
     public void yiMiaoYanShouAction() {

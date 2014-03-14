@@ -7,22 +7,15 @@ package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
-import com.jskj.asset.client.bean.entity.Stockpiletb;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
 import com.jskj.asset.client.bean.entity.YimiaocaigouEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
-import com.jskj.asset.client.bean.entity.YimiaotiaojiaDetailEntity;
-import com.jskj.asset.client.bean.entity.Yimiaotiaojia_detail_tb;
-import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
-import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
@@ -61,7 +54,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoShenBaoPlanJDialog() {
+    public YiMiaoShenBaoPlanJDialog(java.awt.Frame parent, boolean modal) {
         super();
         initComponents();
 
@@ -222,46 +215,6 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
             }
         });
 
-//        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_SCAN;
-//            }
-//
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "addyimiao";
-//            }
-//
-//            public String getConditionSQL() {
-//                return "yimiao_tiaoxingma =";
-//            }
-//
-//            public String[][] displayColumns() {
-//                return null;
-//            }
-//
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//                    Object yimiaoId = bindedMap.get("yimiaoId");
-//                    Object yimiaoName = bindedMap.get("yimiaoName");
-//                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-//                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-//                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-//                    Object unit = bindedMap.get("unitId");
-//
-//                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
-//
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
-//
-//                    editTable.addNewRow();
-//                }
-//
-//            }
-//        });
     }
 
     /**
@@ -594,19 +547,6 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                YiMiaoShenBaoPlanJDialog dialog = new YiMiaoShenBaoPlanJDialog(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
     }
 
     public void setAddOrUpdate(boolean b) {
@@ -701,7 +641,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                parent.setVisible(false);
             }
 
             @Override
