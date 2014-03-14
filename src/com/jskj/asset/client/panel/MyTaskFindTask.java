@@ -179,7 +179,7 @@ public class MyTaskFindTask extends BaseTask {
             int i = 1;
             builder.append("<font color=\"red\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
             for (MyTaskEntity re : results) {
-                if (i > 8) {
+                if (i > 5) {
                     builder.append("...");
                     break;
                 }
@@ -254,7 +254,7 @@ public class MyTaskFindTask extends BaseTask {
                 StringBuilder builder = new StringBuilder("<font color=\"blue\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
                 int i = 1;
                 for (MyTaskEntity re : results) {
-                    if (i > 8) {
+                    if (i > 5) {
                         builder.append("...");
                         break;
                     }
@@ -265,9 +265,10 @@ public class MyTaskFindTask extends BaseTask {
                 builder.append("</font>");
                 String shenpiTask = messageLabel.getText();
                 StringBuilder sb = new StringBuilder(shenpiTask);
-                if (builder.toString().indexOf("我的申请单") >= 0) {
-                    sb.insert(sb.lastIndexOf("</html>"), "<br />" + builder);
+                if (builder.toString().indexOf("我的申请单") >= 0 && sb.toString().indexOf("审批任务") > 0) {
+                    builder.insert(builder.indexOf("<font"), "<br />");
                 }
+                sb.insert(sb.lastIndexOf("</html>"), builder);
                 if (sb.toString().indexOf("我的申请单") < 0 && sb.toString().indexOf("审批任务") < 0) {
                     StringBuilder builderNoMsg = new StringBuilder("<font style=\"FONT-FAMILY:")
                             .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
