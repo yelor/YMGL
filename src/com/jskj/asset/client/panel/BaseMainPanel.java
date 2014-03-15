@@ -242,7 +242,7 @@ public class BaseMainPanel extends BasePanel {
         jButton_bottomleft.setContentAreaFilled(false);
         jButton_bottomleft.setName("jButton_bottomleft"); // NOI18N
 
-        jButton_bottomright.setAction(actionMap.get("selecteYimiaoshenqingInvoiceAction")); // NOI18N
+        jButton_bottomright.setAction(actionMap.get("selectYimiaoShenPiDanAction")); // NOI18N
         jButton_bottomright.setIcon(resourceMap.getIcon("jButton_bottomright.icon")); // NOI18N
         jButton_bottomright.setText(resourceMap.getString("jButton_bottomright.text")); // NOI18N
         jButton_bottomright.setBorder(null);
