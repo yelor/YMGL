@@ -54,8 +54,6 @@ public class ToppagePane extends BasePanel {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorTopPage = new javax.swing.JEditorPane();
-        jPanelGph = new javax.swing.JPanel();
-        messagePanel = new javax.swing.JLabel();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ToppagePane.class);
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
@@ -70,46 +68,15 @@ public class ToppagePane extends BasePanel {
         jEditorTopPage.setName("jEditorTopPage"); // NOI18N
         jScrollPane1.setViewportView(jEditorTopPage);
 
-        jPanelGph.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanelGph.setMaximumSize(new java.awt.Dimension(337, 516));
-        jPanelGph.setMinimumSize(new java.awt.Dimension(337, 516));
-        jPanelGph.setName("jPanelGph"); // NOI18N
-
-        messagePanel.setText(resourceMap.getString("messagePanel.text")); // NOI18N
-        messagePanel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        messagePanel.setName("messagePanel"); // NOI18N
-        messagePanel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-
-        javax.swing.GroupLayout jPanelGphLayout = new javax.swing.GroupLayout(jPanelGph);
-        jPanelGph.setLayout(jPanelGphLayout);
-        jPanelGphLayout.setHorizontalGroup(
-            jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelGphLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(messagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanelGphLayout.setVerticalGroup(
-            jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelGphLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(messagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelGph, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-            .addComponent(jPanelGph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -140,7 +107,7 @@ public class ToppagePane extends BasePanel {
         @Override
         public void onSucceeded(Object object) {
             //new GraphicTask().execute();
-            new MyTaskFindTask(messagePanel,true).execute();
+            //new MyTaskFindTask(messagePanel,true).execute();
         }
 
     }
@@ -199,23 +166,23 @@ public class ToppagePane extends BasePanel {
         public void onSucceeded(Object object) {
 
             if (object instanceof InteractivePanel) {
-                InteractivePanel panelGrx = (InteractivePanel)object;
-                javax.swing.GroupLayout jPanelGphLayout = new javax.swing.GroupLayout(jPanelGph);
-                jPanelGph.setLayout(jPanelGphLayout);
-                jPanelGphLayout.setHorizontalGroup(
-                        jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanelGphLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(panelGrx, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(2, Short.MAX_VALUE))
-                );
-                jPanelGphLayout.setVerticalGroup(
-                        jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanelGphLayout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(panelGrx, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(118, Short.MAX_VALUE))
-                );
+//                InteractivePanel panelGrx = (InteractivePanel)object;
+//                javax.swing.GroupLayout jPanelGphLayout = new javax.swing.GroupLayout(jPanelGph);
+//                jPanelGph.setLayout(jPanelGphLayout);
+//                jPanelGphLayout.setHorizontalGroup(
+//                        jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanelGphLayout.createSequentialGroup()
+//                                .addGap(2, 2, 2)
+//                                .addComponent(panelGrx, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                .addContainerGap(2, Short.MAX_VALUE))
+//                );
+//                jPanelGphLayout.setVerticalGroup(
+//                        jPanelGphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(jPanelGphLayout.createSequentialGroup()
+//                                .addGap(42, 42, 42)
+//                                .addComponent(panelGrx, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                .addContainerGap(118, Short.MAX_VALUE))
+//                );
             }
 
         }
@@ -226,9 +193,7 @@ public class ToppagePane extends BasePanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JEditorPane jEditorTopPage;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanelGph;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel messagePanel;
     // End of variables declaration//GEN-END:variables
 
 }

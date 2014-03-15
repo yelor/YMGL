@@ -6,6 +6,7 @@
 package com.jskj.asset.client;
 
 import com.jskj.asset.client.layout.BaseTask;
+import com.jskj.asset.client.panel.MessagePanel;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.ToppagePane;
 import com.jskj.asset.client.panel.baobiao.caigou.DizhiyihaocaigoumingxiPanel;
@@ -46,11 +47,15 @@ public class LoadModule extends BaseTask {
     private final JMenuBar menuBar;
     private LogDialog logBox;
     private JDialog aboutBox;
-    private boolean disExtPanel;
+    private boolean disLogPanel;
+    private boolean disTaskPanel;
+    private MessagePanel messagePanel;
 
     public LoadModule(JMenuBar menuBar) {
         this.menuBar = menuBar;
-        disExtPanel = false;
+        disLogPanel = false;
+        disTaskPanel = false;
+        messagePanel = new MessagePanel();
     }
 
     @Override
@@ -91,6 +96,7 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem5 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItemTask = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenuDW = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
@@ -271,6 +277,11 @@ public class LoadModule extends BaseTask {
         jMenuItem5.setName("jMenuItem5"); // NOI18N
         helpMenu.add(jMenuItem5);
 
+        jMenuItemTask.setAction(actionMap.get("showTaskBox")); // NOI18N
+        jMenuItemTask.setText(resourceMap.getString("jMenuItemTask.text")); // NOI18N
+        jMenuItemTask.setName("jMenuItemTask"); // NOI18N
+        helpMenu.add(jMenuItemTask);
+        
         jMenuItem1.setAction(actionMap.get("showLogBox")); // NOI18N
         jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
         jMenuItem1.setName("jMenuItem1"); // NOI18N
@@ -312,6 +323,9 @@ public class LoadModule extends BaseTask {
         menuBar.validate();
         menuBar.updateUI();
         
+        //默认显示出消息
+        showTaskBox();
+        
         /**
          * ************************************************************************************
          *
@@ -349,12 +363,25 @@ public class LoadModule extends BaseTask {
     @Action
     public void showLogBox() {
         AssetClientView view = (AssetClientView) AssetClientApp.getApplication().getMainView();
-        if (disExtPanel == false) {
+        if (disLogPanel == false) {
             view.getMainViewPane().addExtPanel(logBox);
-            disExtPanel = true;
+            disLogPanel = true;
         } else {
             view.getMainViewPane().removeExtPanel(logBox);
-            disExtPanel = false;
+            disLogPanel = false;
+        }
+    }
+    
+    @Action
+    public void showTaskBox() {
+        AssetClientView view = (AssetClientView) AssetClientApp.getApplication().getMainView();
+        if (disTaskPanel == false) {
+            view.getMainViewPane().addBottomPanel(messagePanel);
+            messagePanel.reload().execute();
+            disTaskPanel = true;
+        } else {
+            view.getMainViewPane().removeBottomPanel(messagePanel);
+            disTaskPanel = false;
         }
     }
 
