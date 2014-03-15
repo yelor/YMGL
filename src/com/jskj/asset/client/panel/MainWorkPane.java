@@ -36,7 +36,7 @@ public class MainWorkPane extends BasePanel {
         initComponents();
         treePanesMap = new HashMap<String, BasePanel>();
         leftTree.setHorizontalScrollBar(null);
-                LeftPane.setMaximumSize(new java.awt.Dimension(220, 463));
+        LeftPane.setMaximumSize(new java.awt.Dimension(220, 463));
         LeftPane.setMinimumSize(new java.awt.Dimension(220, 463));
     }
 
@@ -109,6 +109,7 @@ public class MainWorkPane extends BasePanel {
         jSplitMain = new javax.swing.JSplitPane();
         LeftPane = new javax.swing.JPanel();
         leftTree = new javax.swing.JScrollPane();
+        rightMainPanel = new javax.swing.JPanel();
         rightPane = new javax.swing.JTabbedPane();
 
         setName("Form"); // NOI18N
@@ -154,11 +155,25 @@ public class MainWorkPane extends BasePanel {
 
         jSplitMain.setLeftComponent(LeftPane);
 
+        rightMainPanel.setName("rightMainPanel"); // NOI18N
+
         rightPane.setBackground(resourceMap.getColor("rightPane.background")); // NOI18N
         rightPane.setFont(resourceMap.getFont("rightPane.font")); // NOI18N
         rightPane.setName("rightPane"); // NOI18N
         rightPane.setRequestFocusEnabled(false);
-        jSplitMain.setRightComponent(rightPane);
+
+        javax.swing.GroupLayout rightMainPanelLayout = new javax.swing.GroupLayout(rightMainPanel);
+        rightMainPanel.setLayout(rightMainPanelLayout);
+        rightMainPanelLayout.setHorizontalGroup(
+            rightMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rightPane, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+        );
+        rightMainPanelLayout.setVerticalGroup(
+            rightMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rightPane, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+        );
+
+        jSplitMain.setRightComponent(rightMainPanel);
 
         javax.swing.GroupLayout jPaneMainLayout = new javax.swing.GroupLayout(jPaneMain);
         jPaneMain.setLayout(jPaneMainLayout);
@@ -191,16 +206,17 @@ public class MainWorkPane extends BasePanel {
     private javax.swing.JPanel jPaneMain;
     private javax.swing.JSplitPane jSplitMain;
     private javax.swing.JScrollPane leftTree;
+    private javax.swing.JPanel rightMainPanel;
     private javax.swing.JTabbedPane rightPane;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public Task reload() {
-        
+
         //根据用户角色打开相应的首页
         UserSessionEntity session = AssetClientApp.getSessionMap();
-        if(session!=null){
-          List<UserRolesKey> roles = session.getRoles();
+        if (session != null) {
+            List<UserRolesKey> roles = session.getRoles();
 //          if(roles.contains("")){
 //             
 //          }
@@ -248,6 +264,40 @@ public class MainWorkPane extends BasePanel {
         this.validate();
     }
 
+    public void addBottomPanel(BasePanel extPanel) {
+        javax.swing.GroupLayout rightMainPanelLayout = new javax.swing.GroupLayout(rightMainPanel);
+        rightMainPanel.setLayout(rightMainPanelLayout);
+        rightMainPanelLayout.setHorizontalGroup(
+                rightMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(rightPane, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(extPanel)
+        );
+        rightMainPanelLayout.setVerticalGroup(
+                rightMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(rightMainPanelLayout.createSequentialGroup()
+                        .addComponent(rightPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(extPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+        );
+        extPanel.setVisible(true);
+        this.validate();
+    }
+
+    public void removeBottomPanel(BasePanel extPanel) {
+        extPanel.setVisible(false);
+        javax.swing.GroupLayout rightMainPanelLayout = new javax.swing.GroupLayout(rightMainPanel);
+        rightMainPanel.setLayout(rightMainPanelLayout);
+        rightMainPanelLayout.setHorizontalGroup(
+                rightMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(rightPane, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+        );
+        rightMainPanelLayout.setVerticalGroup(
+                rightMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(rightPane, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+        );
+
+        this.validate();
+    }
+
     /**
      * @return the rightPane
      */
@@ -261,8 +311,8 @@ public class MainWorkPane extends BasePanel {
     public javax.swing.JScrollPane getLeftTree() {
         return leftTree;
     }
-    
-    public javax.swing.JSplitPane getSplitPane(){
-         return jSplitMain;
+
+    public javax.swing.JSplitPane getSplitPane() {
+        return jSplitMain;
     }
 }

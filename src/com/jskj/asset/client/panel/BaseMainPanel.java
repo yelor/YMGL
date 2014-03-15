@@ -75,7 +75,6 @@ public class BaseMainPanel extends BasePanel {
     public final static int TYPE_SP = 3;
     public final static int TYPE_YM = 4;
 
-
     /**
      * Creates new form NoFoundPane
      *
@@ -156,14 +155,14 @@ public class BaseMainPanel extends BasePanel {
                 jButton_bottomright.setAction(actionMap.get(resourceMap.getString("jButton_bottomright_sl.action"))); // NOI18N
                 jButton_bottomright.setIcon(resourceMap.getIcon("jButton_bottomright_sl.icon")); // NOI18N
                 jButton_bottomright.setText(resourceMap.getString("jButton_bottomright_sl.text")); // NOI18N
-                break;                
+                break;
 
             case TYPE_SP:
                 jButton_center.setAction(actionMap.get(resourceMap.getString("jButton_center_sp.action"))); // NOI18N
                 jButton_center.setIcon(resourceMap.getIcon("jButton_center_sp.icon")); // NOI18N
                 jButton_center.setText(resourceMap.getString("jButton_center_sp.text")); // NOI18N
 
-                jButton_topleft.setAction(actionMap.get(resourceMap.getString("jButton_topleft_sl.action"))); // NOI18N
+                jButton_topleft.setAction(actionMap.get(resourceMap.getString("jButton_topleft_sp.action"))); // NOI18N
                 jButton_topleft.setIcon(resourceMap.getIcon("jButton_topleft_sp.icon")); // NOI18N
                 jButton_topleft.setText(resourceMap.getString("jButton_topleft_sp.text")); // NOI18N
 
@@ -178,8 +177,8 @@ public class BaseMainPanel extends BasePanel {
                 jButton_bottomright.setAction(actionMap.get(resourceMap.getString("jButton_bottomright_sp.action"))); // NOI18N
                 jButton_bottomright.setIcon(resourceMap.getIcon("jButton_bottomright_sp.icon")); // NOI18N
                 jButton_bottomright.setText(resourceMap.getString("jButton_bottomright_sp.text")); // NOI18N
-                break;                 
-                
+                break;
+
         }
 
     }
@@ -378,24 +377,24 @@ public class BaseMainPanel extends BasePanel {
 
     @Override
     public Task reload(Object param) {
-        logger.info("init message panel");
-        MessagePanel ctrlPane = AssetClientApp.getMessagePanel();
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-        );
-        return ctrlPane.reload();
+//        logger.info("init message panel");
+//        MessagePanel ctrlPane = new MessagePanel();
+//        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+//        this.setLayout(layout);
+//        layout.setHorizontalGroup(
+//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//        );
+//        layout.setVerticalGroup(
+//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                .addGroup(layout.createSequentialGroup()
+//                        .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                        .addContainerGap())
+//        );
+        return null;
     }
 
     @Action
