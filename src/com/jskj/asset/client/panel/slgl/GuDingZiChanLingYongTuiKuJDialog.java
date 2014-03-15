@@ -54,7 +54,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         jTextFieldShenqingren.setText(userName);
         jTextFieldDept.setText(department);
         
-        jTextField1.setText(DanHao.getDanHao("LYTK"));
+        jTextField1.setText(DanHao.getDanHao("ZCTK"));
         jTextField1.setEditable(false);
         
         jTextField2.setText(dateformate.format(new Date()).toString());
@@ -106,7 +106,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
                     editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 3);
+                    editTable.insertValue(5, 0);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(jTextField1.getText());
@@ -148,7 +148,12 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         sqd.setZhidanrenId(userId);
         
         for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+            int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
+            if(count == 0){
+                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个物品的退库数量！",this);
+                return null;
+            }
+            zc.get(i).setQuantity(count);
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);

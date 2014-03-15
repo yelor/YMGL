@@ -8,17 +8,15 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaiGouShenQingFindEntity;
-import com.jskj.asset.client.bean.entity.Zichanshenpiliuchengtb;
+import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.Zichanshenpiliuchengtb;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.DetailPanel;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.Popup;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -39,6 +37,10 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     
     private final int userId;
     
+    private final String userDept;
+    
+    private final String userlevel;
+    
     BindTableHelper<Zichanshenpiliuchengtb> bindTable;
     
     /**
@@ -50,6 +52,8 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         super(parent,modal);
         initComponents();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
+        userDept = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
+        userlevel = AssetClientApp.getSessionMap().getUsertb().getUserRoles();
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<Zichanshenpiliuchengtb>(jSQTable, new ArrayList<Zichanshenpiliuchengtb>());
@@ -141,16 +145,13 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     @Action
     public void detail(){
         int n = jSQTable.getSelectedRow();
-        if(n < 0){
+        if(n < 0 || cgsq.isEmpty()){
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return;
         }
-//        this.setVisible(false);
-//        Zichanshenpiliuchengtb cgsqdan = cgsq.get(n);
-//        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-//        GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog(this,cgsqdan);
-//        guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
-//        AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
+        this.setVisible(false);
+        Zichanshenpiliuchengtb cgsqdan = cgsq.get(n);
+        new DetailTask(cgsqdan.getDanjuId()).execute();
     }
     
     public Zichanshenpiliuchengtb selectedDataFromTable() {
@@ -160,6 +161,59 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
             }
         }
         return null;
+    }
+    
+    private class DetailTask extends ShenqingDetailTask{
+
+        public DetailTask(String id) {
+            super(id);
+        }
+        
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            if(object == null){
+                AssetMessage.showMessageDialog(null, "未获取到申请单详细信息。");
+                return;
+            }
+            CaigoushenqingDetailEntity cgsq = (CaigoushenqingDetailEntity)object;
+            openShenqingdan(cgsq);
+        }
+        
+    }
+
+    public void openShenqingdan(CaigoushenqingDetailEntity cgsq) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        if (cgsq.getCgsqId().contains("GDZC")) {
+            GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog(this, cgsq);
+            guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
+        } else if (cgsq.getCgsqId().contains("YHCG")) {
+            DiZhiYiHaoPinCaiGouShenQingJDialog lingyongshenqing = new DiZhiYiHaoPinCaiGouShenQingJDialog(this, cgsq);
+            lingyongshenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(lingyongshenqing);
+        } else if (cgsq.getCgsqId().contains("PTLY")) {
+            PTGuDingZiChanLingYongShenQingJDialog lingyongshenqing = new PTGuDingZiChanLingYongShenQingJDialog(this, cgsq);
+            lingyongshenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(lingyongshenqing);
+        } else if (cgsq.getCgsqId().contains("ITLY")) {
+            ITGuDingZiChanLingYongShenQingJDialog lingyongshenqing = new ITGuDingZiChanLingYongShenQingJDialog(this, cgsq);
+            lingyongshenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(lingyongshenqing);
+        } else if (cgsq.getCgsqId().contains("YHLY")) {
+            DiZhiYiHaoPinLingYongShenQingJDialog lingyongshenqing = new DiZhiYiHaoPinLingYongShenQingJDialog(this, cgsq);
+            lingyongshenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(lingyongshenqing);
+        } else if (cgsq.getCgsqId().contains("WXSQ")) {
+            GuDingZiChanWeiXiuShenQingJDialog weixiushenqing = new GuDingZiChanWeiXiuShenQingJDialog(this, cgsq);
+            weixiushenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(weixiushenqing);
+        }
     }
     
     @Action
@@ -174,6 +228,14 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         shenPiEntity.setId(cgsqdan.getDanjuId().toString());
         shenPiEntity.setResult("同意");
         shenPiEntity.setUser(""+ userId);
+        if(shenPiEntity.getId().contains("WXSQ") && userDept.equals("采购办")
+                && userlevel.equals("直接领导")){
+            String reason = AssetMessage.showInputDialog(this, "请输入预估维修费用！");
+            if(reason.isEmpty()){
+                return null;
+            }
+            shenPiEntity.setReason(reason);
+        }
         cgsq.remove(jSQTable.getSelectedRow());
         return new SPTask(shenPiEntity);
     }
@@ -296,7 +358,6 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
-        jButton2.setEnabled(false);
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setIconTextGap(2);

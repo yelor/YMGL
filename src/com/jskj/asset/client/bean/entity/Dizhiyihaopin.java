@@ -1,6 +1,7 @@
 package com.jskj.asset.client.bean.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Dizhiyihaopin {
@@ -24,6 +25,12 @@ public class Dizhiyihaopin {
 
     private Integer supplierId;
 
+    private Date dzyhpGuaranteedate;
+
+    private Float dzyhpValue;
+
+    private String dzyhpSequence;
+
     private Integer dzyhpKucunxiaxian;
 
     private Integer dzyhpKucunshangxian;
@@ -33,6 +40,8 @@ public class Dizhiyihaopin {
     private String dzyhpRemark;
 
     private String zujima;
+
+    private Integer zhijielingyong;
 
     public Integer getDzyhpId() {
         return dzyhpId;
@@ -114,6 +123,30 @@ public class Dizhiyihaopin {
         this.supplierId = supplierId;
     }
 
+    public Date getDzyhpGuaranteedate() {
+        return dzyhpGuaranteedate;
+    }
+
+    public void setDzyhpGuaranteedate(Date dzyhpGuaranteedate) {
+        this.dzyhpGuaranteedate = dzyhpGuaranteedate;
+    }
+
+    public Float getDzyhpValue() {
+        return dzyhpValue;
+    }
+
+    public void setDzyhpValue(Float dzyhpValue) {
+        this.dzyhpValue = dzyhpValue;
+    }
+
+    public String getDzyhpSequence() {
+        return dzyhpSequence;
+    }
+
+    public void setDzyhpSequence(String dzyhpSequence) {
+        this.dzyhpSequence = dzyhpSequence == null ? null : dzyhpSequence.trim();
+    }
+
     public Integer getDzyhpKucunxiaxian() {
         return dzyhpKucunxiaxian;
     }
@@ -152,5 +185,13 @@ public class Dizhiyihaopin {
 
     public void setZujima(String zujima) {
         this.zujima = zujima == null ? null : zujima.trim();
+    }
+
+    public Integer getZhijielingyong() {
+        return zhijielingyong;
+    }
+
+    public void setZhijielingyong(Integer zhijielingyong) {
+        this.zhijielingyong = zhijielingyong;
     }
 }

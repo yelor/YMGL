@@ -3,8 +3,6 @@
  */
 package com.jskj.asset.client.bean.entity;
 
-
-
 /**
  *
  * @author 305027939
@@ -15,6 +13,10 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
 
     private Supplier suppliertb;
 
+    private ShenqingdanAll shenqingdan;
+    
+    private int count;
+    
     /**
      * @return the depottb
      */
@@ -42,4 +44,21 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
     public void setSuppliertb(Supplier suppliertb) {
         this.suppliertb = suppliertb;
     }
+
+    public ShenqingdanAll getShenqingdan() {
+        return shenqingdan;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setShenqingdan(ShenqingdanAll shenqingdan) {
+        this.shenqingdan = shenqingdan;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+    
 }

@@ -80,7 +80,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "gdzc";
+                return Constants.HTTP + Constants.APPID + "gdzclb";
             }
 
             public String getConditionSQL() {
@@ -171,7 +171,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
         
-        setListTable(detail.getZclist());
+        setListTable(detail.getResult());
     }
     
     public void setListTable(List<ZichanliebiaoDetailEntity> zclist){

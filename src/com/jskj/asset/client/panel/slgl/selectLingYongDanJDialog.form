@@ -97,9 +97,9 @@
               <StringArray count="5">
                 <StringItem index="0" value="&#x666e;&#x901a;&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x9886;&#x7528;&#x7533;&#x8bf7;&#x5355;"/>
                 <StringItem index="1" value="IT&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x9886;&#x7528;&#x7533;&#x8bf7;&#x5355;"/>
-                <StringItem index="2" value="&#x4f4e;&#x503c;&#x6613;&#x8017;&#x54c1;&#x9886;&#x7528;&#x7533;&#x8bf7;&#x5355;"/>
+                <StringItem index="2" value="&#x6613;&#x8017;&#x54c1;&#x9886;&#x7528;&#x7533;&#x8bf7;&#x5355;"/>
                 <StringItem index="3" value="&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x9886;&#x7528;&#x9000;&#x5e93;&#x5355;"/>
-                <StringItem index="4" value="&#x4f4e;&#x503c;&#x6613;&#x8017;&#x54c1;&#x9886;&#x7528;&#x9000;&#x5e93;&#x5355;"/>
+                <StringItem index="4" value="&#x6613;&#x8017;&#x54c1;&#x9886;&#x7528;&#x9000;&#x5e93;&#x5355;"/>
               </StringArray>
             </Property>
             <Property name="name" type="java.lang.String" value="jComboBox1" noResource="true"/>

@@ -142,10 +142,10 @@ public class LingyongshenqingshenpiJDialog extends javax.swing.JDialog {
         }
         this.setVisible(false);
         LingyongzichanDetailEntity cgsqdan = lysq.get(n);
-        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        PTGuDingZiChanLingYongShenQingJDialog lingyongshenqing = new PTGuDingZiChanLingYongShenQingJDialog(this,cgsqdan);
-        lingyongshenqing.setLocationRelativeTo(mainFrame);
-        AssetClientApp.getApplication().show(lingyongshenqing);
+//        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+//        PTGuDingZiChanLingYongShenQingJDialog lingyongshenqing = new PTGuDingZiChanLingYongShenQingJDialog(this,cgsqdan);
+//        lingyongshenqing.setLocationRelativeTo(mainFrame);
+//        AssetClientApp.getApplication().show(lingyongshenqing);
     }
     
     @Action

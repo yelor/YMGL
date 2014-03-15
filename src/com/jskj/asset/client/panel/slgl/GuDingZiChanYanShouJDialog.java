@@ -108,7 +108,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "gdzc";
+                return Constants.HTTP + Constants.APPID + "gdzclb";
             }
 
             public String getConditionSQL() {

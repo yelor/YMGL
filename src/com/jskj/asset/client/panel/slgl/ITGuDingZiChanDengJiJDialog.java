@@ -49,12 +49,13 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "gdzc";
+                return Constants.HTTP + Constants.APPID + "gdzclb";
             }
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0)";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0)"
+                        + " and gdzc_type = \"IT\" ";
                 if (!jTextFieldName.getText().trim().equals("")) {
                     sql += " and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")";
                 }
@@ -187,7 +188,6 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jTextAreaRemark = new javax.swing.JTextArea();
         jToolBar1 = new javax.swing.JToolBar();
         jButton5 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -302,15 +302,6 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jButton5.setName("jButton5"); // NOI18N
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
-
-        jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
-        jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
-        jButton8.setBorderPainted(false);
-        jButton8.setEnabled(false);
-        jButton8.setFocusable(false);
-        jButton8.setName("jButton8"); // NOI18N
-        jButton8.setOpaque(false);
-        jToolBar1.add(jButton8);
 
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
@@ -535,7 +526,6 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

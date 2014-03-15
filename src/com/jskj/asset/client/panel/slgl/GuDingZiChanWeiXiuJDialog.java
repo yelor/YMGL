@@ -37,6 +37,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
     private int userId;
     private String userName;
     private Zichanweixiudantb weixiudan;
+    private String yuandanID;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -59,19 +60,21 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "wxzc";
+                return Constants.HTTP + Constants.APPID + "gdzclb";
             }
 
             public String getConditionSQL() {
                 String sql = "";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 5)";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql = jTextFieldName.getText();
+                    sql += " and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
+                        ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -85,6 +88,8 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
                     jTextField5.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
                     jTextField5.setEditable(false);
                     zcId = (Integer)bindedMap.get("gdzcId");
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
                 }
             }
         });
@@ -178,6 +183,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
         weixiudan.setWxzcId(zcId);
         weixiudan.setYujiquhuiDate(dateformate.parse(jTextField7.getText()));
         weixiudan.setZcValue(Double.parseDouble(jTextField5.getText()));
+        weixiudan.setYuandanId(yuandanID);
         
         return new submitTask(weixiudan);
     }

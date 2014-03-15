@@ -97,7 +97,7 @@
               <StringArray count="4">
                 <StringItem index="0" value="&#x666e;&#x901a;&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x767b;&#x8bb0;&#x5355;"/>
                 <StringItem index="1" value="IT&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x767b;&#x8bb0;&#x5355;"/>
-                <StringItem index="2" value="&#x4f4e;&#x503c;&#x6613;&#x8017;&#x54c1;&#x767b;&#x8bb0;&#x5355;"/>
+                <StringItem index="2" value="&#x6613;&#x8017;&#x54c1;&#x767b;&#x8bb0;&#x5355;"/>
                 <StringItem index="3" value="&#x56fa;&#x5b9a;&#x8d44;&#x4ea7;&#x9a8c;&#x6536;&#x5355;"/>
               </StringArray>
             </Property>

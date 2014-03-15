@@ -80,7 +80,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "gdzc";
+                return Constants.HTTP + Constants.APPID + "gdzclb";
             }
 
             public String getConditionSQL() {
@@ -88,7 +88,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 7 and cgsq_id like \"%LYSQ%\")";
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 7 and cgsq_id like \"%TLY%\")";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += "  and (gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
@@ -96,7 +96,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yuandanId", "源单号"},{"shenqingren", "申请人"}
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
                         ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
             }
 
@@ -115,8 +115,9 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     editTable.insertValue(3, gdzcPinpai);
                     editTable.insertValue(4, gdzcValue);
                     editTable.insertValue(5, gdzcCount);
-
-                    yuandanID = (String)bindedMap.get("yuandanId");
+                    
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
                     
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
@@ -170,7 +171,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
         
-        setListTable(detail.getZclist());
+        setListTable(detail.getResult());
     }
     
     public void setListTable(List<ZichanliebiaoDetailEntity> zclist){
@@ -202,7 +203,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
     @Action
     public Task submitForm() throws ParseException{
         if(zc.size() < 1){
-            AssetMessage.ERRORSYS("请选择要采购的资产！",this);
+            AssetMessage.ERRORSYS("请选择要领用的资产！",this);
             return null;
         }
         cgsq = new ChukudanDetailEntity();

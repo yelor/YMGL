@@ -4,11 +4,12 @@
 
 package com.jskj.asset.client.bean.entity;
 
+
 /**
  *
  * @author haitao
  */
-public class ZichanliebiaoDetailEntity extends Gudingzichantb{
+public class YihaopinliebiaoEntity extends Dizhiyihaopin{
     
     private int count;
     
@@ -18,16 +19,16 @@ public class ZichanliebiaoDetailEntity extends Gudingzichantb{
         return count;
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public float getSaleprice() {
         return saleprice;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public void setSaleprice(float saleprice) {
         this.saleprice = saleprice;
     }
-    
+
 }

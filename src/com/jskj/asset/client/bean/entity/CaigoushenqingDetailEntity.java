@@ -27,15 +27,13 @@ public class CaigoushenqingDetailEntity {
     
     private String supplier;
     
-    private String checkId1;
-
-    private String checkId2;
-
-    private String checkId3;
+    private Float danjujine;
     
-    private String checkId4;
+    private String dept;
+
+    private List<ZichanliebiaoDetailEntity> result;
     
-    private List<ZichanliebiaoDetailEntity> zclist;
+    private List<YihaopinliebiaoEntity> yhplist;
 
     public String getCgsqId() {
         return cgsqId;
@@ -55,18 +53,6 @@ public class CaigoushenqingDetailEntity {
 
     public String getShenqingdanRemark() {
         return shenqingdanRemark;
-    }
-
-    public String getCheckId1() {
-        return checkId1;
-    }
-
-    public String getCheckId2() {
-        return checkId2;
-    }
-
-    public String getCheckId3() {
-        return checkId3;
     }
 
     public void setCgsqId(String cgsqId) {
@@ -89,18 +75,6 @@ public class CaigoushenqingDetailEntity {
         this.shenqingdanRemark = shenqingdanRemark;
     }
 
-    public void setCheckId1(String checkId1) {
-        this.checkId1 = checkId1;
-    }
-
-    public void setCheckId2(String checkId2) {
-        this.checkId2 = checkId2;
-    }
-
-    public void setCheckId3(String checkId3) {
-        this.checkId3 = checkId3;
-    }
-
     public String getSupplier() {
         return supplier;
     }
@@ -109,20 +83,36 @@ public class CaigoushenqingDetailEntity {
         this.supplier = supplier;
     }
 
-    public List<ZichanliebiaoDetailEntity> getZclist() {
-        return zclist;
+    public List<ZichanliebiaoDetailEntity> getResult() {
+        return result;
     }
 
-    public void setZclist(List<ZichanliebiaoDetailEntity> zclist) {
-        this.zclist = zclist;
+    public void setResult(List<ZichanliebiaoDetailEntity> result) {
+        this.result = result;
+    }
+    
+    public Float getDanjujine() {
+        return danjujine;
     }
 
-    public String getCheckId4() {
-        return checkId4;
+    public void setDanjujine(Float danjujine) {
+        this.danjujine = danjujine;
     }
 
-    public void setCheckId4(String checkId4) {
-        this.checkId4 = checkId4;
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
+    public List<YihaopinliebiaoEntity> getYhplist() {
+        return yhplist;
+    }
+
+    public void setYhplist(List<YihaopinliebiaoEntity> yhplist) {
+        this.yhplist = yhplist;
     }
     
 }

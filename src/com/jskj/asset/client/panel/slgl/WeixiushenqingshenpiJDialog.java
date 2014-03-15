@@ -125,10 +125,10 @@ public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
         }
         this.setVisible(false);
         WeixiuzichanDetailEntity cgsqdan = wxsq.get(n);
-        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        GuDingZiChanWeiXiuShenQingJDialog weixiushenqing = new GuDingZiChanWeiXiuShenQingJDialog(this,cgsqdan);
-        weixiushenqing.setLocationRelativeTo(mainFrame);
-        AssetClientApp.getApplication().show(weixiushenqing);
+//        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+//        GuDingZiChanWeiXiuShenQingJDialog weixiushenqing = new GuDingZiChanWeiXiuShenQingJDialog(this,cgsqdan);
+//        weixiushenqing.setLocationRelativeTo(mainFrame);
+//        AssetClientApp.getApplication().show(weixiushenqing);
     }
     
     @Action

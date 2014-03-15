@@ -52,7 +52,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通固定资产登记单", "IT固定资产登记单", "低值易耗品登记单", "固定资产验收单" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通固定资产登记单", "IT固定资产登记单", "易耗品登记单", "固定资产验收单" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

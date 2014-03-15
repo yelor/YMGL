@@ -10,6 +10,7 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
+import com.jskj.asset.client.bean.entity.YihaopinliebiaoEntity;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
 import com.jskj.asset.client.constants.Constants;
@@ -60,7 +61,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
-        cgsqId.setText(DanHao.getDanHao("DZYH"));
+        cgsqId.setText(DanHao.getDanHao("YHCG"));
         cgsqId.setEditable(false);
         
         shenqingdanDate.setText(dateformate.format(new Date()).toString());
@@ -100,8 +101,8 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         });
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "物品编号"}, {"gdzcName", "物品名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"}});
+            {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "类别"},{"dzyhpPinpai", "品牌", "false"},
+            {"gdzcValue", "采购价", "true"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -109,7 +110,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "gdzc";
+                return Constants.HTTP + Constants.APPID + "dizhiyihaopin/";
             }
 
             public String getConditionSQL() {
@@ -118,34 +119,33 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "(gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql = "(dzyhp_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "物品ID"},{"gdzcName", "物品名称"}};
+                return new String[][]{{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object gdzcId = bindedMap.get("gdzcId");
-                    Object gdzcName = bindedMap.get("gdzcName");
-                    Object gdzcType = bindedMap.get("gdzcType");
-                    Object gdzcPinpai = bindedMap.get("gdzcPinpai");
-                    Object gdzcValue = bindedMap.get("gdzcValue");
+                    Object gdzcId = bindedMap.get("dzyhpId");
+                    Object gdzcName = bindedMap.get("dzyhpName");
+                    Object gdzcType = bindedMap.get("dzyhpType");
+                    Object gdzcPinpai = bindedMap.get("dzyhpPinpai");
 
                     editTable.insertValue(0, gdzcId);
                     editTable.insertValue(1, gdzcName);
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 3);
+                    editTable.insertValue(4, 0);
+                    editTable.insertValue(5, 0);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
                     zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(3);
+                    zclb.setQuantity(0);
                     zc.add(zclb);
                 }
 
@@ -193,22 +193,23 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
         
-        setListTable(detail.getZclist());
+        setListTable(detail.getYhplist());
     }
     
-    public void setListTable(List<ZichanliebiaoDetailEntity> zclist){
+    public void setListTable(List<YihaopinliebiaoEntity> zclist){
         
         int size = zclist.size();
         Object[][] o = new Object[size][6];
         for( int i = 0; i < size; i++){
-            ZichanliebiaoDetailEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getGdzcId(),zclb.getGdzcName(),zclb.getGdzcType(),zclb.getGdzcPinpai(),zclb.getGdzcValue(),zclb.getCount()};
+            YihaopinliebiaoEntity zclb = zclist.get(i);
+            o[i] = new Object[]{zclb.getDzyhpId(),zclb.getDzyhpName(),zclb.getDzyhpType()
+                    ,zclb.getDzyhpPinpai(),zclb.getSaleprice(),zclb.getCount(),zclb.getSaleprice()*zclb.getCount()};
         }
         
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "单价", "数量"
+                    "物品编号", "物品名称", "类别", "品牌", "销售价", "数量","合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -243,15 +244,25 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         sqd.setIsCompleted(0);
         sqd.setIsPaid(0);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
-        
+        float total = 0;
         for(int i = 0; i < zc.size(); i++){
             zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            if(price == 0){
+                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个物品的采购价！",this);
+                return null;
+            }
+            if(zc.get(i).getQuantity() == 0){
+                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个物品的采购数量！",this);
+                return null;
+            }
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(0);
+            total+=zc.get(i).getTotalprice();
         }
+        sqd.setDanjujine(total);
         
         cgsq.setSqd(sqd);
         cgsq.setZc(zc);        

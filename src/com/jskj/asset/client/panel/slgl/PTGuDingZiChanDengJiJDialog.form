@@ -422,17 +422,6 @@
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton8">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton8.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="jButton7">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>

@@ -1,11 +1,15 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Zichanweixiudantb {
     private String wxdId;
 
     private Integer wxzcId;
+
+    private String yuandanId;
 
     private Double zcValue;
 
@@ -43,6 +47,14 @@ public class Zichanweixiudantb {
 
     public void setWxzcId(Integer wxzcId) {
         this.wxzcId = wxzcId;
+    }
+
+    public String getYuandanId() {
+        return yuandanId;
+    }
+
+    public void setYuandanId(String yuandanId) {
+        this.yuandanId = yuandanId == null ? null : yuandanId.trim();
     }
 
     public Double getZcValue() {

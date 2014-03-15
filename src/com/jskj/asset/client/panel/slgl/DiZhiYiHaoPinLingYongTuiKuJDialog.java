@@ -54,15 +54,15 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         jTextFieldShenqingren.setText(userName);
         jTextFieldDept.setText(department);
                 
-        jTextField1.setText(DanHao.getDanHao("LYTK"));
+        jTextField1.setText(DanHao.getDanHao("YHTK"));
         jTextField1.setEditable(false);
         
         jTextField2.setText(dateformate.format(new Date()).toString());
         jTextField2.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "物品编号"}, {"gdzcName", "物品名称", "true"}, {"gdzcType", "物品类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "单价", "false"},{"quantity", "数量", "true"}});
+            {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"},{"dzyhpPinpai", "品牌", "false"},
+            {"dzyhpValue", "单价", "false"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -72,7 +72,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
 
             @Override
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "gdzc";
+                return Constants.HTTP + Constants.APPID + "dizhiyihaopin/";
             }
 
             @Override
@@ -82,36 +82,36 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "(gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql = "(dzyhp_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "物品ID"},{"gdzcName", "物品名称"}};
+                return new String[][]{{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"}};
             }
 
             @Override
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object gdzcId = bindedMap.get("gdzcId");
-                    Object gdzcName = bindedMap.get("gdzcName");
-                    Object gdzcType = bindedMap.get("gdzcType");
-                    Object gdzcPinpai = bindedMap.get("gdzcPinpai");
-                    Object gdzcValue = bindedMap.get("gdzcValue");
+                    Object dzyhpId = bindedMap.get("dzyhpId");
+                    Object dzyhpName = bindedMap.get("dzyhpName");
+                    Object dzyhpType = bindedMap.get("dzyhpType");
+                    Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
+                    Object dzyhpValue = bindedMap.get("dzyhpValue");
 
-                    editTable.insertValue(0, gdzcId);
-                    editTable.insertValue(1, gdzcName);
-                    editTable.insertValue(2, gdzcType);
-                    editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 3);
+                    editTable.insertValue(0, dzyhpId);
+                    editTable.insertValue(1, dzyhpName);
+                    editTable.insertValue(2, dzyhpType);
+                    editTable.insertValue(3, dzyhpPinpai);
+                    editTable.insertValue(4, dzyhpValue);
+                    editTable.insertValue(5, 0);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(jTextField1.getText());
-                    zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(3);
+                    zclb.setCgzcId((Integer)dzyhpId);
+                    zclb.setQuantity(0);
                     zc.add(zclb);
                 }
 
@@ -131,10 +131,6 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
         }
-        if(jTextFieldShenqingren.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入退库人！");
-            return null;
-        }
         if(zc.size() < 1){
             JOptionPane.showMessageDialog(null, "请选择要退库的资产！");
             return null;
@@ -148,7 +144,12 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         sqd.setZhidanrenId(userId);
         
         for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+            int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
+            if(count == 0){
+                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个物品的退库数量！",this);
+                return null;
+            }
+            zc.get(i).setQuantity(count);
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
