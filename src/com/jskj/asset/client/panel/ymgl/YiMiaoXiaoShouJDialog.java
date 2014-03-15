@@ -117,17 +117,17 @@ public class YiMiaoXiaoShouJDialog extends javax.swing.JDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "and (yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {                    
+                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\"))";
                 } else {
-                    sql += "yimiao_id in (select distinct yimiao_id from stockpile where stockPile_price>0)";
+                    sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
-                {"yimiao.yimiaoJixing", "剂型"}};
+                return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
+                {"youxiaodate", "有效期"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {

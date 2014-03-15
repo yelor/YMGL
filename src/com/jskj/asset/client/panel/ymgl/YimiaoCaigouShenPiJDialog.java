@@ -609,7 +609,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             YiMiaoSheGouPlanJDialog yimiaoshegouJDialog = new YiMiaoSheGouPlanJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaoshegouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoshegouJDialog);
-        }else if (xiangdanID.contains("YMSG")) {
+        }else if (xiangdanID.contains("YMCG")) {
             YiMiaoCaiGouShenQingJDialog yimiaocaigouJDialog = new YiMiaoCaiGouShenQingJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaocaigouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaocaigouJDialog);

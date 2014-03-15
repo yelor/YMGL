@@ -16,7 +16,6 @@ import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
-import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ckgl.task.YimiaobaosunUpdateTask;
 import com.jskj.asset.client.util.DanHao;
@@ -49,14 +48,13 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
     /**
      * Creates new form GuDingZiChanRuKu
      */
-
     /**
      * Creates new form ymbs
      */
     public YiMiaoBaoSun(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         jTextFieldBaosunId.setText(DanHao.getDanHao("YMBS"));
         jTextFieldBaosunId.setEditable(false);
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -91,8 +89,8 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoGuige", "规格"},
-                {"yimiao.yimiaoJixing", "剂型"}};
+                return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
+                {"youxiaodate", "有效期"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -107,7 +105,6 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
                     Object unit = yimiao.get("unitId");
                     Object price = bindedMap.get("stockpilePrice");
                     Object youxiaoqi = bindedMap.get("youxiaodate");
-                    
 
                     editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
@@ -118,7 +115,6 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
                     editTable.insertValue(6, youxiaoqi);
                     editTable.insertValue(8, price);
                     editTable.insertValue(11, dateformate.format(new Date()).toString());
-                    
 
                 }
 
@@ -489,8 +485,8 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             exit();
         }
     }
-    
-    public YiMiaoBaoSun(final JDialog parent,YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntity) {
+
+    public YiMiaoBaoSun(final JDialog parent, YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntity) {
         super();
         initComponents();
         this.yimiaobaosunxiangdanEntity = yimiaobaosunxiangdanEntity;
@@ -552,15 +548,13 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
             YimiaoAll yimiaoAll = yimiaobaosunDetailEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = yimiaobaosunDetailEntityList.get(i).getStockpileYimiao();
             o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
-                stockpile.getYouxiaodate(), yimiaobaosuntb.getQuantity(),stockpile.getStockpilePrice(), yimiaobaosuntb.getQuantity()*stockpile.getStockpilePrice()
-            , yimiaobaosuntb.getXiaohuiaddr(),yimiaobaosuntb.getXiaohuidate(), yimiaobaosuntb.getXiaohuitype(),yimiaobaosuntb.getXiaohuireason()};
+                stockpile.getYouxiaodate(), yimiaobaosuntb.getQuantity(), stockpile.getStockpilePrice(), yimiaobaosuntb.getQuantity() * stockpile.getStockpilePrice(), yimiaobaosuntb.getXiaohuiaddr(), yimiaobaosuntb.getXiaohuidate(), yimiaobaosuntb.getXiaohuitype(), yimiaobaosuntb.getXiaohuireason()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业","批号", "单位", "有效期", "数量", "单价", "合价"
-                        , "销毁地点", "销毁时间", "销毁方式", "报损原因"
+                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "批号", "单位", "有效期", "数量", "单价", "合价", "销毁地点", "销毁时间", "销毁方式", "报损原因"
                 }
         ) {
             boolean[] canEdit = new boolean[]{

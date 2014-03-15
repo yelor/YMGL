@@ -153,7 +153,7 @@
         <Component class="javax.swing.JButton" name="jButton_bottomright">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="selecteYimiaoshenqingInvoiceAction" methodName="selecteYimiaoshenqingInvoiceAction"/>
+              <action class="com.jskj.asset.client.panel.BaseMainPanel" id="selectYimiaoShenPiDanAction" methodName="selectYimiaoShenPiDanAction"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton_bottomright.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton_bottomright.text"/>

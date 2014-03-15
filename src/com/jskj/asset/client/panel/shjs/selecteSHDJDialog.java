@@ -3,21 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
 
 /**
  *
- * @author huiqi
- 选择付款单单据类型：
- 付款单
- 其他付款单
+ * @author huiqi 选择付款单单据类型： 付款单 其他付款单
  */
 public class selecteSHDJDialog extends javax.swing.JDialog {
+
     /**
      * Creates new form selecteSKDJDialog
      */
@@ -54,7 +53,7 @@ public class selecteSHDJDialog extends javax.swing.JDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "付款单审批", "其他付款单审批", "收款单审批", "其他收款单审批" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "付款单审批", "其他付款单审批", "收款单审批", "其他收款单审批", "疫苗单据审批" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -180,27 +179,37 @@ public class selecteSHDJDialog extends javax.swing.JDialog {
     @Action
     public void ChooseAction() {
         dispose();
-        int aa=jComboBox1.getSelectedIndex();
-        if (aa==0) {
+        int aa = jComboBox1.getSelectedIndex();
+        if (aa == 0) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             FukuanShenPiJDialog fkdJDialog = new FukuanShenPiJDialog(new javax.swing.JFrame(), true);
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
-        } else if(aa==1){
+        } else if (aa == 1) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             OtherFukuanShenPiJDialog otherfkdJDialog = new OtherFukuanShenPiJDialog(new javax.swing.JFrame(), true);
             otherfkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(otherfkdJDialog);
-        } else if(aa==2){
+        } else if (aa == 2) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             ShoukuanShenPiJDialog skdJDialog = new ShoukuanShenPiJDialog(new javax.swing.JFrame(), true);
             skdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(skdJDialog);
-        } else if(aa==3){
+        } else if (aa == 3) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             OtherShoukuanShenPiJDialog otherskdJDialog = new OtherShoukuanShenPiJDialog(new javax.swing.JFrame(), true);
             otherskdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(otherskdJDialog);
+        } else if (aa == 4) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YimiaoCaigouShenPiJDialog yimiaoShenPiJDialog = new YimiaoCaigouShenPiJDialog(new javax.swing.JFrame(), true);
+                    yimiaoShenPiJDialog.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
+                }
+            });
         }
     }
 
