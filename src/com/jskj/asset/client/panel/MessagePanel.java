@@ -18,7 +18,7 @@ import org.jdesktop.application.Task;
  * @author 305027939
  */
 public class MessagePanel extends BasePanel {
-    
+
     private boolean maxWindow;
 
     /**
@@ -28,7 +28,7 @@ public class MessagePanel extends BasePanel {
         initComponents();
         this.maxWindow = false;
     }
-    
+
     public void isMaxWindow(boolean maxWindow) {
         this.maxWindow = maxWindow;
     }
@@ -45,7 +45,10 @@ public class MessagePanel extends BasePanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         messageMain = new javax.swing.JPanel();
         messageLabel = new javax.swing.JLabel();
-        jButtonReload = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jButton2 = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
 
@@ -58,88 +61,124 @@ public class MessagePanel extends BasePanel {
         messageLabel.setText(resourceMap.getString("messageLabel.text")); // NOI18N
         messageLabel.setName("messageLabel"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(MessagePanel.class, this);
-        jButtonReload.setAction(actionMap.get("reload")); // NOI18N
-        jButtonReload.setIcon(resourceMap.getIcon("jButtonReload.icon")); // NOI18N
-        jButtonReload.setText(resourceMap.getString("jButtonReload.text")); // NOI18N
-        jButtonReload.setToolTipText(resourceMap.getString("jButtonReload.toolTipText")); // NOI18N
-        jButtonReload.setBorder(null);
-        jButtonReload.setBorderPainted(false);
-        jButtonReload.setContentAreaFilled(false);
-        jButtonReload.setName("jButtonReload"); // NOI18N
-        jButtonReload.setOpaque(false);
-
         javax.swing.GroupLayout messageMainLayout = new javax.swing.GroupLayout(messageMain);
         messageMain.setLayout(messageMainLayout);
         messageMainLayout.setHorizontalGroup(
             messageMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(messageMainLayout.createSequentialGroup()
                 .addComponent(messageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonReload)
-                .addContainerGap())
+                .addContainerGap(587, Short.MAX_VALUE))
         );
         messageMainLayout.setVerticalGroup(
             messageMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButtonReload)
-            .addComponent(messageLabel)
+            .addGroup(messageMainLayout.createSequentialGroup()
+                .addComponent(messageLabel)
+                .addGap(274, 274, 274))
         );
 
         jScrollPane1.setViewportView(messageMain);
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
+        jToolBar1.setName("jToolBar1"); // NOI18N
+        jToolBar1.setOpaque(false);
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(MessagePanel.class, this);
+        jButton1.setAction(actionMap.get("reload")); // NOI18N
+        jButton1.setFont(resourceMap.getFont("jButton1.font")); // NOI18N
+        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+        jToolBar1.add(jSeparator1);
+
+        jButton2.setFont(resourceMap.getFont("jButton2.font")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonReload;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel messageLabel;
     private javax.swing.JPanel messageMain;
     // End of variables declaration//GEN-END:variables
 
     @Override
     @Action
-    public Task reload() {        
+    public Task reload() {
         return new MyTaskFindTask(messageLabel, this) {
-            
+
             @Override
             public void layout(List<JLabel> labelArray) {
-                
+
+                messageMain.removeAll();
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(messageMain);
                 messageMain.setLayout(layout);
 
                 //这里构造对个JLABEL，这样可以就可以单行触发事件，有没有更好的方法？HTML似乎在这里不好用了？？？？
                 ParallelGroup paraHorizGroup = layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING);
                 GroupLayout.SequentialGroup seqVertGroup = layout.createSequentialGroup();
-                
+
                 if (labelArray != null && labelArray.size() > 0) {
                     for (JLabel label : labelArray) {
                         paraHorizGroup.addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE);
                         seqVertGroup.addComponent(label);
                     }
                 }
-                
+
                 paraHorizGroup.addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE);
                 seqVertGroup.addComponent(messageLabel);
-                
+
                 layout.setHorizontalGroup(paraHorizGroup);
-                
+
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(seqVertGroup));
+                messageMain.doLayout();
             }
         };
     }
-    
+
     @Override
     public Task reload(Object param) {
         return null;

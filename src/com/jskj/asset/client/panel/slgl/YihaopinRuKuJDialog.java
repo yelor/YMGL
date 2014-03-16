@@ -106,7 +106,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
                     Object dzyhpName = bindedMap.get("dzyhpName");
                     Object dzyhpType = bindedMap.get("dzyhpType");
                     Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
-                    Object dzyhpValue = bindedMap.get("dzyhpValue");
+                    Object dzyhpValue = 0;  //暂时写0，后面改！
                     Object dzyhpCount = bindedMap.get("count");
 
                     editTable.insertValue(0, dzyhpId);

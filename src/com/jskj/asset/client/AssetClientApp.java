@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.login.LoginMain;
+import com.jskj.asset.client.panel.MessagePanel;
 import java.awt.Font;
 import java.util.EventObject;
 import java.util.List;
@@ -31,6 +32,8 @@ public class AssetClientApp extends SingleFrameApplication {
     private static UserSessionEntity sessionMap;
 
     private static JFrame loginWindow;
+    
+    private static MessagePanel messagePanel;
 
     public static String[] DEFAULT_FONT = new String[]{
         "Table.font", "TableHeader.font", "CheckBox.font", "Tree.font", "Viewport.font", "ProgressBar.font",
@@ -55,6 +58,10 @@ public class AssetClientApp extends SingleFrameApplication {
      */
     public static void setSessionMap(UserSessionEntity aSessionMap) {
         sessionMap = aSessionMap;
+    }
+    
+    public static MessagePanel getMessagePanel(){
+      return messagePanel;
     }
 
     /**
@@ -174,6 +181,9 @@ public class AssetClientApp extends SingleFrameApplication {
         //得到message
         view.setMessage(message.toString());
 
+        //消息初始化
+        messagePanel = new MessagePanel();
+        
         //参数初始化
         ParamSession.getInstance().buildParamSession(view.loadMoudule()).execute();
 
