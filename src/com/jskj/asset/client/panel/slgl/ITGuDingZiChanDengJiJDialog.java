@@ -54,7 +54,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0)"
+                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 0 )"
                         + " and gdzc_type = \"IT\" ";
                 if (!jTextFieldName.getText().trim().equals("")) {
                     sql += " and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")";

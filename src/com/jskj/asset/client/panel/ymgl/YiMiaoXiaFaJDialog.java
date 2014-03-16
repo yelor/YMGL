@@ -131,7 +131,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
-                    Object stockpileId = bindedMap.get("stockpileId");
+                    Object yimiaoId = yimiao.get("yimiaoId");
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
@@ -139,7 +139,7 @@ public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
                     Object unit = yimiao.get("unitId");
                     Object youxiaoqi = bindedMap.get("youxiaodate");
 
-                    editTable.insertValue(0, stockpileId);
+                    editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
                     editTable.insertValue(3, yimiaoJixing);
