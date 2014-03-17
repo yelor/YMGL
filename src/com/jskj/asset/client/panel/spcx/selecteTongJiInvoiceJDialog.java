@@ -7,18 +7,11 @@ package com.jskj.asset.client.panel.spcx;
 
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import static com.jskj.asset.client.AssetClientApp.getApplication;
-import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.OpenTabTask;
-import java.util.ArrayList;
+import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.FrameView;
-import org.jdesktop.application.Task;
 
 /**
  *
@@ -191,6 +184,7 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
             private DiZhiYiHaoPinLingYongTongJiJDialog diZhiYiHaoPinLingYongTongJiJDialog;
             private WeiXiuFeiYongTongJiJDialog weiXiuFeiYongTongJiJDialog;
             private GuDingZiChanLiYongTongJiJDialog guDingZiChanLiYongTongJiJDialog;
+
             public void run() {
                 dispose();
                 int selecteIndex = jComboBox1.getSelectedIndex();
@@ -215,6 +209,8 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
                         diZhiYiHaoPinLingYongTongJiJDialog.setLocationRelativeTo(mainFrame);
                     }
                     AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongTongJiJDialog);
+                } else if (selecteIndex == 9) {
+                    new OpenTabTask("报表-疫苗库存表", new YimiaokucunPanel(), false).execute();
                 }
             }
         });
