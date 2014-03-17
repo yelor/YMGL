@@ -55,7 +55,7 @@ public class LoadModule extends BaseTask {
         this.menuBar = menuBar;
         disLogPanel = false;
         disTaskPanel = false;
-        messagePanel = new MessagePanel();
+        messagePanel = AssetClientApp.getMessagePanel();
     }
 
     @Override

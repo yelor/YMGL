@@ -41,8 +41,7 @@ public abstract class MyTaskFindTask extends BaseTask {
     List<javax.swing.JLabel> labelArray;
     private final BasePanel basePanel;
 
-
-    public MyTaskFindTask(javax.swing.JLabel messageLabel,BasePanel basePanel) {
+    public MyTaskFindTask(javax.swing.JLabel messageLabel, BasePanel basePanel) {
         super();
         this.messageLabel = messageLabel;
         this.basePanel = basePanel;
@@ -131,6 +130,7 @@ public abstract class MyTaskFindTask extends BaseTask {
 
             for (final MyTaskEntity re : results) {
                 javax.swing.JLabel messageShenpi = new javax.swing.JLabel();
+                messageShenpi.setName(re.getShenqingdanId());
                 labelArray.add(messageShenpi);
                 StringBuilder builder = new StringBuilder("<html>");
                 builder.append("<font color=\"red\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
@@ -160,12 +160,12 @@ public abstract class MyTaskFindTask extends BaseTask {
                         }
 
                     }
-                    
+
                     @Override
                     public void mouseEntered(MouseEvent e) {
-                         e.getComponent().setBackground(Color.WHITE);
+                        e.getComponent().setBackground(Color.WHITE);
                     }
-                    
+
                     @Override
                     public void mouseExited(MouseEvent e) {
                         e.getComponent().setBackground(null);
@@ -249,7 +249,7 @@ public abstract class MyTaskFindTask extends BaseTask {
 //                    builder.insert(builder.indexOf("<font"), "<br />");
 //                }
 //                sb.insert(sb.lastIndexOf("</html>"), builder);
-                if (builder.toString().indexOf("我的申请单") < 0 && labelArray.size() <= 0) {
+                if (builder.toString().indexOf("我的申请单") < 0 && labelArray != null && labelArray.size() <= 0) {
                     StringBuilder builderNoMsg = new StringBuilder("<font style=\"FONT-FAMILY:")
                             .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
                     builderNoMsg.append("您当前没有消息.");
