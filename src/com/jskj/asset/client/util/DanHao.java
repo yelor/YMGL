@@ -30,19 +30,49 @@ public class DanHao {
 
     private static final Logger logger = Logger.getLogger(DanHao.class);
 
-    public static String getDanHao(String type) {
-        
-        return type + (new Date().getTime());
-        
-    }
+    /**
+     * ********************定义需要审批流程的单号***************
+     */
+    //疫苗相关
+    public final static String TYPE_YIMIAOXF = "YMXF";
+    public final static String TYPE_YIMIAOXS = "YMXS";
+    public final static String TYPE_YIMIAOSB = "YMSB";
+    public final static String TYPE_YIMIAOSG = "YMSG";
+    public final static String TYPE_YIMIAOLY = "YMLY";
+    public final static String TYPE_YIMIAOCG = "YMCG";
+    public final static String TYPE_YIMIAOTJ = "YMTJ";
+    public final static String TYPE_YIMIAOBS = "YMBS";
+
+    //资产相关
+    public final static String TYPE_GDZC = "GDZC";
+    public final static String TYPE_YHCG = "YHCG";
+    public final static String TYPE_PTLY = "PTLY";
+    public final static String TYPE_ITLY = "ITLY";
+    public final static String TYPE_YHLY = "YHLY";
+    public final static String TYPE_WXSQ = "WXSQ";
+    public final static String TYPE_FKDJ = "FKDJ";
+
+    /**
+     *************其他单号，不需要审批流程的单号*************
+     */
+    //疫苗相关
     
+    //资产相关
+    
+    
+    public static String getDanHao(String type) {
+
+        return type + (new Date().getTime());
+
+    }
+
     public static void printBarCode128(String label, String barcode) {
         try {
             StyleBuilder bold14Style = stl.style(ReportTemplates.boldStyle).setFontSize(14);
             Code128BarcodeBuilder postalCode = bcode.code128(barcode)
                     .setModuleWidth(2.5)
                     .setStyle(bold14Style);
-            
+
             report()
                     .setTemplate(template()).setPageFormat(PageType.A7, PageOrientation.LANDSCAPE)
                     .title(createBarcodeCellComponent(label, postalCode))
@@ -52,7 +82,7 @@ public class DanHao {
             e.printStackTrace();
         }
     }
-    
+
     private static ComponentBuilder<?, ?> createBarcodeCellComponent(String label, ComponentBuilder<?, ?> content) {
         StyleBuilder bold14Style = stl.style(ReportTemplates.boldStyle).setFontSize(14);
         VerticalListBuilder cell = cmp.verticalList(
