@@ -6,7 +6,7 @@
 package com.jskj.asset.client;
 
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.panel.MessagePanel;
+import com.jskj.asset.client.panel.message.MessagePanel;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.ToppagePane;
 import com.jskj.asset.client.panel.baobiao.caigou.DizhiyihaocaigoumingxiPanel;

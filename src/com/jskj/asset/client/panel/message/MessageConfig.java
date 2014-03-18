@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.panel;
+package com.jskj.asset.client.panel.message;
 
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;

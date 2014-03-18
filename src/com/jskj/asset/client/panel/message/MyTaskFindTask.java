@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.panel;
+package com.jskj.asset.client.panel.message;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.MyTaskEntity;
@@ -155,8 +155,8 @@ public abstract class MyTaskFindTask extends BaseTask {
 //                    break;
 //                }
 
-                builder.append("&nbsp;审批任务").append(": ").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"")
-                        .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("]-").append(DateHelper.formatTime(re.getSubmitDate())).append("<br />");
+                builder.append("&nbsp;审批任务").append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append(",").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"")
+                        .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("]").append("<br />");
                 builder.append("</font>");
                 builder.append("</html>");
                 i++;
@@ -268,7 +268,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                     }
 
                     builder.append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
-                    builder.append("&nbsp;我的申请单").append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append("],\"")
+                    builder.append("&nbsp;申请单").append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append(",\"")
                             .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("],状态[").append(re.getContext()).append("]").append("<br />");
                     builder.append("</font></html>");
                     i++;

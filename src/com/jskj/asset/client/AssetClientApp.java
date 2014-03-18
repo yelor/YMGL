@@ -11,7 +11,7 @@ import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.login.LoginMain;
-import com.jskj.asset.client.panel.MessagePanel;
+import com.jskj.asset.client.panel.message.MessagePanel;
 import java.awt.Font;
 import java.util.EventObject;
 import java.util.List;
