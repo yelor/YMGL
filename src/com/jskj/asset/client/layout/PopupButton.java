@@ -56,15 +56,15 @@ public class PopupButton extends JButton implements ActionListener {
         int selectedX = p.x;
         int selectedY = p.y + getHeight();
 
-        int popHeight = scanBarPanel.getHeight();
-        int popWitdh = scanBarPanel.getWidth();
+        int popHeight = scanBarPanel.getPreferredSize().height;
+        int popWitdh = scanBarPanel.getPreferredSize().width;
 
         if ((selectedY + popHeight) > size.getHeight()) {
-            selectedY = p.y - scanBarPanel.getHeight();
+            selectedY = p.y - scanBarPanel.getPreferredSize().height;
         }
 
         if ((selectedX + popWitdh) > size.getWidth()) {
-            selectedX = p.x - scanBarPanel.getWidth();
+            selectedX = p.x - scanBarPanel.getPreferredSize().width;
         }
 
         pop = PopupFactory.getSharedInstance().getPopup(this, scanBarPanel, selectedX, selectedY);

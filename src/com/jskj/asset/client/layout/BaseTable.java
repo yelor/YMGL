@@ -187,15 +187,15 @@ public class BaseTable extends JTable {
                 }
             }
 
-            int popHeight = basePopup.getHeight();
-            int popWitdh = basePopup.getWidth();
+            int popHeight = basePopup.getPreferredSize().height;
+            int popWitdh = basePopup.getPreferredSize().width;
 
             if ((selectedColumnY + popHeight) > size.getHeight()) {
-                selectedColumnY = selectedColumnY - basePopup.getHeight() - table.getRowHeight();
+                selectedColumnY = selectedColumnY - basePopup.getPreferredSize().height - table.getRowHeight();
             }
 
             if ((selectedColumnX + popWitdh) > size.getWidth()) {
-                selectedColumnX = selectedColumnX - basePopup.getWidth();
+                selectedColumnX = selectedColumnX - basePopup.getPreferredSize().width;
             }
 
             pop = PopupFactory.getSharedInstance().getPopup(table, basePopup, selectedColumnX, selectedColumnY);

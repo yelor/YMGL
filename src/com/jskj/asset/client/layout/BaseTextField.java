@@ -220,15 +220,15 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         int selectedX = p.x;
         int selectedY = p.y + getHeight();
 
-        int popHeight = basePopup.getHeight();
-        int popWitdh = basePopup.getWidth();
+        int popHeight = basePopup.getPreferredSize().height;
+        int popWitdh = basePopup.getPreferredSize().width;
 
         if ((selectedY + popHeight) > size.getHeight()) {
-            selectedY = p.y - basePopup.getHeight();
+            selectedY = p.y - basePopup.getPreferredSize().height;
         }
 
         if ((selectedX + popWitdh) > size.getWidth()) {
-            selectedX = p.x - basePopup.getWidth();
+            selectedX = p.x - basePopup.getPreferredSize().width;
         }
 
 //        Point mousepoint = MouseInfo.getPointerInfo().getLocation();
