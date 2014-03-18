@@ -6,6 +6,7 @@ package com.jskj.asset.client.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -376,5 +377,12 @@ public class DateHelper {
     public static int diffDate(java.util.Date date, java.util.Date date1) {
         return (int) ((getMillis(date) - getMillis(date1)) / (24 * 3600 * 1000));
 
+    }
+    
+     public static Date currentDateAdd(int days) {
+        // 日期处理模块 (将日期加上某些天或减去天数)返回字符串
+        Calendar canlendar = Calendar.getInstance(); // java.util包
+        canlendar.add(Calendar.DATE, days); // 日期减 如果不够减会将月变动
+        return canlendar.getTime();
     }
 }

@@ -40,11 +40,17 @@ public abstract class MyTaskFindTask extends BaseTask {
     javax.swing.JLabel messageLabel;
     List<javax.swing.JLabel> labelArray;
     private final BasePanel basePanel;
+    private final int days;
+    private boolean displayTask;
+    private boolean displayApplication;
 
-    public MyTaskFindTask(javax.swing.JLabel messageLabel, BasePanel basePanel) {
+    public MyTaskFindTask(javax.swing.JLabel messageLabel, BasePanel basePanel, int days, boolean displayTask, boolean displayApplication) {
         super();
         this.messageLabel = messageLabel;
         this.basePanel = basePanel;
+        this.days = days;
+        this.displayTask = displayTask;
+        this.displayApplication = displayApplication;
     }
 
     @Action
@@ -81,14 +87,22 @@ public abstract class MyTaskFindTask extends BaseTask {
     @Override
     public Object doBackgrounp() {
         try {
-            //使用Spring3 RESTful client来获取http数据            
+            if (displayTask) {
+                //使用Spring3 RESTful client来获取http数据            
 //            CommFindEntity<T> response = restTemplate.getForObject(URI + serviceId + "?pagesize=" + pageSize + "&pageindex=" + pageIndex, CommFindEntity.class);
-            CommFindEntity<MyTaskEntity> response = restTemplate.exchange(URI + serviceId,
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<CommFindEntity<MyTaskEntity>>() {
-                    }).getBody();
-            return response;
+                CommFindEntity<MyTaskEntity> response = restTemplate.exchange(URI + serviceId,
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<CommFindEntity<MyTaskEntity>>() {
+                        }).getBody();
+                return response;
+            } else {
+                CommFindEntity<MyTaskEntity> response = new CommFindEntity<MyTaskEntity>();
+                response.setCount(0);
+                List<MyTaskEntity> array = new ArrayList();
+                response.setResult(array);
+                return response;
+            }
         } catch (RestClientException e) {
             logger.error(e);
             return e;
@@ -185,7 +199,7 @@ public abstract class MyTaskFindTask extends BaseTask {
 
         private final Logger logger = Logger.getLogger(MySubmitFindTask.class);
         private final String URI = Constants.HTTP + Constants.APPID;
-        private final String serviceId = "/spfind/mysubmit";
+        private final String serviceId = "/spfind/mysubmit?days=" + days;
 
         public MySubmitFindTask() {
             super();
@@ -194,12 +208,20 @@ public abstract class MyTaskFindTask extends BaseTask {
         @Override
         public Object doBackgrounp() {
             try {
-                CommFindEntity<MyTaskEntity> response = restTemplate.exchange(URI + serviceId,
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<CommFindEntity<MyTaskEntity>>() {
-                        }).getBody();
-                return response;
+                if (displayApplication) {
+                    CommFindEntity<MyTaskEntity> response = restTemplate.exchange(URI + serviceId,
+                            HttpMethod.GET,
+                            null,
+                            new ParameterizedTypeReference<CommFindEntity<MyTaskEntity>>() {
+                            }).getBody();
+                    return response;
+                } else {
+                    CommFindEntity<MyTaskEntity> response = new CommFindEntity<MyTaskEntity>();
+                    response.setCount(0);
+                    List<MyTaskEntity> array = new ArrayList();
+                    response.setResult(array);
+                    return response;
+                }
             } catch (RestClientException e) {
                 logger.error(e);
                 return e;

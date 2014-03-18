@@ -5,12 +5,19 @@
  */
 package com.jskj.asset.client.panel;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
+import static com.jskj.asset.client.layout.AssetMessage.INFO_MESSAGE;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.PopupButton;
 import java.util.List;
+import java.util.TimerTask;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.JLabel;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
 
 /**
@@ -19,18 +26,56 @@ import org.jdesktop.application.Task;
  */
 public class MessagePanel extends BasePanel {
 
-    private boolean maxWindow;
+    private int messagedays = -30;
+    private final static Logger logger = Logger.getLogger(MessagePanel.class);
+    private boolean displayTask;
+    private boolean displayApplication;
 
     /**
      * Creates new form MessagePanel
      */
     public MessagePanel() {
         initComponents();
-        this.maxWindow = false;
-    }
+        displayTask = true;
+        displayApplication = true;
+        ((PopupButton) jButton2).registerPopup(new MessageConfig(((PopupButton) jButton2)) {
+            AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
+            java.util.Timer timer = new java.util.Timer(true);
+            TimerTask timetask;
 
-    public void isMaxWindow(boolean maxWindow) {
-        this.maxWindow = maxWindow;
+            @Override
+            public void savedData(int days, boolean autorefresh, final int selectSec, boolean task, boolean application) {
+                messagedays = days;
+                displayTask = task;
+                displayApplication = application;
+
+                if (autorefresh) {
+
+                    logger.info(selectSec + "s loop task");
+
+                    clientView.setStatus("定义定时任务:" + selectSec + "秒循环.", INFO_MESSAGE);
+
+                    if (timetask != null) {
+                        timetask.cancel();
+                    }
+
+                    timetask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            clientView.setStatus("定时任务已经启动.", INFO_MESSAGE);
+                            MessagePanel.this.reload().execute();
+                        }
+                    };
+
+                    timer.schedule(timetask, 2000, selectSec * 1000);
+
+                } else {
+
+                    timetask.cancel();
+                    MessagePanel.this.reload().execute();
+                }
+            }
+        });
     }
 
     /**
@@ -48,7 +93,7 @@ public class MessagePanel extends BasePanel {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton2 = new javax.swing.JButton();
+        jButton2 = new PopupButton();
 
         setName("Form"); // NOI18N
 
@@ -102,6 +147,7 @@ public class MessagePanel extends BasePanel {
         jSeparator1.setName("jSeparator1"); // NOI18N
         jToolBar1.add(jSeparator1);
 
+        jButton2.setAction(actionMap.get("popupConfig")); // NOI18N
         jButton2.setFont(resourceMap.getFont("jButton2.font")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
@@ -146,7 +192,7 @@ public class MessagePanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
-        return new MyTaskFindTask(messageLabel, this) {
+        return new MyTaskFindTask(messageLabel, this, messagedays, displayTask, displayApplication) {
 
             @Override
             public void layout(List<JLabel> labelArray) {
@@ -182,5 +228,9 @@ public class MessagePanel extends BasePanel {
     @Override
     public Task reload(Object param) {
         return null;
+    }
+
+    @Action
+    public void popupConfig() {
     }
 }

@@ -97,6 +97,7 @@ public final class AssetClientView extends FrameView {
 
         statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
 
+        statusMessageLabel.setFont(resourceMap.getFont("statusMessageLabel.font")); // NOI18N
         statusMessageLabel.setName("statusMessageLabel"); // NOI18N
 
         statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
