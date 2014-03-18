@@ -18,8 +18,11 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -41,8 +44,8 @@ public abstract class MyTaskFindTask extends BaseTask {
     List<javax.swing.JLabel> labelArray;
     private final BasePanel basePanel;
     private final int days;
-    private boolean displayTask;
-    private boolean displayApplication;
+    private final boolean displayTask;
+    private final boolean displayApplication;
 
     public MyTaskFindTask(javax.swing.JLabel messageLabel, BasePanel basePanel, int days, boolean displayTask, boolean displayApplication) {
         super();
@@ -86,6 +89,7 @@ public abstract class MyTaskFindTask extends BaseTask {
 
     @Override
     public Object doBackgrounp() {
+        labelArray = new ArrayList<javax.swing.JLabel>();
         try {
             if (displayTask) {
                 //使用Spring3 RESTful client来获取http数据            
@@ -139,12 +143,9 @@ public abstract class MyTaskFindTask extends BaseTask {
 //                builder.append("<br /><br />");
 //            }
             int i = 1;
-
-            labelArray = new ArrayList<javax.swing.JLabel>();
-
             for (final MyTaskEntity re : results) {
                 javax.swing.JLabel messageShenpi = new javax.swing.JLabel();
-                messageShenpi.setName(re.getShenqingdanId());
+                messageShenpi.setName(String.valueOf(re.getSubmitDate().getTime()));
                 labelArray.add(messageShenpi);
                 StringBuilder builder = new StringBuilder("<html>");
                 builder.append("<font color=\"red\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
@@ -154,13 +155,13 @@ public abstract class MyTaskFindTask extends BaseTask {
 //                    break;
 //                }
 
-                builder.append("&nbsp;审批任务").append(i).append(": ").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"")
+                builder.append("&nbsp;审批任务").append(": ").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"")
                         .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("]-").append(DateHelper.formatTime(re.getSubmitDate())).append("<br />");
                 builder.append("</font>");
                 builder.append("</html>");
                 i++;
                 messageShenpi.setText(builder.toString());
-                messageShenpi.setToolTipText("点击打开" + re.getShenqingdanId());
+                messageShenpi.setToolTipText("点击打开审批任务单:" + re.getShenqingdanId());
                 messageShenpi.setOpaque(true);
                 messageShenpi.addMouseListener(new MouseAdapter() {
                     @Override
@@ -187,8 +188,6 @@ public abstract class MyTaskFindTask extends BaseTask {
 
                 });
             }
-
-            layout(labelArray);
             new MySubmitFindTask().execute();
         }
     }
@@ -253,33 +252,85 @@ public abstract class MyTaskFindTask extends BaseTask {
 
             if (results != null) {
                 logger.info("获取任务数:" + response.getCount());
-                StringBuilder builder = new StringBuilder("<html><font color=\"blue\" style=\"FONT-FAMILY:").append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
+
                 int i = 1;
                 for (MyTaskEntity re : results) {
-//                    if (i > 4) {
-//                        builder.append("...");
-//                        break;
-//                    }
-                    builder.append("&nbsp;我的申请单").append(i).append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append("],\"")
+                    javax.swing.JLabel messageApp = new javax.swing.JLabel();
+                    messageApp.setName(String.valueOf(re.getSubmitDate().getTime()));
+                    labelArray.add(messageApp);
+
+                    StringBuilder builder = new StringBuilder("<html>");
+                    if (re.getContext().contains("审核完成")) {
+                        builder.append("<font color=\"black\" style=\"FONT-FAMILY:");
+
+                    } else {
+                        builder.append("<font color=\"blue\" style=\"FONT-FAMILY:");
+                    }
+
+                    builder.append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
+                    builder.append("&nbsp;我的申请单").append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append("],\"")
                             .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("],状态[").append(re.getContext()).append("]").append("<br />");
+                    builder.append("</font></html>");
                     i++;
+
+                    messageApp.setText(builder.toString());
+                    messageApp.setToolTipText("点击打开我的申请单:" + re.getShenqingdanId());
+                    messageApp.setOpaque(true);
+
+                    messageApp.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+//                            if (re.getShenqingdanId().toUpperCase().startsWith("YM")) {
+//                                //疫苗审批
+//                                gotoShenpi();
+//                            } else {//资产审批
+//                                selectShenPiDanAction();
+//                            }
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            e.getComponent().setBackground(Color.WHITE);
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            e.getComponent().setBackground(null);
+                        }
+
+                    });
                 }
-                builder.append("</font></html>");
-//                String shenpiTask = messageLabel.getText();
-//                StringBuilder sb = new StringBuilder();
-//                if (builder.toString().indexOf("我的申请单") >= 0 && sb.toString().indexOf("审批任务") > 0) {
-//                    builder.insert(builder.indexOf("<font"), "<br />");
-//                }
-//                sb.insert(sb.lastIndexOf("</html>"), builder);
-                if (builder.toString().indexOf("我的申请单") < 0 && labelArray != null && labelArray.size() <= 0) {
+
+                if (labelArray.size() <= 0) {
                     StringBuilder builderNoMsg = new StringBuilder("<font style=\"FONT-FAMILY:")
                             .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
                     builderNoMsg.append("您当前没有消息.");
                     builderNoMsg.append("</font>");
-                    builder.insert(builder.lastIndexOf("</html>"), builderNoMsg);
+                    javax.swing.JLabel messageApp = new javax.swing.JLabel();
+                    messageApp.setText(builderNoMsg.toString());
+                    labelArray.add(messageApp);
+                } else {
+                    JLabelComparator comparator = new JLabelComparator();
+                    Collections.sort(labelArray, comparator);
                 }
-                // System.out.println("@@@@@@@@@@@@@@@@@@@@@messageLabel:"+sb.toString());
-                messageLabel.setText(builder.toString());
+                layout(labelArray);
+            }
+        }
+    }
+
+    class JLabelComparator implements Comparator<JLabel> {
+
+        @Override
+        public int compare(JLabel o1, JLabel o2) {
+            long o1Label = Long.parseLong(o1.getName());
+            long o2Label = Long.parseLong(o2.getName());
+            if (o1Label > o2Label) {
+                return -1;
+            } else if (o1Label == o2Label) {
+                return 0;
+            } else {
+                return 1;
             }
         }
     }

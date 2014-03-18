@@ -71,7 +71,9 @@ public class MessagePanel extends BasePanel {
 
                 } else {
 
-                    timetask.cancel();
+                    if (timetask != null) {
+                        timetask.cancel();
+                    }
                     MessagePanel.this.reload().execute();
                 }
             }
@@ -213,8 +215,8 @@ public class MessagePanel extends BasePanel {
                     }
                 }
 
-                paraHorizGroup.addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE);
-                seqVertGroup.addComponent(messageLabel);
+//                paraHorizGroup.addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE);
+//                seqVertGroup.addComponent(messageLabel);
 
                 layout.setHorizontalGroup(paraHorizGroup);
 
