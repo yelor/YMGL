@@ -661,7 +661,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(false);
+                parent.setVisible(true);
             }
 
             @Override

@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.panel.user;
+package com.jskj.asset.client.panel.baobiao.kucun;
 
-import com.jskj.asset.client.bean.entity.UsertbFindEntity;
+import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
+import com.jskj.asset.client.panel.user.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import org.apache.log4j.Logger;
@@ -14,26 +15,26 @@ import org.springframework.web.client.RestClientException;
  *
  * @author woderchen
  */
-public class UserTask extends BaseTask {
+public class StockpiletbAllFindEntityTask extends BaseTask {
 
     private static final Logger logger = Logger.getLogger(UserTask.class);
-    private final String URI = Constants.HTTP + Constants.APPID + "user";
+    private final String URI = Constants.HTTP + Constants.APPID + "addkucunyimiao";
     private int pageSize = 20;
     private int pageIndex = 1;
     private String conditionSql;
 
-    public UserTask(int pageIndex,int pageSize) {
+    public StockpiletbAllFindEntityTask(int pageIndex,int pageSize) {
         this(pageIndex,pageSize,"");
     }
     
-    public UserTask(int pageIndex,int pageSize, String conditionSql) {
+    public StockpiletbAllFindEntityTask(int pageIndex,int pageSize, String conditionSql) {
         super();
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
         this.conditionSql = conditionSql;
     }
 
-    public UserTask() {
+    public StockpiletbAllFindEntityTask() {
         this(1,20);
     }
 
@@ -42,8 +43,8 @@ public class UserTask extends BaseTask {
         try {
             String urlParam = "pagesize="+pageSize+"&pageindex="+pageIndex+"&conditionSql="+conditionSql;
             logger.info("URL parameter:"+urlParam);
-            UsertbFindEntity users = restTemplate.getForObject(URI+"?"+urlParam, UsertbFindEntity.class);
-            return users;
+            StockpiletbFindEntity stockpiletbEntiy = restTemplate.getForObject(URI+"?"+urlParam, StockpiletbFindEntity.class);
+            return stockpiletbEntiy;
         } catch (RestClientException e) {
             logger.error(e);
             return e;

@@ -15,6 +15,7 @@ import com.jskj.asset.client.bean.entity.Yimiaotiaojiatb;
 import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
@@ -37,7 +38,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
+public class YiMiaoTiaoJiaJDialog extends BaseDialog {
 
     private Yimiaotiaojia_detail_tbFindEntity yimiaotiaojiaEntity;
     private Yimiaotiaojia_detail_tb yimiaotiaojia_detail;
@@ -50,7 +51,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
      * Creates new form yimiaoyanshouJDialog
      */
     public YiMiaoTiaoJiaJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super();
         initComponents();
 
         jTextFieldTiaojiaId.setText(DanHao.getDanHao("YMTJ"));
@@ -570,8 +571,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "stockpileId"));
-            yimiaotiaojia_detail.setBeforeprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "stockpilePrice"))));
-            yimiaotiaojia_detail.setLastprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastPrice"))));
+            yimiaotiaojia_detail.setBeforesaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "stockpilePrice"))));
+            yimiaotiaojia_detail.setLastsaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastPrice"))));
             yimiaotiaojia_detail.setIsCompleted(0);
             list.add(yimiaotiaojia_detail);
         }
@@ -621,7 +622,7 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(false);
+                parent.setVisible(true);
             }
 
             @Override
@@ -650,6 +651,8 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
         jTextFieldzhidanDate.setEditable(false);
         jTextFieldjingbanren.setEditable(false);
         jTextFieldjingbanren.setText(yimiaotiaojiaxiangdanEntity.getUserAll().getUserName());
+        jTextFielddepartment.setEditable(false);
+        jTextFielddepartment.setText(yimiaotiaojiaxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
         jTextFieldzhidanren.setEditable(false);
         jTextFieldzhidanren.setText(yimiaotiaojiaxiangdanEntity.getUserAll().getUserName());
         jTextArea1.setEditable(false);
@@ -667,13 +670,13 @@ public class YiMiaoTiaoJiaJDialog extends javax.swing.JDialog {
             YimiaoAll yimiaoAll = yimiaotiaojiaDetailEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = yimiaotiaojiaDetailEntityList.get(i).getStockpileYimiao();
             o[i] = new Object[]{stockpile.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
-                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforeprice(), yimiaotiaojia_detailtb.getLastprice()};
+                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforesaleprice(), yimiaotiaojia_detailtb.getLastsaleprice()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "库存编号", "疫苗名称", "规格", "剂型", "批号", "单位", "有效期", "调前价", "调后价"
+                    "库存编号", "疫苗名称", "规格", "剂型", "批号", "单位", "有效期", "调前售价", "调后售价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{

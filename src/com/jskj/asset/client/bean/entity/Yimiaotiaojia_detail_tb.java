@@ -10,9 +10,13 @@ public class Yimiaotiaojia_detail_tb {
 
     private Integer kucunyimiaoId;
 
-    private Float beforeprice;
+    private Float beforebuyprice;
 
-    private Float lastprice;
+    private Float lastbuyprice;
+
+    private Float beforesaleprice;
+
+    private Float lastsaleprice;
 
     private Integer isCompleted;
 
@@ -40,20 +44,36 @@ public class Yimiaotiaojia_detail_tb {
         this.kucunyimiaoId = kucunyimiaoId;
     }
 
-    public Float getBeforeprice() {
-        return beforeprice;
+    public Float getBeforebuyprice() {
+        return beforebuyprice;
     }
 
-    public void setBeforeprice(Float beforeprice) {
-        this.beforeprice = beforeprice;
+    public void setBeforebuyprice(Float beforebuyprice) {
+        this.beforebuyprice = beforebuyprice;
     }
 
-    public Float getLastprice() {
-        return lastprice;
+    public Float getLastbuyprice() {
+        return lastbuyprice;
     }
 
-    public void setLastprice(Float lastprice) {
-        this.lastprice = lastprice;
+    public void setLastbuyprice(Float lastbuyprice) {
+        this.lastbuyprice = lastbuyprice;
+    }
+
+    public Float getBeforesaleprice() {
+        return beforesaleprice;
+    }
+
+    public void setBeforesaleprice(Float beforesaleprice) {
+        this.beforesaleprice = beforesaleprice;
+    }
+
+    public Float getLastsaleprice() {
+        return lastsaleprice;
+    }
+
+    public void setLastsaleprice(Float lastsaleprice) {
+        this.lastsaleprice = lastsaleprice;
     }
 
     public Integer getIsCompleted() {
