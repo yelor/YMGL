@@ -56,10 +56,50 @@ public class DanHao {
      *************其他单号，不需要审批流程的单号*************
      */
     //疫苗相关
-    
     //资产相关
-    
-    
+    /**
+     *
+     * @param DANHAO_TYPE
+     * @return
+     */
+    public String getUIClassByDanhaoType(String DANHAO_TYPE) {
+        String className = "";
+
+        if (TYPE_YIMIAOXF.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoXiaFaJDialog";
+        } else if (TYPE_YIMIAOXS.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoXiaoShouJDialog";
+        } else if (TYPE_YIMIAOSB.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoShenBaoPlanJDialog";
+        } else if (TYPE_YIMIAOSG.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoSheGouPlanJDialog";
+        } else if (TYPE_YIMIAOLY.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoLingYongShenQingJDialog";
+        } else if (TYPE_YIMIAOCG.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoCaiGouShenQingJDialog";
+        } else if (TYPE_YIMIAOTJ.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoTiaoJiaJDialog";
+        } else if (TYPE_YIMIAOBS.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoBaoSun";
+        } else if (TYPE_GDZC.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.slgl.GuDingZiChanCaiGouShenQingJDialog";
+        } else if (TYPE_YHCG.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinCaiGouShenQingJDialog";
+        } else if (TYPE_PTLY.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.slgl.PTGuDingZiChanLingYongShenQingJDialog";
+        } else if (TYPE_ITLY.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.slgl.ITGuDingZiChanLingYongShenQingJDialog";
+        } else if (TYPE_YHLY.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinLingYongShenQingJDialog";
+        } else if (TYPE_WXSQ.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.slgl.GuDingZiChanWeiXiuShenQingJDialog";
+        } else if (TYPE_FKDJ.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.shjs.FuKuanDanJDialog";
+        }
+
+        return className;
+    }
+
     public static String getDanHao(String type) {
 
         return type + (new Date().getTime());

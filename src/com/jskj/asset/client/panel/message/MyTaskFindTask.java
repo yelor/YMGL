@@ -303,10 +303,10 @@ public abstract class MyTaskFindTask extends BaseTask {
                 }
 
                 if (labelArray.size() <= 0) {
-                    StringBuilder builderNoMsg = new StringBuilder("<font style=\"FONT-FAMILY:")
+                    StringBuilder builderNoMsg = new StringBuilder("<html><font style=\"FONT-FAMILY:")
                             .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
                     builderNoMsg.append("您当前没有消息.");
-                    builderNoMsg.append("</font>");
+                    builderNoMsg.append("</font></html>");
                     javax.swing.JLabel messageApp = new javax.swing.JLabel();
                     messageApp.setText(builderNoMsg.toString());
                     labelArray.add(messageApp);
