@@ -7,8 +7,10 @@ package com.jskj.asset.client.layout;
 
 import com.jskj.asset.client.AssetClientApp;
 import java.awt.Component;
+import java.awt.Container;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JComboBox;
@@ -214,6 +216,98 @@ public abstract class BaseDialog extends JDialog {
 
         }
 
+    }
+
+    public void setDialogComponentValue(HashMap map, Container container, boolean canEdit) {
+        Component[] coms = container.getComponents();
+        for (Component c : coms) {
+            if (c instanceof JPanel) {
+                setDialogComponentValue(map, (JPanel) c,canEdit);
+            } else if (c instanceof JScrollPane) {
+                JScrollPane ccc = (JScrollPane) c;
+                if (ccc.getViewport() != null) {
+                    Component com = ccc.getViewport().getView();
+                    if (com != null) {
+                        if (com instanceof JTextArea) {
+                            try {
+                                String name = ((JTextArea) com).getName();
+                                Object obj = map.get(name);
+                                ((JTextArea) com).setEnabled(canEdit);
+                                if (obj instanceof String) {
+                                    ((JTextArea) com).setText(obj.toString());
+                                }
+                            } catch (Exception ex) {
+                                logger.error(ex);
+                            }
+                        } else if (com instanceof javax.swing.JList) {
+                            try {
+                                String name = ((javax.swing.JList) com).getName();
+                                Object obj = map.get(name);
+
+                                ((javax.swing.JList) com).setSelectedValue(obj, true);
+                                ((javax.swing.JList) com).setEnabled(canEdit);
+                            } catch (Exception ex) {
+                                logger.error(ex);
+                            }
+                        } else if (com instanceof javax.swing.JTable) {
+                            try {
+                                String name = ((javax.swing.JTable) com).getName();
+                                Object obj = map.get(name);
+                                
+                                //((javax.swing.JTable) com).setText(obj.toString()); //jtable的处理有点麻烦，后面再改？？
+                                ((javax.swing.JTable) com).setEnabled(canEdit);
+                                
+                            } catch (Exception ex) {
+                                logger.error(ex);
+                            }
+                        }
+                    }
+                }
+            } else if (c instanceof JTextField) {
+                try {
+                    String name = ((JTextField) c).getName();
+                    Object obj = map.get(name);
+                    ((JTextField) c).setEnabled(canEdit);
+                    if (obj instanceof String) {
+                        ((JTextField) c).setText(obj.toString());
+                    }
+                } catch (Exception ex) {
+                    logger.error(ex);
+                }
+
+            } else if (c instanceof JComboBox) {
+                try {
+                    String name = ((JComboBox) c).getName();
+                    Object obj = map.get(name);
+                    ((JComboBox) c).setEnabled(canEdit);
+                    ((JComboBox) c).setSelectedItem(obj);
+
+                } catch (Exception ex) {
+                    logger.error(ex);
+                }
+            } else if (c instanceof JTextArea) {
+                try {
+                    String name = ((JTextArea) c).getName();
+                    Object obj = map.get(name);
+                    ((JTextArea) c).setEnabled(canEdit);
+                    if (obj instanceof String) {
+                        ((JTextArea) c).setText(obj.toString());
+                    }
+                } catch (Exception ex) {
+                    logger.error(ex);
+                }
+            } else if (c instanceof JList) {
+                try {
+                    String name = ((JList) c).getName();
+                    Object obj = map.get(name);
+                    ((JList) c).setEnabled(canEdit);
+                    ((JList) c).setSelectedValue(obj, true);
+                } catch (Exception ex) {
+                    logger.error(ex);
+                }
+            }
+
+        }
     }
 
     /**

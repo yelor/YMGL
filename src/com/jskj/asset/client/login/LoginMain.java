@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -210,10 +211,10 @@ public class LoginMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
+        setIconImage(new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png")).getImage());
         setMaximumSize(new java.awt.Dimension(371, 274));
         setMinimumSize(new java.awt.Dimension(371, 274));
         setName("Form"); // NOI18N
-        setUndecorated(true);
         setResizable(false);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
