@@ -204,19 +204,19 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
                     AssetClientApp.getApplication().show(yiMiaoXiaFaJDialog);
                 } else if (selecteIndex == 1) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoXiaoShouJDialog yiMiaoXiaoShouJDialog = new YiMiaoXiaoShouJDialog(new javax.swing.JFrame(), true);
+                    YiMiaoXiaoShouJDialog yiMiaoXiaoShouJDialog = new YiMiaoXiaoShouJDialog();
                     yiMiaoXiaoShouJDialog.setLocationRelativeTo(mainFrame);
                     yiMiaoXiaoShouJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaoShouJDialog);
                 } else if (selecteIndex == 2) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoXiaFaTuiKuJDialog yiMiaoXiaFaTuiKuJDialog = new YiMiaoXiaFaTuiKuJDialog(new javax.swing.JFrame(), true);
+                    YiMiaoXiaFaTuiKuJDialog yiMiaoXiaFaTuiKuJDialog = new YiMiaoXiaFaTuiKuJDialog(mainFrame, true);
                     yiMiaoXiaFaTuiKuJDialog.setLocationRelativeTo(mainFrame);
                     yiMiaoXiaFaTuiKuJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaFaTuiKuJDialog);
                 } else {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoXiaoShouTuiHuoJDialog yiMiaoXiaoShouTuiHuoJDialog = new YiMiaoXiaoShouTuiHuoJDialog(new javax.swing.JFrame(), true);
+                    YiMiaoXiaoShouTuiHuoJDialog yiMiaoXiaoShouTuiHuoJDialog = new YiMiaoXiaoShouTuiHuoJDialog(mainFrame, true);
                     yiMiaoXiaoShouTuiHuoJDialog.setLocationRelativeTo(mainFrame);
                     yiMiaoXiaoShouTuiHuoJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(yiMiaoXiaoShouTuiHuoJDialog);

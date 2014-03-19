@@ -51,7 +51,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoSheGouPlanJDialog(java.awt.Frame parent, boolean modal) {
+    public YiMiaoSheGouPlanJDialog() {
         super();
         initComponents();
         jTextFieldYimiaoshegoudanId.setText(DanHao.getDanHao("YMSG"));

@@ -181,17 +181,17 @@ public class selectLingYongDanJDialog extends javax.swing.JDialog {
         int selecteIndex = jComboBox1.getSelectedIndex();
         if (selecteIndex == 0) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                PTGuDingZiChanLingYongShenQingJDialog pTGuDingZiChanLingYongShenQingJDialog = new PTGuDingZiChanLingYongShenQingJDialog(mainFrame);
+                PTGuDingZiChanLingYongShenQingJDialog pTGuDingZiChanLingYongShenQingJDialog = new PTGuDingZiChanLingYongShenQingJDialog();
                 pTGuDingZiChanLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(pTGuDingZiChanLingYongShenQingJDialog);
         } else if (selecteIndex == 1) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                ITGuDingZiChanLingYongShenQingJDialog iTGuDingZiChanLingYongShenQingJDialog = new ITGuDingZiChanLingYongShenQingJDialog(mainFrame);
+                ITGuDingZiChanLingYongShenQingJDialog iTGuDingZiChanLingYongShenQingJDialog = new ITGuDingZiChanLingYongShenQingJDialog();
                 iTGuDingZiChanLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(iTGuDingZiChanLingYongShenQingJDialog);
         } else if (selecteIndex == 2) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                DiZhiYiHaoPinLingYongShenQingJDialog diZhiYiHaoPinLingYongShenQingJDialog = new DiZhiYiHaoPinLingYongShenQingJDialog(mainFrame);
+                DiZhiYiHaoPinLingYongShenQingJDialog diZhiYiHaoPinLingYongShenQingJDialog = new DiZhiYiHaoPinLingYongShenQingJDialog();
                 diZhiYiHaoPinLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongShenQingJDialog);
         } else if (selecteIndex == 3) {

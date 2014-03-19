@@ -187,25 +187,25 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
                     AssetClientApp.getApplication().show(yiMiaoCaiGouJiHuaFenXiJDialog);
                 } else if (selecteIndex == 1) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog(new javax.swing.JFrame(), true);
+                    YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog();
                     shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
                     shenbaoPlanJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(shenbaoPlanJDialog);
                 } else if (selecteIndex == 2) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoSheGouPlanJDialog sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog(new javax.swing.JFrame(), true);
+                    YiMiaoSheGouPlanJDialog sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog();
                     sheGouPlanJDialog.setLocationRelativeTo(mainFrame);
                     sheGouPlanJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(sheGouPlanJDialog);
                 } else if (selecteIndex == 3) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog(new javax.swing.JFrame(), true);
+                    YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog();
                     lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
                     lingYongShenQingJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(lingYongShenQingJDialog);
                 } else if (selecteIndex == 4) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
+                    YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog();
                     caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
                     caiGouShenQingJDialog.setAddOrUpdate(true);
                     AssetClientApp.getApplication().show(caiGouShenQingJDialog);

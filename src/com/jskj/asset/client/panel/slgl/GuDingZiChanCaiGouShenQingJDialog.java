@@ -51,7 +51,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
      * @param parent
      * @param modal
      */
-    public GuDingZiChanCaiGouShenQingJDialog(java.awt.Frame parent,boolean modal) {
+    public GuDingZiChanCaiGouShenQingJDialog() {
         super();
         initComponents();
         
@@ -533,19 +533,19 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                GuDingZiChanCaiGouShenQingJDialog dialog = new GuDingZiChanCaiGouShenQingJDialog(new javax.swing.JFrame(),true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                GuDingZiChanCaiGouShenQingJDialog dialog = new GuDingZiChanCaiGouShenQingJDialog(new javax.swing.JFrame(),true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -181,7 +181,7 @@ public class selectWeiXiuDiaoBoDanJDialog extends javax.swing.JDialog {
         int selecteIndex = jComboBox1.getSelectedIndex();
         if (selecteIndex == 0) {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanWeiXiuShenQingJDialog guDingZiChanWeiXiuShenQingJDialog = new GuDingZiChanWeiXiuShenQingJDialog(mainFrame);
+                GuDingZiChanWeiXiuShenQingJDialog guDingZiChanWeiXiuShenQingJDialog = new GuDingZiChanWeiXiuShenQingJDialog();
                 guDingZiChanWeiXiuShenQingJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(guDingZiChanWeiXiuShenQingJDialog);
         } else if (selecteIndex == 1) {

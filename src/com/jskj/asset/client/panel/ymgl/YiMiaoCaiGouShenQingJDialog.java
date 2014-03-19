@@ -54,7 +54,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoCaiGouShenQingJDialog(java.awt.Frame parent, boolean modal) {
+    public YiMiaoCaiGouShenQingJDialog() {
         super();
         initComponents();
         jTextFieldYimiaocaigoudanId.setText(DanHao.getDanHao("YMCG"));

@@ -15,6 +15,7 @@ import com.jskj.asset.client.bean.entity.YimiaobaosuntbFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ckgl.task.YimiaobaosunUpdateTask;
@@ -36,7 +37,7 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoBaoSun extends javax.swing.JDialog {
+public class YiMiaoBaoSun extends BaseDialog {
 
     private Yimiaobaosuntb yimiaobaosun;
     private Baosuntb baosun;
@@ -51,8 +52,8 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
     /**
      * Creates new form ymbs
      */
-    public YiMiaoBaoSun(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoBaoSun() {
+        super();
         initComponents();
 
         jTextFieldBaosunId.setText(DanHao.getDanHao("YMBS"));
@@ -391,19 +392,19 @@ public class YiMiaoBaoSun extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                YiMiaoBaoSun dialog = new YiMiaoBaoSun(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                YiMiaoBaoSun dialog = new YiMiaoBaoSun(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     public void setAddOrUpdate(boolean b) {

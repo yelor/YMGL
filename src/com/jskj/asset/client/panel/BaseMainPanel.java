@@ -468,7 +468,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymbs == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymbs = new YiMiaoBaoSun(new javax.swing.JFrame(), true);
+                    ymbs = new YiMiaoBaoSun();
                     ymbs.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymbs);

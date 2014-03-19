@@ -15,6 +15,7 @@ import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -39,7 +40,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoXiaFaJDialog extends javax.swing.JDialog {
+public class YiMiaoXiaFaJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoXiaFaJDialog.class);
     private Sale_detail_tbFindEntity yimiaoxiafa;

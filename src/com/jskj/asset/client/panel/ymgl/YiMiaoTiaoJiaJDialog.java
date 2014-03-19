@@ -50,7 +50,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoTiaoJiaJDialog(java.awt.Frame parent, boolean modal) {
+    public YiMiaoTiaoJiaJDialog() {
         super();
         initComponents();
 
@@ -511,19 +511,19 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                YiMiaoTiaoJiaJDialog dialog = new YiMiaoTiaoJiaJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                YiMiaoTiaoJiaJDialog dialog = new YiMiaoTiaoJiaJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     public void setAddOrUpdate(boolean b) {

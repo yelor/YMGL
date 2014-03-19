@@ -14,6 +14,7 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
@@ -38,7 +39,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
+public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoShenBaoPlanJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
@@ -54,7 +55,7 @@ public class YiMiaoShenBaoPlanJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoShenBaoPlanJDialog(java.awt.Frame parent, boolean modal) {
+    public YiMiaoShenBaoPlanJDialog() {
         super();
         initComponents();
 
