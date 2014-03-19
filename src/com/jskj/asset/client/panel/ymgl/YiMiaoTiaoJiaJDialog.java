@@ -65,7 +65,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"stockpileId", "库存编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"stockpilePrice", "调前价格", "false"}, {"lastPrice", "调后价格", "true"}});
+            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"beforebuyPrice", "调前进价", "false"}, {"lastbuyPrice", "调后进价", "true"}, {"beforesalePrice", "调前预售价", "false"}, {"lastsalePrice", "调后预售价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -107,6 +107,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
+                    Object yushoujia = yimiao.get("yimiaoYushoujia");
 
                     editTable.insertValue(0, stockpileId);
                     editTable.insertValue(1, yimiaoName);
@@ -115,6 +116,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
                     editTable.insertValue(6, stockpilePrice);
+                    editTable.insertValue(8, yushoujia);
 
                 }
 
@@ -122,7 +124,6 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         });
 
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -571,8 +572,10 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "stockpileId"));
-            yimiaotiaojia_detail.setBeforesaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "stockpilePrice"))));
-            yimiaotiaojia_detail.setLastsaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastPrice"))));
+            yimiaotiaojia_detail.setBeforebuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "beforebuyPrice"))));
+            yimiaotiaojia_detail.setLastbuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastbuyPrice"))));
+            yimiaotiaojia_detail.setBeforesaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "beforesalePrice"))));
+            yimiaotiaojia_detail.setLastsaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastsalePrice"))));
             yimiaotiaojia_detail.setIsCompleted(0);
             list.add(yimiaotiaojia_detail);
         }
