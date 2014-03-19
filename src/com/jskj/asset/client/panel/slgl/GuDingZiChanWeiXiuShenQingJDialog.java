@@ -71,7 +71,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "单价"},{"quantity", "数量", "true"}});
+            {"gdzcValue", "原值"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -115,12 +115,12 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
                     editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 3);
+                    editTable.insertValue(5, 0);
                     
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
                     zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(3);
+                    zclb.setQuantity(0);
                     zc.add(zclb);
                 }
 
@@ -162,7 +162,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         });
         super.bind(detail, middlePanel);
         jButton1.setEnabled(false);
-        jLabel3.setText("******** 维修费用：" + detail.getDanjujine() + "元 ********");
+        jLabel3.setText("维修费用：" + detail.getDanjujine() + "元");
         cgsqId.setEditable(false);
         shenqingdanDate.setText(DateHelper.format(detail.getShenqingdanDate(), "yyyy-MM-dd"));
         shenqingdanDate.setEditable(false);
@@ -185,7 +185,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "单价", "数量"
+                    "资产编号", "资产名称", "类别", "品牌", "原值", "数量"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -224,8 +224,12 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         sqd.setDanjujine((float)0);
         
         for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setSaleprice(Float.parseFloat(""+jTable1.getValueAt(i, 4)));
             zc.get(i).setQuantity(Integer.parseInt(""+jTable1.getValueAt(i, 5)));
+            if(zc.get(i).getQuantity() == 0){
+                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个资产的维修数量！",this);
+                return null;
+            }
+            zc.get(i).setSaleprice(Float.parseFloat(""+jTable1.getValueAt(i, 4)));
             zc.get(i).setTotalprice(zc.get(i).getQuantity() * zc.get(i).getSaleprice());
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(5);
@@ -553,7 +557,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-//        /* Create and display the dialog */
+        /* Create and display the dialog */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
 //                GuDingZiChanWeiXiuShenQingJDialog dialog = new GuDingZiChanWeiXiuShenQingJDialog(new javax.swing.JFrame());

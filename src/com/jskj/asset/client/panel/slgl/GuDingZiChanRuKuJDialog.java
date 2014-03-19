@@ -72,7 +72,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "单价", "false"},{"quantity", "数量", "false"}});
+            {"gdzcValue", "采购价", "false"},{"quantity", "数量", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -88,9 +88,10 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 2)";
+                sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 2 ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "  and (gdzc_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_name like \"%" + newColumnObj.toString() + "%\"" 
+                        + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -106,7 +107,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
                     Object gdzcName = bindedMap.get("gdzcName");
                     Object gdzcType = bindedMap.get("gdzcType");
                     Object gdzcPinpai = bindedMap.get("gdzcPinpai");
-                    Object gdzcValue = bindedMap.get("gdzcValue");
+                    Object gdzcValue = bindedMap.get("saleprice");
                     Object gdzcCount = bindedMap.get("count");
 
                     editTable.insertValue(0, gdzcId);

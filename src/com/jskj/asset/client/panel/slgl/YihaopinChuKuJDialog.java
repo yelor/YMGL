@@ -72,7 +72,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpValue", "单价", "false"},{"quantity", "数量"}});
+            {"dzyhpValue", "原值", "false"},{"quantity", "数量"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -88,9 +88,10 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " dzyhp_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 7 and cgsq_id like \"%YHLY%\")";
+                sql += " cgsq_id like \"%YHLY%\" and is_completed = 1 and status = 7 ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "  and (dzyhp_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + newColumnObj.toString() + "%\"" 
+                        + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -186,7 +187,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "单价", "数量"
+                    "资产编号", "资产名称", "类别", "品牌", "原值", "数量"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -203,7 +204,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     @Action
     public Task submitForm() throws ParseException{
         if(zc.size() < 1){
-            AssetMessage.ERRORSYS("请选择要领用的资产！",this);
+            AssetMessage.ERRORSYS("请选择要领用的物品！",this);
             return null;
         }
         cgsq = new ChukudanDetailEntity();

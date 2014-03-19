@@ -72,7 +72,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "资产编号"}, {"dzyhpName", "资产名称", "true"}, {"dzyhpType", "类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpValue", "单价", "false"},{"quantity", "数量", "false"}});
+            {"dzyhpValue", "采购价", "false"},{"quantity", "数量", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -88,9 +88,10 @@ public class YihaopinRuKuJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " dzyhp_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1 and cgsq_id like \"%YHCG%\" )";
+                sql += " cgsq_id like \"%YHCG%\" and is_completed = 1 and status = 1 ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "  and (dzyhp_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + newColumnObj.toString() + "%\"" 
+                        + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -106,7 +107,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
                     Object dzyhpName = bindedMap.get("dzyhpName");
                     Object dzyhpType = bindedMap.get("dzyhpType");
                     Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
-                    Object dzyhpValue = 0;  //暂时写0，后面改！
+                    Object dzyhpValue = bindedMap.get("saleprice");
                     Object dzyhpCount = bindedMap.get("count");
 
                     editTable.insertValue(0, dzyhpId);
@@ -203,7 +204,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
     @Action
     public Task submitForm() throws ParseException{
         if(zc.size() < 1){
-            AssetMessage.ERRORSYS("请选择要入库的资产！",this);
+            AssetMessage.ERRORSYS("请选择要入库的物品！",this);
             return null;
         }
         cgsq = new RukudanDetailEntity();

@@ -62,7 +62,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpValue", "单价", "false"},{"quantity", "数量", "true"}});
+            {"dzyhpValue", "原值", "false"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -132,7 +132,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
             return null;
         }
         if(zc.size() < 1){
-            JOptionPane.showMessageDialog(null, "请选择要退库的资产！");
+            JOptionPane.showMessageDialog(null, "请选择要退库的物品！");
             return null;
         }
         lytk = new LingyongtuikuDetailEntity();

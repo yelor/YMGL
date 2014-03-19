@@ -28,7 +28,6 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
 
-    private DateChooser dateChooser1,dateChooser2,dateChooser3,dateChooser4;
     private JTextField regTextField1,regTextField2,regTextField3,regTextField4;
     
     private int zcId;
@@ -38,6 +37,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
     private String userName;
     private Zichanweixiudantb weixiudan;
     private String yuandanID;
+    private float feiyong;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -65,9 +65,10 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 5)";
+                sql += " cgsq_id like \"%WXSQ%\" and is_completed = 1 and status = 5 ";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql += " and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")";
+                    sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_name like \"%" + jTextFieldName.getText() + "%\"" 
+                        + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -90,6 +91,9 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
                     zcId = (Integer)bindedMap.get("gdzcId");
                     HashMap map = (HashMap)bindedMap.get("shenqingdan");
                     yuandanID = (String)map.get("shenqingdanId");
+//                    feiyong = Float.parseFloat("" + map.get("danjujine"));
+//                    jTextField15.setText("" + feiyong);
+//                    jTextField15.setEditable(false);
                 }
             }
         });
@@ -127,18 +131,14 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
     }
 
     private void init() {
-        regTextField1 = new JTextField();
-        regTextField2 = new JTextField();
-        regTextField3 = new JTextField();
-        regTextField4 = new JTextField();
-        dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser3 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser4 = DateChooser.getInstance("yyyy-MM-dd");
-        dateChooser1.register(regTextField1);
-        dateChooser2.register(regTextField2);
-        dateChooser3.register(regTextField3);
-        dateChooser4.register(regTextField4);
+        regTextField1 = new BaseTextField();
+        regTextField2 = new BaseTextField();
+        regTextField3 = new BaseTextField();
+        regTextField4 = new BaseTextField();
+        ((BaseTextField) regTextField1).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
+        ((BaseTextField) regTextField2).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
+        ((BaseTextField) regTextField3).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
+        ((BaseTextField) regTextField4).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
     
     @Action

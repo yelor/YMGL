@@ -17,6 +17,8 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
     
     private int count;
     
+    private float saleprice;
+    
     /**
      * @return the depottb
      */
@@ -59,6 +61,14 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public float getSaleprice() {
+        return saleprice;
+    }
+
+    public void setSaleprice(float saleprice) {
+        this.saleprice = saleprice;
     }
     
 }

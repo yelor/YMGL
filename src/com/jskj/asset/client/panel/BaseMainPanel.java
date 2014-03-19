@@ -14,6 +14,7 @@ import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
+import com.jskj.asset.client.panel.ckgl.SelectKucunchaxun;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXie;
 import com.jskj.asset.client.panel.ckgl.Select_YiMiaoChuRuKuJiLu;
@@ -25,7 +26,6 @@ import com.jskj.asset.client.panel.shjs.selecteSKDJDialog;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
 import com.jskj.asset.client.panel.slgl.selectCaiGouDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectLingYongDanJDialog;
-import com.jskj.asset.client.panel.slgl.selectShenHeDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectWeiXiuDiaoBoDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectYanShouDengJiDanJDialog;
 import com.jskj.asset.client.panel.spcx.LiChengZaiXianChaXunJDialog;
@@ -55,6 +55,7 @@ public class BaseMainPanel extends BasePanel {
     private Select_YiMiaoChuRuKuJiLu ymcrkjl;
     private SelectYiMiaoChuRuKu ymcrk;
     private YiMiaoBaoSun ymbs;
+    private SelectKucunchaxun kccx;
 
     /*审核结算*/
     private selecteFKDJDialog selecteFKDJDialog;
@@ -67,7 +68,6 @@ public class BaseMainPanel extends BasePanel {
     private selectLingYongDanJDialog selectLingYongDanJDialog;
     private selectYanShouDengJiDanJDialog selectYanShouDengJiDanJDialog;
     private selectWeiXiuDiaoBoDanJDialog selectWeiXiuDiaoBoDanJDialog;
-    private selectShenHeDanJDialog selectShenHeDanJDialog;
 
     public final static int TYPE_CK = 0;
     public final static int TYPE_SH = 1;
@@ -442,6 +442,21 @@ public class BaseMainPanel extends BasePanel {
                     ymcrkjl.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymcrkjl);
+            }
+        });
+    }
+
+    @Action
+    public void kucunchaxun_pop() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (kccx == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    kccx = new SelectKucunchaxun(new javax.swing.JFrame(), true);
+                    kccx.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(kccx);
             }
         });
     }

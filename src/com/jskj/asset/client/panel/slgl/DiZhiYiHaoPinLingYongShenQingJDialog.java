@@ -68,7 +68,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpValue", "单价", "false"},{"quantity", "数量", "true"}});
+            {"dzyhpValue", "原值", "false"},{"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -184,7 +184,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "单价", "数量"
+                    "资产编号", "资产名称", "类别", "品牌", "原值", "数量"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -216,7 +216,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(20);
-        
+        float total = 0;
         for(int i = 0; i < zc.size(); i++){
             int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
             if(count == 0){
@@ -234,7 +234,9 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(7);
+            total+=zc.get(i).getTotalprice();
         }
+        sqd.setDanjujine(total);
         
         lysq.setSqd(sqd);
         lysq.setZc(zc);        

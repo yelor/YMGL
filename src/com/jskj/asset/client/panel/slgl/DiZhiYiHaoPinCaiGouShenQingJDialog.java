@@ -230,7 +230,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
             return null;
         }
         if(zc.size() < 1){
-            AssetMessage.ERRORSYS("请选择要采购的资产！",this);
+            AssetMessage.ERRORSYS("请选择要采购的物品！",this);
             return null;
         }
         cgsq = new ShenQingDetailEntity();

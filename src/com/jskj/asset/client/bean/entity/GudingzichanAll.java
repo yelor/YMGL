@@ -17,9 +17,7 @@ public class GudingzichanAll extends Gudingzichantb{
     
     private int count;
     
-    private String yuandanId;
-    
-    private String shenqingren;
+    private float saleprice;
 
     /**
      * @return the depottb
@@ -65,20 +63,12 @@ public class GudingzichanAll extends Gudingzichantb{
         this.shenqingdan = shenqingdan;
     }
 
-    public String getYuandanId() {
-        return yuandanId;
+    public float getSaleprice() {
+        return saleprice;
     }
 
-    public String getShenqingren() {
-        return shenqingren;
+    public void setSaleprice(float saleprice) {
+        this.saleprice = saleprice;
     }
 
-    public void setYuandanId(String yuandanId) {
-        this.yuandanId = yuandanId;
-    }
-
-    public void setShenqingren(String shenqingren) {
-        this.shenqingren = shenqingren;
-    }
-    
 }

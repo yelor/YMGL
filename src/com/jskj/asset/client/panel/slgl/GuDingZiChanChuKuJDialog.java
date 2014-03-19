@@ -72,7 +72,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "单价", "false"},{"quantity", "数量"}});
+            {"gdzcValue", "原值", "false"},{"quantity", "数量"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -88,9 +88,10 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 7 and cgsq_id like \"%TLY%\")";
+                sql += " cgsq_id like \"%TLY%\" and is_completed = 1 and status = 7 ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "  and (gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_name like \"%" + newColumnObj.toString() + "%\"" 
+                        + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -186,7 +187,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "单价", "数量"
+                    "资产编号", "资产名称", "类别", "品牌", "原值", "数量"
                 }
         ) {
             boolean[] canEdit = new boolean[]{

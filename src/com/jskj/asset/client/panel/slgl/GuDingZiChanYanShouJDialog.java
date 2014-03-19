@@ -113,9 +113,10 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " gdzc_id in (select distinct cgzc_id from zichanliebiao where is_completed = 1 and status = 1)";
+                sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 1 ";
                 if (!jTextFieldZichan.getText().trim().equals("")) {
-                    sql += " and (gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"" + " or zujima like \"" + jTextFieldZichan.getText().toLowerCase() + "%\")";
+                    sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"" 
+                        + " or zujima like \"" + jTextFieldZichan.getText().toLowerCase() + "%\")");
                 }
                 return sql;
             }

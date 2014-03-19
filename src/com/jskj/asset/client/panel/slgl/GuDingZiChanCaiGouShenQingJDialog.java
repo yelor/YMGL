@@ -132,19 +132,18 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
                     Object gdzcName = bindedMap.get("gdzcName");
                     Object gdzcType = bindedMap.get("gdzcType");
                     Object gdzcPinpai = bindedMap.get("gdzcPinpai");
-                    Object gdzcValue = bindedMap.get("gdzcValue");
 
                     editTable.insertValue(0, gdzcId);
                     editTable.insertValue(1, gdzcName);
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 3);
+                    editTable.insertValue(4, 0);
+                    editTable.insertValue(5, 0);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
                     zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(3);
+                    zclb.setQuantity(0);
                     zc.add(zclb);
                 }
 
@@ -244,15 +243,25 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         sqd.setIsCompleted(0);
         sqd.setIsPaid(0);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
-        
+        float total = 0;
         for(int i = 0; i < zc.size(); i++){
             zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            if(price == 0){
+                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个资产的采购价！",this);
+                return null;
+            }
+            if(zc.get(i).getQuantity() == 0){
+                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个资产的采购数量！",this);
+                return null;
+            }
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(0);
+            total+=zc.get(i).getTotalprice();
         }
+        sqd.setDanjujine(total);
         
         cgsq.setSqd(sqd);
         cgsq.setZc(zc);        
