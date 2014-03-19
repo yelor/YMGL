@@ -183,12 +183,12 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
         int selecteIndex=jComboBox1.getSelectedIndex();
         if (selecteIndex==0) {            
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
+            GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog();
             guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
         } else if(selecteIndex==1){
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog(new javax.swing.JFrame(), true);
+            DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog();
             diZhiYiHaoPinCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(diZhiYiHaoPinCaiGouSQSHJDialog);
         }  

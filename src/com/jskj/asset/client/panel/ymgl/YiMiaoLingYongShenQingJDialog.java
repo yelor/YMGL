@@ -53,7 +53,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoLingYongShenQingJDialog(java.awt.Frame parent, boolean modal) {
+    public YiMiaoLingYongShenQingJDialog() {
         super();
         initComponents();
         jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao("YMLY"));

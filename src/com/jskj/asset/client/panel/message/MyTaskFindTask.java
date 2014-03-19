@@ -9,10 +9,13 @@ import com.jskj.asset.client.bean.entity.MyTaskEntity;
 import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
 import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
+import com.jskj.asset.client.util.ClassHelper;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -254,7 +258,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                 logger.info("获取任务数:" + response.getCount());
 
                 int i = 1;
-                for (MyTaskEntity re : results) {
+                for (final MyTaskEntity re : results) {
                     javax.swing.JLabel messageApp = new javax.swing.JLabel();
                     messageApp.setName(String.valueOf(re.getSubmitDate().getTime()));
                     labelArray.add(messageApp);
@@ -281,6 +285,24 @@ public abstract class MyTaskFindTask extends BaseTask {
                         @Override
                         public void mouseReleased(MouseEvent e) {
 
+                            String shenqingdan = re.getShenqingdanId();
+                            if (shenqingdan != null && shenqingdan.length() > 4) {
+                                String danjuType = shenqingdan.substring(0, 4);
+
+                                String className = DanHao.getUIClassByDanhaoType(danjuType);
+                                if (!className.equals("")) {
+                                    try {
+                                        ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, new Class[0]);
+                                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                                        BaseDialog jdialog = helper.newInstance(new Object[0]);
+                                        jdialog.setLocationRelativeTo(mainFrame);
+                                        //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
+                                        jdialog.setVisible(true);
+                                    } catch (Exception ex) {
+                                        logger.error(ex);
+                                    }
+                                }
+                            }
 //                            if (re.getShenqingdanId().toUpperCase().startsWith("YM")) {
 //                                //疫苗审批
 //                                gotoShenpi();

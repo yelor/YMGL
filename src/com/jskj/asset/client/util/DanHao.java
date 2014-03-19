@@ -62,7 +62,7 @@ public class DanHao {
      * @param DANHAO_TYPE
      * @return
      */
-    public String getUIClassByDanhaoType(String DANHAO_TYPE) {
+    public static String getUIClassByDanhaoType(String DANHAO_TYPE) {
         String className = "";
 
         if (TYPE_YIMIAOXF.equals(DANHAO_TYPE)) {
@@ -80,7 +80,7 @@ public class DanHao {
         } else if (TYPE_YIMIAOTJ.equals(DANHAO_TYPE)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoTiaoJiaJDialog";
         } else if (TYPE_YIMIAOBS.equals(DANHAO_TYPE)) {
-            className = "com.jskj.asset.client.panel.ymgl.YiMiaoBaoSun";
+            className = "com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun";
         } else if (TYPE_GDZC.equals(DANHAO_TYPE)) {
             className = "com.jskj.asset.client.panel.slgl.GuDingZiChanCaiGouShenQingJDialog";
         } else if (TYPE_YHCG.equals(DANHAO_TYPE)) {

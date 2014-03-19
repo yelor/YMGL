@@ -48,7 +48,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     /**
      * Creates new form GuDingZiChanRuKu
      */
-    public DiZhiYiHaoPinLingYongShenQingJDialog(java.awt.Frame parent) {
+    public DiZhiYiHaoPinLingYongShenQingJDialog() {
         super();
         initComponents();
         
@@ -547,19 +547,19 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                DiZhiYiHaoPinLingYongShenQingJDialog dialog = new DiZhiYiHaoPinLingYongShenQingJDialog(new javax.swing.JFrame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                DiZhiYiHaoPinLingYongShenQingJDialog dialog = new DiZhiYiHaoPinLingYongShenQingJDialog(new javax.swing.JFrame());
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
