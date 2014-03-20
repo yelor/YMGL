@@ -57,7 +57,7 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "固定资产领用统计表", "固定资产维修统计表", "低值易耗品领用统计表", "Ⅰ类疫苗领用单明细表", "Ⅱ类疫苗采购单明细表", "固定资产采购单明细表", "低值易耗品采购单明细表", "Ⅰ类疫苗下发单明细表", "Ⅱ类疫苗销售单明细表", "疫苗库存汇总表", "固定资产库存汇总表", "低值易耗品库存汇总表", "盘点单统计表", "单位应收应付" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "固定资产领用统计表", "固定资产维修统计表", "低值易耗品领用统计表", "Ⅰ类疫苗领用单明细表", "Ⅱ类疫苗采购单明细表", "固定资产采购单明细表", "低值易耗品采购单明细表", "Ⅰ类疫苗下发单明细表", "Ⅱ类疫苗销售单明细表", "盘点单统计表", "单位应收应付" }));
         jComboBox1.setName("jComboBox1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -211,9 +211,7 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
                         diZhiYiHaoPinLingYongTongJiJDialog.setLocationRelativeTo(mainFrame);
                     }
                     AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongTongJiJDialog);
-                } else if (selecteIndex == 9) {
-                    new OpenTabTask("报表-疫苗库存表", new KucunchaxunPanel(), false).execute();
-                } else if (selecteIndex == 13) {
+                } else if (selecteIndex == 10) {
                     new OpenTabTask("报表-单位应收应付", new DanweiyingshouyingfuPanel(), false).execute();
                 }
             }

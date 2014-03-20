@@ -14,6 +14,7 @@ import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
+import com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel;
 import com.jskj.asset.client.panel.ckgl.SelectKucunchaxun;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXie;
@@ -481,6 +482,11 @@ public class BaseMainPanel extends BasePanel {
     @Action
     public Task showYimiaoyunshujilu() {
         return new OpenTabTask("报表-疫苗运输记录", new YimiaoyunshujiluPanel(), false);
+    }
+    
+    @Action
+    public Task showKucunzhuangkuang() {
+        return new OpenTabTask("报表-库存状况", new KucunchaxunPanel(), false);
     }
 
     /**
