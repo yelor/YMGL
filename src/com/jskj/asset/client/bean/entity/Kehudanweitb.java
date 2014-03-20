@@ -1,5 +1,8 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Kehudanweitb {
     private Integer kehudanweiId;
 
@@ -38,6 +41,10 @@ public class Kehudanweitb {
     private String kehudanweiTax;
 
     private String kehudanweiRemark;
+
+    private Float yingshoujine;
+
+    private Float yingfujine;
 
     public Integer getKehudanweiId() {
         return kehudanweiId;
@@ -189,5 +196,21 @@ public class Kehudanweitb {
 
     public void setKehudanweiRemark(String kehudanweiRemark) {
         this.kehudanweiRemark = kehudanweiRemark == null ? null : kehudanweiRemark.trim();
+    }
+
+    public Float getYingshoujine() {
+        return yingshoujine;
+    }
+
+    public void setYingshoujine(Float yingshoujine) {
+        this.yingshoujine = yingshoujine;
+    }
+
+    public Float getYingfujine() {
+        return yingfujine;
+    }
+
+    public void setYingfujine(Float yingfujine) {
+        this.yingfujine = yingfujine;
     }
 }

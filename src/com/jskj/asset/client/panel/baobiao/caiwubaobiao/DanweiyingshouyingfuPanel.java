@@ -5,6 +5,8 @@
  */
 package com.jskj.asset.client.panel.baobiao.caiwubaobiao;
 
+import com.jskj.asset.client.bean.entity.DanweiyingshouyingfuEntity;
+import com.jskj.asset.client.bean.entity.DanweiyingshouyingfuFindEntity;
 import com.jskj.asset.client.panel.baobiao.caigou.*;
 import com.jskj.asset.client.bean.report.CaigouReport;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -35,11 +37,9 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     private final int pageSize;
     private int count;
 
-    private List<CaigouReport> currentPageData;
+    private List<DanweiyingshouyingfuEntity> currentPageData;
 
-    private final BindTableHelper<CaigouReport> bindTable;
-
-    private final HashMap parameterMap;
+    private final BindTableHelper<DanweiyingshouyingfuEntity> bindTable;
 
     /**
      * Creates new form YimiaocaigoumingxiJDialog
@@ -50,16 +50,11 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 20;
         count = 0;
-        bindTable = new BindTableHelper<CaigouReport>(jTable1, new ArrayList<CaigouReport>());
-        bindTable.createTable(new String[][]{{"shenqingdanDate", "单位编号"}, {"danjuleixing.danjuleixingName", "单位全名"}, {"shenqingdanId", "应收余额"}, {"suppliertb.supplierName", "应付余额"}, {"usertball.department.departmentName", "负责人"},
-        {"usertball.userName", "电话"}, {"shenqingdanRemark", "地址"}});
+        bindTable = new BindTableHelper<DanweiyingshouyingfuEntity>(jTable1, new ArrayList<DanweiyingshouyingfuEntity>());
+        bindTable.createTable(new String[][]{{"danweiId", "单位编号"}, {"danweiName", "单位全名"}, {"yingshoujine", "应收余额"}, {"yingfujine", "应付余额"}, {"fuzeren", "负责人"},
+        {"telephone", "电话"}, {"danweiAddr", "地址"}});
 //        bindTable.setColumnType(Date.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}, new int[]{3, 200}, new int[]{4, 100}, new int[]{5, 120}, new int[]{6, 200}).setRowHeight(25);
-
-        parameterMap = new HashMap();
-        parameterMap.put("pagesize", String.valueOf(pageSize));
-        parameterMap.put("pageindex", String.valueOf(pageIndex));
-//        parameterMap.put("idflag", "YMS");
+        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}, new int[]{3, 200}, new int[]{4, 200}, new int[]{5, 200}, new int[]{6, 200}).setRowHeight(25);
 
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
@@ -342,23 +337,9 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         if (((JTabbedPane) evt.getSource()).getSelectedIndex() == 1) {
             String startDate = jTextFieldStart.getText();
             String endDate = jTextFieldEnd.getText();
-            parameterMap.put("startDate", startDate);
-            parameterMap.put("endDate", endDate);
-            parameterMap.put("idflag", "YMS");
 
             jLabelImg.setText("loading chart...");
-            jLabelImg.setIcon(null);
-            ReportChartFindTask reportTask = new ReportChartFindTask(parameterMap) {
-                @Override
-                public void responseResult(File imgPath) {
-                    jLabelImg.setText("");
-                    if (imgPath != null && imgPath.exists()) {
-                        ImageIcon icon = new ImageIcon(imgPath.getPath());
-                        jLabelImg.setIcon(icon);
-                    }
-                }
-            };
-            reportTask.execute();
+            jLabelImg.setIcon(null);    
 
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
@@ -391,8 +372,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
-        parameterMap.put("pageindex", 0);
-        return new RefreshTask(parameterMap);
+        return new RefreshTask();
     }
 
     @Override
@@ -404,8 +384,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     public Task pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
-        parameterMap.put("pageindex", String.valueOf(pageIndex));
-        return new RefreshTask(parameterMap);
+        return new RefreshTask();
     }
 
     @Action
@@ -413,11 +392,10 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         if (pageSize * (pageIndex) <= count) {
             pageIndex = pageIndex + 1;
         }
-        parameterMap.put("pageindex", String.valueOf(pageIndex));
-        return new RefreshTask(parameterMap);
+        return new RefreshTask();
     }
 
-    public CaigouReport selectedDataFromTable() {
+    public DanweiyingshouyingfuEntity selectedDataFromTable() {
         if (jTable1.getSelectedRow() >= 0) {
             if (currentPageData != null) {
                 return currentPageData.get(jTable1.getSelectedRow());
@@ -426,18 +404,18 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         return null;
     }
 
-    public List<CaigouReport> getTableData() {
+    public List<DanweiyingshouyingfuEntity> getTableData() {
         return currentPageData;
     }
 
-    private class RefreshTask extends ReportCaiGouFindTask {
+    private class RefreshTask extends DanweiyingshouyingfuFindTask {
 
-        RefreshTask(HashMap parameterMap) {
-            super(parameterMap, "report/list");
+        RefreshTask() {
+            super("danweiyingshouyingfu");
         }
 
         @Override
-        public void responseResult(CommFindEntity<CaigouReport> response) {
+        public void responseResult(DanweiyingshouyingfuFindEntity response) {
 
             count = response.getCount();
             jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
@@ -471,11 +449,11 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
 
     @Action
     public Task disDetail() {
-        CaigouReport selectedData = selectedDataFromTable();
+        DanweiyingshouyingfuEntity selectedData = selectedDataFromTable();
         if (selectedData == null) {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
-        return new ReportCaiGouYimiaoTask(selectedData);
+        return null;
     }
 }

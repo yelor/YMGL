@@ -29,6 +29,8 @@ public class Stockpiletb {
 
     private Float stockpileTotalprice;
 
+    private Float yimiaoyushoujia;
+
     public Integer getStockpileId() {
         return stockpileId;
     }
@@ -123,5 +125,13 @@ public class Stockpiletb {
 
     public void setStockpileTotalprice(Float stockpileTotalprice) {
         this.stockpileTotalprice = stockpileTotalprice;
+    }
+
+    public Float getYimiaoyushoujia() {
+        return yimiaoyushoujia;
+    }
+
+    public void setYimiaoyushoujia(Float yimiaoyushoujia) {
+        this.yimiaoyushoujia = yimiaoyushoujia;
     }
 }

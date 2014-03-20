@@ -1,5 +1,8 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Supplier {
     private Integer supplierId;
 
@@ -38,6 +41,10 @@ public class Supplier {
     private String supplierTax;
 
     private String supplierRemark;
+
+    private Float yingshoujine;
+
+    private Float yingfujine;
 
     public Integer getSupplierId() {
         return supplierId;
@@ -189,5 +196,21 @@ public class Supplier {
 
     public void setSupplierRemark(String supplierRemark) {
         this.supplierRemark = supplierRemark == null ? null : supplierRemark.trim();
+    }
+
+    public Float getYingshoujine() {
+        return yingshoujine;
+    }
+
+    public void setYingshoujine(Float yingshoujine) {
+        this.yingshoujine = yingshoujine;
+    }
+
+    public Float getYingfujine() {
+        return yingfujine;
+    }
+
+    public void setYingfujine(Float yingfujine) {
+        this.yingfujine = yingfujine;
     }
 }

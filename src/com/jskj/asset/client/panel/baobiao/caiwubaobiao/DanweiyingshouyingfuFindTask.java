@@ -2,14 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.panel.baobiao.caigou;
+package com.jskj.asset.client.panel.baobiao.caiwubaobiao;
 
-import com.jskj.asset.client.bean.report.CaigouReport;
-import com.jskj.asset.client.layout.ws.*;
+import com.jskj.asset.client.bean.entity.DanweiyingshouyingfuFindEntity;
+import com.jskj.asset.client.panel.baobiao.caigou.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
-import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -19,44 +18,25 @@ import org.springframework.web.client.RestClientException;
  *
  * @author woderchen
  */
-public abstract class ReportCaiGouFindTask extends BaseTask {
+public abstract class DanweiyingshouyingfuFindTask extends BaseTask {
 
     private static final Logger logger = Logger.getLogger(ReportCaiGouFindTask.class);
     private final String URI = Constants.HTTP + Constants.APPID;
     private String serviceId;
-    private HashMap map;
 
-    public ReportCaiGouFindTask(HashMap map, String serviceId) {
+    public DanweiyingshouyingfuFindTask(String serviceId) {
         super();
-        this.map = map;
         this.serviceId = serviceId;
-    }
-
-    public ReportCaiGouFindTask(String serviceId) {
-        this(new HashMap(), serviceId);
     }
 
     @Override
     public Object doBackgrounp() {
-        try {
-            StringBuilder paramater = new StringBuilder();
-            if (map.get("idflag") != null && !map.get("idflag").toString().trim().equals("")) {
-                paramater.append("idflag=").append(map.get("idflag")).append("&");
-            }
-            if (map.get("startDate") != null && !map.get("startDate").toString().trim().equals("")) {
-                paramater.append("startDate=").append(map.get("startDate")).append("&");
-            }
-            if (map.get("endDate") != null && !map.get("endDate").toString().trim().equals("")) {
-                paramater.append("endDate=").append(map.get("endDate")).append("&");
-            }
-            paramater.deleteCharAt(paramater.length() - 1);
-
-            logger.debug("parameter map:" + paramater);
+        try {            
             //使用Spring3 RESTful client来获取http数据
-            CommFindEntity<CaigouReport> response = restTemplate.exchange(URI + serviceId + "?" + paramater,
+            DanweiyingshouyingfuFindEntity response = restTemplate.exchange(URI + serviceId + "?",
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<CommFindEntity<CaigouReport>>() {
+                    new ParameterizedTypeReference<DanweiyingshouyingfuFindEntity>() {
                     }).getBody();
             return response;
         } catch (RestClientException e) {
@@ -77,12 +57,12 @@ public abstract class ReportCaiGouFindTask extends BaseTask {
             logger.error(e);
             return;
         }
-        if (object instanceof CommFindEntity) {
-            responseResult((CommFindEntity<CaigouReport>) object);
+        if (object instanceof DanweiyingshouyingfuFindEntity) {
+            responseResult((DanweiyingshouyingfuFindEntity) object);
         } else {
             clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
         }
     }
 
-    public abstract void responseResult(CommFindEntity<CaigouReport> response);
+    public abstract void responseResult(DanweiyingshouyingfuFindEntity response);
 }
