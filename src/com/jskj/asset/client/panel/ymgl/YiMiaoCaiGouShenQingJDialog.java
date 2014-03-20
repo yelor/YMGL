@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -683,6 +684,11 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoCaiGouShenQingJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog();
+            caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
+            caiGouShenQingJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(caiGouShenQingJDialog);
         }
     }
 

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -97,7 +98,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                     HashMap stockpile = (HashMap) stockpilemap;
                     HashMap saletb = (HashMap) saletbmap;
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
-                    
+
                     chukudan = new Churukudantb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
 
@@ -153,7 +154,6 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -202,15 +202,6 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jButton16.setName("jButton16"); // NOI18N
         jButton16.setOpaque(false);
         jToolBar1.add(jButton16);
-
-        jButton17.setIcon(resourceMap.getIcon("jButton17.icon")); // NOI18N
-        jButton17.setText(resourceMap.getString("jButton17.text")); // NOI18N
-        jButton17.setBorderPainted(false);
-        jButton17.setFocusable(false);
-        jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton17.setName("jButton17"); // NOI18N
-        jButton17.setOpaque(false);
-        jToolBar1.add(jButton17);
 
         jButton18.setIcon(resourceMap.getIcon("jButton18.icon")); // NOI18N
         jButton18.setText(resourceMap.getString("jButton18.text")); // NOI18N
@@ -442,6 +433,10 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2(new javax.swing.JFrame(), true);
+                    ymck2.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(ymck2);
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), YiMiaoChuKu2.this);
                 }
@@ -482,7 +477,6 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton7;

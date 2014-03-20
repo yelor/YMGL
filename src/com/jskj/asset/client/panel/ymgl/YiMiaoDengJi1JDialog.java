@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -77,7 +78,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                     jTextFieldYimiaoId.setText(yimiaoAll.get("yimiaoId") == null ? "" : yimiaoAll.get("yimiaoId").toString());
                     jTextFieldYimiaoName.setText(yimiaoAll.get("yimiaoName") == null ? "" : yimiaoAll.get("yimiaoName").toString());
                     jTextFieldguige.setText(yimiaoAll.get("yimiaoGuige") == null ? "" : yimiaoAll.get("yimiaoGuige").toString());
-                    jTextFieldYimiaoJixing.setText(yimiaoAll.get("yimiaoJixing") == null ? "" : yimiaoAll.get("yimiaoJixing").toString());                   
+                    jTextFieldYimiaoJixing.setText(yimiaoAll.get("yimiaoJixing") == null ? "" : yimiaoAll.get("yimiaoJixing").toString());
                     jTextFieldQuantity.setText(yimiaoshenqingdan.get("quantity") == null ? "" : yimiaoshenqingdan.get("quantity").toString());
                     jTextFieldshengchanqiye.setText(yimiaoAll.get("yimiaoShengchanqiye") == null ? "" : yimiaoAll.get("yimiaoShengchanqiye").toString());
                     jTextFieldpizhunwenhao.setText(yimiaoAll.get("yimiaoPizhunwenhao") == null ? "" : yimiaoAll.get("yimiaoPizhunwenhao").toString());
@@ -113,7 +114,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
                     jTextFieldYimiaoId.setText(bindedMap.get("yimiaoId") == null ? "" : bindedMap.get("yimiaoId").toString());
                     jTextFieldYimiaoJixing.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
                     jTextFieldguige.setText(bindedMap.get("yimiaoGuige") == null ? "" : bindedMap.get("yimiaoGuige").toString());
-                   
+
                     jTextFieldshengchanqiye.setText(bindedMap.get("shengchanqiye") == null ? "" : bindedMap.get("shengchanqiye").toString());
                     jTextFieldpizhunwenhao.setText(bindedMap.get("pizhunwenhao") == null ? "" : bindedMap.get("pizhunwenhao").toString());
                     jTextFieldpihao.setText(bindedMap.get("pihao") == null ? "" : bindedMap.get("pihao").toString());
@@ -737,6 +738,11 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoDengJi1JDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoDengJi1JDialog yiMiaoDengJi1JDialog = new YiMiaoDengJi1JDialog(mainFrame, true);
+            yiMiaoDengJi1JDialog.setLocationRelativeTo(mainFrame);
+            yiMiaoDengJi1JDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(yiMiaoDengJi1JDialog);
         }
     }
 

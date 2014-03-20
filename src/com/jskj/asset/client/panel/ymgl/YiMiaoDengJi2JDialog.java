@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.ymgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -16,6 +17,7 @@ import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -769,6 +771,12 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoDengJi2JDialog.this);
             exit();
+
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog(mainFrame, true);
+            yiMiaoDengJi2JDialog.setLocationRelativeTo(mainFrame);
+            yiMiaoDengJi2JDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(yiMiaoDengJi2JDialog);
         }
     }
 

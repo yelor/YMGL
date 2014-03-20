@@ -6,7 +6,6 @@
 package com.jskj.asset.client.util;
 
 import com.jskj.asset.client.layout.ReportTemplates;
-import com.jskj.asset.client.panel.jichuxinxi.DanWeiInfoJDialog;
 import java.util.Date;
 import static net.sf.dynamicreports.report.builder.DynamicReports.bcode;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;

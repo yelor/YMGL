@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -940,6 +941,11 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoYanShouDanJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoYanShouDanJDialog yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
+            yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
+            yiMiaoYanShouJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);
         }
     }
 

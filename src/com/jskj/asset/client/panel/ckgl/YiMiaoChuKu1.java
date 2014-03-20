@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -136,7 +137,6 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -174,15 +174,6 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         jButton7.setName("jButton7"); // NOI18N
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
-
-        jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
-        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
-        jButton9.setBorderPainted(false);
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton9.setName("jButton9"); // NOI18N
-        jButton9.setOpaque(false);
-        jToolBar1.add(jButton9);
 
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
@@ -393,6 +384,10 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1(new javax.swing.JFrame(), true);
+                    ymck1.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(ymck1);
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), YiMiaoChuKu1.this);
                 }
@@ -436,7 +431,6 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

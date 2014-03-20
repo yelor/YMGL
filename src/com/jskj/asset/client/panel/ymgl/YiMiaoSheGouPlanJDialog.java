@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -528,7 +529,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                 return null;
             }
             yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
-            yimiaoshenqingdan.setTotalprice(yimiaoshenqingdan.getBuyprice()* yimiaoshenqingdan.getQuantity());
+            yimiaoshenqingdan.setTotalprice(yimiaoshenqingdan.getBuyprice() * yimiaoshenqingdan.getQuantity());
             list.add(yimiaoshenqingdan);
         }
         yimiaoshegou.setShenqingdan(shenqingdan);
@@ -558,9 +559,14 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoSheGouPlanJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoSheGouPlanJDialog sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog();
+            sheGouPlanJDialog.setLocationRelativeTo(mainFrame);
+            sheGouPlanJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(sheGouPlanJDialog);
         }
     }
-    
+
     public YiMiaoSheGouPlanJDialog(final JDialog parent, YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
         super();
         initComponents();
@@ -624,7 +630,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             Yimiaoshenqingdantb yimiaoshenqingdantb = yimiaocaigouEntityList.get(i).getYimiaoshenqingdantb();
             YimiaoAll yimiaoAll = yimiaocaigouEntityList.get(i).getYimiaoAll();
             o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
-                yimiaoshenqingdantb.getQuantity(),yimiaoshenqingdantb.getBuyprice(),yimiaoshenqingdantb.getTotalprice(),yimiaoAll.getYimiaoYushoujia()};
+                yimiaoshenqingdantb.getQuantity(), yimiaoshenqingdantb.getBuyprice(), yimiaoshenqingdantb.getTotalprice(), yimiaoAll.getYimiaoYushoujia()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
@@ -638,7 +644,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             };
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;

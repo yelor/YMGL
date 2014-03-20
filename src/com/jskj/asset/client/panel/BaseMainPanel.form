@@ -135,7 +135,7 @@
         <Component class="javax.swing.JButton" name="jButton_bottomleft">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="yiMiaoYanShouAction" methodName="yiMiaoYanShouAction"/>
+              <action class="com.jskj.asset.client.panel.BaseMainPanel" id="yiMiaoYanShouAction" methodName="yiMiaoYanShouAction"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton_bottomleft.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton_bottomleft.text"/>

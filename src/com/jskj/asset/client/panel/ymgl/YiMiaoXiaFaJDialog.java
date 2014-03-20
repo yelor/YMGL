@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -710,6 +711,11 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoXiaFaJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoXiaFaJDialog yiMiaoXiaFaJDialog = new YiMiaoXiaFaJDialog();
+            yiMiaoXiaFaJDialog.setLocationRelativeTo(mainFrame);
+            yiMiaoXiaFaJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(yiMiaoXiaFaJDialog);
         }
     }
 

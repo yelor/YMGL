@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
@@ -245,7 +246,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jToolBar2 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jTextFieldbumen = new javax.swing.JTextField();
@@ -504,16 +504,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jButton8.setOpaque(false);
         jToolBar2.add(jButton8);
 
-        jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
-        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
-        jButton9.setBorderPainted(false);
-        jButton9.setFocusPainted(false);
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton9.setName("jButton9"); // NOI18N
-        jButton9.setOpaque(false);
-        jToolBar2.add(jButton9);
-
         jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
         jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
         jButton11.setBorderPainted(false);
@@ -737,7 +727,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         BaseTable yimiaotable1 = ((BaseTable) jTableyimiao1);
         BaseTable yimiaotable2 = ((BaseTable) jTableyimiao2);
         yimiaozuzhuangchaixie.setYimiao1Id(Integer.parseInt(yimiaotable1.getValue(0, "yimiaoId").toString()));
-        if (((String)yimiaotable1.getValue(0, "cangku")).trim().equals("")) {
+        if (((String) yimiaotable1.getValue(0, "cangku")).trim().equals("")) {
             AssetMessage.ERRORSYS("请输入仓库1!");
             return null;
         }
@@ -745,7 +735,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         System.out.println(yimiaotable1.getValue(0, "quantity"));
         yimiaozuzhuangchaixie.setQuantity1(Integer.parseInt((String) yimiaotable1.getValue(0, "quantity")));
         yimiaozuzhuangchaixie.setYimiao2Id(Integer.parseInt(yimiaotable2.getValue(0, "yimiaoId").toString()));
-        if (((String)yimiaotable2.getValue(0, "cangku")).trim().equals("")) {
+        if (((String) yimiaotable2.getValue(0, "cangku")).trim().equals("")) {
             AssetMessage.ERRORSYS("请输入仓库2!");
             return null;
         }
@@ -763,6 +753,10 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoZuZhuangChaiXie ymzzcx = new YiMiaoZuZhuangChaiXie(new javax.swing.JFrame(), true, zz);
+                    ymzzcx.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(ymzzcx);
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), YiMiaoZuZhuangChaiXie.this);
                 }
@@ -820,7 +814,6 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -17,7 +17,7 @@ import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
 import com.jskj.asset.client.panel.ckgl.SelectKucunchaxun;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXie;
-import com.jskj.asset.client.panel.ckgl.Select_YiMiaoChuRuKuJiLu;
+import com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujilu;
 import com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun;
 import com.jskj.asset.client.panel.shjs.selecteFKDJDialog;
 import com.jskj.asset.client.panel.shjs.selectePDDJDialog;
@@ -48,11 +48,10 @@ public class BaseMainPanel extends BasePanel {
     private selecteInvoiceJDialog selecteInvoiceJDialog;
     private selecteInvoiceJDialog2 selecteInvoiceJDialog2;
     private selecteInvoiceJDialog3 selecteInvoiceJDialog3;
-    private selecteYimiaoshenpiInvoiceJDialog selecteYimiaoshenpiInvoiceJDialog;
 
     /*仓库管理*/
     private SelectYiMiaoZuZhuangChaiXie ymzzcx;
-    private Select_YiMiaoChuRuKuJiLu ymcrkjl;
+    private SelectYiMiaochurukujilu ymcrkjl;
     private SelectYiMiaoChuRuKu ymcrk;
     private YiMiaoBaoSun ymbs;
     private SelectKucunchaxun kccx;
@@ -346,19 +345,7 @@ public class BaseMainPanel extends BasePanel {
         });
     }
 
-    @Action
-    public void selecteYimiaoshenqingInvoiceAction() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                if (selecteYimiaoshenpiInvoiceJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selecteYimiaoshenpiInvoiceJDialog = new selecteYimiaoshenpiInvoiceJDialog(new javax.swing.JFrame(), true);
-                    selecteYimiaoshenpiInvoiceJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(selecteYimiaoshenpiInvoiceJDialog);
-            }
-        });
-    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_bottomleft;
     private javax.swing.JButton jButton_bottomright;
@@ -438,7 +425,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymcrkjl == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrkjl = new Select_YiMiaoChuRuKuJiLu(new javax.swing.JFrame(), true);
+                    ymcrkjl = new SelectYiMiaochurukujilu(new javax.swing.JFrame(), true);
                     ymcrkjl.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymcrkjl);

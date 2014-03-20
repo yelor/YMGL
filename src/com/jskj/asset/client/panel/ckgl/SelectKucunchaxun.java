@@ -6,6 +6,8 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.panel.OpenTabTask;
+import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
 import com.jskj.asset.client.panel.slgl.GuDingZiChanChuKuJDialog;
 import com.jskj.asset.client.panel.slgl.GuDingZiChanRuKuJDialog;
 import com.jskj.asset.client.panel.slgl.YihaopinChuKuJDialog;
@@ -47,10 +49,11 @@ public class SelectKucunchaxun extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectKucunchaxun.class, this);
+        jButton3.setAction(actionMap.get("yimiaokucunAction")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectKucunchaxun.class, this);
         jButton5.setAction(actionMap.get("zichanruku_pop")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
@@ -64,26 +67,27 @@ public class SelectKucunchaxun extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(29, 29, 29)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jButton5)
+                        .addGap(44, 44, 44)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jButton3)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addComponent(jButton3)
-                .addGap(36, 36, 36)
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton6))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -132,113 +136,12 @@ public class SelectKucunchaxun extends javax.swing.JDialog {
     }
 
     @Action
-    public void ck1_pop() {
+    public void yimiaokucunAction() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1(new javax.swing.JFrame(), true);
-                ymck1.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymck1);
-            }
-        });
-    }
-
-    @Action
-    public void rk1_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1(new javax.swing.JFrame(), true);
-                ymrk1.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymrk1);
-            }
-        });
-    }
-
-    @Action
-    public void ck2_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2(new javax.swing.JFrame(), true);
-                ymck2.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymck2);
-            }
-        });
-    }
-
-    @Action
-    public void rk2_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu2 ymrk2 = new YiMiaoRuKu2(new javax.swing.JFrame(), true);
-                ymrk2.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymrk2);
-            }
-        });
-    }
-    
-    @Action
-    public void zichanruku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(), true);
-                zichanruku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanruku);
-            }
-        });
-    }
-    
-    @Action
-    public void zichanchuku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog(new javax.swing.JFrame(), true);
-                zichanchuku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanchuku);
-            }
-        });
-    }
-    
-    @Action
-    public void yihaopinruku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YihaopinRuKuJDialog zichanruku = new YihaopinRuKuJDialog(new javax.swing.JFrame(), true);
-                zichanruku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanruku);
-            }
-        });
-    }
-    
-    @Action
-    public void yihaopinchuku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YihaopinChuKuJDialog zichanchuku = new YihaopinChuKuJDialog(new javax.swing.JFrame(), true);
-                zichanchuku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanchuku);
+                new OpenTabTask("报表-疫苗库存表", new YimiaokucunPanel(), false).execute();
             }
         });
     }

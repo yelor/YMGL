@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -623,6 +624,11 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoShenBaoPlanJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog();
+            shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
+            shenbaoPlanJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(shenbaoPlanJDialog);
         }
     }
 

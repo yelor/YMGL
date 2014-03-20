@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -118,7 +119,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {                    
+                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\"))";
                 } else {
                     sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
@@ -728,10 +729,15 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoXiaoShouJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoXiaoShouJDialog yiMiaoXiaoShouJDialog = new YiMiaoXiaoShouJDialog();
+            yiMiaoXiaoShouJDialog.setLocationRelativeTo(mainFrame);
+            yiMiaoXiaoShouJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(yiMiaoXiaoShouJDialog);
         }
     }
-    
-      public YiMiaoXiaoShouJDialog(final JDialog parent, XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity) {
+
+    public YiMiaoXiaoShouJDialog(final JDialog parent, XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity) {
         super();
         initComponents();
         this.yimiaoxiaoshouxiangdanEntity = yimiaoxiaoshouxiangdanEntity;

@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -351,7 +352,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -606,6 +607,11 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoTiaoJiaJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoTiaoJiaJDialog yiMiaoTiaoJiaJDialog = new YiMiaoTiaoJiaJDialog();
+            yiMiaoTiaoJiaJDialog.setLocationRelativeTo(mainFrame);
+            yiMiaoTiaoJiaJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(yiMiaoTiaoJiaJDialog);
         }
     }
 

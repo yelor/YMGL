@@ -17,12 +17,12 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class Select_YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
+public class SelectYiMiaochurukujilu extends javax.swing.JDialog {
     YiMiaoChuRuKuJiLu ymcrkjl;
     /**
      * Creates new form ymcrkjl_select
      */
-    public Select_YiMiaoChuRuKuJiLu(java.awt.Frame parent, boolean modal) {
+    public SelectYiMiaochurukujilu(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -41,12 +41,12 @@ public class Select_YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(Select_YiMiaoChuRuKuJiLu.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectYiMiaochurukujilu.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(Select_YiMiaoChuRuKuJiLu.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectYiMiaochurukujilu.class, this);
         jButton1.setAction(actionMap.get("ymrkjl_pop")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -110,20 +110,20 @@ public class Select_YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Select_YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaochurukujilu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Select_YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaochurukujilu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Select_YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaochurukujilu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Select_YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaochurukujilu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Select_YiMiaoChuRuKuJiLu dialog = new Select_YiMiaoChuRuKuJiLu(new javax.swing.JFrame(), true);
+                SelectYiMiaochurukujilu dialog = new SelectYiMiaochurukujilu(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -30,6 +30,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -483,7 +485,12 @@ public class YiMiaoBaoSun extends BaseDialog {
                 logger.error(e);
                 return;
             }
+            JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoBaoSun ymbs = new YiMiaoBaoSun();
+            ymbs.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(ymbs);
         }
     }
 

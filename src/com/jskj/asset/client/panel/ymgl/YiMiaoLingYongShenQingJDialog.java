@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -134,8 +135,8 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
 
-                    Yimiaoshenqingdantb yimiaoliebiao=new Yimiaoshenqingdantb();
-                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) (""+yimiaoshenqingdan.get("xiangdanId")))) );
+                    Yimiaoshenqingdantb yimiaoliebiao = new Yimiaoshenqingdantb();
+                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId")))));
                     yimiaoshenqingdanlist.add(yimiaoliebiao);
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -642,10 +643,15 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
             }
             AssetMessage.INFO("提交成功！", YiMiaoLingYongShenQingJDialog.this);
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog();
+            lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
+            lingYongShenQingJDialog.setAddOrUpdate(true);
+            AssetClientApp.getApplication().show(lingYongShenQingJDialog);
         }
     }
-    
-     public YiMiaoLingYongShenQingJDialog(final JDialog parent, YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
+
+    public YiMiaoLingYongShenQingJDialog(final JDialog parent, YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
         super();
         initComponents();
         this.yimiaocaigouxiangdanEntity = yimiaocaigouxiangdanEntity;

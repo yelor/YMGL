@@ -33,12 +33,11 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(selecteInvoiceJDialog.class);
@@ -46,87 +45,63 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "疫苗采购计划分析", "Ⅰ类疫苗申报计划申请单", "Ⅱ类疫苗赊购计划申请单", "Ⅰ类疫苗领用申请单", "Ⅱ类疫苗采购申请单" }));
-        jComboBox1.setName("jComboBox1"); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        jPanel2.setName("jPanel2"); // NOI18N
-
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteInvoiceJDialog.class, this);
-        jButton1.setAction(actionMap.get("selectedAction")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
+        jButton3.setAction(actionMap.get("Yimiaoshenbao")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setName("jButton3"); // NOI18N
 
-        jButton2.setAction(actionMap.get("cancelAction")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
+        jButton4.setAction(actionMap.get("Yimiaoshegou")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setName("jButton4"); // NOI18N
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jButton5.setAction(actionMap.get("Yimiaolingyong")); // NOI18N
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setName("jButton5"); // NOI18N
+
+        jButton6.setAction(actionMap.get("Yimiaocaigoujihua")); // NOI18N
+        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setName("jButton6"); // NOI18N
+
+        jButton7.setAction(actionMap.get("Yimiaocaigou")); // NOI18N
+        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setName("jButton7"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(51, 51, 51))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(204, 204, 204)
+                .addComponent(jButton6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton7))
+                .addGap(47, 47, 47))
         );
 
         pack();
@@ -175,47 +150,80 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
     }
 
     @Action
-    public void selectedAction() {
+    public void Yimiaocaigoujihua() {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 dispose();
-                int selecteIndex = jComboBox1.getSelectedIndex();
-                if (selecteIndex == 0) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
-                    yiMiaoCaiGouJiHuaFenXiJDialog.setLocationRelativeTo(mainFrame);
-                    AssetClientApp.getApplication().show(yiMiaoCaiGouJiHuaFenXiJDialog);
-                } else if (selecteIndex == 1) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog();
-                    shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
-                    shenbaoPlanJDialog.setAddOrUpdate(true);
-                    AssetClientApp.getApplication().show(shenbaoPlanJDialog);
-                } else if (selecteIndex == 2) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoSheGouPlanJDialog sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog();
-                    sheGouPlanJDialog.setLocationRelativeTo(mainFrame);
-                    sheGouPlanJDialog.setAddOrUpdate(true);
-                    AssetClientApp.getApplication().show(sheGouPlanJDialog);
-                } else if (selecteIndex == 3) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog();
-                    lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
-                    lingYongShenQingJDialog.setAddOrUpdate(true);
-                    AssetClientApp.getApplication().show(lingYongShenQingJDialog);
-                } else if (selecteIndex == 4) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog();
-                    caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
-                    caiGouShenQingJDialog.setAddOrUpdate(true);
-                    AssetClientApp.getApplication().show(caiGouShenQingJDialog);
-                }
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
+                yiMiaoCaiGouJiHuaFenXiJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(yiMiaoCaiGouJiHuaFenXiJDialog);
             }
         });
     }
 
     @Action
+    public void Yimiaoshenbao() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog();
+                shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
+                shenbaoPlanJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(shenbaoPlanJDialog);
+            }
+        });
+    }
 
+    @Action
+    public void Yimiaoshegou() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoSheGouPlanJDialog sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog();
+                sheGouPlanJDialog.setLocationRelativeTo(mainFrame);
+                sheGouPlanJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(sheGouPlanJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaolingyong() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog();
+                lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
+                lingYongShenQingJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(lingYongShenQingJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaocaigou() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog();
+                caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
+                caiGouShenQingJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(caiGouShenQingJDialog);
+            }
+        });
+    }
+
+    @Action
     public void cancelAction() {
         dispose();
 
@@ -223,11 +231,10 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     // End of variables declaration//GEN-END:variables
 }

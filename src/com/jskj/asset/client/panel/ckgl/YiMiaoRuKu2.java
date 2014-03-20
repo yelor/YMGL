@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -433,6 +434,10 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    YiMiaoRuKu2 ymrk2 = new YiMiaoRuKu2(new javax.swing.JFrame(), true);
+                    ymrk2.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(ymrk2);
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), YiMiaoRuKu2.this);
                 }
