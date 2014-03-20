@@ -140,6 +140,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
                     Object youxiaoqi = bindedMap.get("youxiaodate");
+                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);

@@ -145,6 +145,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Float stockpilePrice = Float.parseFloat("" + bindedMap.get("stockpilePrice"));
                     Object youxiaoqi = bindedMap.get("youxiaodate");
                     Object saleprice = yimiao.get("yimiaoYushoujia");
+                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);

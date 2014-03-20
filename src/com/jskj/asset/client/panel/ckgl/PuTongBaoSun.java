@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.ckgl;
 
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.util.DateChooser;
 import javax.swing.JTextField;
 
@@ -13,7 +14,7 @@ import javax.swing.JTextField;
  *
  * @author Administrator
  */
-public class PuTongBaoSun extends javax.swing.JDialog {
+public class PuTongBaoSun extends BaseDialog {
     DateChooser dateChooser1;
     JTextField regTextField;
     /**
@@ -28,8 +29,8 @@ public class PuTongBaoSun extends javax.swing.JDialog {
     /**
      * Creates new form ptbs
      */
-    public PuTongBaoSun(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public PuTongBaoSun() {
+        super();
         init();
         initComponents();
     }
@@ -317,7 +318,7 @@ public class PuTongBaoSun extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PuTongBaoSun dialog = new PuTongBaoSun(new javax.swing.JFrame(), true);
+                PuTongBaoSun dialog = new PuTongBaoSun();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
