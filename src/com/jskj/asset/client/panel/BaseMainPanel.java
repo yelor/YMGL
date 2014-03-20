@@ -18,6 +18,7 @@ import com.jskj.asset.client.panel.ckgl.SelectKucunchaxun;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXie;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujilu;
+import com.jskj.asset.client.panel.ckgl.Selectebaosun;
 import com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun;
 import com.jskj.asset.client.panel.shjs.selecteFKDJDialog;
 import com.jskj.asset.client.panel.shjs.selectePDDJDialog;
@@ -53,7 +54,7 @@ public class BaseMainPanel extends BasePanel {
     private SelectYiMiaoZuZhuangChaiXie ymzzcx;
     private SelectYiMiaochurukujilu ymcrkjl;
     private SelectYiMiaoChuRuKu ymcrk;
-    private YiMiaoBaoSun ymbs;
+    private Selectebaosun selectebaosun;
     private SelectKucunchaxun kccx;
 
     /*审核结算*/
@@ -464,16 +465,16 @@ public class BaseMainPanel extends BasePanel {
     }
 
     @Action
-    public void ymbs_pop() {
+    public void selectebaosun_pop() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                if (ymbs == null) {
+                if (selectebaosun == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymbs = new YiMiaoBaoSun();
-                    ymbs.setLocationRelativeTo(mainFrame);
+                    selectebaosun = new Selectebaosun();
+                    selectebaosun.setLocationRelativeTo(mainFrame);
                 }
-                AssetClientApp.getApplication().show(ymbs);
+                AssetClientApp.getApplication().show(selectebaosun);
             }
         });
     }
