@@ -137,6 +137,7 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 DiZhiYiHaoPinCaiGouShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinCaiGouShenQingJDialog();
                 diZhiYiHaoPinCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
