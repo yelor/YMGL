@@ -9,6 +9,7 @@ import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.baobiao.caiwubaobiao.DanweiyingshouyingfuPanel;
+import com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -211,7 +212,7 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
                     }
                     AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongTongJiJDialog);
                 } else if (selecteIndex == 9) {
-                    new OpenTabTask("报表-疫苗库存表", new YimiaokucunPanel(), false).execute();
+                    new OpenTabTask("报表-疫苗库存表", new KucunchaxunPanel(), false).execute();
                 } else if (selecteIndex == 13) {
                     new OpenTabTask("报表-单位应收应付", new DanweiyingshouyingfuPanel(), false).execute();
                 }
