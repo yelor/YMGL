@@ -8,7 +8,8 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Zhijielingyongtb;
-import com.jskj.asset.client.bean.entity.Zichandengjitb;
+import com.jskj.asset.client.bean.entity.ZichandengjiAll;
+import com.jskj.asset.client.bean.entity.ZichandengjiAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
@@ -29,7 +30,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
 
     private JTextField regTextField;
     private String imageUri;
-    private Zichandengjitb zc;
+    private ZichandengjiAll zc;
     private Zhijielingyongtb zjly;
     private int userId;
     private String userName;
@@ -167,7 +168,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入购置日期！",this);
             return null;
         }
-        zc = new Zichandengjitb();
+        zc = new ZichandengjiAll();
         zc.setGdzcId(Integer.parseInt(jTextFieldZcid.getText()));
         SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
         zc.setGouzhiDate(dateformate.parse(jTextField12.getText()));
@@ -180,7 +181,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
     
     private class submitTask extends DengjiTask{
 
-        public submitTask(Zichandengjitb zc) {
+        public submitTask(ZichandengjiAll zc) {
             super(zc);
         }
         
