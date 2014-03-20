@@ -573,6 +573,8 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
+        jTableyimiao.getCellEditor(jTableyimiao.getSelectedRow(),
+                jTableyimiao.getSelectedColumn()).stopCellEditing();
         yimiaoshenbao = new YimiaoshenqingdantbFindEntity();
         shenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
         shenqingdan.setShenqingdanDate(dateformate.parse(jTextFieldzhidanDate.getText()));

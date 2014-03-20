@@ -672,6 +672,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
+        jTableyimiao.getCellEditor(jTableyimiao.getSelectedRow(),
+                jTableyimiao.getSelectedColumn()).stopCellEditing();
         if (jTextFieldzhidanDate.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入制单日期!");
             return null;

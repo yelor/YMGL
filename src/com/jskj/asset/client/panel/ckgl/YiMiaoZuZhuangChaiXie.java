@@ -710,6 +710,10 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
 
     @Action
     public Task save() throws ParseException {
+        jTableyimiao1.getCellEditor(jTableyimiao1.getSelectedRow(),
+                jTableyimiao1.getSelectedColumn()).stopCellEditing();
+        jTableyimiao2.getCellEditor(jTableyimiao2.getSelectedRow(),
+                jTableyimiao2.getSelectedColumn()).stopCellEditing();
         if (jTextFieldzuzhuangfeiyong.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入组装费用!");
             return null;

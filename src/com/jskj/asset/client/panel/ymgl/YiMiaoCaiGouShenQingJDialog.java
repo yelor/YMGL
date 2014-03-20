@@ -632,6 +632,8 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
+        jTableyimiao.getCellEditor(jTableyimiao.getSelectedRow(),
+                jTableyimiao.getSelectedColumn()).stopCellEditing();
         if (jTextFieldSupplierName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入供应单位名称!");
             return null;
