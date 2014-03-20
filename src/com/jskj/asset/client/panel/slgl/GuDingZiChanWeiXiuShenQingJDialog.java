@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
@@ -48,30 +47,31 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
     private float totalPrice;
     CaigoushenqingDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     /**
      * Creates new form GuDingZiChanRuKu
      */
     public GuDingZiChanWeiXiuShenQingJDialog() {
         super();
         initComponents();
-        
+
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         department = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
-        
+
         jingbanren.setText(userName);
         dept.setText(department);
-        
-        cgsqId.setText(DanHao.getDanHao("WXSQ"));
+
+        cgsqId.setText(DanHao.getDanHao(DanHao.TYPE_WXSQ));
         cgsqId.setEditable(false);
-        
+
         shenqingdanDate.setText(dateformate.format(new Date()).toString());
         shenqingdanDate.setEditable(false);
-        
+
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "原值"},{"quantity", "数量", "true"}});
+            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"}, {"gdzcPinpai", "品牌", "false"},
+            {"gdzcValue", "原值"}, {"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -98,7 +98,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+                return new String[][]{{"gdzcId", "资产ID"}, {"gdzcName", "资产名称"}};
             }
 
             @Override
@@ -116,49 +116,56 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
                     editTable.insertValue(3, gdzcPinpai);
                     editTable.insertValue(4, gdzcValue);
                     editTable.insertValue(5, 0);
-                    
+
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer)gdzcId);
+                    zclb.setCgzcId((Integer) gdzcId);
                     zclb.setQuantity(0);
                     zc.add(zclb);
                 }
 
             }
         });
-        
+
     }
-    
-    public GuDingZiChanWeiXiuShenQingJDialog(final JDialog parent,CaigoushenqingDetailEntity detail){
+
+    public GuDingZiChanWeiXiuShenQingJDialog(final JDialog parent, CaigoushenqingDetailEntity detail) {
         super();
         initComponents();
         this.detail = detail;
-        this.addWindowListener(new WindowListener(){
+        this.addWindowListener(new WindowListener() {
 
             @Override
-            public void windowOpened(WindowEvent e) {}
-
-            @Override
-            public void windowClosing(WindowEvent e) {}
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+            public void windowOpened(WindowEvent e) {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) { }
+            public void windowClosing(WindowEvent e) {
+            }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowClosed(WindowEvent e) {
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
+            }
 
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
             }
-            
+
         });
         super.bind(detail, middlePanel);
         jButton1.setEnabled(false);
@@ -169,19 +176,19 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         dept.setEditable(false);
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
-        
+
         setListTable(detail.getResult());
     }
-    
-    public void setListTable(List<ZichanliebiaoDetailEntity> zclist){
-        
+
+    public void setListTable(List<ZichanliebiaoDetailEntity> zclist) {
+
         int size = zclist.size();
         Object[][] o = new Object[size][6];
-        for( int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             ZichanliebiaoDetailEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getGdzcId(),zclb.getGdzcName(),zclb.getGdzcType(),zclb.getGdzcPinpai(),zclb.getGdzcValue(),zclb.getCount()};
+            o[i] = new Object[]{zclb.getGdzcId(), zclb.getGdzcName(), zclb.getGdzcType(), zclb.getGdzcPinpai(), zclb.getGdzcValue(), zclb.getCount()};
         }
-        
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
@@ -193,23 +200,23 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
             };
         });
     }
-    
+
     @Action
     public void exit() {
         this.dispose();
     }
-    
+
     @Action
-    public Task submitForm() throws ParseException{
-        if(shenqingdanDate.getText().isEmpty()){
+    public Task submitForm() throws ParseException {
+        if (shenqingdanDate.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
         }
-        if(jingbanren.getText().isEmpty()){
+        if (jingbanren.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "请输入申请人！");
             return null;
         }
-        if(zc.size() < 1){
+        if (zc.size() < 1) {
             JOptionPane.showMessageDialog(null, "请选择要维修的资产！");
             return null;
         }
@@ -221,32 +228,32 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(21);
-        sqd.setDanjujine((float)0);
-        
-        for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt(""+jTable1.getValueAt(i, 5)));
-            if(zc.get(i).getQuantity() == 0){
-                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个资产的维修数量！",this);
+        sqd.setDanjujine((float) 0);
+
+        for (int i = 0; i < zc.size(); i++) {
+            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+            if (zc.get(i).getQuantity() == 0) {
+                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的维修数量！", this);
                 return null;
             }
-            zc.get(i).setSaleprice(Float.parseFloat(""+jTable1.getValueAt(i, 4)));
+            zc.get(i).setSaleprice(Float.parseFloat("" + jTable1.getValueAt(i, 4)));
             zc.get(i).setTotalprice(zc.get(i).getQuantity() * zc.get(i).getSaleprice());
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(5);
         }
-        
+
         wxsq.setSqd(sqd);
-        wxsq.setZc(zc);        
-        
+        wxsq.setZc(zc);
+
         return new submitTask(wxsq);
     }
-    
-    private class submitTask extends ShenQingTask{
+
+    private class submitTask extends ShenQingTask {
 
         public submitTask(ShenQingDetailEntity cgsq) {
             super(cgsq);
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             if (result instanceof Exception) {
@@ -259,6 +266,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
             exit();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

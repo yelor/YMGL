@@ -5,7 +5,12 @@
 package com.jskj.asset.client.panel.message;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.MyTaskEntity;
+import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -13,7 +18,10 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
+import com.jskj.asset.client.panel.slgl.ShenqingDetailTask;
 import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
+import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
+import static com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask.logger;
 import com.jskj.asset.client.util.ClassHelper;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
@@ -285,30 +293,65 @@ public abstract class MyTaskFindTask extends BaseTask {
                         @Override
                         public void mouseReleased(MouseEvent e) {
 
-                            String shenqingdan = re.getShenqingdanId();
+                            final String shenqingdan = re.getShenqingdanId();
                             if (shenqingdan != null && shenqingdan.length() > 4) {
                                 String danjuType = shenqingdan.substring(0, 4);
 
-                                String className = DanHao.getUIClassByDanhaoType(danjuType);
+                                final String className = DanHao.getUIClassByDanhaoType(danjuType);
                                 if (!className.equals("")) {
-                                    try {
-                                        ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, new Class[0]);
-                                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                                        BaseDialog jdialog = helper.newInstance(new Object[0]);
-                                        jdialog.setLocationRelativeTo(mainFrame);
-                                        //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
-                                        jdialog.setVisible(true);
-                                    } catch (Exception ex) {
-                                        logger.error(ex);
+
+                                    if (danjuType.startsWith("YM")) {//疫苗相关
+                                        new YimiaoXiaoshouXiangdanTask(shenqingdan) {
+                                            @Override
+                                            protected void succeeded(Object result) {
+                                                if (result != null) {
+                                                    if (shenqingdan.contains(DanHao.TYPE_YIMIAOXF) || shenqingdan.contains(DanHao.TYPE_YIMIAOXS)) {
+                                                        openDialog(className, result, XiaoshoushenpixiangdanEntity.class);
+                                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOSB) || shenqingdan.contains(DanHao.TYPE_YIMIAOLY)
+                                                            || shenqingdan.contains(DanHao.TYPE_YIMIAOSG) || shenqingdan.contains(DanHao.TYPE_YIMIAOCG)) {
+                                                        openDialog(className, result, YimiaocaigouxiangdanEntity.class);
+                                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOBS)) {
+                                                        openDialog(className, result, YimiaobaosunxiangdanEntity.class);
+                                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOTJ)) {
+                                                        openDialog(className, result, YimiaotiaojiaxiangdanEntity.class);
+                                                    }
+
+                                                } else {
+                                                    logger.error("response result is null.");
+                                                }
+                                            }
+                                        }.execute();
+
+                                    } else if (!danjuType.equals(DanHao.TYPE_FKDJ)) {//资产相关
+                                        new ShenqingDetailTask(shenqingdan) {
+                                            @Override
+                                            protected void succeeded(Object result) {
+                                                if (result != null) {
+                                                    openDialog(className, result, CaigoushenqingDetailEntity.class);
+                                                } else {
+                                                    logger.error("response result is null.");
+                                                }
+                                            }
+                                        }.execute();
+                                    } else {//付款单据
+
                                     }
+
                                 }
                             }
-//                            if (re.getShenqingdanId().toUpperCase().startsWith("YM")) {
-//                                //疫苗审批
-//                                gotoShenpi();
-//                            } else {//资产审批
-//                                selectShenPiDanAction();
-//                            }
+                        }
+
+                        private void openDialog(String className, Object entity, Class entityClassType) {
+                            try {
+                                ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, JDialog.class, entityClassType);
+                                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                                BaseDialog jdialog = helper.newInstance(null, entity);
+                                jdialog.setLocationRelativeTo(mainFrame);
+                                //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
+                                jdialog.setVisible(true);
+                            } catch (Exception ex) {
+                                logger.error("StaticDialog:" + ex);
+                            }
                         }
 
                         @Override

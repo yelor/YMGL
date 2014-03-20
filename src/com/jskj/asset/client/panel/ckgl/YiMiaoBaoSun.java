@@ -58,7 +58,7 @@ public class YiMiaoBaoSun extends BaseDialog {
         super();
         initComponents();
 
-        jTextFieldBaosunId.setText(DanHao.getDanHao("YMBS"));
+        jTextFieldBaosunId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOBS));
         jTextFieldBaosunId.setEditable(false);
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldJingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
@@ -502,7 +502,9 @@ public class YiMiaoBaoSun extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
             }
 
             @Override

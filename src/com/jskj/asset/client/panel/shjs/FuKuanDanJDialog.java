@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.AssetClientApp;
@@ -40,7 +39,7 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class FuKuanDanJDialog extends BaseDialog {
-    
+
     private int userId;
     private String userName;
     private int supplierId;
@@ -51,18 +50,18 @@ public class FuKuanDanJDialog extends BaseDialog {
     /**
      * Creates new form FKDJDialog
      */
-    public FuKuanDanJDialog(java.awt.Frame parent, boolean modal) {
-        super(); 
+    public FuKuanDanJDialog() {
+        super();
         initComponents();
-        
+
         ydlb = new ArrayList<Yuandanliebiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
-        
-        fukuandanId.setText(DanHao.getDanHao("FKDJ"));
-        
+
+        fukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_FKDJ));
+
         fukuandanDate.setText(dateformate.format(new Date()).toString());
-        
+
         ((BaseTextField) supplier).registerPopup(new IPopupBuilder() {
 
             public int getType() {
@@ -76,7 +75,7 @@ public class FuKuanDanJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" +  supplier.getText().trim().toLowerCase() + "%\")";
+                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -89,17 +88,17 @@ public class FuKuanDanJDialog extends BaseDialog {
                 if (bindedMap != null) {
                     supplier.setText(bindedMap.get("supplierName") == null ? "" : bindedMap.get("supplierName").toString());
                     accountNum.setText(bindedMap.get("supplierBanknumber") == null ? "" : bindedMap.get("supplierBanknumber").toString());
-                    if(!accountNum.getText().isEmpty()){
+                    if (!accountNum.getText().isEmpty()) {
                         accountNum.setEditable(false);
                     }
-                    supplierId = (Integer)bindedMap.get("supplierId");
+                    supplierId = (Integer) bindedMap.get("supplierId");
                 }
             }
         });
-        
+
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"shenqingdanId", "源单编号", "true"}, {"shenqingdanDate", "制单日期"}, {"danjuType", "源单类型"},
-            {"totalPrice", "单据金额"},{"shenqingdanRemark", "备注"}});
+            {"totalPrice", "单据金额"}, {"shenqingdanRemark", "备注"}});
 
         editTable.registerPopup(0, new IPopupBuilder() {
             public int getType() {
@@ -116,7 +115,7 @@ public class FuKuanDanJDialog extends BaseDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 sql += " is_completed = 1 and is_paid = 0 ";
-                if( !supplier.getText().isEmpty()){
+                if (!supplier.getText().isEmpty()) {
                     sql += " and supplier_id = " + supplierId;
                 }
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
@@ -126,8 +125,8 @@ public class FuKuanDanJDialog extends BaseDialog {
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"shenqingdanId", "源单编号"},{"shenqingdanDate", "制单日期"},
-                    {"zhidanren","制单人"}};
+                return new String[][]{{"shenqingdanId", "源单编号"}, {"shenqingdanDate", "制单日期"},
+                {"zhidanren", "制单人"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -155,36 +154,43 @@ public class FuKuanDanJDialog extends BaseDialog {
         });
     }
 
-    public FuKuanDanJDialog(final JDialog parent,FukuanshenqingDetailEntity detail){
+    public FuKuanDanJDialog(final JDialog parent, FukuanshenqingDetailEntity detail) {
         super();
         initComponents();
-        
-        this.addWindowListener(new WindowListener(){
+
+        this.addWindowListener(new WindowListener() {
 
             @Override
-            public void windowOpened(WindowEvent e) {}
-
-            @Override
-            public void windowClosing(WindowEvent e) {}
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+            public void windowOpened(WindowEvent e) {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) { }
+            public void windowClosing(WindowEvent e) {
+            }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowClosed(WindowEvent e) {
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
+            }
 
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
             }
-            
+
         });
         super.bind(detail, jPanel1);
         jButton1.setEnabled(false);
@@ -193,20 +199,20 @@ public class FuKuanDanJDialog extends BaseDialog {
         supplier.setEditable(false);
         accountNum.setEditable(false);
         shenqingdanRemark.setEditable(false);
-        
+
         setListTable(detail.getList());
     }
-    
-    public void setListTable(List<ShenqingdanAll> zclist){
-        
+
+    public void setListTable(List<ShenqingdanAll> zclist) {
+
         int size = zclist.size();
         Object[][] o = new Object[size][6];
-        for( int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             ShenqingdanAll zclb = zclist.get(i);
             String date = DateHelper.format(zclb.getShenqingdanDate(), "yyyy-MM-dd");
-            o[i] = new Object[]{zclb.getShenqingdanId(),date,zclb.getDanjuType(),zclb.getTotalPrice(),zclb.getShenqingdanRemark()};
+            o[i] = new Object[]{zclb.getShenqingdanId(), date, zclb.getDanjuType(), zclb.getTotalPrice(), zclb.getShenqingdanRemark()};
         }
-        
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
@@ -223,15 +229,15 @@ public class FuKuanDanJDialog extends BaseDialog {
     public void exit() {
         this.dispose();
     }
-    
+
     @Action
     public Task submitForm() throws ParseException {
-        if(supplier.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入供应单位！",this);
+        if (supplier.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入供应单位！", this);
             return null;
         }
-        if(ydlb.size() < 1){
-            AssetMessage.ERRORSYS("请选择要付款的单据！",this);
+        if (ydlb.size() < 1) {
+            AssetMessage.ERRORSYS("请选择要付款的单据！", this);
             return null;
         }
         FukuanDetailEntity detail = new FukuanDetailEntity();
@@ -248,7 +254,7 @@ public class FuKuanDanJDialog extends BaseDialog {
         detail.setList(ydlb);
         return new SaveTask(detail);
     }
-    
+
     private class SaveTask extends FukuandanTask {
 
         public SaveTask(FukuanDetailEntity bean) {
@@ -260,8 +266,9 @@ public class FuKuanDanJDialog extends BaseDialog {
             AssetMessage.showMessageDialog(null, "保存成功");
             exit();
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -512,19 +519,19 @@ public class FuKuanDanJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                FuKuanDanJDialog dialog = new FuKuanDanJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                FuKuanDanJDialog dialog = new FuKuanDanJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

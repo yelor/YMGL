@@ -13,6 +13,7 @@ import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.Zichanshenpiliuchengtb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -189,27 +190,27 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
     public void openShenqingdan(CaigoushenqingDetailEntity cgsq) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        if (cgsq.getCgsqId().contains("GDZC")) {
+        if (cgsq.getCgsqId().contains(DanHao.TYPE_GDZC)) {
             GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog(this, cgsq);
             guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
-        } else if (cgsq.getCgsqId().contains("YHCG")) {
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_YHCG)) {
             DiZhiYiHaoPinCaiGouShenQingJDialog lingyongshenqing = new DiZhiYiHaoPinCaiGouShenQingJDialog(this, cgsq);
             lingyongshenqing.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(lingyongshenqing);
-        } else if (cgsq.getCgsqId().contains("PTLY")) {
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_PTLY)) {
             PTGuDingZiChanLingYongShenQingJDialog lingyongshenqing = new PTGuDingZiChanLingYongShenQingJDialog(this, cgsq);
             lingyongshenqing.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(lingyongshenqing);
-        } else if (cgsq.getCgsqId().contains("ITLY")) {
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_ITLY)) {
             ITGuDingZiChanLingYongShenQingJDialog lingyongshenqing = new ITGuDingZiChanLingYongShenQingJDialog(this, cgsq);
             lingyongshenqing.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(lingyongshenqing);
-        } else if (cgsq.getCgsqId().contains("YHLY")) {
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_YHLY)) {
             DiZhiYiHaoPinLingYongShenQingJDialog lingyongshenqing = new DiZhiYiHaoPinLingYongShenQingJDialog(this, cgsq);
             lingyongshenqing.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(lingyongshenqing);
-        } else if (cgsq.getCgsqId().contains("WXSQ")) {
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_WXSQ)) {
             GuDingZiChanWeiXiuShenQingJDialog weixiushenqing = new GuDingZiChanWeiXiuShenQingJDialog(this, cgsq);
             weixiushenqing.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(weixiushenqing);

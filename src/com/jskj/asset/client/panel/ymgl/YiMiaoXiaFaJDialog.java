@@ -57,7 +57,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
     public YiMiaoXiaFaJDialog() {
         super();
         initComponents();
-        jTextFieldXiafaId.setText(DanHao.getDanHao("YMXF"));
+        jTextFieldXiafaId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOXF));
         jTextFieldXiafaId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -140,7 +140,6 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
                     Object youxiaoqi = bindedMap.get("youxiaodate");
-                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -738,7 +737,9 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
             }
 
             @Override

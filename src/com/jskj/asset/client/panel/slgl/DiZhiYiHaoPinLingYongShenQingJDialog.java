@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
@@ -45,30 +44,31 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private List<ZiChanLieBiaotb> zc;
     private CaigoushenqingDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     /**
      * Creates new form GuDingZiChanRuKu
      */
     public DiZhiYiHaoPinLingYongShenQingJDialog() {
         super();
         initComponents();
-        
+
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         department = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
-        
+
         jingbanren.setText(userName);
         dept.setText(department);
-        
-        cgsqId.setText(DanHao.getDanHao("YHLY"));
+
+        cgsqId.setText(DanHao.getDanHao(DanHao.TYPE_YHLY));
         cgsqId.setEditable(false);
-        
+
         lysqDate.setText(dateformate.format(new Date()).toString());
         lysqDate.setEditable(false);
-        
+
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpValue", "原值", "false"},{"quantity", "数量", "true"}});
+            {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"}, {"dzyhpPinpai", "品牌", "false"},
+            {"dzyhpValue", "原值", "false"}, {"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -89,14 +89,14 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                 String sql = "";
                 sql += " dzyhp_id in (select distinct dzyhp_id from dizhiyihaopinkucun where quantity > 0) ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += " and (dzyhp_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += " and (dzyhp_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"}};
+                return new String[][]{{"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"}};
             }
 
             @Override
@@ -118,47 +118,54 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer)dzyhpId);
+                    zclb.setCgzcId((Integer) dzyhpId);
                     //quantity中暂时保存库存数，用来校验数据
-                    zclb.setQuantity((Integer)dzyhpKucun);
+                    zclb.setQuantity((Integer) dzyhpKucun);
                     zc.add(zclb);
                 }
 
             }
         });
-        
+
     }
 
-    public DiZhiYiHaoPinLingYongShenQingJDialog(final JDialog parent,CaigoushenqingDetailEntity detail){
+    public DiZhiYiHaoPinLingYongShenQingJDialog(final JDialog parent, CaigoushenqingDetailEntity detail) {
         super();
         initComponents();
         this.detail = detail;
-        this.addWindowListener(new WindowListener(){
+        this.addWindowListener(new WindowListener() {
 
             @Override
-            public void windowOpened(WindowEvent e) {}
-
-            @Override
-            public void windowClosing(WindowEvent e) {}
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+            public void windowOpened(WindowEvent e) {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) { }
+            public void windowClosing(WindowEvent e) {
+            }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowClosed(WindowEvent e) {
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
+            }
 
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
             }
-            
+
         });
         super.bind(detail, middlePanel);
         jButton1.setEnabled(false);
@@ -168,19 +175,19 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         dept.setEditable(false);
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
-        
+
         setListTable(detail.getYhplist());
     }
-    
-    public void setListTable(List<YihaopinliebiaoEntity> zclist){
-        
+
+    public void setListTable(List<YihaopinliebiaoEntity> zclist) {
+
         int size = zclist.size();
         Object[][] o = new Object[size][6];
-        for( int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             YihaopinliebiaoEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getDzyhpId(),zclb.getDzyhpName(),zclb.getDzyhpType(),zclb.getDzyhpPinpai(),zclb.getSaleprice(),zclb.getCount()};
+            o[i] = new Object[]{zclb.getDzyhpId(), zclb.getDzyhpName(), zclb.getDzyhpType(), zclb.getDzyhpPinpai(), zclb.getSaleprice(), zclb.getCount()};
         }
-        
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
@@ -192,19 +199,19 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
             };
         });
     }
-    
+
     @Action
     public void exit() {
         this.dispose();
     }
-    
+
     @Action
-    public Task submitForm() throws ParseException{
-        if(lysqDate.getText().isEmpty()){
+    public Task submitForm() throws ParseException {
+        if (lysqDate.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
         }
-        if(zc.size() < 1){
+        if (zc.size() < 1) {
             JOptionPane.showMessageDialog(null, "请选择要领用的物品！");
             return null;
         }
@@ -217,39 +224,39 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(20);
         float total = 0;
-        for(int i = 0; i < zc.size(); i++){
+        for (int i = 0; i < zc.size(); i++) {
             int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-            if(count == 0){
-                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个物品的领取数量！",this);
+            if (count == 0) {
+                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个物品的领取数量！", this);
                 return null;
             }
-            if(count > zc.get(i).getQuantity()) {
-                AssetMessage.ERRORSYS("第" + (i+1) + "个物品的领取数量大于库存数，"
-                        + "请输入一个小于" + zc.get(i).getQuantity() + "的数",this);
+            if (count > zc.get(i).getQuantity()) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的领取数量大于库存数，"
+                        + "请输入一个小于" + zc.get(i).getQuantity() + "的数", this);
                 return null;
             }
             zc.get(i).setQuantity(count);
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
             zc.get(i).setSaleprice(price);
-            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
+            zc.get(i).setTotalprice(zc.get(i).getQuantity() * price);
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(7);
-            total+=zc.get(i).getTotalprice();
+            total += zc.get(i).getTotalprice();
         }
         sqd.setDanjujine(total);
-        
+
         lysq.setSqd(sqd);
-        lysq.setZc(zc);        
-        
+        lysq.setZc(zc);
+
         return new submitTask(lysq);
     }
-    
-    private class submitTask extends ShenQingTask{
+
+    private class submitTask extends ShenQingTask {
 
         public submitTask(ShenQingDetailEntity cgsq) {
             super(cgsq);
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             if (result instanceof Exception) {
@@ -262,6 +269,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
             exit();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

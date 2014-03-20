@@ -58,7 +58,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
     public YiMiaoXiaoShouJDialog() {
         super();
         initComponents();
-        jTextFieldXiaoshouId.setText(DanHao.getDanHao("YMXS"));
+        jTextFieldXiaoshouId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOXS));
         jTextFieldXiaoshouId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -145,7 +145,6 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Float stockpilePrice = Float.parseFloat("" + bindedMap.get("stockpilePrice"));
                     Object youxiaoqi = bindedMap.get("youxiaodate");
                     Object saleprice = yimiao.get("yimiaoYushoujia");
-                    
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -756,7 +755,9 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
             }
 
             @Override

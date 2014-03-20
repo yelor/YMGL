@@ -183,12 +183,12 @@ public class selecteFKDJDialog extends javax.swing.JDialog {
         int aa=jComboBox1.getSelectedIndex();
         if (aa==0) {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog(new javax.swing.JFrame(), true);
+            FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog();
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
         } else {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            OtherFuKuanDanJDialog otherfkdJDialog = new OtherFuKuanDanJDialog(new javax.swing.JFrame(), true);
+            OtherFuKuanDanJDialog otherfkdJDialog = new OtherFuKuanDanJDialog(mainFrame, true);
             otherfkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(otherfkdJDialog);
         }

@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
+import com.jskj.asset.client.util.DanHao;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
 
@@ -40,23 +41,23 @@ public class YimiaoXiaoshouXiangdanTask extends BaseTask {
     public Object doBackgrounp() {
         try {
             logger.debug("xiangdanID:" + xiangdanID);
-            if (xiangdanID.contains("YMXF") | xiangdanID.contains("YMXS")) {
+            if (xiangdanID.contains(DanHao.TYPE_YIMIAOXF) | xiangdanID.contains(DanHao.TYPE_YIMIAOXS)) {
                 yimiaoxiaoshouEntiy = new XiaoshoushenpixiangdanEntity();
                 yimiaoxiaoshouEntiy = restTemplate.getForObject(YMXS_URI + "?xiangdanID=" + xiangdanID, XiaoshoushenpixiangdanEntity.class);
                 return yimiaoxiaoshouEntiy;
-            } else if (xiangdanID.contains("YMSB") | xiangdanID.contains("YMLY") | xiangdanID.contains("YMSG") | xiangdanID.contains("YMCG")) {
+            } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOSB) | xiangdanID.contains(DanHao.TYPE_YIMIAOLY) | xiangdanID.contains(DanHao.TYPE_YIMIAOSG) | xiangdanID.contains(DanHao.TYPE_YIMIAOCG)) {
                 yimiaocaigouEntiy = restTemplate.getForObject(YMCG_URI + "?xiangdanID=" + xiangdanID, YimiaocaigouxiangdanEntity.class);
                 return yimiaocaigouEntiy;
-            } else if (xiangdanID.contains("YMBS")) {
+            } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOBS)) {
                 yimiaobaosunEntiy = restTemplate.getForObject(YMBS_URI + "?xiangdanID=" + xiangdanID, YimiaobaosunxiangdanEntity.class);
                 return yimiaobaosunEntiy;
-            } else if (xiangdanID.contains("YMTJ")) {
+            } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOTJ)) {
                 yimiaoxiaotiaojiaEntiy = restTemplate.getForObject(YMTJ_URI + "?xiangdanID=" + xiangdanID, YimiaotiaojiaxiangdanEntity.class);
-                System.out.println("调价人员是：" + yimiaoxiaotiaojiaEntiy.getUserAll().getUserName());
-                System.out.println("调价单据编号是：" + yimiaoxiaotiaojiaEntiy.getYimiaotiaojiatb().getTiaojiaId());
-                System.out.println("调价库存疫苗编号是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getStockpileYimiao().getStockpileId());
-                System.out.println("调价库存疫苗名称是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getYimiaoAll().getYimiaoName());
-                System.out.println("调价详单ID是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getYimiaotiaojia_detail_tb().getTiaojiaId());
+                logger.debug("调价人员是：" + yimiaoxiaotiaojiaEntiy.getUserAll().getUserName());
+                logger.debug("调价单据编号是：" + yimiaoxiaotiaojiaEntiy.getYimiaotiaojiatb().getTiaojiaId());
+                logger.debug("调价库存疫苗编号是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getStockpileYimiao().getStockpileId());
+                logger.debug("调价库存疫苗名称是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getYimiaoAll().getYimiaoName());
+                logger.debug("调价详单ID是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getYimiaotiaojia_detail_tb().getTiaojiaId());
 
                 return yimiaoxiaotiaojiaEntiy;
             }

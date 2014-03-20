@@ -57,7 +57,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     public YiMiaoLingYongShenQingJDialog() {
         super();
         initComponents();
-        jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao("YMLY"));
+        jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOLY));
         jTextFieldYimiaolingyongdanId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -667,7 +667,9 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
             }
 
             @Override

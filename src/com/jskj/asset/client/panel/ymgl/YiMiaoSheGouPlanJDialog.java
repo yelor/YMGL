@@ -55,7 +55,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     public YiMiaoSheGouPlanJDialog() {
         super();
         initComponents();
-        jTextFieldYimiaoshegoudanId.setText(DanHao.getDanHao("YMSG"));
+        jTextFieldYimiaoshegoudanId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOSG));
         jTextFieldYimiaoshegoudanId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -585,7 +585,9 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
             }
 
             @Override

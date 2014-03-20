@@ -58,7 +58,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
     public YiMiaoCaiGouShenQingJDialog() {
         super();
         initComponents();
-        jTextFieldYimiaocaigoudanId.setText(DanHao.getDanHao("YMCG"));
+        jTextFieldYimiaocaigoudanId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOCG));
         jTextFieldYimiaocaigoudanId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -710,7 +710,9 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
             }
 
             @Override

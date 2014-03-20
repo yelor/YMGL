@@ -21,6 +21,7 @@ import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -164,29 +165,6 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         return new SPTask(shenPiEntity);
     }
 
-    private class ShenPiYTask extends org.jdesktop.application.Task<Object, Void> {
-
-        ShenPiYTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to ShenPiYTask fields, here.
-            super(app);
-        }
-
-        @Override
-        protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-
-        @Override
-        protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
 
     @Action
     public Task shenPiNMessage() {
@@ -211,30 +189,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         return new SPTask(shenPiEntity);
     }
 
-    private class ShenPiNMessageTask extends org.jdesktop.application.Task<Object, Void> {
-
-        ShenPiNMessageTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to ShenPiNMessageTask fields, here.
-            super(app);
-        }
-
-        @Override
-        protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-
-        @Override
-        protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-
+  
     private class SPTask extends ShenPiTask {
 
         public SPTask(ShenPiEntity yimiaosp) {
@@ -489,41 +444,18 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
         this.setVisible(false);
         Yimiaoshenpiliucheng shenpidan = yimiaoshenpiList.get(n);
-        if (shenpidan.getDanjuId().contains("YMXS") | shenpidan.getDanjuId().contains("YMXF")) {
+        if (shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOXS) | shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOXF)) {
             new YimiaosalexiangdanTask(shenpidan.getDanjuId()).execute();
-        } else if (shenpidan.getDanjuId().contains("YMSB") | shenpidan.getDanjuId().contains("YMSG") | shenpidan.getDanjuId().contains("YMLY") | shenpidan.getDanjuId().contains("YMCG")) {
+        } else if (shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOSB) | shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOSG) | shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOLY) | shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOCG)) {
             new YimiaocaigouxiangdanTask(shenpidan.getDanjuId()).execute();
-        } else if (shenpidan.getDanjuId().contains("YMTJ")) {
+        } else if (shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOTJ)) {
             new YimiaotiaojiaxiangdanTask(shenpidan.getDanjuId()).execute();
-        } else if (shenpidan.getDanjuId().contains("YMBS")) {
+        } else if (shenpidan.getDanjuId().contains(DanHao.TYPE_YIMIAOBS)) {
             new YimiaobaosunxiangdanTask(shenpidan.getDanjuId()).execute();
         }
     }
 
-    private class DetailTask extends org.jdesktop.application.Task<Object, Void> {
-
-        DetailTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to DetailTask fields, here.
-            super(app);
-        }
-
-        @Override
-        protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-
-        @Override
-        protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-
+ 
     private class YimiaosalexiangdanTask extends YimiaoXiaoshouXiangdanTask {
 
         public YimiaosalexiangdanTask(String xiangdanID) {
@@ -583,11 +515,11 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
     @Action
     public void xiaoshouxiangdandetailshow(XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity, String xiangdanID) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        if (xiangdanID.contains("YMXF")) {
+        if (xiangdanID.contains(DanHao.TYPE_YIMIAOXF)) {
             YiMiaoXiaFaJDialog yimiaoxiafaJDialog = new YiMiaoXiaFaJDialog(this, yimiaoxiaoshouxiangdanEntity);
             yimiaoxiafaJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoxiafaJDialog);
-        } else if (xiangdanID.contains("YMXS")) {
+        } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOXS)) {
             YiMiaoXiaoShouJDialog yimiaoxiaoshouJDialog = new YiMiaoXiaoShouJDialog(this, yimiaoxiaoshouxiangdanEntity);
             yimiaoxiaoshouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoxiaoshouJDialog);
@@ -597,19 +529,19 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
     @Action
     public void yimiaocaigouxiangdandetailshow(YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity, String xiangdanID) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        if (xiangdanID.contains("YMSB")) {
+        if (xiangdanID.contains(DanHao.TYPE_YIMIAOSB)) {
             YiMiaoShenBaoPlanJDialog yimiaoshenbaoJDialog = new YiMiaoShenBaoPlanJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaoshenbaoJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoshenbaoJDialog);
-        } else if (xiangdanID.contains("YMLY")) {
+        } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOLY)) {
             YiMiaoLingYongShenQingJDialog yimiaolingyongJDialog = new YiMiaoLingYongShenQingJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaolingyongJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaolingyongJDialog);
-        } else if (xiangdanID.contains("YMSG")) {
+        } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOSG)) {
             YiMiaoSheGouPlanJDialog yimiaoshegouJDialog = new YiMiaoSheGouPlanJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaoshegouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoshegouJDialog);
-        } else if (xiangdanID.contains("YMCG")) {
+        } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOCG)) {
             YiMiaoCaiGouShenQingJDialog yimiaocaigouJDialog = new YiMiaoCaiGouShenQingJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaocaigouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaocaigouJDialog);

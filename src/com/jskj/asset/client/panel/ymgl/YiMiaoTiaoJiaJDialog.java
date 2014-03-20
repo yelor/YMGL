@@ -55,7 +55,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         super();
         initComponents();
 
-        jTextFieldTiaojiaId.setText(DanHao.getDanHao("YMTJ"));
+        jTextFieldTiaojiaId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOTJ));
         jTextFieldTiaojiaId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -631,7 +631,9 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
             }
 
             @Override
