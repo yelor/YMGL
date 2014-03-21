@@ -15,7 +15,6 @@ import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
-import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
 import com.jskj.asset.client.panel.slgl.ShenqingDetailTask;
@@ -31,6 +30,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -38,10 +38,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Task;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.client.RestClientException;
 
 /**
  *
@@ -54,23 +52,23 @@ public abstract class MyTaskFindTask extends BaseTask {
     private final String serviceId = "/spfind/findmytask";
     javax.swing.JLabel messageLabel;
     List<javax.swing.JLabel> labelArray;
-    private final BasePanel basePanel;
-    private final int days;
+    private final Date startAppDate;
+    private final Date endAppDate;
+    private final Date startShenpiguoDate;
+    private final Date endShenpiguoDate;
     private final boolean displayTask;
     private final boolean displayApplication;
+    private final boolean displayShenpi;
 
-    public MyTaskFindTask(javax.swing.JLabel messageLabel, BasePanel basePanel, int days, boolean displayTask, boolean displayApplication) {
+    public MyTaskFindTask(Date startAppDate, Date endAppDate, Date startShenpiguoDate, Date endShenpiguoDate, boolean displayTask, boolean displayApplication, boolean displayShenpi) {
         super();
-        this.messageLabel = messageLabel;
-        this.basePanel = basePanel;
-        this.days = days;
+        this.startAppDate = startAppDate;
+        this.endAppDate = endAppDate;
+        this.startShenpiguoDate = startShenpiguoDate;
+        this.endShenpiguoDate = endShenpiguoDate;
         this.displayTask = displayTask;
         this.displayApplication = displayApplication;
-    }
-
-    @Action
-    public Task refresh() {
-        return basePanel.reload();
+        this.displayShenpi = displayShenpi;
     }
 
     @Action
@@ -119,7 +117,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                 response.setResult(array);
                 return response;
             }
-        } catch (RestClientException e) {
+        } catch (Exception e) {
             logger.error(e);
             return e;
         }
@@ -129,20 +127,18 @@ public abstract class MyTaskFindTask extends BaseTask {
     public void onSucceeded(Object object) {
         if (object == null) {
             clientView.setStatus("response data is null", AssetMessage.ERROR_MESSAGE);
-            return;
         }
-        if (object instanceof Exception) {
+        if (object != null && object instanceof Exception) {
             Exception e = (Exception) object;
             clientView.setStatus(e.getMessage(), AssetMessage.ERROR_MESSAGE);
             logger.error(e);
-            return;
         }
-        if (object instanceof CommFindEntity) {
+        if (object != null && object instanceof CommFindEntity) {
             responseResult((CommFindEntity<MyTaskEntity>) object);
-
         } else {
-            clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
+            clientView.setStatus("没有获取到我的审批任务.", AssetMessage.ERROR_MESSAGE);
         }
+        new MySubmitFindTask().execute();
     }
 
     public void responseResult(CommFindEntity<MyTaskEntity> response) {
@@ -200,7 +196,6 @@ public abstract class MyTaskFindTask extends BaseTask {
 
                 });
             }
-            new MySubmitFindTask().execute();
         }
     }
 
@@ -210,7 +205,7 @@ public abstract class MyTaskFindTask extends BaseTask {
 
         private final Logger logger = Logger.getLogger(MySubmitFindTask.class);
         private final String URI = Constants.HTTP + Constants.APPID;
-        private final String serviceId = "/spfind/mysubmit?days=" + days;
+        private final String serviceId = "/spfind/mysubmit";
 
         public MySubmitFindTask() {
             super();
@@ -220,11 +215,21 @@ public abstract class MyTaskFindTask extends BaseTask {
         public Object doBackgrounp() {
             try {
                 if (displayApplication) {
-                    CommFindEntity<MyTaskEntity> response = restTemplate.exchange(URI + serviceId,
+                    StringBuilder paramater = new StringBuilder();
+                    if (startAppDate != null) {
+                        paramater.append("startDate=").append(DateHelper.format(startAppDate, "yyyy-MM-dd HH:mm:ss")).append("&");
+                    }
+                    if (endAppDate != null) {
+                        paramater.append("endDate=").append(DateHelper.format(endAppDate, "yyyy-MM-dd HH:mm:ss")).append("&");
+                    }
+                    paramater.deleteCharAt(paramater.length() - 1);
+                    logger.debug("parameter map:" + paramater);
+                    CommFindEntity<MyTaskEntity> response = restTemplate.exchange(URI + serviceId + "?" + paramater,
                             HttpMethod.GET,
                             null,
                             new ParameterizedTypeReference<CommFindEntity<MyTaskEntity>>() {
                             }).getBody();
+
                     return response;
                 } else {
                     CommFindEntity<MyTaskEntity> response = new CommFindEntity<MyTaskEntity>();
@@ -233,7 +238,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                     response.setResult(array);
                     return response;
                 }
-            } catch (RestClientException e) {
+            } catch (Exception e) {
                 logger.error(e);
                 return e;
             }
@@ -243,27 +248,26 @@ public abstract class MyTaskFindTask extends BaseTask {
         public void onSucceeded(Object object) {
             if (object == null) {
                 clientView.setStatus("response data is null", AssetMessage.ERROR_MESSAGE);
-                return;
             }
-            if (object instanceof Exception) {
+            if (object != null && object instanceof Exception) {
                 Exception e = (Exception) object;
                 clientView.setStatus(e.getMessage(), AssetMessage.ERROR_MESSAGE);
                 logger.error(e);
-                return;
             }
-            if (object instanceof CommFindEntity) {
+            if (object != null && object instanceof CommFindEntity) {
                 responseResult((CommFindEntity<MyTaskEntity>) object);
-
             } else {
-                clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
+                clientView.setStatus("没有获取到我的申请单.", AssetMessage.ERROR_MESSAGE);
             }
+
+            new MyShenpiFindTask().execute();
         }
 
         public void responseResult(CommFindEntity<MyTaskEntity> response) {
             List<MyTaskEntity> results = response.getResult();
 
             if (results != null) {
-                logger.info("获取任务数:" + response.getCount());
+                //logger.info("获取任务数:" + response.getCount());
 
                 int i = 1;
                 for (final MyTaskEntity re : results) {
@@ -289,99 +293,107 @@ public abstract class MyTaskFindTask extends BaseTask {
                     messageApp.setToolTipText("点击打开我的申请单:" + re.getShenqingdanId());
                     messageApp.setOpaque(true);
 
-                    messageApp.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-
-                            final String shenqingdan = re.getShenqingdanId();
-                            if (shenqingdan != null && shenqingdan.length() > 4) {
-                                String danjuType = shenqingdan.substring(0, 4);
-
-                                final String className = DanHao.getUIClassByDanhaoType(danjuType);
-                                if (!className.equals("")) {
-
-                                    if (danjuType.startsWith("YM")) {//疫苗相关
-                                        new YimiaoXiaoshouXiangdanTask(shenqingdan) {
-                                            @Override
-                                            protected void succeeded(Object result) {
-                                                if (result != null) {
-                                                    if (shenqingdan.contains(DanHao.TYPE_YIMIAOXF) || shenqingdan.contains(DanHao.TYPE_YIMIAOXS)) {
-                                                        openDialog(className, result, XiaoshoushenpixiangdanEntity.class);
-                                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOSB) || shenqingdan.contains(DanHao.TYPE_YIMIAOLY)
-                                                            || shenqingdan.contains(DanHao.TYPE_YIMIAOSG) || shenqingdan.contains(DanHao.TYPE_YIMIAOCG)) {
-                                                        openDialog(className, result, YimiaocaigouxiangdanEntity.class);
-                                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOBS)) {
-                                                        openDialog(className, result, YimiaobaosunxiangdanEntity.class);
-                                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOTJ)) {
-                                                        openDialog(className, result, YimiaotiaojiaxiangdanEntity.class);
-                                                    }
-
-                                                } else {
-                                                    logger.error("response result is null.");
-                                                }
-                                            }
-                                        }.execute();
-
-                                    } else if (!danjuType.equals(DanHao.TYPE_FKDJ)) {//资产相关
-                                        new ShenqingDetailTask(shenqingdan) {
-                                            @Override
-                                            protected void succeeded(Object result) {
-                                                if (result != null) {
-                                                    openDialog(className, result, CaigoushenqingDetailEntity.class);
-                                                } else {
-                                                    logger.error("response result is null.");
-                                                }
-                                            }
-                                        }.execute();
-                                    } else {//付款单据
-
-                                    }
-
-                                }
-                            }
-                        }
-
-                        private void openDialog(String className, Object entity, Class entityClassType) {
-                            try {
-                                ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, JDialog.class, entityClassType);
-                                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                                BaseDialog jdialog = helper.newInstance(null, entity);
-                                jdialog.setLocationRelativeTo(mainFrame);
-                                //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
-                                jdialog.setVisible(true);
-                            } catch (Exception ex) {
-                                logger.error("StaticDialog:" + ex);
-                            }
-                        }
-
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
-                            e.getComponent().setBackground(Color.WHITE);
-                        }
-
-                        @Override
-                        public void mouseExited(MouseEvent e) {
-                            e.getComponent().setBackground(null);
-                        }
-
-                    });
+                    messageApp.addMouseListener(new AssetMouseAdapter(re.getShenqingdanId()));
                 }
-
-                if (labelArray.size() <= 0) {
-                    StringBuilder builderNoMsg = new StringBuilder("<html><font style=\"FONT-FAMILY:")
-                            .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
-                    builderNoMsg.append("您当前没有消息.");
-                    builderNoMsg.append("</font></html>");
-                    javax.swing.JLabel messageApp = new javax.swing.JLabel();
-                    messageApp.setText(builderNoMsg.toString());
-                    labelArray.add(messageApp);
-                } else {
-                    JLabelComparator comparator = new JLabelComparator();
-                    Collections.sort(labelArray, comparator);
-                }
-                layout(labelArray);
             }
         }
+    }
+
+    class MyShenpiFindTask extends BaseTask {
+
+        private final Logger logger = Logger.getLogger(MyShenpiFindTask.class);
+        private final String URI = Constants.HTTP + Constants.APPID;
+        private final String serviceId = "/spfind/myshenpi";
+
+        @Override
+        public Object doBackgrounp() {
+            try {
+                if (displayShenpi) {
+                    StringBuilder paramater = new StringBuilder();
+                    if (startAppDate != null) {
+                        paramater.append("startDate=").append(DateHelper.format(startShenpiguoDate, "yyyy-MM-dd HH:mm:ss")).append("&");
+                    }
+                    if (endAppDate != null) {
+                        paramater.append("endDate=").append(DateHelper.format(endShenpiguoDate, "yyyy-MM-dd HH:mm:ss")).append("&");
+                    }
+                    paramater.deleteCharAt(paramater.length() - 1);
+                    logger.debug("parameter map:" + paramater);
+
+                    CommFindEntity<MyTaskEntity> shenpiArray = restTemplate.exchange(URI + serviceId + "?" + paramater,
+                            HttpMethod.GET,
+                            null,
+                            new ParameterizedTypeReference<CommFindEntity<MyTaskEntity>>() {
+                            }).getBody();
+                    return shenpiArray;
+                } else {
+                    CommFindEntity<MyTaskEntity> response = new CommFindEntity<MyTaskEntity>();
+                    List<MyTaskEntity> array = new ArrayList();
+                    response.setResult(array);
+                    return response;
+                }
+            } catch (Exception e) {
+                logger.error(e);
+                return e;
+            }
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+            if (object == null) {
+                clientView.setStatus("response data is null", AssetMessage.ERROR_MESSAGE);
+            }
+            if (object != null && object instanceof Exception) {
+                Exception e = (Exception) object;
+                clientView.setStatus(e.getMessage(), AssetMessage.ERROR_MESSAGE);
+                logger.error(e);
+            }
+            if (object != null && object instanceof CommFindEntity) {
+                responseResult((CommFindEntity<MyTaskEntity>) object);
+            } else {
+                clientView.setStatus("没有获取到我审批过的申请单状态.", AssetMessage.ERROR_MESSAGE);
+            }
+
+            if (labelArray.size() <= 0) {
+                StringBuilder builderNoMsg = new StringBuilder("<html><font style=\"FONT-FAMILY:")
+                        .append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
+                builderNoMsg.append("您当前没有消息.");
+                builderNoMsg.append("</font></html>");
+                javax.swing.JLabel messageApp = new javax.swing.JLabel();
+                messageApp.setText(builderNoMsg.toString());
+                labelArray.add(messageApp);
+            } else {
+                JLabelComparator comparator = new JLabelComparator();
+                Collections.sort(labelArray, comparator);
+            }
+            layout(labelArray);
+        }
+
+        public void responseResult(CommFindEntity<MyTaskEntity> response) {
+            List<MyTaskEntity> results = response.getResult();
+            if (results != null) {
+                for (final MyTaskEntity re : results) {
+                    javax.swing.JLabel messageApp = new javax.swing.JLabel();
+                    messageApp.setName(String.valueOf(re.getSubmitDate().getTime()));
+                    labelArray.add(messageApp);
+
+                    StringBuilder builder = new StringBuilder("<html>");
+
+                    builder.append("<font color=\"green\" style=\"FONT-FAMILY:");
+
+                    builder.append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
+                    builder.append("&nbsp;审批单").append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append(",").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"").append(",\"")
+                            .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("],状态[").append(re.getContext()).append("]").append("<br />");
+                    builder.append("</font></html>");
+
+                    messageApp.setText(builder.toString());
+                    messageApp.setToolTipText("点击打开我的审批单:" + re.getShenqingdanId());
+                    messageApp.setOpaque(true);
+
+                    messageApp.addMouseListener(new AssetMouseAdapter(re.getShenqingdanId()));
+                }
+            }
+        }
+
     }
 
     class JLabelComparator implements Comparator<JLabel> {
@@ -398,5 +410,89 @@ public abstract class MyTaskFindTask extends BaseTask {
                 return 1;
             }
         }
+    }
+
+    class AssetMouseAdapter extends MouseAdapter {
+
+        String shenqingdanID;
+
+        public AssetMouseAdapter(String shenqingdanID) {
+            this.shenqingdanID = shenqingdanID;
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+            final String shenqingdan = shenqingdanID;
+            if (shenqingdan != null && shenqingdan.length() > 4) {
+                String danjuType = shenqingdan.substring(0, 4);
+
+                final String className = DanHao.getUIClassByDanhaoType(danjuType);
+                if (!className.equals("")) {
+
+                    if (danjuType.startsWith("YM")) {//疫苗相关
+                        new YimiaoXiaoshouXiangdanTask(shenqingdan) {
+                            @Override
+                            protected void succeeded(Object result) {
+                                if (result != null) {
+                                    if (shenqingdan.contains(DanHao.TYPE_YIMIAOXF) || shenqingdan.contains(DanHao.TYPE_YIMIAOXS)) {
+                                        openDialog(className, result, XiaoshoushenpixiangdanEntity.class);
+                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOSB) || shenqingdan.contains(DanHao.TYPE_YIMIAOLY)
+                                            || shenqingdan.contains(DanHao.TYPE_YIMIAOSG) || shenqingdan.contains(DanHao.TYPE_YIMIAOCG)) {
+                                        openDialog(className, result, YimiaocaigouxiangdanEntity.class);
+                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOBS)) {
+                                        openDialog(className, result, YimiaobaosunxiangdanEntity.class);
+                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOTJ)) {
+                                        openDialog(className, result, YimiaotiaojiaxiangdanEntity.class);
+                                    }
+
+                                } else {
+                                    logger.error("response result is null.");
+                                }
+                            }
+                        }.execute();
+
+                    } else if (!danjuType.equals(DanHao.TYPE_FKDJ)) {//资产相关
+                        new ShenqingDetailTask(shenqingdan) {
+                            @Override
+                            protected void succeeded(Object result) {
+                                if (result != null) {
+                                    openDialog(className, result, CaigoushenqingDetailEntity.class);
+                                } else {
+                                    logger.error("response result is null.");
+                                }
+                            }
+                        }.execute();
+                    } else {//付款单据
+
+                    }
+
+                }
+            }
+        }
+
+        private void openDialog(String className, Object entity, Class entityClassType) {
+            try {
+                ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, JDialog.class, entityClassType);
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                BaseDialog jdialog = helper.newInstance(null, entity);
+                jdialog.setLocationRelativeTo(mainFrame);
+                //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
+                jdialog.setVisible(true);
+            } catch (Exception ex) {
+                logger.error("StaticDialog:" + ex);
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            e.getComponent().setBackground(Color.WHITE);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            e.getComponent().setBackground(null);
+        }
+
     }
 }

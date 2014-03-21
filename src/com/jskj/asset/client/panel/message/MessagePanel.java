@@ -10,6 +10,8 @@ import com.jskj.asset.client.AssetClientView;
 import static com.jskj.asset.client.layout.AssetMessage.INFO_MESSAGE;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.PopupButton;
+import com.jskj.asset.client.util.DateHelper;
+import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 import javax.swing.GroupLayout;
@@ -26,10 +28,12 @@ import org.jdesktop.application.Task;
  */
 public class MessagePanel extends BasePanel {
 
-    private int messagedays = -30;
+    private Date startDate;
+    private Date startShenpihouDate;
     private final static Logger logger = Logger.getLogger(MessagePanel.class);
     private boolean displayTask;
     private boolean displayApplication;
+    private boolean displayShenpi;
 
     /**
      * Creates new form MessagePanel
@@ -38,16 +42,21 @@ public class MessagePanel extends BasePanel {
         initComponents();
         displayTask = true;
         displayApplication = true;
+        displayShenpi = true;
+        startDate = DateHelper.currentDateAdd(-30);
+        startShenpihouDate = DateHelper.currentDateAdd(-15);
         ((PopupButton) jButton2).registerPopup(new MessageConfig(((PopupButton) jButton2)) {
             AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
             java.util.Timer timer = new java.util.Timer(true);
             TimerTask timetask;
 
             @Override
-            public void savedData(int days, boolean autorefresh, final int selectSec, boolean task, boolean application) {
-                messagedays = days;
+            public void savedData(Date app,Date shenpidata, boolean autorefresh, final int selectSec, boolean task, boolean application,boolean shenpi) {
+                startDate = app;
                 displayTask = task;
                 displayApplication = application;
+                displayShenpi = shenpi;
+                startShenpihouDate = shenpidata;
 
                 if (autorefresh) {
 
@@ -194,7 +203,7 @@ public class MessagePanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
-        return new MyTaskFindTask(messageLabel, this, messagedays, displayTask, displayApplication) {
+        return new MyTaskFindTask(startDate,null,startShenpihouDate,null, displayTask, displayApplication,displayShenpi) {
 
             @Override
             public void layout(List<JLabel> labelArray) {
