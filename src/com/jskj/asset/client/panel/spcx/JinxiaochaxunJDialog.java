@@ -7,8 +7,6 @@ package com.jskj.asset.client.panel.spcx;
 
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.panel.OpenTabTask;
-import com.jskj.asset.client.panel.baobiao.caiwubaobiao.DanweiyingshouyingfuPanel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
@@ -17,12 +15,12 @@ import org.jdesktop.application.Action;
  *
  * @author huiqi
  */
-public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
+public class JinxiaochaxunJDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form selecteInvoiceJDialog
      */
-    public selecteTongJiInvoiceJDialog(java.awt.Frame parent, boolean modal) {
+    public JinxiaochaxunJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -41,63 +39,85 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(selecteTongJiInvoiceJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(JinxiaochaxunJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteTongJiInvoiceJDialog.class, this);
-        jButton3.setAction(actionMap.get("GudingzichanlingyongAction")); // NOI18N
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JinxiaochaxunJDialog.class, this);
+        jButton3.setAction(actionMap.get("Yimiaoshenbao")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
-        jButton4.setAction(actionMap.get("GudingzichanweixiuAction")); // NOI18N
+        jButton4.setAction(actionMap.get("Yimiaoshegou")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
-        jButton5.setAction(actionMap.get("DizhiyihaopinlingyongAction")); // NOI18N
+        jButton5.setAction(actionMap.get("Yimiaolingyong")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
 
+        jButton6.setAction(actionMap.get("Yimiaocaigoujihua")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setName("jButton6"); // NOI18N
 
-        jButton7.setAction(actionMap.get("DanweiyingshouyingfuAction")); // NOI18N
+        jButton7.setAction(actionMap.get("Yimiaocaigou")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
+
+        jButton8.setAction(actionMap.get("Yimiaoshegou")); // NOI18N
+        jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setName("jButton8"); // NOI18N
+
+        jButton10.setAction(actionMap.get("YiMiaoChengBenChaXunAction")); // NOI18N
+        jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
+        jButton10.setName("jButton10"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(79, 79, 79))
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
-                .addGap(41, 41, 41)
+                    .addComponent(jButton3)
+                    .addComponent(jButton8))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton4))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
-                    .addComponent(jButton6))
-                .addGap(34, 34, 34)
-                .addComponent(jButton7)
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jButton7))
+                .addGap(26, 26, 26)
+                .addComponent(jButton10)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,59 +165,96 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
         });
     }
 
-    @Action
-    public void DanweiyingshouyingfuAction() {
+        @Action
+    public void YiMiaoChengBenChaXunAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                new OpenTabTask("报表-单位应收应付", new DanweiyingshouyingfuPanel(), false).execute();
-            }
-        });
-    }
+            private YiMiaoChengBenChaXunJDialog yiMiaoChengBenChaXunJDialog;
 
-    @Action
-    public void GudingzichanlingyongAction() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanLiYongTongJiJDialog guDingZiChanLiYongTongJiJDialog = new GuDingZiChanLiYongTongJiJDialog(new javax.swing.JFrame(), true);
-                guDingZiChanLiYongTongJiJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(guDingZiChanLiYongTongJiJDialog);
+                if (yiMiaoChengBenChaXunJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    yiMiaoChengBenChaXunJDialog = new YiMiaoChengBenChaXunJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoChengBenChaXunJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(yiMiaoChengBenChaXunJDialog);
             }
-        });
-    }
 
-    @Action
-    public void GudingzichanweixiuAction() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                WeiXiuFeiYongTongJiJDialog weiXiuFeiYongTongJiJDialog = new WeiXiuFeiYongTongJiJDialog(new javax.swing.JFrame(), true);
-                weiXiuFeiYongTongJiJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(weiXiuFeiYongTongJiJDialog);
-            }
-        });
-    }
-
-    @Action
-    public void DizhiyihaopinlingyongAction() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                DiZhiYiHaoPinLingYongTongJiJDialog diZhiYiHaoPinLingYongTongJiJDialog = new DiZhiYiHaoPinLingYongTongJiJDialog(new javax.swing.JFrame(), true);
-                diZhiYiHaoPinLingYongTongJiJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongTongJiJDialog);
-            }
         });
     }
     
+    @Action
+    public void Yimiaocaigoujihua() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
+                yiMiaoCaiGouJiHuaFenXiJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(yiMiaoCaiGouJiHuaFenXiJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaoshenbao() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog();
+                shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
+                shenbaoPlanJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(shenbaoPlanJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaoshegou() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoSheGouPlanJDialog sheGouPlanJDialog = new YiMiaoSheGouPlanJDialog();
+                sheGouPlanJDialog.setLocationRelativeTo(mainFrame);
+                sheGouPlanJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(sheGouPlanJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaolingyong() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog();
+                lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
+                lingYongShenQingJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(lingYongShenQingJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaocaigou() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog();
+                caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
+                caiGouShenQingJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(caiGouShenQingJDialog);
+            }
+        });
+    }
 
     @Action
     public void cancelAction() {
@@ -207,10 +264,12 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     // End of variables declaration//GEN-END:variables
 }

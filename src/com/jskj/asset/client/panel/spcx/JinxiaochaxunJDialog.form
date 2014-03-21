@@ -27,37 +27,53 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="jButton7" max="32767" attributes="0"/>
-                  <Component id="jButton3" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jButton5" alignment="1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton10" min="-2" pref="153" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jButton5" max="32767" attributes="0"/>
+                              <Component id="jButton3" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="185" max="32767" attributes="0"/>
+              <EmptySpace pref="197" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jButton4" max="32767" attributes="0"/>
-                  <Component id="jButton6" max="32767" attributes="0"/>
+                  <Component id="jButton7" max="32767" attributes="0"/>
+                  <Component id="jButton8" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton8" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="44" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="jButton10" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,7 +82,7 @@
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.spcx.selecteTongJiInvoiceJDialog" id="GudingzichanlingyongAction" methodName="GudingzichanlingyongAction"/>
+          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaoshenbao" methodName="Yimiaoshenbao"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
         <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
@@ -75,7 +91,7 @@
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.spcx.selecteTongJiInvoiceJDialog" id="GudingzichanweixiuAction" methodName="GudingzichanweixiuAction"/>
+          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaoshegou" methodName="Yimiaoshegou"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
         <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
@@ -84,7 +100,7 @@
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.spcx.selecteTongJiInvoiceJDialog" id="DizhiyihaopinlingyongAction" methodName="DizhiyihaopinlingyongAction"/>
+          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaolingyong" methodName="Yimiaolingyong"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
         <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
@@ -92,6 +108,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton6">
       <Properties>
+        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaocaigoujihua" methodName="Yimiaocaigoujihua"/>
+        </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
         <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
       </Properties>
@@ -99,10 +118,28 @@
     <Component class="javax.swing.JButton" name="jButton7">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.spcx.selecteTongJiInvoiceJDialog" id="DanweiyingshouyingfuAction" methodName="DanweiyingshouyingfuAction"/>
+          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaocaigou" methodName="Yimiaocaigou"/>
         </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
         <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton8">
+      <Properties>
+        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaoshegou" methodName="Yimiaoshegou"/>
+        </Property>
+        <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
+        <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton10">
+      <Properties>
+        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="com.jskj.asset.client.panel.spcx.JinxiaochaxunJDialog" id="YiMiaoChengBenChaXunAction" methodName="YiMiaoChengBenChaXunAction"/>
+        </Property>
+        <Property name="text" type="java.lang.String" resourceKey="jButton10.text"/>
+        <Property name="name" type="java.lang.String" value="jButton10" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>

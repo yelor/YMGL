@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -51,6 +50,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
     private boolean isNew;
     private Sale_detail_tbFindEntity yimiaoxiaoshou;
     private XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity;
+    private List<Stockpiletb> stockpileList;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -105,6 +105,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
             {"stockpilePrice", "单价", "false"}, {"yimiaoYushoujia", "售价", "true"}, {"totalprice", "销售合价", "true"}});
 
+        editTable.tableChanged(null);
+        
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -136,6 +138,11 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
+                    
+                    stockpileList=new ArrayList<Stockpiletb>();
+                    Stockpiletb stockpile=new Stockpiletb();
+                    stockpile.setStockpileQuantity(Integer.parseInt(""+bindedMap.get("stockpileQuantity")));
+                    stockpileList.add(stockpile);
                     Object yimiaoId = yimiao.get("yimiaoId");
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
@@ -696,6 +703,9 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "saleQuantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗销售数量!");
+                return null;
+            }else if(Integer.parseInt(""+yimiaotable.getValue(i, "saleQuantity"))>stockpileList.get(i).getStockpileQuantity()){
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiaoName").toString()+"销售数量不能大于库存数量!");
                 return null;
             }
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));

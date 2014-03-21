@@ -30,6 +30,7 @@ import com.jskj.asset.client.panel.slgl.selectCaiGouDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectLingYongDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectWeiXiuDiaoBoDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectYanShouDengJiDanJDialog;
+import com.jskj.asset.client.panel.spcx.JinxiaochaxunJDialog;
 import com.jskj.asset.client.panel.spcx.LiChengZaiXianChaXunJDialog;
 import com.jskj.asset.client.panel.spcx.YeWuLiuChengChaXunJDialog;
 import com.jskj.asset.client.panel.spcx.YiMiaoChengBenChaXunJDialog;
@@ -678,21 +679,23 @@ public class BaseMainPanel extends BasePanel {
     }
 
     @Action
-    public void YiMiaoChengBenChaXunAction() {
+    public void JinxiaoChaXunAction() {
         SwingUtilities.invokeLater(new Runnable() {
-            private YiMiaoChengBenChaXunJDialog yiMiaoChengBenChaXunJDialog;
+            private JinxiaochaxunJDialog jinxiaochaxunJDialog;
 
             public void run() {
-                if (yiMiaoChengBenChaXunJDialog == null) {
+                if (jinxiaochaxunJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yiMiaoChengBenChaXunJDialog = new YiMiaoChengBenChaXunJDialog(new javax.swing.JFrame(), true);
-                    yiMiaoChengBenChaXunJDialog.setLocationRelativeTo(mainFrame);
+                    jinxiaochaxunJDialog = new JinxiaochaxunJDialog(new javax.swing.JFrame(), true);
+                    jinxiaochaxunJDialog.setLocationRelativeTo(mainFrame);
                 }
-                AssetClientApp.getApplication().show(yiMiaoChengBenChaXunJDialog);
+                AssetClientApp.getApplication().show(jinxiaochaxunJDialog);
             }
 
         });
     }
+    
+
 
     @Action
     public void TongJiChaXunAction() {

@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author 305027939
  */
-public class StockpiletbFindEntity extends Stockpiletb{
+public class StockpiletbFindEntity{
     
     private int count;
     
