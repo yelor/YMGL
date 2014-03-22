@@ -5,15 +5,33 @@
  */
 package com.jskj.asset.client.panel.spcx;
 
+import com.jskj.asset.client.bean.entity.MyTaskEntity;
 import com.jskj.asset.client.bean.entity.RecordProcessEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
+import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.DetailPanel;
+import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.RowRender;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.message.MyTaskFindTask;
 import com.jskj.asset.client.panel.spcx.task.LichengZaixianFindTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DateChooser;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -25,34 +43,52 @@ import org.jdesktop.application.Task;
 public class LiChengZaiXianChaXunJDialog extends BaseDialog {
 
     private final static Logger logger = Logger.getLogger(LiChengZaiXianChaXunJDialog.class);
-    private final BindTableHelper<RecordProcessEntity> bindTable;
+    private final BindTableHelper<MyTaskEntity> bindTable;
     int resultCount = 0;
-    private List<RecordProcessEntity> recordProcesses;
+    BaseTextField jTextFieldStartInit;
+    BaseTextField jTextFieldEndInit;
+    private final HashMap parameterMap;
+    private DetailPanel detailPanel;
+    private List<MyTaskEntity> resultArray;
 
     /**
      * Creates new form yimiaoyanshouJDialog
      */
     public LiChengZaiXianChaXunJDialog() {
         super();
+        jTextFieldStartInit = new BaseTextField();
+        jTextFieldEndInit = new BaseTextField();
+        jTextFieldStartInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
+        jTextFieldEndInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
+
+        DateChooser dateChooser1 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
+        dateChooser1.register(jTextFieldStartInit);
+
+        DateChooser dateChooser2 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
+        dateChooser2.register(jTextFieldEndInit);
         initComponents();
-        bindTable = new BindTableHelper<RecordProcessEntity>(jTable4, new ArrayList<RecordProcessEntity>());
-        bindTable.createTable(new String[][]{{"departmentName", "部门"}, {"danjuleixing", "类型"}, {"handleType", "操作"}, {"handleDate", "日期"},
-        {"jingbanren", "经办人"}, {"comments", "信息"}});
-        bindTable.setDateType(4);
-        bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 100}).setRowHeight(25);
+        parameterMap = new HashMap();
+        bindTable = new BindTableHelper<MyTaskEntity>(jTable4, new ArrayList<MyTaskEntity>());
+        bindTable.createTable(new String[][]{{"shenqingdanId", "申请单ID"}, {"submitDate", "提出时间"}, {"danjuleixing", "单据类型"}, {"owner", "制单人"},
+        {"department", "部门"}});
+        bindTable.setDateType(2);
+        bindTable.bind().setColumnWidth(new int[]{0, 200}, new int[]{1, 200}).setRowHeight(25);
+        detailPanel = new DetailPanel();
     }
 
-    private class RefreshTask extends LichengZaixianFindTask {
-
-        RefreshTask(String danjuId) {
-            super(danjuId);
-        }
+    class JLabelComparator implements Comparator<MyTaskEntity> {
 
         @Override
-        public void responseResult(CommFindEntity<RecordProcessEntity> response) {
-            logger.debug("get current size:" + response.getResult().size());
-            bindTable.refreshData(response.getResult());
-
+        public int compare(MyTaskEntity o1, MyTaskEntity o2) {
+            long o1Label = o1.getSubmitDate().getTime();
+            long o2Label = o2.getSubmitDate().getTime();
+            if (o1Label > o2Label) {
+                return -1;
+            } else if (o1Label == o2Label) {
+                return 0;
+            } else {
+                return 1;
+            }
         }
     }
 
@@ -65,66 +101,15 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jLabel1 = new javax.swing.JLabel();
-        shenqingdanid = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
-
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane2.setViewportView(jTable1);
-
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable2.setName("jTable2"); // NOI18N
-        jScrollPane3.setViewportView(jTable2);
-
-        jScrollPane4.setName("jScrollPane4"); // NOI18N
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable3.setName("jTable3"); // NOI18N
-        jScrollPane4.setViewportView(jTable3);
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldStart = jTextFieldStartInit;
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldEnd = jTextFieldEndInit;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(LiChengZaiXianChaXunJDialog.class);
@@ -139,17 +124,6 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-        jToolBar1.add(jLabel1);
-
-        shenqingdanid.setText(resourceMap.getString("shenqingdanid.text")); // NOI18N
-        shenqingdanid.setToolTipText(resourceMap.getString("shenqingdanid.toolTipText")); // NOI18N
-        shenqingdanid.setMinimumSize(new java.awt.Dimension(6, 30));
-        shenqingdanid.setName("shenqingdanid"); // NOI18N
-        shenqingdanid.setPreferredSize(new java.awt.Dimension(6, 30));
-        jToolBar1.add(shenqingdanid);
-
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(LiChengZaiXianChaXunJDialog.class, this);
         jButton1.setAction(actionMap.get("findProcess")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
@@ -161,6 +135,17 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
+
+        jButton2.setAction(actionMap.get("detail")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
 
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
@@ -199,21 +184,48 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
             jTable4.getColumnModel().getColumn(5).setHeaderValue(resourceMap.getString("jTable4.columnModel.title6")); // NOI18N
         }
 
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jTextFieldStart.setText(resourceMap.getString("jTextFieldStart.text")); // NOI18N
+        jTextFieldStart.setName("jTextFieldStart"); // NOI18N
+
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        jTextFieldEnd.setText(resourceMap.getString("jTextFieldEnd.text")); // NOI18N
+        jTextFieldEnd.setName("jTextFieldEnd"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane5)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(97, 97, 97))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(jTextFieldEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
         );
 
         pack();
@@ -263,27 +275,117 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
 
     @Action
     public Task findProcess() {
-        String id = shenqingdanid.getText();
-        if (id.trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入单据ID!");
-            shenqingdanid.grabFocus();
-            return null;
-        }
-        return new RefreshTask(id);
+        String startDate = jTextFieldStart.getText();
+        String endDate = jTextFieldEnd.getText();
+        parameterMap.put("startDate", startDate);
+        parameterMap.put("endDate", endDate);
+        return new LichengZaixianFindTask(parameterMap) {
+
+            @Override
+            public void responseResult(CommFindEntity<MyTaskEntity> response) {
+                logger.debug("get current size:" + response.getResult().size());
+                resultArray = response.getResult();
+                JLabelComparator comparator = new JLabelComparator();
+                Collections.sort(resultArray, comparator);
+                bindTable.refreshData(resultArray);
+
+//                jTable4.getColumnModel().getColumn(5).setCellRenderer(new RowRender() {
+//
+//                    @Override
+//                    public void setRender(JTable t, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//                        setBackground(Color.white);
+//
+//                        if (value instanceof String) {
+//                            String maoli = value.toString();
+//                            if (maoli.startsWith("-")) {
+//                                setBackground(new Color(223, 131, 123));
+//                            } else {
+//                                setBackground(new Color(107, 209, 143));
+//                            }
+//                        }
+//
+//                    }
+//                });
+            }
+
+        };
     }
+
+    private MyTaskEntity selectedTaskEntity() {
+        if (jTable4.getSelectedRow() >= 0) {
+            if (resultArray != null) {
+                return resultArray.get(jTable4.getSelectedRow());
+            }
+        }
+        return null;
+    }
+
+    @Action
+    public void detail() {
+
+        if (isShow) {
+            hidePanel();
+        } else {
+            MyTaskEntity entity = selectedTaskEntity();
+            if (entity == null) {
+                AssetMessage.ERRORSYS("请选择数据!");
+                return;
+            }
+            showPanel(entity.getContext());
+        }
+    }
+
+    private Popup pop;
+    private boolean isShow;
+
+    public void hidePanel() {
+        if (pop != null) {
+            isShow = false;
+            pop.hide();
+            pop = null;
+        }
+    }
+
+    public void showPanel(String context) {
+        if (pop != null) {
+            pop.hide();
+        }
+        Point p = jTable4.getLocationOnScreen();
+
+        int selectedRow = jTable4.getSelectedRow();
+
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
+        int selectedColumnX = p.x;
+        int selectedColumnY = p.y + (selectedRow + 1) * jTable4.getRowHeight();
+
+        int popHeight = detailPanel.getPreferredSize().height;
+        int popWitdh = detailPanel.getPreferredSize().width;
+
+        if ((selectedColumnY + popHeight) > size.getHeight()) {
+            selectedColumnY = selectedColumnY - detailPanel.getHeight() - jTable4.getRowHeight();
+        }
+
+        if ((selectedColumnX + popWitdh) > size.getWidth()) {
+            selectedColumnX = selectedColumnX - detailPanel.getWidth();
+        }
+
+        pop = PopupFactory.getSharedInstance().getPopup(jTable4, detailPanel, selectedColumnX, selectedColumnY);
+        detailPanel.setText(context);
+        pop.show();
+        isShow = true;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTextField jTextFieldEnd;
+    private javax.swing.JTextField jTextFieldStart;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTextField shenqingdanid;
     // End of variables declaration//GEN-END:variables
 }

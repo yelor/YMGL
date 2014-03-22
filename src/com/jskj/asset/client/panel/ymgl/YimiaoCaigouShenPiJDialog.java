@@ -575,60 +575,9 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
 
     @Action
     public void detailPopup() {
-        Yimiaoshenpiliucheng yimiaoshenpiliucheng = selectedDataFromTable();
-        if (yimiaoshenpiliucheng == null) {
-            AssetMessage.ERRORSYS("请选择数据!");
-            return;
-        }
-        String danjuID = yimiaoshenpiliucheng.getDanjuId();
-        if (isShow) {
-            hidePanel();
-        } else {
-            showPanel(danjuID);
-        }
+ 
     }
 
-    private Popup pop;
-    private boolean isShow;
-
-    public void hidePanel() {
-        if (pop != null) {
-            isShow = false;
-            pop.hide();
-            pop = null;
-        }
-    }
-
-    public void showPanel(String danjuID) {
-        if (pop != null) {
-            pop.hide();
-        }
-        Point p = jSQTable.getLocationOnScreen();
-
-        int selectedRow = jSQTable.getSelectedRow();
-
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-
-        int selectedColumnX = p.x;
-        int selectedColumnY = p.y + (selectedRow + 1) * jSQTable.getRowHeight();
-
-        int popHeight = detailPanel.getHeight();
-        int popWitdh = detailPanel.getWidth();
-
-        if ((selectedColumnY + popHeight) > size.getHeight()) {
-            selectedColumnY = selectedColumnY - detailPanel.getHeight() - jSQTable.getRowHeight();
-        }
-
-        if ((selectedColumnX + popWitdh) > size.getWidth()) {
-            selectedColumnX = selectedColumnX - detailPanel.getWidth();
-        }
-
-        pop = PopupFactory.getSharedInstance().getPopup(jSQTable, detailPanel, selectedColumnX, selectedColumnY);
-        detailPanel.submitTask(danjuID);
-        detailPanel.requestFocusInWindow();
-        pop.show();
-        isShow = true;
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
