@@ -11,13 +11,11 @@ public class Fukuandantb {
 
     private Integer supplierId;
 
-    private String jiesuanId;
+    private Float yingfu;
 
-    private Integer zhekou;
+    private Float fukuan;
 
-    private Float totalprice;
-
-    private String payType;
+    private Float youhui;
 
     private String shenqingdanRemark;
 
@@ -26,6 +24,8 @@ public class Fukuandantb {
     private Integer danjuleixingId;
 
     private Integer isCompleted;
+
+    private Integer isPaid;
 
     public String getFukuandanId() {
         return fukuandanId;
@@ -51,36 +51,28 @@ public class Fukuandantb {
         this.supplierId = supplierId;
     }
 
-    public String getJiesuanId() {
-        return jiesuanId;
+    public Float getYingfu() {
+        return yingfu;
     }
 
-    public void setJiesuanId(String jiesuanId) {
-        this.jiesuanId = jiesuanId == null ? null : jiesuanId.trim();
+    public void setYingfu(Float yingfu) {
+        this.yingfu = yingfu;
     }
 
-    public Integer getZhekou() {
-        return zhekou;
+    public Float getFukuan() {
+        return fukuan;
     }
 
-    public void setZhekou(Integer zhekou) {
-        this.zhekou = zhekou;
+    public void setFukuan(Float fukuan) {
+        this.fukuan = fukuan;
     }
 
-    public Float getTotalprice() {
-        return totalprice;
+    public Float getYouhui() {
+        return youhui;
     }
 
-    public void setTotalprice(Float totalprice) {
-        this.totalprice = totalprice;
-    }
-
-    public String getPayType() {
-        return payType;
-    }
-
-    public void setPayType(String payType) {
-        this.payType = payType == null ? null : payType.trim();
+    public void setYouhui(Float youhui) {
+        this.youhui = youhui;
     }
 
     public String getShenqingdanRemark() {
@@ -113,5 +105,13 @@ public class Fukuandantb {
 
     public void setIsCompleted(Integer isCompleted) {
         this.isCompleted = isCompleted;
+    }
+
+    public Integer getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(Integer isPaid) {
+        this.isPaid = isPaid;
     }
 }
