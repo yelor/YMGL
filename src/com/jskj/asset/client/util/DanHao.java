@@ -50,6 +50,7 @@ public class DanHao {
     public final static String TYPE_YHLY = "YHLY";
     public final static String TYPE_WXSQ = "WXSQ";
     public final static String TYPE_FKDJ = "FKDJ";
+    public final static String TYPE_QTFK = "QTFK";
 
     /**
      *************其他单号，不需要审批流程的单号*************

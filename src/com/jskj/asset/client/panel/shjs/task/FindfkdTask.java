@@ -7,7 +7,7 @@
 package com.jskj.asset.client.panel.shjs.task;
 
 import com.jskj.asset.client.panel.slgl.*;
-import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.Fukuanshenpiliuchengtb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
@@ -41,10 +41,10 @@ public abstract class FindfkdTask extends BaseTask{
     public Object doBackgrounp() {
         try{
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            CommFindEntity<FukuanshenqingDetailEntity> sqs = restTemplate.exchange(CX_URI,
+            CommFindEntity<Fukuanshenpiliuchengtb> sqs = restTemplate.exchange(CX_URI,
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<CommFindEntity<FukuanshenqingDetailEntity>>() {
+                    new ParameterizedTypeReference<CommFindEntity<Fukuanshenpiliuchengtb>>() {
                     }).getBody();
             return sqs;
         }catch (RestClientException e) {
@@ -66,11 +66,11 @@ public abstract class FindfkdTask extends BaseTask{
             return;
         }
         if (object instanceof CommFindEntity) {
-            responseResult((CommFindEntity<FukuanshenqingDetailEntity>) object);
+            responseResult((CommFindEntity<Fukuanshenpiliuchengtb>) object);
         } else {
             clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
         }
     }
 
-    public abstract void responseResult(CommFindEntity<FukuanshenqingDetailEntity> response);
+    public abstract void responseResult(CommFindEntity<Fukuanshenpiliuchengtb> response);
 }

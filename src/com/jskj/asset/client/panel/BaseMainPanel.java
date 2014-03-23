@@ -14,17 +14,16 @@ import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
+import com.jskj.asset.client.panel.baobiao.caiwubaobiao.DanweiyingshouyingfuPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel;
 import com.jskj.asset.client.panel.ckgl.SelectKucunchaxun;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXie;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujilu;
 import com.jskj.asset.client.panel.ckgl.Selectebaosun;
-import com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun;
-import com.jskj.asset.client.panel.shjs.selecteFKDJDialog;
-import com.jskj.asset.client.panel.shjs.selectePDDJDialog;
-import com.jskj.asset.client.panel.shjs.selecteSHDJDialog;
-import com.jskj.asset.client.panel.shjs.selecteSKDJDialog;
+import com.jskj.asset.client.panel.shjs.FukuanShenPiJDialog;
+import com.jskj.asset.client.panel.shjs.SelectPandianJDialog;
+import com.jskj.asset.client.panel.shjs.SelectShoufukuanJDialog;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
 import com.jskj.asset.client.panel.slgl.selectCaiGouDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectLingYongDanJDialog;
@@ -33,7 +32,6 @@ import com.jskj.asset.client.panel.slgl.selectYanShouDengJiDanJDialog;
 import com.jskj.asset.client.panel.spcx.JinxiaochaxunJDialog;
 import com.jskj.asset.client.panel.spcx.LiChengZaiXianChaXunJDialog;
 import com.jskj.asset.client.panel.spcx.YeWuLiuChengChaXunJDialog;
-import com.jskj.asset.client.panel.spcx.YiMiaoChengBenChaXunJDialog;
 import com.jskj.asset.client.panel.spcx.selecteTongJiInvoiceJDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -60,10 +58,8 @@ public class BaseMainPanel extends BasePanel {
     private SelectKucunchaxun kccx;
 
     /*审核结算*/
-    private selecteFKDJDialog selecteFKDJDialog;
-    private selecteSKDJDialog selecteSKDJDialog;
-    private selectePDDJDialog selectePDDJDialog;
-    private selecteSHDJDialog selecteSHDJDialog;
+    private SelectShoufukuanJDialog selecteSKDJDialog;
+    private SelectPandianJDialog selectePDDJDialog;
 
     /*申领管理*/
     private selectCaiGouDanJDialog selectCaiGouDanJDialog;
@@ -498,17 +494,8 @@ public class BaseMainPanel extends BasePanel {
      * ***************************审核结算开始********************
      */
     @Action
-    public void selecteInvoice1Action() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                if (selecteFKDJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selecteFKDJDialog = new selecteFKDJDialog(new javax.swing.JFrame(), true);
-                    selecteFKDJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(selecteFKDJDialog);
-            }
-        });
+    public Task selecteInvoice1Action() {
+        return new OpenTabTask("报表-单位应收应付", new DanweiyingshouyingfuPanel(), false);
     }
 
     @Action
@@ -517,7 +504,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (selecteSKDJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selecteSKDJDialog = new selecteSKDJDialog(new javax.swing.JFrame(), true);
+                    selecteSKDJDialog = new SelectShoufukuanJDialog(new javax.swing.JFrame(), true);
                     selecteSKDJDialog.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(selecteSKDJDialog);
@@ -529,12 +516,10 @@ public class BaseMainPanel extends BasePanel {
     public void selecteShenpiAction() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                if (selecteSHDJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selecteSHDJDialog = new selecteSHDJDialog(new javax.swing.JFrame(), true);
-                    selecteSHDJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(selecteSHDJDialog);
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                FukuanShenPiJDialog fkdJDialog = new FukuanShenPiJDialog(new javax.swing.JFrame(), true);
+                fkdJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(fkdJDialog);
             }
         });
     }
@@ -545,7 +530,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (selectePDDJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selectePDDJDialog = new selectePDDJDialog(new javax.swing.JFrame(), true);
+                    selectePDDJDialog = new SelectPandianJDialog(new javax.swing.JFrame(), true);
                     selectePDDJDialog.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(selectePDDJDialog);

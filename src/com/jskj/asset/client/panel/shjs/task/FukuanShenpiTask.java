@@ -4,7 +4,7 @@
  */
 package com.jskj.asset.client.panel.shjs.task;
 
-import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.Fukuanshenpiliuchengtb;
 import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -20,9 +20,9 @@ public abstract class FukuanShenpiTask extends BaseTask {
 
     private static final Logger logger = Logger.getLogger(FukuanShenpiTask.class);
     private final String URI = Constants.HTTP + Constants.APPID + "fukuandan/update";
-    private FukuanshenqingDetailEntity bean;
+    private Fukuanshenpiliuchengtb bean;
 
-    public FukuanShenpiTask(FukuanshenqingDetailEntity bean) {
+    public FukuanShenpiTask(Fukuanshenpiliuchengtb bean) {
         this.bean = bean;
     }
 
@@ -50,11 +50,11 @@ public abstract class FukuanShenpiTask extends BaseTask {
             return;
         }
         if (object instanceof ComResponse) {
-            responseResult((ComResponse<FukuanshenqingDetailEntity>) object);
+            responseResult((ComResponse<Fukuanshenpiliuchengtb>) object);
         } else {
             clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
         }
     }
 
-    public abstract void responseResult(ComResponse<FukuanshenqingDetailEntity> response);
+    public abstract void responseResult(ComResponse<Fukuanshenpiliuchengtb> response);
 }

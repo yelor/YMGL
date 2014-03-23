@@ -8,7 +8,7 @@ package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.Fukuanshenpiliuchengtb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
@@ -16,6 +16,7 @@ import com.jskj.asset.client.panel.shjs.task.FindfkdTask;
 import static com.jskj.asset.client.panel.shjs.task.FindfkdTask.pageSize;
 import com.jskj.asset.client.panel.shjs.task.FukuanShenpiTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -33,11 +34,11 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
 
     private int count;
 
-    private List<FukuanshenqingDetailEntity> fksq;
+    private List<Fukuanshenpiliuchengtb> fksq;
     
     private final int userId;
     
-    BindTableHelper<FukuanshenqingDetailEntity> bindTable;
+    BindTableHelper<Fukuanshenpiliuchengtb> bindTable;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -49,12 +50,12 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         pageIndex = 1;
         count = 0;
-        bindTable = new BindTableHelper<FukuanshenqingDetailEntity>(jSQTable, new ArrayList<FukuanshenqingDetailEntity>());
-        bindTable.createTable(new String[][]{{"fukuandanId", "付款单号"}, {"shenqingren", "经办人"}, {"fukuandanDate", "申请日期"},
-            {"shenqingdanRemark", "备注"},{"totalprice", "总价"},{"checkId1", "财务科"}, {"checkId2", "分管领导"}, {"checkId3", "主要领导"}});
+        bindTable = new BindTableHelper<Fukuanshenpiliuchengtb>(jSQTable, new ArrayList<Fukuanshenpiliuchengtb>());
+        bindTable.createTable(new String[][]{{"danjuId", "付款单号"},
+            {"checkId1", "采购办"}, {"checkId2", "财务科"}, {"checkId3", "分管领导"},{"checkId4", "主要领导"}});
 //        bindTable.setIntegerType(1);
-        bindTable.setDateType(3);
-        bindTable.bind().setColumnWidth(new int[]{0, 150},new int[]{2, 80}).setRowHeight(30);
+//        bindTable.setDateType(3);
+        bindTable.bind().setColumnWidth(new int[]{0, 150}).setRowHeight(30);
         new RefreshTask(0).execute();
     }
     
@@ -78,13 +79,31 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         }
 
         @Override
-        public void responseResult(CommFindEntity<FukuanshenqingDetailEntity> response) {
+        public void responseResult(CommFindEntity<Fukuanshenpiliuchengtb> response) {
             count = response.getCount();
             jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
             logger.debug("total:" + count + ",get total size:" + response.getResult().size());
 
             //存下所有的数据
             fksq = response.getResult();
+            
+            if (fksq != null) {
+                for (Fukuanshenpiliuchengtb liucheng : fksq) {
+                    if (liucheng.getCheckId1() != null) {
+                        liucheng.setCheckId1(liucheng.getCheckId1() + "," + liucheng.getCheckUser1() + "," + DateHelper.formatTime(liucheng.getCheckTime1()));
+                    }
+                    if (liucheng.getCheckId2() != null) {
+                        liucheng.setCheckId2(liucheng.getCheckId2() + "," + liucheng.getCheckUser2() + "," + DateHelper.formatTime(liucheng.getCheckTime2()));
+                    }
+                    if (liucheng.getCheckId3() != null) {
+                        liucheng.setCheckId3(liucheng.getCheckId3() + "," + liucheng.getCheckUser3() + "," + DateHelper.formatTime(liucheng.getCheckTime3()));
+                    }
+                    if (liucheng.getCheckId4() != null) {
+                        liucheng.setCheckId4(liucheng.getCheckId4() + "," + liucheng.getCheckUser4() + "," + DateHelper.formatTime(liucheng.getCheckTime4()));
+                    }
+                }
+            }
+            
             bindTable.refreshData(fksq);
         }
 
@@ -113,11 +132,11 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
             return;
         }
         this.setVisible(false);
-        FukuanshenqingDetailEntity fksqdan = fksq.get(n);
-        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        FuKuanDanJDialog fukuandan = new FuKuanDanJDialog(this,fksqdan);
-        fukuandan.setLocationRelativeTo(mainFrame);
-        AssetClientApp.getApplication().show(fukuandan);
+//        Fukuanshenpiliuchengtb fksqdan = fksq.get(n);
+//        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+//        FuKuanDanJDialog fukuandan = new FuKuanDanJDialog(this,fksqdan);
+//        fukuandan.setLocationRelativeTo(mainFrame);
+//        AssetClientApp.getApplication().show(fukuandan);
     }
     
     @Action
@@ -127,8 +146,8 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return null;
         }
-        FukuanshenqingDetailEntity fksqdan = fksq.get(n);
-        fksqdan.setFukuandanId(fksq.get(n).getFukuandanId());
+        Fukuanshenpiliuchengtb fksqdan = fksq.get(n);
+        fksqdan.setDanjuId(fksq.get(n).getDanjuId());
         fksqdan.setRejectReason("同意");
         fksq.remove(jSQTable.getSelectedRow());
         return new SPTask(fksqdan);
@@ -146,8 +165,8 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         if(reason==null){
            return null;
         }
-        FukuanshenqingDetailEntity fksqdan = fksq.get(n);
-        fksqdan.setFukuandanId(fksq.get(n).getFukuandanId());
+        Fukuanshenpiliuchengtb fksqdan = fksq.get(n);
+        fksqdan.setDanjuId(fksq.get(n).getDanjuId());
         if(reason.isEmpty()){
             reason = "拒绝";
         }
@@ -158,12 +177,12 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
     
     private class SPTask extends FukuanShenpiTask{
 
-        public SPTask(FukuanshenqingDetailEntity sp) {
+        public SPTask(Fukuanshenpiliuchengtb sp) {
             super(sp);
         }
         
         @Override
-        public void responseResult(ComResponse<FukuanshenqingDetailEntity> response) {
+        public void responseResult(ComResponse<Fukuanshenpiliuchengtb> response) {
             reload();
             AssetMessage.showMessageDialog(null, "审批成功！");
         }
@@ -252,6 +271,7 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
+        jButton2.setEnabled(false);
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setIconTextGap(2);
