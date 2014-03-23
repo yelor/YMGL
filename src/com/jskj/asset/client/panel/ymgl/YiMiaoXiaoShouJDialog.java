@@ -103,9 +103,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称", "true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
             {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
-            {"stockpilePrice", "单价", "false"}, {"yimiaoYushoujia", "售价", "true"}, {"totalprice", "销售合价", "true"}});
+            {"stockpilePrice", "单价", "false"}, {"yimiaoYushoujia", "售价", "true"}});
 
-        editTable.tableChanged(null);
         
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -705,7 +704,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("请输入疫苗销售数量!");
                 return null;
             }else if(Integer.parseInt(""+yimiaotable.getValue(i, "saleQuantity"))>stockpileList.get(i).getStockpileQuantity()){
-                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiaoName").toString()+"销售数量不能大于库存数量!");
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiao.yimiaoName").toString()+"销售数量不能大于库存数量!");
                 return null;
             }
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));

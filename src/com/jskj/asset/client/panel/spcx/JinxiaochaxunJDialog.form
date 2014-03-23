@@ -81,54 +81,36 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaoshenbao" methodName="Yimiaoshenbao"/>
-        </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
         <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaoshegou" methodName="Yimiaoshegou"/>
-        </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
         <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaolingyong" methodName="Yimiaolingyong"/>
-        </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
         <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton6">
       <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaocaigoujihua" methodName="Yimiaocaigoujihua"/>
-        </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
         <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton7">
       <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaocaigou" methodName="Yimiaocaigou"/>
-        </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
         <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton8">
       <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog" id="Yimiaoshegou" methodName="Yimiaoshegou"/>
-        </Property>
         <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
         <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>
       </Properties>
