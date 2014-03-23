@@ -7,6 +7,8 @@ package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
+import com.jskj.asset.client.bean.entity.Churukudanyimiaoliebiaotb;
+import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -17,8 +19,10 @@ import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -34,7 +38,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
-    private Churukudantb chukudan;
+    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
 
     public YiMiaoChuKu1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -89,8 +93,11 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
                     HashMap saletb = (HashMap) saletbmap;
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
 
-                    chukudan = new Churukudantb();
+                    bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
+                    Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
+                    bindedMapyimiaoliebiaoList.add(chukudan);
+                    
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -351,6 +358,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
     @Action
     public Task save() throws ParseException {
+        YimiaochurukuEntity yimiaochukuEntity=new YimiaochurukuEntity();
         if (jTextFielddanjuNo.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入出库疫苗!");
             return null;
@@ -359,28 +367,32 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         churukudan.setChurukuId(DanHao.getDanHao("YMCK"));
         churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
         churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        churukudan.setJingbanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        
+        yimiaochukuEntity.setChurukutb(churukudan);
+        List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
 
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            churukudan.setPihao((String) yimiaotable.getValue(i, "pihao"));
-            churukudan.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
-            churukudan.setPrice(0f);
-            churukudan.setSource((String) ("" + yimiaotable.getValue(i, "source")));
-            churukudan.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
-            churukudan.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
-            churukudan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            churukudan.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
-            churukudan.setTotalprice(churukudan.getPrice() * churukudan.getPrice());
-            churukudan.setXiangdanId(chukudan.getXiangdanId());
+            Churukudanyimiaoliebiaotb yimiaoliebiao=new Churukudanyimiaoliebiaotb();
+            yimiaoliebiao.setPihao((String) yimiaotable.getValue(i, "pihao"));
+            yimiaoliebiao.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
+            yimiaoliebiao.setPrice(0f);
+            yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
+            yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
+            yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            yimiaoliebiao.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            yimiaoliebiao.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
+            yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getPrice());
+            yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
+            list.add(yimiaoliebiao);
         }
-        churukudan.setGongyingdanwei(2);
+        yimiaochukuEntity.setResult(list);
 
         String serviceId = "yimiaochuku/add";
-        return new CommUpdateTask<Churukudantb>(churukudan, serviceId) {
+        return new CommUpdateTask<YimiaochurukuEntity>(yimiaochukuEntity, serviceId) {
 
             @Override
-            public void responseResult(ComResponse<Churukudantb> response) {
+            public void responseResult(ComResponse<YimiaochurukuEntity> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();

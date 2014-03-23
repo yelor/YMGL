@@ -50,6 +50,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
     private Saletb sale;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew;
+    private List<Stockpiletb> stockpileList;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -133,6 +134,11 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
+                    stockpileList=new ArrayList<Stockpiletb>();
+                    Stockpiletb stockpile=new Stockpiletb();
+                    stockpile.setStockpileQuantity(Integer.parseInt(""+bindedMap.get("stockpileQuantity")));
+                    stockpileList.add(stockpile);
+                    
                     Object yimiaoId = yimiao.get("yimiaoId");
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
@@ -678,6 +684,9 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
             sale_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "saleQuantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗下发数量!");
+                return null;
+            }else if(Integer.parseInt(""+yimiaotable.getValue(i, "saleQuantity"))>stockpileList.get(i).getStockpileQuantity()){
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiao.yimiaoName").toString()+"下发数量不能大于库存数量!");
                 return null;
             }
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));

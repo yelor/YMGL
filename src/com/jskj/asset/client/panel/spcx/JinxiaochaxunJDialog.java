@@ -48,31 +48,25 @@ public class JinxiaochaxunJDialog extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JinxiaochaxunJDialog.class, this);
-        jButton3.setAction(actionMap.get("Yimiaoshenbao")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
-        jButton4.setAction(actionMap.get("Yimiaoshegou")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
-        jButton5.setAction(actionMap.get("Yimiaolingyong")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
 
-        jButton6.setAction(actionMap.get("Yimiaocaigoujihua")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setName("jButton6"); // NOI18N
 
-        jButton7.setAction(actionMap.get("Yimiaocaigou")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
 
-        jButton8.setAction(actionMap.get("Yimiaoshegou")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setName("jButton8"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(JinxiaochaxunJDialog.class, this);
         jButton10.setAction(actionMap.get("YiMiaoChengBenChaXunAction")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
         jButton10.setName("jButton10"); // NOI18N
@@ -165,12 +159,12 @@ public class JinxiaochaxunJDialog extends javax.swing.JDialog {
         });
     }
 
-        @Action
+    @Action
     public void YiMiaoChengBenChaXunAction() {
         SwingUtilities.invokeLater(new Runnable() {
             private YiMiaoChengBenChaXunJDialog yiMiaoChengBenChaXunJDialog;
-
             public void run() {
+                dispose();
                 if (yiMiaoChengBenChaXunJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                     yiMiaoChengBenChaXunJDialog = new YiMiaoChengBenChaXunJDialog(new javax.swing.JFrame(), true);
@@ -181,7 +175,7 @@ public class JinxiaochaxunJDialog extends javax.swing.JDialog {
 
         });
     }
-    
+
     @Action
     public void Yimiaocaigoujihua() {
         SwingUtilities.invokeLater(new Runnable() {

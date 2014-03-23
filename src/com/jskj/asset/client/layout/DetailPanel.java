@@ -5,9 +5,6 @@
  */
 package com.jskj.asset.client.layout;
 
-import com.jskj.asset.client.bean.entity.MyTaskEntity;
-import com.jskj.asset.client.constants.Constants;
-import com.jskj.asset.client.util.DateHelper;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Task;
 
@@ -26,10 +23,6 @@ public class DetailPanel extends BasePanel {
         initComponents();
     }
 
-    public void submitTask(String shenqingdanId) {
-        new FindApplication(shenqingdanId).execute();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,11 +35,15 @@ public class DetailPanel extends BasePanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
 
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setName("Form"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DetailPanel.class);
+        jEditorPane1.setBackground(resourceMap.getColor("jEditorPane1.background")); // NOI18N
         jEditorPane1.setContentType("text/html"); // NOI18N
+        jEditorPane1.setForeground(resourceMap.getColor("jEditorPane1.foreground")); // NOI18N
         jEditorPane1.setName("jEditorPane1"); // NOI18N
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -54,11 +51,11 @@ public class DetailPanel extends BasePanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -78,48 +75,10 @@ public class DetailPanel extends BasePanel {
         return null;
     }
 
-    class FindApplication extends BaseTask {
-
-        public final Logger logger = Logger.getLogger(FindApplication.class);
-        private final String CX_URI = Constants.HTTP + Constants.APPID + "spfind/application";
-        private final String shenqingdanId;
-
-        public FindApplication(String shenqingdanId) {
-            this.shenqingdanId = shenqingdanId;
-        }
-
-        @Override
-        public Object doBackgrounp() {
-            try {
-                jEditorPane1.setText("");
-                MyTaskEntity taskEntity = restTemplate.getForObject(CX_URI + "/" + shenqingdanId, MyTaskEntity.class);
-                return taskEntity;
-            } catch (Exception e) {
-                logger.error(e);
-                return e;
-            }
-        }
-
-        @Override
-        public void onSucceeded(Object object) {
-            if (object instanceof Exception) {
-                Exception e = (Exception) object;
-                logger.error(e);
-                return;
-            }
-            if (object != null && object instanceof MyTaskEntity) {
-                MyTaskEntity taskEntity = (MyTaskEntity) object;
-                StringBuilder sb = new StringBuilder("<html>");
-                sb.append(taskEntity.getShenqingdanId())
-                        .append("<br />提出时间:").append(DateHelper.formatTime(taskEntity.getSubmitDate()))
-                        .append("<br />申请人:").append(taskEntity.getOwner())
-                        .append("<br />部门:").append(taskEntity.getDepartment())
-                        .append("<br />单据类型:").append(taskEntity.getDanjuleixing())
-                        .append("<br />详细内容:").append(taskEntity.getContext());
-                sb.append("</html>");
-                jEditorPane1.setText(sb.toString());
-            }
-        }
-
+    public void setText(String context) {
+        StringBuilder sb = new StringBuilder("<html><font color=white>");
+        sb.append(context);
+        sb.append("</font></html>");
+        jEditorPane1.setText(sb.toString());
     }
 }
