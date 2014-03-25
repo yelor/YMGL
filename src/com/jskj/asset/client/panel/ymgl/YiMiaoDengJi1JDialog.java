@@ -17,7 +17,6 @@ import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
@@ -54,8 +53,8 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
 
             public String getConditionSQL() {
                 String sql = "";
-                if (!jTextFieldYimiaoJixing.getText().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoJixing.getText() + "%\" or yimiao.zujima like \"" + jTextFieldYimiaoJixing.getText().toString() + "%\")) ";
+                if (!jTextFieldYimiaoName.getText().trim().equals("")) {
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\" or yimiao.zujima like \"" + jTextFieldYimiaoName.getText().toString() + "%\")) ";
                 } else {
                     sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=5 and is_completed = 1 and status = 0)";
                 }

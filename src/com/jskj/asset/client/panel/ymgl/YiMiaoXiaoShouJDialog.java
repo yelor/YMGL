@@ -50,7 +50,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
     private boolean isNew;
     private Sale_detail_tbFindEntity yimiaoxiaoshou;
     private XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity;
-    private List<Stockpiletb> stockpileList;
+    private List<Stockpiletb> stockpileList=new ArrayList<Stockpiletb>();;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -138,7 +138,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
                     
-                    stockpileList=new ArrayList<Stockpiletb>();
+                    
                     Stockpiletb stockpile=new Stockpiletb();
                     stockpile.setStockpileQuantity(Integer.parseInt(""+bindedMap.get("stockpileQuantity")));
                     stockpileList.add(stockpile);

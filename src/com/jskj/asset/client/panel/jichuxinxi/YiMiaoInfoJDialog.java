@@ -247,6 +247,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         yimiaoShengchanqiye.setName("yimiaoShengchanqiye"); // NOI18N
 
+        yimiaoPizhunwenhao.setText(resourceMap.getString("yimiaoPizhunwenhao.text")); // NOI18N
         yimiaoPizhunwenhao.setName("yimiaoPizhunwenhao"); // NOI18N
 
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N

@@ -38,7 +38,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
-    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
+    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();;
 
     public YiMiaoChuKu1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -93,7 +93,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
                     HashMap saletb = (HashMap) saletbmap;
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
 
-                    bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
+                    
                     Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
                     bindedMapyimiaoliebiaoList.add(chukudan);

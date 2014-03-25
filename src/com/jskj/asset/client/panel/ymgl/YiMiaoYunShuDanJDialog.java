@@ -33,9 +33,9 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
+public class YiMiaoYunShuDanJDialog extends javax.swing.JDialog {
 
-    private static final Logger logger = Logger.getLogger(YiMiaoYanShouDanJDialog.class);
+    private static final Logger logger = Logger.getLogger(YiMiaoYunShuDanJDialog.class);
     private Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity;
     private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
     private List<Yimiaoyanshou_detail_tb> bindedMaplist;
@@ -47,13 +47,13 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoYanShouDanJDialog(java.awt.Frame parent, boolean modal) {
+    public YiMiaoYunShuDanJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         init();
         initComponents();
         bindedMaplist = new ArrayList<Yimiaoyanshou_detail_tb>();
 
-        jTextFieldYimiaoyanshouId.setText(DanHao.getDanHao("YMYS"));
+        jTextFieldYimiaoyanshouId.setText(DanHao.getDanHao("YMYSJL"));
         jTextFieldYimiaoyanshouId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -103,7 +103,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "adddengjiyimiao";
+                return Constants.HTTP + Constants.APPID + "addchukuyimiao";
             }
 
             public String getConditionSQL() {
@@ -162,6 +162,11 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                     editTable.insertValue(9, quantity);
 
                     Yimiaoyanshou_detail_tb yanshou = new Yimiaoyanshou_detail_tb();
+//                    try {
+//                        yanshou.setPiqianfahegeno((String) ("" + yimiaodengji.get("piqianfahegezhenno")));
+//                    } catch (Exception e) {
+//                        yanshou.setPiqianfahegeno(null);
+//                    }
 
                     yanshou.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
 
@@ -312,7 +317,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jScrollPane4.setViewportView(jTable3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoYanShouDanJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoYunShuDanJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -324,7 +329,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoYanShouDanJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoYunShuDanJDialog.class, this);
         jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -804,13 +809,13 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoYunShuDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoYunShuDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoYunShuDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoYunShuDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -818,7 +823,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                YiMiaoYanShouDanJDialog dialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
+                YiMiaoYunShuDanJDialog dialog = new YiMiaoYunShuDanJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -926,10 +931,10 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
-            AssetMessage.INFO("提交成功！", YiMiaoYanShouDanJDialog.this);
+            AssetMessage.INFO("提交成功！", YiMiaoYunShuDanJDialog.this);
             exit();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            YiMiaoYanShouDanJDialog yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
+            YiMiaoYunShuDanJDialog yiMiaoYanShouJDialog = new YiMiaoYunShuDanJDialog(new javax.swing.JFrame(), true);
             yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
             yiMiaoYanShouJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);

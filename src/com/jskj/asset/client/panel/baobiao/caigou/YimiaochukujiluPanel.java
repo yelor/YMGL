@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.baobiao.caigou;
 
 import com.jskj.asset.client.bean.report.CaigouReport;
+import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
@@ -13,6 +14,7 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,13 +53,13 @@ public class YimiaochukujiluPanel extends BasePanel {
         count = 0;
         bindTable = new BindTableHelper<CaigouReport>(jTable1, new ArrayList<CaigouReport>());
         bindTable.createTable(new String[][]{
-            {"yimiaoId", "日期", "false"},{"yimiaoId", "入库数(支)", "false"},{"yimiaoId", "出库数(支)", "false"},{"yimiaoShengchanqiye", "生产企业", "false"},{"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-             {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},{"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
-//            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, 
+            {"yimiaoId", "日期", "false"}, {"yimiaoId", "入库数(支)", "false"}, {"yimiaoId", "出库数(支)", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"}, {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
+            //            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, 
             {"jingbanren", "往来单位", "true"}, {"gongyingdanwei", "价格(元)", "true"},
             {"jingbanren", "经办人", "true"}, {"duifangjingbanren", "对方经办人", "true"}, {"duifangjingbanren", "累计库存(支)", "true"}});
         bindTable.setColumnType(Date.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}, new int[]{3, 200}, new int[]{4, 100}, new int[]{5, 120}, new int[]{6, 200}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 80}, new int[]{2, 80}, new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 80}, new int[]{6, 80}).setRowHeight(25);
 
         parameterMap = new HashMap();
         parameterMap.put("pagesize", String.valueOf(pageSize));
@@ -66,6 +68,40 @@ public class YimiaochukujiluPanel extends BasePanel {
 
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
+
+        ((BaseTextField) jTextFieldYimiaoName).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addkucunyimiao";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldYimiaoName.getText().trim().equals("")) {
+                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.toString() + "%\"" + " or zujima like \"" + jTextFieldYimiaoName.toString().toLowerCase() + "%\"))";
+                } else {
+                    sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
+                {"youxiaodate", "有效期"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
+
+                    jTextFieldYimiaoName.setText(yimiao.get("yimiaoName") == null ? "" : yimiao.get("yimiaoName").toString());
+                }
+            }
+        });
     }
 
     /**
@@ -96,10 +132,10 @@ public class YimiaochukujiluPanel extends BasePanel {
         jTextFieldStart = new BaseTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldEnd = new BaseTextField();
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton15 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldYimiaoName = new BaseTextField();
         jLabel3 = new javax.swing.JLabel();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
 
@@ -250,7 +286,7 @@ public class YimiaochukujiluPanel extends BasePanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel2Layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jpanel2.TabConstraints.tabTitle"), jpanel2); // NOI18N
@@ -281,11 +317,11 @@ public class YimiaochukujiluPanel extends BasePanel {
         jTextFieldEnd.setText(resourceMap.getString("jTextFieldEnd.text")); // NOI18N
         jTextFieldEnd.setName("jTextFieldEnd"); // NOI18N
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
-        jToolBar1.setBorderPainted(false);
-        jToolBar1.setName("jToolBar1"); // NOI18N
-        jToolBar1.setOpaque(false);
+        jTextFieldYimiaoName.setText(resourceMap.getString("jTextFieldYimiaoName.text")); // NOI18N
+        jTextFieldYimiaoName.setName("jTextFieldYimiaoName"); // NOI18N
+
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
 
         jButton15.setAction(actionMap.get("reload")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
@@ -296,13 +332,16 @@ public class YimiaochukujiluPanel extends BasePanel {
         jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton15.setName("jButton15"); // NOI18N
         jButton15.setOpaque(false);
-        jToolBar1.add(jButton15);
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
-
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
+        jButton16.setAction(actionMap.get("reload")); // NOI18N
+        jButton16.setIcon(resourceMap.getIcon("jButton16.icon")); // NOI18N
+        jButton16.setText(resourceMap.getString("jButton16.text")); // NOI18N
+        jButton16.setBorder(null);
+        jButton16.setBorderPainted(false);
+        jButton16.setFocusable(false);
+        jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton16.setName("jButton16"); // NOI18N
+        jButton16.setOpaque(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -311,9 +350,9 @@ public class YimiaochukujiluPanel extends BasePanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldYimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -321,9 +360,11 @@ public class YimiaochukujiluPanel extends BasePanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton15)
                 .addGap(18, 18, 18)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jButton16)
+                .addGap(12, 12, 12))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -334,10 +375,11 @@ public class YimiaochukujiluPanel extends BasePanel {
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldStart, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextFieldYimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton15)
+                    .addComponent(jButton16))
+                .addGap(0, 5, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -387,6 +429,7 @@ public class YimiaochukujiluPanel extends BasePanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JLabel jLabel1;
@@ -399,10 +442,9 @@ public class YimiaochukujiluPanel extends BasePanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldEnd;
     private javax.swing.JTextField jTextFieldStart;
-    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField jTextFieldYimiaoName;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JPanel jpanel2;

@@ -50,7 +50,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
     private Saletb sale;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew;
-    private List<Stockpiletb> stockpileList;
+    private List<Stockpiletb> stockpileList=new ArrayList<Stockpiletb>();;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -134,7 +134,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
-                    stockpileList=new ArrayList<Stockpiletb>();
+                    
                     Stockpiletb stockpile=new Stockpiletb();
                     stockpile.setStockpileQuantity(Integer.parseInt(""+bindedMap.get("stockpileQuantity")));
                     stockpileList.add(stockpile);
