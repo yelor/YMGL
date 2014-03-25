@@ -110,7 +110,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
-                    editTable.insertValue(9, saleprice);
+                    editTable.insertValue(8, saleprice);
 
                 }
 
