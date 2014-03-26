@@ -646,6 +646,7 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
         shenqingdan.setDanjuleixingId(6);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
+        float total = 0;
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
@@ -659,7 +660,9 @@ public class YiMiaoCaiGouShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setTotalprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "totalprice"))));
             yimiaoshenqingdan.setYuandanId(yimiaoshenqingdanlist.get(i).getYuandanId());
             list.add(yimiaoshenqingdan);
+            total += yimiaoshenqingdan.getTotalprice();
         }
+        shenqingdan.setDanjujine(total);
         yimiaocaigou.setShenqingdan(shenqingdan);
         yimiaocaigou.setYimiaoshenqingdans(list);
         return new SubmitFormTask(yimiaocaigou);

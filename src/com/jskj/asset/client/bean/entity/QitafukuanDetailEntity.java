@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class QitafukuanDetailEntity {
     
-    Qitafukuandantb fukuandan;
+    Fukuandantb fukuandan;
     
     List<Qitafukuanliebiaotb> list;
 
-    public Qitafukuandantb getFukuandan() {
+    public Fukuandantb getFukuandan() {
         return fukuandan;
     }
 
@@ -24,7 +24,7 @@ public class QitafukuanDetailEntity {
         return list;
     }
 
-    public void setFukuandan(Qitafukuandantb fukuandan) {
+    public void setFukuandan(Fukuandantb fukuandan) {
         this.fukuandan = fukuandan;
     }
 
