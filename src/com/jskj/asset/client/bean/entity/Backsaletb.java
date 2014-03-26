@@ -1,13 +1,13 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Backsaletb {
     private String backsaleId;
 
     private Date backsaleDate;
-
-    private Integer departmentId;
 
     private Integer deportId;
 
@@ -31,14 +31,6 @@ public class Backsaletb {
 
     public void setBacksaleDate(Date backsaleDate) {
         this.backsaleDate = backsaleDate;
-    }
-
-    public Integer getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
     }
 
     public Integer getDeportId() {

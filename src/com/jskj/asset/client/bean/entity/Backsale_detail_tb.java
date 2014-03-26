@@ -1,11 +1,17 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Date;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Backsale_detail_tb {
     private Integer backDetailId;
 
     private String backsaleId;
 
-    private Integer yimiaoId;
+    private Integer stockpileId;
+
+    private Date youxiaoqi;
 
     private Integer quantity;
 
@@ -29,12 +35,20 @@ public class Backsale_detail_tb {
         this.backsaleId = backsaleId == null ? null : backsaleId.trim();
     }
 
-    public Integer getYimiaoId() {
-        return yimiaoId;
+    public Integer getStockpileId() {
+        return stockpileId;
     }
 
-    public void setYimiaoId(Integer yimiaoId) {
-        this.yimiaoId = yimiaoId;
+    public void setStockpileId(Integer stockpileId) {
+        this.stockpileId = stockpileId;
+    }
+
+    public Date getYouxiaoqi() {
+        return youxiaoqi;
+    }
+
+    public void setYouxiaoqi(Date youxiaoqi) {
+        this.youxiaoqi = youxiaoqi;
     }
 
     public Integer getQuantity() {

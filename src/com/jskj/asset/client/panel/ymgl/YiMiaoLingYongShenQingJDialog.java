@@ -572,10 +572,10 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     public void setAddOrUpdate(boolean b) {
         isNew = b;
         if (isNew) {
-            this.setTitle("Ⅰ类疫苗领用申请单");
+            this.setTitle("Ⅰ类疫苗领取申请单");
             shenqingdan = new Shenqingdantb();
         } else {
-            this.setTitle("Ⅰ类疫苗领用申请单");
+            this.setTitle("Ⅰ类疫苗领取申请单");
         }
     }
 

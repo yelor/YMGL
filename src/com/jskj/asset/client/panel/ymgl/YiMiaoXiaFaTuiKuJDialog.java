@@ -6,16 +6,18 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.Sale_detail_tb;
-import com.jskj.asset.client.bean.entity.Sale_detail_tbFindEntity;
-import com.jskj.asset.client.bean.entity.Saletb;
+import com.jskj.asset.client.bean.entity.Backsale_detail_tb;
+import com.jskj.asset.client.bean.entity.XiaoshoutuihuoEntity;
+import com.jskj.asset.client.bean.entity.Backsaletb;
+import com.jskj.asset.client.bean.entity.Stockpiletb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
-import com.jskj.asset.client.panel.ymgl.task.Sale_detailUpdateTask;
+import com.jskj.asset.client.panel.ymgl.task.XiaoshouTask;
+import com.jskj.asset.client.panel.ymgl.task.XiaoshoutuihuoTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,10 +37,10 @@ import org.jdesktop.application.Task;
 public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoXiaFaTuiKuJDialog.class);
-    private Sale_detail_tbFindEntity yimiaoxiafaTuiku;
-    private Sale_detail_tb backsale_detail;
-    private Saletb backsale;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private XiaoshoutuihuoEntity yimiaoxiafaTuiku;
+    private Backsale_detail_tb backsale_detail;
+    private Backsaletb backsale;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew;
 
     /**
@@ -90,7 +92,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"saleQuantity", "数量", "true"}});
+            {"yimiaoJixing", "剂型", "false"}, {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"tuihuoQuantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -107,27 +109,32 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "yimiao_id like \"%" + newColumnObj.toString() + "%\"";
+                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"))";
+                } else {
+                    sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price=0)";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-                {"yimiaoJixing", "剂型"}};
+                return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
+                {"youxiaodate", "有效期"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object yimiaoId = bindedMap.get("yimiaoId");
-                    Object yimiaoName = bindedMap.get("yimiaoName");
-                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-                    Object shengchanqiye = bindedMap.get("shengchanqiye");
-                    Object unit = bindedMap.get("unit");
-                    Object youxiaoqi = bindedMap.get("youxiaoqi");
+                    Object yimiaomap = bindedMap.get("yimiao");
+                    HashMap yimiao = (HashMap) yimiaomap;
 
-                    editTable.insertValue(0, yimiaoId);
+                    Object kucunId = bindedMap.get("stockpileId");
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
+                    Object youxiaoqi = bindedMap.get("youxiaodate");
+
+                    editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
                     editTable.insertValue(3, yimiaoJixing);
@@ -602,19 +609,19 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         isNew = b;
         if (isNew) {
             this.setTitle("Ⅰ类疫苗下发退库单");
-            backsale = new Saletb();
-            backsale_detail = new Sale_detail_tb();
+            backsale = new Backsaletb();
+            backsale_detail = new Backsale_detail_tb();
         } else {
             this.setTitle("Ⅰ类疫苗下发退库单");
         }
     }
 
-    public void setUpdatedData(Sale_detail_tb backsale_detail) {
+    public void setUpdatedData(Backsale_detail_tb backsale_detail) {
         if (backsale_detail == null) {
             return;
         }
         this.backsale_detail = backsale_detail;
-        jTextFieldXiafaId.setText((backsale_detail.getSaleId()).toString());
+        jTextFieldXiafaId.setText((backsale_detail.getBacksaleId()).toString());
 
     }
 
@@ -629,24 +636,29 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入下发单位!");
             return null;
         }
-        yimiaoxiafaTuiku = new Sale_detail_tbFindEntity();
+        yimiaoxiafaTuiku = new XiaoshoutuihuoEntity();
 
-        backsale.setSaleId(jTextFieldXiafaId.getText());
+        backsale.setBacksaleId(jTextFieldXiafaId.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
-        backsale.setSaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
-        backsale.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
-        backsale.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
+        backsale.setBacksaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
+        backsale.setCheckId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        backsale.setRemark(jTextArea1.getText());
 
-        List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
-        for (int i = 0; i < 3; i++) {
-            backsale_detail.setSaleId(jTextFieldXiafaId.getText());
-            backsale_detail.setYimiaoId(1000 + i);
-            backsale_detail.setQuantity(345);
+        List<Backsale_detail_tb> list = new ArrayList<Backsale_detail_tb>();
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            backsale_detail.setBacksaleId(jTextFieldXiafaId.getText());
+            backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            if (yimiaotable.getValue(i, "tuihuoQuantity").equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗退库数量!");
+                return null;
+            }
+            backsale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "tuihuoQuantity").toString()));
             list.add(backsale_detail);
         }
 
-        yimiaoxiafaTuiku.setSale(backsale);
-        yimiaoxiafaTuiku.setSale_details(list);
+        yimiaoxiafaTuiku.setBacksaletb(backsale);
+        yimiaoxiafaTuiku.setBacksale_details(list);
         return new SubmitFormTask(yimiaoxiafaTuiku);
     }
 
@@ -655,10 +667,10 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         this.dispose();
     }
 
-    private class SubmitFormTask extends Sale_detailUpdateTask {
+    private class SubmitFormTask extends XiaoshoutuihuoTask {
 
-        SubmitFormTask(Sale_detail_tbFindEntity yimiaoxiafa) {
-            super(yimiaoxiafa, isNew ? Sale_detailUpdateTask.ENTITY_SAVE : Sale_detailUpdateTask.ENTITY_UPDATE);
+        SubmitFormTask(XiaoshoutuihuoEntity tuihuoEntity) {
+            super(tuihuoEntity,XiaoshoutuihuoTask.TUIHUOENTITY_SAVE);
         }
 
         @Override

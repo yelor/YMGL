@@ -20,7 +20,7 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
-import com.jskj.asset.client.panel.ymgl.task.Sale_detailUpdateTask;
+import com.jskj.asset.client.panel.ymgl.task.XiaoshouTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.event.WindowEvent;
@@ -693,6 +693,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         sale.setSaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         sale.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         sale.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
+        sale.setRemark(jTextArea1.getText());
+
 
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
@@ -724,10 +726,10 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         this.dispose();
     }
 
-    private class SubmitFormTask extends Sale_detailUpdateTask {
+    private class SubmitFormTask extends XiaoshouTask {
 
         SubmitFormTask(Sale_detail_tbFindEntity sale_detail) {
-            super(sale_detail, isNew ? Sale_detailUpdateTask.ENTITY_SAVE : Sale_detailUpdateTask.ENTITY_UPDATE);
+            super(sale_detail, isNew ? XiaoshouTask.ENTITY_SAVE : XiaoshouTask.ENTITY_UPDATE);
         }
 
         @Override
