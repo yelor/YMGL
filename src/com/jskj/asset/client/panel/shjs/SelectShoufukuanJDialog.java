@@ -140,7 +140,7 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                OtherShouKuanDanJDialog skdJDialog = new OtherShouKuanDanJDialog(new javax.swing.JFrame(), true);
+                OtherShouKuanDanJDialog skdJDialog = new OtherShouKuanDanJDialog(mainFrame, true);
                 skdJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(skdJDialog);
             }
@@ -168,7 +168,7 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                OtherFuKuanDanJDialog otherfkdJDialog = new OtherFuKuanDanJDialog(mainFrame, true);
+                OtherFuKuanDanJDialog otherfkdJDialog = new OtherFuKuanDanJDialog();
                 otherfkdJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(otherfkdJDialog);
             }

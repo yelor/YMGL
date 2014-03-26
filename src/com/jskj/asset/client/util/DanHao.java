@@ -96,6 +96,8 @@ public class DanHao {
             className = "com.jskj.asset.client.panel.slgl.GuDingZiChanWeiXiuShenQingJDialog";
         } else if (TYPE_FKDJ.equals(DANHAO_TYPE)) {
             className = "com.jskj.asset.client.panel.shjs.FuKuanDanJDialog";
+        }else if (TYPE_QTFK.equals(DANHAO_TYPE)) {
+            className = "com.jskj.asset.client.panel.shjs.OtherFuKuanDanJDialog";
         }
 
         return className;

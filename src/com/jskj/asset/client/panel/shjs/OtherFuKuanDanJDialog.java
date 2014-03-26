@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.AssetClientApp;
@@ -40,7 +39,7 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class OtherFuKuanDanJDialog extends BaseDialog {
-    
+
     private int userId;
     private String userName;
     private int supplierId;
@@ -52,18 +51,18 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
     /**
      * Creates new form FKDJDialog
      */
-    public OtherFuKuanDanJDialog(java.awt.Frame parent, boolean modal) {
-        super(); 
+    public OtherFuKuanDanJDialog() {
+        super();
         initComponents();
-        
+
         fklb = new ArrayList<Qitafukuanliebiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
-        
+
         fukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_QTFK));
         fukuandanDate.setText(dateformate.format(new Date()).toString());
         jingbanren.setText(userName);
-        
+
         ((BaseTextField) supplier).registerPopup(new IPopupBuilder() {
 
             public int getType() {
@@ -77,7 +76,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" +  supplier.getText().trim().toLowerCase() + "%\")";
+                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -90,50 +89,57 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
                 if (bindedMap != null) {
                     supplier.setText(bindedMap.get("supplierName") == null ? "" : bindedMap.get("supplierName").toString());
                     accountNum.setText(bindedMap.get("supplierBanknumber") == null ? "" : bindedMap.get("supplierBanknumber").toString());
-                    if(!accountNum.getText().isEmpty()){
+                    if (!accountNum.getText().isEmpty()) {
                         accountNum.setEditable(false);
                     }
-                    supplierId = (Integer)bindedMap.get("supplierId");
+                    supplierId = (Integer) bindedMap.get("supplierId");
                 }
             }
         });
-        
+
         editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"bianhao", "编号", "true"}, {"zhichuType", "支出类型", "true"}, 
-            {"totalPrice", "金额", "true"},{"shenqingdanRemark", "备注", "true"}});
+            {"bianhao", "编号", "true"}, {"zhichuType", "支出类型", "true"},
+            {"totalPrice", "金额", "true"}, {"shenqingdanRemark", "备注", "true"}});
 
     }
 
-    public OtherFuKuanDanJDialog(final JDialog parent,QitafukuanshenqingDetailEntity detail){
+    public OtherFuKuanDanJDialog(final JDialog parent, QitafukuanshenqingDetailEntity detail) {
         super();
         initComponents();
-        
-        this.addWindowListener(new WindowListener(){
+
+        this.addWindowListener(new WindowListener() {
 
             @Override
-            public void windowOpened(WindowEvent e) {}
-
-            @Override
-            public void windowClosing(WindowEvent e) {}
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                parent.setVisible(true);
+            public void windowOpened(WindowEvent e) {
             }
 
             @Override
-            public void windowIconified(WindowEvent e) { }
+            public void windowClosing(WindowEvent e) {
+            }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowClosed(WindowEvent e) {
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
+            }
 
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
             }
-            
+
         });
         super.bind(detail, jPanel1);
         jButton1.setEnabled(false);
@@ -142,19 +148,19 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         supplier.setEditable(false);
         accountNum.setEditable(false);
         shenqingdanRemark.setEditable(false);
-        
+
         setListTable(detail.getList());
     }
-    
-    public void setListTable(List<Qitafukuanliebiaotb> zclist){
-        
+
+    public void setListTable(List<Qitafukuanliebiaotb> zclist) {
+
         int size = zclist.size();
         Object[][] o = new Object[size][6];
-        for( int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             Qitafukuanliebiaotb zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getZhichuType(),zclb.getJingbanren(),zclb.getPrice(),zclb.getRemark()};
+            o[i] = new Object[]{zclb.getZhichuType(), zclb.getJingbanren(), zclb.getPrice(), zclb.getRemark()};
         }
-        
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
@@ -171,16 +177,16 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
     public void exit() {
         this.dispose();
     }
-    
+
     @Action
-    public void addrow(){
+    public void addrow() {
         editTable.addNewRow();
     }
-    
+
     @Action
     public Task submitForm() throws ParseException {
-        if(supplier.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入供应单位！",this);
+        if (supplier.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入供应单位！", this);
             return null;
         }
         QitafukuanDetailEntity detail = new QitafukuanDetailEntity();
@@ -191,29 +197,29 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         fkd.setIsCompleted(0);
         fkd.setSupplierId(supplierId);
         fkd.setZhidanrenId(userId);
-        
-        for(int i = 0; i < jTable1.getRowCount(); i++ ){
+
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
             Qitafukuanliebiaotb fslb = new Qitafukuanliebiaotb();
             fslb.setZhichuType("" + jTable1.getValueAt(i, 1));
             fslb.setPrice(Float.parseFloat("" + jTable1.getValueAt(i, 2)));
             fslb.setRemark("" + jTable1.getValueAt(i, 3));
             fslb.setJingbanren(userName);
             fslb.setFukuandanId(fukuandanId.getText());
-            total+=fslb.getPrice();
+            total += fslb.getPrice();
             fklb.add(fslb);
         }
-        if(fklb.size() < 1){
-            AssetMessage.ERRORSYS("请输入要付款的内容！",this);
+        if (fklb.size() < 1) {
+            AssetMessage.ERRORSYS("请输入要付款的内容！", this);
             return null;
         }
         fkd.setFukuan(total);
-        
+
         detail.setFukuandan(fkd);
         detail.setList(fklb);
-        
+
         return new SaveTask(detail);
     }
-    
+
     private class SaveTask extends QitafukuandanTask {
 
         public SaveTask(QitafukuanDetailEntity bean) {
@@ -225,8 +231,9 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
             AssetMessage.showMessageDialog(null, "保存成功");
             exit();
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -510,19 +517,19 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                OtherFuKuanDanJDialog dialog = new OtherFuKuanDanJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                OtherFuKuanDanJDialog dialog = new OtherFuKuanDanJDialog(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

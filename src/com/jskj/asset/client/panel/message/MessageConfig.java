@@ -79,6 +79,7 @@ public abstract class MessageConfig extends BasePanel {
         jPanel1.setName("jPanel1"); // NOI18N
 
         jCheckBoxAuto.setFont(resourceMap.getFont("jCheckBoxAuto.font")); // NOI18N
+        jCheckBoxAuto.setSelected(true);
         jCheckBoxAuto.setText(resourceMap.getString("jCheckBoxAuto.text")); // NOI18N
         jCheckBoxAuto.setName("jCheckBoxAuto"); // NOI18N
 
