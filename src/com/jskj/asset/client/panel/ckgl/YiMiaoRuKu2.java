@@ -37,7 +37,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
-    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
+    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();;
 
     /**
      * Creates new form ymcrk1
@@ -94,7 +94,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
 
-                    bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
+                    
                     Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
                     bindedMapyimiaoliebiaoList.add(chukudan);
@@ -434,6 +434,7 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
             yimiaoliebiao.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "price"))));
             yimiaoliebiao.setTotalprice(yimiaoliebiao.getQuantity() * yimiaoliebiao.getPrice());
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
             list.add(yimiaoliebiao);
         }
 

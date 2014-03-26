@@ -14,27 +14,25 @@ public class YiMiaotb {
 
     private String yimiaoJixing;
 
+    private Float yimiaoJiliang;
+
+    private String jiliangdanwei;
+
     private String yimiaoShengchanqiye;
 
     private String yimiaoPizhunwenhao;
 
     private String unitId;
 
+    private Float chengbenjia;
+
     private Float yimiaoYushoujia;
 
     private String yimiaoPicture;
 
-    private String yimiaoChufangbiaoji;
-
     private Integer yimiaoStockup;
 
     private Integer yimiaoStockdown;
-
-    private Integer yimiaoMorencangku;
-
-    private Integer supplierId;
-
-    private String yimiaoTiaoxingma;
 
     private String yimiaoFuzhuunit;
 
@@ -84,6 +82,22 @@ public class YiMiaotb {
         this.yimiaoJixing = yimiaoJixing == null ? null : yimiaoJixing.trim();
     }
 
+    public Float getYimiaoJiliang() {
+        return yimiaoJiliang;
+    }
+
+    public void setYimiaoJiliang(Float yimiaoJiliang) {
+        this.yimiaoJiliang = yimiaoJiliang;
+    }
+
+    public String getJiliangdanwei() {
+        return jiliangdanwei;
+    }
+
+    public void setJiliangdanwei(String jiliangdanwei) {
+        this.jiliangdanwei = jiliangdanwei == null ? null : jiliangdanwei.trim();
+    }
+
     public String getYimiaoShengchanqiye() {
         return yimiaoShengchanqiye;
     }
@@ -108,6 +122,14 @@ public class YiMiaotb {
         this.unitId = unitId == null ? null : unitId.trim();
     }
 
+    public Float getChengbenjia() {
+        return chengbenjia;
+    }
+
+    public void setChengbenjia(Float chengbenjia) {
+        this.chengbenjia = chengbenjia;
+    }
+
     public Float getYimiaoYushoujia() {
         return yimiaoYushoujia;
     }
@@ -124,14 +146,6 @@ public class YiMiaotb {
         this.yimiaoPicture = yimiaoPicture == null ? null : yimiaoPicture.trim();
     }
 
-    public String getYimiaoChufangbiaoji() {
-        return yimiaoChufangbiaoji;
-    }
-
-    public void setYimiaoChufangbiaoji(String yimiaoChufangbiaoji) {
-        this.yimiaoChufangbiaoji = yimiaoChufangbiaoji == null ? null : yimiaoChufangbiaoji.trim();
-    }
-
     public Integer getYimiaoStockup() {
         return yimiaoStockup;
     }
@@ -146,30 +160,6 @@ public class YiMiaotb {
 
     public void setYimiaoStockdown(Integer yimiaoStockdown) {
         this.yimiaoStockdown = yimiaoStockdown;
-    }
-
-    public Integer getYimiaoMorencangku() {
-        return yimiaoMorencangku;
-    }
-
-    public void setYimiaoMorencangku(Integer yimiaoMorencangku) {
-        this.yimiaoMorencangku = yimiaoMorencangku;
-    }
-
-    public Integer getSupplierId() {
-        return supplierId;
-    }
-
-    public void setSupplierId(Integer supplierId) {
-        this.supplierId = supplierId;
-    }
-
-    public String getYimiaoTiaoxingma() {
-        return yimiaoTiaoxingma;
-    }
-
-    public void setYimiaoTiaoxingma(String yimiaoTiaoxingma) {
-        this.yimiaoTiaoxingma = yimiaoTiaoxingma == null ? null : yimiaoTiaoxingma.trim();
     }
 
     public String getYimiaoFuzhuunit() {

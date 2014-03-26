@@ -59,14 +59,17 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
         //客户单位的popup
         ((BaseTextField) jTextFieldXiaoshoudanwei).registerPopup(new IPopupBuilder() {
 
+            @Override
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
 
+            @Override
             public String getWebServiceURI() {
                 return Constants.HTTP + Constants.APPID + "kehudanwei";
             }
 
+            @Override
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldXiaoshoudanwei.getText().trim().equals("")) {
@@ -75,10 +78,12 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
                 return sql;
             }
 
+            @Override
             public String[][] displayColumns() {
                 return new String[][]{{"kehudanweiName", "客户单位名称"}, {"kehudanweiConstactperson", "联系人"}};
             }
 
+            @Override
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
                     jTextFieldXiaoshoudanwei.setText(bindedMap.get("kehudanweiName") == null ? "" : bindedMap.get("kehudanweiName").toString());
@@ -91,17 +96,20 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"saleQuantity", "数量", "true"}, {"price", "单价", "true"}, {"totalprice", "合价", "true"}});
+            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"saleQuantity", "数量", "true"}, {"price", "单价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
+            @Override
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
             }
 
+            @Override
             public String getWebServiceURI() {
                 return Constants.HTTP + Constants.APPID + "addkucunyimiao";
             }
 
+            @Override
             public String getConditionSQL() {
                 int selectedColumn = jTableyimiao.getSelectedColumn();
                 int selectedRow = jTableyimiao.getSelectedRow();
@@ -113,11 +121,13 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
                 return sql;
             }
 
+            @Override
             public String[][] displayColumns() {
                 return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
                 {"yimiaoJixing", "剂型"}};
             }
 
+            @Override
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
                     Object yimiaoId = bindedMap.get("yimiaoId");

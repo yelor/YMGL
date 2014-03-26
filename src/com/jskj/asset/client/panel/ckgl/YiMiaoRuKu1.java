@@ -37,7 +37,8 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
-private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
+    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();;
+
     /**
      * Creates new form ymcrk1
      */
@@ -93,12 +94,12 @@ private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
-                   
-                    bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
+
+                    
                     Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
                     bindedMapyimiaoliebiaoList.add(chukudan);
-                    
+
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -417,7 +418,7 @@ private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
 
     @Action
     public Task save() throws ParseException {
-        YimiaochurukuEntity yimiaorukuEntity=new YimiaochurukuEntity();
+        YimiaochurukuEntity yimiaorukuEntity = new YimiaochurukuEntity();
 
         churukudan.setChurukuId(DanHao.getDanHao("YMRK"));
         churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
@@ -427,7 +428,7 @@ private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
         List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            Churukudanyimiaoliebiaotb yimiaoliebiao=new Churukudanyimiaoliebiaotb();
+            Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
             if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
                 AssetMessage.ERRORSYS("请输入入库疫苗!");
             }
@@ -442,6 +443,7 @@ private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList;
             } else {
                 yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
             }
+            yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
             list.add(yimiaoliebiao);
         }
         yimiaorukuEntity.setResult(list);

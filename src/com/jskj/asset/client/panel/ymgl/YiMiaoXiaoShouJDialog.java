@@ -50,7 +50,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
     private boolean isNew;
     private Sale_detail_tbFindEntity yimiaoxiaoshou;
     private XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity;
-    private List<Stockpiletb> stockpileList;
+    private List<Stockpiletb> stockpileList=new ArrayList<Stockpiletb>();;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -103,7 +103,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称", "true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
             {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
-            {"stockpilePrice", "单价", "false"}, {"yimiaoYushoujia", "售价", "true"}});
+            {"stockpilePrice", "单价", "false"}, {"yimiaoYushoujia", "售价", "false"}});
 
         
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -138,7 +138,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
                     
-                    stockpileList=new ArrayList<Stockpiletb>();
+                    
                     Stockpiletb stockpile=new Stockpiletb();
                     stockpile.setStockpileQuantity(Integer.parseInt(""+bindedMap.get("stockpileQuantity")));
                     stockpileList.add(stockpile);

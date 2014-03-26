@@ -162,11 +162,6 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                     editTable.insertValue(9, quantity);
 
                     Yimiaoyanshou_detail_tb yanshou = new Yimiaoyanshou_detail_tb();
-//                    try {
-//                        yanshou.setPiqianfahegeno((String) ("" + yimiaodengji.get("piqianfahegezhenno")));
-//                    } catch (Exception e) {
-//                        yanshou.setPiqianfahegeno(null);
-//                    }
 
                     yanshou.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
 

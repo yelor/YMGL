@@ -102,6 +102,8 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
+                    
+                    Object chengbenjia = bindedMap.get("chengbenjia");
                     Object saleprice = bindedMap.get("yimiaoYushoujia");
 
                     editTable.insertValue(0, yimiaoId);
@@ -110,7 +112,8 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
-                    editTable.insertValue(9, saleprice);
+                    editTable.insertValue(7, chengbenjia);
+                    editTable.insertValue(8, saleprice);
 
                 }
 

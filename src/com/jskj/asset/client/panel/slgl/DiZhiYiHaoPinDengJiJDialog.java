@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
@@ -37,6 +36,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
     private String yuandanID;
     private float danjujine;
     private int zhijielingyong;
+
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -46,7 +46,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
         initComponents();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
-        
+
         ((BaseTextField) jTextFieldName).registerPopup(new IPopupBuilder() {
 
             public int getType() {
@@ -61,15 +61,14 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
                 String sql = "";
                 sql += " cgsq_id like \"%YHCG%\" and is_completed = 1 and status = 0 ";
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + jTextFieldName.getText() + "%\"" 
-                        + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")");
+                    sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + jTextFieldName.getText() + "%\""
+                            + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")");
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
-                        ,{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"}, {"shenqingdan.zhidanren", "申请人"}, {"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -82,8 +81,10 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
                     jTextFieldGuige.setText(bindedMap.get("dzyhpGuige") == null ? "" : bindedMap.get("dzyhpGuige").toString());
                     jTextFieldPrice.setText(bindedMap.get("dzyhpValue") == null ? "" : bindedMap.get("dzyhpValue").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
-                    HashMap map = (HashMap)bindedMap.get("suppliertb");
-                    jTextFieldSupplier.setText(map.get("supplierName") == null ? "" : map.get("supplierName").toString());
+                    HashMap map = (HashMap) bindedMap.get("suppliertb");
+                    if (map != null) {
+                        jTextFieldSupplier.setText(map.get("supplierName") == null ? "" : map.get("supplierName").toString());
+                    }
                     jTextFieldBaoxiuqi.setText(bindedMap.get("dzyhpGuaranteedate") == null ? "" : bindedMap.get("dzyhpGuaranteedate").toString());
                     jTextFieldSequence.setText(bindedMap.get("dzyhpSequence") == null ? "" : bindedMap.get("dzyhpSequence").toString());
                     jTextAreaRemark.setText(bindedMap.get("dzyhpRemark") == null ? "" : bindedMap.get("dzyhpRemark").toString());
@@ -92,8 +93,8 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
                     jTextFieldQuantity.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
                     jTextFieldQuantity.setEditable(false);
                     zhijielingyong = Integer.parseInt("" + bindedMap.get("zhijielingyong"));
-                    map = (HashMap)bindedMap.get("shenqingdan");
-                    yuandanID = (String)map.get("shenqingdanId");
+                    map = (HashMap) bindedMap.get("shenqingdan");
+                    yuandanID = (String) map.get("shenqingdanId");
                     danjujine = Float.parseFloat("" + map.get("danjujine"));
                 }
             }
@@ -104,47 +105,47 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
         regTextField = new BaseTextField();
         ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
-    
+
     @Action
     public void exit() {
         this.dispose();
     }
-    
+
     @Action
-    public Task zhijielingyong() throws ParseException{
-        if(jTextFieldName.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入资产名称！",this);
+    public Task zhijielingyong() throws ParseException {
+        if (jTextFieldName.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入资产名称！", this);
             return null;
         }
-        if(zhijielingyong == 1){
-            AssetMessage.ERRORSYS("此易耗品不允许直接领用，请登记！",this);
+        if (zhijielingyong == 1) {
+            AssetMessage.ERRORSYS("此易耗品不允许直接领用，请登记！", this);
             return null;
         }
-        if(danjujine > 1000){
-            AssetMessage.ERRORSYS("此易耗品所在单据金额大于1000，不允许直接领用，请登记！",this);
+        if (danjujine > 1000) {
+            AssetMessage.ERRORSYS("此易耗品所在单据金额大于1000，不允许直接领用，请登记！", this);
             return null;
         }
-        if(jTextField12.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入购置日期！",this);
+        if (jTextField12.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入购置日期！", this);
             return null;
         }
         zjly = new Zhijielingyongtb();
         zjly.setYhpId(Integer.parseInt(jTextFieldZcid.getText()));
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
         zjly.setGouzhiDate(dateformate.parse(jTextField12.getText()));
         zjly.setDengjirenId(userId);
         zjly.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         zjly.setYuandanId(yuandanID);
-        
+
         return new zjlyTask(zjly);
     }
-    
-    private class zjlyTask extends ZhijielingyongTask{
+
+    private class zjlyTask extends ZhijielingyongTask {
 
         public zjlyTask(Zhijielingyongtb zc) {
             super(zc);
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             if (result instanceof Exception) {
@@ -157,34 +158,34 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
             exit();
         }
     }
-    
+
     @Action
-    public Task submitForm() throws ParseException{
-        if(jTextFieldName.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入资产名称！",this);
+    public Task submitForm() throws ParseException {
+        if (jTextFieldName.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入资产名称！", this);
             return null;
         }
-        if(jTextField12.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入购置日期！",this);
+        if (jTextField12.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入购置日期！", this);
             return null;
         }
         zc = new ZichandengjiAll();
         zc.setGdzcId(Integer.parseInt(jTextFieldZcid.getText()));
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
         zc.setGouzhiDate(dateformate.parse(jTextField12.getText()));
         zc.setDengjirenId(userId);
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         zc.setYuandanId(yuandanID);
-        
+
         return new submitTask(zc);
     }
-    
-    private class submitTask extends DengjiTask{
+
+    private class submitTask extends DengjiTask {
 
         public submitTask(ZichandengjiAll zc) {
             super(zc);
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             if (result instanceof Exception) {
@@ -197,6 +198,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
             exit();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
