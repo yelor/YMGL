@@ -34,6 +34,7 @@ public class MessagePanel extends BasePanel {
     private boolean displayTask;
     private boolean displayApplication;
     private boolean displayShenpi;
+    private MessageConfig messageConf;
 
     /**
      * Creates new form MessagePanel
@@ -45,7 +46,7 @@ public class MessagePanel extends BasePanel {
         displayShenpi = true;
         startDate = DateHelper.currentDateAdd(-30);
         startShenpihouDate = DateHelper.currentDateAdd(-15);
-        ((PopupButton) jButton2).registerPopup(new MessageConfig(((PopupButton) jButton2)) {
+        messageConf = new MessageConfig(((PopupButton) jButton2)) {
             AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
             java.util.Timer timer = new java.util.Timer(true);
             TimerTask timetask;
@@ -72,7 +73,7 @@ public class MessagePanel extends BasePanel {
                         @Override
                         public void run() {
                             clientView.setStatus("定时任务已经启动.", INFO_MESSAGE);
-                            MessagePanel.this.reload().execute();
+                            MessagePanel.this.refersh().execute();
                         }
                     };
 
@@ -82,11 +83,13 @@ public class MessagePanel extends BasePanel {
 
                     if (timetask != null) {
                         timetask.cancel();
+                        clientView.setStatus("定时任务已经取消.", INFO_MESSAGE);
                     }
-                    MessagePanel.this.reload().execute();
+                    MessagePanel.this.refersh().execute();
                 }
             }
-        });
+        };
+        ((PopupButton) jButton2).registerPopup(messageConf);
     }
 
     /**
@@ -200,10 +203,9 @@ public class MessagePanel extends BasePanel {
     private javax.swing.JPanel messageMain;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    @Action
-    public Task reload() {
-        return new MyTaskFindTask(startDate,null,startShenpihouDate,null, displayTask, displayApplication,displayShenpi) {
+    
+    public Task refersh(){
+         return new MyTaskFindTask(startDate,null,startShenpihouDate,null, displayTask, displayApplication,displayShenpi) {
 
             @Override
             public void layout(List<JLabel> labelArray) {
@@ -234,6 +236,13 @@ public class MessagePanel extends BasePanel {
                 messageMain.doLayout();
             }
         };
+    }
+    
+    @Override
+    @Action
+    public Task reload() {
+        messageConf.save();
+       return null;
     }
 
     @Override

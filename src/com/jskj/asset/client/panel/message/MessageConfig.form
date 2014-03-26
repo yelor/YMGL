@@ -113,6 +113,7 @@
         <Component class="javax.swing.JCheckBox" name="jCheckBoxAuto">
           <Properties>
             <Property name="font" type="java.awt.Font" resourceKey="jCheckBoxAuto.font"/>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" resourceKey="jCheckBoxAuto.text"/>
             <Property name="name" type="java.lang.String" value="jCheckBoxAuto" noResource="true"/>
           </Properties>

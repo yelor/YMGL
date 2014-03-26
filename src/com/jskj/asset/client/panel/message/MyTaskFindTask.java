@@ -452,7 +452,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                             }
                         }.execute();
 
-                    } else if (!danjuType.equals(DanHao.TYPE_FKDJ)) {//资产相关
+                    } else if (!danjuType.equals(DanHao.TYPE_FKDJ) && !danjuType.equals(DanHao.TYPE_QTFK)) {//资产相关
                         new ShenqingDetailTask(shenqingdan) {
                             @Override
                             protected void succeeded(Object result) {
@@ -464,6 +464,11 @@ public abstract class MyTaskFindTask extends BaseTask {
                             }
                         }.execute();
                     } else {//付款单据
+                        if(danjuType.equals(DanHao.TYPE_FKDJ)){
+                        
+                        }else{
+                            
+                        }
 
                     }
 

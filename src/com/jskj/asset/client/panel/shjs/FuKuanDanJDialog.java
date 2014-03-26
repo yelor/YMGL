@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Fukuandantb;
 import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ShenqingdanAll;
 import com.jskj.asset.client.bean.entity.Qitafukuanliebiaotb;
+import com.jskj.asset.client.bean.entity.Yingfukuandanjutb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
@@ -18,7 +19,10 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.shjs.task.FukuandanTask;
+import com.jskj.asset.client.panel.shjs.task.YingfuliebiaoFindTask;
+import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.event.WindowEvent;
@@ -26,11 +30,11 @@ import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -40,12 +44,18 @@ import org.jdesktop.application.Task;
  */
 public class FuKuanDanJDialog extends BaseDialog {
 
+    private final static Logger logger = Logger.getLogger(FuKuanDanJDialog.class);
     private int userId;
     private String userName;
     private int supplierId;
     private float total;
     private List<Qitafukuanliebiaotb> ydlb;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private List<Yingfukuandanjutb> currentPageData;
+    private BindTableHelper<Yingfukuandanjutb> bindTable;
+    private HashMap parameterMap;
+    private String conditionSql;
+    
 
     /**
      * Creates new form FKDJDialog
@@ -62,6 +72,11 @@ public class FuKuanDanJDialog extends BaseDialog {
         fukuandanDate.setText(dateformate.format(new Date()).toString());
         yingfu.setText("0.0");
         zhidanren.setText(userName);
+        
+        conditionSql = "";
+        parameterMap = new HashMap();
+        parameterMap.put("conditionSql", "");
+        parameterMap.put("serviceId", "yflist");
 
         ((BaseTextField) supplier).registerPopup(new IPopupBuilder() {
 
@@ -93,66 +108,17 @@ public class FuKuanDanJDialog extends BaseDialog {
                         accountNum.setEditable(false);
                     }
                     supplierId = (Integer) bindedMap.get("supplierId");
+                    parameterMap.put("supplierId", supplierId);
+                    new RefreshTask().execute();
                 }
             }
         });
-
-//        final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-//            {"shenqingdanId", "源单编号", "true"}, {"shenqingdanDate", "制单日期"}, {"danjuType", "源单类型"},
-//            {"totalPrice", "单据金额"}, {"shenqingdanRemark", "备注"}});
-//
-//        editTable.registerPopup(0, new IPopupBuilder() {
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_TABLE;
-//            }
-//
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "sqd";
-//            }
-//
-//            public String getConditionSQL() {
-//                int selectedColumn = jTable1.getSelectedColumn();
-//                int selectedRow = jTable1.getSelectedRow();
-//                Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
-//                String sql = "";
-//                sql += " is_completed = 1 and is_paid = 0 ";
-//                if (!supplier.getText().isEmpty()) {
-//                    sql += " and supplier_id = " + supplierId;
-//                }
-//                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-//                    sql += " and shenqingdan_id like \"%" + newColumnObj.toString() + "%\"";
-//                }
-//                return sql;
-//            }
-//
-//            public String[][] displayColumns() {
-//                return new String[][]{{"shenqingdanId", "源单编号"}, {"shenqingdanDate", "制单日期"},
-//                {"zhidanren", "制单人"}};
-//            }
-//
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//                    Object shenqingdanId = bindedMap.get("shenqingdanId");
-//                    Object shenqingdanDate = bindedMap.get("shenqingdanDate");
-//                    Object danjuType = bindedMap.get("danjuType");
-//                    Object totalPrice = bindedMap.get("totalPrice");
-//                    Object shenqingdanRemark = bindedMap.get("shenqingdanRemark");
-//
-//                    editTable.insertValue(0, shenqingdanId);
-//                    editTable.insertValue(1, shenqingdanDate);
-//                    editTable.insertValue(2, danjuType);
-//                    editTable.insertValue(3, totalPrice);
-//                    editTable.insertValue(4, shenqingdanRemark);
-//
-//                    Qitafukuanliebiaotb yd = new Qitafukuanliebiaotb();
-//                    yd.setFukuandanId(fukuandanId.getText());
-//                    yd.setYuandanId((String) shenqingdanId);
-//                    ydlb.add(yd);
-//                    total += Float.parseFloat("" + totalPrice);
-//                }
-//
-//            }
-//        });
+        bindTable = new BindTableHelper<Yingfukuandanjutb>(jTable1, new ArrayList<Yingfukuandanjutb>());
+        bindTable.createTable(new String[][]{{"yuandanId", "源单编号"}, {"zhidandate", "制单日期"},{"yuandantype", "源单类型"}
+                , {"danjujine", "单据金额"}, {"increase", "增加金额"}, {"decrease", "减少金额"}, {"yingfu", "应付金额"}, {"remark", "备注"}});
+        bindTable.setColumnType(Date.class, 2);
+        //bindTable.setColumnType(Float.class, 8, 9);
+        bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 150}, new int[]{2, 100}).setRowHeight(25);
     }
 
     public FuKuanDanJDialog(final JDialog parent, FukuanshenqingDetailEntity detail) {
@@ -230,6 +196,31 @@ public class FuKuanDanJDialog extends BaseDialog {
     public void exit() {
         this.dispose();
     }
+    
+    private class RefreshTask extends YingfuliebiaoFindTask{
+
+        RefreshTask() {
+            super(parameterMap);
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<Yingfukuandanjutb> response) {
+            
+            logger.debug("get current size:" + response.getResult().size());
+
+            //存下所有的数据
+            currentPageData = response.getResult();
+            bindTable.refreshData(currentPageData);
+
+            float total = 0;
+            for(Yingfukuandanjutb yf: currentPageData){
+                yf.setFukuandanId(fukuandanId.getText());
+                total += yf.getYingfu();
+            }
+            yingfu.setText("" + total);
+        }
+        
+    }
 
     @Action
     public Task submitForm() throws ParseException {
@@ -257,8 +248,13 @@ public class FuKuanDanJDialog extends BaseDialog {
         fkd.setYingfu(Float.parseFloat(yingfu.getText()));
         fkd.setYouhui(Float.parseFloat(youhui.getText()));
         
+        if (fkd.getFukuan() + fkd.getYouhui() > fkd.getYingfu()) {
+            AssetMessage.ERRORSYS("付款金额+优惠金额大于应付金额！", this);
+            return null;
+        }
+        
         detail.setFukuandan(fkd);
-        detail.setList(ydlb);
+        detail.setYfklist(currentPageData);
         
         return new SaveTask(detail);
     }
@@ -550,12 +546,13 @@ public class FuKuanDanJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(yingfu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
-                        .addComponent(zhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(zhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(yingfu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
