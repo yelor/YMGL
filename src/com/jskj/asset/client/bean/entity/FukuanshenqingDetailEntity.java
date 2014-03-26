@@ -18,15 +18,9 @@ public class FukuanshenqingDetailEntity extends Fukuandantb{
     
     private String accountNum;
     
-    private String checkId1;
+    List<Yingfukuandanjutb> yfklist;
     
-    private String checkId2;
-    
-    private String checkId3;
-    
-    private String rejectReason;
-    
-    private List<ShenqingdanAll> list;
+    List<Qitafukuanliebiaotb> qtlist;
 
     public String getShenqingren() {
         return shenqingren;
@@ -40,20 +34,12 @@ public class FukuanshenqingDetailEntity extends Fukuandantb{
         return accountNum;
     }
 
-    public String getCheckId1() {
-        return checkId1;
+    public List<Yingfukuandanjutb> getYfklist() {
+        return yfklist;
     }
 
-    public String getCheckId2() {
-        return checkId2;
-    }
-
-    public String getRejectReason() {
-        return rejectReason;
-    }
-
-    public List<ShenqingdanAll> getList() {
-        return list;
+    public List<Qitafukuanliebiaotb> getQtlist() {
+        return qtlist;
     }
 
     public void setShenqingren(String shenqingren) {
@@ -68,28 +54,12 @@ public class FukuanshenqingDetailEntity extends Fukuandantb{
         this.accountNum = accountNum;
     }
 
-    public void setCheckId1(String checkId1) {
-        this.checkId1 = checkId1;
+    public void setYfklist(List<Yingfukuandanjutb> yfklist) {
+        this.yfklist = yfklist;
     }
 
-    public void setCheckId2(String checkId2) {
-        this.checkId2 = checkId2;
+    public void setQtlist(List<Qitafukuanliebiaotb> qtlist) {
+        this.qtlist = qtlist;
     }
 
-    public void setRejectReason(String rejectReason) {
-        this.rejectReason = rejectReason;
-    }
-
-    public void setList(List<ShenqingdanAll> list) {
-        this.list = list;
-    }
-
-    public String getCheckId3() {
-        return checkId3;
-    }
-
-    public void setCheckId3(String checkId3) {
-        this.checkId3 = checkId3;
-    }
-    
 }

@@ -148,7 +148,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="zhidanren" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="shenqingren" min="-2" pref="160" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -194,7 +194,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="zhidanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="shenqingren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -437,10 +437,10 @@
             <Property name="name" type="java.lang.String" value="jLabel8" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="zhidanren">
+        <Component class="javax.swing.JTextField" name="shenqingren">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="zhidanren" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="shenqingren" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
