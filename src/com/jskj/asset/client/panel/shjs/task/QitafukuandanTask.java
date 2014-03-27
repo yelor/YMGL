@@ -4,7 +4,6 @@
  */
 package com.jskj.asset.client.panel.shjs.task;
 
-import com.jskj.asset.client.bean.entity.FukuanDetailEntity;
 import com.jskj.asset.client.bean.entity.QitafukuanDetailEntity;
 import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;

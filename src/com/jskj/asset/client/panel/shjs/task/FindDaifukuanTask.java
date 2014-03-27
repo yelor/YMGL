@@ -7,7 +7,7 @@
 package com.jskj.asset.client.panel.shjs.task;
 
 import com.jskj.asset.client.panel.slgl.*;
-import com.jskj.asset.client.bean.entity.ShoukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.Fukuanshenpiliuchengtb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
@@ -21,19 +21,19 @@ import org.springframework.web.client.RestClientException;
  *
  * @author tt
  */
-public abstract class FindskdTask extends BaseTask{
+public abstract class FindDaifukuanTask extends BaseTask{
 
     public static final Logger logger = Logger.getLogger(ChaXunTask.class);
-    private final String CX_URI = Constants.HTTP + Constants.APPID + "shoukuandan/findall";
+    private final String CX_URI = Constants.HTTP + Constants.APPID + "fukuandan/finddaifukuan";
     public static final int pageSize = 10;
     private int pageIndex = 1;
     
-    public FindskdTask(int pageIndex){
+    public FindDaifukuanTask(int pageIndex){
         super();
         this.pageIndex = pageIndex;
     }
     
-    public FindskdTask(){
+    public FindDaifukuanTask(){
         this(1);
     }
     
@@ -41,10 +41,10 @@ public abstract class FindskdTask extends BaseTask{
     public Object doBackgrounp() {
         try{
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            CommFindEntity<ShoukuanshenqingDetailEntity> sqs = restTemplate.exchange(CX_URI,
+            CommFindEntity<Fukuanshenpiliuchengtb> sqs = restTemplate.exchange(CX_URI,
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<CommFindEntity<ShoukuanshenqingDetailEntity>>() {
+                    new ParameterizedTypeReference<CommFindEntity<Fukuanshenpiliuchengtb>>() {
                     }).getBody();
             return sqs;
         }catch (RestClientException e) {
@@ -66,11 +66,11 @@ public abstract class FindskdTask extends BaseTask{
             return;
         }
         if (object instanceof CommFindEntity) {
-            responseResult((CommFindEntity<ShoukuanshenqingDetailEntity>) object);
+            responseResult((CommFindEntity<Fukuanshenpiliuchengtb>) object);
         } else {
             clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
         }
     }
 
-    public abstract void responseResult(CommFindEntity<ShoukuanshenqingDetailEntity> response);
+    public abstract void responseResult(CommFindEntity<Fukuanshenpiliuchengtb> response);
 }

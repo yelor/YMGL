@@ -22,6 +22,7 @@ import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXie;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujilu;
 import com.jskj.asset.client.panel.ckgl.Selectebaosun;
 import com.jskj.asset.client.panel.shjs.FukuanShenPiJDialog;
+import com.jskj.asset.client.panel.shjs.SelectDanweiJDialog;
 import com.jskj.asset.client.panel.shjs.SelectPandianJDialog;
 import com.jskj.asset.client.panel.shjs.SelectShoufukuanJDialog;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
@@ -60,6 +61,7 @@ public class BaseMainPanel extends BasePanel {
     /*审核结算*/
     private SelectShoufukuanJDialog selecteSKDJDialog;
     private SelectPandianJDialog selectePDDJDialog;
+    private SelectDanweiJDialog selectDanweiJDialog;
 
     /*申领管理*/
     private selectCaiGouDanJDialog selectCaiGouDanJDialog;
@@ -494,8 +496,17 @@ public class BaseMainPanel extends BasePanel {
      * ***************************审核结算开始********************
      */
     @Action
-    public Task selecteInvoice1Action() {
-        return new OpenTabTask("报表-单位应收应付", new DanweiyingshouyingfuPanel(), false);
+    public void selecteInvoice1Action() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (selectDanweiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selectDanweiJDialog = new SelectDanweiJDialog();
+                    selectDanweiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selectDanweiJDialog);
+            }
+        });
     }
 
     @Action

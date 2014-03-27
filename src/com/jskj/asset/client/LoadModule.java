@@ -167,12 +167,10 @@ public class LoadModule extends BaseTask {
 //        jMenuItem13.setText(resourceMap.getString("jMenuItem13.text")); // NOI18N
 //        jMenuItem13.setName("jMenuItem13"); // NOI18N
 //        jichuMenu.add(jMenuItem13);
-
 //        jMenuItem14.setAction(actionMap.get("showJianShaoFangShi")); // NOI18N
 //        jMenuItem14.setText(resourceMap.getString("jMenuItem14.text")); // NOI18N
 //        jMenuItem14.setName("jMenuItem14"); // NOI18N
 //        jichuMenu.add(jMenuItem14);
-
         menuBar.add(jichuMenu);
 
         baobiaoMenu.setText(resourceMap.getString("baobiaoMenu.text")); // NOI18N
@@ -281,7 +279,7 @@ public class LoadModule extends BaseTask {
         jMenuItemTask.setText(resourceMap.getString("jMenuItemTask.text")); // NOI18N
         jMenuItemTask.setName("jMenuItemTask"); // NOI18N
         helpMenu.add(jMenuItemTask);
-        
+
         jMenuItem1.setAction(actionMap.get("showLogBox")); // NOI18N
         jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
         jMenuItem1.setName("jMenuItem1"); // NOI18N
@@ -304,28 +302,27 @@ public class LoadModule extends BaseTask {
         //加载主要工作区
         clientView.displayMainView();
 
-        
         /*权限控制*/
         if (!AssetClientApp.permissionMoudle(resourceMap.getString("jichuMenu.text"))) {
             //jichuMenu.setEnabled(false);
             menuBar.remove(jichuMenu);
         }
-        
+
         if (!AssetClientApp.permissionMoudle(resourceMap.getString("baobiaoMenu.text"))) {
             //baobiaoMenu.setEnabled(false);
             menuBar.remove(baobiaoMenu);
         }
         if (!AssetClientApp.permissionMoudle(resourceMap.getString("jMenuDW.text"))) {
-           // jMenuDW.setEnabled(false);
+            // jMenuDW.setEnabled(false);
             menuBar.remove(jMenuDW);
         }
 
         menuBar.validate();
         menuBar.updateUI();
-        
+
         //默认显示出消息
         showTaskBox();
-        
+
         /**
          * ************************************************************************************
          *
@@ -371,13 +368,16 @@ public class LoadModule extends BaseTask {
             disLogPanel = false;
         }
     }
-    
+
     @Action
     public void showTaskBox() {
         AssetClientView view = (AssetClientView) AssetClientApp.getApplication().getMainView();
         if (disTaskPanel == false) {
             view.getMainViewPane().addBottomPanel(messagePanel);
-            messagePanel.reload().execute();
+            Task task = messagePanel.reload();
+            if (task != null) {
+                task.execute();
+            }
             disTaskPanel = true;
         } else {
             view.getMainViewPane().removeBottomPanel(messagePanel);

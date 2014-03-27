@@ -14,22 +14,22 @@ public class FukuanDetailEntity {
     
     Fukuandantb fukuandan;
     
-    List<Qitafukuanliebiaotb> list;
+    List<Yingfukuandanjutb> yfklist;
 
     public Fukuandantb getFukuandan() {
         return fukuandan;
-    }
-
-    public List<Qitafukuanliebiaotb> getList() {
-        return list;
     }
 
     public void setFukuandan(Fukuandantb fukuandan) {
         this.fukuandan = fukuandan;
     }
 
-    public void setList(List<Qitafukuanliebiaotb> list) {
-        this.list = list;
+    public List<Yingfukuandanjutb> getYfklist() {
+        return yfklist;
+    }
+
+    public void setYfklist(List<Yingfukuandanjutb> yfklist) {
+        this.yfklist = yfklist;
     }
     
 }

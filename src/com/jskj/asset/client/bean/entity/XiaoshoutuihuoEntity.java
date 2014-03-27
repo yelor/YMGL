@@ -1,7 +1,6 @@
 /*
  * 2014 Chengdu JunChen Technology
  */
-
 package com.jskj.asset.client.bean.entity;
 
 import java.util.List;
@@ -10,17 +9,18 @@ import java.util.List;
  *
  * @author huiqi
  */
-public class Backsale_detail_tbFindEntity extends Backsale_detail_tb{
-     private int count;
-    
-    private  List<Backsale_detail_tb> backsale_details;
+public class XiaoshoutuihuoEntity {
 
-    public int getCount() {
-        return count;
+    private Backsaletb backsaletb;
+
+    private List<Backsale_detail_tb> backsale_details;
+
+    public Backsaletb getBacksaletb() {
+        return backsaletb;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setBacksaletb(Backsaletb backsaletb) {
+        this.backsaletb = backsaletb;
     }
 
     public List<Backsale_detail_tb> getBacksales() {
@@ -30,7 +30,5 @@ public class Backsale_detail_tbFindEntity extends Backsale_detail_tb{
     public void setBacksale_details(List<Backsale_detail_tb> backsale_details) {
         this.backsale_details = backsale_details;
     }
-    
-    
-    
+
 }

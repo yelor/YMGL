@@ -5,9 +5,9 @@
  */
 package com.jskj.asset.client.panel.shjs;
 
-import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.panel.ckgl.*;
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.layout.BaseDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
@@ -16,13 +16,13 @@ import org.jdesktop.application.Action;
  *
  * @author Administrator
  */
-public class SelectShoufukuanJDialog extends javax.swing.JDialog {
+public class SelectDanweiJDialog extends BaseDialog {
 
     /**
      * Creates new form ymcrk
      */
-    public SelectShoufukuanJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public SelectDanweiJDialog() {
+        super();
         initComponents();
     }
 
@@ -37,55 +37,41 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
 
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectShoufukuanJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectDanweiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectShoufukuanJDialog.class, this);
-        jButton1.setAction(actionMap.get("qtfkd_pop")); // NOI18N
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectDanweiJDialog.class, this);
+        jButton1.setAction(actionMap.get("kehu_pop")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton1.setName("jButton1"); // NOI18N
 
-        jButton3.setAction(actionMap.get("fkd_pop")); // NOI18N
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setAction(actionMap.get("supplier_pop")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton3.setName("jButton3"); // NOI18N
-
-        jButton2.setAction(actionMap.get("skd_pop")); // NOI18N
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton2.setName("jButton2"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -134,50 +120,35 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
     }
 
     @Action
-    public void skd_pop() {
+    public void supplier_pop() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                OtherShouKuanDanJDialog skdJDialog = new OtherShouKuanDanJDialog(mainFrame, true);
-                skdJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(skdJDialog);
+                SupplierJDialog supplierJDialog = new SupplierJDialog();
+                supplierJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(supplierJDialog);
             }
         });
     }
 
     @Action
-    public void fkd_pop() {
+    public void kehu_pop() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog();
-                fkdJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(fkdJDialog);
-            }
-        });
-    }
-
-    @Action
-    public void qtfkd_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                OtherFuKuanDanJDialog otherfkdJDialog = new OtherFuKuanDanJDialog();
-                otherfkdJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(otherfkdJDialog);
+                KehudanweiJDialog kehuJDialog = new KehudanweiJDialog();
+                kehuJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(kehuJDialog);
             }
         });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     // End of variables declaration//GEN-END:variables
 }

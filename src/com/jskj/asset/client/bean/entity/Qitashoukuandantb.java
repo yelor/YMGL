@@ -11,21 +11,13 @@ public class Qitashoukuandantb {
 
     private Integer supplierId;
 
-    private String jiesuanId;
-
-    private Integer zhekou;
-
     private Float totalprice;
-
-    private String payType;
 
     private String shenqingdanRemark;
 
     private Integer zhidanrenId;
 
     private Integer danjuleixingId;
-
-    private Integer isCompleted;
 
     public String getShoukuandanId() {
         return shoukuandanId;
@@ -51,36 +43,12 @@ public class Qitashoukuandantb {
         this.supplierId = supplierId;
     }
 
-    public String getJiesuanId() {
-        return jiesuanId;
-    }
-
-    public void setJiesuanId(String jiesuanId) {
-        this.jiesuanId = jiesuanId == null ? null : jiesuanId.trim();
-    }
-
-    public Integer getZhekou() {
-        return zhekou;
-    }
-
-    public void setZhekou(Integer zhekou) {
-        this.zhekou = zhekou;
-    }
-
     public Float getTotalprice() {
         return totalprice;
     }
 
     public void setTotalprice(Float totalprice) {
         this.totalprice = totalprice;
-    }
-
-    public String getPayType() {
-        return payType;
-    }
-
-    public void setPayType(String payType) {
-        this.payType = payType == null ? null : payType.trim();
     }
 
     public String getShenqingdanRemark() {
@@ -105,13 +73,5 @@ public class Qitashoukuandantb {
 
     public void setDanjuleixingId(Integer danjuleixingId) {
         this.danjuleixingId = danjuleixingId;
-    }
-
-    public Integer getIsCompleted() {
-        return isCompleted;
-    }
-
-    public void setIsCompleted(Integer isCompleted) {
-        this.isCompleted = isCompleted;
     }
 }
