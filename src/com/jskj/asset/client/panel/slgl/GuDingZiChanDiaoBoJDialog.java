@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -18,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -203,6 +205,10 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            GuDingZiChanDiaoBoJDialog guDingZiChanDiaoBoJDialog = new GuDingZiChanDiaoBoJDialog(mainFrame);
+            guDingZiChanDiaoBoJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(guDingZiChanDiaoBoJDialog);
         }
     }
     /**

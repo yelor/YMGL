@@ -15,14 +15,13 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -127,6 +126,8 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
     
     @Action
     public Task submitForm() throws ParseException{
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         if(jTextField2.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
@@ -183,6 +184,10 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            GuDingZiChanLingYongTuiKuJDialog guDingZiChanTuiKuJDialog = new GuDingZiChanLingYongTuiKuJDialog(mainFrame);
+            guDingZiChanTuiKuJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(guDingZiChanTuiKuJDialog);
         }
     }
     /**

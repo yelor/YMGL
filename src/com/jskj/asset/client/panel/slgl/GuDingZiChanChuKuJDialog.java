@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -203,6 +204,8 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
     
     @Action
     public Task submitForm() throws ParseException{
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         if(zc.size() < 1){
             AssetMessage.ERRORSYS("请选择要领用的资产！",this);
             return null;
@@ -235,6 +238,10 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     AssetMessage.showMessageDialog(null, "提交成功！");
                     exit();
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog(new javax.swing.JFrame(), true);
+                    zichanchuku.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(zichanchuku);
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanChuKuJDialog.this);
                 }

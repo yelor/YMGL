@@ -7,7 +7,6 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
-import com.jskj.asset.client.bean.entity.Lingyongshenqingdantb;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
@@ -24,11 +23,11 @@ import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -210,6 +209,8 @@ public class ITGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         if (lysqDate.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
@@ -274,6 +275,10 @@ public class ITGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            ITGuDingZiChanLingYongShenQingJDialog iTGuDingZiChanLingYongShenQingJDialog = new ITGuDingZiChanLingYongShenQingJDialog();
+            iTGuDingZiChanLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(iTGuDingZiChanLingYongShenQingJDialog);
         }
     }
 

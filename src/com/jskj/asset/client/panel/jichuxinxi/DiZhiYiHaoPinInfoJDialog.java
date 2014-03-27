@@ -51,8 +51,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         this.setTitle("低值易耗品");
 
         dzyhpType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("物品类别")));
-        unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
-
+        
         ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
 
             @Override
@@ -198,6 +197,12 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             appParam.setSupplierId(Integer.parseInt(supplierId));
         }
 
+        appParam.setUnitId(unitId.getText());
+        if(jCheckBoxzjly.isSelected()){
+            appParam.setZhijielingyong(0);
+        }else {
+            appParam.setZhijielingyong(1);
+        }
         
         String zujima = PingYinUtil.getFirstSpell(dzyhpName.getText().trim());
         appParam.setZujima(zujima);
@@ -228,6 +233,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                     if (!jCheckBoxCont.isSelected()) {
                         dispose();
                     } else {
+                        AssetMessage.showMessageDialog(null, "保存成功！");
                         BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
                         List<String> source = mode.getSource();
                         source.clear();
@@ -277,6 +283,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jCheckBoxCont = new javax.swing.JCheckBox();
+        jCheckBoxzjly = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -290,11 +297,11 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jButton7 = new javax.swing.JButton();
         dzyhpType = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
-        unitId = new javax.swing.JComboBox();
         dzyhpGuige = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         unitPhoto = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
+        unitId = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         dzyhpKucunxiaxian = new javax.swing.JTextField();
@@ -337,6 +344,9 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jCheckBoxCont.setText(resourceMap.getString("jCheckBoxCont.text")); // NOI18N
         jCheckBoxCont.setName("jCheckBoxCont"); // NOI18N
 
+        jCheckBoxzjly.setText(resourceMap.getString("jCheckBoxzjly.text")); // NOI18N
+        jCheckBoxzjly.setName("jCheckBoxzjly"); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -344,6 +354,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBoxCont)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBoxzjly)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -355,7 +367,9 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jButton3)
                 .addComponent(jButton4))
-            .addComponent(jCheckBoxCont)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jCheckBoxCont)
+                .addComponent(jCheckBoxzjly))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel3.border.title"))); // NOI18N
@@ -396,9 +410,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
-        unitId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        unitId.setName("unitId"); // NOI18N
-
         dzyhpGuige.setName("dzyhpGuige"); // NOI18N
 
         jScrollPane3.setName("jScrollPane3"); // NOI18N
@@ -409,6 +420,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jButton1.setAction(actionMap.get("imagePreview")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
+
+        unitId.setName("unitId"); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -429,8 +442,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(unitId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(58, 58, 58)
+                                .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel18))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(dzyhpXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -480,12 +493,12 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                                     .addComponent(jLabel10)
                                     .addComponent(dzyhpXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3))
-                                .addGap(12, 12, 12)
+                                .addGap(13, 13, 13)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel7)
-                                    .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel18)
-                                    .addComponent(dzyhpPinpai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(dzyhpPinpai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
@@ -806,6 +819,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBoxCont;
+    private javax.swing.JCheckBox jCheckBoxzjly;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel15;
@@ -826,7 +840,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldDepotID;
     private javax.swing.JTextField jTextFieldSupplier;
     private javax.swing.JTextField suppliertb$supplierName;
-    private javax.swing.JComboBox unitId;
+    private javax.swing.JTextField unitId;
     private javax.swing.JList unitPhoto;
     // End of variables declaration//GEN-END:variables
 }
