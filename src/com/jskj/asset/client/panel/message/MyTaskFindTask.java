@@ -6,6 +6,7 @@ package com.jskj.asset.client.panel.message;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.MyTaskEntity;
 import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
 import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
@@ -464,11 +465,17 @@ public abstract class MyTaskFindTask extends BaseTask {
                             }
                         }.execute();
                     } else {//付款单据
-                        if(danjuType.equals(DanHao.TYPE_FKDJ)){
-                        
-                        }else{
-                            
-                        }
+
+                        new com.jskj.asset.client.panel.shjs.task.ShenqingDetailTask(shenqingdan) {
+                            @Override
+                            protected void succeeded(Object result) {
+                                if (result != null) {
+                                    openDialog(className, result, FukuanshenqingDetailEntity.class);
+                                } else {
+                                    logger.error("response result is null.");
+                                }
+                            }
+                        }.execute();
 
                     }
 
