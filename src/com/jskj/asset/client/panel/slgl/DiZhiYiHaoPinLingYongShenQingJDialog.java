@@ -87,7 +87,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " dzyhp_id in (select distinct dzyhp_id from dizhiyihaopinkucun where quantity > 0) ";
+                sql += " dzyhp_id in (select distinct yhp_id from dizhiyihaopinkucun where quantity > 0) ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += " and (dzyhp_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }

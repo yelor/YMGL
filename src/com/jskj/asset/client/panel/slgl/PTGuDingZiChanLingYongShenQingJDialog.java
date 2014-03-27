@@ -90,7 +90,7 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 sql += " gdzc_id in (select distinct gdzc_id from gudingzichankucun where quantity > 0) "
-                        + " and gdzc_type = \"普通\" ";
+                        + " and gdzc_type like \"%普通%\" ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += " and (gdzc_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
