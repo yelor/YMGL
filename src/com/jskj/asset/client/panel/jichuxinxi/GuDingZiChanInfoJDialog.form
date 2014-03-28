@@ -155,31 +155,23 @@
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="gdzcName" max="32767" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="unitId" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                                  <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="gdzcXinghao" min="-2" pref="151" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="gdzcName" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                              <Component id="gdzcXinghao" min="-2" pref="151" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="gdzcGuige" min="-2" pref="181" max="-2" attributes="0"/>
-                              <Component id="gdzcValue" min="-2" pref="181" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <Component id="unitId" min="-2" pref="152" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -191,7 +183,7 @@
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="169" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -222,12 +214,10 @@
                               <Component id="gdzcXinghao" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="unitId" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="gdzcValue" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -272,15 +262,9 @@
             <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel18">
+        <Component class="javax.swing.JTextField" name="unitId">
           <Properties>
-            <Property name="text" type="java.lang.String" resourceKey="jLabel18.text"/>
-            <Property name="name" type="java.lang.String" value="jLabel18" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="gdzcValue">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="gdzcValue" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="unitId" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton6">
@@ -313,14 +297,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jLabel8.text"/>
             <Property name="name" type="java.lang.String" value="jLabel8" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="unitId">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="unitId" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="gdzcGuige">

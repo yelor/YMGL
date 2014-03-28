@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -101,7 +102,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"}, {"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "采购价", "true"}, {"quantity", "数量", "true"}});
+            {"gdzcXinghao", "型号"}, {"gdzcValue", "采购价", "true"}, {"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -133,13 +134,15 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
                     Object gdzcName = bindedMap.get("gdzcName");
                     Object gdzcType = bindedMap.get("gdzcType");
                     Object gdzcPinpai = bindedMap.get("gdzcPinpai");
+                    Object gdzcXinghao = bindedMap.get("gdzcXinghao");
 
                     editTable.insertValue(0, gdzcId);
                     editTable.insertValue(1, gdzcName);
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, 0);
+                    editTable.insertValue(4, gdzcXinghao);
                     editTable.insertValue(5, 0);
+                    editTable.insertValue(6, 0);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
@@ -215,7 +218,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "销售价", "数量", "合价"
+                    "资产编号", "资产名称", "类别", "品牌", "采购价", "数量", "合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -231,6 +234,8 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         if (supplier.getText().isEmpty()) {
             AssetMessage.ERRORSYS("请输入供应单位！", this);
             return null;
@@ -252,8 +257,8 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         float total = 0;
         for (int i = 0; i < zc.size(); i++) {
-            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 6)));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 5));
             if (price == 0) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的采购价！", this);
                 return null;
@@ -292,6 +297,10 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            GuDingZiChanCaiGouShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanCaiGouShenQingJDialog();
+            guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
         }
     }
 

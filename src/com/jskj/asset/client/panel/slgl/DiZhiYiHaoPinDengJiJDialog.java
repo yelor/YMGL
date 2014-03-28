@@ -16,6 +16,7 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
@@ -34,6 +35,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
     private int userId;
     private String userName;
     private String yuandanID;
+    private String supplier;
     private float danjujine;
     private int zhijielingyong;
 
@@ -196,6 +198,10 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            DiZhiYiHaoPinDengJiJDialog diZhiYiHaoPinDengJiJDialog = new DiZhiYiHaoPinDengJiJDialog(mainFrame);
+            diZhiYiHaoPinDengJiJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(diZhiYiHaoPinDengJiJDialog);
         }
     }
 
@@ -387,13 +393,9 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
@@ -429,18 +431,22 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
                             .addComponent(jTextFieldUnit)
                             .addComponent(jTextFieldXinghao)
                             .addComponent(jTextFieldSupplier)
-                            .addComponent(jTextFieldName)))
+                            .addComponent(jTextFieldName))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel14)
+                            .addComponent(jLabel12)
                             .addComponent(jLabel16))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1)
+                                .addGap(12, 12, 12)))
+                        .addGap(12, 12, 12))))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

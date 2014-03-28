@@ -13,10 +13,10 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
-import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdesktop.application.Action;
@@ -204,6 +204,10 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            GuDingZiChanWeiXiuJDialog guDingZiChanWeiXiuJDialog = new GuDingZiChanWeiXiuJDialog(mainFrame);
+            guDingZiChanWeiXiuJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(guDingZiChanWeiXiuJDialog);
         }
     }
     /**

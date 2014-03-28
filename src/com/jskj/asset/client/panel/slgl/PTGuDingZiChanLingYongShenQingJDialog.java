@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -210,6 +211,8 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         if (shenqingdanDate.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
@@ -270,6 +273,10 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            PTGuDingZiChanLingYongShenQingJDialog pTGuDingZiChanLingYongShenQingJDialog = new PTGuDingZiChanLingYongShenQingJDialog();
+            pTGuDingZiChanLingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(pTGuDingZiChanLingYongShenQingJDialog);
         }
     }
 

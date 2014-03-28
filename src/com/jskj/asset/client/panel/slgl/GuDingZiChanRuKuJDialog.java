@@ -26,11 +26,11 @@ import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -203,6 +203,8 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
     
     @Action
     public Task submitForm() throws ParseException{
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         if(zc.size() < 1){
             AssetMessage.ERRORSYS("请选择要入库的资产！",this);
             return null;
@@ -235,6 +237,10 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     AssetMessage.showMessageDialog(null, "提交成功！");
                     exit();
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(), true);
+                    zichanruku.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(zichanruku);
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanRuKuJDialog.this);
                 }

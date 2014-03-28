@@ -84,6 +84,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jCheckBoxCont" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxzjly" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButton3" min="-2" pref="70" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -98,7 +100,10 @@
                   <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Component id="jCheckBoxCont" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jCheckBoxCont" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxzjly" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -125,6 +130,12 @@
           <Properties>
             <Property name="text" type="java.lang.String" resourceKey="jCheckBoxCont.text"/>
             <Property name="name" type="java.lang.String" value="jCheckBoxCont" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="jCheckBoxzjly">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jCheckBoxzjly.text"/>
+            <Property name="name" type="java.lang.String" value="jCheckBoxzjly" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -163,12 +174,12 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="unitId" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="unitId" min="-2" pref="151" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
+                              <Group type="102" attributes="0">
                                   <Component id="dzyhpXinghao" min="-2" pref="151" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -231,12 +242,12 @@
                                       <Component id="dzyhpXinghao" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="unitId" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="dzyhpPinpai" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="unitId" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -329,19 +340,6 @@
             <Property name="name" type="java.lang.String" value="jLabel8" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="unitId">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
-            </Property>
-            <Property name="name" type="java.lang.String" value="unitId" noResource="true"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JTextField" name="dzyhpGuige">
           <Properties>
             <Property name="name" type="java.lang.String" value="dzyhpGuige" noResource="true"/>
@@ -374,6 +372,11 @@
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="unitId">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="unitId" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>

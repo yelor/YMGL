@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -127,6 +128,8 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
     
     @Action
     public Task submitForm() throws ParseException{
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         if(jTextField2.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
@@ -179,6 +182,10 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            DiZhiYiHaoPinLingYongTuiKuJDialog diZhiYiHaoPinLingYongTuiKuJDialog = new DiZhiYiHaoPinLingYongTuiKuJDialog(mainFrame);
+            diZhiYiHaoPinLingYongTuiKuJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(diZhiYiHaoPinLingYongTuiKuJDialog);
         }
     }
     /**

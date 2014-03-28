@@ -83,13 +83,17 @@ public class DanweiyingshouJDialog extends BaseDialog {
 
             //存下所有的数据
             currentPageData = response.getResult();
-            bindTable.refreshData(currentPageData);
 
             float total = 0;
-            for(Yingfukuandanjutb yf: currentPageData){
-                total += yf.getYingfu();
+            for(int i = 0; i < currentPageData.size(); i++){
+                total += currentPageData.get(i).getYingfu();
+                if(i > 0){
+                    currentPageData.get(i).setYingfu(currentPageData.get(i - 1).getYingfu() +
+                            currentPageData.get(i).getYingfu());
+                }
             }
             yingfu.setText("" + total);
+            bindTable.refreshData(currentPageData);
         }
         
     }

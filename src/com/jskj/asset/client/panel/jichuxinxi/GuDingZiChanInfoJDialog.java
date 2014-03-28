@@ -52,7 +52,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         this.parentPanel = parentPanel;
 
         gdzcType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("资产类别")));
-        unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
 
         ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
 
@@ -228,6 +227,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
                     if (!jCheckBoxCont.isSelected()) {
                         dispose();
                     } else {
+                        AssetMessage.showMessageDialog(null, "保存成功！");
                         BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
                         List<String> source = mode.getSource();
                         source.clear();
@@ -265,13 +265,11 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         gdzcName = new javax.swing.JTextField();
         gdzcXinghao = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        gdzcValue = new javax.swing.JTextField();
+        unitId = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         gdzcType = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
-        unitId = new javax.swing.JComboBox();
         gdzcGuige = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         gdzcPhoto = new javax.swing.JList();
@@ -358,10 +356,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
-        jLabel18.setText(resourceMap.getString("jLabel18.text")); // NOI18N
-        jLabel18.setName("jLabel18"); // NOI18N
-
-        gdzcValue.setName("gdzcValue"); // NOI18N
+        unitId.setName("unitId"); // NOI18N
 
         jButton6.setAction(actionMap.get("deletePic")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
@@ -375,8 +370,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
-
-        unitId.setName("unitId"); // NOI18N
 
         gdzcGuige.setName("gdzcGuige"); // NOI18N
 
@@ -400,25 +393,20 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
                     .addComponent(jLabel7)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(gdzcName)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(58, 58, 58)
-                                .addComponent(jLabel18))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(gdzcXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(gdzcGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(gdzcValue, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(gdzcName)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel8))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(1, 1, 1)
+                            .addComponent(gdzcXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(gdzcGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(gdzcType, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -427,7 +415,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
                         .addComponent(jButton1)
                         .addComponent(jButton6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -453,12 +441,10 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
                             .addComponent(jLabel10)
                             .addComponent(gdzcXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(12, 12, 12)
+                        .addGap(13, 13, 13)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18)
-                            .addComponent(gdzcValue, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
         );
@@ -770,7 +756,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
     private javax.swing.JTextArea gdzcRemark;
     private javax.swing.JTextField gdzcSequence;
     private javax.swing.JComboBox gdzcType;
-    private javax.swing.JTextField gdzcValue;
     private javax.swing.JTextField gdzcXinghao;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
@@ -784,7 +769,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -801,6 +785,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
     private javax.swing.JTextField kucunshangxian;
     private javax.swing.JTextField kucunxiaxian;
     private javax.swing.JTextField suppliertb$supplierName;
-    private javax.swing.JComboBox unitId;
+    private javax.swing.JTextField unitId;
     // End of variables declaration//GEN-END:variables
 }
