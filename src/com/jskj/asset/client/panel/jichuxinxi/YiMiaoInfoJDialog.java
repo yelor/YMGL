@@ -201,6 +201,11 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jButton7.setName("jButton7"); // NOI18N
 
         yimiaoType.setName("yimiaoType"); // NOI18N
+        yimiaoType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yimiaoTypeActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
@@ -304,8 +309,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -331,12 +335,13 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1)))
                         .addGap(0, 0, 0)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(chengbenjia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(yimiaoYushoujia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel21))))
+                                .addComponent(jLabel21))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel18)
+                                .addComponent(chengbenjia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(yimiaoGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -532,6 +537,17 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void yimiaoTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yimiaoTypeActionPerformed
+        
+         if (yimiaoType.getSelectedIndex() == 1) {
+            chengbenjia.setEditable(true);
+            yimiaoYushoujia.setEditable(true);
+        } else {
+            chengbenjia.setEditable(false);
+            yimiaoYushoujia.setEditable(false);
+        }
+    }//GEN-LAST:event_yimiaoTypeActionPerformed
 
     /**
      * @param args the command line arguments

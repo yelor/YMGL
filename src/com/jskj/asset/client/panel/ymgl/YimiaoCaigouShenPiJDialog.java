@@ -165,7 +165,6 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         return new SPTask(shenPiEntity);
     }
 
-
     @Action
     public Task shenPiNMessage() {
         if (jSQTable.getSelectedRow() < 0) {
@@ -189,7 +188,6 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         return new SPTask(shenPiEntity);
     }
 
-  
     private class SPTask extends ShenPiTask {
 
         public SPTask(ShenPiEntity yimiaosp) {
@@ -201,8 +199,8 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             if (result != null && result instanceof ShenPiEntity) {
                 ShenPiEntity entity = (ShenPiEntity) result;
                 AssetMessage.INFO(entity.getResult(), YimiaoCaigouShenPiJDialog.this);
-                AssetMessage.showMessageDialog(null, "审批完成！");
             }
+            AssetMessage.showMessageDialog(null, "审批完成！");
             reload();
         }
     }
@@ -455,7 +453,6 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
     }
 
- 
     private class YimiaosalexiangdanTask extends YimiaoXiaoshouXiangdanTask {
 
         public YimiaosalexiangdanTask(String xiangdanID) {
@@ -575,9 +572,8 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
 
     @Action
     public void detailPopup() {
- 
-    }
 
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

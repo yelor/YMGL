@@ -706,7 +706,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("请输入疫苗销售数量!");
                 return null;
             }else if(Integer.parseInt(""+yimiaotable.getValue(i, "saleQuantity"))>stockpileList.get(i).getStockpileQuantity()){
-                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiao.yimiaoName").toString()+"销售数量不能大于库存数量!");
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiao.yimiaoName").toString()+"销售数量不能大于库存数量:"+stockpileList.get(i).getStockpileQuantity());
                 return null;
             }
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));

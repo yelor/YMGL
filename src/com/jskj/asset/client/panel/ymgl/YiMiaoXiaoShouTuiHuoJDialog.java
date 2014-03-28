@@ -701,6 +701,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
+            AssetMessage.INFO("提交成功！", YiMiaoXiaoShouTuiHuoJDialog.this);
             exit();
         }
     }

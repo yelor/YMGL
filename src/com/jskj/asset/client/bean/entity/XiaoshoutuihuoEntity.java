@@ -23,12 +23,14 @@ public class XiaoshoutuihuoEntity {
         this.backsaletb = backsaletb;
     }
 
-    public List<Backsale_detail_tb> getBacksales() {
+    public List<Backsale_detail_tb> getBacksale_details() {
         return backsale_details;
     }
 
     public void setBacksale_details(List<Backsale_detail_tb> backsale_details) {
         this.backsale_details = backsale_details;
     }
+
+ 
 
 }

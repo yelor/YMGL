@@ -608,7 +608,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         if (isNew) {
             this.setTitle("Ⅰ类疫苗下发退库单");
             backsale = new Backsaletb();
-            backsale_detail = new Backsale_detail_tb();
+            
         } else {
             this.setTitle("Ⅰ类疫苗下发退库单");
         }
@@ -644,6 +644,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         List<Backsale_detail_tb> list = new ArrayList<Backsale_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            backsale_detail = new Backsale_detail_tb();
             backsale_detail.setBacksaleId(jTextFieldXiafaId.getText());
             backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "tuihuoQuantity").equals("")) {
@@ -678,6 +679,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
                 logger.error(e);
                 return;
             }
+            AssetMessage.INFO("提交成功！", YiMiaoXiaFaTuiKuJDialog.this);
             exit();
         }
     }
