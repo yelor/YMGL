@@ -9,14 +9,12 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Backsale_detail_tb;
 import com.jskj.asset.client.bean.entity.XiaoshoutuihuoEntity;
 import com.jskj.asset.client.bean.entity.Backsaletb;
-import com.jskj.asset.client.bean.entity.Stockpiletb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
-import com.jskj.asset.client.panel.ymgl.task.XiaoshouTask;
 import com.jskj.asset.client.panel.ymgl.task.XiaoshoutuihuoTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
@@ -637,7 +635,6 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
             return null;
         }
         yimiaoxiafaTuiku = new XiaoshoutuihuoEntity();
-
         backsale.setBacksaleId(jTextFieldXiafaId.getText());
         dateformate = new SimpleDateFormat("yyyy-MM-dd");
         backsale.setBacksaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));

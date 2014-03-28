@@ -15,7 +15,6 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
-import com.jskj.asset.client.panel.ymgl.task.XiaoshouTask;
 import com.jskj.asset.client.panel.ymgl.task.XiaoshoutuihuoTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;

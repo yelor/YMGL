@@ -18,6 +18,8 @@ public class SaleyimiaoEntity{
     private Saletb saletb;
     
     private Sale_detail_tb sale_detail_tb;
+    
+    private Kehudanweitb kehudanwei;
 
     public YimiaoAll getYimiaoAll() {
         return yimiaoAll;
@@ -49,6 +51,14 @@ public class SaleyimiaoEntity{
 
     public void setSale_detail_tb(Sale_detail_tb sale_detail_tb) {
         this.sale_detail_tb = sale_detail_tb;
+    }
+
+    public Kehudanweitb getKehudanwei() {
+        return kehudanwei;
+    }
+
+    public void setKehudanwei(Kehudanweitb kehudanwei) {
+        this.kehudanwei = kehudanwei;
     }
     
     

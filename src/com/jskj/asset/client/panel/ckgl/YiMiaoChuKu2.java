@@ -8,6 +8,7 @@ package com.jskj.asset.client.panel.ckgl;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.Churukudanyimiaoliebiaotb;
+import com.jskj.asset.client.bean.entity.Kehudanweitb;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -37,7 +38,9 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
-    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();;
+    private List<Kehudanweitb> kehudanweilist = new ArrayList<Kehudanweitb>();
+    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
+
 
     /**
      * Creates new form ymcrk1
@@ -56,7 +59,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"stockpileId", "库存编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"}, {"stockpilePrice", "单价", "true"}, {"totalPrice", "合价", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
@@ -93,17 +96,18 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                     Object stockpilemap = bindedMap.get("stockpile");
                     Object saletbmap = bindedMap.get("saletb");
                     Object sale_detail_tbmap = bindedMap.get("sale_detail_tb");
+                    Object kehudanweimap = bindedMap.get("kehudanwei");
                     HashMap yimiaoAll = (HashMap) yimiaomap;
                     HashMap stockpile = (HashMap) stockpilemap;
                     HashMap saletb = (HashMap) saletbmap;
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
+                    HashMap kehudanwei = (HashMap) kehudanweimap;
 
-                    
                     Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
                     bindedMapyimiaoliebiaoList.add(chukudan);
 
-                    Object yimiaoId = yimiaoAll.get("yimiaoId");
+                    Object yimiaoId = stockpile.get("stockpileId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
                     Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
@@ -117,7 +121,9 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                     Object tongguandanNo = yimiaoAll.get("jinkoutongguanno");
                     Object quantity = sale_detail_tb.get("quantity");
                     Object price = sale_detail_tb.get("price");
-                    Object totalPrice = sale_detail_tb.get("totalPrice");
+                    Object totalPrice = sale_detail_tb.get("totalprice");
+                    Object kehudanweiName = kehudanwei.get("kehudanweiName");
+                    Object duifangjinbangren = kehudanwei.get("kehudanweiConstactperson");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -134,6 +140,13 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                     editTable.insertValue(12, pizhunwenhao);
                     editTable.insertValue(13, price);
                     editTable.insertValue(14, totalPrice);
+                    editTable.insertValue(15, AssetClientApp.getSessionMap().getUsertb().getUserName());
+                    editTable.insertValue(16, kehudanweiName);
+                    editTable.insertValue(17, duifangjinbangren);
+
+                    Kehudanweitb kehudanwei1 = new Kehudanweitb();
+                    kehudanwei1.setKehudanweiId(Integer.parseInt("" + kehudanwei.get("kehudanweiId")));
+                    kehudanweilist.add(kehudanwei1);
 
                 }
 
@@ -401,7 +414,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
 
     @Action
     public Task save() throws ParseException {
-        YimiaochurukuEntity yimiaochukuEntity=new YimiaochurukuEntity();
+        YimiaochurukuEntity yimiaochukuEntity = new YimiaochurukuEntity();
         if (jTextFielddanjuNo.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入出库疫苗!");
             return null;
@@ -413,24 +426,25 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         yimiaochukuEntity.setChurukutb(churukudan);
 
         List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
-        
+
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            Churukudanyimiaoliebiaotb yimiaoliebiao=new Churukudanyimiaoliebiaotb();
+            Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
             yimiaoliebiao.setPihao((String) yimiaotable.getValue(i, "pihao"));
             yimiaoliebiao.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
             yimiaoliebiao.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "stockpilePrice"))));
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
-            yimiaoliebiao.setYimiaoId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "yimiaoId"))));
+            yimiaoliebiao.setYimiaoId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "stockpileId"))));
             yimiaoliebiao.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getPrice());
-            churukudan.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
+            yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
+            yimiaoliebiao.setWanglaidanweiId(kehudanweilist.get(i).getKehudanweiId());
             list.add(yimiaoliebiao);
         }
         yimiaochukuEntity.setResult(list);
-        
+
         String serviceId = "yimiaochuku/add";
         return new CommUpdateTask<YimiaochurukuEntity>(yimiaochukuEntity, serviceId) {
 

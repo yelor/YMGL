@@ -27,6 +27,8 @@ public class Churukudanyimiaoliebiaotb {
 
     private Float totalprice;
 
+    private Integer wanglaidanweiId;
+
     private Integer xiangdanId;
 
     public Integer getId() {
@@ -115,6 +117,14 @@ public class Churukudanyimiaoliebiaotb {
 
     public void setTotalprice(Float totalprice) {
         this.totalprice = totalprice;
+    }
+
+    public Integer getWanglaidanweiId() {
+        return wanglaidanweiId;
+    }
+
+    public void setWanglaidanweiId(Integer wanglaidanweiId) {
+        this.wanglaidanweiId = wanglaidanweiId;
     }
 
     public Integer getXiangdanId() {

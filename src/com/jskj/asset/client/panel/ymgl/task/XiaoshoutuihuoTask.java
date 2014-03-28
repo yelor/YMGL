@@ -25,11 +25,11 @@ public class XiaoshoutuihuoTask extends BaseTask{
     private final String TUIHUOUPD_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshoutuihuo/update";
     private final String TUIHUOdelete_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshoutuihuo/delete";
     
-    private final XiaoshoutuihuoEntity tuihuoEntity;
+    private final XiaoshoutuihuoEntity yimiaotuihuoEntity;
     private final int actionType;
 
     public XiaoshoutuihuoTask(XiaoshoutuihuoEntity tuihuoEntity, int actionType) {
-        this.tuihuoEntity = tuihuoEntity;
+        this.yimiaotuihuoEntity = tuihuoEntity;
         this.actionType = actionType;
     }
     
@@ -40,11 +40,11 @@ public class XiaoshoutuihuoTask extends BaseTask{
          try {
             if (actionType == TUIHUOENTITY_SAVE) {
                 System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                restTemplate.postForObject(TUIHUOADD_URI, tuihuoEntity, XiaoshoutuihuoEntity.class);
+                restTemplate.postForObject(TUIHUOADD_URI, yimiaotuihuoEntity, XiaoshoutuihuoEntity.class);
             } else if (actionType == TUIHUOENTITY_UPDATE) {
-                restTemplate.postForObject(TUIHUOUPD_URI, tuihuoEntity, XiaoshoutuihuoEntity.class);
+                restTemplate.postForObject(TUIHUOUPD_URI, yimiaotuihuoEntity, XiaoshoutuihuoEntity.class);
             } else if (actionType == TUIHUOENTITY_DELETE) {
-                restTemplate.postForLocation(TUIHUOdelete_URI + "/" + tuihuoEntity.getBacksaletb().getBacksaleId(),null);
+                restTemplate.postForLocation(TUIHUOdelete_URI + "/" + yimiaotuihuoEntity.getBacksaletb().getBacksaleId(),null);
             }
         } catch (RestClientException e) {
             System.out.println("eeeeeeeeeeeeeeeeeeeeeeeee");
