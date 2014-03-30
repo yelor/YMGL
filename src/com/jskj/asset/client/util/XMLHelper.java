@@ -10,19 +10,21 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author woderchen
  */
 public class XMLHelper<T> {
-
+private final static Logger logger = Logger.getLogger(XMLHelper.class);
     private String xmlPath;
     private T xmlBean;
 
     public XMLHelper(String xmlPath, T xmlBean) {
         this.xmlPath = xmlPath;
         this.xmlBean = xmlBean;
+        logger.debug(xmlPath);
     }
 
     public XMLHelper(T xmlBean) {

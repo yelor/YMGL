@@ -5,12 +5,17 @@
  */
 package com.jskj.asset.client.panel.message;
 
+import com.jskj.asset.client.bean.MessageCacheBean;
+import com.jskj.asset.client.bean.PathCacheBean;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.PopupButton;
 import com.jskj.asset.client.util.DateHelper;
+import com.jskj.asset.client.util.XMLHelper;
 import java.util.Date;
+import java.util.logging.Level;
+import javax.xml.bind.JAXBException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -22,25 +27,49 @@ import org.jdesktop.application.Task;
 public abstract class MessageConfig extends BasePanel {
 
     private final static Logger logger = Logger.getLogger(MessageConfig.class);
-    PopupButton panel;
+    private PopupButton panel;
+    private MessageCacheBean messageCacheBean;
 
     /**
      * Creates new form MessageConfig
+     *
      * @param panel
      */
     public MessageConfig(PopupButton panel) {
         this.panel = panel;
         initComponents();
+        messageCacheBean = new MessageCacheBean();
         ((BaseTextField) jTextFieldDate).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
-        
-         ((BaseTextField) jTextFieldShenpihouDate).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
-        
+
+        ((BaseTextField) jTextFieldShenpihouDate).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
 
         //得到一月中的日期
         jTextFieldDate.setText(DateHelper.format(DateHelper.currentDateAdd(-30), "yyyy-MM-dd"));
-        
+
         //得到15中天内的数据
         jTextFieldShenpihouDate.setText(DateHelper.format(DateHelper.currentDateAdd(-15), "yyyy-MM-dd"));
+
+        readCache();
+    }
+
+    private void readCache() {
+        XMLHelper<MessageCacheBean> helper = new XMLHelper<MessageCacheBean>(messageCacheBean);
+        try {
+            messageCacheBean = helper.read();
+
+            jCheckBoxTask.setSelected(messageCacheBean.isDisplayMyTask());
+
+            jCheckBoxShenpihou.setSelected(messageCacheBean.isDisplayMyShenpi());
+
+            if (messageCacheBean.getSec() >= 0) {
+                jComboBoxSec.setSelectedIndex(messageCacheBean.getSec());
+                jCheckBoxAuto.setSelected(messageCacheBean.isAutoUpdate());
+            }
+            jCheckBoxApp.setSelected(messageCacheBean.isDisplayMyApp());
+
+        } catch (JAXBException ex) {
+            logger.error(ex);
+        }
     }
 
     /**
@@ -299,7 +328,7 @@ public abstract class MessageConfig extends BasePanel {
         return null;
     }
 
-    public abstract void savedData(Date startDate,Date startShenpiDate, boolean autorefresh, final int selectSec, boolean displayTask, boolean displayApplication, boolean displayShenpi);
+    public abstract void savedData(Date startDate, Date startShenpiDate, boolean autorefresh, final int selectSec, boolean displayTask, boolean displayApplication, boolean displayShenpi);
 
     @Action
     public void save() {
@@ -310,8 +339,22 @@ public abstract class MessageConfig extends BasePanel {
         boolean autorefresh = jCheckBoxAuto.isSelected();
         int selectSec = Integer.parseInt(jComboBoxSec.getSelectedItem().toString());
         logger.debug("calculation message data before " + date);
-        savedData(selectDate,selectShenpiDate, autorefresh, selectSec, jCheckBoxTask.isSelected(), jCheckBoxApp.isSelected(), jCheckBoxShenpihou.isSelected());
+        savedData(selectDate, selectShenpiDate, autorefresh, selectSec, jCheckBoxTask.isSelected(), jCheckBoxApp.isSelected(), jCheckBoxShenpihou.isSelected());
         panel.hidePanel();
+
+        try {
+            messageCacheBean.setAutoUpdate(autorefresh);
+            messageCacheBean.setSec(jComboBoxSec.getSelectedIndex());
+            messageCacheBean.setDisplayMyApp(jCheckBoxApp.isSelected());
+            messageCacheBean.setDisplayMyShenpi(jCheckBoxShenpihou.isSelected());
+            messageCacheBean.setDisplayMyTask(jCheckBoxTask.isSelected());
+//            messageCacheBean.setShenpidanDate(shenpidate);
+//            messageCacheBean.setShenqingdanDate(date);
+            XMLHelper<MessageCacheBean> helper = new XMLHelper<MessageCacheBean>(messageCacheBean);
+            helper.write();
+        } catch (JAXBException ex) {
+            logger.error(ex);
+        }
 
     }
 }

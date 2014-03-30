@@ -145,7 +145,7 @@ public class MessagePanel extends BasePanel {
         jToolBar1.setOpaque(false);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(MessagePanel.class, this);
-        jButton1.setAction(actionMap.get("reload")); // NOI18N
+        jButton1.setAction(actionMap.get("refersh")); // NOI18N
         jButton1.setFont(resourceMap.getFont("jButton1.font")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -204,6 +204,7 @@ public class MessagePanel extends BasePanel {
     // End of variables declaration//GEN-END:variables
 
     
+    @Action
     public Task refersh(){
          return new MyTaskFindTask(startDate,null,startShenpihouDate,null, displayTask, displayApplication,displayShenpi) {
 

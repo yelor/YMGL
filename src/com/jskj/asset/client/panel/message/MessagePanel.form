@@ -94,7 +94,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.MessagePanel" id="reload" methodName="reload"/>
+              <action class="com.jskj.asset.client.panel.message.MessagePanel" id="refersh" methodName="refersh"/>
             </Property>
             <Property name="font" type="java.awt.Font" resourceKey="jButton1.font"/>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
