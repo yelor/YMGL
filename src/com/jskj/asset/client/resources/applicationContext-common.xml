@@ -36,7 +36,7 @@
         <constructor-arg ref="httpClient"/>  
     </bean>
     
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+    <bean id="restTemplate" class="com.jskj.asset.client.layout.ws.WebSender">
         <constructor-arg ref="httpClientFactory"/>    
         <property name="messageConverters">
             <list>

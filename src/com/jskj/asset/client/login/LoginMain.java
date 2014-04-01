@@ -361,7 +361,7 @@ public class LoginMain extends javax.swing.JFrame {
             if (keyCode == KeyEvent.VK_ENTER) {
                 sendLogin().execute();
             }
-        }else{
+        } else {
             loginButton.setEnabled(false);
         }
 
@@ -550,7 +550,11 @@ public class LoginMain extends javax.swing.JFrame {
                     dispose();
                     logined = true;
                 } else {
-                    setWarningMsg("请检查用户名和密码!");
+                    if (session.getMessage() != null && !session.getMessage().equals("")) {
+                        setWarningMsg(session.getMessage());
+                    } else {
+                        setWarningMsg("请检查用户名和密码!");
+                    }
                 }
             } else {
                 setWarningMsg("签入服务器异常!");

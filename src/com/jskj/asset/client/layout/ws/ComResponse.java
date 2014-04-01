@@ -13,6 +13,8 @@ public class ComResponse<T> {
 
     public final static int STATUS_FAIL = 1;
     
+    public final static int STATUS_TIMEOUT = 2;
+    
     private int responseStatus;
     
     private String errorMessage;

@@ -8,6 +8,8 @@ package com.jskj.asset.client.layout;
 import com.jskj.asset.client.AssetClientApp;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -222,7 +224,7 @@ public abstract class BaseDialog extends JDialog {
         Component[] coms = container.getComponents();
         for (Component c : coms) {
             if (c instanceof JPanel) {
-                setDialogComponentValue(map, (JPanel) c,canEdit);
+                setDialogComponentValue(map, (JPanel) c, canEdit);
             } else if (c instanceof JScrollPane) {
                 JScrollPane ccc = (JScrollPane) c;
                 if (ccc.getViewport() != null) {
@@ -253,10 +255,10 @@ public abstract class BaseDialog extends JDialog {
                             try {
                                 String name = ((javax.swing.JTable) com).getName();
                                 Object obj = map.get(name);
-                                
+
                                 //((javax.swing.JTable) com).setText(obj.toString()); //jtable的处理有点麻烦，后面再改？？
                                 ((javax.swing.JTable) com).setEnabled(canEdit);
-                                
+
                             } catch (Exception ex) {
                                 logger.error(ex);
                             }
@@ -305,6 +307,49 @@ public abstract class BaseDialog extends JDialog {
                 } catch (Exception ex) {
                     logger.error(ex);
                 }
+            }
+
+        }
+    }
+
+    public void enableEnterFocus(Container container) {
+        Component[] coms = container.getComponents();
+        for (Component c : coms) {
+            if (c instanceof JPanel) {
+                enableEnterFocus((JPanel) c);
+            } else if (c instanceof JScrollPane) {
+                JScrollPane ccc = (JScrollPane) c;
+                if (ccc.getViewport() != null) {
+                    Component com = ccc.getViewport().getView();
+                    if (com != null) {
+                        if (com instanceof JTextArea) {
+
+                        } else if (com instanceof javax.swing.JList) {
+
+                        } else if (com instanceof javax.swing.JTable) {
+
+                        }
+                    }
+                }
+            } else if (c instanceof JTextField) {
+                if (c instanceof BaseTextField) {
+                } else {
+                    c.addKeyListener(new KeyAdapter() {
+                        public void keyPressed(KeyEvent evt) {
+                            int key = evt.getKeyCode();
+                            if (key == KeyEvent.VK_ENTER) {
+                                transferFocus();
+                            }
+                        }
+                    });
+                }
+
+            } else if (c instanceof JComboBox) {
+
+            } else if (c instanceof JTextArea) {
+
+            } else if (c instanceof JList) {
+
             }
 
         }

@@ -6,18 +6,14 @@ package com.jskj.asset.client.layout;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.AssetClientView;
-import com.jskj.asset.client.bean.UserSessionEntity;
+import com.jskj.asset.client.layout.ws.WebSender;
 import com.jskj.asset.client.util.BeanFactory;
 import com.jskj.asset.client.util.ProgressPanel;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JFrame;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -34,10 +30,10 @@ public abstract class BaseTask extends Task<Object, Void> {
     public final static int STATUS_OK = 0;
     public final static int STATUS_ERROR = -1;
 
-    protected static RestTemplate restTemplate;
+    protected static WebSender restTemplate;
 
     static {
-        restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
+        restTemplate = (WebSender) BeanFactory.instance().createBean(WebSender.class);
     }
 
     protected AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
@@ -91,8 +87,14 @@ public abstract class BaseTask extends Task<Object, Void> {
         if (processDisplay) {
             startWaitingPage();
         }
+        Object response = null;
+        try {
+             response = doBackgrounp();
+        } catch (Exception e) {
+            return e;
+        }
 
-        return doBackgrounp();
+        return response;
     }
 
     @Override
