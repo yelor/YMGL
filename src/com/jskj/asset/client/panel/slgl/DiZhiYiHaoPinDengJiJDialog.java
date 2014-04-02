@@ -8,7 +8,6 @@ package com.jskj.asset.client.panel.slgl;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Zhijielingyongtb;
 import com.jskj.asset.client.bean.entity.ZichandengjiAll;
-import com.jskj.asset.client.bean.entity.ZichandengjiAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
@@ -98,6 +97,11 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
                     map = (HashMap) bindedMap.get("shenqingdan");
                     yuandanID = (String) map.get("shenqingdanId");
                     danjujine = Float.parseFloat("" + map.get("danjujine"));
+                    if(zhijielingyong == 1 || danjujine > 1000){
+                        jButton8.setEnabled(false);
+                    }else {
+                        jButton8.setEnabled(true);
+                    }
                 }
             }
         });
@@ -117,14 +121,6 @@ public class DiZhiYiHaoPinDengJiJDialog extends javax.swing.JDialog {
     public Task zhijielingyong() throws ParseException {
         if (jTextFieldName.getText().isEmpty()) {
             AssetMessage.ERRORSYS("请输入资产名称！", this);
-            return null;
-        }
-        if (zhijielingyong == 1) {
-            AssetMessage.ERRORSYS("此易耗品不允许直接领用，请登记！", this);
-            return null;
-        }
-        if (danjujine > 1000) {
-            AssetMessage.ERRORSYS("此易耗品所在单据金额大于1000，不允许直接领用，请登记！", this);
             return null;
         }
         if (jTextField12.getText().isEmpty()) {

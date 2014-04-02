@@ -61,7 +61,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "原值", "false"},{"quantity", "数量", "true"}});
+            {"quantity", "数量", "true"}, {"gdzcValue", "原值", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -104,13 +104,12 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
                     editTable.insertValue(1, gdzcName);
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 0);
+                    editTable.insertValue(5, gdzcValue);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(jTextField1.getText());
                     zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(3);
+                    zclb.setQuantity(0);
                     zc.add(zclb);
                 }
 
@@ -126,20 +125,12 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
     
     @Action
     public Task submitForm() throws ParseException{
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
-                jTable1.getSelectedColumn()).stopCellEditing();
-        if(jTextField2.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入制单日期！");
-            return null;
-        }
-        if(jTextFieldShenqingren.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入退库人！");
-            return null;
-        }
         if(zc.size() < 1){
             JOptionPane.showMessageDialog(null, "请选择要退库的资产！");
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         lytk = new LingyongtuikuDetailEntity();
         Lingyongtuikudantb sqd = new Lingyongtuikudantb();
         sqd.setLytkId(jTextField1.getText());
@@ -149,13 +140,18 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         sqd.setZhidanrenId(userId);
         
         for(int i = 0; i < zc.size(); i++){
-            int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-            if(count == 0){
-                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个物品的退库数量！",this);
+            if (jTable1.getValueAt(i, 4).toString().equals("")) {
+                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的退库数量！", this);
                 return null;
             }
-            zc.get(i).setQuantity(count);
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            try {
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 4));
+                zc.get(i).setQuantity(count);
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的退库数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 5));
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
             zc.get(i).setIsCompleted(1);

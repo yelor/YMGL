@@ -132,9 +132,12 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         unitPhoto.setModel(new BaseListModel<String>(new ArrayList(), ""));
         jTextFieldDepotID.setText("");
         jTextFieldSupplier.setText("");
-        //自动帮定所有的值
+        //自动绑定所有的值
         super.bind(paramData, jPanel3);
         super.bind(paramData, jPanel4);
+        if(paramData.getZhijielingyong() == 0){
+            jCheckBoxzjly.setSelected(true);
+        }
 
         if (appParam.getDzyhpId() == null || appParam.getDzyhpId() <= 0) { //新建
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("基本信息")); // NOI18N

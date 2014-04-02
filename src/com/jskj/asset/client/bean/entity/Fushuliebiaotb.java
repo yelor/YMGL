@@ -1,6 +1,7 @@
 package com.jskj.asset.client.bean.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Fushuliebiaotb {
@@ -15,6 +16,10 @@ public class Fushuliebiaotb {
     private String fszcPinpai;
 
     private String fszcXuliehao;
+
+    private Date fszcDate;
+
+    private Float fszcPrice;
 
     private String fszcQita;
 
@@ -64,6 +69,22 @@ public class Fushuliebiaotb {
 
     public void setFszcXuliehao(String fszcXuliehao) {
         this.fszcXuliehao = fszcXuliehao == null ? null : fszcXuliehao.trim();
+    }
+
+    public Date getFszcDate() {
+        return fszcDate;
+    }
+
+    public void setFszcDate(Date fszcDate) {
+        this.fszcDate = fszcDate;
+    }
+
+    public Float getFszcPrice() {
+        return fszcPrice;
+    }
+
+    public void setFszcPrice(Float fszcPrice) {
+        this.fszcPrice = fszcPrice;
     }
 
     public String getFszcQita() {

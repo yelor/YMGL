@@ -33,7 +33,6 @@ public class SupplierJDialog extends BaseDialog {
     private int supplierId;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
     
-
     /**
      * Creates new form FKDJDialog
      */

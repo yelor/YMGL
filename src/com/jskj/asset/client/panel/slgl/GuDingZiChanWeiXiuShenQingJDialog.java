@@ -70,7 +70,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"}, {"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "原值"}, {"quantity", "数量", "true"}});
+            {"quantity", "数量", "true"},{"gdzcValue", "原值"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -113,8 +113,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
                     editTable.insertValue(1, gdzcName);
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 0);
+                    editTable.insertValue(5, gdzcValue);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
@@ -207,20 +206,12 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
-                jTable1.getSelectedColumn()).stopCellEditing();
-        if (shenqingdanDate.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "请输入制单日期！");
-            return null;
-        }
-        if (jingbanren.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "请输入申请人！");
-            return null;
-        }
         if (zc.size() < 1) {
             JOptionPane.showMessageDialog(null, "请选择要维修的资产！");
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         wxsq = new ShenQingDetailEntity();
         Shenqingdantb sqd = new Shenqingdantb();
         sqd.setShenqingdanId(cgsqId.getText());
@@ -232,12 +223,18 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         sqd.setDanjujine((float) 0);
 
         for (int i = 0; i < zc.size(); i++) {
-            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
-            if (zc.get(i).getQuantity() == 0) {
+            if (jTable1.getValueAt(i, 4).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的维修数量！", this);
                 return null;
             }
-            zc.get(i).setSaleprice(Float.parseFloat("" + jTable1.getValueAt(i, 4)));
+            try {
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 4));
+                zc.get(i).setQuantity(count);
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的维修数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            zc.get(i).setSaleprice(Float.parseFloat("" + jTable1.getValueAt(i, 5)));
             zc.get(i).setTotalprice(zc.get(i).getQuantity() * zc.get(i).getSaleprice());
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(5);

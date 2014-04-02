@@ -466,7 +466,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                         }.execute();
                     } else {//付款单据
 
-                        new com.jskj.asset.client.panel.shjs.task.ShenqingDetailTask(shenqingdan) {
+                        new com.jskj.asset.client.panel.shjs.task.FkShenqingDetailTask(shenqingdan) {
                             @Override
                             protected void succeeded(Object result) {
                                 if (result != null) {
