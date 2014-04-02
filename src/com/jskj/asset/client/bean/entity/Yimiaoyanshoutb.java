@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yimiaoyanshoutb {
     private String ymysId;
 
@@ -39,7 +41,7 @@ public class Yimiaoyanshoutb {
 
     private Float ymysKm;
 
-    private Integer userId;
+    private String userName;
 
     private String ymysArriveaddr;
 
@@ -48,7 +50,7 @@ public class Yimiaoyanshoutb {
     }
 
     public void setYmysId(String ymysId) {
-        this.ymysId = ymysId;
+        this.ymysId = ymysId == null ? null : ymysId.trim();
     }
 
     public Date getYmysDate() {
@@ -187,12 +189,12 @@ public class Yimiaoyanshoutb {
         this.ymysKm = ymysKm;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getYmysArriveaddr() {

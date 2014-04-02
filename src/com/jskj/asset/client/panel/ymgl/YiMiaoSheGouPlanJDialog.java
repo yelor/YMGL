@@ -67,6 +67,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"yimiaoYushoujia", "预售价", "false"}});
 
+        
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -102,6 +103,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
+                    Object quantity = bindedMap.get("quantity");
                     
                     Object chengbenjia = bindedMap.get("chengbenjia");
                     Object saleprice = bindedMap.get("yimiaoYushoujia");
@@ -439,6 +441,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldzhidanDateActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
