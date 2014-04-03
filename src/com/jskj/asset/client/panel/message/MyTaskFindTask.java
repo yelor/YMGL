@@ -5,25 +5,13 @@
 package com.jskj.asset.client.panel.message;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.MyTaskEntity;
-import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
-import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
-import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
-import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
-import com.jskj.asset.client.panel.slgl.ShenqingDetailTask;
 import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
-import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
-import static com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask.logger;
-import com.jskj.asset.client.util.ClassHelper;
-import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -33,7 +21,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -294,7 +281,14 @@ public abstract class MyTaskFindTask extends BaseTask {
                     messageApp.setToolTipText("点击打开我的申请单:" + re.getShenqingdanId());
                     messageApp.setOpaque(true);
 
-                    messageApp.addMouseListener(new AssetMouseAdapter(re.getShenqingdanId()));
+                    messageApp.addMouseListener(new DanjuMouseAdapter(){
+
+                        @Override
+                        public String getShenqingdanID() {
+                            return re.getShenqingdanId();
+                        }
+                        
+                    });
                 }
             }
         }
@@ -390,7 +384,14 @@ public abstract class MyTaskFindTask extends BaseTask {
                     messageApp.setToolTipText("点击打开我的审批单:" + re.getShenqingdanId());
                     messageApp.setOpaque(true);
 
-                    messageApp.addMouseListener(new AssetMouseAdapter(re.getShenqingdanId()));
+                    messageApp.addMouseListener(new DanjuMouseAdapter(){
+
+                        @Override
+                        public String getShenqingdanID() {
+                            return re.getShenqingdanId();
+                        }
+                        
+                    });
                 }
             }
         }
@@ -411,100 +412,5 @@ public abstract class MyTaskFindTask extends BaseTask {
                 return 1;
             }
         }
-    }
-
-    class AssetMouseAdapter extends MouseAdapter {
-
-        String shenqingdanID;
-
-        public AssetMouseAdapter(String shenqingdanID) {
-            this.shenqingdanID = shenqingdanID;
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-            final String shenqingdan = shenqingdanID;
-            if (shenqingdan != null && shenqingdan.length() > 4) {
-                String danjuType = shenqingdan.substring(0, 4);
-
-                final String className = DanHao.getUIClassByDanhaoType(danjuType);
-                if (!className.equals("")) {
-
-                    if (danjuType.startsWith("YM")) {//疫苗相关
-                        new YimiaoXiaoshouXiangdanTask(shenqingdan) {
-                            @Override
-                            protected void succeeded(Object result) {
-                                if (result != null) {
-                                    if (shenqingdan.contains(DanHao.TYPE_YIMIAOXF) || shenqingdan.contains(DanHao.TYPE_YIMIAOXS)) {
-                                        openDialog(className, result, XiaoshoushenpixiangdanEntity.class);
-                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOSB) || shenqingdan.contains(DanHao.TYPE_YIMIAOLY)
-                                            || shenqingdan.contains(DanHao.TYPE_YIMIAOSG) || shenqingdan.contains(DanHao.TYPE_YIMIAOCG)) {
-                                        openDialog(className, result, YimiaocaigouxiangdanEntity.class);
-                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOBS)) {
-                                        openDialog(className, result, YimiaobaosunxiangdanEntity.class);
-                                    } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOTJ)) {
-                                        openDialog(className, result, YimiaotiaojiaxiangdanEntity.class);
-                                    }
-
-                                } else {
-                                    logger.error("response result is null.");
-                                }
-                            }
-                        }.execute();
-
-                    } else if (!danjuType.equals(DanHao.TYPE_FKDJ) && !danjuType.equals(DanHao.TYPE_QTFK)) {//资产相关
-                        new ShenqingDetailTask(shenqingdan) {
-                            @Override
-                            protected void succeeded(Object result) {
-                                if (result != null) {
-                                    openDialog(className, result, CaigoushenqingDetailEntity.class);
-                                } else {
-                                    logger.error("response result is null.");
-                                }
-                            }
-                        }.execute();
-                    } else {//付款单据
-
-                        new com.jskj.asset.client.panel.shjs.task.ShenqingDetailTask(shenqingdan) {
-                            @Override
-                            protected void succeeded(Object result) {
-                                if (result != null) {
-                                    openDialog(className, result, FukuanshenqingDetailEntity.class);
-                                } else {
-                                    logger.error("response result is null.");
-                                }
-                            }
-                        }.execute();
-
-                    }
-
-                }
-            }
-        }
-
-        private void openDialog(String className, Object entity, Class entityClassType) {
-            try {
-                ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, JDialog.class, entityClassType);
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                BaseDialog jdialog = helper.newInstance(null, entity);
-                jdialog.setLocationRelativeTo(mainFrame);
-                //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
-                jdialog.setVisible(true);
-            } catch (Exception ex) {
-                logger.error("StaticDialog:" + ex);
-            }
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            e.getComponent().setBackground(Color.WHITE);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            e.getComponent().setBackground(null);
-        }
-
     }
 }

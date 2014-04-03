@@ -6,20 +6,17 @@
 package com.jskj.asset.client.panel.spcx;
 
 import com.jskj.asset.client.bean.entity.MyTaskEntity;
-import com.jskj.asset.client.bean.entity.RecordProcessEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.DetailPanel;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.layout.RowRender;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
-import com.jskj.asset.client.panel.message.MyTaskFindTask;
+import com.jskj.asset.client.panel.message.DanjuMouseAdapter;
 import com.jskj.asset.client.panel.spcx.task.LichengZaixianFindTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DateChooser;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -28,8 +25,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import org.apache.log4j.Logger;
@@ -41,7 +36,7 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class LiChengZaiXianChaXunJDialog extends BaseDialog {
-
+    
     private final static Logger logger = Logger.getLogger(LiChengZaiXianChaXunJDialog.class);
     private final BindTableHelper<MyTaskEntity> bindTable;
     int resultCount = 0;
@@ -60,10 +55,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         jTextFieldEndInit = new BaseTextField();
         jTextFieldStartInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
         jTextFieldEndInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
-
+        
         DateChooser dateChooser1 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser1.register(jTextFieldStartInit);
-
+        
         DateChooser dateChooser2 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser2.register(jTextFieldEndInit);
         initComponents();
@@ -74,10 +69,24 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         bindTable.setDateType(2);
         bindTable.bind().setColumnWidth(new int[]{0, 200}, new int[]{1, 200}).setRowHeight(25);
         detailPanel = new DetailPanel();
+        
+        jTable4.addMouseListener(new DanjuMouseAdapter(true){
+
+            @Override
+            public String getShenqingdanID() {
+               MyTaskEntity entity= selectedTaskEntity();
+               if(entity!=null){
+                  return entity.getShenqingdanId();
+               }
+               return null;
+            }
+        });
+        
+        jTable4.setToolTipText("双击打开单据.");
     }
-
+    
     class JLabelComparator implements Comparator<MyTaskEntity> {
-
+        
         @Override
         public int compare(MyTaskEntity o1, MyTaskEntity o2) {
             long o1Label = o1.getSubmitDate().getTime();
@@ -105,7 +114,11 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        jTable4 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int ColIndex){
+                return false;
+            }
+        };
         jLabel2 = new javax.swing.JLabel();
         jTextFieldStart = jTextFieldStartInit;
         jLabel3 = new javax.swing.JLabel();
@@ -172,6 +185,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
             }
         ));
         jTable4.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        jTable4.setColumnSelectionAllowed(false);
         jTable4.setName("jTable4"); // NOI18N
         jTable4.setShowVerticalLines(false);
         jScrollPane5.setViewportView(jTable4);
@@ -272,7 +286,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
 //            }
 //        });
     }
-
+    
     @Action
     public Task findProcess() {
         String startDate = jTextFieldStart.getText();
@@ -280,7 +294,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         parameterMap.put("startDate", startDate);
         parameterMap.put("endDate", endDate);
         return new LichengZaixianFindTask(parameterMap) {
-
+            
             @Override
             public void responseResult(CommFindEntity<MyTaskEntity> response) {
                 logger.debug("get current size:" + response.getResult().size());
@@ -307,10 +321,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
 //                    }
 //                });
             }
-
+            
         };
     }
-
+    
     private MyTaskEntity selectedTaskEntity() {
         if (jTable4.getSelectedRow() >= 0) {
             if (resultArray != null) {
@@ -319,10 +333,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         }
         return null;
     }
-
+    
     @Action
     public void detail() {
-
+        
         if (isShow) {
             hidePanel();
         } else {
@@ -334,10 +348,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
             showPanel(entity.getContext());
         }
     }
-
+    
     private Popup pop;
     private boolean isShow;
-
+    
     public void hidePanel() {
         if (pop != null) {
             isShow = false;
@@ -345,31 +359,31 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
             pop = null;
         }
     }
-
+    
     public void showPanel(String context) {
         if (pop != null) {
             pop.hide();
         }
         Point p = jTable4.getLocationOnScreen();
-
+        
         int selectedRow = jTable4.getSelectedRow();
-
+        
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-
+        
         int selectedColumnX = p.x;
         int selectedColumnY = p.y + (selectedRow + 1) * jTable4.getRowHeight();
-
+        
         int popHeight = detailPanel.getPreferredSize().height;
         int popWitdh = detailPanel.getPreferredSize().width;
-
+        
         if ((selectedColumnY + popHeight) > size.getHeight()) {
             selectedColumnY = selectedColumnY - detailPanel.getHeight() - jTable4.getRowHeight();
         }
-
+        
         if ((selectedColumnX + popWitdh) > size.getWidth()) {
             selectedColumnX = selectedColumnX - detailPanel.getWidth();
         }
-
+        
         pop = PopupFactory.getSharedInstance().getPopup(jTable4, detailPanel, selectedColumnX, selectedColumnY);
         detailPanel.setText(context);
         pop.show();
