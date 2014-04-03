@@ -165,7 +165,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         zc.setImguri(imageUri);
         if(fslb != null) {
              List<Fushuliebiaotb> list = fslb.getList();
-            if(list.size() > 0){
+            if(list != null && list.size() > 0){
                 for(Fushuliebiaotb lb:list){
                     lb.setZhuzcId(zc.getGdzcId());
                 }

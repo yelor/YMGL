@@ -16,13 +16,13 @@ import org.springframework.web.client.RestClientException;
  *
  * @author tt
  */
-public class ShenqingDetailTask extends BaseTask{
+public class FkShenqingDetailTask extends BaseTask{
 
-    public static final Logger logger = Logger.getLogger(ShenqingDetailTask.class);
+    public static final Logger logger = Logger.getLogger(FkShenqingDetailTask.class);
     private final String CX_URI = Constants.HTTP + Constants.APPID + "fukuandan/detail/";
     private String id = "";
     
-    public ShenqingDetailTask(String id){
+    public FkShenqingDetailTask(String id){
         super();
         this.id = id;
     }

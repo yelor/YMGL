@@ -179,7 +179,7 @@ public class FuKuanDanJDialog extends BaseDialog {
         for (int i = 0; i < size; i++) {
             Yingfukuandanjutb zclb = zclist.get(i);
             String date = DateHelper.format(zclb.getZhidandate(), "yyyy-MM-dd");
-            o[i] = new Object[]{zclb.getFukuandanId(), date, zclb.getYuandantype()
+            o[i] = new Object[]{zclb.getYuandanId(), date, zclb.getYuandantype()
                     , zclb.getDanjujine(), zclb.getIncrease(), zclb.getDecrease(), zclb.getYingfu(), zclb.getRemark()};
         }
 

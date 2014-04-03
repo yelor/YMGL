@@ -93,6 +93,8 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
+                    Object yimiaoyanshoumap = bindedMap.get("yimiaoyanshou");
+                    HashMap yimiaoyanshou = (HashMap) yimiaoyanshoumap;
 
                     
                     Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
@@ -114,6 +116,8 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                     Object quantity = yimiaoshenqingdan.get("quantity");
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
                     Object totalprice = yimiaoshenqingdan.get("totalprice");
+                    Object ymysSendperson = yimiaoyanshou.get("ymysSendperson");
+                    Object userName = yimiaoyanshou.get("userName");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -130,6 +134,8 @@ public class YiMiaoRuKu2 extends javax.swing.JDialog {
                     editTable.insertValue(12, yimiaoPizhunwenhao);
                     editTable.insertValue(13, buyprice);
                     editTable.insertValue(14, totalprice);
+                    editTable.insertValue(15, ymysSendperson);
+                    editTable.insertValue(17, userName);
 
                 }
 

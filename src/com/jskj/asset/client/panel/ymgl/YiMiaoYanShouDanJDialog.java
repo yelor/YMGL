@@ -580,7 +580,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                                             .addComponent(jLabel12))
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldCarcondition, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldCarcondition)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jTextFieldArrivetemp1)
                                                 .addGap(3, 3, 3)
@@ -589,7 +589,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                                                 .addComponent(jTextFieldXingshiKM, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel32)
-                                                .addGap(0, 1, Short.MAX_VALUE))))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addGap(18, 18, 18)
@@ -701,7 +701,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                             .addComponent(jLabel10)
                             .addComponent(jTextFieldArrivetemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27))
-                        .addGap(9, 9, 9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldCarcondition, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11))
@@ -927,7 +927,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
 
         yimiaoyanshou.setYmysId(jTextFieldYimiaoyanshouId.getText());
         yimiaoyanshou.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
-        yimiaoyanshou.setUserId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        yimiaoyanshou.setUserName(AssetClientApp.getSessionMap().getUsertb().getUserName());
         yimiaoyanshou.setYmysDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         yimiaoyanshou.setYmysSendperson(jTextFieldsongmiaoren.getText() == null ? "" : jTextFieldsongmiaoren.getText());
         yimiaoyanshou.setYmysEquipment(jTextFieldEquipment.getText() == null ? "" : jTextFieldEquipment.getText());

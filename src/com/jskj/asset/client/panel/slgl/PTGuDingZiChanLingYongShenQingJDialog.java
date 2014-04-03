@@ -71,7 +71,7 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"}, {"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "原值", "false"}, {"quantity", "数量", "true"}});
+            {"quantity", "数量", "true"}, {"gdzcValue", "原值", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -117,8 +117,7 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
                     editTable.insertValue(1, gdzcName);
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 0);
+                    editTable.insertValue(5, gdzcValue);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
@@ -189,13 +188,13 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
         Object[][] o = new Object[size][6];
         for (int i = 0; i < size; i++) {
             ZichanliebiaoDetailEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getGdzcId(), zclb.getGdzcName(), zclb.getGdzcType(), zclb.getGdzcPinpai(), zclb.getGdzcValue(), zclb.getCount()};
+            o[i] = new Object[]{zclb.getGdzcId(), zclb.getGdzcName(), zclb.getGdzcType(), zclb.getGdzcPinpai(), zclb.getCount(), zclb.getGdzcValue()};
         }
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "原值", "数量"
+                    "资产编号", "资产名称", "类别", "品牌", "数量", "原值"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -211,8 +210,6 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
-                jTable1.getSelectedColumn()).stopCellEditing();
         if (shenqingdanDate.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "请输入制单日期！");
             return null;
@@ -221,6 +218,8 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
             JOptionPane.showMessageDialog(null, "请选择要领用的资产！");
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         lysq = new ShenQingDetailEntity();
         Shenqingdantb sqd = new Shenqingdantb();
         sqd.setShenqingdanId(cgsqId.getText());
@@ -231,18 +230,23 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
         sqd.setDanjuleixingId(20);
         float total = 0;
         for (int i = 0; i < zc.size(); i++) {
-            int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-            if (count == 0) {
+            if (jTable1.getValueAt(i, 4).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的领取数量！", this);
                 return null;
             }
-            if (count > zc.get(i).getQuantity()) {
-                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的领取数量大于库存数，"
-                        + "请输入一个小于" + zc.get(i).getQuantity() + "的数", this);
+            try {
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 4));
+                if (count > zc.get(i).getQuantity()) {
+                    AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的领取数量大于库存数，"
+                            + "请输入一个小于" + zc.get(i).getQuantity() + "的数", this);
+                    return null;
+                }
+                zc.get(i).setQuantity(count);
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的领用数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            zc.get(i).setQuantity(count);
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 5));
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity() * price);
             zc.get(i).setIsCompleted(0);

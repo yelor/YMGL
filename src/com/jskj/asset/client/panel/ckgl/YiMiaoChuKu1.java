@@ -57,7 +57,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
             {"stockpileId", "库存编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
-            {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "客户单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+            {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "收货单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;

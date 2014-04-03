@@ -114,8 +114,6 @@ public class YiMiaoShenBaoPlanJDialog extends BaseDialog {
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
-                    editTable.insertValue(6, 0);
-
                 }
 
             }

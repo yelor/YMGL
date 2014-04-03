@@ -66,7 +66,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"stockpileId", "库存编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"beforebuyPrice", "调前进价", "false"}, {"lastbuyPrice", "调后进价", "true"}, {"beforesalePrice", "调前预售价", "false"}, {"lastsalePrice", "调后预售价", "true"}});
+            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"beforebuyPrice", "调前进价", "false"}, {"lastbuyPrice", "调后进价", "true"}, {"beforesalePrice", "调前售价", "false"}, {"lastsalePrice", "调后售价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -549,13 +549,8 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
-        if (jTextFieldzhidanDate.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入制单日期!");
-            return null;
-        } else if (jTextFieldjingbanren.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入经办人!");
-            return null;
-        }
+        jTableyimiao.getCellEditor(jTableyimiao.getSelectedRow(),
+                jTableyimiao.getSelectedColumn()).stopCellEditing();
         yimiaotiaojiaEntity = new Yimiaotiaojia_detail_tbFindEntity();
         yimiaotiaojia.setTiaojiaId(jTextFieldTiaojiaId.getText());
         yimiaotiaojia.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
@@ -574,8 +569,16 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "stockpileId"));
             yimiaotiaojia_detail.setBeforebuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "beforebuyPrice"))));
+            if (yimiaotable.getValue(i, "lastbuyPrice").equals("")) {
+                AssetMessage.ERRORSYS("请输入调后进价!");
+                return null;
+            }
             yimiaotiaojia_detail.setLastbuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastbuyPrice"))));
             yimiaotiaojia_detail.setBeforesaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "beforesalePrice"))));
+            if (yimiaotable.getValue(i, "lastsalePrice").equals("")) {
+                AssetMessage.ERRORSYS("请输入调后售价!");
+                return null;
+            }
             yimiaotiaojia_detail.setLastsaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "lastsalePrice"))));
             yimiaotiaojia_detail.setIsCompleted(0);
             list.add(yimiaotiaojia_detail);
@@ -675,19 +678,19 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
     public void setListTable(List<YimiaotiaojiaDetailEntity> yimiaotiaojiaDetailEntityList) {
 
         int size = yimiaotiaojiaDetailEntityList.size();
-        Object[][] o = new Object[size][9];
+        Object[][] o = new Object[size][11];
         for (int i = 0; i < size; i++) {
             Yimiaotiaojia_detail_tb yimiaotiaojia_detailtb = yimiaotiaojiaDetailEntityList.get(i).getYimiaotiaojia_detail_tb();
             YimiaoAll yimiaoAll = yimiaotiaojiaDetailEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = yimiaotiaojiaDetailEntityList.get(i).getStockpileYimiao();
             o[i] = new Object[]{stockpile.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
-                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforesaleprice(), yimiaotiaojia_detailtb.getLastsaleprice()};
+                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforebuyprice(), yimiaotiaojia_detailtb.getLastbuyprice(),yimiaotiaojia_detailtb.getBeforesaleprice(), yimiaotiaojia_detailtb.getLastsaleprice()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "库存编号", "疫苗名称", "规格", "剂型", "批号", "单位", "有效期", "调前售价", "调后售价"
+                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "有效期", "调前进价", "调后进价", "调前售价", "调后售价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{

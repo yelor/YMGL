@@ -17,7 +17,7 @@ import com.jskj.asset.client.panel.shjs.task.FindfkdTask;
 import static com.jskj.asset.client.panel.shjs.task.FindfkdTask.pageSize;
 import com.jskj.asset.client.panel.shjs.task.FukuanShenpiTask;
 import com.jskj.asset.client.panel.shjs.task.FukuanTask;
-import com.jskj.asset.client.panel.shjs.task.ShenqingDetailTask;
+import com.jskj.asset.client.panel.shjs.task.FkShenqingDetailTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
@@ -150,7 +150,7 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         new DetailTask(fksqdan.getDanjuId()).execute();
     }
     
-    private class DetailTask extends ShenqingDetailTask{
+    private class DetailTask extends FkShenqingDetailTask{
 
         public DetailTask(String id) {
             super(id);

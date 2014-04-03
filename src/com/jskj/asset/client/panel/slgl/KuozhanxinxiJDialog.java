@@ -7,6 +7,7 @@
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.bean.entity.Kuozhanxinxitb;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
 
     private final BaseTable.SingleEditRowTable editTable;
     private List<Kuozhanxinxitb> kuozhanlist;
+    private boolean cancel;
     
     /**
      * Creates new form FushuliebiaoJDialog
@@ -41,14 +43,37 @@ public class KuozhanxinxiJDialog extends BaseDialog {
     
     @Action
     public void exit() {
+        cancel = false;
+        if(getList() == null) {
+            return;
+        }
+        this.dispose();
+    }
+    
+    @Action
+    public void cancel(){
+        int result = AssetMessage.showConfirmDialog(null, "取消之后将不会保存已输入的扩展信息，确定取消？");
+        if(result != 0) {
+            return;
+        }
+        cancel = true;
         this.dispose();
     }
     
     public List<Kuozhanxinxitb> getList(){
         kuozhanlist = new ArrayList<Kuozhanxinxitb>();
+        if(cancel) {
+            return kuozhanlist;
+        }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         for(int i = 0; i < jTable1.getRowCount(); i++ ){
             Kuozhanxinxitb fslb = new Kuozhanxinxitb();
             fslb.setKzName("" + jTable1.getValueAt(i, 0));
+            if(fslb.getKzName().equals("")){
+                AssetMessage.ERRORSYS("资产名称不能为空，请重新输入！");
+                return null;
+            }
             fslb.setKzXinghao("" + jTable1.getValueAt(i, 1));
             fslb.setKzPinpai("" + jTable1.getValueAt(i, 2));
             fslb.setKzXuliehao("" + jTable1.getValueAt(i, 3));
@@ -71,6 +96,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
 
@@ -78,8 +104,10 @@ public class KuozhanxinxiJDialog extends BaseDialog {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(KuozhanxinxiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
+        setUndecorated(true);
         setResizable(false);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -109,6 +137,16 @@ public class KuozhanxinxiJDialog extends BaseDialog {
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
+        jButton3.setAction(actionMap.get("cancel")); // NOI18N
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
+        jToolBar1.add(jButton3);
+
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -129,7 +167,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
@@ -137,7 +175,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,6 +237,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

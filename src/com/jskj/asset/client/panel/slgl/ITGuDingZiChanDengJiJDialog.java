@@ -175,7 +175,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         zc.setImguri(imageUri);
         if(fslb != null) {
              List<Fushuliebiaotb> list = fslb.getList();
-            if(list.size() > 0){
+            if(list != null && list.size() > 0){
                 for(Fushuliebiaotb lb:list){
                     lb.setZhuzcId(zc.getGdzcId());
                 }
@@ -184,7 +184,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         }
         if(kzxx != null) {
              List<Kuozhanxinxitb> kzlist = kzxx.getList();
-            if(kzlist.size() > 0){
+            if(kzlist != null && kzlist.size() > 0){
                 for(Kuozhanxinxitb lb:kzlist){
                     lb.setZhuzcId(zc.getGdzcId());
                 }

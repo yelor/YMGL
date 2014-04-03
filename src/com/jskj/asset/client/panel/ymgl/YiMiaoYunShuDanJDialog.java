@@ -871,7 +871,7 @@ public class YiMiaoYunShuDanJDialog extends javax.swing.JDialog {
 
         yimiaoyanshou.setYmysId(jTextFieldYimiaoyanshouId.getText());
         yimiaoyanshou.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
-        yimiaoyanshou.setUserId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        yimiaoyanshou.setUserName(AssetClientApp.getSessionMap().getUsertb().getUserName());
         yimiaoyanshou.setYmysDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         yimiaoyanshou.setYmysSendperson(jTextFieldsongmiaoren.getText() == null ? "" : jTextFieldsongmiaoren.getText());
         yimiaoyanshou.setYmysEquipment(jTextFieldEquipment.getText() == null ? "" : jTextFieldEquipment.getText());
