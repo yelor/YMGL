@@ -69,7 +69,7 @@ public final class ParamPanel extends BasePanel {
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{2, 3};
+                return new int[]{3};
             }
 
             @Override
@@ -77,21 +77,23 @@ public final class ParamPanel extends BasePanel {
 
                 if (searchKeys.size() > 0) {
                     StringBuilder sql = new StringBuilder();
-                    if (!searchKeys.get(2).trim().equals("")) {
-                        sql.append("appparam_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
-                    }
                     if (!searchKeys.get(3).trim().equals("")) {
                         sql.append("appparam_name like \"%").append(searchKeys.get(3).trim()).append("%\"").append(" and ");
+                    }
+                    String value = getComboxSql();
+                    if(!value.equals("")){
+                        sql.append(value).append(" and ");
                     }
                     if (sql.length() > 0) {
                         sql.delete(sql.length() - 5, sql.length() - 1);
                     }
+                    
                     conditionSql = sql.toString();
                 } else {
                     conditionSql = "";
                 }
 
-                return reload();
+                return new RefreshTask(0, 20);
             }
 
         });
@@ -100,12 +102,44 @@ public final class ParamPanel extends BasePanel {
     @Action
     @Override
     public Task reload() {
+        return new RefreshComboxTask();
+    }
+
+    @Action
+    public Task refresh() {
         return new RefreshTask(0, 20);
     }
 
     @Override
     public Task reload(Object param) {
         return null;
+    }
+
+    private class RefreshComboxTask extends ParamFindTask {
+
+        RefreshComboxTask() {
+            super(0, 10000, "appparam/", conditionSql);
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<Appparam> response) {
+
+            //存下所有的数据
+            List<Appparam> totalData = response.getResult();
+
+            List typeArray = new ArrayList<String>();
+            typeArray.add("");
+            for (Appparam app : totalData) {
+                if (!typeArray.contains(app.getAppparamType())) {
+                    typeArray.add(app.getAppparamType());
+                }
+            }
+
+            String[] temp = new String[typeArray.size()];
+            typeArray.toArray(temp);
+            jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel(temp));
+
+        }
     }
 
     private class RefreshTask extends ParamFindTask {
@@ -150,6 +184,9 @@ public final class ParamPanel extends BasePanel {
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableParam = new BaseTable(null);
+        jLabel1 = new javax.swing.JLabel();
+        jComboBoxType = new javax.swing.JComboBox();
+        jButton5 = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
 
@@ -193,7 +230,7 @@ public final class ParamPanel extends BasePanel {
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
-        jButtonReload.setAction(actionMap.get("reload")); // NOI18N
+        jButtonReload.setAction(actionMap.get("refresh")); // NOI18N
         jButtonReload.setIcon(resourceMap.getIcon("jButtonReload.icon")); // NOI18N
         jButtonReload.setText(resourceMap.getString("jButtonReload.text")); // NOI18N
         jButtonReload.setBorderPainted(false);
@@ -286,19 +323,41 @@ public final class ParamPanel extends BasePanel {
         jTableParam.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTableParam);
 
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jComboBoxType.setName("jComboBoxType"); // NOI18N
+
+        jButton5.setAction(actionMap.get("filter")); // NOI18N
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setName("jButton5"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -407,15 +466,37 @@ public final class ParamPanel extends BasePanel {
         return printData;
     }
 
+    @Action
+    public Task filter() {
+        conditionSql = getComboxSql();
+        return refresh();
+    }
+
+    private String getComboxSql() {
+        Object selectObj = jComboBoxType.getSelectedItem();
+        if (selectObj != null) {
+            StringBuilder sql = new StringBuilder();
+            if (!selectObj.toString().trim().equals("")) {
+                sql.append("appparam_type = \"").append(selectObj).append("\"");
+            }
+            return sql.toString();
+        }
+
+        return "";
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ctrlPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonPrint;
     private javax.swing.JButton jButtonReload;
+    private javax.swing.JComboBox jComboBoxType;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableParam;
