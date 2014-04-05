@@ -30,6 +30,8 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -45,6 +47,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private String department;
     private List<ZiChanLieBiaotb> zc;
     private CaigoushenqingDetailEntity detail;
+    private float total = 0;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
@@ -70,7 +73,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"}, {"dzyhpPinpai", "品牌", "false"},
-            {"quantity", "数量", "true"}, {"dzyhpValue", "原值", "false"}});
+            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"}, {"dzyhpValue", "原值", "false"}, {"total", "合价"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -109,13 +112,15 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                     Object dzyhpType = bindedMap.get("dzyhpType");
                     Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
                     Object dzyhpValue = bindedMap.get("dzyhpValue");
+                    Object gdzcXinghao = bindedMap.get("dzyhpXinghao");
                     Object dzyhpKucun = bindedMap.get("count");
 
                     editTable.insertValue(0, dzyhpId);
                     editTable.insertValue(1, dzyhpName);
                     editTable.insertValue(2, dzyhpType);
                     editTable.insertValue(3, dzyhpPinpai);
-                    editTable.insertValue(5, dzyhpValue);
+                    editTable.insertValue(4, gdzcXinghao);
+                    editTable.insertValue(6, dzyhpValue);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(cgsqId.getText());
@@ -128,6 +133,32 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
             }
         });
 
+        jTable1.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
+                int col = e.getColumn();
+                int row = e.getFirstRow();
+
+                if (col == 5 || col == 6) {
+                    if ((!(("" + jTable1.getValueAt(row, 5)).equals("")))
+                            && (!(("" + jTable1.getValueAt(row, 6)).equals("")))) {
+                        int count = Integer.parseInt("" + jTable1.getValueAt(row, 5));
+                        float price = Float.parseFloat("" + jTable1.getValueAt(row, 6));
+                        jTable1.setValueAt(price * count, row, 7);
+                    }
+                    int rows = jTable1.getRowCount();
+                    total = 0;
+                    for(int i = 0; i < rows; i++) {
+                        if(!(("" + jTable1.getValueAt(i, 7)).equals(""))){
+                            total += Float.parseFloat("" + jTable1.getValueAt(i, 7));
+                        }
+                    }
+                    totalprice.setText(total + "元");
+                }
+            }
+            
+        });
     }
 
     public DiZhiYiHaoPinLingYongShenQingJDialog(final JDialog parent, CaigoushenqingDetailEntity detail) {
@@ -226,7 +257,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(22);
-        float total = 0;
+        total = 0;
         for (int i = 0; i < zc.size(); i++) {
             if (jTable1.getValueAt(i, 4).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个物品的领取数量！", this);
@@ -294,6 +325,8 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
+        totalprice = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -374,21 +407,34 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
             jTable1.getColumnModel().getColumn(8).setHeaderValue(resourceMap.getString("jTable1.columnModel.title8")); // NOI18N
         }
 
+        totalprice.setText(resourceMap.getString("totalprice.text")); // NOI18N
+        totalprice.setName("totalprice"); // NOI18N
+
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalprice)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalprice)
+                    .addComponent(jLabel5))
+                .addGap(11, 11, 11))
         );
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -596,6 +642,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -605,5 +652,6 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private javax.swing.JTextField lysqDate;
     private javax.swing.JPanel middlePanel;
     private javax.swing.JTextArea shenqingdanRemark;
+    private javax.swing.JLabel totalprice;
     // End of variables declaration//GEN-END:variables
 }
