@@ -26,6 +26,7 @@ import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel;
 import com.jskj.asset.client.panel.user.ParamPanel;
 import com.jskj.asset.client.panel.user.PkPanel;
+import com.jskj.asset.client.panel.user.SelfPanel;
 import com.jskj.asset.client.panel.user.UserPanel;
 import com.jskj.asset.client.util.LogPaneAppender;
 import javax.swing.JDialog;
@@ -101,6 +102,7 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenu jMenuDW = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItemMe = new javax.swing.JMenuItem();
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
@@ -274,6 +276,11 @@ public class LoadModule extends BaseTask {
         jMenuItem5.setText(resourceMap.getString("jMenuItem5.text")); // NOI18N
         jMenuItem5.setName("jMenuItem5"); // NOI18N
         helpMenu.add(jMenuItem5);
+
+        jMenuItemMe.setAction(actionMap.get("showSelfBox")); // NOI18N
+        jMenuItemMe.setText(resourceMap.getString("jMenuItemMe.text")); // NOI18N
+        jMenuItemMe.setName("jMenuItemMeTask"); // NOI18N
+        helpMenu.add(jMenuItemMe);
 
         jMenuItemTask.setAction(actionMap.get("showTaskBox")); // NOI18N
         jMenuItemTask.setText(resourceMap.getString("jMenuItemTask.text")); // NOI18N
@@ -499,5 +506,10 @@ public class LoadModule extends BaseTask {
     @Action
     public Task showCangku() {
         return new OpenTabTask("基础数据-仓库管理", new CangkuPanel(), false);
+    }
+
+    @Action
+    public Task showSelfBox() {
+        return new OpenTabTask("我的密码", new SelfPanel(), false);
     }
 }
