@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.LingyongshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.ZichandengjiAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import org.apache.log4j.Logger;
@@ -16,21 +16,21 @@ import org.springframework.web.client.RestClientException;
  *
  * @author tt
  */
-public class LingyongshenqingTask extends BaseTask{
+public class DengjiTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(LingyongshenqingTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "lysq";
+    static final Logger logger = Logger.getLogger(DengjiTask.class);
+    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/dengji";
     
-    private final LingyongshenqingDetailEntity lysq;
+    private final ZichandengjiAll zc;
     
-    public LingyongshenqingTask(LingyongshenqingDetailEntity lysq) {
-        this.lysq = lysq;
+    public DengjiTask(ZichandengjiAll zc) {
+        this.zc = zc;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, lysq, LingyongshenqingDetailEntity.class);
+            restTemplate.postForObject(ADD_URI, zc, ZichandengjiAll.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;

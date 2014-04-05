@@ -6,15 +6,20 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.DengjiTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Fushuliebiaotb;
 import com.jskj.asset.client.bean.entity.ZichandengjiAll;
+import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseFileChoose;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.FileTask;
+import com.jskj.asset.client.panel.slgl.task.CancelDengji;
+import com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -22,6 +27,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -31,6 +38,8 @@ import org.jdesktop.application.Task;
  */
 public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
 
+    private static final Log logger = LogFactory.getLog(PTGuDingZiChanDengJiJDialog.class);
+    
     private JTextField regTextField;
     private String imageUri;
     private ZichandengjiAll zc;
@@ -40,6 +49,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     private String supplier;
     private FushuliebiaoJDialog fslb;
     private JFrame mainFrame;
+    private List<ZichanliebiaotbAll> list;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -113,7 +123,68 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     
     @Action
     public void exit() {
+        String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
+        new CloseTask(sql).execute();
+    }
+    
+    public void close(){
         this.dispose();
+    }
+    
+    private class CloseTask extends WeidengjizichanTask{
+
+        public CloseTask(String sql) {
+            super(sql,"普通");
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (ZichanliebiaotbAll zc : list) {
+                    string.append("单据").append(zc.getCgsqId()).append("有未登记项（")
+                            .append(zc.getZcName()).append(")\n");
+                }
+                string.append("是否继续登记？选“否”或“取消”会要求输入原因，并不再登记以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                if (result == 0) {
+                    return;
+                }
+                String reason;
+                reason = AssetMessage.showInputDialog(null, "请输入取消登记理由：");
+                if (reason == null) {
+                    return;
+                }
+                for(ZichanliebiaotbAll lb: list){
+                    lb.setReason("【登记】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+            close();
+        }
+        
+    }
+    
+    private class Cancel extends CancelDengji{
+
+        public Cancel(List<ZichanliebiaotbAll> zc) {
+            super(zc);
+        }
+   
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            close();
+        }
+
     }
     
     @Action
@@ -191,7 +262,7 @@ public class PTGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                 return;
             }
             JOptionPane.showMessageDialog(null, "提交成功！");
-            exit();
+            close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             PTGuDingZiChanDengJiJDialog pTGuDingZiChanDengJiJDialog = new PTGuDingZiChanDengJiJDialog(mainFrame);
             pTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);

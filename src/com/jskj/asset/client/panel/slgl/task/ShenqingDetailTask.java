@@ -4,41 +4,39 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.Zichanweixiudantb;
+import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author tt
  */
-public class WeixiuTask extends BaseTask{
+public class ShenqingDetailTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(WeixiuTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "weixiu";
+    public static final Logger logger = Logger.getLogger(ShenqingDetailTask.class);
+    private final String CX_URI = Constants.HTTP + Constants.APPID + "cgsqsp/detail/";
+    private String id = "";
     
-    private final Zichanweixiudantb zcwx;
-    
-    public WeixiuTask(Zichanweixiudantb zcwx) {
-        this.zcwx = zcwx;
+    public ShenqingDetailTask(String id){
+        super();
+        this.id = id;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, zcwx, Zichanweixiudantb.class);
+            logger.debug("ShenqingDetailTask:" + id);
+            CaigoushenqingDetailEntity cgsqs = restTemplate.getForObject(CX_URI +id ,CaigoushenqingDetailEntity.class);
+            return cgsqs;
         }catch (RestClientException e) {
             logger.error(e);
             return e;
         }
-        
-        return STATUS_OK;
     }
 
     @Override

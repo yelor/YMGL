@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.JihuaTask;
 import com.jskj.asset.client.bean.entity.CaigoujihuaChaxunEntity;
 import com.jskj.asset.client.bean.entity.CaigoujihuaFindEntity;
 import com.jskj.asset.client.layout.AssetMessage;

@@ -4,11 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.Gudingzichantb;
-import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
-import com.jskj.asset.client.bean.entity.ZichanYanshoutb;
+import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -20,21 +18,21 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author tt
  */
-public class YanshouTask extends BaseTask{
+public class DiaoboTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(YanshouTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/yanshou";
+    static final Logger logger = Logger.getLogger(DiaoboTask.class);
+    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/diaobo";
     
-    private final ZichanYanshoutb zcys;
+    private final Zichandiaobodantb zcdb;
     
-    public YanshouTask(ZichanYanshoutb zcys) {
-        this.zcys = zcys;
+    public DiaoboTask(Zichandiaobodantb zcdb) {
+        this.zcdb = zcdb;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, zcys, ZichanYanshoutb.class);
+            restTemplate.postForObject(ADD_URI, zcdb, Zichandiaobodantb.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;

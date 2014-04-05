@@ -4,35 +4,33 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
+import com.jskj.asset.client.bean.entity.Zhijielingyongtb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author tt
  */
-public class DiaoboTask extends BaseTask{
+public class ZhijielingyongTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(DiaoboTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/diaobo";
+    static final Logger logger = Logger.getLogger(ZhijielingyongTask.class);
+    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/zhijielingyong";
     
-    private final Zichandiaobodantb zcdb;
+    private final Zhijielingyongtb zc;
     
-    public DiaoboTask(Zichandiaobodantb zcdb) {
-        this.zcdb = zcdb;
+    public ZhijielingyongTask(Zhijielingyongtb zc) {
+        this.zc = zc;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, zcdb, Zichandiaobodantb.class);
+            restTemplate.postForObject(ADD_URI, zc, Zhijielingyongtb.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;

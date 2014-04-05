@@ -4,11 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.shjs.task;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.panel.slgl.task.ChaXunTask;
-import com.jskj.asset.client.panel.slgl.*;
-import com.jskj.asset.client.bean.entity.Fukuanshenpiliuchengtb;
+import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
@@ -22,32 +20,33 @@ import org.springframework.web.client.RestClientException;
  *
  * @author tt
  */
-public abstract class FindfkdTask extends BaseTask{
+public abstract class WeidengjizichanTask extends BaseTask{
 
-    public static final Logger logger = Logger.getLogger(ChaXunTask.class);
-    private final String CX_URI = Constants.HTTP + Constants.APPID + "fukuandan/findall";
-    public static final int pageSize = 10;
-    private int pageIndex = 1;
+    public static final Logger logger = Logger.getLogger(WeidengjizichanTask.class);
+    private final String CX_URI = Constants.HTTP + Constants.APPID + "gdzc/weidengji";
+    private String sql;
+    private String type;
     
-    public FindfkdTask(int pageIndex){
+    public WeidengjizichanTask(String sql,String type){
         super();
-        this.pageIndex = pageIndex;
+        this.sql = sql;
+        this.type = type;
     }
     
-    public FindfkdTask(){
-        this(1);
+    public WeidengjizichanTask(String sql){
+        this(sql,"");
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            CommFindEntity<Fukuanshenpiliuchengtb> sqs = restTemplate.exchange(CX_URI,
+            CommFindEntity<ZichanliebiaotbAll> response = restTemplate.exchange(CX_URI + "?"+ 
+                    "type=" + type + "&conditionSql=" + sql,
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<CommFindEntity<Fukuanshenpiliuchengtb>>() {
+                    new ParameterizedTypeReference<CommFindEntity<ZichanliebiaotbAll>>() {
                     }).getBody();
-            return sqs;
+            return response;
         }catch (RestClientException e) {
             logger.error(e);
             return e;
@@ -67,11 +66,11 @@ public abstract class FindfkdTask extends BaseTask{
             return;
         }
         if (object instanceof CommFindEntity) {
-            responseResult((CommFindEntity<Fukuanshenpiliuchengtb>) object);
+            responseResult((CommFindEntity<ZichanliebiaotbAll>) object);
         } else {
             clientView.setStatus("response data is not a valid object", AssetMessage.ERROR_MESSAGE);
         }
     }
 
-    public abstract void responseResult(CommFindEntity<Fukuanshenpiliuchengtb> response);
+    public abstract void responseResult(CommFindEntity<ZichanliebiaotbAll> response);
 }

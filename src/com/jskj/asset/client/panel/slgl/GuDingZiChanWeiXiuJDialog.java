@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.WeixiuTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Zichanweixiudantb;
 import com.jskj.asset.client.constants.Constants;
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -28,6 +31,8 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
 
+    private static final Log logger = LogFactory.getLog(GuDingZiChanWeiXiuJDialog.class);
+    
     private JTextField regTextField1,regTextField2,regTextField3,regTextField4;
     
     private int zcId;

@@ -6,6 +6,8 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.ChaXunTask;
+import com.jskj.asset.client.panel.slgl.task.LingyongshenqingchaxunTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.LingyongshenqingFindEntity;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;

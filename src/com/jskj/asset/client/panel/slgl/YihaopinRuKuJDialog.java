@@ -12,13 +12,18 @@ import com.jskj.asset.client.bean.entity.RukudanDetailEntity;
 import com.jskj.asset.client.bean.entity.Zichanrukudantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
+import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.panel.slgl.task.CancelDengji;
+import com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask;
+import static com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask.logger;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.event.WindowEvent;
@@ -48,6 +53,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
     CaigoushenqingDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
+    private List<ZichanliebiaotbAll> list;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -198,7 +204,68 @@ public class YihaopinRuKuJDialog extends BaseDialog {
 
     @Action
     public void exit() {
+        String sql = " cgsq_id like \"YHCG%\" and is_completed = 1 and status = 1";
+        new CloseTask(sql).execute();
+    }
+    
+    public void close(){
         this.dispose();
+    }
+    
+    private class CloseTask extends WeidengjizichanTask{
+
+        public CloseTask(String sql) {
+            super(sql);
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (ZichanliebiaotbAll zc : list) {
+                    string.append("单据").append(zc.getCgsqId()).append("有未入库项（")
+                            .append(zc.getZcName()).append(")\n");
+                }
+                string.append("是否继续入库？选“否”或“取消”会要求输入原因，并不再入库以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                if (result == 0) {
+                    return;
+                }
+                String reason;
+                reason = AssetMessage.showInputDialog(null, "请输入取消入库理由：");
+                if (reason == null) {
+                    return;
+                }
+                for(ZichanliebiaotbAll lb: list){
+                    lb.setReason("【入库】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+            close();
+        }
+        
+    }
+    
+    private class Cancel extends CancelDengji{
+
+        public Cancel(List<ZichanliebiaotbAll> zc) {
+            super(zc);
+        }
+   
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            close();
+        }
+
     }
     
     @Action
@@ -236,7 +303,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
             public void responseResult(ComResponse<RukudanDetailEntity> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     AssetMessage.showMessageDialog(null, "提交成功！");
-                    exit();
+                    close();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                     YihaopinRuKuJDialog zichanruku = new YihaopinRuKuJDialog(new javax.swing.JFrame(), true);
                     zichanruku.setLocationRelativeTo(mainFrame);

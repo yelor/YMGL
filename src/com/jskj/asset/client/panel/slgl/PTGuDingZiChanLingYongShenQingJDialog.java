@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.ShenQingTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;

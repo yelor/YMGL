@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.LingyongtuikuTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
 import com.jskj.asset.client.bean.entity.Lingyongtuikudantb;
@@ -23,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -32,6 +35,8 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
 
+    private static final Log logger = LogFactory.getLog(GuDingZiChanLingYongTuiKuJDialog.class);
+    
     private LingyongtuikuDetailEntity lytk;
     private int userId;
     private String userName;

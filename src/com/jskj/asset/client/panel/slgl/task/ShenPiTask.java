@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.constants.Constants;

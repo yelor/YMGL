@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.DiaoboTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
 import com.jskj.asset.client.constants.Constants;
@@ -21,6 +22,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -30,6 +33,8 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
 
+    private static final Log logger = LogFactory.getLog(GuDingZiChanDiaoBoJDialog.class);
+    
     private int zcId;
     private int yichurenId;
     private int jieshourenId;

@@ -22,7 +22,7 @@ import com.jskj.asset.client.panel.slgl.GuDingZiChanCaiGouShenQingJDialog;
 import com.jskj.asset.client.panel.slgl.GuDingZiChanWeiXiuShenQingJDialog;
 import com.jskj.asset.client.panel.slgl.ITGuDingZiChanLingYongShenQingJDialog;
 import com.jskj.asset.client.panel.slgl.PTGuDingZiChanLingYongShenQingJDialog;
-import com.jskj.asset.client.panel.slgl.ShenqingDetailTask;
+import com.jskj.asset.client.panel.slgl.task.ShenqingDetailTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import java.text.SimpleDateFormat;
