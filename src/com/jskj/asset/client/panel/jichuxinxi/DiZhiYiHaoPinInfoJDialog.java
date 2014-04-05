@@ -135,7 +135,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         //自动绑定所有的值
         super.bind(paramData, jPanel3);
         super.bind(paramData, jPanel4);
-        if(paramData.getZhijielingyong() == 0){
+        if(paramData.getZhijielingyong()!=null&&paramData.getZhijielingyong() == 0){
             jCheckBoxzjly.setSelected(true);
         }
 

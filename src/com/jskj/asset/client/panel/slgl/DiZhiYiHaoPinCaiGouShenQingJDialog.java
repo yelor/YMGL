@@ -14,6 +14,7 @@ import com.jskj.asset.client.bean.entity.YihaopinliebiaoEntity;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseCellFocusListener;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
@@ -181,6 +182,29 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
                 }
             }
             
+        });
+        
+        /*例子，把数量和采购价相乘，直接用system.out输出*/
+        ((BaseTable) jTable1).addCellListener(new BaseCellFocusListener() {
+
+            @Override
+            public void editingStopped(int selectedRow, int selectedColumn) {
+                if (selectedColumn == 5 || selectedColumn == 6) { //这里是一个例子，就是下标第5列和下标第6列相乘
+                    Object column5valueObj = jTable1.getValueAt(jTable1.getSelectedRow(), 5);
+                    Object column6valueObj = jTable1.getValueAt(jTable1.getSelectedRow(), 6);
+                    if (column5valueObj != null && column6valueObj != null) {
+                        try {
+                            int column5value = column5valueObj.toString().trim().equals("")?0:Integer.parseInt(column5valueObj.toString());
+                            float column6value = column6valueObj.toString().trim().equals("")?0:Float.valueOf(column6valueObj.toString());
+                            float total = column5value * column6value;
+                            System.out.println("total:" + total);
+                        } catch (Exception e) {
+                            //这里主要是防止用户输入一个非数字，导致相乘异常。
+                        }
+                    }
+
+                }
+            }
         });
     }
 

@@ -28,6 +28,8 @@ import javax.swing.JTable;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -85,6 +87,23 @@ public class BaseTable extends JTable {
         if (!evt.isPopupTrigger()) {
             enableRightButton(true);
         }
+    }
+
+  
+    public void addCellListener(final BaseCellFocusListener listener){
+       this.getCellEditor(0, 0).addCellEditorListener(new CellEditorListener(){
+
+            @Override
+            public void editingStopped(ChangeEvent e) {
+                int column = BaseTable.this.getSelectedColumn();
+                int row = BaseTable.this.getSelectedRow();
+                listener.editingStopped(row,column);
+            }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+            }
+        });
     }
 
     public class SingleEditRowTable implements TableModelListener, KeyListener {
