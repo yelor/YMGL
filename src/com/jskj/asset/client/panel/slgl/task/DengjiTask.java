@@ -4,35 +4,33 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
+import com.jskj.asset.client.bean.entity.ZichandengjiAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author tt
  */
-public class LingyongtuikuTask extends BaseTask{
+public class DengjiTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(LingyongtuikuTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "lytk";
+    static final Logger logger = Logger.getLogger(DengjiTask.class);
+    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/dengji";
     
-    private final LingyongtuikuDetailEntity lytk;
+    private final ZichandengjiAll zc;
     
-    public LingyongtuikuTask(LingyongtuikuDetailEntity lytk) {
-        this.lytk = lytk;
+    public DengjiTask(ZichandengjiAll zc) {
+        this.zc = zc;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, lytk, LingyongtuikuDetailEntity.class);
+            restTemplate.postForObject(ADD_URI, zc, ZichandengjiAll.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;

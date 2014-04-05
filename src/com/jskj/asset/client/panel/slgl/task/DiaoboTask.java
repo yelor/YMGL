@@ -4,39 +4,41 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.shjs.task;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
+import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author tt
  */
-public class ShenqingDetailTask extends BaseTask{
+public class DiaoboTask extends BaseTask{
 
-    public static final Logger logger = Logger.getLogger(ShenqingDetailTask.class);
-    private final String CX_URI = Constants.HTTP + Constants.APPID + "fukuandan/detail/";
-    private String id = "";
+    static final Logger logger = Logger.getLogger(DiaoboTask.class);
+    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/diaobo";
     
-    public ShenqingDetailTask(String id){
-        super();
-        this.id = id;
+    private final Zichandiaobodantb zcdb;
+    
+    public DiaoboTask(Zichandiaobodantb zcdb) {
+        this.zcdb = zcdb;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            logger.debug("ShenqingDetailTask:" + id);
-            FukuanshenqingDetailEntity cgsqs = restTemplate.getForObject(CX_URI +id ,FukuanshenqingDetailEntity.class);
-            return cgsqs;
+            restTemplate.postForObject(ADD_URI, zcdb, Zichandiaobodantb.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;
         }
+        
+        return STATUS_OK;
     }
 
     @Override

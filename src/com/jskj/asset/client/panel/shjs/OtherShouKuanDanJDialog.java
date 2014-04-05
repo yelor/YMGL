@@ -186,7 +186,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
         Qitashoukuandantb skd = new Qitashoukuandantb();
         super.copyToBean(skd, jPanel1);
         skd.setFukuandanDate(dateformate.parse(fukuandanDate.getText()));
-        skd.setDanjuleixingId(17);
+        skd.setDanjuleixingId(16);
         skd.setSupplierId(supplierId);
         skd.setZhidanrenId(userId);
         

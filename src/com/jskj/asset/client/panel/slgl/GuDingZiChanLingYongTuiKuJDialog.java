@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.LingyongtuikuTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
 import com.jskj.asset.client.bean.entity.Lingyongtuikudantb;
@@ -23,6 +24,10 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -32,11 +37,14 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
 
+    private static final Log logger = LogFactory.getLog(GuDingZiChanLingYongTuiKuJDialog.class);
+    
     private LingyongtuikuDetailEntity lytk;
     private int userId;
     private String userName;
     private String department;
     private List<ZiChanLieBiaotb> zc;
+    private float total = 0;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * Creates new form GuDingZiChanRuKu
@@ -61,7 +69,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "原值", "false"},{"quantity", "数量", "true"}});
+            {"gdzcXinghao", "型号"}, {"quantity", "数量", "true"}, {"gdzcValue", "原值", "false"}, {"total", "合价"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -99,24 +107,51 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
                     Object gdzcType = bindedMap.get("gdzcType");
                     Object gdzcPinpai = bindedMap.get("gdzcPinpai");
                     Object gdzcValue = bindedMap.get("gdzcValue");
+                    Object gdzcXinghao = bindedMap.get("gdzcXinghao");
 
                     editTable.insertValue(0, gdzcId);
                     editTable.insertValue(1, gdzcName);
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
-                    editTable.insertValue(4, gdzcValue);
-                    editTable.insertValue(5, 0);
+                    editTable.insertValue(4, gdzcXinghao);
+                    editTable.insertValue(6, gdzcValue);
 
                     ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
                     zclb.setCgsqId(jTextField1.getText());
                     zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(3);
+                    zclb.setQuantity(0);
                     zc.add(zclb);
                 }
 
             }
         });
         
+        jTable1.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
+                int col = e.getColumn();
+                int row = e.getFirstRow();
+
+                if (col == 5 || col == 6) {
+                    if ((!(("" + jTable1.getValueAt(row, 5)).equals("")))
+                            && (!(("" + jTable1.getValueAt(row, 6)).equals("")))) {
+                        int count = Integer.parseInt("" + jTable1.getValueAt(row, 5));
+                        float price = Float.parseFloat("" + jTable1.getValueAt(row, 6));
+                        jTable1.setValueAt(price * count, row, 7);
+                    }
+                    int rows = jTable1.getRowCount();
+                    total = 0;
+                    for(int i = 0; i < rows; i++) {
+                        if(!(("" + jTable1.getValueAt(i, 7)).equals(""))){
+                            total += Float.parseFloat("" + jTable1.getValueAt(i, 7));
+                        }
+                    }
+                    totalprice.setText(total + "元");
+                }
+            }
+            
+        });
     }
 
     @Action
@@ -126,20 +161,12 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
     
     @Action
     public Task submitForm() throws ParseException{
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
-                jTable1.getSelectedColumn()).stopCellEditing();
-        if(jTextField2.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入制单日期！");
-            return null;
-        }
-        if(jTextFieldShenqingren.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "请输入退库人！");
-            return null;
-        }
         if(zc.size() < 1){
             JOptionPane.showMessageDialog(null, "请选择要退库的资产！");
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         lytk = new LingyongtuikuDetailEntity();
         Lingyongtuikudantb sqd = new Lingyongtuikudantb();
         sqd.setLytkId(jTextField1.getText());
@@ -149,13 +176,18 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         sqd.setZhidanrenId(userId);
         
         for(int i = 0; i < zc.size(); i++){
-            int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-            if(count == 0){
-                AssetMessage.ERRORSYS("请输入第" + (i+1) + "个物品的退库数量！",this);
+            if (jTable1.getValueAt(i, 4).toString().equals("")) {
+                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的退库数量！", this);
                 return null;
             }
-            zc.get(i).setQuantity(count);
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            try {
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 4));
+                zc.get(i).setQuantity(count);
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的退库数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 5));
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
             zc.get(i).setIsCompleted(1);
@@ -202,6 +234,8 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
+        totalprice = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -282,21 +316,34 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
             jTable1.getColumnModel().getColumn(8).setHeaderValue(resourceMap.getString("jTable1.columnModel.title8")); // NOI18N
         }
 
+        totalprice.setText(resourceMap.getString("totalprice.text")); // NOI18N
+        totalprice.setName("totalprice"); // NOI18N
+
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalprice)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalprice)
+                    .addComponent(jLabel5))
+                .addGap(11, 11, 11))
         );
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -502,6 +549,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -513,5 +561,6 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldShenqingren;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel middlePanel;
+    private javax.swing.JLabel totalprice;
     // End of variables declaration//GEN-END:variables
 }

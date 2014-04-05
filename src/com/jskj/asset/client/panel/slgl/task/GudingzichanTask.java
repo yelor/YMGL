@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.CaiGouShenQingFindEntity;
-import com.jskj.asset.client.bean.entity.WeixiushenqingFindEntity;
+import com.jskj.asset.client.bean.entity.GudingzichanFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -19,30 +18,32 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author tt
  */
-public class WeixiushenqingchaxunTask extends BaseTask{
+public class GudingzichanTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(WeixiushenqingchaxunTask.class);
-    private final String CX_URI = Constants.HTTP + Constants.APPID + "wxsqsp";
+    public static final Logger logger = Logger.getLogger(GudingzichanTask.class);
+    private final String CX_URI = Constants.HTTP + Constants.APPID + "gdzc";
     public static final int pageSize = 10;
-    private int pageIndex = 1;    
-    private int user;
+    private int pageIndex = 1;   
+    private String sql;
     
-    public WeixiushenqingchaxunTask(int user,int pageIndex){
+    public GudingzichanTask(String sql,int pageIndex){
         super();
         this.pageIndex = pageIndex;
-        this.user = user;
+        this.sql = sql;
     }
     
-    public WeixiushenqingchaxunTask(int user){
-        this(user,1);
+    public GudingzichanTask(String sql){
+        this(sql,1);
     }
     
     @Override
     public Object doBackgrounp() {
         try{
             logger.debug("pagesize:"+pageSize+",pageindex:"+pageIndex);
-            WeixiushenqingFindEntity wxsq = restTemplate.getForObject(CX_URI + "/" + user +"?pagesize="+pageSize+"&pageindex="+pageIndex,WeixiushenqingFindEntity.class);
-            return wxsq;
+            RestTemplate restTemplate = (RestTemplate) BeanFactory.instance().createBean(RestTemplate.class);
+            GudingzichanFindEntity gdzc = restTemplate.getForObject(CX_URI +"?pagesize="+pageSize+"&pageindex="+pageIndex+"&conditionSql="+sql,GudingzichanFindEntity.class);
+            System.out.println("GudingzichanFindEntity" + gdzc.getResult().size());
+            return gdzc;
         }catch (RestClientException e) {
             logger.error(e);
             return e;

@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.shjs.task;
 
-import com.jskj.asset.client.bean.entity.LingyongshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import org.apache.log4j.Logger;
@@ -16,27 +16,27 @@ import org.springframework.web.client.RestClientException;
  *
  * @author tt
  */
-public class LingyongshenqingTask extends BaseTask{
+public class FkShenqingDetailTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(LingyongshenqingTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "lysq";
+    public static final Logger logger = Logger.getLogger(FkShenqingDetailTask.class);
+    private final String CX_URI = Constants.HTTP + Constants.APPID + "fukuandan/detail/";
+    private String id = "";
     
-    private final LingyongshenqingDetailEntity lysq;
-    
-    public LingyongshenqingTask(LingyongshenqingDetailEntity lysq) {
-        this.lysq = lysq;
+    public FkShenqingDetailTask(String id){
+        super();
+        this.id = id;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, lysq, LingyongshenqingDetailEntity.class);
+            logger.debug("ShenqingDetailTask:" + id);
+            FukuanshenqingDetailEntity cgsqs = restTemplate.getForObject(CX_URI +id ,FukuanshenqingDetailEntity.class);
+            return cgsqs;
         }catch (RestClientException e) {
             logger.error(e);
             return e;
         }
-        
-        return STATUS_OK;
     }
 
     @Override

@@ -18,6 +18,10 @@ public class ZiChanLieBiaotb {
 
     private Integer status;
 
+    private String reason;
+
+    private String operator;
+
     public String getCgsqId() {
         return cgsqId;
     }
@@ -72,5 +76,21 @@ public class ZiChanLieBiaotb {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator == null ? null : operator.trim();
     }
 }

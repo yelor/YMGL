@@ -4,35 +4,33 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.WeixiushenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.LingyongshenqingDetailEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author tt
  */
-public class WeixiushenqingTask extends BaseTask{
+public class LingyongshenqingTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(WeixiushenqingTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "wxsq";
+    static final Logger logger = Logger.getLogger(LingyongshenqingTask.class);
+    private final String ADD_URI = Constants.HTTP + Constants.APPID + "lysq";
     
-    private final WeixiushenqingDetailEntity wxsq;
+    private final LingyongshenqingDetailEntity lysq;
     
-    public WeixiushenqingTask(WeixiushenqingDetailEntity wxsq) {
-        this.wxsq = wxsq;
+    public LingyongshenqingTask(LingyongshenqingDetailEntity lysq) {
+        this.lysq = lysq;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, wxsq, WeixiushenqingDetailEntity.class);
+            restTemplate.postForObject(ADD_URI, lysq, LingyongshenqingDetailEntity.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;

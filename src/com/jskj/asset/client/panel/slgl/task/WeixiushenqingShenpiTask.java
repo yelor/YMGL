@@ -4,33 +4,35 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.Zhijielingyongtb;
+import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
+import com.jskj.asset.client.util.BeanFactory;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
  * @author tt
  */
-public class ZhijielingyongTask extends BaseTask{
+public class WeixiushenqingShenpiTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(ZhijielingyongTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/zhijielingyong";
+    private static final Logger logger = Logger.getLogger(WeixiushenqingShenpiTask.class);
+    private final String SP_URI = Constants.HTTP + Constants.APPID + "wxsqsp/shenpi";
     
-    private final Zhijielingyongtb zc;
+    private ShenPiEntity sp;
     
-    public ZhijielingyongTask(Zhijielingyongtb zc) {
-        this.zc = zc;
+    public WeixiushenqingShenpiTask(ShenPiEntity sp){
+        this.sp = sp;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, zc, Zhijielingyongtb.class);
+            restTemplate.postForObject(SP_URI, sp,ShenPiEntity.class );
         }catch (RestClientException e) {
             logger.error(e);
             return e;

@@ -6,6 +6,9 @@
 
 package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.slgl.task.ChaXunTask;
+import com.jskj.asset.client.panel.slgl.task.WeixiushenqingShenpiTask;
+import com.jskj.asset.client.panel.slgl.task.WeixiushenqingchaxunTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.WeixiushenqingFindEntity;
@@ -15,8 +18,9 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -27,6 +31,8 @@ import org.jdesktop.beansbinding.BindingGroup;
  */
 public class WeixiushenqingshenpiJDialog extends javax.swing.JDialog {
 
+    private static final Log logger = LogFactory.getLog(WeixiushenqingshenpiJDialog.class);
+    
     private int pageIndex;
 
     private int count;

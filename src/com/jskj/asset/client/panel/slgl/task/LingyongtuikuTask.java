@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jskj.asset.client.panel.slgl;
+package com.jskj.asset.client.panel.slgl.task;
 
-import com.jskj.asset.client.bean.entity.Zichandiaobodantb;
+import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.util.BeanFactory;
@@ -18,21 +18,21 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author tt
  */
-public class DiaoboTask extends BaseTask{
+public class LingyongtuikuTask extends BaseTask{
 
-    static final Logger logger = Logger.getLogger(DiaoboTask.class);
-    private final String ADD_URI = Constants.HTTP + Constants.APPID + "gdzc/diaobo";
+    static final Logger logger = Logger.getLogger(LingyongtuikuTask.class);
+    private final String ADD_URI = Constants.HTTP + Constants.APPID + "lytk";
     
-    private final Zichandiaobodantb zcdb;
+    private final LingyongtuikuDetailEntity lytk;
     
-    public DiaoboTask(Zichandiaobodantb zcdb) {
-        this.zcdb = zcdb;
+    public LingyongtuikuTask(LingyongtuikuDetailEntity lytk) {
+        this.lytk = lytk;
     }
     
     @Override
     public Object doBackgrounp() {
         try{
-            restTemplate.postForObject(ADD_URI, zcdb, Zichandiaobodantb.class);
+            restTemplate.postForObject(ADD_URI, lytk, LingyongtuikuDetailEntity.class);
         }catch (RestClientException e) {
             logger.error(e);
             return e;

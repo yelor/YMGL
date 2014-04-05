@@ -6,6 +6,7 @@
 
 package com.jskj.asset.client.panel.shjs.task;
 
+import com.jskj.asset.client.panel.slgl.task.ChaXunTask;
 import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.bean.entity.QitafukuanshenqingDetailEntity;
 import com.jskj.asset.client.constants.Constants;
