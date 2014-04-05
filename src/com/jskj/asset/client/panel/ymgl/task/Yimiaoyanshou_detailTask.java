@@ -8,12 +8,10 @@ package com.jskj.asset.client.panel.ymgl.task;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTask;
-import com.jskj.asset.client.util.BeanFactory;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *

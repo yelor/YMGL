@@ -35,10 +35,10 @@ public class DanHao {
     //疫苗相关
     public final static String TYPE_YIMIAOXF = "YMXF";
     public final static String TYPE_YIMIAOXS = "YMXS";
-    public final static String TYPE_YIMIAOSB = "YMSB";
-    public final static String TYPE_YIMIAOSG = "YMSG";
-    public final static String TYPE_YIMIAOLY = "YMLY";
-    public final static String TYPE_YIMIAOCG = "YMCG";
+    public final static String TYPE_YIMIAOSB = "YMLQJH";
+    public final static String TYPE_YIMIAOSG = "YMSGJH";
+    public final static String TYPE_YIMIAOLY = "YMLQ";
+    public final static String TYPE_YIMIAOCG = "YMSG";
     public final static String TYPE_YIMIAOTJ = "YMTJ";
     public final static String TYPE_YIMIAOBS = "YMBS";
 

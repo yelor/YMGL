@@ -11,6 +11,8 @@ public class Churukudantb {
 
     private Integer gongyingdanwei;
 
+    private String kufang;
+
     private Integer zhidanren;
 
     private String remark;
@@ -39,6 +41,14 @@ public class Churukudantb {
 
     public void setGongyingdanwei(Integer gongyingdanwei) {
         this.gongyingdanwei = gongyingdanwei;
+    }
+
+    public String getKufang() {
+        return kufang;
+    }
+
+    public void setKufang(String kufang) {
+        this.kufang = kufang == null ? null : kufang.trim();
     }
 
     public Integer getZhidanren() {

@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.ckgl;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel;
-import com.jskj.asset.client.panel.baobiao.caigou.YimiaorukujiluPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
+import com.jskj.asset.client.panel.ymgl.YiMiaoYunShuDanJDialog;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -18,7 +20,9 @@ import org.jdesktop.application.Task;
  * @author Administrator
  */
 public class SelectYiMiaochurukujilu extends javax.swing.JDialog {
+
     YiMiaoChuRuKuJiLu ymcrkjl;
+
     /**
      * Creates new form ymcrkjl_select
      */
@@ -127,11 +131,38 @@ public class SelectYiMiaochurukujilu extends javax.swing.JDialog {
         dispose();
         return new OpenTabTask("报表-疫苗出入库记录", new YimiaochukujiluPanel(), false);
     }
-  
+
+    private class Ymckjl_popTask extends org.jdesktop.application.Task<Object, Void> {
+        Ymckjl_popTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to Ymckjl_popTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
-    public Task showYimiaoyunshujilu() {
-        dispose();
-        return new OpenTabTask("报表-疫苗运输记录", new YimiaoyunshujiluPanel(), false);
+    public void showYimiaoyunshujilu() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoYunShuDanJDialog yimiaoyunshu = new YiMiaoYunShuDanJDialog();
+                yimiaoyunshu.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(yimiaoyunshu);
+            }
+        });
     }
 
 

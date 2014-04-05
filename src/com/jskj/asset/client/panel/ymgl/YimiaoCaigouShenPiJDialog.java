@@ -23,14 +23,9 @@ import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.Popup;
-import javax.swing.PopupFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -527,11 +522,11 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
     public void yimiaocaigouxiangdandetailshow(YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity, String xiangdanID) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
         if (xiangdanID.contains(DanHao.TYPE_YIMIAOSB)) {
-            YiMiaoShenBaoPlanJDialog yimiaoshenbaoJDialog = new YiMiaoShenBaoPlanJDialog(this, yimiaocaigouxiangdanEntity);
+            YiMiaoLingQuPlanJDialog yimiaoshenbaoJDialog = new YiMiaoLingQuPlanJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaoshenbaoJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoshenbaoJDialog);
         } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOLY)) {
-            YiMiaoLingYongShenQingJDialog yimiaolingyongJDialog = new YiMiaoLingYongShenQingJDialog(this, yimiaocaigouxiangdanEntity);
+            YiMiaoLingQuShenQingJDialog yimiaolingyongJDialog = new YiMiaoLingQuShenQingJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaolingyongJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaolingyongJDialog);
         } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOSG)) {
@@ -539,7 +534,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             yimiaoshegouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoshegouJDialog);
         } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOCG)) {
-            YiMiaoCaiGouShenQingJDialog yimiaocaigouJDialog = new YiMiaoCaiGouShenQingJDialog(this, yimiaocaigouxiangdanEntity);
+            YiMiaoSheGouShenQingJDialog yimiaocaigouJDialog = new YiMiaoSheGouShenQingJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaocaigouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaocaigouJDialog);
         }

@@ -205,7 +205,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoShenBaoPlanJDialog" id="submitForm" methodName="submitForm"/>
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoLingQuPlanJDialog" id="submitForm" methodName="submitForm"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
@@ -228,7 +228,7 @@
         <Component class="javax.swing.JButton" name="jButton5">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoShenBaoPlanJDialog" id="exit" methodName="exit"/>
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoLingQuPlanJDialog" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>

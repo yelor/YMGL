@@ -160,7 +160,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoCaiGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
+                YiMiaoLingGouJiHuaFenXiJDialog yiMiaoCaiGouJiHuaFenXiJDialog = new YiMiaoLingGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
                 yiMiaoCaiGouJiHuaFenXiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(yiMiaoCaiGouJiHuaFenXiJDialog);
             }
@@ -174,7 +174,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoShenBaoPlanJDialog shenbaoPlanJDialog = new YiMiaoShenBaoPlanJDialog();
+                YiMiaoLingQuPlanJDialog shenbaoPlanJDialog = new YiMiaoLingQuPlanJDialog();
                 shenbaoPlanJDialog.setLocationRelativeTo(mainFrame);
                 shenbaoPlanJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(shenbaoPlanJDialog);
@@ -204,7 +204,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog();
+                YiMiaoLingQuShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingQuShenQingJDialog();
                 lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
                 lingYongShenQingJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(lingYongShenQingJDialog);
@@ -219,7 +219,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoCaiGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoCaiGouShenQingJDialog();
+                YiMiaoSheGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoSheGouShenQingJDialog();
                 caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
                 caiGouShenQingJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(caiGouShenQingJDialog);

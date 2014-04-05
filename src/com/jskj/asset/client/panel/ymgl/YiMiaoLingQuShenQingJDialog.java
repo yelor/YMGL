@@ -40,9 +40,9 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
+public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
 
-    private static final Logger logger = Logger.getLogger(YiMiaoLingYongShenQingJDialog.class);
+    private static final Logger logger = Logger.getLogger(YiMiaoLingQuShenQingJDialog.class);
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaolingyong;
     private List<Yimiaoshenqingdantb> yimiaoshenqingdanlist = new ArrayList<Yimiaoshenqingdantb>();
@@ -54,7 +54,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoLingYongShenQingJDialog() {
+    public YiMiaoLingQuShenQingJDialog() {
         super();
         initComponents();
         jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOLY));
@@ -292,7 +292,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         jScrollPane4.setViewportView(jTable3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoLingYongShenQingJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoLingQuShenQingJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -304,7 +304,7 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoLingYongShenQingJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoLingQuShenQingJDialog.class, this);
         jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -557,13 +557,13 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoLingYongShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoLingYongShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoLingYongShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoLingYongShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuShenQingJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -641,17 +641,17 @@ public class YiMiaoLingYongShenQingJDialog extends BaseDialog {
                 logger.error(e);
                 return;
             }
-            AssetMessage.INFO("提交成功！", YiMiaoLingYongShenQingJDialog.this);
+            AssetMessage.INFO("提交成功！", YiMiaoLingQuShenQingJDialog.this);
             exit();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            YiMiaoLingYongShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingYongShenQingJDialog();
+            YiMiaoLingQuShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingQuShenQingJDialog();
             lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
             lingYongShenQingJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(lingYongShenQingJDialog);
         }
     }
 
-    public YiMiaoLingYongShenQingJDialog(final JDialog parent, YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
+    public YiMiaoLingQuShenQingJDialog(final JDialog parent, YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
         super();
         initComponents();
         this.yimiaocaigouxiangdanEntity = yimiaocaigouxiangdanEntity;

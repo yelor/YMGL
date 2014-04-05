@@ -21,9 +21,9 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author huiqi
  */
-public class YiMiaoCaiGouJiHuaFenXiJDialog extends BaseDialog {
+public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
 
-    private final static Logger logger = Logger.getLogger(YiMiaoCaiGouJiHuaFenXiJDialog.class);
+    private final static Logger logger = Logger.getLogger(YiMiaoLingGouJiHuaFenXiJDialog.class);
 
     private int pageIndex;
 
@@ -36,7 +36,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoCaiGouJiHuaFenXiJDialog(java.awt.Frame parent, boolean modal) {
+    public YiMiaoLingGouJiHuaFenXiJDialog(java.awt.Frame parent, boolean modal) {
         super();
         initComponents();
         pageIndex = 1;
@@ -177,7 +177,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends BaseDialog {
         jScrollPane4.setViewportView(jTable3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoCaiGouJiHuaFenXiJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoLingGouJiHuaFenXiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -213,7 +213,7 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends BaseDialog {
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoCaiGouJiHuaFenXiJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoLingGouJiHuaFenXiJDialog.class, this);
         jButton7.setAction(actionMap.get("exit")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
@@ -353,20 +353,20 @@ public class YiMiaoCaiGouJiHuaFenXiJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoCaiGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoCaiGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoCaiGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoCaiGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingGouJiHuaFenXiJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
 //        /* Create and display the dialog */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                YiMiaoCaiGouJiHuaFenXiJDialog dialog = new YiMiaoCaiGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
+//                YiMiaoLingGouJiHuaFenXiJDialog dialog = new YiMiaoLingGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
 //                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 //                    @Override
 //                    public void windowClosing(java.awt.event.WindowEvent e) {

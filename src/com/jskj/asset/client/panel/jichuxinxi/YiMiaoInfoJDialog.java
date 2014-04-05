@@ -7,23 +7,18 @@ package com.jskj.asset.client.panel.jichuxinxi;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
-import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseFileChoose;
 import com.jskj.asset.client.layout.BaseListModel;
 import com.jskj.asset.client.layout.BasePanel;
-import com.jskj.asset.client.layout.BaseTextField;
-import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.ymgl.*;
-import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.PingYinUtil;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -56,6 +51,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         yimiaoType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("疫苗类别")));
         yimiaoJixing.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("剂型")));
         unitId.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("单位")));
+        yimiaoShengchanqiye.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("生产企业")));
         yimiaoFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("辅助单位")));
         jiliangdanwei.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("剂量单位")));
     }
@@ -124,7 +120,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         yimiaoJixing = new javax.swing.JComboBox();
         unitId = new javax.swing.JComboBox();
         jLabel19 = new javax.swing.JLabel();
-        yimiaoShengchanqiye = new javax.swing.JTextField();
         yimiaoPizhunwenhao = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -136,6 +131,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jiliangdanwei = new javax.swing.JComboBox();
         jLabel21 = new javax.swing.JLabel();
         yimiaoYushoujia = new javax.swing.JTextField();
+        yimiaoShengchanqiye = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         yimiaoStockdown = new javax.swing.JTextField();
@@ -217,8 +213,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel19.setText(resourceMap.getString("jLabel19.text")); // NOI18N
         jLabel19.setName("jLabel19"); // NOI18N
 
-        yimiaoShengchanqiye.setName("yimiaoShengchanqiye"); // NOI18N
-
         yimiaoPizhunwenhao.setText(resourceMap.getString("yimiaoPizhunwenhao.text")); // NOI18N
         yimiaoPizhunwenhao.setName("yimiaoPizhunwenhao"); // NOI18N
 
@@ -249,6 +243,9 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         yimiaoYushoujia.setName("yimiaoYushoujia"); // NOI18N
 
+        yimiaoShengchanqiye.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yimiaoShengchanqiye.setName("yimiaoShengchanqiye"); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -270,16 +267,20 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                             .addComponent(jLabel2)
                             .addComponent(jLabel19))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(yimiaoGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(yimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(yimiaoName)
-                            .addComponent(yimiaoShengchanqiye))
-                        .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(yimiaoGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(yimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(yimiaoName))
+                                .addGap(18, 18, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(yimiaoShengchanqiye, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(130, 130, 130)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -296,7 +297,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(yimiaoPizhunwenhao)))))
+                                .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -355,9 +356,9 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
-                            .addComponent(yimiaoShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14))))
+                            .addComponent(jLabel14)
+                            .addComponent(yimiaoShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -540,7 +541,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
     private void yimiaoTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yimiaoTypeActionPerformed
         
-         if (yimiaoType.getSelectedIndex() == 1) {
+         if (yimiaoType.getSelectedIndex() == 0) {
             chengbenjia.setEditable(true);
             yimiaoYushoujia.setEditable(true);
         } else {
@@ -644,9 +645,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             return null;
         } else if (yimiaoGuige.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗规格!");
-            return null;
-        } else if (yimiaoShengchanqiye.getText().trim().equals("")) {
-            AssetMessage.ERRORSYS("请输入生产企业!");
             return null;
         } else if (yimiaoJixing.getSelectedItem().toString().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗剂型!");
@@ -869,7 +867,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     private javax.swing.JList yimiaoPicture;
     private javax.swing.JTextField yimiaoPizhunwenhao;
     private javax.swing.JTextArea yimiaoRemark;
-    private javax.swing.JTextField yimiaoShengchanqiye;
+    private javax.swing.JComboBox yimiaoShengchanqiye;
     private javax.swing.JTextField yimiaoStockdown;
     private javax.swing.JTextField yimiaoStockup;
     private javax.swing.JComboBox yimiaoType;
