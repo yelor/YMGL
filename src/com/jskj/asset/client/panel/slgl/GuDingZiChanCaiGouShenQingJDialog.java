@@ -85,9 +85,9 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
-                String sql = "";
+                String sql = " supplier_type = 1 ";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" + supplier.getText().trim().toLowerCase() + "%\")";
+                    sql = "  and (supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }

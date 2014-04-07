@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Supplier {
     private Integer supplierId;
 
+    private Integer supplierType;
+
     private String supplierName;
 
     private String supplierJiancheng;
@@ -52,6 +54,14 @@ public class Supplier {
 
     public void setSupplierId(Integer supplierId) {
         this.supplierId = supplierId;
+    }
+
+    public Integer getSupplierType() {
+        return supplierType;
+    }
+
+    public void setSupplierType(Integer supplierType) {
+        this.supplierType = supplierType;
     }
 
     public String getSupplierName() {

@@ -30,47 +30,50 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class KeHuDanWeiPanel extends BasePanel {
-
+    
     private final static Logger logger = Logger.getLogger(KeHuDanWeiPanel.class);
-
+    
     private final int pageSize;
     private int pageIndex;
     private String conditionSql;
-
+    
     private int count;
-
+    
     private List<Kehudanweitb> kehudanweis;
-
+    
     private KeHuDanWeiInfoJDialog keHuDanWeiInfoJDialog;
-
+    
     private final BindTableHelper<Kehudanweitb> bindTable;
+    
+    private int uiType;
 
     /**
      * Creates new form YiMiaoJDialog
      */
-    public KeHuDanWeiPanel() {
+    public KeHuDanWeiPanel(int type) {
         super();
         initComponents();
         pageIndex = 1;
         count = 0;
         pageSize = 20;
-        conditionSql="";
+        conditionSql = "";
+        this.uiType = type;
         bindTable = new BindTableHelper<Kehudanweitb>(jTableKehudanwei, new ArrayList<Kehudanweitb>());
         bindTable.createTable(new String[][]{{"kehudanweiId", "编号"}, {"kehudanweiName", "名称"}, {"kehudanweiConstactperson", "联系人"}, {"kehudanweiPhone", "电话"}, {"kehudanweiFax", "传真"}, {"kehudanweiAddr", "单位地址"}, {"kehudanweiRemark", "备注"}});
         bindTable.setIntegerType(1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
         
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
-
+            
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{0,1,2};
+                return new int[]{0, 1, 2};
             }
-
+            
             @Override
             public Task filterData(HashMap<Integer, String> searchKeys) {
-
+                
                 if (searchKeys.size() > 0) {
                     StringBuilder sql = new StringBuilder();
                     if (!searchKeys.get(0).trim().equals("")) {
@@ -89,10 +92,10 @@ public class KeHuDanWeiPanel extends BasePanel {
                 } else {
                     conditionSql = "";
                 }
-
+                
                 return reload();
             }
-
+            
         });
     }
 
@@ -361,13 +364,14 @@ public class KeHuDanWeiPanel extends BasePanel {
 //            }
 //        });
     }
-
+    
     @Action
     @Override
     public Task reload() {
+        conditionSql = " kehudanwei_type = " + uiType + (!conditionSql.trim().equals("") ? " and " + conditionSql : "");
         return new RefreshTask(0, pageSize);
     }
-
+    
     private Kehudanweitb selectedKehudanwei() {
         if (jTableKehudanwei.getSelectedRow() >= 0) {
             if (kehudanweis != null) {
@@ -376,30 +380,30 @@ public class KeHuDanWeiPanel extends BasePanel {
         }
         return null;
     }
-
+    
     @Override
     public Task reload(Object param) {
         return null;
     }
-
+    
     private class RefreshTask extends KehudanweiTask {
-
+        
         RefreshTask(int pageIndex, int pageSize) {
-            super(pageIndex, pageSize,conditionSql);
+            super(pageIndex, pageSize, conditionSql);
         }
-
+        
         @Override
         public void onSucceeded(Object object) {
-
+            
             if (object instanceof Exception) {
                 Exception e = (Exception) object;
                 AssetMessage.ERRORSYS(e.getMessage());
                 logger.error(e);
                 return;
             }
-
+            
             KehudanweitbFindEntity danjuleixingtbs = (KehudanweitbFindEntity) object;
-
+            
             if (danjuleixingtbs != null && danjuleixingtbs.getResult() != null && danjuleixingtbs.getResult().size() > 0) {
                 count = danjuleixingtbs.getCount();
                 jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
@@ -407,18 +411,18 @@ public class KeHuDanWeiPanel extends BasePanel {
 
                 //存下所有的数据
                 kehudanweis = danjuleixingtbs.getResult();
-
+                
                 bindTable.refreshData(kehudanweis);
-
+                
             }
         }
     }
-
+    
     @Action
     public void addKeHuDanWei() {
         SwingUtilities.invokeLater(new Runnable() {
             private KeHuDanWeiInfoJDialog keHuDanWeiInfoJDialog;
-
+            
             @Override
             public void run() {
                 if (keHuDanWeiInfoJDialog == null) {
@@ -426,12 +430,14 @@ public class KeHuDanWeiPanel extends BasePanel {
                     keHuDanWeiInfoJDialog = new KeHuDanWeiInfoJDialog(KeHuDanWeiPanel.this);
                     keHuDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                keHuDanWeiInfoJDialog.setUpdatedData(new Kehudanweitb());
+                Kehudanweitb kehutb = new Kehudanweitb();
+                kehutb.setKehudanweiType(uiType);
+                keHuDanWeiInfoJDialog.setUpdatedData(kehutb);
                 AssetClientApp.getApplication().show(keHuDanWeiInfoJDialog);
             }
         });
     }
-
+    
     @Action
     public void updateKehudanwei() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -442,7 +448,7 @@ public class KeHuDanWeiPanel extends BasePanel {
                     AssetMessage.ERRORSYS("请选择客户单位!");
                     return;
                 }
-
+                
                 if (keHuDanWeiInfoJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                     keHuDanWeiInfoJDialog = new KeHuDanWeiInfoJDialog(KeHuDanWeiPanel.this);
@@ -453,7 +459,7 @@ public class KeHuDanWeiPanel extends BasePanel {
             }
         });
     }
-
+    
     @Action
     public Task deleteKehudanwei() {
         Kehudanweitb danjuleixing = selectedKehudanwei();
@@ -463,7 +469,7 @@ public class KeHuDanWeiPanel extends BasePanel {
         }
         int result = AssetMessage.CONFIRM("确定删除客户单位:" + danjuleixing.getKehudanweiName());
         if (result == JOptionPane.OK_OPTION) {
-             return new CommUpdateTask<Kehudanweitb>(danjuleixing, "kehudanwei/delete/" + danjuleixing.getKehudanweiId()) {
+            return new CommUpdateTask<Kehudanweitb>(danjuleixing, "kehudanwei/delete/" + danjuleixing.getKehudanweiId()) {
                 @Override
                 public void responseResult(ComResponse<Kehudanweitb> response) {
                     if (response.getResponseStatus() == ComResponse.STATUS_OK) {
@@ -472,35 +478,38 @@ public class KeHuDanWeiPanel extends BasePanel {
                         AssetMessage.ERROR(response.getErrorMessage(), KeHuDanWeiPanel.this);
                     }
                 }
-
+                
             };
         }
         return null;
     }
-
+    
     @Action
     public void pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        conditionSql = " kehudanwei_type = " + uiType + (!conditionSql.trim().equals("") ? " and " + conditionSql : "");
         new RefreshTask(pageIndex, pageSize).execute();
     }
-
+    
     @Action
     public void pageNext() {
         if (pageSize * (pageIndex) <= count) {
             pageIndex = pageIndex + 1;
         }
+        conditionSql = " kehudanwei_type = " + uiType + (!conditionSql.trim().equals("") ? " and " + conditionSql : "");
         new RefreshTask(pageIndex, pageSize).execute();
     }
-
+    
     @Action
     public void exit() {
     }
-
+    
     @Action
     public Task print() {
-        KehudanweiTask printData = new KehudanweiTask(0, count,conditionSql) {
-
+        conditionSql = " kehudanwei_type = " + uiType + (!conditionSql.trim().equals("") ? " and " + conditionSql : "");
+        KehudanweiTask printData = new KehudanweiTask(0, count, conditionSql) {
+            
             @Override
             public void onSucceeded(Object object) {
                 if (object instanceof Exception) {
@@ -509,12 +518,12 @@ public class KeHuDanWeiPanel extends BasePanel {
                     return;
                 }
                 KehudanweitbFindEntity danjuleixingtbs = (KehudanweitbFindEntity) object;
-
+                
                 if (danjuleixingtbs != null && danjuleixingtbs.getResult() != null && danjuleixingtbs.getResult().size() > 0) {
                     bindTable.createPrinter("客户单位", danjuleixingtbs.getResult()).buildInBackgound().execute();
                 }
             }
-
+            
         };
         return printData;
     }

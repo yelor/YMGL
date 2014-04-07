@@ -25,7 +25,7 @@ public class Constants {
     public final static Font GLOBAL_FONT = new Font("微软雅黑", Font.PLAIN, 14 );
     public final static Font TREE_FONT = new Font("微软雅黑", Font.PLAIN, 18 );
     /*Global config*/
-    public static String WINTITLE = "疫苗资产管理系统";
+    public static String WINTITLE = "广安疾控资产管理系统";
     public static int LOGIN_WIDTH = 371;
     public static int LOGIN_HEIGHT = 274;
 

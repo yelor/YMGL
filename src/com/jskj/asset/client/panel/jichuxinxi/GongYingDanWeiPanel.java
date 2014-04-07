@@ -39,17 +39,19 @@ public class GongYingDanWeiPanel extends BasePanel {
     private final BindTableHelper<Supplier> bindTable;
     private final int pageSize;
     private String conditionSql;
+    private int uiType;
 
     /**
      * Creates new form YiMiaoJDialog
      */
-    public GongYingDanWeiPanel() {
+    public GongYingDanWeiPanel(int type) {
         super();
         initComponents();
         pageIndex = 1;
         count = 0;
         pageSize = 20;
         conditionSql="";
+        this.uiType = type;
 
         bindTable = new BindTableHelper<Supplier>(jTableSupplier, new ArrayList<Supplier>());
         bindTable.createTable(new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}, {"supplierPhone", "电话"}, {"supplierFax", "传真"}, {"supplierAddr", "单位地址"}, {"supplierRemark", "备注"}});
@@ -358,7 +360,9 @@ public class GongYingDanWeiPanel extends BasePanel {
                     gongYingDanWeiInfoJDialog = new GongYingDanWeiInfoJDialog(GongYingDanWeiPanel.this);
                     gongYingDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
                 }
-                gongYingDanWeiInfoJDialog.setUpdatedData(new Supplier());
+                Supplier suppliertb = new Supplier();
+                suppliertb.setSupplierType(uiType);
+                gongYingDanWeiInfoJDialog.setUpdatedData(suppliertb);
                 AssetClientApp.getApplication().show(gongYingDanWeiInfoJDialog);
             }
         });
@@ -421,6 +425,9 @@ public class GongYingDanWeiPanel extends BasePanel {
     @Action
     @Override
     public Task reload() {
+       
+       conditionSql=" supplier_type = "+uiType +(!conditionSql.trim().equals("")?" and "+conditionSql:"");
+        
         return new RefreshTask(0, 20);
     }
 
@@ -428,6 +435,7 @@ public class GongYingDanWeiPanel extends BasePanel {
     public void pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+        conditionSql=" supplier_type = "+uiType +(!conditionSql.trim().equals("")?" and "+conditionSql:"");
         new RefreshTask(pageIndex, pageSize).execute();
     }
 
@@ -436,6 +444,7 @@ public class GongYingDanWeiPanel extends BasePanel {
         if (pageSize * (pageIndex) <= count) {
             pageIndex = pageIndex + 1;
         }
+        conditionSql=" supplier_type = "+uiType +(!conditionSql.trim().equals("")?" and "+conditionSql:"");
         new RefreshTask(pageIndex, pageSize).execute();
     }
 
@@ -497,6 +506,7 @@ public class GongYingDanWeiPanel extends BasePanel {
 
     @Action
     public Task print() {
+        conditionSql=" supplier_type = "+uiType +(!conditionSql.trim().equals("")?" and "+conditionSql:"");
         SupplierTask printData = new SupplierTask(0, count,conditionSql) {
             
        @Override

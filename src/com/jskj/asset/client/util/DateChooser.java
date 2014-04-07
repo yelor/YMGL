@@ -697,6 +697,7 @@ public class DateChooser extends JPanel {
 		dateChooser2.register(showDate2);
  
 		JFrame jf = new JFrame("测试日期选择器");
+                jf.setBounds(0, 0, 400, 400);
 		jf.add(showDate1, BorderLayout.NORTH);
 		jf.add(showDate2, BorderLayout.SOUTH);
 		jf.pack();

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Kehudanweitb {
     private Integer kehudanweiId;
 
+    private Integer kehudanweiType;
+
     private String kehudanweiName;
 
     private String kehudanweiJiancheng;
@@ -52,6 +54,14 @@ public class Kehudanweitb {
 
     public void setKehudanweiId(Integer kehudanweiId) {
         this.kehudanweiId = kehudanweiId;
+    }
+
+    public Integer getKehudanweiType() {
+        return kehudanweiType;
+    }
+
+    public void setKehudanweiType(Integer kehudanweiType) {
+        this.kehudanweiType = kehudanweiType;
     }
 
     public String getKehudanweiName() {
