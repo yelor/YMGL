@@ -60,43 +60,43 @@ public class DanHao {
     public final static String TYPE_SKDJ = "SKDJ";
     /**
      *
-     * @param DANHAO_TYPE
+     * @param shenqingdanId
      * @return
      */
-    public static String getUIClassByDanhaoType(String DANHAO_TYPE) {
+    public static String getUIClassByDanhaoType(String shenqingdanId) {
         String className = "";
 
-        if (TYPE_YIMIAOXF.equals(DANHAO_TYPE)) {
+        if (shenqingdanId.startsWith(TYPE_YIMIAOXF)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoXiaFaJDialog";
-        } else if (TYPE_YIMIAOXS.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YIMIAOXS)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoXiaoShouJDialog";
-        } else if (TYPE_YIMIAOSB.equals(DANHAO_TYPE)) {
-            className = "com.jskj.asset.client.panel.ymgl.YiMiaoShenBaoPlanJDialog";
-        } else if (TYPE_YIMIAOSG.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YIMIAOSB)) {
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoLingQuPlanJDialog";
+        } else if (shenqingdanId.startsWith(TYPE_YIMIAOSG)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoSheGouPlanJDialog";
-        } else if (TYPE_YIMIAOLY.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YIMIAOLY)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoLingYongShenQingJDialog";
-        } else if (TYPE_YIMIAOCG.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YIMIAOCG)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoCaiGouShenQingJDialog";
-        } else if (TYPE_YIMIAOTJ.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YIMIAOTJ)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoTiaoJiaJDialog";
-        } else if (TYPE_YIMIAOBS.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YIMIAOBS)) {
             className = "com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun";
-        } else if (TYPE_GDZC.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_GDZC)) {
             className = "com.jskj.asset.client.panel.slgl.GuDingZiChanCaiGouShenQingJDialog";
-        } else if (TYPE_YHCG.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YHCG)) {
             className = "com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinCaiGouShenQingJDialog";
-        } else if (TYPE_PTLY.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_PTLY)) {
             className = "com.jskj.asset.client.panel.slgl.PTGuDingZiChanLingYongShenQingJDialog";
-        } else if (TYPE_ITLY.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_ITLY)) {
             className = "com.jskj.asset.client.panel.slgl.ITGuDingZiChanLingYongShenQingJDialog";
-        } else if (TYPE_YHLY.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_YHLY)) {
             className = "com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinLingYongShenQingJDialog";
-        } else if (TYPE_WXSQ.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_WXSQ)) {
             className = "com.jskj.asset.client.panel.slgl.GuDingZiChanWeiXiuShenQingJDialog";
-        } else if (TYPE_FKDJ.equals(DANHAO_TYPE)) {
+        } else if (shenqingdanId.startsWith(TYPE_FKDJ)) {
             className = "com.jskj.asset.client.panel.shjs.FuKuanDanJDialog";
-        }else if (TYPE_QTFK.equals(DANHAO_TYPE)) {
+        }else if (shenqingdanId.startsWith(TYPE_QTFK)) {
             className = "com.jskj.asset.client.panel.shjs.OtherFuKuanDanJDialog";
         }
 

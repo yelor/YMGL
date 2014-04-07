@@ -73,7 +73,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "  supplier_type = 0 ";
                 if (!jTextFieldSupplierName.getText().trim().equals("")) {
-                    sql = " and  (supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" + jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
+                    sql += " and  (supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"" + jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }

@@ -73,7 +73,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "  kehudanwei_type = 0 ";
                 if (!jTextFieldXiaoshoudanwei.getText().trim().equals("")) {
-                    sql = " and (kehudanwei_name like \"%" + jTextFieldXiaoshoudanwei.getText() + "%\"" + " or kehudanwei_zujima like \"" + jTextFieldXiaoshoudanwei.getText().toLowerCase() + "%\")";
+                    sql += " and (kehudanwei_name like \"%" + jTextFieldXiaoshoudanwei.getText() + "%\"" + " or kehudanwei_zujima like \"" + jTextFieldXiaoshoudanwei.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }

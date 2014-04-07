@@ -54,24 +54,23 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
 
         final String shenqingdan = getShenqingdanID();
         if (shenqingdan != null && shenqingdan.length() > 4) {
-            String danjuType = shenqingdan.substring(0, 4);
 
-            final String className = DanHao.getUIClassByDanhaoType(danjuType);
+            final String className = DanHao.getUIClassByDanhaoType(shenqingdan);
             if (!className.equals("")) {
 
-                if (danjuType.startsWith("YM")) {//疫苗相关
+                if (shenqingdan.startsWith("YM")) {//疫苗相关
                     new YimiaoXiaoshouXiangdanTask(shenqingdan) {
                         @Override
                         protected void succeeded(Object result) {
                             if (result != null) {
-                                if (shenqingdan.contains(DanHao.TYPE_YIMIAOXF) || shenqingdan.contains(DanHao.TYPE_YIMIAOXS)) {
+                                if (shenqingdan.startsWith(DanHao.TYPE_YIMIAOXF) || shenqingdan.startsWith(DanHao.TYPE_YIMIAOXS)) {
                                     openDialog(className, result, XiaoshoushenpixiangdanEntity.class);
-                                } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOSB) || shenqingdan.contains(DanHao.TYPE_YIMIAOLY)
-                                        || shenqingdan.contains(DanHao.TYPE_YIMIAOSG) || shenqingdan.contains(DanHao.TYPE_YIMIAOCG)) {
+                                } else if (shenqingdan.startsWith(DanHao.TYPE_YIMIAOSB) || shenqingdan.startsWith(DanHao.TYPE_YIMIAOLY)
+                                        || shenqingdan.startsWith(DanHao.TYPE_YIMIAOSG) || shenqingdan.startsWith(DanHao.TYPE_YIMIAOCG)) {
                                     openDialog(className, result, YimiaocaigouxiangdanEntity.class);
-                                } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOBS)) {
+                                } else if (shenqingdan.startsWith(DanHao.TYPE_YIMIAOBS)) {
                                     openDialog(className, result, YimiaobaosunxiangdanEntity.class);
-                                } else if (shenqingdan.contains(DanHao.TYPE_YIMIAOTJ)) {
+                                } else if (shenqingdan.startsWith(DanHao.TYPE_YIMIAOTJ)) {
                                     openDialog(className, result, YimiaotiaojiaxiangdanEntity.class);
                                 }
 
@@ -81,7 +80,7 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
                         }
                     }.execute();
 
-                } else if (!danjuType.equals(DanHao.TYPE_FKDJ) && !danjuType.equals(DanHao.TYPE_QTFK)) {//资产相关
+                } else if (!shenqingdan.startsWith(DanHao.TYPE_FKDJ) && !shenqingdan.startsWith(DanHao.TYPE_QTFK)) {//资产相关
                     new ShenqingDetailTask(shenqingdan) {
                         @Override
                         protected void succeeded(Object result) {

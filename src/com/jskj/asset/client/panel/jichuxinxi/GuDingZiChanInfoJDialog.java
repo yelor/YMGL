@@ -102,9 +102,9 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
 
             @Override
             public String getConditionSQL() {
-                String sql = "";
+                String sql = " supplier_type = 1 ";
                 if (!suppliertb$supplierName.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
+                    sql += " and (supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
