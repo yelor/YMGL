@@ -14,6 +14,7 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseCellFocusListener;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -47,6 +48,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private boolean isNew;
     private YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity;
+    private float total = 0;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -65,9 +67,8 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"yimiaoYushoujia", "预售价", "false"}});
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"yimiaoYushoujia", "预售价", "false"}, {"yimiaototalPrice", "合价", "false"}});
 
-        
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -104,7 +105,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
                     Object quantity = bindedMap.get("quantity");
-                    
+
                     Object chengbenjia = bindedMap.get("chengbenjia");
                     Object saleprice = bindedMap.get("yimiaoYushoujia");
 
@@ -121,6 +122,31 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
 
             }
         });
+
+        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
+            public void editingStopped(int selectedRow, int selectedColumn) {
+                int col = selectedColumn;
+                int row = selectedRow;
+
+                if (col == 6) {
+                    if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
+                            && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
+                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
+                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
+                        jTableyimiao.setValueAt(price * count, row, 9);
+                    }
+                    int rows = jTableyimiao.getRowCount();
+                    total = 0;
+                    for(int i = 0; i < rows; i++) {
+                        if(!(("" + jTableyimiao.getValueAt(i, 9)).equals(""))){
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 9));
+                        }
+                    }
+                    totalPrice.setText(total + "元");
+                }
+            }
+        }
+        );
 
     }
 
@@ -160,6 +186,8 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jTableyimiao = new BaseTable(null);
         jLabel4 = new javax.swing.JLabel();
         jTextFieldzhidanren = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        totalPrice = new javax.swing.JLabel();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -353,6 +381,12 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jTextFieldzhidanren.setEditable(false);
         jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
 
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        totalPrice.setText(resourceMap.getString("totalPrice.text")); // NOI18N
+        totalPrice.setName("totalPrice"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -360,11 +394,6 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
@@ -386,8 +415,17 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextFielddepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap())
+                                        .addComponent(jTextFielddepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalPrice)
+                        .addGap(19, 19, 19))))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -414,7 +452,9 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(totalPrice))
                 .addGap(279, 279, 279))
         );
 
@@ -441,7 +481,6 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldzhidanDateActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
@@ -663,6 +702,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -682,5 +722,6 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldzhidanDate;
     private javax.swing.JTextField jTextFieldzhidanren;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel totalPrice;
     // End of variables declaration//GEN-END:variables
 }

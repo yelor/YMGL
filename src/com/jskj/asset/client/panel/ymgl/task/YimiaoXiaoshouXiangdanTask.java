@@ -22,6 +22,8 @@ import org.springframework.web.client.RestClientException;
 public class YimiaoXiaoshouXiangdanTask extends BaseTask {
 
     public static final Logger logger = Logger.getLogger(YimiaoXiaoshouXiangdanTask.class);
+    
+//  //对应的URL在YimiaoxiangdanxianshiController里
     private final String YMXS_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshouxiangdan";
     private final String YMCG_URI = Constants.HTTP + Constants.APPID + "yimiaocaigouxiangdan";
     private final String YMBS_URI = Constants.HTTP + Constants.APPID + "yimiaobaosunxiangdan";
