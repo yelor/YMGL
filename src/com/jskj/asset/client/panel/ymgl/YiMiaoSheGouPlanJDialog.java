@@ -67,7 +67,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"yimiaoYushoujia", "预售价", "false"}, {"yimiaototalPrice", "合价", "false"}});
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"yimiaototalPrice", "合价", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -104,10 +104,9 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                     Object yimiaoJixing = bindedMap.get("yimiaoJixing");
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
-                    Object quantity = bindedMap.get("quantity");
 
                     Object chengbenjia = bindedMap.get("chengbenjia");
-                    Object saleprice = bindedMap.get("yimiaoYushoujia");
+//                    Object saleprice = bindedMap.get("yimiaoYushoujia");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -116,7 +115,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                     editTable.insertValue(4, shengchanqiye);
                     editTable.insertValue(5, unit);
                     editTable.insertValue(7, chengbenjia);
-                    editTable.insertValue(8, saleprice);
+//                    editTable.insertValue(8, saleprice);
 
                 }
 
@@ -133,13 +132,13 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                             && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
                         int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
                         float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
-                        jTableyimiao.setValueAt(price * count, row, 9);
+                        jTableyimiao.setValueAt(price * count, row, 8);
                     }
                     int rows = jTableyimiao.getRowCount();
                     total = 0;
                     for(int i = 0; i < rows; i++) {
-                        if(!(("" + jTableyimiao.getValueAt(i, 9)).equals(""))){
-                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 9));
+                        if(!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))){
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
                         }
                     }
                     totalPrice.setText(total + "元");
@@ -554,6 +553,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setDanjuleixingId(4);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
+        shenqingdan.setDanjujine(total);
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
@@ -576,8 +576,10 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             }
             yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
             yimiaoshenqingdan.setTotalprice(yimiaoshenqingdan.getBuyprice() * yimiaoshenqingdan.getQuantity());
+            total += yimiaoshenqingdan.getTotalprice();
             list.add(yimiaoshenqingdan);
         }
+        shenqingdan.setDanjujine(total);
         yimiaoshegou.setShenqingdan(shenqingdan);
         yimiaoshegou.setYimiaoshenqingdans(list);
 
@@ -666,6 +668,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jTextFielddepartment.setText(yimiaocaigouxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
         jTextAreaRemark.setEditable(false);
         jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
+        totalPrice.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getDanjujine()+"元");
 
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }

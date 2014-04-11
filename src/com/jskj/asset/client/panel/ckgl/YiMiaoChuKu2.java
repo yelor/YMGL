@@ -12,6 +12,7 @@ import com.jskj.asset.client.bean.entity.Kehudanweitb;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseCellFocusListener;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -40,10 +41,11 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     private Churukudantb churukudan;
     private List<Kehudanweitb> kehudanweilist = new ArrayList<Kehudanweitb>();
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
-
+    private float total = 0;
 
     /**
      * Creates new form ymcrk1
+     *
      * @param parent
      * @param modal
      */
@@ -153,6 +155,31 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
             }
         });
 
+        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
+            public void editingStopped(int selectedRow, int selectedColumn) {
+                int col = selectedColumn;
+                int row = selectedRow;
+
+                if (col == 6) {
+                    if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
+                            && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
+                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
+                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
+                        jTableyimiao.setValueAt(price * count, row, 8);
+                    }
+                    int rows = jTableyimiao.getRowCount();
+                    total = 0;
+                    for (int i = 0; i < rows; i++) {
+                        if (!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))) {
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
+                        }
+                    }
+                    totalPrice.setText(total + "元");
+                }
+            }
+        }
+        );
+
     }
 
     /**
@@ -181,6 +208,8 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        totalPrice = new javax.swing.JLabel();
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChuKu2.class);
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
@@ -314,6 +343,12 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jTextArea1.setName("jTextArea1"); // NOI18N
         jScrollPane2.setViewportView(jTextArea1);
 
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+
+        totalPrice.setText(resourceMap.getString("totalPrice.text")); // NOI18N
+        totalPrice.setName("totalPrice"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -343,6 +378,12 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                             .addComponent(jScrollPane1)))
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(totalPrice)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,8 +403,12 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(totalPrice))
                 .addContainerGap())
         );
 
@@ -503,6 +548,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
@@ -513,5 +559,6 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldzhidanDate;
     private javax.swing.JTextField jTextFieldzhidanren;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel totalPrice;
     // End of variables declaration//GEN-END:variables
 }
