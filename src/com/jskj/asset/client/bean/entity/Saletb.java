@@ -13,19 +13,15 @@ public class Saletb {
 
     private Integer customerId;
 
-    private String gongyingtype;
-
     private String fahuotype;
 
     private Integer zhidanrenId;
 
-    private String shoumiaopeople;
-
-    private Integer deportId;
-
     private Integer processId;
 
     private String remark;
+
+    private Float danjujine;
 
     private Integer isPaid;
 
@@ -61,14 +57,6 @@ public class Saletb {
         this.customerId = customerId;
     }
 
-    public String getGongyingtype() {
-        return gongyingtype;
-    }
-
-    public void setGongyingtype(String gongyingtype) {
-        this.gongyingtype = gongyingtype == null ? null : gongyingtype.trim();
-    }
-
     public String getFahuotype() {
         return fahuotype;
     }
@@ -85,22 +73,6 @@ public class Saletb {
         this.zhidanrenId = zhidanrenId;
     }
 
-    public String getShoumiaopeople() {
-        return shoumiaopeople;
-    }
-
-    public void setShoumiaopeople(String shoumiaopeople) {
-        this.shoumiaopeople = shoumiaopeople == null ? null : shoumiaopeople.trim();
-    }
-
-    public Integer getDeportId() {
-        return deportId;
-    }
-
-    public void setDeportId(Integer deportId) {
-        this.deportId = deportId;
-    }
-
     public Integer getProcessId() {
         return processId;
     }
@@ -115,6 +87,14 @@ public class Saletb {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Float getDanjujine() {
+        return danjujine;
+    }
+
+    public void setDanjujine(Float danjujine) {
+        this.danjujine = danjujine;
     }
 
     public Integer getIsPaid() {

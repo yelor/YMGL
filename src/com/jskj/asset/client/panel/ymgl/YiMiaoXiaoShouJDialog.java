@@ -51,7 +51,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
     private boolean isNew;
     private Sale_detail_tbFindEntity yimiaoxiaoshou;
     private XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity;
-    private List<Stockpiletb> stockpileList=new ArrayList<Stockpiletb>();;
+    private List<Stockpiletb> stockpileList = new ArrayList<Stockpiletb>();
+    ;
     private float total = 0;
 
     /**
@@ -107,7 +108,6 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
             {"stockpilePrice", "单价", "false"}, {"hejia", "合价", "false"}});
 
-        
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -139,10 +139,9 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
-                    
-                    
-                    Stockpiletb stockpile=new Stockpiletb();
-                    stockpile.setStockpileQuantity(Integer.parseInt(""+bindedMap.get("stockpileQuantity")));
+
+                    Stockpiletb stockpile = new Stockpiletb();
+                    stockpile.setStockpileQuantity(Integer.parseInt("" + bindedMap.get("stockpileQuantity")));
                     stockpileList.add(stockpile);
                     Object yimiaoId = yimiao.get("yimiaoId");
                     Object yimiaoName = yimiao.get("yimiaoName");
@@ -168,10 +167,9 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
 
             }
         });
-        
-        
+
 //        自动计算出疫苗的合价显示
-         ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
+        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
             public void editingStopped(int selectedRow, int selectedColumn) {
                 int col = selectedColumn;
                 int row = selectedRow;
@@ -185,8 +183,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     }
                     int rows = jTableyimiao.getRowCount();
                     total = 0;
-                    for(int i = 0; i < rows; i++) {
-                        if(!(("" + jTableyimiao.getValueAt(i, 10)).equals(""))){
+                    for (int i = 0; i < rows; i++) {
+                        if (!(("" + jTableyimiao.getValueAt(i, 10)).equals(""))) {
                             total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 10));
                         }
                     }
@@ -675,7 +673,6 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-   
     }
 
     public void setAddOrUpdate(boolean b) {
@@ -688,14 +685,6 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         }
     }
 
-//    public void setUpdatedData(Sale_detail_tb sale_detail) {
-//        if (sale_detail == null) {
-//            return;
-//        }
-//        this.sale_detail = sale_detail;
-//        jTextFieldXiaoshouId.setText((sale_detail.getSaleId()).toString());
-//
-//    }
 
     @Action
     public Task submitForm() throws ParseException {
@@ -710,12 +699,11 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         }
         yimiaoxiaoshou = new Sale_detail_tbFindEntity();
         sale.setSaleId(jTextFieldXiaoshouId.getText());
-        sale.setGongyingtype(jTextFieldgongyingType.getText());
+        sale.setFahuotype(jTextFieldgongyingType.getText());
         sale.setSaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         sale.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         sale.setDepartmentId(AssetClientApp.getSessionMap().getDepartment().getDepartmentId());
         sale.setRemark(jTextArea1.getText());
-
 
         List<Sale_detail_tb> list = new ArrayList<Sale_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
@@ -726,8 +714,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             if (yimiaotable.getValue(i, "saleQuantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗销售数量!");
                 return null;
-            }else if(Integer.parseInt(""+yimiaotable.getValue(i, "saleQuantity"))>stockpileList.get(i).getStockpileQuantity()){
-                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiao.yimiaoName").toString()+"销售数量不能大于库存数量:"+stockpileList.get(i).getStockpileQuantity());
+            } else if (Integer.parseInt("" + yimiaotable.getValue(i, "saleQuantity")) > stockpileList.get(i).getStockpileQuantity()) {
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiao.yimiaoName").toString() + "销售数量不能大于库存数量:" + stockpileList.get(i).getStockpileQuantity());
                 return null;
             }
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
@@ -818,7 +806,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         jTextFieldXiaoshoudanwei.setEditable(false);
         jTextFieldXiaoshoudanwei.setText("" + yimiaoxiaoshouxiangdanEntity.getKehudanwei().getKehudanweiName());
         jTextFieldgongyingType.setEditable(false);
-        jTextFieldgongyingType.setText("" + yimiaoxiaoshouxiangdanEntity.getSaletb().getGongyingtype());
+        jTextFieldgongyingType.setText("" + yimiaoxiaoshouxiangdanEntity.getSaletb().getFahuotype());
         jTextFieldAddr.setEditable(false);
         jTextFieldAddr.setText("" + yimiaoxiaoshouxiangdanEntity.getKehudanwei().getKehudanweiAddr());
         jTextFieldTel.setEditable(false);
@@ -831,6 +819,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         jTextFieldzhidanren.setText("" + yimiaoxiaoshouxiangdanEntity.getUserAll().getUserName());
         jTextArea1.setEditable(false);
         jTextArea1.setText("" + yimiaoxiaoshouxiangdanEntity.getSaletb().getRemark());
+        totalPrice.setText("" + yimiaoxiaoshouxiangdanEntity.getSaletb().getDanjujine() + "元");
 
         setListTable(yimiaoxiaoshouxiangdanEntity.getResult());
     }
@@ -854,7 +843,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 }
         ) {
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false, false, false,false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
         });
     }
