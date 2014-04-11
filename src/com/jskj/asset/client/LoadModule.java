@@ -13,7 +13,7 @@ import com.jskj.asset.client.panel.baobiao.caigou.DizhiyihaocaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
-import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoxiaoshoumingxiPanel;
+import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoSalesMingxiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.CangkuPanel;
 import com.jskj.asset.client.panel.jichuxinxi.DanJuLeiXingPanel;
 import com.jskj.asset.client.panel.jichuxinxi.DanweiUnitPanel;
@@ -28,6 +28,7 @@ import com.jskj.asset.client.panel.user.ParamPanel;
 import com.jskj.asset.client.panel.user.PkPanel;
 import com.jskj.asset.client.panel.user.SelfPanel;
 import com.jskj.asset.client.panel.user.UserPanel;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.LogPaneAppender;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -213,6 +214,7 @@ public class LoadModule extends BaseTask {
         jMenu3.setText(resourceMap.getString("jMenu3.text")); // NOI18N
         jMenu3.setName("jMenu3"); // NOI18N
 
+        jMenuItem18.setAction(actionMap.get("showYimiaoxiafamingxi"));
         jMenuItem18.setText(resourceMap.getString("jMenuItem18.text")); // NOI18N
         jMenuItem18.setName("jMenuItem18"); // NOI18N
         jMenu3.add(jMenuItem18);
@@ -347,7 +349,7 @@ public class LoadModule extends BaseTask {
          *
          * jMenu3 jMenu4 jMenu5功能暂时屏蔽（报表） *********************************
          */
-        jMenu3.setEnabled(false);
+        //jMenu3.setEnabled(false);
         jMenu4.setEnabled(false);
         jMenu5.setEnabled(false);
 
@@ -358,7 +360,7 @@ public class LoadModule extends BaseTask {
     public void onSucceeded(Object object) {
         logger.info("模块加载完成");
     }
-
+    
     /**
      * 日志分析
      */
@@ -507,7 +509,12 @@ public class LoadModule extends BaseTask {
 
     @Action
     public Task showYimiaoxiaoshoumingxi() {
-        return new OpenTabTask("报表-疫苗销售明细表", new YimiaoxiaoshoumingxiPanel(), false);
+        return new OpenTabTask("报表-疫苗销售明细表", new YimiaoSalesMingxiPanel(DanHao.TYPE_YIMIAOXS), false);
+    }
+    
+    @Action
+    public Task showYimiaoxiafamingxi(){
+        return new OpenTabTask("报表-疫苗下发明细表", new YimiaoSalesMingxiPanel(DanHao.TYPE_YIMIAOXF), false);
     }
 
     @Action
