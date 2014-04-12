@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -43,7 +44,7 @@ import org.jdesktop.application.Task;
  *
  * @author tt
  */
-public class GuDingZiChanRuKuJDialog extends BaseDialog {
+public class GuDingZiChanRuKuJDialog extends BaseDialog{
 
     private RukudanDetailEntity cgsq;
     private int userId;
@@ -59,13 +60,45 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
      * @param parent
      * @param modal
      */
-    public GuDingZiChanRuKuJDialog(java.awt.Frame parent,boolean modal) {
+    public GuDingZiChanRuKuJDialog() {
         super();
         initComponents();
         
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
         
         cgsqId.setText(DanHao.getDanHao("ZCRK"));
         cgsqId.setEditable(false);
@@ -226,20 +259,21 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
             if (list != null && list.size() > 0) {
                 StringBuilder string = new StringBuilder();
                 for (ZichanliebiaotbAll zc : list) {
-                    string.append("单据").append(zc.getCgsqId()).append("有未入库项（")
-                            .append(zc.getZcName()).append(")\n");
+                    string.append("单据").append(zc.getCgsqId()).append("有未入库项【")
+                            .append(zc.getZcName()).append("】\n");
                 }
-                string.append("是否继续入库？选“否”或“取消”会要求输入原因，并不再入库以上所有资产");
-                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                string.append("是否继续入库？选“否或“取消”会要求输入原因，并不再入库以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
-                String reason;
-                reason = AssetMessage.showInputDialog(null, "请输入取消入库理由：");
-                if (reason == null) {
-                    return;
-                }
-                for(ZichanliebiaotbAll lb: list){
+                for (ZichanliebiaotbAll lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消入库资产【" + 
+                                lb.getZcName() + "】的理由(必输)：");
+                    }
                     lb.setReason("【入库】" + reason);
                 }
                 new Cancel(list).execute();
@@ -264,18 +298,22 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
                 return;
             }
             close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog();
+            zichanruku.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(zichanruku);
         }
 
     }
     
     @Action
     public Task submitForm() throws ParseException{
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
-                jTable1.getSelectedColumn()).stopCellEditing();
         if(zc.size() < 1){
             AssetMessage.ERRORSYS("请选择要入库的资产！",this);
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         cgsq = new RukudanDetailEntity();
         Zichanrukudantb sqd = new Zichanrukudantb();
         sqd.setRukudanId(cgsqId.getText());
@@ -305,7 +343,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
                     AssetMessage.showMessageDialog(null, "提交成功！");
                     close();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(), true);
+                    GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog();
                     zichanruku.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(zichanruku);
                 } else {
@@ -343,7 +381,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         jLabel4 = new javax.swing.JLabel();
         jingbanren = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanRuKuJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -572,7 +610,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GuDingZiChanRuKuJDialog dialog = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(),true);
+                GuDingZiChanRuKuJDialog dialog = new GuDingZiChanRuKuJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

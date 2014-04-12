@@ -244,7 +244,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(), true);
+                GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog();
                 zichanruku.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(zichanruku);
             }
@@ -258,7 +258,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog(new javax.swing.JFrame(), true);
+                GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog();
                 zichanchuku.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(zichanchuku);
             }
@@ -272,7 +272,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YihaopinRuKuJDialog zichanruku = new YihaopinRuKuJDialog(new javax.swing.JFrame(), true);
+                YihaopinRuKuJDialog zichanruku = new YihaopinRuKuJDialog();
                 zichanruku.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(zichanruku);
             }

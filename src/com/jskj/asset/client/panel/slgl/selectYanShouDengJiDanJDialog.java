@@ -151,7 +151,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                PTGuDingZiChanDengJiJDialog pTGuDingZiChanDengJiJDialog = new PTGuDingZiChanDengJiJDialog(mainFrame);
+                PTGuDingZiChanDengJiJDialog pTGuDingZiChanDengJiJDialog = new PTGuDingZiChanDengJiJDialog();
                 pTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(pTGuDingZiChanDengJiJDialog);
             }
@@ -165,7 +165,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                DiZhiYiHaoPinDengJiJDialog diZhiYiHaoPinDengJiJDialog = new DiZhiYiHaoPinDengJiJDialog(mainFrame);
+                DiZhiYiHaoPinDengJiJDialog diZhiYiHaoPinDengJiJDialog = new DiZhiYiHaoPinDengJiJDialog();
                 diZhiYiHaoPinDengJiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(diZhiYiHaoPinDengJiJDialog);
             }
@@ -179,7 +179,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog(mainFrame);
+                ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog();
                 iTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
             }
@@ -193,7 +193,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog(mainFrame);
+                GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog();
                 guDingZiChanYanShouJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
             }

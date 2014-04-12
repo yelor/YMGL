@@ -259,12 +259,12 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         sqd.setDanjuleixingId(22);
         total = 0;
         for (int i = 0; i < zc.size(); i++) {
-            if (jTable1.getValueAt(i, 4).toString().equals("")) {
+            if (jTable1.getValueAt(i, 5).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个物品的领取数量！", this);
                 return null;
             }
             try {
-                int count = Integer.parseInt("" + jTable1.getValueAt(i, 4));
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
                 if (count > zc.get(i).getQuantity()) {
                     AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的领取数量大于库存数，"
                             + "请输入一个小于" + zc.get(i).getQuantity() + "的数", this);
@@ -275,7 +275,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的领用数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 5));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity() * price);
             zc.get(i).setIsCompleted(0);

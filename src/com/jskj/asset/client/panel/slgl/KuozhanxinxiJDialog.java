@@ -10,15 +10,18 @@ import com.jskj.asset.client.bean.entity.Kuozhanxinxitb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 
 /**
  *
  * @author haitao
  */
-public class KuozhanxinxiJDialog extends BaseDialog {
+public class KuozhanxinxiJDialog extends BaseDialog implements WindowListener{
 
     private final BaseTable.SingleEditRowTable editTable;
     private List<Kuozhanxinxitb> kuozhanlist;
@@ -30,6 +33,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
     public KuozhanxinxiJDialog() {
         super();
         initComponents();
+        this.addWindowListener(this); 
         
         editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "名称", "true"}, {"gdzcName", "型号", "true"},{"gdzcPinpai", "品牌", "true"},
@@ -52,7 +56,8 @@ public class KuozhanxinxiJDialog extends BaseDialog {
     
     @Action
     public void cancel(){
-        int result = AssetMessage.showConfirmDialog(null, "取消之后将不会保存已输入的扩展信息，确定取消？");
+        int result = AssetMessage.showConfirmDialog(null, "取消之后将不会保存已输入的扩展信息，确定取消？",
+                "取消",JOptionPane.YES_NO_OPTION);
         if(result != 0) {
             return;
         }
@@ -65,7 +70,8 @@ public class KuozhanxinxiJDialog extends BaseDialog {
         if(cancel) {
             return kuozhanlist;
         }
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
+        if(jTable1.getSelectedRow() >= 0 && jTable1.getSelectedColumn() >= 0)
+            jTable1.getCellEditor(jTable1.getSelectedRow(),
                 jTable1.getSelectedColumn()).stopCellEditing();
         for(int i = 0; i < jTable1.getRowCount(); i++ ){
             Kuozhanxinxitb fslb = new Kuozhanxinxitb();
@@ -100,14 +106,12 @@ public class KuozhanxinxiJDialog extends BaseDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(KuozhanxinxiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
-        setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -167,7 +171,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,7 +179,7 @@ public class KuozhanxinxiJDialog extends BaseDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,4 +247,33 @@ public class KuozhanxinxiJDialog extends BaseDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        exit();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }

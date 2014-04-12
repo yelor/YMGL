@@ -190,61 +190,6 @@ public class SelectKucunchaxun extends javax.swing.JDialog {
         });
     }
     
-    @Action
-    public void zichanruku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog(new javax.swing.JFrame(), true);
-                zichanruku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanruku);
-            }
-        });
-    }
-    
-    @Action
-    public void zichanchuku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog(new javax.swing.JFrame(), true);
-                zichanchuku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanchuku);
-            }
-        });
-    }
-    
-    @Action
-    public void yihaopinruku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YihaopinRuKuJDialog zichanruku = new YihaopinRuKuJDialog(new javax.swing.JFrame(), true);
-                zichanruku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanruku);
-            }
-        });
-    }
-    
-    @Action
-    public void yihaopinchuku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YihaopinChuKuJDialog zichanchuku = new YihaopinChuKuJDialog(new javax.swing.JFrame(), true);
-                zichanchuku.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zichanchuku);
-            }
-        });
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;

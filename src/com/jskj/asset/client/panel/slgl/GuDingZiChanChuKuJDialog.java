@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -60,13 +61,45 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
      * @param parent
      * @param modal
      */
-    public GuDingZiChanChuKuJDialog(java.awt.Frame parent,boolean modal) {
+    public GuDingZiChanChuKuJDialog() {
         super();
         initComponents();
         
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
         
         cgsqId.setText(DanHao.getDanHao("ZCCK"));
         cgsqId.setEditable(false);
@@ -227,20 +260,21 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
             if (list != null && list.size() > 0) {
                 StringBuilder string = new StringBuilder();
                 for (ZichanliebiaotbAll zc : list) {
-                    string.append("单据").append(zc.getCgsqId()).append("有未出库项（")
-                            .append(zc.getZcName()).append(")\n");
+                    string.append("单据").append(zc.getCgsqId()).append("有未出库项【")
+                            .append(zc.getZcName()).append("】\n");
                 }
-                string.append("是否继续出库？选“否”或“取消”会要求输入原因，并不再出库以上所有资产");
-                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                string.append("是否继续出库？选“否”会要求输入原因，并不再出库以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
-                String reason;
-                reason = AssetMessage.showInputDialog(null, "请输入取消出库理由：");
-                if (reason == null) {
-                    return;
-                }
-                for(ZichanliebiaotbAll lb: list){
+                for (ZichanliebiaotbAll lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【" + 
+                                lb.getZcName() + "】的理由(必输)：");
+                    }
                     lb.setReason("【出库】" + reason);
                 }
                 new Cancel(list).execute();
@@ -265,6 +299,10 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 return;
             }
             close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog();
+            zichanchuku.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(zichanchuku);
         }
 
     }
@@ -306,7 +344,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     AssetMessage.showMessageDialog(null, "提交成功！");
                     close();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog(new javax.swing.JFrame(), true);
+                    GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog();
                     zichanchuku.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(zichanchuku);
                 } else {
@@ -344,7 +382,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         jLabel4 = new javax.swing.JLabel();
         jingbanren = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanChuKuJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -573,7 +611,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GuDingZiChanChuKuJDialog dialog = new GuDingZiChanChuKuJDialog(new javax.swing.JFrame(),true);
+                GuDingZiChanChuKuJDialog dialog = new GuDingZiChanChuKuJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

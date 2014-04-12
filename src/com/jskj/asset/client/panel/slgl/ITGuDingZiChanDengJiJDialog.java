@@ -14,6 +14,7 @@ import com.jskj.asset.client.bean.entity.ZichandengjiAll;
 import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseFileChoose;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -22,6 +23,8 @@ import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.slgl.task.CancelDengji;
 import com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask;
 import static com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask.logger;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -38,7 +41,7 @@ import org.jdesktop.application.Task;
  *
  * @author tt
  */
-public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
+public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
 
     private static final Log logger = LogFactory.getLog(ITGuDingZiChanDengJiJDialog.class);
     
@@ -56,13 +59,45 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
-    public ITGuDingZiChanDengJiJDialog(java.awt.Frame parent) {
-        super(parent);
+    public ITGuDingZiChanDengJiJDialog() {
+        super();
         init();
         initComponents();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         mainFrame = AssetClientApp.getApplication().getMainFrame();
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
         
         ((BaseTextField) jTextFieldName).registerPopup(new IPopupBuilder() {
 
@@ -150,17 +185,18 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                     string.append("单据").append(zc.getCgsqId()).append("有未登记项（")
                             .append(zc.getZcName()).append(")\n");
                 }
-                string.append("是否继续登记？选“否”或“取消”会要求输入原因，并不再登记以上所有资产");
-                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                string.append("是否继续登记？选“否”会要求输入原因，并不再登记以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
-                String reason;
-                reason = AssetMessage.showInputDialog(null, "请输入取消登记理由：");
-                if (reason == null) {
-                    return;
-                }
-                for(ZichanliebiaotbAll lb: list){
+                for (ZichanliebiaotbAll lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【" + 
+                                lb.getZcName() + "】的理由(必输)：");
+                    }
                     lb.setReason("【登记】" + reason);
                 }
                 new Cancel(list).execute();
@@ -185,6 +221,10 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                 return;
             }
             close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog();
+            iTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
         }
 
     }
@@ -284,11 +324,12 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "提交成功！");
             close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog(mainFrame);
+            ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog();
             iTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
         }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -338,7 +379,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jTextFieldFile = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ITGuDingZiChanDengJiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -536,8 +577,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -647,7 +687,7 @@ public class ITGuDingZiChanDengJiJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ITGuDingZiChanDengJiJDialog dialog = new ITGuDingZiChanDengJiJDialog(new javax.swing.JFrame());
+                ITGuDingZiChanDengJiJDialog dialog = new ITGuDingZiChanDengJiJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

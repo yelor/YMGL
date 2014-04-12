@@ -255,18 +255,18 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         sqd.setDanjujine((float) 0);
 
         for (int i = 0; i < zc.size(); i++) {
-            if (jTable1.getValueAt(i, 4).toString().equals("")) {
+            if (jTable1.getValueAt(i, 5).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的维修数量！", this);
                 return null;
             }
             try {
-                int count = Integer.parseInt("" + jTable1.getValueAt(i, 4));
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
                 zc.get(i).setQuantity(count);
             } catch (NumberFormatException e) {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的维修数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            zc.get(i).setSaleprice(Float.parseFloat("" + jTable1.getValueAt(i, 5)));
+            zc.get(i).setSaleprice(Float.parseFloat("" + jTable1.getValueAt(i, 6)));
             zc.get(i).setTotalprice(zc.get(i).getQuantity() * zc.get(i).getSaleprice());
             zc.get(i).setIsCompleted(0);
             zc.get(i).setStatus(5);

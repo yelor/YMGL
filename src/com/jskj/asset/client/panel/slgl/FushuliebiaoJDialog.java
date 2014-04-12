@@ -10,6 +10,8 @@ import com.jskj.asset.client.bean.entity.Fushuliebiaotb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,13 +19,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 
 /**
  *
  * @author haitao
  */
-public class FushuliebiaoJDialog extends BaseDialog {
+public class FushuliebiaoJDialog extends BaseDialog implements WindowListener{
 
     private final BaseTable.SingleEditRowTable editTable;
     private List<Fushuliebiaotb> fushulist;
@@ -36,6 +39,7 @@ public class FushuliebiaoJDialog extends BaseDialog {
     public FushuliebiaoJDialog() {
         super();
         initComponents();
+        this.addWindowListener(this); 
         
         editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "名称", "true"}, {"gdzcName", "型号", "true"},{"gdzcPinpai", "品牌", "true"},
@@ -64,7 +68,8 @@ public class FushuliebiaoJDialog extends BaseDialog {
     
     @Action
     public void cancel(){
-        int result = AssetMessage.showConfirmDialog(null, "取消之后将不会保存已输入的附属列表信息，确定取消？");
+        int result = AssetMessage.showConfirmDialog(null, "取消之后将不会保存已输入的附属列表信息，确定取消？",
+                "取消",JOptionPane.YES_NO_OPTION);
         if(result != 0) {
             return;
         }
@@ -77,7 +82,8 @@ public class FushuliebiaoJDialog extends BaseDialog {
         if(cancel) {
             return fushulist;
         }
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
+        if(jTable1.getSelectedRow() >= 0 && jTable1.getSelectedColumn() >= 0)
+            jTable1.getCellEditor(jTable1.getSelectedRow(),
                 jTable1.getSelectedColumn()).stopCellEditing();
         for(int i = 0; i < jTable1.getRowCount(); i++ ){
             Fushuliebiaotb fslb = new Fushuliebiaotb();
@@ -92,7 +98,7 @@ public class FushuliebiaoJDialog extends BaseDialog {
             fslb.setFszcDate(dateformate.parse("" + jTable1.getValueAt(i, 4)));
             try {
                 fslb.setFszcPrice(Float.parseFloat("" + jTable1.getValueAt(i, 5)));
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 AssetMessage.ERRORSYS("附属列表资产价格必须输入数字，不能包含字母、汉字和特殊字符！");
                 return null;
             }
@@ -119,16 +125,14 @@ public class FushuliebiaoJDialog extends BaseDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(FushuliebiaoJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
-        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(700, 450));
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
         jPanel1.setName("jPanel1"); // NOI18N
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -188,7 +192,7 @@ public class FushuliebiaoJDialog extends BaseDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
@@ -196,7 +200,7 @@ public class FushuliebiaoJDialog extends BaseDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -264,4 +268,33 @@ public class FushuliebiaoJDialog extends BaseDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        exit();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }

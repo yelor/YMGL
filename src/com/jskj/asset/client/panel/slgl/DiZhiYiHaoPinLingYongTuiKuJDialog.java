@@ -178,18 +178,18 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends javax.swing.JDialog {
         sqd.setZhidanrenId(userId);
         
         for(int i = 0; i < zc.size(); i++){
-            if (jTable1.getValueAt(i, 4).toString().equals("")) {
+            if (jTable1.getValueAt(i, 5).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个物品的退库数量！", this);
                 return null;
             }
             try {
-                int count = Integer.parseInt("" + jTable1.getValueAt(i, 4));
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
                 zc.get(i).setQuantity(count);
             } catch (NumberFormatException e) {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的退库数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 5));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
             zc.get(i).setSaleprice(price);
             zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
             zc.get(i).setIsCompleted(1);

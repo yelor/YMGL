@@ -12,6 +12,7 @@ import com.jskj.asset.client.bean.entity.ZichanYanshoutb;
 import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseFileChoose;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -21,6 +22,8 @@ import com.jskj.asset.client.panel.slgl.task.CancelDengji;
 import com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask;
 import static com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask.logger;
 import com.jskj.asset.client.util.DanHao;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +41,7 @@ import org.jdesktop.application.Task;
  *
  * @author tt
  */
-public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
+public class GuDingZiChanYanShouJDialog extends BaseDialog{
 
     private static final Log logger = LogFactory.getLog(GuDingZiChanYanShouJDialog.class);
     
@@ -58,12 +61,44 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
     /**
      * Creates new form GuDingZiChanRuKu
      */
-    public GuDingZiChanYanShouJDialog(java.awt.Frame parent) {
-        super(parent);
+    public GuDingZiChanYanShouJDialog() {
+        super();
         init();
         initComponents();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
         
         jTextField1.setText(DanHao.getDanHao("ZCYS"));
         jTextField1.setEditable(false);
@@ -184,17 +219,18 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                     string.append("单据").append(zc.getCgsqId()).append("有未验收项（")
                             .append(zc.getZcName()).append(")\n");
                 }
-                string.append("是否继续验收？选“否”或“取消”会要求输入原因，并不再验收以上所有资产");
-                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                string.append("是否继续验收？选“否”会要求输入原因，并不再验收以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
-                String reason;
-                reason = AssetMessage.showInputDialog(null, "请输入取消验收理由：");
-                if (reason == null) {
-                    return;
-                }
-                for(ZichanliebiaotbAll lb: list){
+                for (ZichanliebiaotbAll lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消验收资产【" + 
+                                lb.getZcName() + "】的理由(必输)：");
+                    }
                     lb.setReason("【验收】" + reason);
                 }
                 new Cancel(list).execute();
@@ -219,6 +255,10 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
                 return;
             }
             close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog();
+            guDingZiChanYanShouJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
         }
 
     }
@@ -289,11 +329,12 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "提交成功！");
             close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog(mainFrame);
+            GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog();
             guDingZiChanYanShouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
         }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -692,7 +733,7 @@ public class GuDingZiChanYanShouJDialog extends javax.swing.JDialog {
 //                dialog.setVisible(true);
 //            }
 //        });
-         GuDingZiChanYanShouJDialog dialog = new GuDingZiChanYanShouJDialog(new javax.swing.JFrame());
+         GuDingZiChanYanShouJDialog dialog = new GuDingZiChanYanShouJDialog();
          dialog.setVisible(true);
     }
 
