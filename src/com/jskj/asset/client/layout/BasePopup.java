@@ -213,7 +213,6 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTableResult.setAutoCreateRowSorter(true);
         jTableResult.setFont(new java.awt.Font("宋体", 0, 12)); // NOI18N
         jTableResult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
