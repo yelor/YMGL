@@ -14,6 +14,7 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseCellFocusListener;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
@@ -32,7 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -51,6 +53,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity;
     private boolean isNew;
+    private float total = 0;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -100,7 +103,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"totalprice", "合价", "true"}, {"yimiaoYushoujia", "预售价", "true"}});
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"totalprice", "合价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -148,7 +151,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     Object quantity = yimiaoshenqingdan.get("quantity");
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
                     Object totalprice = yimiaoshenqingdan.get("totalprice");
-                    Object saleprice = yimiaoAll.get("yimiaoYushoujia");
+//                    Object saleprice = yimiaoAll.get("yimiaoYushoujia");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -159,56 +162,65 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     editTable.insertValue(6, quantity);
                     editTable.insertValue(7, buyprice);
                     editTable.insertValue(8, totalprice);
-                    editTable.insertValue(9, saleprice);
+//                    editTable.insertValue(9, saleprice);
 
                 }
 
             }
         });
 
-//        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_SCAN;
-//            }
-//
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "addyimiao";
-//            }
-//
-//            public String getConditionSQL() {
-//                return "yimiao_tiaoxingma =";
-//            }
-//
-//            public String[][] displayColumns() {
-//                return null;
-//            }
-//
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//
-//                    Object yimiaoId = bindedMap.get("yimiaoId");
-//                    Object yimiaoName = bindedMap.get("yimiaoName");
-//                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-//                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-//                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-//                    Object unit = bindedMap.get("unitId");
-//                    Object saleprice = bindedMap.get("yimiaoYushoujia");
-//
-//                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
-//
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 9, saleprice);
-//
-//                    editTable.addNewRow();
-//                }
-//
-//            }
-//        });
+        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
+            public void editingStopped(int selectedRow, int selectedColumn) {
+                int col = selectedColumn;
+                int row = selectedRow;
+
+                if (col == 2) {
+                    if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
+                            && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
+                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
+                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
+                        jTableyimiao.setValueAt(price * count, row, 8);
+                    }
+                    int rows = jTableyimiao.getRowCount();
+                    total = 0;
+                    for (int i = 0; i < rows; i++) {
+                        if (!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))) {
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
+                        }
+                    }
+                    totalPrice.setText(total + "元");
+                }
+            }
+        }
+        );
+
+        jTableyimiao.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
+                int col = e.getColumn();
+                int row = e.getFirstRow();
+
+                if (col == 2) {
+                    if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
+                            && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
+                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
+                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
+                        jTableyimiao.setValueAt(price * count, row, 8);
+                    }
+                    int rows = jTableyimiao.getRowCount();
+                    total = 0;
+                    for (int i = 0; i < rows; i++) {
+                        if (!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))) {
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
+                        }
+                    }
+                    totalPrice.setText(total + "元");
+                }
+            }
+
+        });
+
     }
 
     /**
@@ -251,6 +263,8 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         jTextFieldConstactperson = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jTextFieldzhidanren = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        totalPrice = new javax.swing.JLabel();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -457,6 +471,12 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         jTextFieldzhidanren.setEditable(false);
         jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
 
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+
+        totalPrice.setText(resourceMap.getString("totalPrice.text")); // NOI18N
+        totalPrice.setName("totalPrice"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -502,7 +522,11 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                         .addComponent(jLabel15)
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalPrice)
+                        .addGap(21, 21, 21)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -535,7 +559,9 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel4)
+                    .addComponent(totalPrice))
                 .addContainerGap())
         );
 
@@ -754,6 +780,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         jTextFieldConstactperson.setText(yimiaocaigouxiangdanEntity.getSupplier().getSupplierConstactperson());
         jTextAreaRemark.setEditable(false);
         jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
+        totalPrice.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getDanjujine() + "元");
 
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }
@@ -792,6 +819,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -813,5 +841,6 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldzhidanDate;
     private javax.swing.JTextField jTextFieldzhidanren;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel totalPrice;
     // End of variables declaration//GEN-END:variables
 }

@@ -47,6 +47,7 @@ public class YiMiaoBaoSun extends BaseDialog {
     private boolean isNew = true;
     private YimiaobaosuntbFindEntity yimiaobaosunEntity;
     private YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntity;
+    private List<Stockpiletb> stockpileList = new ArrayList<Stockpiletb>();
 
     /**
      * Creates new form GuDingZiChanRuKu
@@ -98,6 +99,10 @@ public class YiMiaoBaoSun extends BaseDialog {
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
+                    Stockpiletb stockpile = new Stockpiletb();
+                    stockpile.setStockpileQuantity(Integer.parseInt("" + bindedMap.get("stockpileQuantity")));
+                    stockpileList.add(stockpile);
+
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
                     Object kucunId = bindedMap.get("stockpileId");
@@ -432,7 +437,6 @@ public class YiMiaoBaoSun extends BaseDialog {
         }
         yimiaobaosunEntity = new YimiaobaosuntbFindEntity();
         baosun = new Baosuntb();
-        yimiaobaosun = new Yimiaobaosuntb();
         baosun.setBaosunId(jTextFieldBaosunId.getText());
         baosun.setBaosunDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         baosun.setDeport("冻库");
@@ -442,9 +446,17 @@ public class YiMiaoBaoSun extends BaseDialog {
 
         List<Yimiaobaosuntb> list = new ArrayList<Yimiaobaosuntb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            yimiaobaosun = new Yimiaobaosuntb();
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaobaosun.setBaosunId(jTextFieldBaosunId.getText());
             yimiaobaosun.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "stockpileId").toString()));
+            if (yimiaotable.getValue(i, "baosunQuantity").equals("")) {
+                AssetMessage.ERRORSYS("请输入疫苗报损数量!");
+                return null;
+            } else if (Integer.parseInt("" + yimiaotable.getValue(i, "baosunQuantity")) > stockpileList.get(i).getStockpileQuantity()) {
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiaoName").toString() + "报损数量不能大于库存数量:" + stockpileList.get(i).getStockpileQuantity());
+                return null;
+            }
             yimiaobaosun.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "baosunQuantity").toString()));
             yimiaobaosun.setXiaohuiaddr((String) yimiaotable.getValue(i, "xiaohuiAddr"));
             yimiaobaosun.setXiaohuidate(dateformate.parse(jTextFieldzhidanDate.getText()));
@@ -549,7 +561,7 @@ public class YiMiaoBaoSun extends BaseDialog {
             Yimiaobaosuntb yimiaobaosuntb = yimiaobaosunDetailEntityList.get(i).getYimiaobaosuntb();
             YimiaoAll yimiaoAll = yimiaobaosunDetailEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = yimiaobaosunDetailEntityList.get(i).getStockpileYimiao();
-            o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
+            o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), stockpile.getPihao(), yimiaoAll.getUnitId(),
                 stockpile.getYouxiaodate(), yimiaobaosuntb.getQuantity(), stockpile.getStockpilePrice(), yimiaobaosuntb.getQuantity() * stockpile.getStockpilePrice(), yimiaobaosuntb.getXiaohuiaddr(), yimiaobaosuntb.getXiaohuidate(), yimiaobaosuntb.getXiaohuitype(), yimiaobaosuntb.getXiaohuireason()};
         }
 

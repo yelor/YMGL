@@ -24,6 +24,10 @@ public class Yimiaoshenqingdantb {
 
     private Integer yuandanId;
 
+    private String reason;
+
+    private String operator;
+
     public Integer getXiangdanId() {
         return xiangdanId;
     }
@@ -102,5 +106,21 @@ public class Yimiaoshenqingdantb {
 
     public void setYuandanId(Integer yuandanId) {
         this.yuandanId = yuandanId;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator == null ? null : operator.trim();
     }
 }

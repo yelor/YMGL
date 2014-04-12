@@ -9,13 +9,19 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.Churukudanyimiaoliebiaotb;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
+import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.panel.ymgl.YiMiaoYanShouDanJDialog;
+import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
+import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
+import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +43,8 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
-    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();;
+    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
+    private List<YimiaoshenqingliebiaoEntity> list;
 
     /**
      * Creates new form ymcrk1
@@ -51,7 +58,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         jTextFielddanjuNo.setEditable(false);
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
-        
+
         //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -127,7 +134,6 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                     Object yimiaoyanshoumap = bindedMap.get("yimiaoyanshou");
                     HashMap yimiaoyanshou = (HashMap) yimiaoyanshoumap;
 
-                    
                     Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
                     bindedMapyimiaoliebiaoList.add(chukudan);
@@ -170,8 +176,18 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                         tongguandanno = null;
                     }
                     Object quantity = yimiaoshenqingdan.get("quantity");
-                    Object ymysSendperson = yimiaoyanshou.get("ymysSendperson");
-                    Object userName = yimiaoyanshou.get("userName");
+                    Object ymysSendperson;
+                    try {
+                        ymysSendperson = yimiaoyanshou.get("ymysSendperson");
+                    } catch (Exception e) {
+                        ymysSendperson = "";
+                    }
+                    Object userName;
+                    try {
+                        userName = yimiaoyanshou.get("userName");
+                    } catch (Exception e) {
+                        userName = "";
+                    }
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -550,7 +566,68 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
 
     @Action
     public void exit() {
+        String sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2";
+        new CloseTask(sql).execute();
+    }
+
+    public void close() {
         this.dispose();
+    }
+
+    private class CloseTask extends WeidengjiyimiaoTask {
+
+        public CloseTask(String sql) {
+            super(sql, "普通");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<YimiaoshenqingliebiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (YimiaoshenqingliebiaoEntity yimiao : list) {
+                    string.append("单据").append(yimiao.getYimiaoshenqingdan().getShenqingdanId()).append("有未登记项（")
+                            .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
+                }
+                string.append("是否继续入库？选“否”或“取消”会要求输入原因，并不再入库以上所有疫苗");
+                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                if (result == 0) {
+                    return;
+                }
+                String reason;
+                reason = AssetMessage.showInputDialog(null, "请输入取消入库理由：");
+                if (reason == null) {
+                    return;
+                }
+                for (YimiaoshenqingliebiaoEntity lb : list) {
+                    lb.getYimiaoshenqingdan().setReason("【入库】" + reason);
+                }
+                new YiMiaoRuKu1.Cancel(list).execute();
+            }
+            close();
+        }
+
+    }
+
+    private class Cancel extends CancelYimiaoDengji {
+
+        public Cancel(List<YimiaoshenqingliebiaoEntity> zc) {
+            super(zc);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            close();
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -137,7 +137,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoCaiGouShenQingJDialog" id="submitForm" methodName="submitForm"/>
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoSheGouShenQingJDialog" id="submitForm" methodName="submitForm"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
@@ -230,7 +230,11 @@
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jTextFieldzhidanren" min="-2" pref="100" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="totalPrice" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -272,6 +276,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextFieldzhidanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="totalPrice" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -516,6 +522,18 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldzhidanren" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel4.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="totalPrice">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="totalPrice.text"/>
+            <Property name="name" type="java.lang.String" value="totalPrice" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>

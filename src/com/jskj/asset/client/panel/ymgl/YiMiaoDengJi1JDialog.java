@@ -7,16 +7,21 @@ package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
+import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
+import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaodengjiUpdateTask;
 import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
@@ -33,6 +38,7 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
     private Yimiaodengjitb yimiaodengji;
     private SimpleDateFormat dateformate;
     private boolean isNew;
+    private List<YimiaoshenqingliebiaoEntity> list;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
@@ -718,7 +724,68 @@ public class YiMiaoDengJi1JDialog extends javax.swing.JDialog {
 
     @Action
     public void exit() {
+        String sql = " shenqingdan_id like \"YMLQ%\" and danjuleixing_id=5 and is_completed = 1 and status = 0";
+        new CloseTask(sql).execute();
+    }
+
+    public void close() {
         this.dispose();
+    }
+
+    private class CloseTask extends WeidengjiyimiaoTask {
+
+        public CloseTask(String sql) {
+            super(sql, "普通");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<YimiaoshenqingliebiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (YimiaoshenqingliebiaoEntity yimiao : list) {
+                    string.append("单据").append(yimiao.getYimiaoshenqingdan().getShenqingdanId()).append("有未登记项（")
+                            .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
+                }
+                string.append("是否继续登记？选“否”或“取消”会要求输入原因，并不再登记以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                if (result == 0) {
+                    return;
+                }
+                String reason;
+                reason = AssetMessage.showInputDialog(null, "请输入取消登记理由：");
+                if (reason == null) {
+                    return;
+                }
+                for (YimiaoshenqingliebiaoEntity lb : list) {
+                    lb.getYimiaoshenqingdan().setReason("【登记】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+            close();
+        }
+
+    }
+
+    private class Cancel extends CancelYimiaoDengji {
+
+        public Cancel(List<YimiaoshenqingliebiaoEntity> zc) {
+            super(zc);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            close();
+        }
+
     }
 
     private class SubmitFormTask extends YimiaodengjiUpdateTask {

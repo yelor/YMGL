@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tb;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tbFindEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshoutb;
@@ -14,6 +15,10 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
+import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
+import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.Yimiaoyanshou_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
@@ -43,6 +48,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
     private boolean isNew;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqi = new SimpleDateFormat("yyyy-MM-dd");
+    private List<YimiaoshenqingliebiaoEntity> list;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -917,10 +923,13 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 jTableyimiao.getSelectedColumn()).stopCellEditing();
         if (jTextFieldSupplierName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入送苗单位!");
+            return null;
         } else if (jTextFieldStarttime.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入起运时间!");
+            return null;
         } else if (jTextFieldArrivetime.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入到达时间!");
+            return null;
         }
 
         yimiaoyanshouEntity = new Yimiaoyanshou_detail_tbFindEntity();
@@ -970,7 +979,68 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
 
     @Action
     public void exit() {
+        String sql = " shenqingdan_id like \"YMSG%\" or shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 1";
+        new CloseTask(sql).execute();
+    }
+
+    public void close() {
         this.dispose();
+    }
+
+    private class CloseTask extends WeidengjiyimiaoTask {
+
+        public CloseTask(String sql) {
+            super(sql, "普通");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<YimiaoshenqingliebiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (YimiaoshenqingliebiaoEntity yimiao : list) {
+                    string.append("单据").append(yimiao.getYimiaoshenqingdan().getShenqingdanId()).append("有未登记项（")
+                            .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
+                }
+                string.append("是否继续验收？选“否”或“取消”会要求输入原因，并不再验收以上所有疫苗");
+                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                if (result == 0) {
+                    return;
+                }
+                String reason;
+                reason = AssetMessage.showInputDialog(null, "请输入取消验收理由：");
+                if (reason == null) {
+                    return;
+                }
+                for (YimiaoshenqingliebiaoEntity lb : list) {
+                    lb.getYimiaoshenqingdan().setReason("【验收】" + reason);
+                }
+                new YiMiaoYanShouDanJDialog.Cancel(list).execute();
+            }
+            close();
+        }
+
+    }
+
+    private class Cancel extends CancelYimiaoDengji {
+
+        public Cancel(List<YimiaoshenqingliebiaoEntity> zc) {
+            super(zc);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            close();
+        }
+
     }
 
     private class SubmitFormTask extends Yimiaoyanshou_detailUpdateTask {
