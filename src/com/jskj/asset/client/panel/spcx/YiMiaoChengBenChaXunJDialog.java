@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.spcx;
 
 import com.jskj.asset.client.bean.report.Yimiaoxiaoshoudetail;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -39,8 +40,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
     private final BindTableHelper<Yimiaoxiaoshoudetail> bindTable;
 
     private final HashMap parameterMap;
-    private int pageIndex;
-    public int pageSize;
     private int count;
     private final String conditionSql;
     BaseTextField jTextFieldStartInit;
@@ -65,21 +64,17 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
 
         initComponents();
 
-        pageIndex = 1;
-        pageSize = 20;
         count = 0;
         conditionSql = "";
 
         parameterMap = new HashMap();
-        parameterMap.put("pagesize", String.valueOf(pageSize));
-        parameterMap.put("pageindex", String.valueOf(pageIndex));
-        parameterMap.put("conditionSql", "");
+        parameterMap.put("conditionSql", "sale_id like 'YMXS%'");
         bindTable = new BindTableHelper<Yimiaoxiaoshoudetail>(jTable4, new ArrayList<Yimiaoxiaoshoudetail>());
         bindTable.createTable(new String[][]{{"saleId", "单据编号"}, {"saleDate", "制单日期"},
         {"yimiaotb.yimiaoName", "疫苗名称"}, {"quantity", "数量"}, {"totalprice", "销售总额"}, {"remark", "销售毛利"}, {"yimiaotb.yimiaoYushoujia", "预售价"}, {"price", "进价"}, {"yimiaotb.yimiaoGuige", "规格"}, {"yimiaotb.yimiaoJixing", "剂型"}, {"yimiaotb.yimiaoShengchanqiye", "生产企业"}, {"yimiaotb.yimiaoPizhunwenhao", "批号"}, {"kehudanweitb.kehudanweiName", "客户单位"}, {"zhidanren.userName", "经办人"}, {"depottb.depotName", "仓库"}});
         bindTable.setColumnType(Date.class, 2);
         //bindTable.setColumnType(Float.class, 8, 9);
-        bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 150}, new int[]{2, 150}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 100}, new int[]{2, 150}).setRowHeight(25);
 
         Dimension dimension = new Dimension();
         dimension.setSize(800, 600);
@@ -129,7 +124,7 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         public void responseResult(CommFindEntity<Yimiaoxiaoshoudetail> response) {
 
             count = response.getCount();
-            jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+            jLabelTotal.setText("总数:"+count);
             logger.debug("total:" + count + ",get current size:" + response.getResult().size());
 
             //存下所有的数据
@@ -170,22 +165,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         }
     }
 
-    @Action
-    public void pagePrev() {
-        pageIndex = pageIndex - 1;
-        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
-        parameterMap.put("pageindex", String.valueOf(pageIndex));
-        new RefreshTask().execute();
-    }
-
-    @Action
-    public void pageNext() {
-        if (pageSize * (pageIndex) <= count) {
-            pageIndex = pageIndex + 1;
-        }
-        parameterMap.put("pageindex", String.valueOf(pageIndex));
-        new RefreshTask().execute();
-    }
 
     @Action
     public Task print() {
@@ -217,9 +196,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jToolBar2 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldStart = jTextFieldStartInit;
@@ -282,10 +258,8 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChengBenChaXunJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setName("Form"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
         jToolBar1.setBorder(null);
@@ -327,35 +301,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         jButton5.setName("jButton5"); // NOI18N
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
-
-        jToolBar2.setBorder(null);
-        jToolBar2.setFloatable(false);
-        jToolBar2.setRollover(true);
-        jToolBar2.setBorderPainted(false);
-        jToolBar2.setName("jToolBar2"); // NOI18N
-        jToolBar2.setOpaque(false);
-
-        jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton1);
-
-        jButton6.setAction(actionMap.get("pageNext")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setBorder(null);
-        jButton6.setBorderPainted(false);
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setName("jButton6"); // NOI18N
-        jButton6.setOpaque(false);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton6);
 
         jPanel2.setName("jPanel2"); // NOI18N
 
@@ -483,8 +428,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,7 +439,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -559,6 +501,12 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
     public Task search() {
         String endDate = jTextFieldEnd.getText();
         String startDate = jTextFieldStart.getText();
+        
+        if(endDate.trim().equals("")&&startDate.trim().equals("")){
+            AssetMessage.ERRORSYS("请至少输入一个查询日期.");
+            return null;
+        }
+        
         parameterMap.put("startDate", startDate);
         parameterMap.put("endDate", endDate);
 
@@ -567,12 +515,10 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelTotal;
@@ -588,7 +534,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldEnd;
     private javax.swing.JTextField jTextFieldStart;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
     // End of variables declaration//GEN-END:variables
 }
