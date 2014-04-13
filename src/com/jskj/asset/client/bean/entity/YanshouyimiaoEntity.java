@@ -9,10 +9,19 @@ package com.jskj.asset.client.bean.entity;
  * @author huiqi
  */
 public class YanshouyimiaoEntity extends DengjiyimiaoEntity {
+    private Supplier gongyingdanwei;
 
     private Yimiaoyanshoutb yimiaoyanshou;
 
     private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
+
+    public Supplier getGongyingdanwei() {
+        return gongyingdanwei;
+    }
+
+    public void setGongyingdanwei(Supplier gongyingdanwei) {
+        this.gongyingdanwei = gongyingdanwei;
+    }
 
     public Yimiaoyanshoutb getYimiaoyanshou() {
         return yimiaoyanshou;

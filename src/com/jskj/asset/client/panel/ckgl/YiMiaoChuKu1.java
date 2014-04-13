@@ -403,7 +403,7 @@ public class YiMiaoChuKu1 extends BaseDialog {
             return null;
         }
         churukudan = new Churukudantb();
-        churukudan.setChurukuId(DanHao.getDanHao("YMCK"));
+        churukudan.setChurukuId(jTextFielddanjuNo.getText());
         churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
         churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
 
@@ -413,6 +413,7 @@ public class YiMiaoChuKu1 extends BaseDialog {
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
+            yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
             yimiaoliebiao.setPihao((String) yimiaotable.getValue(i, "pihao"));
             yimiaoliebiao.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
             yimiaoliebiao.setPrice(0f);
@@ -475,7 +476,7 @@ public class YiMiaoChuKu1 extends BaseDialog {
 
     @Action
     public void exit() {
-        String sql = " (cgsq_id like \"PTLY%\" or cgsq_id like \"ITLY%\") and is_completed = 1 and status = 7";
+        String sql = " (sale_id like \"YMXF%\") and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
     }
 

@@ -1017,7 +1017,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
     @Action
     public void exit() {
-        String sql = " shenqingdan_id like \"YMSG%\" or shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 1";
+        String sql = " (shenqingdan_id like \"YMSG%\" or shenqingdan_id like \"YMLQ%\") and is_completed = 1 and status = 1";
         new CloseTask(sql).execute();
     }
 
@@ -1039,7 +1039,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             if (list != null && list.size() > 0) {
                 StringBuilder string = new StringBuilder();
                 for (YimiaoshenqingliebiaoEntity yimiao : list) {
-                    string.append("单据").append(yimiao.getYimiaoshenqingdan().getShenqingdanId()).append("有未登记项（")
+                    string.append("单据").append(yimiao.getYimiaoshenqingdan().getShenqingdanId()).append("有未验收项（")
                             .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
                 }
                 string.append("是否继续验收？选“否”或“取消”会要求输入原因，并不再验收以上所有疫苗");

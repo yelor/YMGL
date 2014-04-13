@@ -107,7 +107,7 @@ public class YiMiaoRuKu2 extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldkufang.getText().trim().equals("")) {
-                    sql = "(depot_name like \"%" + jTextFieldkufang.getText() + "%\"" + " or depot_zujima like \"%" + jTextFieldkufang.getText().trim().toLowerCase() + "%\")";
+                    sql = "(depot_name like \"%" + jTextFieldkufang.getText() + "%\"" + " or zujima like \"%" + jTextFieldkufang.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -165,12 +165,9 @@ public class YiMiaoRuKu2 extends BaseDialog {
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
-                    Object yimiaoyanshoumap = bindedMap.get("yimiaoyanshou");
-                    HashMap yimiaoyanshou = (HashMap) yimiaoyanshoumap;
+                    Object gongyingdanweimap = bindedMap.get("gongyingdanwei");
+                    HashMap gongyingdanwei = (HashMap) gongyingdanweimap;
 
-                    Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
-                    chukudan.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
-                    bindedMapyimiaoliebiaoList.add(chukudan);
 
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -210,20 +207,26 @@ public class YiMiaoRuKu2 extends BaseDialog {
                         tongguandanno = null;
                     }
                     Object quantity = yimiaoshenqingdan.get("quantity");
-                    Object ymysSendperson;
+                    Object gongyingdanweiName;
                     try {
-                        ymysSendperson = yimiaoyanshou.get("ymysSendperson");
+                        gongyingdanweiName = gongyingdanwei.get("supplierName");
                     } catch (Exception e) {
-                        ymysSendperson = "";
+                        gongyingdanweiName = "";
                     }
                     Object userName;
                     try {
-                        userName = yimiaoyanshou.get("userName");
+                        userName = gongyingdanwei.get("supplierConstactperson");
                     } catch (Exception e) {
                         userName = "";
                     }
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
                     Object totalprice = yimiaoshenqingdan.get("totalprice");
+                    
+                    
+                    Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
+                    chukudan.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
+                    chukudan.setWanglaidanweiId(Integer.parseInt((String) ("" + gongyingdanwei.get("supplierId"))));
+                    bindedMapyimiaoliebiaoList.add(chukudan);
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -240,7 +243,8 @@ public class YiMiaoRuKu2 extends BaseDialog {
                     editTable.insertValue(12, yimiaoPizhunwenhao);
                     editTable.insertValue(13, buyprice);
                     editTable.insertValue(14, totalprice);
-                    editTable.insertValue(15, ymysSendperson);
+                    editTable.insertValue(15, AssetClientApp.getSessionMap().getUsertb().getUserName());
+                    editTable.insertValue(16, gongyingdanweiName);
                     editTable.insertValue(17, userName);
 
                 }
@@ -550,8 +554,13 @@ public class YiMiaoRuKu2 extends BaseDialog {
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             yimiaoliebiao.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "price"))));
-            yimiaoliebiao.setTotalprice(yimiaoliebiao.getQuantity() * yimiaoliebiao.getPrice());
-            yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            yimiaoliebiao.setTotalprice(Float.parseFloat((String) ("" +yimiaoliebiao.getQuantity() * yimiaoliebiao.getPrice())));
+            if (yimiaotable.getValue(i, "youxiaodate").toString().trim().equals("")) {
+                yimiaoliebiao.setYouxiaoqi(null);
+            } else {
+                yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
+            }
+            yimiaoliebiao.setWanglaidanweiId(bindedMapyimiaoliebiaoList.get(i).getWanglaidanweiId());
             yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
             list.add(yimiaoliebiao);
         }
