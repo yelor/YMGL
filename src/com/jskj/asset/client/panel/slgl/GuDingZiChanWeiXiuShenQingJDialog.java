@@ -94,7 +94,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "(gdzc_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql = "(gdzc_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -198,6 +198,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
 
         });
         super.bind(detail, middlePanel);
+        totalprice.setText(detail.getDanjujine() + "元");
         jButton1.setEnabled(false);
         jLabel3.setText("维修费用：" + detail.getDanjujine() + "元");
         cgsqId.setEditable(false);

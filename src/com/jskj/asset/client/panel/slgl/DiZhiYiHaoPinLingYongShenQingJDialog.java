@@ -94,7 +94,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                 String sql = "";
                 sql += " dzyhp_id in (select distinct yhp_id from dizhiyihaopinkucun where quantity > 0) ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += " and (dzyhp_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += " and (dzyhp_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -200,6 +200,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
         });
         super.bind(detail, middlePanel);
+        totalprice.setText(detail.getDanjujine() + "元");
         jButton1.setEnabled(false);
         cgsqId.setEditable(false);
         lysqDate.setText(DateHelper.format(detail.getShenqingdanDate(), "yyyy-MM-dd"));

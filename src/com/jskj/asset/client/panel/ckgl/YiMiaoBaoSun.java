@@ -87,7 +87,7 @@ public class YiMiaoBaoSun extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "stockpile_id in (select distinct stockpile_id from stockpile,yimiao where stockpile.yimiao_id =yimiao.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"" + newColumnObj.toString() + "%\")) ";
+                    sql += "stockpile_id in (select distinct stockpile_id from stockpile,yimiao where stockpile.yimiao_id =yimiao.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString() + "%\")) ";
                 }
                 return sql;
             }

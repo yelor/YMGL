@@ -83,7 +83,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = " kehudanwei_type = 0 ";
                 if (!jTextFieldXiaoshoudanwei.getText().trim().equals("")) {
-                    sql += " and (kehudanwei_name like \"%" + jTextFieldXiaoshoudanwei.getText() + "%\"" + " or kehudanwei_zujima like \"" + jTextFieldXiaoshoudanwei.getText().toLowerCase() + "%\")";
+                    sql += " and (kehudanwei_name like \"%" + jTextFieldXiaoshoudanwei.getText() + "%\"" + " or kehudanwei_zujima like \"%" + jTextFieldXiaoshoudanwei.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -123,7 +123,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\"))";
+                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\"))";
                 } else {
                     sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
                 }

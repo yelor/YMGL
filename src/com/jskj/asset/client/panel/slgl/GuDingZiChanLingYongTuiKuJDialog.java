@@ -89,7 +89,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "(gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql = "(gdzc_name like \"%" + newColumnObj.toString() + "%\""+ " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }

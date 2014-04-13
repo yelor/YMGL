@@ -91,7 +91,7 @@ public class FuKuanDanJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" + supplier.getText().trim().toLowerCase() + "%\")";
+                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"%" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -213,14 +213,18 @@ public class FuKuanDanJDialog extends BaseDialog {
 
             //存下所有的数据
             currentPageData = response.getResult();
-            bindTable.refreshData(currentPageData);
 
             float total = 0;
-            for(Yingfukuandanjutb yf: currentPageData){
-                yf.setFukuandanId(fukuandanId.getText());
-                total += yf.getYingfu();
+            for(int i = 0; i < currentPageData.size(); i++){
+                currentPageData.get(i).setFukuandanId(fukuandanId.getText());
+                total += currentPageData.get(i).getYingfu();
+                if(i > 0){
+                    currentPageData.get(i).setYingfu(currentPageData.get(i - 1).getYingfu() +
+                            currentPageData.get(i).getYingfu());
+                }
             }
             yingfu.setText("" + total);
+            bindTable.refreshData(currentPageData);
         }
         
     }

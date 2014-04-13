@@ -81,7 +81,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = " kehudanwei_type = 0 ";
                 if (!jTextFieldXiafadanwei.getText().trim().equals("")) {
-                    sql += " and (kehudanwei_name like \"%" + jTextFieldXiafadanwei.getText() + "%\"" + " or kehudanwei_zujima like \"" + jTextFieldXiafadanwei.getText().toLowerCase() + "%\")";
+                    sql += " and (kehudanwei_name like \"%" + jTextFieldXiafadanwei.getText() + "%\"" + " or kehudanwei_zujima like \"%" + jTextFieldXiafadanwei.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }

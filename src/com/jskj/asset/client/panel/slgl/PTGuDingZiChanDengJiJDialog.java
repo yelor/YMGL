@@ -111,7 +111,7 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
                 sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 0 ";
                 if (!jTextFieldName.getText().trim().equals("")) {
                     sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_type like \"%普通%\" and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" 
-                        + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\"))");
+                        + " or zujima like \"%" + jTextFieldName.getText().toLowerCase() + "%\"))");
                 } else {
                     sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_type like \"%普通%\" )");
                 }

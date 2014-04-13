@@ -81,7 +81,7 @@ public final class KucunchaxunPanel extends BasePanel {
                         } else {
                             sql.append(" (dzyhp_name ");
                         }
-                        sql.append("like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or zujima like \"").append(searchKeys.get(1).trim().toLowerCase()).append("%\") ").append(" and ");
+                        sql.append("like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or zujima like \"%").append(searchKeys.get(1).trim().toLowerCase()).append("%\") ").append(" and ");
                     }
                     if (!searchKeys.get(2).trim().equals("")) {
                         if(type.equals("Ⅰ类疫苗") || type.equals("Ⅱ类疫苗")){

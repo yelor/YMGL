@@ -131,7 +131,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 sql += " cgsq_id like \"%TLY%\" and is_completed = 1 and status = 7 ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_name like \"%" + newColumnObj.toString() + "%\"" 
-                        + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")");
+                        + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
                 }
                 return sql;
             }

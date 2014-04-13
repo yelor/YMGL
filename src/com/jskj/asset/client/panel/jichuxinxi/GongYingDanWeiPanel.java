@@ -74,7 +74,7 @@ public class GongYingDanWeiPanel extends BasePanel {
                         sql.append("supplier_id =").append(searchKeys.get(0).trim()).append(" and ");
                     }
                     if (!searchKeys.get(1).trim().equals("")) {
-                        sql.append("(supplier_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or supplier_zujima like \"").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
+                        sql.append("(supplier_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or supplier_zujima like \"%").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
                     }
                     if (!searchKeys.get(2).trim().equals("")) {
                         sql.append("supplier_constactPerson like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");

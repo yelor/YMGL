@@ -87,7 +87,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "(yimiao_name like \"%" + newColumnObj.toString() + "%\" or zujima like \"" + newColumnObj.toString() + "%\") and yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
+                    sql += "(yimiao_name like \"%" + newColumnObj.toString() + "%\" or zujima like \"%" + newColumnObj.toString() + "%\") and yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
                 } else {
                     sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
                 }

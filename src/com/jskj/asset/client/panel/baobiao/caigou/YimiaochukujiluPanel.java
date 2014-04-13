@@ -81,7 +81,7 @@ public class YimiaochukujiluPanel extends BasePanel {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.toString() + "%\"" + " or zujima like \"" + jTextFieldYimiaoName.toString().toLowerCase() + "%\"))";
+                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.toString() + "%\"" + " or zujima like \"%" + jTextFieldYimiaoName.toString().toLowerCase() + "%\"))";
                 } else {
                     sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
                 }

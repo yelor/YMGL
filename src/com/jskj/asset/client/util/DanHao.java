@@ -58,6 +58,7 @@ public class DanHao {
     //疫苗相关
     //资产相关
     public final static String TYPE_SKDJ = "SKDJ";
+    public final static String TYPE_QTSK = "QTSK";
     /**
      *
      * @param shenqingdanId

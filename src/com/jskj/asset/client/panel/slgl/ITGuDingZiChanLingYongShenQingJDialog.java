@@ -95,7 +95,7 @@ public class ITGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
                 sql += " gdzc_id in (select distinct gdzc_id from gudingzichankucun where quantity > 0) "
                         + " and gdzc_type like \"%IT%\" ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += " and (gdzc_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql += " and (gdzc_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -201,6 +201,7 @@ public class ITGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
         });
         super.bind(detail, middlePanel);
+        totalprice.setText(detail.getDanjujine() + "元");
         jButton1.setEnabled(false);
         cgsqId.setEditable(false);
         lysqDate.setText(DateHelper.format(detail.getShenqingdanDate(), "yyyy-MM-dd"));

@@ -78,7 +78,7 @@ public final class CangkuPanel extends BasePanel {
                 if (searchKeys.size() > 0) {
                     StringBuilder sql = new StringBuilder();
                     if (!searchKeys.get(1).trim().equals("")) {
-                        sql.append("(depot_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or zujima like \"").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
+                        sql.append("(depot_name like \"%").append(searchKeys.get(1).trim()).append("%\"").append(" or zujima like \"%").append(searchKeys.get(1).trim().toLowerCase()).append("%\")").append(" and ");
                     }
                     if (!searchKeys.get(3).trim().equals("")) {
                         sql.append("depot_addr like \"%").append(searchKeys.get(3).trim()).append("%\"").append(" and ");

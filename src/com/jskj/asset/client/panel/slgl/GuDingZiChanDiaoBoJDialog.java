@@ -66,7 +66,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldZichan.getText().trim().equals("")) {
-                    sql = "(gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"" + " or zujima like \"" + jTextFieldZichan.getText().trim().toLowerCase() + "%\")";
+                    sql = "(gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"" + " or zujima like \"%" + jTextFieldZichan.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -102,7 +102,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldYichuren.getText().trim().equals("")) {
-                    sql = "(user_name like \"%" + jTextFieldYichuren.getText() + "%\"" + " or zujima like \"" + jTextFieldYichuren.getText().toLowerCase() + "%\")";
+                    sql = "(user_name like \"%" + jTextFieldYichuren.getText() + "%\"" + " or zujima like \"%" + jTextFieldYichuren.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -134,7 +134,7 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldJieshouren.getText().trim().equals("")) {
-                    sql = "(user_name like \"%" + jTextFieldJieshouren.getText() + "%\"" + " or zujima like \"" + jTextFieldJieshouren.getText().toLowerCase() + "%\")";
+                    sql = "(user_name like \"%" + jTextFieldJieshouren.getText() + "%\"" + " or zujima like \"%" + jTextFieldJieshouren.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }

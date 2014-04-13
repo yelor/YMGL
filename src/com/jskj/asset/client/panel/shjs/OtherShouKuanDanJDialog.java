@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -51,7 +52,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
     /**
      * Creates new form FKDJDialog
      */
-    public OtherShouKuanDanJDialog(java.awt.Frame parent, boolean modal) {
+    public OtherShouKuanDanJDialog() {
         super(); 
         initComponents();
         
@@ -59,7 +60,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         
-        shoukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_SKDJ));
+        shoukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_QTSK));
         fukuandanDate.setText(dateformate.format(new Date()).toString());
         jingbanren.setText(userName);
         
@@ -76,7 +77,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "kehudanweiName like \"%" + supplier.getText() + "%\"";
+                    sql = "(kehudanwei_name like \"%" + supplier.getText() + "%\"" + " or kehudanwei_zujima like \"%" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -221,6 +222,10 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
         public void responseResult(ComResponse<QitashoukuanDetailEntity> response) {
             AssetMessage.showMessageDialog(null, "保存成功");
             exit();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            OtherShouKuanDanJDialog skdJDialog = new OtherShouKuanDanJDialog();
+            skdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(skdJDialog);
         }
         
     }
@@ -501,7 +506,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                OtherShouKuanDanJDialog dialog = new OtherShouKuanDanJDialog(new javax.swing.JFrame(), true);
+                OtherShouKuanDanJDialog dialog = new OtherShouKuanDanJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -69,7 +69,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!depottb$depotName.getText().trim().equals("")) {
-                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \""+depottb$depotName.getText().toLowerCase() + "%\")";
+                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \"%"+depottb$depotName.getText().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -104,7 +104,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = " supplier_type = 1 ";
                 if (!suppliertb$supplierName.getText().trim().equals("")) {
-                    sql += " and (supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
+                    sql += " and (supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"%" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }

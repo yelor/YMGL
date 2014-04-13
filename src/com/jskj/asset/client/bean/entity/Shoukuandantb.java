@@ -9,15 +9,13 @@ public class Shoukuandantb {
 
     private Date shoukuandanDate;
 
-    private Integer supplierId;
+    private Integer kehudanweiId;
 
-    private String jiesuanId;
+    private Float yingshou;
 
-    private Integer zhekou;
+    private Float shoukuan;
 
-    private Float totalprice;
-
-    private String payType;
+    private Float youhui;
 
     private String shenqingdanRemark;
 
@@ -26,6 +24,8 @@ public class Shoukuandantb {
     private Integer danjuleixingId;
 
     private Integer isCompleted;
+
+    private Integer isPaid;
 
     public String getShoukuandanId() {
         return shoukuandanId;
@@ -43,44 +43,36 @@ public class Shoukuandantb {
         this.shoukuandanDate = shoukuandanDate;
     }
 
-    public Integer getSupplierId() {
-        return supplierId;
+    public Integer getKehudanweiId() {
+        return kehudanweiId;
     }
 
-    public void setSupplierId(Integer supplierId) {
-        this.supplierId = supplierId;
+    public void setKehudanweiId(Integer kehudanweiId) {
+        this.kehudanweiId = kehudanweiId;
     }
 
-    public String getJiesuanId() {
-        return jiesuanId;
+    public Float getYingshou() {
+        return yingshou;
     }
 
-    public void setJiesuanId(String jiesuanId) {
-        this.jiesuanId = jiesuanId == null ? null : jiesuanId.trim();
+    public void setYingshou(Float yingshou) {
+        this.yingshou = yingshou;
     }
 
-    public Integer getZhekou() {
-        return zhekou;
+    public Float getShoukuan() {
+        return shoukuan;
     }
 
-    public void setZhekou(Integer zhekou) {
-        this.zhekou = zhekou;
+    public void setShoukuan(Float shoukuan) {
+        this.shoukuan = shoukuan;
     }
 
-    public Float getTotalprice() {
-        return totalprice;
+    public Float getYouhui() {
+        return youhui;
     }
 
-    public void setTotalprice(Float totalprice) {
-        this.totalprice = totalprice;
-    }
-
-    public String getPayType() {
-        return payType;
-    }
-
-    public void setPayType(String payType) {
-        this.payType = payType == null ? null : payType.trim();
+    public void setYouhui(Float youhui) {
+        this.youhui = youhui;
     }
 
     public String getShenqingdanRemark() {
@@ -113,5 +105,13 @@ public class Shoukuandantb {
 
     public void setIsCompleted(Integer isCompleted) {
         this.isCompleted = isCompleted;
+    }
+
+    public Integer getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(Integer isPaid) {
+        this.isPaid = isPaid;
     }
 }

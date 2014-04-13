@@ -74,7 +74,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 //            public String getConditionSQL() {
 //                String sql = "";
 //                if (!depottb$depotName.getText().trim().equals("")) {
-//                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \""+depottb$depotName.getText().toLowerCase() + "%\")";
+//                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \"%"+depottb$depotName.getText().toLowerCase() + "%\")";
 //                }
 //                return sql;
 //            }

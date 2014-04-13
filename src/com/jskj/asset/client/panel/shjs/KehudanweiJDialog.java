@@ -60,7 +60,7 @@ public class KehudanweiJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "kehudanweiName like \"%" + supplier.getText() + "%\"";
+                    sql = "(kehudanwei_name like \"%" + supplier.getText() + "%\"" + " or kehudanwei_zujima like \"%" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }

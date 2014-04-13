@@ -38,6 +38,7 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectShoufukuanJDialog.class);
@@ -64,6 +65,12 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton2.setName("jButton2"); // NOI18N
 
+        jButton4.setAction(actionMap.get("qtskd_pop")); // NOI18N
+        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton4.setName("jButton4"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,21 +78,26 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton4))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,7 +152,21 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                OtherShouKuanDanJDialog skdJDialog = new OtherShouKuanDanJDialog(mainFrame, true);
+                ShouKuanDanJDialog skdJDialog = new ShouKuanDanJDialog();
+                skdJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(skdJDialog);
+            }
+        });
+    }
+    
+    @Action
+    public void qtskd_pop() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                OtherShouKuanDanJDialog skdJDialog = new OtherShouKuanDanJDialog();
                 skdJDialog.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(skdJDialog);
             }
@@ -179,5 +205,6 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     // End of variables declaration//GEN-END:variables
 }

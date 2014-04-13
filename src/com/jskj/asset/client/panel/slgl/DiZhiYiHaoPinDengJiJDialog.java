@@ -111,7 +111,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
                 sql += " cgsq_id like \"%YHCG%\" and is_completed = 1 and status = 0 ";
                 if (!jTextFieldName.getText().trim().equals("")) {
                     sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + jTextFieldName.getText() + "%\""
-                            + " or zujima like \"" + jTextFieldName.getText().toLowerCase() + "%\")");
+                            + " or zujima like \"%" + jTextFieldName.getText().toLowerCase() + "%\")");
                 }
                 return sql;
             }

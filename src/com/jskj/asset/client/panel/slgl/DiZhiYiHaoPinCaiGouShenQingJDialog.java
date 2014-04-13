@@ -88,7 +88,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
             public String getConditionSQL() {
                 String sql = " supplier_type = 1 ";
                 if (!supplier.getText().trim().equals("")) {
-                    sql += " and (supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"" + supplier.getText().trim().toLowerCase() + "%\")";
+                    sql += " and (supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"%" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -124,7 +124,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql = "(dzyhp_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"" + newColumnObj.toString().toLowerCase() + "%\")";
+                    sql = "(dzyhp_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -247,6 +247,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
 
         });
         super.bind(detail, middlePanel);
+        totalprice.setText(detail.getDanjujine() + "元");
         jButton1.setEnabled(false);
         cgsqId.setEditable(false);
         shenqingdanDate.setText(DateHelper.format(detail.getShenqingdanDate(), "yyyy-MM-dd"));
