@@ -8,6 +8,7 @@ package com.jskj.asset.client.panel.shjs;
 import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.panel.ckgl.*;
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.layout.BaseDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
@@ -16,13 +17,13 @@ import org.jdesktop.application.Action;
  *
  * @author Administrator
  */
-public class SelectShoufukuanJDialog extends javax.swing.JDialog {
+public class SelectShoufukuanJDialog extends BaseDialog {
 
     /**
      * Creates new form ymcrk
      */
-    public SelectShoufukuanJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public SelectShoufukuanJDialog() {
+        super();
         initComponents();
     }
 
@@ -133,7 +134,7 @@ public class SelectShoufukuanJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SelectYiMiaoChuRuKu dialog = new SelectYiMiaoChuRuKu(new javax.swing.JFrame(), true);
+                SelectYiMiaoChuRuKu dialog = new SelectYiMiaoChuRuKu();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

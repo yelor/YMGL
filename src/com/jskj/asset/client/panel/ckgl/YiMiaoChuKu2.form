@@ -10,7 +10,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" resourceKey="Form.title"/>
     <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
     <Property name="resizable" type="boolean" value="false"/>
@@ -165,7 +165,7 @@
         <Component class="javax.swing.JButton" name="jButton19">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuRuKu2" id="exit" methodName="exit"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuKu2" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton19.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton19.text"/>

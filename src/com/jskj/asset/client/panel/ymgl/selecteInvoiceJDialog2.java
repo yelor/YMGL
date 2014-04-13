@@ -136,7 +136,7 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoDengJi1JDialog yiMiaoDengJi1JDialog = new YiMiaoDengJi1JDialog(mainFrame, true);
+                YiMiaoDengJi1JDialog yiMiaoDengJi1JDialog = new YiMiaoDengJi1JDialog();
                 yiMiaoDengJi1JDialog.setLocationRelativeTo(mainFrame);
                 yiMiaoDengJi1JDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(yiMiaoDengJi1JDialog);
@@ -151,7 +151,7 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog(mainFrame, true);
+                YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog();
                 yiMiaoDengJi2JDialog.setLocationRelativeTo(mainFrame);
                 yiMiaoDengJi2JDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(yiMiaoDengJi2JDialog);

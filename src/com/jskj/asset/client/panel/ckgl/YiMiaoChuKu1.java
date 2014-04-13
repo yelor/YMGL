@@ -9,14 +9,19 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.Churukudanyimiaoliebiaotb;
 import com.jskj.asset.client.bean.entity.Kehudanweitb;
+import com.jskj.asset.client.bean.entity.SaleyimiaoEntity;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.panel.ckgl.task.CancelChuKu;
+import com.jskj.asset.client.panel.ckgl.task.WeiChuKuYimiaoTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
@@ -34,17 +38,17 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoChuKu1 extends javax.swing.JDialog {
+public class YiMiaoChuKu1 extends BaseDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
     private List<Kehudanweitb> kehudanweilist = new ArrayList<Kehudanweitb>();
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
+    private List<SaleyimiaoEntity> list;
 
-
-    public YiMiaoChuKu1(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoChuKu1() {
+        super();
         initComponents();
 
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMCK"));
@@ -171,7 +175,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChuKu1.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -354,9 +358,32 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
+            try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoChuKu1 dialog = new YiMiaoChuKu1(new javax.swing.JFrame(), true);
+                YiMiaoChuKu1 dialog = new YiMiaoChuKu1();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -410,7 +437,7 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1(new javax.swing.JFrame(), true);
+                    YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1();
                     ymck1.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(ymck1);
                 } else {
@@ -448,7 +475,73 @@ public class YiMiaoChuKu1 extends javax.swing.JDialog {
 
     @Action
     public void exit() {
+        String sql = " (cgsq_id like \"PTLY%\" or cgsq_id like \"ITLY%\") and is_completed = 1 and status = 7";
+        new CloseTask(sql).execute();
+    }
+
+    public void close() {
         this.dispose();
+    }
+
+    private class CloseTask extends WeiChuKuYimiaoTask {
+
+        public CloseTask(String sql) {
+            super(sql);
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<SaleyimiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (SaleyimiaoEntity zc : list) {
+                    string.append("单据").append(zc.getSale_detail_tb().getSaleId()).append("有未出库项【")
+                            .append(zc.getYimiaoAll().getYimiaoName()).append("】\n");
+                }
+                string.append("是否继续出库？选“否”会要求输入原因，并不再出库以上所有疫苗");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认", JOptionPane.YES_NO_OPTION);
+                if (result == 0) {
+                    return;
+                }
+                for (SaleyimiaoEntity lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消出库疫苗【"
+                                + lb.getYimiaoAll().getYimiaoName()+ "】的理由(必输)：");
+                    }
+                    lb.getSale_detail_tb().setReason("【出库】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+            close();
+        }
+
+    }
+
+    private class Cancel extends CancelChuKu {
+
+        public Cancel(List<SaleyimiaoEntity> zc) {
+            super(zc);
+        }
+
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                WeiChuKuYimiaoTask.logger.error(e);
+                return;
+            }
+            close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoChuKu1 yimiaochuku = new YiMiaoChuKu1();
+            yimiaochuku.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaochuku);
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

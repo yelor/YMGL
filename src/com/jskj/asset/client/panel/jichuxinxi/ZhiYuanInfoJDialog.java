@@ -527,7 +527,7 @@ public class ZhiYuanInfoJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoDengJi2JDialog dialog = new YiMiaoDengJi2JDialog(new javax.swing.JFrame(), true);
+                YiMiaoDengJi2JDialog dialog = new YiMiaoDengJi2JDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

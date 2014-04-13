@@ -12,17 +12,19 @@ import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
-import com.jskj.asset.client.panel.ymgl.YiMiaoYanShouDanJDialog;
 import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.util.DanHao;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoRuKu1 extends javax.swing.JDialog {
+public class YiMiaoRuKu1 extends BaseDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,9 +51,41 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
     /**
      * Creates new form ymcrk1
      */
-    public YiMiaoRuKu1(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoRuKu1() {
+        super();
         initComponents();
+         this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
 
         churukudan = new Churukudantb();
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMRK"));
@@ -111,7 +145,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id =5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 2 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString() + "%\")) ";
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id =5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 2 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")) ";
                 } else {
                     sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where is_completed = 1 and status = 2 and danjuleixing_id =5)";
                 }
@@ -239,7 +273,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jTextFieldkufang = new BaseTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoRuKu1.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -474,7 +508,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoRuKu1 dialog = new YiMiaoRuKu1(new javax.swing.JFrame(), true);
+                YiMiaoRuKu1 dialog = new YiMiaoRuKu1();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -528,7 +562,7 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1(new javax.swing.JFrame(), true);
+                    YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1();
                     ymrk1.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(ymrk1);
                 } else {
@@ -588,20 +622,20 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
             if (list != null && list.size() > 0) {
                 StringBuilder string = new StringBuilder();
                 for (YimiaoshenqingliebiaoEntity yimiao : list) {
-                    string.append("单据").append(yimiao.getYimiaoshenqingdan().getShenqingdanId()).append("有未登记项（")
-                            .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
+                    string.append("单据").append(yimiao.getYimiaoshenqingdan().getShenqingdanId()).append("有未登记项【")
+                            .append(yimiao.getYimiao().getYimiaoName()).append("】\n");
                 }
                 string.append("是否继续入库？选“否”或“取消”会要求输入原因，并不再入库以上所有疫苗");
-                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),"确认",JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
-                String reason;
-                reason = AssetMessage.showInputDialog(null, "请输入取消入库理由：");
-                if (reason == null) {
-                    return;
-                }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消入库疫苗【" + 
+                                lb.getYimiao().getYimiaoName()+ "】的理由(必输)：");
+                    }
                     lb.getYimiaoshenqingdan().setReason("【入库】" + reason);
                 }
                 new YiMiaoRuKu1.Cancel(list).execute();
@@ -626,6 +660,10 @@ public class YiMiaoRuKu1 extends javax.swing.JDialog {
                 return;
             }
             close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoRuKu1 yimiaoruku = new YiMiaoRuKu1();
+            yimiaoruku.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoruku);
         }
 
     }

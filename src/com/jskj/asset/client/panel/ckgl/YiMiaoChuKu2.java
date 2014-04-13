@@ -9,15 +9,20 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.Churukudanyimiaoliebiaotb;
 import com.jskj.asset.client.bean.entity.Kehudanweitb;
+import com.jskj.asset.client.bean.entity.SaleyimiaoEntity;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseCellFocusListener;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.panel.ckgl.task.CancelChuKu;
+import com.jskj.asset.client.panel.ckgl.task.WeiChuKuYimiaoTask;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +39,7 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoChuKu2 extends javax.swing.JDialog {
+public class YiMiaoChuKu2 extends BaseDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -42,6 +47,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
     private List<Kehudanweitb> kehudanweilist = new ArrayList<Kehudanweitb>();
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private float total = 0;
+    private List<SaleyimiaoEntity> list;
 
     /**
      * Creates new form ymcrk1
@@ -49,8 +55,8 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public YiMiaoChuKu2(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoChuKu2() {
+        super();
         initComponents();
 
         churukudan = new Churukudantb();
@@ -215,7 +221,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -445,7 +451,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoChuKu2 dialog = new YiMiaoChuKu2(new javax.swing.JFrame(), true);
+                YiMiaoChuKu2 dialog = new YiMiaoChuKu2();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -499,7 +505,7 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2(new javax.swing.JFrame(), true);
+                    YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2();
                     ymck2.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(ymck2);
                 } else {
@@ -535,9 +541,75 @@ public class YiMiaoChuKu2 extends javax.swing.JDialog {
         }
     }
 
-    @Action
+     @Action
     public void exit() {
+        String sql = " (cgsq_id like \"PTLY%\" or cgsq_id like \"ITLY%\") and is_completed = 1 and status = 7";
+        new CloseTask(sql).execute();
+    }
+    
+    public void close(){
         this.dispose();
+    }
+    
+    private class CloseTask extends WeiChuKuYimiaoTask{
+
+        public CloseTask(String sql) {
+            super(sql);
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<SaleyimiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (SaleyimiaoEntity zc : list) {
+                    string.append("单据").append(zc.getSale_detail_tb().getSaleId()).append("有未出库项【")
+                            .append(zc.getYimiaoAll().getYimiaoName()).append("】\n");
+                }
+                string.append("是否继续出库？选“否”会要求输入原因，并不再出库以上所有疫苗");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
+                if (result == 0) {
+                    return;
+                }
+                for (SaleyimiaoEntity lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消出库疫苗【" + 
+                                lb.getYimiaoAll().getYimiaoName()+ "】的理由(必输)：");
+                    }
+                    lb.getSale_detail_tb().setReason("【出库】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+            close();
+        }
+        
+    }
+    
+    private class Cancel extends CancelChuKu{
+
+        public Cancel(List<SaleyimiaoEntity> zc) {
+            super(zc);
+        }
+   
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                WeiChuKuYimiaoTask.logger.error(e);
+                return;
+            }
+            close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoChuKu2 yimiaochuku = new YiMiaoChuKu2();
+            yimiaochuku.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaochuku);
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

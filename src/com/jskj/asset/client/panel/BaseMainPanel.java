@@ -391,7 +391,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (yiMiaoYanShouJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog();
                     yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
                 }
                 yiMiaoYanShouJDialog.setAddOrUpdate(true);
@@ -441,7 +441,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (kccx == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    kccx = new SelectKucunchaxun(new javax.swing.JFrame(), true);
+                    kccx = new SelectKucunchaxun();
                     kccx.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(kccx);
@@ -456,7 +456,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymcrk == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrk = new SelectYiMiaoChuRuKu(new javax.swing.JFrame(), true);
+                    ymcrk = new SelectYiMiaoChuRuKu();
                     ymcrk.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymcrk);
@@ -515,7 +515,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (selecteSKDJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selecteSKDJDialog = new SelectShoufukuanJDialog(new javax.swing.JFrame(), true);
+                    selecteSKDJDialog = new SelectShoufukuanJDialog();
                     selecteSKDJDialog.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(selecteSKDJDialog);
@@ -541,7 +541,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (selectePDDJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selectePDDJDialog = new SelectPandianJDialog(new javax.swing.JFrame(), true);
+                    selectePDDJDialog = new SelectPandianJDialog();
                     selectePDDJDialog.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(selectePDDJDialog);

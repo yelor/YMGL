@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.slgl.GuDingZiChanChuKuJDialog;
 import com.jskj.asset.client.panel.slgl.GuDingZiChanRuKuJDialog;
 import com.jskj.asset.client.panel.slgl.YihaopinChuKuJDialog;
@@ -18,15 +19,15 @@ import org.jdesktop.application.Action;
  *
  * @author Administrator
  */
-public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
+public class SelectYiMiaoChuRuKu extends BaseDialog {
 
     YiMiaoRuKu2 ymcrk2;
 
     /**
      * Creates new form ymcrk
      */
-    public SelectYiMiaoChuRuKu(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public SelectYiMiaoChuRuKu() {
+        super();
         initComponents();
     }
 
@@ -169,7 +170,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SelectYiMiaoChuRuKu dialog = new SelectYiMiaoChuRuKu(new javax.swing.JFrame(), true);
+                SelectYiMiaoChuRuKu dialog = new SelectYiMiaoChuRuKu();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -188,7 +189,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1(new javax.swing.JFrame(), true);
+                YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1();
                 ymck1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck1);
             }
@@ -202,7 +203,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1(new javax.swing.JFrame(), true);
+                YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1();
                 ymrk1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk1);
             }
@@ -216,7 +217,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2(new javax.swing.JFrame(), true);
+                YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2();
                 ymck2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck2);
             }
@@ -230,7 +231,7 @@ public class SelectYiMiaoChuRuKu extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu2 ymrk2 = new YiMiaoRuKu2(new javax.swing.JFrame(), true);
+                YiMiaoRuKu2 ymrk2 = new YiMiaoRuKu2();
                 ymrk2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk2);
             }

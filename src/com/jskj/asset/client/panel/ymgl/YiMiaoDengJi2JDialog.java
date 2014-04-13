@@ -10,6 +10,7 @@ import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
@@ -19,6 +20,8 @@ import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaodengjiUpdateTask;
 import com.jskj.asset.client.util.DateChooser;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -33,7 +36,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
+public class YiMiaoDengJi2JDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoDengJi2JDialog.class);
     private Yimiaodengjitb yimiaodengji;
@@ -44,10 +47,42 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
     /**
      * Creates new form YiMiaoDengJi1JDialog
      */
-    public YiMiaoDengJi2JDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoDengJi2JDialog() {
+        super();
         init();
         initComponents();
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
 
         ((BaseTextField) jTextFieldYimiaoName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -61,7 +96,7 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=6 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\" or yimiao.zujima like \"%" + jTextFieldYimiaoName.getText().toString() + "%\")) ";
+                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=6 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\" or yimiao.zujima like \"%" + jTextFieldYimiaoName.getText().toLowerCase() + "%\")) ";
                 } else {
                     sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=6 and is_completed = 1 and status = 0)";
                 }
@@ -200,7 +235,7 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoDengJi2JDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -697,7 +732,7 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoDengJi2JDialog dialog = new YiMiaoDengJi2JDialog(new javax.swing.JFrame(), true);
+                YiMiaoDengJi2JDialog dialog = new YiMiaoDengJi2JDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -761,7 +796,7 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
         return new SubmitFormTask(yimiaodengji);
     }
 
-   @Action
+    @Action
     public void exit() {
         String sql = " shenqingdan_id like \"YMSG%\" and danjuleixing_id=6 and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
@@ -793,13 +828,13 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
                 if (result == 0) {
                     return;
                 }
-                String reason;
-                reason = AssetMessage.showInputDialog(null, "请输入登记取消理由：");
-                if (reason == null) {
-                    return;
-                }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
-                    lb.getYimiaoshenqingdan().setReason("【登记】" + reason);
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                                + lb.getYimiao().getYimiaoName() + "】的理由(必输)：");
+                        lb.getYimiaoshenqingdan().setReason("【登记】" + reason);
+                    }
                 }
                 new YiMiaoDengJi2JDialog.Cancel(list).execute();
             }
@@ -807,8 +842,8 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
         }
 
     }
-    
-     private class Cancel extends CancelYimiaoDengji {
+
+    private class Cancel extends CancelYimiaoDengji {
 
         public Cancel(List<YimiaoshenqingliebiaoEntity> zc) {
             super(zc);
@@ -823,6 +858,10 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
                 return;
             }
             close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoDengJi2JDialog yimiaoDengJi2JDialog = new YiMiaoDengJi2JDialog();
+            yimiaoDengJi2JDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoDengJi2JDialog);
         }
 
     }
@@ -845,7 +884,7 @@ public class YiMiaoDengJi2JDialog extends javax.swing.JDialog {
             exit();
 
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog(mainFrame, true);
+            YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog();
             yiMiaoDengJi2JDialog.setLocationRelativeTo(mainFrame);
             yiMiaoDengJi2JDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(yiMiaoDengJi2JDialog);

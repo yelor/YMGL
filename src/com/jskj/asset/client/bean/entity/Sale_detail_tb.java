@@ -22,6 +22,10 @@ public class Sale_detail_tb {
 
     private Integer status;
 
+    private String reason;
+
+    private String operator;
+
     public Integer getSaleDetailId() {
         return saleDetailId;
     }
@@ -92,5 +96,21 @@ public class Sale_detail_tb {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator == null ? null : operator.trim();
     }
 }

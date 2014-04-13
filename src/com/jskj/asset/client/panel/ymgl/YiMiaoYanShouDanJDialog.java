@@ -12,6 +12,7 @@ import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tbFindEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshoutb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -22,6 +23,8 @@ import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.Yimiaoyanshou_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -38,7 +42,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
+public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoYanShouDanJDialog.class);
     private Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity;
@@ -53,10 +57,44 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoYanShouDanJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoYanShouDanJDialog() {
+        super();
         init();
         initComponents();
+
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
+        
         bindedMaplist = new ArrayList<Yimiaoyanshou_detail_tb>();
 
         jTextFieldYimiaoyanshouId.setText(DanHao.getDanHao("YMYS"));
@@ -324,7 +362,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         jTable3.setName("jTable3"); // NOI18N
         jScrollPane4.setViewportView(jTable3);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoYanShouDanJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
@@ -885,7 +923,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                YiMiaoYanShouDanJDialog dialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
+                YiMiaoYanShouDanJDialog dialog = new YiMiaoYanShouDanJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -1005,16 +1043,16 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                             .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
                 }
                 string.append("是否继续验收？选“否”或“取消”会要求输入原因，并不再验收以上所有疫苗");
-                int result = AssetMessage.showConfirmDialog(null, string.toString());
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),"确认",JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
-                String reason;
-                reason = AssetMessage.showInputDialog(null, "请输入取消验收理由：");
-                if (reason == null) {
-                    return;
-                }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
+                    String reason = null;
+                    while (reason == null || reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【" + 
+                                lb.getYimiao().getYimiaoName()+ "】的理由(必输)：");
+                    }
                     lb.getYimiaoshenqingdan().setReason("【验收】" + reason);
                 }
                 new YiMiaoYanShouDanJDialog.Cancel(list).execute();
@@ -1039,6 +1077,10 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
                 return;
             }
             close();
+            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+            YiMiaoYanShouDanJDialog yimiaoYanShouJDialog = new YiMiaoYanShouDanJDialog();
+            yimiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoYanShouJDialog);
         }
 
     }
@@ -1060,7 +1102,7 @@ public class YiMiaoYanShouDanJDialog extends javax.swing.JDialog {
             AssetMessage.INFO("提交成功！", YiMiaoYanShouDanJDialog.this);
             exit();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            YiMiaoYanShouDanJDialog yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog(new javax.swing.JFrame(), true);
+            YiMiaoYanShouDanJDialog yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog();
             yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
             yiMiaoYanShouJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);
