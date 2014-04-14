@@ -16,11 +16,11 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
 import com.jskj.asset.client.panel.baobiao.caiwubaobiao.DanweiyingshouyingfuPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel;
-import com.jskj.asset.client.panel.ckgl.SelectKucunchaxun;
-import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKu;
-import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXie;
-import com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujilu;
-import com.jskj.asset.client.panel.ckgl.Selectebaosun;
+import com.jskj.asset.client.panel.ckgl.SelectKucunchaxunJDialog;
+import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKuJDialog;
+import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXieJDialog;
+import com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujiluJDialog;
+import com.jskj.asset.client.panel.ckgl.SelectebaosunJDialog;
 import com.jskj.asset.client.panel.shjs.FukuanShenPiJDialog;
 import com.jskj.asset.client.panel.shjs.SelectDanweiJDialog;
 import com.jskj.asset.client.panel.shjs.SelectPandianJDialog;
@@ -52,11 +52,11 @@ public class BaseMainPanel extends BasePanel {
     private selecteInvoiceJDialog3 selecteInvoiceJDialog3;
 
     /*仓库管理*/
-    private SelectYiMiaoZuZhuangChaiXie ymzzcx;
-    private SelectYiMiaochurukujilu ymcrkjl;
-    private SelectYiMiaoChuRuKu ymcrk;
-    private Selectebaosun selectebaosun;
-    private SelectKucunchaxun kccx;
+    private SelectYiMiaoZuZhuangChaiXieJDialog ymzzcx;
+    private SelectYiMiaochurukujiluJDialog ymcrkjl;
+    private SelectYiMiaoChuRuKuJDialog ymcrk;
+    private SelectebaosunJDialog selectebaosun;
+    private SelectKucunchaxunJDialog kccx;
 
     /*审核结算*/
     private SelectShoufukuanJDialog selecteSKDJDialog;
@@ -411,7 +411,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymzzcx == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymzzcx = new SelectYiMiaoZuZhuangChaiXie(new javax.swing.JFrame(), true);
+                    ymzzcx = new SelectYiMiaoZuZhuangChaiXieJDialog(new javax.swing.JFrame(), true);
                     ymzzcx.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymzzcx);
@@ -426,7 +426,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymcrkjl == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrkjl = new SelectYiMiaochurukujilu(new javax.swing.JFrame(), true);
+                    ymcrkjl = new SelectYiMiaochurukujiluJDialog(new javax.swing.JFrame(), true);
                     ymcrkjl.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymcrkjl);
@@ -441,7 +441,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (kccx == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    kccx = new SelectKucunchaxun();
+                    kccx = new SelectKucunchaxunJDialog();
                     kccx.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(kccx);
@@ -456,7 +456,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymcrk == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrk = new SelectYiMiaoChuRuKu();
+                    ymcrk = new SelectYiMiaoChuRuKuJDialog();
                     ymcrk.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymcrk);
@@ -471,7 +471,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (selectebaosun == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    selectebaosun = new Selectebaosun();
+                    selectebaosun = new SelectebaosunJDialog();
                     selectebaosun.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(selectebaosun);

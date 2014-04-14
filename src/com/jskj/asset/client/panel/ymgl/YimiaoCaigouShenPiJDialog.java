@@ -16,7 +16,7 @@ import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.DetailPanel;
-import com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun;
+import com.jskj.asset.client.panel.ckgl.YiMiaoBaoSunJDialog;
 import com.jskj.asset.client.panel.ymgl.task.ShenPiTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoDanjuChaxunTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
@@ -543,7 +543,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
     @Action
     public void yimiaobaosunxiangdanshow(YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntity) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        YiMiaoBaoSun yimiaobaosunJDialog = new YiMiaoBaoSun(this, yimiaobaosunxiangdanEntity);
+        YiMiaoBaoSunJDialog yimiaobaosunJDialog = new YiMiaoBaoSunJDialog(this, yimiaobaosunxiangdanEntity);
         yimiaobaosunJDialog.setLocationRelativeTo(mainFrame);
         AssetClientApp.getApplication().show(yimiaobaosunJDialog);
     }

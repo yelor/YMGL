@@ -15,12 +15,12 @@ import org.jdesktop.application.Action;
  *
  * @author Administrator
  */
-public class SelectKucunchaxun extends BaseDialog {
+public class SelectKucunchaxunJDialog extends BaseDialog {
 
     /**
      * Creates new form ymcrk
      */
-    public SelectKucunchaxun() {
+    public SelectKucunchaxunJDialog() {
         super();
         initComponents();
     }
@@ -39,7 +39,7 @@ public class SelectKucunchaxun extends BaseDialog {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectKucunchaxun.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectKucunchaxunJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -49,7 +49,7 @@ public class SelectKucunchaxun extends BaseDialog {
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton3.setName("jButton3"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectKucunchaxun.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectKucunchaxunJDialog.class, this);
         jButton5.setAction(actionMap.get("zichanruku_pop")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
@@ -106,20 +106,20 @@ public class SelectKucunchaxun extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SelectKucunchaxun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectKucunchaxunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SelectKucunchaxun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectKucunchaxunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SelectKucunchaxun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectKucunchaxunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SelectKucunchaxun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectKucunchaxunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SelectKucunchaxun dialog = new SelectKucunchaxun();
+                SelectKucunchaxunJDialog dialog = new SelectKucunchaxunJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -138,7 +138,7 @@ public class SelectKucunchaxun extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1();
+                YiMiaoChuKu1JDialog ymck1 = new YiMiaoChuKu1JDialog();
                 ymck1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck1);
             }
@@ -152,7 +152,7 @@ public class SelectKucunchaxun extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1();
+                YiMiaoRuKu1JDialog ymrk1 = new YiMiaoRuKu1JDialog();
                 ymrk1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk1);
             }
@@ -166,7 +166,7 @@ public class SelectKucunchaxun extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2();
+                YiMiaoChuKu2JDialog ymck2 = new YiMiaoChuKu2JDialog();
                 ymck2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck2);
             }
@@ -180,7 +180,7 @@ public class SelectKucunchaxun extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu2 ymrk2 = new YiMiaoRuKu2();
+                YiMiaoRuKu2JDialog ymrk2 = new YiMiaoRuKu2JDialog();
                 ymrk2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk2);
             }

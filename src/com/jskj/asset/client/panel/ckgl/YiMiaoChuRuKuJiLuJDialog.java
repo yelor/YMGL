@@ -10,7 +10,7 @@ package com.jskj.asset.client.panel.ckgl;
  *
  * @author Administrator
  */ 
-public class YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
+public class YiMiaoChuRuKuJiLuJDialog extends javax.swing.JDialog {
     private boolean rk;
     public void setRk(){
         setTitle("疫苗入库记录表");
@@ -23,7 +23,7 @@ public class YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
     /**
      * Creates new form ymcrkjl_select
      */
-    public YiMiaoChuRuKuJiLu(java.awt.Frame parent, boolean modal) {
+    public YiMiaoChuRuKuJiLuJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -62,7 +62,7 @@ public class YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChuRuKuJiLu.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChuRuKuJiLuJDialog.class);
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -255,20 +255,20 @@ public class YiMiaoChuRuKuJiLu extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoChuRuKuJiLuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoChuRuKuJiLu dialog = new YiMiaoChuRuKuJiLu(new javax.swing.JFrame(), true);
+                YiMiaoChuRuKuJiLuJDialog dialog = new YiMiaoChuRuKuJiLuJDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

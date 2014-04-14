@@ -29,7 +29,7 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
+public class YiMiaoZuZhuangChaiXieJDialog extends javax.swing.JDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     boolean zz;
@@ -38,7 +38,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
     /**
      * Creates new form ymzzcx
      */
-    public YiMiaoZuZhuangChaiXie(java.awt.Frame parent, boolean modal, boolean zzz) {
+    public YiMiaoZuZhuangChaiXieJDialog(java.awt.Frame parent, boolean modal, boolean zzz) {
         super(parent, modal);
         init();
         initComponents();
@@ -252,7 +252,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableyimiao2 = new BaseTable(null);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoZuZhuangChaiXie.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoZuZhuangChaiXieJDialog.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -263,7 +263,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
         jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
         jLabel11.setName("jLabel11"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoZuZhuangChaiXie.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoZuZhuangChaiXieJDialog.class, this);
         jButton1.setAction(actionMap.get("quit")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
@@ -683,13 +683,13 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXieJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXieJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXieJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoZuZhuangChaiXieJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -735,7 +735,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入仓库1!");
             return null;
         }
-        yimiaozuzhuangchaixie.setDeport1(Integer.parseInt((String) yimiaotable1.getValue(0, "cangku")));
+        yimiaozuzhuangchaixie.setCangku1((String) yimiaotable1.getValue(0, "cangku"));
         System.out.println(yimiaotable1.getValue(0, "quantity"));
         yimiaozuzhuangchaixie.setQuantity1(Integer.parseInt((String) yimiaotable1.getValue(0, "quantity")));
         yimiaozuzhuangchaixie.setYimiao2Id(Integer.parseInt(yimiaotable2.getValue(0, "yimiaoId").toString()));
@@ -743,7 +743,7 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
             AssetMessage.ERRORSYS("请输入仓库2!");
             return null;
         }
-        yimiaozuzhuangchaixie.setDeport2(Integer.parseInt((String) yimiaotable2.getValue(0, "cangku")));
+        yimiaozuzhuangchaixie.setCangku2((String) yimiaotable2.getValue(0, "cangku"));
         yimiaozuzhuangchaixie.setQuantity2(Integer.parseInt((String) yimiaotable2.getValue(0, "quantity")));
 
         String serviceId = "yimiaozuzhuangchaixie/add";
@@ -758,11 +758,11 @@ public class YiMiaoZuZhuangChaiXie extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoZuZhuangChaiXie ymzzcx = new YiMiaoZuZhuangChaiXie(new javax.swing.JFrame(), true, zz);
+                    YiMiaoZuZhuangChaiXieJDialog ymzzcx = new YiMiaoZuZhuangChaiXieJDialog(new javax.swing.JFrame(), true, zz);
                     ymzzcx.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(ymzzcx);
                 } else {
-                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoZuZhuangChaiXie.this);
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoZuZhuangChaiXieJDialog.this);
                 }
             }
 

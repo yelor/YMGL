@@ -19,14 +19,14 @@ import org.jdesktop.application.Action;
  *
  * @author Administrator
  */
-public class SelectYiMiaoChuRuKu extends BaseDialog {
+public class SelectYiMiaoChuRuKuJDialog extends BaseDialog {
 
-    YiMiaoRuKu2 ymcrk2;
+    YiMiaoRuKu2JDialog ymcrk2;
 
     /**
      * Creates new form ymcrk
      */
-    public SelectYiMiaoChuRuKu() {
+    public SelectYiMiaoChuRuKuJDialog() {
         super();
         initComponents();
     }
@@ -50,12 +50,12 @@ public class SelectYiMiaoChuRuKu extends BaseDialog {
         jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectYiMiaoChuRuKu.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectYiMiaoChuRuKuJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectYiMiaoChuRuKu.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectYiMiaoChuRuKuJDialog.class, this);
         jButton1.setAction(actionMap.get("ck1_pop")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -157,20 +157,20 @@ public class SelectYiMiaoChuRuKu extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectYiMiaoChuRuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SelectYiMiaoChuRuKu dialog = new SelectYiMiaoChuRuKu();
+                SelectYiMiaoChuRuKuJDialog dialog = new SelectYiMiaoChuRuKuJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -189,7 +189,7 @@ public class SelectYiMiaoChuRuKu extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1();
+                YiMiaoChuKu1JDialog ymck1 = new YiMiaoChuKu1JDialog();
                 ymck1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck1);
             }
@@ -203,7 +203,7 @@ public class SelectYiMiaoChuRuKu extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu1 ymrk1 = new YiMiaoRuKu1();
+                YiMiaoRuKu1JDialog ymrk1 = new YiMiaoRuKu1JDialog();
                 ymrk1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk1);
             }
@@ -217,7 +217,7 @@ public class SelectYiMiaoChuRuKu extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu2 ymck2 = new YiMiaoChuKu2();
+                YiMiaoChuKu2JDialog ymck2 = new YiMiaoChuKu2JDialog();
                 ymck2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck2);
             }
@@ -231,7 +231,7 @@ public class SelectYiMiaoChuRuKu extends BaseDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu2 ymrk2 = new YiMiaoRuKu2();
+                YiMiaoRuKu2JDialog ymrk2 = new YiMiaoRuKu2JDialog();
                 ymrk2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk2);
             }

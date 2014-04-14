@@ -38,7 +38,7 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoChuKu1 extends BaseDialog {
+public class YiMiaoChuKu1JDialog extends BaseDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,7 +47,7 @@ public class YiMiaoChuKu1 extends BaseDialog {
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private List<SaleyimiaoEntity> list;
 
-    public YiMiaoChuKu1() {
+    public YiMiaoChuKu1JDialog() {
         super();
         initComponents();
 
@@ -176,7 +176,7 @@ public class YiMiaoChuKu1 extends BaseDialog {
         jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChuKu1.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoChuKu1JDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -187,7 +187,7 @@ public class YiMiaoChuKu1 extends BaseDialog {
         jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoChuKu1.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoChuKu1JDialog.class, this);
         jButton7.setAction(actionMap.get("save")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
@@ -343,16 +343,16 @@ public class YiMiaoChuKu1 extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -367,23 +367,23 @@ public class YiMiaoChuKu1 extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoChuKu1.class
+            java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoChuKu1 dialog = new YiMiaoChuKu1();
+                YiMiaoChuKu1JDialog dialog = new YiMiaoChuKu1JDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -438,11 +438,11 @@ public class YiMiaoChuKu1 extends BaseDialog {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     exit();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoChuKu1 ymck1 = new YiMiaoChuKu1();
+                    YiMiaoChuKu1JDialog ymck1 = new YiMiaoChuKu1JDialog();
                     ymck1.setLocationRelativeTo(mainFrame);
                     AssetClientApp.getApplication().show(ymck1);
                 } else {
-                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoChuKu1.this);
+                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoChuKu1JDialog.this);
                 }
             }
 
@@ -538,7 +538,7 @@ public class YiMiaoChuKu1 extends BaseDialog {
             }
             close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            YiMiaoChuKu1 yimiaochuku = new YiMiaoChuKu1();
+            YiMiaoChuKu1JDialog yimiaochuku = new YiMiaoChuKu1JDialog();
             yimiaochuku.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaochuku);
         }

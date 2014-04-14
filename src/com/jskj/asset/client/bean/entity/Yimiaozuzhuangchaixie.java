@@ -21,13 +21,13 @@ public class Yimiaozuzhuangchaixie {
 
     private Integer yimiao1Id;
 
-    private Integer deport1;
+    private String cangku1;
 
     private Integer quantity1;
 
     private Integer yimiao2Id;
 
-    private Integer deport2;
+    private String cangku2;
 
     private Integer quantity2;
 
@@ -97,12 +97,12 @@ public class Yimiaozuzhuangchaixie {
         this.yimiao1Id = yimiao1Id;
     }
 
-    public Integer getDeport1() {
-        return deport1;
+    public String getCangku1() {
+        return cangku1;
     }
 
-    public void setDeport1(Integer deport1) {
-        this.deport1 = deport1;
+    public void setCangku1(String cangku1) {
+        this.cangku1 = cangku1 == null ? null : cangku1.trim();
     }
 
     public Integer getQuantity1() {
@@ -121,12 +121,12 @@ public class Yimiaozuzhuangchaixie {
         this.yimiao2Id = yimiao2Id;
     }
 
-    public Integer getDeport2() {
-        return deport2;
+    public String getCangku2() {
+        return cangku2;
     }
 
-    public void setDeport2(Integer deport2) {
-        this.deport2 = deport2;
+    public void setCangku2(String cangku2) {
+        this.cangku2 = cangku2 == null ? null : cangku2.trim();
     }
 
     public Integer getQuantity2() {

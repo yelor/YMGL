@@ -14,13 +14,16 @@ import javax.swing.JTextField;
  *
  * @author Administrator
  */
-public class PuTongBaoSun extends BaseDialog {
+public class PuTongBaoSunJDialog extends BaseDialog {
     DateChooser dateChooser1;
     JTextField regTextField;
     /**
      * Creates new form GuDingZiChanRuKu
      */
 
+    /**
+     * Creates new form GuDingZiChanRuKu
+     */
     private void init() {
         regTextField = new JTextField();
         dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
@@ -29,7 +32,7 @@ public class PuTongBaoSun extends BaseDialog {
     /**
      * Creates new form ptbs
      */
-    public PuTongBaoSun() {
+    public PuTongBaoSunJDialog() {
         super();
         init();
         initComponents();
@@ -63,7 +66,7 @@ public class PuTongBaoSun extends BaseDialog {
         jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(PuTongBaoSun.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(PuTongBaoSunJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -258,20 +261,20 @@ public class PuTongBaoSun extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PuTongBaoSun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PuTongBaoSunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PuTongBaoSun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PuTongBaoSunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PuTongBaoSun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PuTongBaoSunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PuTongBaoSun.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PuTongBaoSunJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PuTongBaoSun dialog = new PuTongBaoSun();
+                PuTongBaoSunJDialog dialog = new PuTongBaoSunJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

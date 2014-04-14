@@ -9,7 +9,7 @@ public class Stockpiletb {
 
     private Date stockpileDate;
 
-    private Integer deportId;
+    private String kufang;
 
     private Integer yimiaoId;
 
@@ -47,12 +47,12 @@ public class Stockpiletb {
         this.stockpileDate = stockpileDate;
     }
 
-    public Integer getDeportId() {
-        return deportId;
+    public String getKufang() {
+        return kufang;
     }
 
-    public void setDeportId(Integer deportId) {
-        this.deportId = deportId;
+    public void setKufang(String kufang) {
+        this.kufang = kufang == null ? null : kufang.trim();
     }
 
     public Integer getYimiaoId() {
