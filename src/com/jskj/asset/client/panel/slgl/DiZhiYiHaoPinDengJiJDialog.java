@@ -24,6 +24,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
@@ -194,10 +195,14 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
                     return;
                 }
                 for (ZichanliebiaotbAll lb : list) {
-                    String reason = null;
-                    while (reason == null || reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【" + 
-                                lb.getZcName() + "】的理由(必输)：");
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回登记页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.setReason("【登记】" + reason);
                 }
@@ -275,6 +280,34 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
         }
     }
 
+    //单个资产登记不合格情况
+    @Action
+    public Task buhege(){
+        if(jTextFieldName.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入资产名称！",this);
+            return null;
+        }
+        if(jTextFieldZcid.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入资产编号！",this);
+            return null;
+        }
+        List<ZichanliebiaotbAll> list = new ArrayList<ZichanliebiaotbAll>();
+        ZichanliebiaotbAll lb = new ZichanliebiaotbAll();
+        lb.setCgsqId(yuandanID);
+        lb.setCgzcId(Integer.parseInt(jTextFieldZcid.getText()));
+        String reason = "";
+        while (reason.isEmpty()) {
+            reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                    + jTextFieldName.getText() + "】的理由(必输)：");
+            if (reason == null) {
+                return null;
+            }
+        }
+        lb.setReason("【登记】" + reason);
+        list.add(lb);
+        return new Cancel(list);
+    }
+    
     @Action
     public Task submitForm() throws ParseException {
         if (jTextFieldName.getText().isEmpty()) {
@@ -360,6 +393,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
         jTextAreaRemark = new javax.swing.JTextArea();
         jToolBar1 = new javax.swing.JToolBar();
         jButton5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -466,6 +500,16 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
         jButton5.setName("jButton5"); // NOI18N
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
+
+        jButton1.setAction(actionMap.get("buhege")); // NOI18N
+        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setOpaque(false);
+        jToolBar1.add(jButton1);
 
         jButton8.setAction(actionMap.get("zhijielingyong")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
@@ -674,6 +718,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

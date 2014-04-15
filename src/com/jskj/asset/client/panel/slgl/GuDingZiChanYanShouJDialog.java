@@ -26,6 +26,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -159,7 +160,12 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
 
             public String getConditionSQL() {
                 String sql = "";
-                sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 1 ";
+                //验收这里由于固定资产分了普通和IT类别分开登记，所以登记单关闭时无法保证一个单据中所有物品都已经登记
+                //而需求有要求，一个单据如果有物品没有登记，就该单据的物品就不能进入到验收这一步，所以
+                //在验收这一步就加了一个判断，筛选资产时只显示所有物品都登记了的单据，exit()中的sql做了相同修改
+                //其他资产和疫苗，如果一张单据的物品没有像固定资产一样分开在两个登记单中登记，则不需要如此修改
+                sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 1 "
+                        + " and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=0 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
                 if (!jTextFieldZichan.getText().trim().equals("")) {
                     sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"" 
                         + " or zujima like \"%" + jTextFieldZichan.getText().toLowerCase() + "%\")");
@@ -194,7 +200,8 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
 
     @Action
     public void exit() {
-        String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 1";
+        String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 1 "
+                + "and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=0 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
         new CloseTask(sql).execute();
     }
     
@@ -226,10 +233,14 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                     return;
                 }
                 for (ZichanliebiaotbAll lb : list) {
-                    String reason = null;
-                    while (reason == null || reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消验收资产【" + 
-                                lb.getZcName() + "】的理由(必输)：");
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回登记页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.setReason("【验收】" + reason);
                 }
@@ -261,6 +272,30 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
             AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
         }
 
+    }
+    
+    //单个资产登记不合格情况
+    @Action
+    public Task buhege(){
+        if(jTextFieldZichan.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入资产名称！",this);
+            return null;
+        }
+        List<ZichanliebiaotbAll> list = new ArrayList<ZichanliebiaotbAll>();
+        ZichanliebiaotbAll lb = new ZichanliebiaotbAll();
+        lb.setCgsqId(yuandanID);
+        lb.setCgzcId(zcid);
+        String reason = "";
+        while (reason.isEmpty()) {
+            reason = AssetMessage.showInputDialog(null, "请输入取消验收资产【"
+                    + jTextFieldZichan.getText() + "】的理由(必输)：");
+            if (reason == null) {
+                return null;
+            }
+        }
+        lb.setReason("【验收】" + reason);
+        list.add(lb);
+        return new Cancel(list);
     }
     
     @Action
@@ -380,6 +415,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jTextFieldFile = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -633,6 +669,16 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton3.setAction(actionMap.get("buhege")); // NOI18N
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
+        jToolBar1.add(jButton3);
+
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -741,6 +787,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;

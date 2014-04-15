@@ -269,10 +269,14 @@ public class YihaopinRuKuJDialog extends BaseDialog {
                     return;
                 }
                 for (ZichanliebiaotbAll lb : list) {
-                    String reason = null;
-                    while (reason == null || reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消入库物品【" + 
-                                lb.getZcName() + "】的理由(必输)：");
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回入库页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消入库资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.setReason("【入库】" + reason);
                 }
@@ -304,6 +308,32 @@ public class YihaopinRuKuJDialog extends BaseDialog {
             AssetClientApp.getApplication().show(zichanruku);
         }
 
+    }
+    
+    //单个资产登记不合格情况
+    @Action
+    public Task buhege(){
+        if(zc.size() < 1){
+            AssetMessage.ERRORSYS("请选择要取消入库的资产！",this);
+            return null;
+        }
+        List<ZichanliebiaotbAll> lst = new ArrayList<ZichanliebiaotbAll>();
+        for (int i = 0; i < zc.size(); i++) {
+            ZichanliebiaotbAll lb = new ZichanliebiaotbAll();
+            lb.setCgsqId(zc.get(i).getCgsqId());
+            lb.setCgzcId(zc.get(i).getCgzcId());
+            String reason = "";
+            while (reason.isEmpty()) {
+                reason = AssetMessage.showInputDialog(null, "请输入取消入库资产【"
+                        + jTable1.getValueAt(i, 1) + "】的理由(必输)：");
+                if (reason == null) {
+                    return null;
+                }
+            }
+            lb.setReason("【入库】" + reason);
+            lst.add(lb);
+        }
+        return new Cancel(lst);
     }
     
     @Action
@@ -375,6 +405,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
         jTable1 = new BaseTable(null);
         jToolBar1 = new javax.swing.JToolBar();
         jButton10 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
@@ -496,6 +527,16 @@ public class YihaopinRuKuJDialog extends BaseDialog {
         jButton10.setName("jButton10"); // NOI18N
         jButton10.setOpaque(false);
         jToolBar1.add(jButton10);
+
+        jButton2.setAction(actionMap.get("buhege")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
 
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
@@ -628,6 +669,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
