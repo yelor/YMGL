@@ -126,7 +126,7 @@
         <Component class="javax.swing.JButton" name="jButton7">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu1" id="save" methodName="save"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu1JDialog" id="save" methodName="save"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
@@ -135,6 +135,18 @@
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu1JDialog" id="buhege" methodName="buhege"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton8">
@@ -162,7 +174,7 @@
         <Component class="javax.swing.JButton" name="jButton12">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu1" id="exit" methodName="exit"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu1JDialog" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton12.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton12.text"/>
@@ -352,6 +364,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldkufang">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jTextFieldkufang" noResource="true"/>
       </Properties>
       <AuxValues>

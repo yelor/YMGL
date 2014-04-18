@@ -18,6 +18,7 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
+import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -344,20 +345,66 @@ public final class KucunchaxunPanel extends BasePanel {
         new RefureTask(pageIndex, pageSize).execute();
     }
 
+//    @Action
+//    public Task yileiyimiao() {
+//        type = "Ⅰ类疫苗";
+//        conditionSql = "";
+//        return reload();
+//    }
     @Action
     public Task yileiyimiao() {
-        type = "Ⅰ类疫苗";
-        conditionSql = "";
-        return reload();
+        return new OpenTabTask("报表-Ⅰ类疫苗库存状况表", new YileiYimiaoKucunPanel(), false);
     }
-    
     @Action
     public Task erleiyimiao() {
-        type = "Ⅱ类疫苗";
-        conditionSql = "";
-        return reload();
+        return new OpenTabTask("报表-Ⅱ类疫苗库存状况表", new ErleiYimiaoKucunPanel(), false);
+    }
+
+    private class ErleiyimiaoTask extends org.jdesktop.application.Task<Object, Void> {
+        ErleiyimiaoTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ErleiyimiaoTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
+    private class YileiyimiaoTask extends org.jdesktop.application.Task<Object, Void> {
+        YileiyimiaoTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to YileiyimiaoTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
     
+//    @Action
+//    public Task erleiyimiao() {
+//        type = "Ⅱ类疫苗";
+//        conditionSql = "";
+//        return reload();
+//    }
+//    
     @Action
     public Task gdzc() {
         type = "固定资产";
