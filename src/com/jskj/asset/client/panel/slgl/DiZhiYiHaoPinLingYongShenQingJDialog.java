@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -49,6 +50,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private CaigoushenqingDetailEntity detail;
     private float total = 0;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Map kucunmap;
 
     /**
      * Creates new form GuDingZiChanRuKu
@@ -61,6 +63,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         department = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
+        kucunmap = new HashMap();
 
         jingbanren.setText(userName);
         dept.setText(department);
@@ -122,12 +125,15 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                     editTable.insertValue(4, gdzcXinghao);
                     editTable.insertValue(6, dzyhpValue);
 
-                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-                    zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer) dzyhpId);
-                    //quantity中暂时保存库存数，用来校验数据
-                    zclb.setQuantity((Integer) dzyhpKucun);
-                    zc.add(zclb);
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(cgsqId.getText());
+//                    zclb.setCgzcId((Integer) gdzcId);
+//                    //quantity中暂时保存库存数，用来校验数据
+//                    zclb.setQuantity((Integer) gdzcKucun);
+//                    zc.add(zclb);
+                    
+                    //保存库存数，用来校验数据
+                    kucunmap.put(dzyhpId, dzyhpKucun);
                 }
 
             }
@@ -218,13 +224,13 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         Object[][] o = new Object[size][6];
         for (int i = 0; i < size; i++) {
             YihaopinliebiaoEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getDzyhpId(), zclb.getDzyhpName(), zclb.getDzyhpType(), zclb.getDzyhpPinpai(), zclb.getCount(), zclb.getSaleprice()};
+            o[i] = new Object[]{zclb.getDzyhpId(), zclb.getDzyhpName(), zclb.getDzyhpType(), zclb.getDzyhpPinpai(), zclb.getCount(), zclb.getSaleprice(), zclb.getSaleprice() * zclb.getCount()};
         }
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "数量", "原值"
+                    "资产编号", "资产名称", "类别", "品牌", "数量", "原值", "合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -241,11 +247,11 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     @Action
     public Task submitForm() throws ParseException {
         if (lysqDate.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "请输入制单日期！");
+            AssetMessage.showMessageDialog(null, "请输入制单日期！");
             return null;
         }
-        if (zc.size() < 1) {
-            JOptionPane.showMessageDialog(null, "请选择要领用的物品！");
+        if (jTable1.getRowCount()-1 < 1) {
+            AssetMessage.showMessageDialog(null, "请选择要领用的物品！");
             return null;
         }
         jTable1.getCellEditor(jTable1.getSelectedRow(),
@@ -259,29 +265,40 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(22);
         total = 0;
-        for (int i = 0; i < zc.size(); i++) {
+        zc = new ArrayList<ZiChanLieBiaotb>();
+//        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            zclb.setCgsqId(cgsqId.getText());
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
             if (jTable1.getValueAt(i, 5).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个物品的领取数量！", this);
                 return null;
             }
             try {
                 int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-                if (count > zc.get(i).getQuantity()) {
-                    AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的领取数量大于库存数，"
-                            + "请输入一个小于" + zc.get(i).getQuantity() + "的数", this);
+                if (count > Integer.parseInt(kucunmap.get(zclb.getCgzcId()).toString())) {
+                    AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的领取数量大于库存数，"
+                            + "请输入一个小于" + kucunmap.get(zclb.getCgzcId()) + "的数", this);
                     return null;
                 }
-                zc.get(i).setQuantity(count);
+                zclb.setQuantity(count);
             } catch (NumberFormatException e) {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的领用数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
-            zc.get(i).setSaleprice(price);
-            zc.get(i).setTotalprice(zc.get(i).getQuantity() * price);
-            zc.get(i).setIsCompleted(0);
-            zc.get(i).setStatus(7);
-            total += zc.get(i).getTotalprice();
+            zclb.setSaleprice(price);
+            zclb.setTotalprice(zclb.getQuantity() * price);
+            zclb.setIsCompleted(0);
+            zclb.setStatus(7);
+            total += zclb.getTotalprice();
+            zc.add(zclb);
         }
         sqd.setDanjujine(total);
 

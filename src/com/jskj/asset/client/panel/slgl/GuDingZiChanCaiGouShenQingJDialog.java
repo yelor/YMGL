@@ -146,11 +146,11 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
                     editTable.insertValue(3, gdzcPinpai);
                     editTable.insertValue(4, gdzcXinghao);
 
-                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-                    zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer) gdzcId);
-                    zclb.setQuantity(0);
-                    zc.add(zclb);
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(cgsqId.getText());
+//                    zclb.setCgzcId((Integer) gdzcId);
+//                    zclb.setQuantity(0);
+//                    zc.add(zclb);
                 }
 
             }
@@ -267,7 +267,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入供应单位！", this);
             return null;
         }
-        if (zc.size() < 1) {
+        if (jTable1.getRowCount()-1 < 1) {
             AssetMessage.ERRORSYS("请选择要采购的资产！", this);
             return null;
         }
@@ -285,7 +285,17 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         sqd.setIsPaid(0);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         total = 0;
-        for (int i = 0; i < zc.size(); i++) {
+        zc = new ArrayList<ZiChanLieBiaotb>();
+//        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            zclb.setCgsqId(cgsqId.getText());
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
             if (jTable1.getValueAt(i, 5).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的采购数量！", this);
                 return null;
@@ -295,22 +305,23 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
                 return null;
             }
             try{
-                zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+                zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             }catch(NumberFormatException e){
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的采购数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
             try{
                 float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
-                zc.get(i).setSaleprice(price);
-                zc.get(i).setTotalprice(zc.get(i).getQuantity() * price);
+                zclb.setSaleprice(price);
+                zclb.setTotalprice(zclb.getQuantity() * price);
             }catch(NumberFormatException e){
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的采购价格输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            zc.get(i).setIsCompleted(0);
-            zc.get(i).setStatus(0);
-            total += zc.get(i).getTotalprice();
+            zclb.setIsCompleted(0);
+            zclb.setStatus(0);
+            total += zclb.getTotalprice();
+            zc.add(zclb);
         }
         sqd.setDanjujine(total);
 

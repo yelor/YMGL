@@ -51,76 +51,76 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         this.setTitle("低值易耗品");
 
         dzyhpType.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("物品类别")));
-        
-        ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
-
-            @Override
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            @Override
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "cangku/";
-            }
-
-            @Override
-            public String getConditionSQL() {
-                String sql = "";
-                if (!depottb$depotName.getText().trim().equals("")) {
-                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \"%"+depottb$depotName.getText().toLowerCase() + "%\")";
-                }
-                return sql;
-            }
-
-            @Override
-            public String[][] displayColumns() {
-                return new String[][]{{"depotName", "仓库名"}, {"depotArea", "面积"}};
-            }
-
-            @Override
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    depottb$depotName.setText(bindedMap.get("depotName").toString());
-                    jTextFieldDepotID.setText(bindedMap.get("depotId").toString());
-                }
-            }
-        });
-
-        ((BaseTextField) suppliertb$supplierName).registerPopup(new IPopupBuilder() {
-
-            @Override
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_TEXT;
-            }
-
-            @Override
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "supplier/";
-            }
-
-            @Override
-            public String getConditionSQL() {
-                String sql = " supplier_type = 1 ";
-                if (!suppliertb$supplierName.getText().trim().equals("")) {
-                    sql += "and (supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"%" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
-                }
-                return sql;
-            }
-
-            @Override
-            public String[][] displayColumns() {
-                return new String[][]{{"supplierName", "供应商"}, {"supplierConstactperson", "联系人"}};
-            }
-
-            @Override
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    suppliertb$supplierName.setText(bindedMap.get("supplierName").toString());
-                    jTextFieldSupplier.setText(bindedMap.get("supplierId").toString());
-                }
-            }
-        });
+//        
+//        ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
+//
+//            @Override
+//            public int getType() {
+//                return IPopupBuilder.TYPE_POPUP_TEXT;
+//            }
+//
+//            @Override
+//            public String getWebServiceURI() {
+//                return Constants.HTTP + Constants.APPID + "cangku/";
+//            }
+//
+//            @Override
+//            public String getConditionSQL() {
+//                String sql = "";
+//                if (!depottb$depotName.getText().trim().equals("")) {
+//                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \"%"+depottb$depotName.getText().toLowerCase() + "%\")";
+//                }
+//                return sql;
+//            }
+//
+//            @Override
+//            public String[][] displayColumns() {
+//                return new String[][]{{"depotName", "仓库名"}, {"depotArea", "面积"}};
+//            }
+//
+//            @Override
+//            public void setBindedMap(HashMap bindedMap) {
+//                if (bindedMap != null) {
+//                    depottb$depotName.setText(bindedMap.get("depotName").toString());
+//                    jTextFieldDepotID.setText(bindedMap.get("depotId").toString());
+//                }
+//            }
+//        });
+//
+//        ((BaseTextField) suppliertb$supplierName).registerPopup(new IPopupBuilder() {
+//
+//            @Override
+//            public int getType() {
+//                return IPopupBuilder.TYPE_POPUP_TEXT;
+//            }
+//
+//            @Override
+//            public String getWebServiceURI() {
+//                return Constants.HTTP + Constants.APPID + "supplier/";
+//            }
+//
+//            @Override
+//            public String getConditionSQL() {
+//                String sql = " supplier_type = 1 ";
+//                if (!suppliertb$supplierName.getText().trim().equals("")) {
+//                    sql += "and (supplier_name like \"%" + suppliertb$supplierName.getText() + "%\"" + " or supplier_zujima like \"%" +  suppliertb$supplierName.getText().trim().toLowerCase() + "%\")";
+//                }
+//                return sql;
+//            }
+//
+//            @Override
+//            public String[][] displayColumns() {
+//                return new String[][]{{"supplierName", "供应商"}, {"supplierConstactperson", "联系人"}};
+//            }
+//
+//            @Override
+//            public void setBindedMap(HashMap bindedMap) {
+//                if (bindedMap != null) {
+//                    suppliertb$supplierName.setText(bindedMap.get("supplierName").toString());
+//                    jTextFieldSupplier.setText(bindedMap.get("supplierId").toString());
+//                }
+//            }
+//        });
     }
 
     public void setUpdatedData(DizhiyihaopinAll paramData) {
@@ -144,7 +144,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
             jTextFieldDepotID.setText("");
-            dzyhpBarcode.setText(DanHao.getDanHao("DZ"));
+//            dzyhpBarcode.setText(DanHao.getDanHao("DZ"));
         } else {//更新
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("物品编号:" + appParam.getDzyhpId())); // NOI18N
             jCheckBoxCont.setSelected(false);
@@ -306,20 +306,9 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jButton1 = new javax.swing.JButton();
         unitId = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        dzyhpKucunxiaxian = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        dzyhpKucunshangxian = new javax.swing.JTextField();
-        depottb$depotName = new BaseTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        suppliertb$supplierName = new BaseTextField();
-        jButton5 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         dzyhpRemark = new javax.swing.JTextArea();
-        jLabel17 = new javax.swing.JLabel();
-        dzyhpBarcode = new javax.swing.JTextField();
 
         jTextFieldDepotID.setName("jTextFieldDepotID"); // NOI18N
 
@@ -509,31 +498,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
         jPanel4.setName("jPanel4"); // NOI18N
 
-        jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
-        jLabel15.setName("jLabel15"); // NOI18N
-
-        dzyhpKucunxiaxian.setName("dzyhpKucunxiaxian"); // NOI18N
-
-        jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
-        jLabel16.setName("jLabel16"); // NOI18N
-
-        dzyhpKucunshangxian.setName("dzyhpKucunshangxian"); // NOI18N
-
-        depottb$depotName.setName("depottb$depotName"); // NOI18N
-
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-
-        jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
-        jLabel9.setName("jLabel9"); // NOI18N
-
-        suppliertb$supplierName.setName("suppliertb$supplierName"); // NOI18N
-
-        jButton5.setAction(actionMap.get("generatorBar")); // NOI18N
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setName("jButton5"); // NOI18N
-
         jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
         jLabel11.setName("jLabel11"); // NOI18N
 
@@ -544,66 +508,20 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         dzyhpRemark.setName("dzyhpRemark"); // NOI18N
         jScrollPane1.setViewportView(dzyhpRemark);
 
-        jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
-        jLabel17.setName("jLabel17"); // NOI18N
-
-        dzyhpBarcode.setEnabled(false);
-        dzyhpBarcode.setName("dzyhpBarcode"); // NOI18N
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(46, 46, 46)
+                .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(depottb$depotName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dzyhpKucunxiaxian, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dzyhpKucunshangxian, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(suppliertb$supplierName)
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dzyhpBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5))))
+                .addComponent(jScrollPane1))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(depottb$depotName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(dzyhpKucunxiaxian, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16)
-                    .addComponent(dzyhpKucunshangxian, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(suppliertb$supplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel17)
-                    .addComponent(dzyhpBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
-                .addGap(11, 11, 11)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -787,29 +705,25 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         return null;
     }
 
-    @Action
-    public void generatorBar() {
-        String barcode = dzyhpBarcode.getText();
-        String label = dzyhpName.getText();
-        if (barcode == null) {
-            return;
-        }
-        if (label.trim().equals("")) {
-            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
-            if (result != AssetMessage.OK_OPTION) {
-                dzyhpName.grabFocus();
-                return;
-            }
-        }
-        DanHao.printBarCode128(label, barcode);
-    }
+//    @Action
+//    public void generatorBar() {
+//        String barcode = dzyhpBarcode.getText();
+//        String label = dzyhpName.getText();
+//        if (barcode == null) {
+//            return;
+//        }
+//        if (label.trim().equals("")) {
+//            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+//            if (result != AssetMessage.OK_OPTION) {
+//                dzyhpName.grabFocus();
+//                return;
+//            }
+//        }
+//        DanHao.printBarCode128(label, barcode);
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField depottb$depotName;
-    private javax.swing.JTextField dzyhpBarcode;
     private javax.swing.JTextField dzyhpGuige;
-    private javax.swing.JTextField dzyhpKucunshangxian;
-    private javax.swing.JTextField dzyhpKucunxiaxian;
     private javax.swing.JTextField dzyhpName;
     private javax.swing.JTextField dzyhpPinpai;
     private javax.swing.JTextArea dzyhpRemark;
@@ -818,23 +732,17 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBoxCont;
     private javax.swing.JCheckBox jCheckBoxzjly;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -842,7 +750,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextFieldDepotID;
     private javax.swing.JTextField jTextFieldSupplier;
-    private javax.swing.JTextField suppliertb$supplierName;
     private javax.swing.JTextField unitId;
     private javax.swing.JList unitPhoto;
     // End of variables declaration//GEN-END:variables

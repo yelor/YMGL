@@ -127,7 +127,8 @@ public class YihaopinRuKuJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " cgsq_id like \"%YHCG%\" and is_completed = 1 and status = 1 ";
+                sql += " cgsq_id like \"%YHCG%\" and is_completed = 1 and status = 1 "
+                        + " and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=0 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + newColumnObj.toString() + "%\"" 
                         + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
@@ -237,7 +238,8 @@ public class YihaopinRuKuJDialog extends BaseDialog {
 
     @Action
     public void exit() {
-        String sql = " cgsq_id like \"YHCG%\" and is_completed = 1 and status = 1";
+        String sql = " cgsq_id like \"YHCG%\" and is_completed = 1 and status = 1"
+            + " and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=0 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
         new CloseTask(sql).execute();
     }
     

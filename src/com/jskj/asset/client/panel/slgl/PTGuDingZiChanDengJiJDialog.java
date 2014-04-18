@@ -54,6 +54,7 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
     private FushuliebiaoJDialog fslb;
     private JFrame mainFrame;
     private List<ZichanliebiaotbAll> list;
+    private boolean isNew;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -64,6 +65,8 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         mainFrame = AssetClientApp.getApplication().getMainFrame();
+        isNew = false;
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -157,8 +160,16 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
         ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
     
+    public void setNew(){
+        isNew = true;
+    }
+    
     @Action
     public void exit() {
+        if(isNew){
+            close();
+            return;
+        }
         String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
     }
