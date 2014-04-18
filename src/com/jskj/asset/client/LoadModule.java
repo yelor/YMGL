@@ -12,7 +12,7 @@ import com.jskj.asset.client.panel.ToppagePane;
 import com.jskj.asset.client.panel.baobiao.caigou.DizhiyihaocaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.GudingzichancaigoumingxiPanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel;
-import com.jskj.asset.client.panel.baobiao.kucun.YimiaokucunPanel;
+import com.jskj.asset.client.panel.baobiao.kucun.YileiYimiaoKucunPanel;
 import com.jskj.asset.client.panel.baobiao.xiaoshou.YimiaoSalesMingxiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.CangkuPanel;
 import com.jskj.asset.client.panel.jichuxinxi.DanJuLeiXingPanel;
@@ -519,7 +519,7 @@ public class LoadModule extends BaseTask {
 
     @Action
     public Task showYimiaokucun() {
-        return new OpenTabTask("报表-疫苗库存表", new YimiaokucunPanel(), false);
+        return new OpenTabTask("报表-疫苗库存表", new YileiYimiaoKucunPanel(), false);
     }
 
     @Action

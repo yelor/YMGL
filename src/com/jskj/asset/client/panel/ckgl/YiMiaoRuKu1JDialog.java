@@ -9,6 +9,7 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.Churukudanyimiaoliebiaotb;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
+import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -47,6 +48,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
     private Churukudantb churukudan;
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private List<YimiaoshenqingliebiaoEntity> list;
+    private List<Yimiaoshenqingdantb> yimiaoshenqingdanMaplist = new ArrayList<Yimiaoshenqingdantb>();
 
     /**
      * Creates new form ymcrk1
@@ -224,6 +226,11 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     chukudan.setWanglaidanweiId(Integer.parseInt((String) ("" + gongyingdanwei.get("supplierId"))));
                     bindedMapyimiaoliebiaoList.add(chukudan);
 
+                    Yimiaoshenqingdantb yimiaoshenqing = new Yimiaoshenqingdantb();
+                    yimiaoshenqing.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
+                    yimiaoshenqing.setShenqingdanId((String) yimiaoshenqingdan.get("shenqingdanId"));
+                    yimiaoshenqingdanMaplist.add(yimiaoshenqing);
+
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, source);
@@ -258,6 +265,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -297,6 +305,14 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         jButton7.setName("jButton7"); // NOI18N
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
+
+        jButton1.setAction(actionMap.get("buhege")); // NOI18N
+        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setName("jButton1"); // NOI18N
+        jToolBar1.add(jButton1);
 
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
@@ -406,6 +422,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        jTextFieldkufang.setEditable(false);
         jTextFieldkufang.setName("jTextFieldkufang"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -522,13 +539,66 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         });
     }
 
+    //疫苗取消入库情况
+    @Action
+    public Task buhege() {
+        if (bindedMapyimiaoliebiaoList.size() < 1) {
+            AssetMessage.ERRORSYS("请选择要取消入库的疫苗！", this);
+            return null;
+        }
+        List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
+        for (int i = 0; i < bindedMapyimiaoliebiaoList.size(); i++) {
+            YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
+            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan.setShenqingdanId(yimiaoshenqingdanMaplist.get(i).getShenqingdanId());
+            yimiaoshenqingdan.setXiangdanId(yimiaoshenqingdanMaplist.get(i).getXiangdanId());
+            lb.setYimiaoshenqingdan(yimiaoshenqingdan);
+            String reason = "";
+            while (reason.isEmpty()) {
+                reason = AssetMessage.showInputDialog(null, "请输入取消入库疫苗【"
+                        + jTableyimiao.getValueAt(i, 1) + "】的理由(必输)：");
+                if (reason == null) {
+                    return null;
+                }
+            }
+            lb.getYimiaoshenqingdan().setReason("【入库】" + reason);
+            lst.add(lb);
+        }
+        return new Cancel(lst);
+    }
+
+    private class BuhegeTask extends org.jdesktop.application.Task<Object, Void> {
+
+        BuhegeTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to BuhegeTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public Task save() throws ParseException {
         YimiaochurukuEntity yimiaorukuEntity = new YimiaochurukuEntity();
 
-        churukudan.setChurukuId(DanHao.getDanHao("YMRK"));
+        churukudan.setChurukuId(jTextFielddanjuNo.getText());
         churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
-        if (jTextFieldkufang.getText().toString().trim().equals("")) {
+       
+        if (jTextFieldkufang.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请选择入库库房!");
             return null;
         }
@@ -540,6 +610,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
+            yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
             if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
                 AssetMessage.ERRORSYS("请输入入库疫苗!");
                 return null;
@@ -569,7 +640,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             public void responseResult(ComResponse<YimiaochurukuEntity> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     JOptionPane.showMessageDialog(null, "提交成功！");
-                    exit();
+                    close();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                     YiMiaoRuKu1JDialog ymrk1 = new YiMiaoRuKu1JDialog();
                     ymrk1.setLocationRelativeTo(mainFrame);
@@ -678,6 +749,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton7;

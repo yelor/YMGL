@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tb;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tbFindEntity;
@@ -48,6 +49,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity;
     private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
     private List<Yimiaoyanshou_detail_tb> bindedMaplist;
+    private List<Yimiaoshenqingdantb> yimiaoshenqingdanMaplist;
     private Yimiaoyanshoutb yimiaoyanshou;
     private boolean isNew;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -94,7 +96,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             }
 
         });
-        
+
         bindedMaplist = new ArrayList<Yimiaoyanshou_detail_tb>();
 
         jTextFieldYimiaoyanshouId.setText(DanHao.getDanHao("YMYS"));
@@ -206,10 +208,14 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     editTable.insertValue(9, quantity);
 
                     Yimiaoyanshou_detail_tb yanshou = new Yimiaoyanshou_detail_tb();
-
                     yanshou.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
-
                     bindedMaplist.add(yanshou);
+                    
+                    Yimiaoshenqingdantb yimiaoshenqing = new Yimiaoshenqingdantb();
+                    yimiaoshenqing.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
+                    yimiaoshenqing.setShenqingdanId((String) yimiaoshenqingdan.get("shenqingdanId"));
+                    yimiaoshenqingdanMaplist.add(yimiaoshenqing);
+                    
                 }
 
             }
@@ -249,7 +255,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -386,6 +394,13 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton2.setAction(actionMap.get("buhege")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setName("jButton2"); // NOI18N
+        jToolBar1.add(jButton2);
+
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -394,6 +409,12 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
+
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setName("jButton3"); // NOI18N
+        jToolBar1.add(jButton3);
 
         jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
@@ -626,13 +647,15 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextFieldCarcondition)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jTextFieldArrivetemp1)
-                                                .addGap(3, 3, 3)
-                                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jTextFieldXingshiKM, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel32)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jTextFieldArrivetemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jTextFieldXingshiKM, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLabel32)))
                                                 .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel8)
@@ -955,6 +978,58 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jTextFieldzhidanDate.setText(yimiaoyanshou.getYmysDate().toString());
     }
 
+    //疫苗验收不合格情况
+    @Action
+    public Task buhege() {
+        if (bindedMaplist.size() < 1) {
+            AssetMessage.ERRORSYS("请选择要取消入库的疫苗！", this);
+            return null;
+        }
+        List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
+        for (int i = 0; i < bindedMaplist.size(); i++) {
+            YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
+            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan.setShenqingdanId(yimiaoshenqingdanMaplist.get(i).getShenqingdanId());
+            yimiaoshenqingdan.setXiangdanId(yimiaoshenqingdanMaplist.get(i).getXiangdanId());
+            lb.setYimiaoshenqingdan(yimiaoshenqingdan);
+            String reason = "";
+            while (reason.isEmpty()) {
+                reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【"
+                        + jTable1.getValueAt(i, 1) + "】的理由(必输)：");
+                if (reason == null) {
+                    return null;
+                }
+            }
+            lb.getYimiaoshenqingdan().setReason("【入库】" + reason);
+            lst.add(lb);
+        }
+        return new Cancel(lst);
+    }
+
+    private class BuhegeTask extends org.jdesktop.application.Task<Object, Void> {
+
+        BuhegeTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to BuhegeTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public Task submitForm() throws ParseException {
         jTableyimiao.getCellEditor(jTableyimiao.getSelectedRow(),
@@ -1043,15 +1118,15 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                             .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
                 }
                 string.append("是否继续验收？选“否”或“取消”会要求输入原因，并不再验收以上所有疫苗");
-                int result = AssetMessage.showConfirmDialog(null, string.toString(),"确认",JOptionPane.YES_NO_OPTION);
+                int result = AssetMessage.showConfirmDialog(null, string.toString(), "确认", JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
                     String reason = null;
                     while (reason == null || reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【" + 
-                                lb.getYimiao().getYimiaoName()+ "】的理由(必输)：");
+                        reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【"
+                                + lb.getYimiao().getYimiaoName() + "】的理由(必输)：");
                     }
                     lb.getYimiaoshenqingdan().setReason("【验收】" + reason);
                 }
@@ -1100,7 +1175,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 return;
             }
             AssetMessage.INFO("提交成功！", YiMiaoYanShouDanJDialog.this);
-            exit();
+            close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             YiMiaoYanShouDanJDialog yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog();
             yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
@@ -1111,6 +1186,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
