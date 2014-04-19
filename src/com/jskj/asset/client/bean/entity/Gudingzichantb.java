@@ -29,6 +29,8 @@ public class Gudingzichantb {
 
     private String gdzcRemark;
 
+    private String gdzcBarcode;
+
     private String gdzcPhoto;
 
     private Integer deportId;
@@ -135,6 +137,14 @@ public class Gudingzichantb {
 
     public void setGdzcRemark(String gdzcRemark) {
         this.gdzcRemark = gdzcRemark == null ? null : gdzcRemark.trim();
+    }
+
+    public String getGdzcBarcode() {
+        return gdzcBarcode;
+    }
+
+    public void setGdzcBarcode(String gdzcBarcode) {
+        this.gdzcBarcode = gdzcBarcode == null ? null : gdzcBarcode.trim();
     }
 
     public String getGdzcPhoto() {

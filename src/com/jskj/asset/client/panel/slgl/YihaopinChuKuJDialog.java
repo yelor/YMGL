@@ -35,6 +35,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -56,6 +57,8 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
     private List<ZichanliebiaotbAll> list;
+    private boolean isNew;
+    private Map yuandanmap;
     /**
      * Creates new form GuDingZiChanChuKu
      * @param parent
@@ -68,6 +71,9 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        isNew = false;
+        yuandanmap = new HashMap();
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -160,12 +166,14 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     HashMap map = (HashMap)bindedMap.get("shenqingdan");
                     yuandanID = (String)map.get("shenqingdanId");
                     
-                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-                    zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer)dzyhpId);
-                    zclb.setQuantity(Integer.parseInt("" + dzyhpCount));
-                    zclb.setCgsqId(yuandanID);
-                    zc.add(zclb);
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(cgsqId.getText());
+//                    zclb.setCgzcId((Integer)gdzcId);
+//                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
+//                    zclb.setCgsqId(yuandanID);
+//                    zc.add(zclb);
+                    //保存原单号
+                    yuandanmap.put(dzyhpId, yuandanID);
                 }
 
             }
@@ -236,8 +244,16 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         });
     }
 
+    public void setNew(){
+        isNew = true;
+    }
+    
     @Action
     public void exit() {
+        if(isNew){
+            close();
+            return;
+        }
         String sql = " cgsq_id like \"YHLY%\" and is_completed = 1 and status = 7";
         new CloseTask(sql).execute();
     }
@@ -314,15 +330,20 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     //单个资产登记不合格情况
     @Action
     public Task buhege(){
-        if(zc.size() < 1){
+        if(jTable1.getRowCount()-1 < 1){
             AssetMessage.ERRORSYS("请选择要取消出库的资产！",this);
             return null;
         }
         List<ZichanliebiaotbAll> lst = new ArrayList<ZichanliebiaotbAll>();
-        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
             ZichanliebiaotbAll lb = new ZichanliebiaotbAll();
-            lb.setCgsqId(zc.get(i).getCgsqId());
-            lb.setCgzcId(zc.get(i).getCgzcId());
+            try{
+                lb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            lb.setCgsqId(yuandanmap.get(lb.getCgzcId()).toString());
             String reason = "";
             while (reason.isEmpty()) {
                 reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【"
@@ -339,12 +360,12 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     
     @Action
     public Task submitForm() throws ParseException{
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
-                jTable1.getSelectedColumn()).stopCellEditing();
-        if(zc.size() < 1){
+        if(jTable1.getRowCount()-1 < 1){
             AssetMessage.ERRORSYS("请选择要领用的物品！",this);
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         cgsq = new ChukudanDetailEntity();
         Zichanchukudantb sqd = new Zichanchukudantb();
         sqd.setChukudanId(cgsqId.getText());
@@ -353,13 +374,24 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         sqd.setDanjuleixingId(24);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
-        for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+        zc = new ArrayList<ZiChanLieBiaotb>();
+//        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()).toString());
+            zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
-            zc.get(i).setSaleprice(price);
-            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
-            zc.get(i).setIsCompleted(0);
-            zc.get(i).setStatus(0);
+            zclb.setSaleprice(price);
+            zclb.setTotalprice(zclb.getQuantity()*price);
+            zclb.setIsCompleted(0);
+            zclb.setStatus(0);
+            zc.add(zclb);
         }
         
         cgsq.setChukudan(sqd);

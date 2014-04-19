@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -55,6 +56,8 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
     private List<ZichanliebiaotbAll> list;
+    private boolean isNew;
+    private Map yuandanmap;
     /**
      * Creates new form GuDingZiChanRuKu
      * @param parent
@@ -67,6 +70,9 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        isNew = false;
+        yuandanmap = new HashMap();
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -160,12 +166,14 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
                     HashMap map = (HashMap)bindedMap.get("shenqingdan");
                     yuandanID = (String)map.get("shenqingdanId");
                     
-                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-                    zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
-                    zclb.setCgsqId(yuandanID);
-                    zc.add(zclb);
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(cgsqId.getText());
+//                    zclb.setCgzcId((Integer)gdzcId);
+//                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
+//                    zclb.setCgsqId(yuandanID);
+//                    zc.add(zclb);
+                    //保存原单号
+                    yuandanmap.put(gdzcId, yuandanID);
                 }
 
             }
@@ -236,8 +244,16 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
         });
     }
 
+    public void setNew(){
+        isNew = true;
+    }
+    
     @Action
     public void exit() {
+        if(isNew){
+            close();
+            return;
+        }
         String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 2"
             + " and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=1 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
         new CloseTask(sql).execute();
@@ -315,15 +331,20 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
     //单个资产登记不合格情况
     @Action
     public Task buhege(){
-        if(zc.size() < 1){
+        if(jTable1.getRowCount()-1 < 1){
             AssetMessage.ERRORSYS("请选择要取消入库的资产！",this);
             return null;
         }
         List<ZichanliebiaotbAll> lst = new ArrayList<ZichanliebiaotbAll>();
-        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
             ZichanliebiaotbAll lb = new ZichanliebiaotbAll();
-            lb.setCgsqId(zc.get(i).getCgsqId());
-            lb.setCgzcId(zc.get(i).getCgzcId());
+            try{
+                lb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            lb.setCgsqId(yuandanmap.get(lb.getCgzcId()).toString());
             String reason = "";
             while (reason.isEmpty()) {
                 reason = AssetMessage.showInputDialog(null, "请输入取消入库资产【"
@@ -340,7 +361,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
     
     @Action
     public Task submitForm() throws ParseException{
-        if(zc.size() < 1){
+        if(jTable1.getRowCount()-1 < 1){
             AssetMessage.ERRORSYS("请选择要入库的资产！",this);
             return null;
         }
@@ -354,13 +375,24 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
         sqd.setDanjuleixingId(18);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
-        for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+        zc = new ArrayList<ZiChanLieBiaotb>();
+//        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()).toString());
+            zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
-            zc.get(i).setSaleprice(price);
-            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
-            zc.get(i).setIsCompleted(0);
-            zc.get(i).setStatus(0);
+            zclb.setSaleprice(price);
+            zclb.setTotalprice(zclb.getQuantity()*price);
+            zclb.setIsCompleted(0);
+            zclb.setStatus(0);
+            zc.add(zclb);
         }
         
         cgsq.setRukudan(sqd);
@@ -385,25 +417,6 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
         };
     }
 
-    private class SubmitFormTask extends org.jdesktop.application.Task<Object, Void> {
-        SubmitFormTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to SubmitFormTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

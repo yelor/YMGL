@@ -40,6 +40,7 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
 
     private GudingzichanAll appParam;
     private BasePanel parentPanel;
+    private String barcode;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
@@ -137,12 +138,13 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         //自动帮定所有的值
         super.bind(paramData, jPanel3);
         super.bind(paramData, jPanel4);
+        barcode = appParam.getGdzcBarcode();
 
         if (appParam.getGdzcId() == null || appParam.getGdzcId() <= 0) { //新建
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("基本信息")); // NOI18N
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
-//            gdzcSequence.setText(DanHao.getDanHao("ZC"));
+            barcode = DanHao.getDanHao("ZC");
         } else {//更新
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("资产编号:" + appParam.getGdzcId())); // NOI18N
             jCheckBoxCont.setSelected(false);
@@ -191,6 +193,9 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
         super.copyToBean(appParam, jPanel3);
         super.copyToBean(appParam, jPanel4);
 
+        //单独保存barcode
+        appParam.setGdzcBarcode(barcode);
+        
         String depotId = jTextFieldDepotID.getText();
         String supplierId = jTextFieldSupplier.getText();
 

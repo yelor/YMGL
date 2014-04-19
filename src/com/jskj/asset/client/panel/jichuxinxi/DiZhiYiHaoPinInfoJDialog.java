@@ -40,6 +40,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
 
     private DizhiyihaopinAll appParam;
     private BasePanel parentPanel;
+    private String barcode;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
@@ -135,6 +136,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         //自动绑定所有的值
         super.bind(paramData, jPanel3);
         super.bind(paramData, jPanel4);
+        barcode = appParam.getDzyhpBarcode();
+        
         if(paramData.getZhijielingyong()!=null&&paramData.getZhijielingyong() == 0){
             jCheckBoxzjly.setSelected(true);
         }
@@ -144,7 +147,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
             jTextFieldDepotID.setText("");
-//            dzyhpBarcode.setText(DanHao.getDanHao("DZ"));
+            barcode = DanHao.getDanHao("DZ");
         } else {//更新
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("物品编号:" + appParam.getDzyhpId())); // NOI18N
             jCheckBoxCont.setSelected(false);
@@ -210,6 +213,9 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         String zujima = PingYinUtil.getFirstSpell(dzyhpName.getText().trim());
         appParam.setZujima(zujima);
         
+        //单独保存barcode
+        appParam.setDzyhpBarcode(barcode);
+        
         /*得到图片路径*/
         BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
         List source = mode.getSource();
@@ -250,25 +256,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
 
         };
 
-    }
-
-    private class SaveTask extends org.jdesktop.application.Task<Object, Void> {
-        SaveTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to SaveTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
     }
 
     /**
