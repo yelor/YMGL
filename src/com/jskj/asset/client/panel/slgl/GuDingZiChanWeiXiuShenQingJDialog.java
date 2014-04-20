@@ -121,11 +121,11 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
                     editTable.insertValue(4, gdzcXinghao);
                     editTable.insertValue(6, gdzcValue);
 
-                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-                    zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer) gdzcId);
-                    zclb.setQuantity(0);
-                    zc.add(zclb);
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(cgsqId.getText());
+//                    zclb.setCgzcId((Integer) gdzcId);
+//                    zclb.setQuantity(0);
+//                    zc.add(zclb);
                 }
 
             }
@@ -239,8 +239,8 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
 
     @Action
     public Task submitForm() throws ParseException {
-        if (zc.size() < 1) {
-            JOptionPane.showMessageDialog(null, "请选择要维修的资产！");
+        if (jTable1.getRowCount()-1 < 1) {
+            AssetMessage.showMessageDialog(null, "请选择要维修的资产！");
             return null;
         }
         jTable1.getCellEditor(jTable1.getSelectedRow(),
@@ -255,22 +255,32 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         sqd.setDanjuleixingId(21);
         sqd.setDanjujine((float) 0);
 
-        for (int i = 0; i < zc.size(); i++) {
+        zc = new ArrayList<ZiChanLieBiaotb>();
+//        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            zclb.setCgsqId(cgsqId.getText());
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
             if (jTable1.getValueAt(i, 5).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的维修数量！", this);
                 return null;
             }
             try {
-                int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-                zc.get(i).setQuantity(count);
+                zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             } catch (NumberFormatException e) {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的维修数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            zc.get(i).setSaleprice(Float.parseFloat("" + jTable1.getValueAt(i, 6)));
-            zc.get(i).setTotalprice(zc.get(i).getQuantity() * zc.get(i).getSaleprice());
-            zc.get(i).setIsCompleted(0);
-            zc.get(i).setStatus(5);
+            zclb.setSaleprice(Float.parseFloat("" + jTable1.getValueAt(i, 6)));
+            zclb.setTotalprice(zclb.getQuantity() * zclb.getSaleprice());
+            zclb.setIsCompleted(0);
+            zclb.setStatus(5);
+            zc.add(zclb);
         }
 
         wxsq.setSqd(sqd);

@@ -15,15 +15,15 @@ import org.springframework.web.client.RestClientException;
  *
  * @author woderchen
  */
-public class StockpiletbAllFindEntityTask extends BaseTask {
+public class YimiaoPicichaxunEntityTask extends BaseTask {
 
     private static final Logger logger = Logger.getLogger(UserTask.class);
-    private final String URI = Constants.HTTP + Constants.APPID + "yimiaokucunchaxun";
+    private final String URI = Constants.HTTP + Constants.APPID + "yimiaopicichaxun";
     private int pageSize = 20;
     private int pageIndex = 1;
     private String conditionSql;
     
-    public StockpiletbAllFindEntityTask(int pageIndex,int pageSize,String conditionSql) {
+    public YimiaoPicichaxunEntityTask(int pageIndex,int pageSize,String conditionSql) {
         super();
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;

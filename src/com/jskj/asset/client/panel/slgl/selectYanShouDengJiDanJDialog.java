@@ -153,6 +153,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 PTGuDingZiChanDengJiJDialog pTGuDingZiChanDengJiJDialog = new PTGuDingZiChanDengJiJDialog();
                 pTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
+                pTGuDingZiChanDengJiJDialog.setNew();
                 AssetClientApp.getApplication().show(pTGuDingZiChanDengJiJDialog);
             }
         });
@@ -167,6 +168,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 DiZhiYiHaoPinDengJiJDialog diZhiYiHaoPinDengJiJDialog = new DiZhiYiHaoPinDengJiJDialog();
                 diZhiYiHaoPinDengJiJDialog.setLocationRelativeTo(mainFrame);
+                diZhiYiHaoPinDengJiJDialog.setNew();
                 AssetClientApp.getApplication().show(diZhiYiHaoPinDengJiJDialog);
             }
         });
@@ -181,6 +183,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 ITGuDingZiChanDengJiJDialog iTGuDingZiChanDengJiJDialog = new ITGuDingZiChanDengJiJDialog();
                 iTGuDingZiChanDengJiJDialog.setLocationRelativeTo(mainFrame);
+                iTGuDingZiChanDengJiJDialog.setNew();
                 AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
             }
         });
@@ -195,6 +198,7 @@ public class selectYanShouDengJiDanJDialog extends javax.swing.JDialog {
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 GuDingZiChanYanShouJDialog guDingZiChanYanShouJDialog = new GuDingZiChanYanShouJDialog();
                 guDingZiChanYanShouJDialog.setLocationRelativeTo(mainFrame);
+                guDingZiChanYanShouJDialog.setNew();
                 AssetClientApp.getApplication().show(guDingZiChanYanShouJDialog);
             }
         });

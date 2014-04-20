@@ -48,14 +48,10 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jTextFielddanjuNo" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <EmptySpace pref="258" max="32767" attributes="0"/>
+                                      <EmptySpace pref="312" max="32767" attributes="0"/>
                                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jTextFieldzhidanDate" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldzhidanren" min="-2" pref="160" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPane2" max="32767" attributes="0"/>
                               </Group>
@@ -64,6 +60,16 @@
                       </Group>
                   </Group>
                   <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jTextFieldzhidanren" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jTextFieldkufang" min="-2" pref="160" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -81,24 +87,31 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jToolBar1" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jTextFielddanjuNo" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                  <Component id="jTextFieldzhidanDate" alignment="0" min="-2" pref="31" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" max="-2" attributes="0">
+                      <Component id="jLabel5" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jTextFieldkufang" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" max="32767" attributes="0"/>
                       <Component id="jTextFieldzhidanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jTextFieldzhidanDate" alignment="0" min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="272" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -129,7 +142,7 @@
         <Component class="javax.swing.JButton" name="jButton7">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuKu2" id="save" methodName="save"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuKu2JDialog" id="save" methodName="save"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton12.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
@@ -138,6 +151,18 @@
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuKu2JDialog" id="buhege" methodName="buhege"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton16">
@@ -165,7 +190,7 @@
         <Component class="javax.swing.JButton" name="jButton19">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuKu2" id="exit" methodName="exit"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuKu2JDialog" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton19.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton19.text"/>
@@ -328,6 +353,7 @@
     </Container>
     <Component class="javax.swing.JTextField" name="jTextFielddanjuNo">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jTextFielddanjuNo" noResource="true"/>
       </Properties>
       <AuxValues>
@@ -369,6 +395,20 @@
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="totalPrice.text"/>
         <Property name="name" type="java.lang.String" value="totalPrice" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldkufang">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="jTextFieldkufang" noResource="true"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel5.text"/>
+        <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>

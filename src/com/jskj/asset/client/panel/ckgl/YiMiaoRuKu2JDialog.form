@@ -122,7 +122,7 @@
         <Component class="javax.swing.JButton" name="jButton7">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu2" id="save" methodName="save"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu2JDialog" id="save" methodName="save"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton12.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
@@ -131,6 +131,18 @@
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu2JDialog" id="buhege" methodName="buhege"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton16">
@@ -158,7 +170,7 @@
         <Component class="javax.swing.JButton" name="jButton19">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu2" id="exit" methodName="exit"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoRuKu2JDialog" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton19.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton19.text"/>

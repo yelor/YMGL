@@ -27,6 +27,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
@@ -56,6 +57,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
     private KuozhanxinxiJDialog kzxx;
     private JFrame mainFrame;
     private List<ZichanliebiaotbAll> list;
+    private boolean isNew;
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -66,6 +68,8 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         mainFrame = AssetClientApp.getApplication().getMainFrame();
+        isNew = false;
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -158,8 +162,16 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
     
+    public void setNew(){
+        isNew = true;
+    }
+    
     @Action
     public void exit() {
+        if(isNew){
+            close();
+            return;
+        }
         String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
     }
@@ -192,10 +204,14 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
                     return;
                 }
                 for (ZichanliebiaotbAll lb : list) {
-                    String reason = null;
-                    while (reason == null || reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【" + 
-                                lb.getZcName() + "】的理由(必输)：");
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回登记页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.setReason("【登记】" + reason);
                 }
@@ -243,6 +259,34 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
             };
         }
         return null;
+    }
+    
+    //单个资产登记不合格情况
+    @Action
+    public Task buhege(){
+        if(jTextFieldName.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入资产名称！",this);
+            return null;
+        }
+        if(jTextFieldZcid.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入资产编号！",this);
+            return null;
+        }
+        List<ZichanliebiaotbAll> list = new ArrayList<ZichanliebiaotbAll>();
+        ZichanliebiaotbAll lb = new ZichanliebiaotbAll();
+        lb.setCgsqId(yuandanID);
+        lb.setCgzcId(Integer.parseInt(jTextFieldZcid.getText()));
+        String reason = "";
+        while (reason.isEmpty()) {
+            reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                    + jTextFieldName.getText() + "】的理由(必输)：");
+            if (reason == null) {
+                return null;
+            }
+        }
+        lb.setReason("【登记】" + reason);
+        list.add(lb);
+        return new Cancel(list);
     }
     
     @Action
@@ -373,6 +417,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         jTextAreaRemark = new javax.swing.JTextArea();
         jToolBar1 = new javax.swing.JToolBar();
         jButton5 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -489,6 +534,16 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
+        jButton8.setAction(actionMap.get("buhege")); // NOI18N
+        jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
+        jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setBorderPainted(false);
+        jButton8.setFocusable(false);
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton8.setName("jButton8"); // NOI18N
+        jButton8.setOpaque(false);
+        jToolBar1.add(jButton8);
+
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setBorderPainted(false);
@@ -525,7 +580,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -707,6 +762,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

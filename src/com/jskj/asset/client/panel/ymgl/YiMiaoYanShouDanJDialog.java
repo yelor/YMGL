@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tb;
 import com.jskj.asset.client.bean.entity.Yimiaoyanshou_detail_tbFindEntity;
@@ -48,6 +49,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity;
     private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
     private List<Yimiaoyanshou_detail_tb> bindedMaplist;
+    private List<Yimiaoshenqingdantb> yimiaoshenqingdanMaplist;
     private Yimiaoyanshoutb yimiaoyanshou;
     private boolean isNew;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -61,6 +63,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         super();
         init();
         initComponents();
+        yimiaoyanshou = new Yimiaoyanshoutb();
+        isNew = false;
 
         this.addWindowListener(new WindowListener() {
 
@@ -94,7 +98,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             }
 
         });
-        
+
         bindedMaplist = new ArrayList<Yimiaoyanshou_detail_tb>();
 
         jTextFieldYimiaoyanshouId.setText(DanHao.getDanHao("YMYS"));
@@ -206,10 +210,14 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     editTable.insertValue(9, quantity);
 
                     Yimiaoyanshou_detail_tb yanshou = new Yimiaoyanshou_detail_tb();
-
                     yanshou.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
-
                     bindedMaplist.add(yanshou);
+
+                    Yimiaoshenqingdantb yimiaoshenqing = new Yimiaoshenqingdantb();
+                    yimiaoshenqing.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
+                    yimiaoshenqing.setShenqingdanId((String) yimiaoshenqingdan.get("shenqingdanId"));
+                    yimiaoshenqingdanMaplist.add(yimiaoshenqing);
+
                 }
 
             }
@@ -249,7 +257,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jTable3 = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -386,6 +396,14 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton2.setAction(actionMap.get("buhege")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setName("jButton2"); // NOI18N
+        jToolBar1.add(jButton2);
+
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -394,6 +412,13 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
+
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setName("jButton3"); // NOI18N
+        jToolBar1.add(jButton3);
 
         jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
@@ -600,63 +625,71 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel25)
-                        .addGap(18, 18, 18)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldYimiaoyanshouId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldsongmiaoren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(jLabel11)
-                                            .addComponent(jLabel12))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jTextFieldYimiaoyanshouId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jTextFieldsongmiaoren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel8)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jTextFieldFamiaoperson, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel25)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel11)
+                                                .addComponent(jLabel12)
+                                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextFieldCarcondition)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jTextFieldArrivetemp1)
-                                                .addGap(3, 3, 3)
-                                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jTextFieldXingshiKM, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel32)
-                                                .addGap(0, 0, Short.MAX_VALUE))))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldFamiaoperson, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldstarttemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(80, 80, 80)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jTextFieldArrivetemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(5, 5, 5)
+                                                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jTextFieldXingshiKM, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLabel32))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jTextFieldstarttemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(5, 5, 5)
+                                                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(0, 0, Short.MAX_VALUE)))))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel16)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(80, 80, 80)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel14)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel16)
+                                            .addComponent(jLabel17)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel6)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
+                                        .addComponent(jLabel15)))))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -680,7 +713,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -737,9 +770,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                             .addComponent(jTextFieldFamiaoperson, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
                             .addComponent(jTextFieldstarttemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26))
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
@@ -935,17 +968,6 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         });
     }
 
-    public void setAddOrUpdate(boolean b) {
-        isNew = b;
-        if (isNew) {
-            this.setTitle("疫苗验收单");
-            yimiaoyanshou = new Yimiaoyanshoutb();
-
-        } else {
-            this.setTitle("疫苗验收单");
-        }
-    }
-
     public void setUpdatedData(Yimiaoyanshou_detail_tb yimiaoyanshou_detail) {
         if (yimiaoyanshou_detail == null) {
             return;
@@ -953,6 +975,58 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         this.yimiaoyanshou_detail = yimiaoyanshou_detail;
         jTextFieldYimiaoyanshouId.setText((yimiaoyanshou_detail.getYmysId()).toString());
         jTextFieldzhidanDate.setText(yimiaoyanshou.getYmysDate().toString());
+    }
+
+    //疫苗验收不合格情况
+    @Action
+    public Task buhege() {
+        if (bindedMaplist.size() < 1) {
+            AssetMessage.ERRORSYS("请选择要取消入库的疫苗！", this);
+            return null;
+        }
+        List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
+        for (int i = 0; i < bindedMaplist.size(); i++) {
+            YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
+            Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+            yimiaoshenqingdan.setShenqingdanId(yimiaoshenqingdanMaplist.get(i).getShenqingdanId());
+            yimiaoshenqingdan.setXiangdanId(yimiaoshenqingdanMaplist.get(i).getXiangdanId());
+            lb.setYimiaoshenqingdan(yimiaoshenqingdan);
+            String reason = "";
+            while (reason.isEmpty()) {
+                reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【"
+                        + jTable1.getValueAt(i, 1) + "】的理由(必输)：");
+                if (reason == null) {
+                    return null;
+                }
+            }
+            lb.getYimiaoshenqingdan().setReason("【入库】" + reason);
+            lst.add(lb);
+        }
+        return new Cancel(lst);
+    }
+
+    private class BuhegeTask extends org.jdesktop.application.Task<Object, Void> {
+
+        BuhegeTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to BuhegeTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     @Action
@@ -1015,8 +1089,16 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         return new SubmitFormTask(yimiaoyanshouEntity);
     }
 
+    public void setNew() {
+        isNew = true;
+    }
+
     @Action
     public void exit() {
+        if (isNew) {
+            close();
+            return;
+        }
         String sql = " (shenqingdan_id like \"YMSG%\" or shenqingdan_id like \"YMLQ%\") and is_completed = 1 and status = 1";
         new CloseTask(sql).execute();
     }
@@ -1043,15 +1125,15 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                             .append(yimiao.getYimiao().getYimiaoName()).append(")\n");
                 }
                 string.append("是否继续验收？选“否”或“取消”会要求输入原因，并不再验收以上所有疫苗");
-                int result = AssetMessage.showConfirmDialog(null, string.toString(),"确认",JOptionPane.YES_NO_OPTION);
+                int result = AssetMessage.showConfirmDialog(null, string.toString(), "确认", JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
                     String reason = null;
                     while (reason == null || reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【" + 
-                                lb.getYimiao().getYimiaoName()+ "】的理由(必输)：");
+                        reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【"
+                                + lb.getYimiao().getYimiaoName() + "】的理由(必输)：");
                     }
                     lb.getYimiaoshenqingdan().setReason("【验收】" + reason);
                 }
@@ -1088,7 +1170,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private class SubmitFormTask extends Yimiaoyanshou_detailUpdateTask {
 
         SubmitFormTask(Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity) {
-            super(yimiaoyanshouEntity, isNew ? Yimiaoyanshou_detailUpdateTask.ENTITY_SAVE : Yimiaoyanshou_detailUpdateTask.ENTITY_UPDATE);
+            super(yimiaoyanshouEntity, Yimiaoyanshou_detailUpdateTask.ENTITY_SAVE);
         }
 
         @Override
@@ -1100,17 +1182,18 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 return;
             }
             AssetMessage.INFO("提交成功！", YiMiaoYanShouDanJDialog.this);
-            exit();
+            close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             YiMiaoYanShouDanJDialog yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog();
             yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
-            yiMiaoYanShouJDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;

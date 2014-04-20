@@ -76,9 +76,9 @@ public class DanHao {
         } else if (shenqingdanId.startsWith(TYPE_YIMIAOSG)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoSheGouPlanJDialog";
         } else if (shenqingdanId.startsWith(TYPE_YIMIAOLY)) {
-            className = "com.jskj.asset.client.panel.ymgl.YiMiaoLingYongShenQingJDialog";
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoLingQuShenQingJDialog";
         } else if (shenqingdanId.startsWith(TYPE_YIMIAOCG)) {
-            className = "com.jskj.asset.client.panel.ymgl.YiMiaoCaiGouShenQingJDialog";
+            className = "com.jskj.asset.client.panel.ymgl.YiMiaoSheGouShenQingJDialog";
         } else if (shenqingdanId.startsWith(TYPE_YIMIAOTJ)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoTiaoJiaJDialog";
         } else if (shenqingdanId.startsWith(TYPE_YIMIAOBS)) {

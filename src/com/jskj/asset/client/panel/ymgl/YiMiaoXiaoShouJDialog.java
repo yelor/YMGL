@@ -123,7 +123,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\"))";
+                    sql += "stockpile.stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price>0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\"))";
                 } else {
                     sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
                 }
@@ -143,6 +143,8 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Stockpiletb stockpile = new Stockpiletb();
                     stockpile.setStockpileQuantity(Integer.parseInt("" + bindedMap.get("stockpileQuantity")));
                     stockpileList.add(stockpile);
+                    
+                    System.out.println(bindedMap.get("stockpileQuantity"));
                     Object yimiaoId = yimiao.get("yimiaoId");
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
@@ -723,7 +725,9 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
             sale_detail.setStatus(0);
             list.add(sale_detail);
+            total += sale_detail.getTotalprice();
         }
+        sale.setDanjujine(total);
         yimiaoxiaoshou.setSale(sale);
         yimiaoxiaoshou.setSale_details(list);
         return new SubmitFormTask(yimiaoxiaoshou);

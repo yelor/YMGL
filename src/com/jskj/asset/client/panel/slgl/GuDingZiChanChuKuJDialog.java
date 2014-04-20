@@ -31,10 +31,10 @@ import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -56,6 +56,8 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
     private List<ZichanliebiaotbAll> list;
+    private boolean isNew;
+    private Map yuandanmap;
     /**
      * Creates new form GuDingZiChanChuKu
      * @param parent
@@ -68,6 +70,9 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
+        isNew = false;
+        yuandanmap = new HashMap();
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -160,12 +165,14 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     HashMap map = (HashMap)bindedMap.get("shenqingdan");
                     yuandanID = (String)map.get("shenqingdanId");
                     
-                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-                    zclb.setCgsqId(cgsqId.getText());
-                    zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
-                    zclb.setCgsqId(yuandanID);
-                    zc.add(zclb);
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(cgsqId.getText());
+//                    zclb.setCgzcId((Integer)gdzcId);
+//                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
+//                    zclb.setCgsqId(yuandanID);
+//                    zc.add(zclb);
+                    //保存原单号
+                    yuandanmap.put(gdzcId, yuandanID);
                 }
 
             }
@@ -236,8 +243,16 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         });
     }
 
+    public void setNew(){
+        isNew = true;
+    }
+    
     @Action
     public void exit() {
+        if(isNew){
+            close();
+            return;
+        }
         String sql = " (cgsq_id like \"PTLY%\" or cgsq_id like \"ITLY%\") and is_completed = 1 and status = 7";
         new CloseTask(sql).execute();
     }
@@ -270,10 +285,14 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     return;
                 }
                 for (ZichanliebiaotbAll lb : list) {
-                    String reason = null;
-                    while (reason == null || reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【" + 
-                                lb.getZcName() + "】的理由(必输)：");
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回入库页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.setReason("【出库】" + reason);
                 }
@@ -307,14 +326,45 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
 
     }
     
+    //单个资产登记不合格情况
+    @Action
+    public Task buhege(){
+        if(jTable1.getRowCount()-1 < 1){
+            AssetMessage.ERRORSYS("请选择要取消出库的资产！",this);
+            return null;
+        }
+        List<ZichanliebiaotbAll> lst = new ArrayList<ZichanliebiaotbAll>();
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZichanliebiaotbAll lb = new ZichanliebiaotbAll();
+            try{
+                lb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            lb.setCgsqId(yuandanmap.get(lb.getCgzcId()).toString());
+            String reason = "";
+            while (reason.isEmpty()) {
+                reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【"
+                        + jTable1.getValueAt(i, 1) + "】的理由(必输)：");
+                if (reason == null) {
+                    return null;
+                }
+            }
+            lb.setReason("【出库】" + reason);
+            lst.add(lb);
+        }
+        return new Cancel(lst);
+    }
+    
     @Action
     public Task submitForm() throws ParseException{
-        jTable1.getCellEditor(jTable1.getSelectedRow(),
-                jTable1.getSelectedColumn()).stopCellEditing();
-        if(zc.size() < 1){
+        if(jTable1.getRowCount()-1 < 1){
             AssetMessage.ERRORSYS("请选择要出库的资产！",this);
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         cgsq = new ChukudanDetailEntity();
         Zichanchukudantb sqd = new Zichanchukudantb();
         sqd.setChukudanId(cgsqId.getText());
@@ -323,13 +373,24 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         sqd.setDanjuleixingId(18);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
-        for(int i = 0; i < zc.size(); i++){
-            zc.get(i).setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+        zc = new ArrayList<ZiChanLieBiaotb>();
+//        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
+            zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()).toString());
+            zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
-            zc.get(i).setSaleprice(price);
-            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
-            zc.get(i).setIsCompleted(0);
-            zc.get(i).setStatus(0);
+            zclb.setSaleprice(price);
+            zclb.setTotalprice(zclb.getQuantity()*price);
+            zclb.setIsCompleted(0);
+            zclb.setStatus(0);
+            zc.add(zclb);
         }
         
         cgsq.setChukudan(sqd);
@@ -376,6 +437,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         jTable1 = new BaseTable(null);
         jToolBar1 = new javax.swing.JToolBar();
         jButton10 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
@@ -497,6 +559,16 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         jButton10.setName("jButton10"); // NOI18N
         jButton10.setOpaque(false);
         jToolBar1.add(jButton10);
+
+        jButton2.setAction(actionMap.get("buhege")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setOpaque(false);
+        jToolBar1.add(jButton2);
 
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
@@ -629,6 +701,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;

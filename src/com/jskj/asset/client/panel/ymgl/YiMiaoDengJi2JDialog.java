@@ -7,6 +7,7 @@ package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Yimiaodengjitb;
+import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingliebiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -24,6 +25,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
@@ -43,6 +45,8 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
     private SimpleDateFormat dateformate;
     private boolean isNew;
     private List<YimiaoshenqingliebiaoEntity> list;
+    private int xiangdanID;
+    private String shengqingdanID;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
@@ -51,6 +55,8 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         super();
         init();
         initComponents();
+        yimiaodengji = new Yimiaodengjitb();
+        isNew=false;
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -130,6 +136,8 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
                     jTextFieldkucunUp.setText(yimiaoAll.get("yimiaoStockup") == null ? "" : yimiaoAll.get("yimiaoStockup").toString());
                     yimiaodengji.setYimiaoId((Integer) yimiaoAll.get("yimiaoId"));
                     yimiaodengji.setXiangdanId((Integer) yimiaoshenqingdan.get("xiangdanId"));
+                    xiangdanID = (Integer) yimiaoshenqingdan.get("xiangdanId");
+                    shengqingdanID = (String) yimiaoshenqingdan.get("shenqingdanId");
                 }
             }
         });
@@ -230,9 +238,10 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jComboBoxSource = new javax.swing.JComboBox();
         jTextFieldYimiaoJixing = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
+        jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jButton1 = new ScanButton();
         jButton2 = new ScanButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -570,6 +579,24 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoDengJi2JDialog.class, this);
+        jButton3.setAction(actionMap.get("submitForm")); // NOI18N
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.setOpaque(false);
+        jToolBar1.add(jButton3);
+
+        jButton5.setAction(actionMap.get("buhege")); // NOI18N
+        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorderPainted(false);
+        jButton5.setFocusable(false);
+        jButton5.setName("jButton5"); // NOI18N
+        jToolBar1.add(jButton5);
+
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
@@ -585,16 +612,6 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jButton2.setName("jButton2"); // NOI18N
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoDengJi2JDialog.class, this);
-        jButton3.setAction(actionMap.get("submitForm")); // NOI18N
-        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.setFocusable(false);
-        jButton3.setName("jButton3"); // NOI18N
-        jButton3.setOpaque(false);
-        jToolBar1.add(jButton3);
 
         jButton4.setAction(actionMap.get("exit")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
@@ -744,15 +761,6 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         });
     }
 
-    public void setAddOrUpdate(boolean b) {
-        isNew = b;
-        if (isNew) {
-            this.setTitle("Ⅱ类疫苗登记单");
-            yimiaodengji = new Yimiaodengjitb();
-        } else {
-            this.setTitle("Ⅱ类疫苗登记单");
-        }
-    }
 
     public void setUpdatedData(Yimiaodengjitb yimiaodengji) {
         if (yimiaodengji == null) {
@@ -763,6 +771,60 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
 
     }
 
+    //单个疫苗登记不合格情况
+    @Action
+    public Task buhege() {
+        if (jTextFieldYimiaoName.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入疫苗名称！", this);
+            return null;
+        }
+        if (jTextFieldYimiaoId.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入疫苗编号！", this);
+            return null;
+        }
+        List<YimiaoshenqingliebiaoEntity> list = new ArrayList<YimiaoshenqingliebiaoEntity>();
+        YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
+        Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
+        yimiaoshenqingdan.setShenqingdanId(shengqingdanID);
+        yimiaoshenqingdan.setXiangdanId(xiangdanID);
+        lb.setYimiaoshenqingdan(yimiaoshenqingdan);
+        String reason = "";
+        while (reason.isEmpty()) {
+            reason = AssetMessage.showInputDialog(null, "请输入取消登记疫苗【"
+                    + jTextFieldYimiaoName.getText() + "】的理由(必输)：");
+            if (reason == null) {
+                return null;
+            }
+        }
+        lb.getYimiaoshenqingdan().setReason("【登记】" + reason);
+        list.add(lb);
+        return new YiMiaoDengJi2JDialog.Cancel(list);
+    }
+
+    private class BuhegeTask extends org.jdesktop.application.Task<Object, Void> {
+
+        BuhegeTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to BuhegeTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public Task submitForm() throws ParseException {
         if (jTextFieldYimiaoName.getText().trim().equals("")) {
@@ -771,6 +833,10 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         }
         if (jTextFieldpihao.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗批号!");
+            return null;
+        }
+        if (jTextFieldpiqianfahege.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("请输入疫苗批签发合格证编号!");
             return null;
         }
         yimiaodengji.setPihao(jTextFieldpihao.getText());
@@ -796,8 +862,16 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         return new SubmitFormTask(yimiaodengji);
     }
 
+    public void setNew() {
+        isNew = true;
+    }
+
     @Action
     public void exit() {
+        if (isNew) {
+            close();
+            return;
+        }
         String sql = " shenqingdan_id like \"YMSG%\" and danjuleixing_id=6 and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
     }
@@ -829,12 +903,15 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
                     return;
                 }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
-                    String reason = null;
-                    while (reason == null || reason.isEmpty()) {
+                    String reason = "";
+                    while (reason.isEmpty()) {
                         reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
                                 + lb.getYimiao().getYimiaoName() + "】的理由(必输)：");
-                        lb.getYimiaoshenqingdan().setReason("【登记】" + reason);
+                        if (reason == null) {
+                            return;
+                        }
                     }
+                    lb.getYimiaoshenqingdan().setReason("【登记】" + reason);
                 }
                 new YiMiaoDengJi2JDialog.Cancel(list).execute();
             }
@@ -869,7 +946,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
     private class SubmitFormTask extends YimiaodengjiUpdateTask {
 
         SubmitFormTask(Yimiaodengjitb yimiaodengji) {
-            super(yimiaodengji, isNew ? YimiaodengjiUpdateTask.ENTITY_SAVE : YimiaodengjiUpdateTask.ENTITY_UPDATE);
+            super(yimiaodengji, YimiaodengjiUpdateTask.ENTITY_SAVE);
         }
 
         @Override
@@ -881,12 +958,10 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
                 return;
             }
             AssetMessage.INFO("提交成功！", YiMiaoDengJi2JDialog.this);
-            exit();
-
+            close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog();
             yiMiaoDengJi2JDialog.setLocationRelativeTo(mainFrame);
-            yiMiaoDengJi2JDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(yiMiaoDengJi2JDialog);
         }
     }
@@ -896,6 +971,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBoxSource;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

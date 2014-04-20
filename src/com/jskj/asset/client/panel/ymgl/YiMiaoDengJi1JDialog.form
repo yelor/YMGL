@@ -471,6 +471,31 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoDengJi1JDialog" id="submitForm" methodName="submitForm"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton5">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoDengJi1JDialog" id="buhege" methodName="buhege"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
+            <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
@@ -496,19 +521,6 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ScanButton()"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
-          <Properties>
-            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoDengJi1JDialog" id="submitForm" methodName="submitForm"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
-            <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
-            <Property name="borderPainted" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton4">
           <Properties>

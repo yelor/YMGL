@@ -116,11 +116,11 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
                     editTable.insertValue(4, gdzcXinghao);
                     editTable.insertValue(6, gdzcValue);
 
-                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-                    zclb.setCgsqId(jTextField1.getText());
-                    zclb.setCgzcId((Integer)gdzcId);
-                    zclb.setQuantity(0);
-                    zc.add(zclb);
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(jTextField1.getText());
+//                    zclb.setCgzcId((Integer)gdzcId);
+//                    zclb.setQuantity(0);
+//                    zc.add(zclb);
                 }
 
             }
@@ -161,8 +161,8 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
     
     @Action
     public Task submitForm() throws ParseException{
-        if(zc.size() < 1){
-            JOptionPane.showMessageDialog(null, "请选择要退库的资产！");
+        if (jTable1.getRowCount()-1 < 1) {
+            AssetMessage.showMessageDialog(null, "请选择要退库的资产！");
             return null;
         }
         jTable1.getCellEditor(jTable1.getSelectedRow(),
@@ -175,23 +175,33 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         sqd.setShenqingrenId(userId);
         sqd.setZhidanrenId(userId);
         
-        for(int i = 0; i < zc.size(); i++){
+        zc = new ArrayList<ZiChanLieBiaotb>();
+//        for (int i = 0; i < zc.size(); i++) {
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            zclb.setCgsqId(jTextField1.getText());
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return null;
+            }
             if (jTable1.getValueAt(i, 5).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的退库数量！", this);
                 return null;
             }
             try {
-                int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-                zc.get(i).setQuantity(count);
+                zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
             } catch (NumberFormatException e) {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的退库数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
-            zc.get(i).setSaleprice(price);
-            zc.get(i).setTotalprice(zc.get(i).getQuantity()*price);
-            zc.get(i).setIsCompleted(1);
-            zc.get(i).setStatus(9);
+            zclb.setSaleprice(price);
+            zclb.setTotalprice(zclb.getQuantity()*price);
+            zclb.setIsCompleted(1);
+            zclb.setStatus(9);
+            zc.add(zclb);
         }
         
         lytk.setSqd(sqd);
