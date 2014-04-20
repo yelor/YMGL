@@ -159,10 +159,11 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                 sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 1"
+                        + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=0 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id in (5,6) and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 1 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString() + "%\")) ";
-                } else {
-                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where is_completed = 1 and status = 1 and danjuleixing_id in (5,6))";
+                    sql += (" and yimiao_id in ( select yimiao_id  from yimiao where yimiao_name like \"%" + newColumnObj.toString() + "%\""
+                            + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -1099,7 +1100,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             close();
             return;
         }
-        String sql = " (shenqingdan_id like \"YMSG%\" or shenqingdan_id like \"YMLQ%\") and is_completed = 1 and status = 1";
+        String sql = " (shenqingdan_id like \"YMSG%\" or shenqingdan_id like \"YMLQ%\") and is_completed = 1 and status = 1"
+                + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=0 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
         new CloseTask(sql).execute();
     }
 
