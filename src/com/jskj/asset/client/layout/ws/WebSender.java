@@ -6,7 +6,6 @@
 package com.jskj.asset.client.layout.ws;
 
 import java.net.URI;
-import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,8 +13,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,7 +33,6 @@ public class WebSender extends RestTemplate {
             T obj = super.getForObject(url, responseType);
             return obj;
         } catch (Exception e) {
-            System.out.println("@@@@@@@@@@@@@@@@@:" + e);
             throw new RestClientException("" + e.getLocalizedMessage());
         }
 
@@ -47,7 +43,6 @@ public class WebSender extends RestTemplate {
             T obj = super.postForObject(url, request, responseType);;
             return obj;
         } catch (Exception e) {
-            System.out.println("@@@@@@@@@@@@@@@@@:" + e);
             throw new RestClientException("" + e.getLocalizedMessage());
         }
 
@@ -58,7 +53,6 @@ public class WebSender extends RestTemplate {
             URI uri = super.postForLocation(url, request);
             return uri;
         } catch (Exception e) {
-            System.out.println("@@@@@@@@@@@@@@@@@:" + e);
             throw new RestClientException("" + e.getLocalizedMessage());
         }
 
@@ -69,7 +63,6 @@ public class WebSender extends RestTemplate {
             ResponseEntity<T> res = super.exchange(url, method, requestEntity, responseType);
             return res;
         } catch (Exception e) {
-            System.out.println("@@@@@@@@@@@@@@@@@:" + e);
             throw new RestClientException("" + e.getLocalizedMessage());
         }
     }

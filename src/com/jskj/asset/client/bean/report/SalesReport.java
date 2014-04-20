@@ -3,6 +3,7 @@
  */
 package com.jskj.asset.client.bean.report;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jskj.asset.client.bean.entity.Kehudanweitb;
 import com.jskj.asset.client.bean.entity.Saletb;
 import com.jskj.asset.client.bean.entity.UsertbAll;
@@ -11,6 +12,7 @@ import com.jskj.asset.client.bean.entity.UsertbAll;
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalesReport extends Saletb {
 
     private Kehudanweitb kehudanwei;

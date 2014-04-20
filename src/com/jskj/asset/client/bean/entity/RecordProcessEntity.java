@@ -3,12 +3,14 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
 /**
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecordProcessEntity {
 
     private String shenqingdanId;

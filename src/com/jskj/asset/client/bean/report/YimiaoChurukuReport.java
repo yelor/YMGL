@@ -3,6 +3,7 @@
  */
 package com.jskj.asset.client.bean.report;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.Danjuleixingtb;
 import com.jskj.asset.client.bean.entity.Supplier;
@@ -14,6 +15,7 @@ import com.jskj.asset.client.bean.entity.UsertbAll;
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class YimiaoChurukuReport extends Churukudantb {
 
     private Supplier suppliertb;

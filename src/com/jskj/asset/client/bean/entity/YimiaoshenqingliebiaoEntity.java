@@ -3,11 +3,13 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
  * @author huiqi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class YimiaoshenqingliebiaoEntity {
 
     private Yimiaoshenqingdantb yimiaoshenqingdan;

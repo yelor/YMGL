@@ -4,11 +4,13 @@
 
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
  * @author huiqi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SaleyimiaoEntity{
     
     private YimiaoAll yimiaoAll;
@@ -18,9 +20,9 @@ public class SaleyimiaoEntity{
     private Saletb saletb;
     
     private Sale_detail_tb sale_detail_tb;
-    
-    private Kehudanweitb kehudanwei;
 
+    private Kehudanweitb kehudanwei;
+    
     public YimiaoAll getYimiaoAll() {
         return yimiaoAll;
     }

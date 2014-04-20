@@ -4,10 +4,13 @@
 
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  *
  * @author tt
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CaigoujihuaChaxunEntity {
     private Integer gdzcId;
 

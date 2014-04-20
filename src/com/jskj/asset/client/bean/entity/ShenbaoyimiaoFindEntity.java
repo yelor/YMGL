@@ -3,12 +3,14 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author huiqi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ShenbaoyimiaoFindEntity {
 
     private int count;
@@ -30,6 +32,5 @@ public class ShenbaoyimiaoFindEntity {
     public void setResult(List<ShenbaoyimiaoEntity> result) {
         this.result = result;
     }
-    
     
 }

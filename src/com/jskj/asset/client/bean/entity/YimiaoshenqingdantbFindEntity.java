@@ -3,16 +3,18 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author huiqi
  */
-public class YimiaoshenqingdantbFindEntity{
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class YimiaoshenqingdantbFindEntity {
 
     private Shenqingdantb shenqingdan;
-
+    
     private int count;
 
     private List<Yimiaoshenqingdantb> yimiaoshenqingdans;
@@ -24,7 +26,6 @@ public class YimiaoshenqingdantbFindEntity{
     public void setShenqingdan(Shenqingdantb shenqingdan) {
         this.shenqingdan = shenqingdan;
     }
-
     public int getCount() {
         return count;
     }

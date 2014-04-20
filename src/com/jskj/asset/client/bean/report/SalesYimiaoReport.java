@@ -3,6 +3,7 @@
  */
 package com.jskj.asset.client.bean.report;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jskj.asset.client.bean.entity.Sale_detail_tb;
 import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
@@ -11,6 +12,7 @@ import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SalesYimiaoReport extends Sale_detail_tb {
 
     private YiMiaotb yimiaotb;

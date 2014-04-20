@@ -3,15 +3,16 @@
  */
 package com.jskj.asset.client.bean.report;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.bean.entity.Yimiaoshenpiliucheng;
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
-
 
 /**
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CaiGouYimiaoReport extends Yimiaoshenqingdantb {
 
     private YiMiaotb yimiaotb;

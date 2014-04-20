@@ -4,11 +4,13 @@
 
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
  * @author haitao
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class YihaopinliebiaoEntity extends Dizhiyihaopin{
     
     private int count;

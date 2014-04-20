@@ -4,12 +4,14 @@
 
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author huiqi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SaletbFindEntity{
      private int count;
     

@@ -6,12 +6,14 @@
 
 package com.jskj.asset.client.bean.report;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
 /**
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CaigouChartReport {
     
     private String state;
@@ -94,7 +96,7 @@ public class CaigouChartReport {
         this.price = price;
     }
 
-  
-    
+
+       
     
 }

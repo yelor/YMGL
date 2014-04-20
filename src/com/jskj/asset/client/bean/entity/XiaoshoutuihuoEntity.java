@@ -3,12 +3,14 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author huiqi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class XiaoshoutuihuoEntity {
 
     private Backsaletb backsaletb;
@@ -30,7 +32,5 @@ public class XiaoshoutuihuoEntity {
     public void setBacksale_details(List<Backsale_detail_tb> backsale_details) {
         this.backsale_details = backsale_details;
     }
-
- 
 
 }
