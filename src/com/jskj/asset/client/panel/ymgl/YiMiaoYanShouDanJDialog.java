@@ -159,7 +159,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                 sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 1"
+                sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 1"
                         + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=0 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and yimiao_id in ( select yimiao_id  from yimiao where yimiao_name like \"%" + newColumnObj.toString() + "%\""
@@ -1133,9 +1133,12 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
                     String reason = null;
-                    while (reason == null || reason.isEmpty()) {
+                    while (reason.isEmpty()) {
                         reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【"
                                 + lb.getYimiao().getYimiaoName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.getYimiaoshenqingdan().setReason("【验收】" + reason);
                 }

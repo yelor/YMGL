@@ -726,6 +726,9 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     while (reason == null || reason.isEmpty()) {
                         reason = AssetMessage.showInputDialog(null, "请输入取消入库疫苗【"
                                 + lb.getYimiao().getYimiaoName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.getYimiaoshenqingdan().setReason("【入库】" + reason);
                 }
