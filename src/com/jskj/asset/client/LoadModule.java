@@ -444,7 +444,7 @@ public class LoadModule extends BaseTask {
 
     @Action
     public Task showDiZhiYiHaoPin() {
-        return new OpenTabTask("基础数据-低值易耗品", new DiZhiYiHaoPinPanel(), false);
+        return new OpenTabTask("基础数据-易耗品", new DiZhiYiHaoPinPanel(), false);
     }
 
     @Action
