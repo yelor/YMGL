@@ -3,29 +3,23 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author huiqi
  */
-public class XiaoshoushenpixiangdanEntity {
-
-    private Saletb saletb;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class XiaoshoushenpixiangdanEntity{
 
     private Kehudanweitb kehudanwei;
 
     private UsertbAll userAll;
-
+    
+    private Saletb saletb;
+    
     private List<SaleyimiaoEntity> result;
-
-    public Saletb getSaletb() {
-        return saletb;
-    }
-
-    public void setSaletb(Saletb saletb) {
-        this.saletb = saletb;
-    }
 
     public Kehudanweitb getKehudanwei() {
         return kehudanwei;
@@ -43,6 +37,14 @@ public class XiaoshoushenpixiangdanEntity {
         this.userAll = userAll;
     }
 
+    public Saletb getSaletb() {
+        return saletb;
+    }
+
+    public void setSaletb(Saletb saletb) {
+        this.saletb = saletb;
+    }
+
     public List<SaleyimiaoEntity> getResult() {
         return result;
     }
@@ -51,6 +53,6 @@ public class XiaoshoushenpixiangdanEntity {
         this.result = result;
     }
 
+   
 
-    
 }

@@ -9,7 +9,6 @@ import com.jskj.asset.client.bean.entity.Depot;
 import com.jskj.asset.client.bean.entity.Kehudanweitb;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.bean.entity.YiMiaotb;
-
 import java.util.Date;
 
 /**

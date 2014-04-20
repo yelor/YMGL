@@ -3,13 +3,15 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author huiqi
  */
-public class Sale_detail_tbFindEntity {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Sale_detail_tbFindEntity{
 
     private Saletb sale;
 

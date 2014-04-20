@@ -4,12 +4,14 @@
 
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DepartmentFindEntity {
     private int count;
     private List<DepartmenttbAll> result;

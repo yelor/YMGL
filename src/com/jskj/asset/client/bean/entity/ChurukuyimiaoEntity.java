@@ -4,12 +4,13 @@
 
 package com.jskj.asset.client.bean.entity;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
  * @author tt
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ChurukuyimiaoEntity extends YiMiaotb{   
     
    private Yimiaodengjitb yimiaodengjitb;

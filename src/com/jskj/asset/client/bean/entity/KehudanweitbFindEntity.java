@@ -1,19 +1,21 @@
 /*
  * 2014 Chengdu JunChen Technology
  */
-
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author huiqi
  */
-public class KehudanweitbFindEntity extends Kehudanweitb{
-     private int count;
-    
-    private  List<Kehudanweitb> result;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class KehudanweitbFindEntity {
+
+    private int count;
+
+    private List<Kehudanweitb> result;
 
     public int getCount() {
         return count;
@@ -30,7 +32,5 @@ public class KehudanweitbFindEntity extends Kehudanweitb{
     public void setResult(List<Kehudanweitb> result) {
         this.result = result;
     }
-    
-    
-    
+
 }

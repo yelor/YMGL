@@ -3,11 +3,13 @@
  */
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
  * @author huiqi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class YanshouyimiaoEntity extends DengjiyimiaoEntity {
     private Supplier gongyingdanwei;
 
@@ -21,7 +23,8 @@ public class YanshouyimiaoEntity extends DengjiyimiaoEntity {
 
     public void setGongyingdanwei(Supplier gongyingdanwei) {
         this.gongyingdanwei = gongyingdanwei;
-    }
+    } 
+    
 
     public Yimiaoyanshoutb getYimiaoyanshou() {
         return yimiaoyanshou;
