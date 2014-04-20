@@ -151,7 +151,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
-                    Float stockpilePrice = Float.parseFloat("" + bindedMap.get("stockpilePrice"));
+                    Float stockpilePrice = Float.parseFloat("" + bindedMap.get("yimiaoyushoujia"));
                     Object youxiaoqi = bindedMap.get("youxiaodate");
                     Object pihao = bindedMap.get("pihao");
 
