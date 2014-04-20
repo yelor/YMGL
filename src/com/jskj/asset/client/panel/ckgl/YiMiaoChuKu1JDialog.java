@@ -110,7 +110,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "sale_detail_id in (select distinct sale_detail.sale_detail_id from sale_detail,yimiao where and sale_detail.is_completed = 1 and sale_detail.status = 0 and sale_detail.price=0 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")) ";
+                    sql += "sale_detail_id in (select distinct sale_detail.sale_detail_id from sale_detail,yimiao where sale_detail.is_completed = 1 and sale_detail.status = 0 and sale_detail.price=0 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")) ";
                 } else {
                     sql += "sale_detail_id in (select distinct sale_detail_id from sale_detail where is_completed = 1 and status = 0 and price=0 )";
                 }
