@@ -20,8 +20,20 @@ import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+import static net.sf.dynamicreports.report.builder.DynamicReports.type;
+import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  *
@@ -431,6 +443,49 @@ public abstract class BaseDialog extends JDialog {
                 }
             }
         }
+    }
+
+    protected void print(String title, JTable table) throws DRException {
+        int rowCount = table.getRowCount();
+        int columnCount = table.getColumnCount();
+
+        TextColumnBuilder[] itemColumns = new TextColumnBuilder[columnCount];
+        String[] columnName = new String[columnCount];
+        for (int i = 0; i < columnCount; i++) {
+            Object headerValue = table.getTableHeader().getColumnModel().getColumn(i).getHeaderValue();
+            columnName[i] = "A" + i;
+            itemColumns[i] = col.column(headerValue.toString(), columnName[i], type.stringType());
+        }
+
+        DRDataSource dataSource = new DRDataSource(columnName);
+        for (int i = 0; i < rowCount; i++) {
+            Object[] values = new Object[columnCount];
+            for (int j = 0; j < columnCount; j++) {
+                Object valuObj = table.getValueAt(i, j);
+                values[j] = valuObj.toString();
+
+            }
+            dataSource.add(values);
+        }
+
+        report().setTemplate(ReportTemplates.reportTemplate)
+                .columns(itemColumns)
+                .title(ReportTemplates.createTitleComponent(title),
+                        cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
+                                cmp.hListCell(createCustomerComponent(null)).heightFixedOnTop()),
+                        cmp.verticalGap(10))
+                .pageFooter(ReportTemplates.footerComponent)
+                //.sortBy(asc(itemColumn), desc(unitPriceColumn))
+                .setDataSource(dataSource)
+                .show(false);
+    }
+
+    private ComponentBuilder<?, ?> createCustomerComponent(String customer) {
+        HorizontalListBuilder list = cmp.horizontalList().setBaseStyle(stl.style().setTopBorder(stl.pen1Point()).setLeftPadding(10));
+
+        list.add(cmp.text("A" + ":").setFixedColumns(8).setStyle(ReportTemplates.boldStyle), cmp.text("V")).newRow();
+
+        return cmp.verticalList(list);
     }
 
 }
