@@ -53,6 +53,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     public YiMiaoChuKu1JDialog() {
         super();
         initComponents();
+        churukudan = new Churukudantb();
 
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMCK"));
         jTextFielddanjuNo.setEditable(false);
