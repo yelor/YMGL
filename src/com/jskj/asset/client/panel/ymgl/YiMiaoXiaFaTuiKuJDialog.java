@@ -39,6 +39,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
     private Backsale_detail_tb backsale_detail;
     private Backsaletb backsale;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
 
     /**
@@ -636,7 +637,6 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         }
         yimiaoxiafaTuiku = new XiaoshoutuihuoEntity();
         backsale.setBacksaleId(jTextFieldXiafaId.getText());
-        dateformate = new SimpleDateFormat("yyyy-MM-dd");
         backsale.setBacksaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
         backsale.setCheckId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         backsale.setRemark(jTextArea1.getText());
@@ -646,6 +646,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             backsale_detail = new Backsale_detail_tb();
             backsale_detail.setBacksaleId(jTextFieldXiafaId.getText());
+            backsale_detail.setYouxiaoqi(riqiformate.parse(yimiaotable.getValue(i, "youxiaoqi").toString()));
             backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "tuihuoQuantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗退库数量!");
