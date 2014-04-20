@@ -47,7 +47,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     private List<Kehudanweitb> kehudanweilist = new ArrayList<Kehudanweitb>();
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private List<SaleyimiaoEntity> list;
-    private List<Sale_detail_tb> saledetailMaplist;
+    private List<Sale_detail_tb> saledetailMaplist= new ArrayList<Sale_detail_tb>();
     private boolean isNew;
 
     public YiMiaoChuKu1JDialog() {

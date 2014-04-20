@@ -49,7 +49,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private float total = 0;
     private List<SaleyimiaoEntity> list;
-    private List<Sale_detail_tb> saledetailMaplist;
+    private List<Sale_detail_tb> saledetailMaplist = new ArrayList<Sale_detail_tb>();
     private boolean isNew;
 
     /**
