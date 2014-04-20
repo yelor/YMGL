@@ -190,6 +190,7 @@ public class SelectYiMiaoChuRuKuJDialog extends BaseDialog {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 YiMiaoChuKu1JDialog ymck1 = new YiMiaoChuKu1JDialog();
+                ymck1.setNew();
                 ymck1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck1);
             }
@@ -204,6 +205,7 @@ public class SelectYiMiaoChuRuKuJDialog extends BaseDialog {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 YiMiaoRuKu1JDialog ymrk1 = new YiMiaoRuKu1JDialog();
+                ymrk1.setNew();
                 ymrk1.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk1);
             }
@@ -218,6 +220,7 @@ public class SelectYiMiaoChuRuKuJDialog extends BaseDialog {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 YiMiaoChuKu2JDialog ymck2 = new YiMiaoChuKu2JDialog();
+                ymck2.setNew();
                 ymck2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymck2);
             }
@@ -232,6 +235,7 @@ public class SelectYiMiaoChuRuKuJDialog extends BaseDialog {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                 YiMiaoRuKu2JDialog ymrk2 = new YiMiaoRuKu2JDialog();
+                ymrk2.setNew();
                 ymrk2.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(ymrk2);
             }

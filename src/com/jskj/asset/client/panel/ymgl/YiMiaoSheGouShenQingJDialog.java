@@ -788,18 +788,18 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
     public void setListTable(List<YimiaocaigouEntity> yimiaocaigouEntityList) {
 
         int size = yimiaocaigouEntityList.size();
-        Object[][] o = new Object[size][10];
+        Object[][] o = new Object[size][9];
         for (int i = 0; i < size; i++) {
             Yimiaoshenqingdantb yimiaoshenqingdantb = yimiaocaigouEntityList.get(i).getYimiaoshenqingdantb();
             YimiaoAll yimiaoAll = yimiaocaigouEntityList.get(i).getYimiaoAll();
             o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
-                yimiaoshenqingdantb.getQuantity(), yimiaoshenqingdantb.getBuyprice(), yimiaoshenqingdantb.getTotalprice(), yimiaoAll.getYimiaoYushoujia()};
+                yimiaoshenqingdantb.getQuantity(), yimiaoshenqingdantb.getBuyprice(), yimiaoshenqingdantb.getTotalprice()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "数量", "单价", "合价", "预售价"
+                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "数量", "单价", "合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{

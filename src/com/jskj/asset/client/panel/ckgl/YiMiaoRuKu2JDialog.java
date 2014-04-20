@@ -46,6 +46,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
+    private boolean isNew;
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private List<YimiaoshenqingliebiaoEntity> list;
     private List<Yimiaoshenqingdantb> yimiaoshenqingdanMaplist = new ArrayList<Yimiaoshenqingdantb>();
@@ -146,10 +147,11 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+                sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2"
+                        + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=1 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id =6 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 2 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")) ";
-                } else {
-                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where is_completed = 1 and status = 2 and danjuleixing_id =6)";
+                    sql += (" and yimiao_id in ( select yimiao_id  from yimiao where yimiao_name like \"%" + newColumnObj.toString() + "%\""
+                            + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -319,6 +321,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         jButton1.setAction(actionMap.get("buhege")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setName("jButton1"); // NOI18N
         jToolBar1.add(jButton1);
@@ -430,7 +433,6 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         jTextArea1.setName("jTextArea1"); // NOI18N
         jScrollPane2.setViewportView(jTextArea1);
 
-        jTextFieldkufang.setEditable(false);
         jTextFieldkufang.setName("jTextFieldkufang"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
@@ -594,7 +596,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
     @Action
     public Task save() throws ParseException {
         YimiaochurukuEntity yimiaorukuEntity = new YimiaochurukuEntity();
-      
+
         if (jTextFieldkufang.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请选择入库库房!");
             return null;
@@ -680,9 +682,18 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         }
     }
 
+    public void setNew() {
+        isNew = true;
+    }
+
     @Action
     public void exit() {
-        String sql = " shenqingdan_id like \"YMSG%\" and is_completed = 1 and status = 2";
+        if (isNew) {
+            close();
+            return;
+        }
+        String sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2"
+                + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=1 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
         new CloseTask(sql).execute();
     }
 

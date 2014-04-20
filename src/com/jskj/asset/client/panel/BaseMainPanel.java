@@ -14,7 +14,6 @@ import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
-import com.jskj.asset.client.panel.baobiao.caiwubaobiao.DanweiyingshouyingfuPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel;
 import com.jskj.asset.client.panel.ckgl.SelectKucunchaxunJDialog;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKuJDialog;
@@ -392,9 +391,9 @@ public class BaseMainPanel extends BasePanel {
                 if (yiMiaoYanShouJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                     yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog();
+                    yiMiaoYanShouJDialog.setNew();
                     yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
                 }
-                yiMiaoYanShouJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);
             }
         });

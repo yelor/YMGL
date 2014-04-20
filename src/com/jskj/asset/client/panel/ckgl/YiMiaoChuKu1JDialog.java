@@ -48,6 +48,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private List<SaleyimiaoEntity> list;
     private List<Sale_detail_tb> saledetailMaplist;
+    private boolean isNew;
 
     public YiMiaoChuKu1JDialog() {
         super();
@@ -57,9 +58,8 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         jTextFielddanjuNo.setEditable(false);
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
-        
 
-         //库房的popup
+        //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
@@ -137,7 +137,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
                     chukudan.setXiangdanId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
                     bindedMapyimiaoliebiaoList.add(chukudan);
-                    
+
                     Sale_detail_tb saledetail = new Sale_detail_tb();
                     saledetail.setSaleDetailId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
                     saledetail.setSaleId((String) sale_detail_tb.get("saleId"));
@@ -305,6 +305,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         jTableyimiao.setName("jTableyimiao"); // NOI18N
         jScrollPane1.setViewportView(jTableyimiao);
 
+        jTextFielddanjuNo.setEditable(false);
         jTextFielddanjuNo.setName("jTextFielddanjuNo"); // NOI18N
 
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
@@ -317,7 +318,6 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         jTextArea1.setName("jTextArea1"); // NOI18N
         jScrollPane2.setViewportView(jTextArea1);
 
-        jTextFieldkufang.setEditable(false);
         jTextFieldkufang.setName("jTextFieldkufang"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
@@ -329,7 +329,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 712, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -372,12 +372,13 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                         .addComponent(jTextFielddanjuNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldkufang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldkufang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
@@ -423,7 +424,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-            try {
+        try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -444,8 +445,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
             java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 YiMiaoChuKu1JDialog dialog = new YiMiaoChuKu1JDialog();
@@ -459,8 +459,8 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
             }
         });
     }
-    
-      //疫苗取消入库情况
+
+    //疫苗取消入库情况
     @Action
     public Task buhege() {
         if (bindedMapyimiaoliebiaoList.size() < 1) {
@@ -489,19 +489,24 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     }
 
     private class BuhegeTask extends org.jdesktop.application.Task<Object, Void> {
+
         BuhegeTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to BuhegeTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
@@ -591,8 +596,16 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         }
     }
 
+    public void setNew() {
+        isNew = true;
+    }
+
     @Action
     public void exit() {
+        if (isNew) {
+            close();
+            return;
+        }
         String sql = " (sale_id like \"YMXF%\") and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
     }
@@ -628,7 +641,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     String reason = null;
                     while (reason == null || reason.isEmpty()) {
                         reason = AssetMessage.showInputDialog(null, "请输入取消出库疫苗【"
-                                + lb.getYimiaoAll().getYimiaoName()+ "】的理由(必输)：");
+                                + lb.getYimiaoAll().getYimiaoName() + "】的理由(必输)：");
                     }
                     lb.getSale_detail_tb().setReason("【出库】" + reason);
                 }

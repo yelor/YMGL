@@ -56,6 +56,8 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         super();
         init();
         initComponents();
+        yimiaodengji = new Yimiaodengjitb();
+        isNew = false;
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -133,7 +135,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
                     jTextFieldkucunUp.setText(yimiaoAll.get("yimiaoStockup") == null ? "" : yimiaoAll.get("yimiaoStockup").toString());
                     yimiaodengji.setYimiaoId((Integer) yimiaoAll.get("yimiaoId"));
                     yimiaodengji.setXiangdanId((Integer) yimiaoshenqingdan.get("xiangdanId"));
-                    xiangdanId=(Integer) yimiaoshenqingdan.get("xiangdanId");
+                    xiangdanId = (Integer) yimiaoshenqingdan.get("xiangdanId");
                     shengqingdanID = (String) yimiaoshenqingdan.get("shenqingdanId");
                 }
             }
@@ -172,7 +174,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
                     jTextFieldkucunDown.setText(bindedMap.get("kucunDown") == null ? "" : bindedMap.get("kucunDown").toString());
                     jTextFieldkucunUp.setText(bindedMap.get("kucunUp") == null ? "" : bindedMap.get("kucunUp").toString());
                     yimiaodengji.setYimiaoId((Integer) bindedMap.get("yimiaoId"));
-                    
+
                 }
 
             }
@@ -560,6 +562,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         jButton5.setAction(actionMap.get("buhege")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setBorderPainted(false);
         jButton5.setFocusable(false);
         jButton5.setName("jButton5"); // NOI18N
         jToolBar1.add(jButton5);
@@ -723,18 +726,6 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
             }
         });
     }
-    
-    
-
-    public void setAddOrUpdate(boolean b) {
-        isNew = b;
-        if (isNew) {
-            this.setTitle("Ⅰ类疫苗登记单");
-            yimiaodengji = new Yimiaodengjitb();
-        } else {
-            this.setTitle("Ⅰ类疫苗登记单");
-        }
-    }
 
     public void setUpdatedData(Yimiaodengjitb yimiaodengji) {
         if (yimiaodengji == null) {
@@ -779,21 +770,21 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         yimiaodengji.setSource((String) jComboBoxSource.getSelectedItem());
         return new SubmitFormTask(yimiaodengji);
     }
-    
-     //单个疫苗登记不合格情况
+
+    //单个疫苗登记不合格情况
     @Action
-    public Task buhege(){
-        if(jTextFieldYimiaoName.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入疫苗名称！",this);
+    public Task buhege() {
+        if (jTextFieldYimiaoName.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入疫苗名称！", this);
             return null;
         }
-        if(jTextFieldYimiaoId.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入疫苗编号！",this);
+        if (jTextFieldYimiaoId.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入疫苗编号！", this);
             return null;
         }
         List<YimiaoshenqingliebiaoEntity> list = new ArrayList<YimiaoshenqingliebiaoEntity>();
         YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
-        Yimiaoshenqingdantb yimiaoshenqingdan=new Yimiaoshenqingdantb();
+        Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
         yimiaoshenqingdan.setShenqingdanId(shengqingdanID);
         yimiaoshenqingdan.setXiangdanId(xiangdanId);
         lb.setYimiaoshenqingdan(yimiaoshenqingdan);
@@ -811,26 +802,39 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
     }
 
     private class BuhegeTask extends org.jdesktop.application.Task<Object, Void> {
+
         BuhegeTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to BuhegeTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
     }
 
+    public void setNew() {
+        isNew = true;
+    }
+
     @Action
     public void exit() {
+        if (isNew) {
+            close();
+            return;
+        }
         String sql = " shenqingdan_id like \"YMLQ%\" and danjuleixing_id=5 and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
     }
@@ -905,7 +909,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
     private class SubmitFormTask extends YimiaodengjiUpdateTask {
 
         SubmitFormTask(Yimiaodengjitb yimiaodengji) {
-            super(yimiaodengji, isNew ? YimiaodengjiUpdateTask.ENTITY_SAVE : YimiaodengjiUpdateTask.ENTITY_UPDATE);
+            super(yimiaodengji, YimiaodengjiUpdateTask.ENTITY_SAVE);
         }
 
         @Override
@@ -921,7 +925,6 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
             YiMiaoDengJi1JDialog yiMiaoDengJi1JDialog = new YiMiaoDengJi1JDialog();
             yiMiaoDengJi1JDialog.setLocationRelativeTo(mainFrame);
-            yiMiaoDengJi1JDialog.setAddOrUpdate(true);
             AssetClientApp.getApplication().show(yiMiaoDengJi1JDialog);
         }
     }

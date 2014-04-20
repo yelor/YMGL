@@ -28,7 +28,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jToolBar1" min="-2" pref="712" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="146" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
@@ -84,12 +84,14 @@
                   <Component id="jTextFieldzhidanDate" min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" max="-2" attributes="0">
-                  <Component id="jLabel4" alignment="3" max="32767" attributes="0"/>
-                  <Component id="jTextFieldkufang" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Group type="103" alignment="3" groupAlignment="3" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" max="-2" attributes="0">
                       <Component id="jLabel3" alignment="3" max="32767" attributes="0"/>
                       <Component id="jTextFieldzhidanren" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel4" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jTextFieldkufang" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -248,6 +250,7 @@
     </Container>
     <Component class="javax.swing.JTextField" name="jTextFielddanjuNo">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jTextFielddanjuNo" noResource="true"/>
       </Properties>
       <AuxValues>
@@ -281,7 +284,6 @@
     </Container>
     <Component class="javax.swing.JTextField" name="jTextFieldkufang">
       <Properties>
-        <Property name="editable" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jTextFieldkufang" noResource="true"/>
       </Properties>
       <AuxValues>
