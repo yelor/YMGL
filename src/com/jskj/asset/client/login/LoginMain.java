@@ -212,13 +212,12 @@ public class LoginMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
         setIconImage(new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png")).getImage());
-        setMaximumSize(new java.awt.Dimension(371, 274));
         setMinimumSize(new java.awt.Dimension(371, 274));
         setName("Form"); // NOI18N
         setResizable(false);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/jskj/asset/client/login/resources/newlogo.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/jskj/asset/client/login/resources/new_logo.jpg"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setName("jLabel1"); // NOI18N
 

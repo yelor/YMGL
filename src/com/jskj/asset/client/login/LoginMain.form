@@ -63,7 +63,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/jskj/asset/client/login/resources/newlogo.jpg"/>
+          <Image iconType="3" name="/com/jskj/asset/client/login/resources/new_logo.jpg"/>
         </Property>
         <Property name="verticalAlignment" type="int" value="1"/>
         <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
