@@ -29,9 +29,9 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButton3" alignment="0" pref="200" max="32767" attributes="0"/>
+                  <Component id="jButton4" alignment="0" pref="200" max="32767" attributes="0"/>
+                  <Component id="jButton5" alignment="0" pref="200" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="188" pref="22" max="32767" attributes="0"/>
           </Group>
@@ -79,7 +79,6 @@
         </Property>
         <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
         <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
-        <Property name="horizontalAlignment" type="int" value="2"/>
         <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
       </Properties>
     </Component>

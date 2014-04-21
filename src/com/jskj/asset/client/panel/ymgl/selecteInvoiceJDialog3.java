@@ -93,8 +93,8 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -110,6 +110,11 @@ public class selecteInvoiceJDialog3 extends javax.swing.JDialog {
                     .addComponent(jButton6))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
+
+        jButton3.getAccessibleContext().setAccessibleName(resourceMap.getString("jButton3.AccessibleContext.accessibleName")); // NOI18N
+        jButton4.getAccessibleContext().setAccessibleName(resourceMap.getString("jButton4.AccessibleContext.accessibleName")); // NOI18N
+        jButton5.getAccessibleContext().setAccessibleName(resourceMap.getString("jButton5.AccessibleContext.accessibleName")); // NOI18N
+        jButton6.getAccessibleContext().setAccessibleName(resourceMap.getString("jButton6.AccessibleContext.accessibleName")); // NOI18N
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
