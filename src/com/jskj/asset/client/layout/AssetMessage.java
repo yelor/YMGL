@@ -8,7 +8,10 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.AssetClientView;
 import java.awt.Component;
 import java.awt.Dimension;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import org.jdesktop.application.Application;
 
 /**
@@ -98,4 +101,16 @@ public class AssetMessage extends JOptionPane {
         return showConfirmDialog(parentComponent, text, "确认", JOptionPane.OK_CANCEL_OPTION);
     }
 
+    public static String CONFIRM_PASSWD(Component parentComponent) {
+        JLabel jPassword = new JLabel("密码:");
+        JTextField password = new JPasswordField();
+        Object[] ob = {jPassword, password};
+        int result = JOptionPane.showConfirmDialog(parentComponent, ob, "请输入您的密码", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            return password.getText();
+        } else {
+            return null;
+        }
+    }
 }

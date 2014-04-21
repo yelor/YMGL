@@ -9,6 +9,7 @@ package com.jskj.asset.client.panel.shjs;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Fukuanshenpiliuchengtb;
 import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
@@ -193,6 +194,16 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return null;
         }
+        String passwd = AssetMessage.CONFIRM_PASSWD(this);
+        if (passwd == null) {
+            return null;
+        } else {
+            Usertb usertb = AssetClientApp.getSessionMap().getUsertb();
+            if (!passwd.equalsIgnoreCase(usertb.getUserPassword())) {
+                AssetMessage.ERRORSYS("密码错误!");
+                return null;
+            }
+        }
         Fukuanshenpiliuchengtb fksqdan = fksq.get(n);
         fksqdan.setDanjuId(fksq.get(n).getDanjuId());
         fksqdan.setRejectReason("同意");
@@ -206,6 +217,16 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         if(n < 0){
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return null;
+        }
+        String passwd = AssetMessage.CONFIRM_PASSWD(this);
+        if (passwd == null) {
+            return null;
+        } else {
+            Usertb usertb = AssetClientApp.getSessionMap().getUsertb();
+            if (!passwd.equalsIgnoreCase(usertb.getUserPassword())) {
+                AssetMessage.ERRORSYS("密码错误!");
+                return null;
+            }
         }
         String reason;
         reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");

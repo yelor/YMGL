@@ -13,6 +13,7 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaiGouShenQingFindEntity;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ShenPiEntity;
+import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.bean.entity.Zichanshenpiliuchengtb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.util.BindTableHelper;
@@ -227,6 +228,18 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return null;
         }
+        
+        String passwd = AssetMessage.CONFIRM_PASSWD(this);
+        if (passwd == null) {
+            return null;
+        } else {
+            Usertb usertb = AssetClientApp.getSessionMap().getUsertb();
+            if (!passwd.equalsIgnoreCase(usertb.getUserPassword())) {
+                AssetMessage.ERRORSYS("密码错误!");
+                return null;
+            }
+        }
+        
         Zichanshenpiliuchengtb cgsqdan = cgsq.get(n);
         shenPiEntity = new ShenPiEntity();
         shenPiEntity.setId(cgsqdan.getDanjuId().toString());
@@ -251,6 +264,18 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return null;
         }
+        
+        String passwd = AssetMessage.CONFIRM_PASSWD(this);
+        if (passwd == null) {
+            return null;
+        } else {
+            Usertb usertb = AssetClientApp.getSessionMap().getUsertb();
+            if (!passwd.equalsIgnoreCase(usertb.getUserPassword())) {
+                AssetMessage.ERRORSYS("密码错误!");
+                return null;
+            }
+        }
+        
         String reason;
         reason = AssetMessage.showInputDialog(this, "请输入拒绝理由");
         if(reason==null){
