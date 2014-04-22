@@ -50,13 +50,13 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         initComponents();
         pageIndex = 1;
         pageSize = 20;
-        this.conditionSql=conditionSql;
+        this.conditionSql = conditionSql;
 //        conditionSql = "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id)";
         count = 0;
         bindTable = new BindTableHelper<StockpiletbAll>(jTableStockpile, new ArrayList<StockpiletbAll>());
-        bindTable.createTable(new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"},{"yimiao.yimiaoType", "疫苗类型"}, {"yimiao.yimiaoJixing", "剂型"},
-        {"yimiao.yimiaoGuige", "疫苗规格"},{"yimiao.yimiaoJiliang", "剂量"},{"yimiao.jiliangdanwei", "剂量单位"}, {"yimiao.yimiaoShengchanqiye", "生产企业"}, {"yimiao.yimiaoPizhunwenhao", "批准文号"}, 
-        {"yimiao.unitId", "单位"}, {"youxiaodate", "有效期至"},{"kufang", "库房"},{"pihao", "批号"},{"piqianfano", "批签发合格证编号"},{"source", "进口/国产"},{"jinkoutongguanno", "进口通关单号"},{"stockpileQuantity", "库存数量"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
+        bindTable.createTable(new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoType", "疫苗类型"}, {"yimiao.yimiaoJixing", "剂型"},
+        {"yimiao.yimiaoGuige", "疫苗规格"}, {"yimiao.yimiaoJiliang", "剂量"}, {"yimiao.jiliangdanwei", "剂量单位"}, {"yimiao.yimiaoShengchanqiye", "生产企业"}, {"yimiao.yimiaoPizhunwenhao", "批准文号"},
+        {"yimiao.unitId", "单位"}, {"youxiaodate", "有效期至"}, {"kufang", "库房"}, {"pihao", "批号"}, {"piqianfano", "批签发合格证编号"}, {"source", "进口/国产"}, {"jinkoutongguanno", "进口通关单号"}, {"stockpileQuantity", "库存数量"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
         bindTable.setColumnType(Date.class, 12);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 150}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}).setRowHeight(30);
 
@@ -103,9 +103,11 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     @Action
     public Task picichaxunAction() {
         conditionSql = "";
-        if (bindTable.getSelectedBean() != null) {
-            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jComboBoxyimianName.getSelectedItem().toString() + "%\"))";
-        } else {
+        if (!jTextFieldYimiaoName.getText().trim().equals("")) {
+            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\"))";
+        } else if(!jTextFieldShengchanqiye.getText().trim().equals("")) {
+            conditionSql += "and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\")";
+        }else {
             conditionSql = "";
         }
         return reload();
@@ -113,19 +115,24 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     }
 
     private class PicichaxunActionTask extends org.jdesktop.application.Task<Object, Void> {
+
         PicichaxunActionTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to PicichaxunActionTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
@@ -187,12 +194,12 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
-        jComboBoxyimianName = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBoxshengchanqiye = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jTextFieldYimiaoName = new javax.swing.JTextField();
+        jTextFieldShengchanqiye = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStockpile = new BaseTable(null);
 
@@ -236,17 +243,11 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelTotal.setName("jLabelTotal"); // NOI18N
 
-        jComboBoxyimianName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxyimianName.setName("jComboBoxyimianName"); // NOI18N
-
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
-
-        jComboBoxshengchanqiye.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxshengchanqiye.setName("jComboBoxshengchanqiye"); // NOI18N
 
         jButton1.setAction(actionMap.get("picichaxunAction")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -256,6 +257,12 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
+        jTextFieldYimiaoName.setText(resourceMap.getString("jTextFieldYimiaoName.text")); // NOI18N
+        jTextFieldYimiaoName.setName("jTextFieldYimiaoName"); // NOI18N
+
+        jTextFieldShengchanqiye.setText(resourceMap.getString("jTextFieldShengchanqiye.text")); // NOI18N
+        jTextFieldShengchanqiye.setName("jTextFieldShengchanqiye"); // NOI18N
+
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
         ctrlPane.setLayout(ctrlPaneLayout);
         ctrlPaneLayout.setHorizontalGroup(
@@ -263,12 +270,12 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctrlPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBoxyimianName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldYimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBoxshengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctrlPaneLayout.createSequentialGroup()
@@ -288,17 +295,18 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                     .addGroup(ctrlPaneLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxyimianName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(jComboBoxshengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldYimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -331,7 +339,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -380,13 +388,13 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBoxshengchanqiye;
-    private javax.swing.JComboBox jComboBoxyimianName;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableStockpile;
+    private javax.swing.JTextField jTextFieldShengchanqiye;
+    private javax.swing.JTextField jTextFieldYimiaoName;
     private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables
 }

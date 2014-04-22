@@ -611,7 +611,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
             yimiaoliebiao.setYimiaoId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "stockpileId"))));
             yimiaoliebiao.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
-            yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getPrice());
+            yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getQuantity());
             yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
             yimiaoliebiao.setWanglaidanweiId(kehudanweilist.get(i).getKehudanweiId());
             list.add(yimiaoliebiao);
