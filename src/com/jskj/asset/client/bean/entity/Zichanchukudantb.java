@@ -15,6 +15,8 @@ public class Zichanchukudantb {
 
     private Integer danjuleixingId;
 
+    private String kufang;
+
     public String getChukudanId() {
         return chukudanId;
     }
@@ -53,5 +55,13 @@ public class Zichanchukudantb {
 
     public void setDanjuleixingId(Integer danjuleixingId) {
         this.danjuleixingId = danjuleixingId;
+    }
+
+    public String getKufang() {
+        return kufang;
+    }
+
+    public void setKufang(String kufang) {
+        this.kufang = kufang == null ? null : kufang.trim();
     }
 }

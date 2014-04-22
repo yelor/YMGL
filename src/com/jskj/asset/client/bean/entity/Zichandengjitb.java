@@ -15,6 +15,10 @@ public class Zichandengjitb {
 
     private Integer quantity;
 
+    private Date baoxiuqi;
+
+    private String pihao;
+
     public String getYuandanId() {
         return yuandanId;
     }
@@ -53,5 +57,21 @@ public class Zichandengjitb {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Date getBaoxiuqi() {
+        return baoxiuqi;
+    }
+
+    public void setBaoxiuqi(Date baoxiuqi) {
+        this.baoxiuqi = baoxiuqi;
+    }
+
+    public String getPihao() {
+        return pihao;
+    }
+
+    public void setPihao(String pihao) {
+        this.pihao = pihao == null ? null : pihao.trim();
     }
 }

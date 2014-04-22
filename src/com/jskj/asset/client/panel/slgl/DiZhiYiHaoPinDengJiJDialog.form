@@ -91,17 +91,21 @@
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextFieldSequence" pref="172" max="32767" attributes="0"/>
-                              <Component id="jTextFieldBaoxiuqi" max="32767" attributes="0"/>
-                              <Component id="jTextFieldUnit" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldXinghao" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldSupplier" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldName" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jTextFieldPihao" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jTextFieldSequence" pref="172" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldBaoxiuqi" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldUnit" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldXinghao" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldSupplier" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldName" alignment="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -140,6 +144,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextFieldZctype" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldPihao" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -178,10 +184,13 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel16" min="-2" pref="19" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel16" min="-2" pref="19" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -315,6 +324,9 @@
           <Properties>
             <Property name="name" type="java.lang.String" value="jTextFieldBaoxiuqi" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="regTextField1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPrice">
           <Properties>
@@ -454,6 +466,17 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JTextField" name="jTextFieldPihao">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="jTextFieldPihao" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel10">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="jLabel10.text"/>
+            <Property name="name" type="java.lang.String" value="jLabel10" noResource="true"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
