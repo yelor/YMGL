@@ -9,7 +9,7 @@ public class ZiChanLieBiaotb {
 
     private Integer cgzcId;
 
-    private Date baoliuqi;
+    private Date baoxiuqi;
 
     private String pihao;
 
@@ -43,12 +43,12 @@ public class ZiChanLieBiaotb {
         this.cgzcId = cgzcId;
     }
 
-    public Date getBaoliuqi() {
-        return baoliuqi;
+    public Date getBaoxiuqi() {
+        return baoxiuqi;
     }
 
-    public void setBaoliuqi(Date baoliuqi) {
-        this.baoliuqi = baoliuqi;
+    public void setBaoxiuqi(Date baoxiuqi) {
+        this.baoxiuqi = baoxiuqi;
     }
 
     public String getPihao() {
