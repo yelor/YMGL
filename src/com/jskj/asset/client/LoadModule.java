@@ -105,7 +105,6 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemMe = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemZichanGY = new javax.swing.JMenuItem();
-        javax.swing.JMenuItem jMenuItemZichanKehu = new javax.swing.JMenuItem();
 
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
@@ -165,11 +164,6 @@ public class LoadModule extends BaseTask {
         jMenuItemZichanGY.setText(resourceMap.getString("jMenuItemZichanGY.text")); // NOI18N
         jMenuItemZichanGY.setName("jMenuItemZichanGY"); // NOI18N
         jMenu2.add(jMenuItemZichanGY);
-
-        jMenuItemZichanKehu.setAction(actionMap.get("showZichanKeHuDanWei")); // NOI18N
-        jMenuItemZichanKehu.setText(resourceMap.getString("jMenuItemZichanKehu.text")); // NOI18N
-        jMenuItemZichanKehu.setName("jMenuItemZichanKehu"); // NOI18N
-        jMenu2.add(jMenuItemZichanKehu);
 
         jichuMenu.add(jMenu2);
 
@@ -460,11 +454,6 @@ public class LoadModule extends BaseTask {
     @Action
     public Task showZichanGongYingDanWei() {
         return new OpenTabTask("基础数据-资产供应单位", new GongYingDanWeiPanel(1), false);
-    }
-
-    @Action
-    public Task showZichanKeHuDanWei() {
-        return new OpenTabTask("基础数据-资产客户单位", new KeHuDanWeiPanel(1), false);
     }
 
     @Action
