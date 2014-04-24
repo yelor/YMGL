@@ -14,7 +14,6 @@ import com.jskj.asset.client.bean.entity.SaleyimiaoEntity;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
-import com.jskj.asset.client.layout.BaseCellFocusListener;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
@@ -197,31 +196,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
 
             }
         });
-
-        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
-            public void editingStopped(int selectedRow, int selectedColumn) {
-                int col = selectedColumn;
-                int row = selectedRow;
-
-                if (col == 6) {
-                    if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
-                            && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
-                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
-                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
-                        jTableyimiao.setValueAt(price * count, row, 8);
-                    }
-                    int rows = jTableyimiao.getRowCount();
-                    total = 0;
-                    for (int i = 0; i < rows; i++) {
-                        if (!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))) {
-                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
-                        }
-                    }
-                    totalPrice.setText(total + "元");
-                }
-            }
-        }
-        );
+    
 
     }
 
@@ -252,8 +227,6 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jLabel4 = new javax.swing.JLabel();
-        totalPrice = new javax.swing.JLabel();
         jTextFieldkufang = new BaseTextField();
         jLabel5 = new javax.swing.JLabel();
 
@@ -398,12 +371,6 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         jTextArea1.setName("jTextArea1"); // NOI18N
         jScrollPane2.setViewportView(jTextArea1);
 
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-
-        totalPrice.setText(resourceMap.getString("totalPrice.text")); // NOI18N
-        totalPrice.setName("totalPrice"); // NOI18N
-
         jTextFieldkufang.setName("jTextFieldkufang"); // NOI18N
 
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
@@ -443,12 +410,6 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldkufang, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(totalPrice)
-                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -474,12 +435,8 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     .addComponent(jLabel7)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(totalPrice))
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -609,9 +566,9 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
-            yimiaoliebiao.setYimiaoId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "stockpileId"))));
-            yimiaoliebiao.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
-            yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getQuantity());
+            yimiaoliebiao.setKucunId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "stockpileId"))));
+            yimiaoliebiao.setChukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
+            yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getChukuQuantity());
             yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
             yimiaoliebiao.setWanglaidanweiId(kehudanweilist.get(i).getKehudanweiId());
             list.add(yimiaoliebiao);
@@ -751,7 +708,6 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -764,6 +720,5 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldzhidanDate;
     private javax.swing.JTextField jTextFieldzhidanren;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel totalPrice;
     // End of variables declaration//GEN-END:variables
 }

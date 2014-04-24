@@ -32,7 +32,7 @@ import org.jdesktop.application.Task;
  */
 public class DanweiyingshouyingfuPanel extends BasePanel {
 
-    private final static Logger logger = Logger.getLogger(YimiaochukujiluPanel.class);
+    private final static Logger logger = Logger.getLogger(DanweiyingshouyingfuPanel.class);
     private int pageIndex;
     private final int pageSize;
     private int count;

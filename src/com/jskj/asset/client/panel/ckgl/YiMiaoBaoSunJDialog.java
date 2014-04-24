@@ -17,6 +17,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ckgl.task.YimiaobaosunUpdateTask;
 import com.jskj.asset.client.util.DanHao;
@@ -64,6 +65,36 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldJingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
+        
+        //库房的popup
+        ((BaseTextField) jTextFieldCangku).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "cangku/finddepot";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldCangku.getText().trim().equals("")) {
+                    sql = "(depot_name like \"%" + jTextFieldCangku.getText() + "%\"" + " or zujima like \"%" + jTextFieldCangku.getText().trim().toLowerCase() + "%\")";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"depotId", "仓库编号"}, {"depotName", "仓库名称"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+//                    shenqingdan.setSupplierId((Integer) (bindedMap.get("supplierId")));
+                    jTextFieldCangku.setText(bindedMap.get("depotName") == null ? "" : bindedMap.get("depotName").toString());
+                }
+            }
+        });
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
@@ -140,7 +171,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
     private void initComponents() {
 
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldCangku = new javax.swing.JTextField();
+        jTextFieldCangku = new BaseTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -228,6 +259,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
             }
         });
 
+        jTextFieldzhidanren.setEditable(false);
         jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
 
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
