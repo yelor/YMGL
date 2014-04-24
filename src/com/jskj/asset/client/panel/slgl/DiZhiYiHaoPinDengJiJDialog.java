@@ -43,7 +43,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
 
     private static final Log logger = LogFactory.getLog(DiZhiYiHaoPinDengJiJDialog.class);
     
-    private JTextField regTextField;
+    private JTextField regTextField,regTextField1;
     private String imageUri;
     private ZichandengjiAll zc;
     private Zhijielingyongtb zjly;
@@ -138,11 +138,11 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
                     if (map != null) {
                         jTextFieldSupplier.setText(map.get("supplierName") == null ? "" : map.get("supplierName").toString());
                     }
-                    jTextFieldBaoxiuqi.setText(bindedMap.get("dzyhpGuaranteedate") == null ? "" : bindedMap.get("dzyhpGuaranteedate").toString());
+//                    jTextFieldBaoxiuqi.setText(bindedMap.get("dzyhpGuaranteedate") == null ? "" : bindedMap.get("dzyhpGuaranteedate").toString());
                     jTextFieldSequence.setText(bindedMap.get("dzyhpSequence") == null ? "" : bindedMap.get("dzyhpSequence").toString());
                     jTextAreaRemark.setText(bindedMap.get("dzyhpRemark") == null ? "" : bindedMap.get("dzyhpRemark").toString());
                     imageUri = bindedMap.get("unitPhoto") == null ? "" : bindedMap.get("unitPhoto").toString();
-                    jTextFieldBaoxiuqi.setEditable(false);
+//                    jTextFieldBaoxiuqi.setEditable(false);
                     jTextFieldQuantity.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
                     jTextFieldQuantity.setEditable(false);
                     zhijielingyong = Integer.parseInt("" + bindedMap.get("zhijielingyong"));
@@ -161,7 +161,9 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
 
     private void init() {
         regTextField = new BaseTextField();
+        regTextField1 = new BaseTextField();
         ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
+        ((BaseTextField) regTextField1).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
 
     public void setNew(){
@@ -329,6 +331,14 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
             AssetMessage.ERRORSYS("请输入购置日期！", this);
             return null;
         }
+        if(jTextFieldPihao.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入批号！",this);
+            return null;
+        }
+        if(jTextFieldBaoxiuqi.getText().isEmpty()){
+            AssetMessage.ERRORSYS("请输入保修期！",this);
+            return null;
+        }
         zc = new ZichandengjiAll();
         zc.setGdzcId(Integer.parseInt(jTextFieldZcid.getText()));
         SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -336,6 +346,8 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
         zc.setDengjirenId(userId);
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         zc.setYuandanId(yuandanID);
+        zc.setBaoxiuqi(dateformate.parse(jTextFieldBaoxiuqi.getText()));
+        zc.setPihao(jTextFieldPihao.getText());
 
         return new submitTask(zc);
     }
@@ -394,7 +406,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
         jTextField12 = regTextField;
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextFieldBaoxiuqi = new javax.swing.JTextField();
+        jTextFieldBaoxiuqi = regTextField1;
         jTextFieldPrice = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextFieldSequence = new javax.swing.JTextField();
@@ -409,6 +421,8 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
         jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jTextFieldPihao = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DiZhiYiHaoPinDengJiJDialog.class);
@@ -556,6 +570,11 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
+        jTextFieldPihao.setName("jTextFieldPihao"); // NOI18N
+
+        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
+        jLabel10.setName("jLabel10"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -592,16 +611,19 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
                             .addComponent(jLabel2)
                             .addComponent(jLabel7)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel15))
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel10))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldSequence, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                            .addComponent(jTextFieldBaoxiuqi)
-                            .addComponent(jTextFieldUnit)
-                            .addComponent(jTextFieldXinghao)
-                            .addComponent(jTextFieldSupplier)
-                            .addComponent(jTextFieldName))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldPihao)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldSequence, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                .addComponent(jTextFieldBaoxiuqi)
+                                .addComponent(jTextFieldUnit)
+                                .addComponent(jTextFieldXinghao)
+                                .addComponent(jTextFieldSupplier)
+                                .addComponent(jTextFieldName)))
+                        .addGap(22, 22, 22))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel14)
@@ -630,7 +652,9 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldZctype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel10)
+                    .addComponent(jTextFieldPihao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -663,9 +687,11 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 46, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -736,6 +762,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -756,6 +783,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
     private javax.swing.JTextField jTextFieldBaoxiuqi;
     private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldName;
+    private javax.swing.JTextField jTextFieldPihao;
     private javax.swing.JTextField jTextFieldPinpai;
     private javax.swing.JTextField jTextFieldPrice;
     private javax.swing.JTextField jTextFieldQuantity;
