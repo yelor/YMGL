@@ -172,7 +172,7 @@
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="pagePrev" methodName="pagePrev"/>
+                  <action class="com.jskj.asset.client.panel.user.ParamPanel" id="pagePrev" methodName="pagePrev"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
@@ -195,7 +195,7 @@
             <Component class="javax.swing.JButton" name="jButton4">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="pageNext" methodName="pageNext"/>
+                  <action class="com.jskj.asset.client.panel.user.ParamPanel" id="pageNext" methodName="pageNext"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>

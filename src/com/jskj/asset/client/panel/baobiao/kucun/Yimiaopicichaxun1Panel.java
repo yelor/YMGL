@@ -10,16 +10,21 @@
  */
 package com.jskj.asset.client.panel.baobiao.kucun;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.panel.user.*;
 import com.jskj.asset.client.bean.entity.StockpiletbAll;
 import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
 import com.jskj.asset.client.bean.entity.UsertbFindEntity;
+import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -45,12 +50,14 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     /**
      * Creates new form NoFoundPane
      */
-    public Yimiaopicichaxun1Panel(String conditionSql) {
+    public Yimiaopicichaxun1Panel(String conditionSql,String yimiaoName) {
         super();
         initComponents();
         pageIndex = 1;
         pageSize = 20;
         this.conditionSql = conditionSql;
+        jTextFieldYimiaoName.setText(yimiaoName);
+        jComboBoxShengchanqiye.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("生产企业")));
 //        conditionSql = "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id)";
         count = 0;
         bindTable = new BindTableHelper<StockpiletbAll>(jTableStockpile, new ArrayList<StockpiletbAll>());
@@ -60,54 +67,49 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         bindTable.setColumnType(Date.class, 12);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 150}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}).setRowHeight(30);
 
-//        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
-//
-//            @Override
-//            public int[] getFilterColumnHeader() {
-//                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-//                return new int[]{2, 3, 6};
-//            }
-//
-//            @Override
-//            public Task filterData(HashMap<Integer, String> searchKeys) {
-//
-//                if (searchKeys.size() > 0) {
-//                    String sql = "";
-////                    if (!searchKeys.get(2).trim().equals("")) {
-////                        sql.append("(yimiao_name like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" or zujima like \"%").append(searchKeys.get(2).trim().toLowerCase()).append("%\")").append(" and ");
-////                    }
-////                    if (!searchKeys.get(4).trim().equals("")) {
-////                        sql.append("yimiao_type like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
-////                    }
-////                    if (!searchKeys.get(5).trim().equals("")) {
-////                        sql.append("yimiao_shengchanqiye like \"%").append(searchKeys.get(5).trim()).append("%\"").append(" and ");
-////                    }
-//                    if (bindTable.getSelectedBean() != null) {
-//                        sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + bindTable.getSelectedBean().getYimiao().getYimiaoName() + "%\"))";
-//
-//                    }
-////                    if (sql.length() > 0) {
-////                        sql.delete(sql.length() - 5, sql.length() - 1);
-////                    }
-//                    conditionSql = sql.toString();
-//                } else {
-//                    conditionSql = "";
-//                }
-//
-//                return reload();
-//            }
-//
-//        });
+        ((BaseTextField) jTextFieldYimiaoName).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyimiao";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!jTextFieldYimiaoName.getText().trim().equals("")) {
+                    sql += "(yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\" or zujima like \"%" + jTextFieldYimiaoName.getText().toLowerCase() + "%\")";
+                } else {
+                    sql += "";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
+                {"yimiaoJixing", "剂型"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldYimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
+                }
+            }
+        });
     }
 
     @Action
     public Task picichaxunAction() {
         conditionSql = "";
-        if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\"))";
-        } else if(!jTextFieldShengchanqiye.getText().trim().equals("")) {
-            conditionSql += "and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\")";
-        }else {
+        if (!jTextFieldYimiaoName.getText().trim().equals("") && !jComboBoxShengchanqiye.getSelectedItem().toString().equals("")) {
+            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\") "
+                    + "and (yimiao.yimiao_shengchanqiye like \"%" + jComboBoxShengchanqiye.getSelectedItem().toString() + "%\"))";
+        } else if (!jTextFieldYimiaoName.getText().trim().equals("") && jComboBoxShengchanqiye.getSelectedItem().toString().equals("")) {
+            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\"))";
+        } else if (jTextFieldYimiaoName.getText().trim().equals("") && !jComboBoxShengchanqiye.getSelectedItem().toString().equals("")) {
+            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_shengchanqiye like \"%" + jComboBoxShengchanqiye.getSelectedItem().toString() + "%\"))";
+        } else {
             conditionSql = "";
         }
         return reload();
@@ -176,6 +178,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                 //存下所有的数据
                 stockpile = stockpileEntiy.getResult();
                 bindTable.refreshData(stockpile);
+                
             }
         }
     }
@@ -198,8 +201,8 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextFieldYimiaoName = new javax.swing.JTextField();
-        jTextFieldShengchanqiye = new javax.swing.JTextField();
+        jTextFieldYimiaoName = new BaseTextField();
+        jComboBoxShengchanqiye = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStockpile = new BaseTable(null);
 
@@ -260,8 +263,8 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jTextFieldYimiaoName.setText(resourceMap.getString("jTextFieldYimiaoName.text")); // NOI18N
         jTextFieldYimiaoName.setName("jTextFieldYimiaoName"); // NOI18N
 
-        jTextFieldShengchanqiye.setText(resourceMap.getString("jTextFieldShengchanqiye.text")); // NOI18N
-        jTextFieldShengchanqiye.setName("jTextFieldShengchanqiye"); // NOI18N
+        jComboBoxShengchanqiye.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxShengchanqiye.setName("jComboBoxShengchanqiye"); // NOI18N
 
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
         ctrlPane.setLayout(ctrlPaneLayout);
@@ -275,7 +278,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctrlPaneLayout.createSequentialGroup()
@@ -298,7 +301,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jTextFieldYimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBoxShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -388,12 +391,12 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox jComboBoxShengchanqiye;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableStockpile;
-    private javax.swing.JTextField jTextFieldShengchanqiye;
     private javax.swing.JTextField jTextFieldYimiaoName;
     private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables

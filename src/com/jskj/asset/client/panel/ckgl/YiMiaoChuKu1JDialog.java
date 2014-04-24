@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
@@ -49,6 +50,9 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     private List<SaleyimiaoEntity> list;
     private List<Sale_detail_tb> saledetailMaplist= new ArrayList<Sale_detail_tb>();
     private boolean isNew;
+    private Map saledetailIdmap;
+    private Map saleIdmap;
+    private Map kehudanweiIdmap;
 
     public YiMiaoChuKu1JDialog() {
         super();
@@ -60,6 +64,10 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
 
+        saledetailIdmap = new HashMap();
+        saleIdmap = new HashMap();
+        kehudanweiIdmap = new HashMap();
+        
         //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -543,9 +551,9 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
-            yimiaoliebiao.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "stockpileId").toString()));
-            yimiaoliebiao.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
-            yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getQuantity());
+            yimiaoliebiao.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "stockpileId").toString()));
+            yimiaoliebiao.setChukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
+            yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getPrice());
             yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
             yimiaoliebiao.setWanglaidanweiId(kehudanweilist.get(i).getKehudanweiId());
             list.add(yimiaoliebiao);

@@ -9,13 +9,19 @@ public class Churukudanyimiaoliebiaotb {
 
     private String churukuId;
 
+    private Date zhidandate;
+
     private Integer yimiaoId;
+
+    private Integer kucunId;
 
     private String source;
 
     private String tongguandanno;
 
-    private Integer quantity;
+    private Integer rukuQuantity;
+
+    private Integer chukuQuantity;
 
     private String pihao;
 
@@ -47,12 +53,28 @@ public class Churukudanyimiaoliebiaotb {
         this.churukuId = churukuId == null ? null : churukuId.trim();
     }
 
+    public Date getZhidandate() {
+        return zhidandate;
+    }
+
+    public void setZhidandate(Date zhidandate) {
+        this.zhidandate = zhidandate;
+    }
+
     public Integer getYimiaoId() {
         return yimiaoId;
     }
 
     public void setYimiaoId(Integer yimiaoId) {
         this.yimiaoId = yimiaoId;
+    }
+
+    public Integer getKucunId() {
+        return kucunId;
+    }
+
+    public void setKucunId(Integer kucunId) {
+        this.kucunId = kucunId;
     }
 
     public String getSource() {
@@ -71,12 +93,20 @@ public class Churukudanyimiaoliebiaotb {
         this.tongguandanno = tongguandanno == null ? null : tongguandanno.trim();
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getRukuQuantity() {
+        return rukuQuantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setRukuQuantity(Integer rukuQuantity) {
+        this.rukuQuantity = rukuQuantity;
+    }
+
+    public Integer getChukuQuantity() {
+        return chukuQuantity;
+    }
+
+    public void setChukuQuantity(Integer chukuQuantity) {
+        this.chukuQuantity = chukuQuantity;
     }
 
     public String getPihao() {

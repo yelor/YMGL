@@ -130,9 +130,14 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                 if (col == 6) {
                     if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
                             && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
-                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
-                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
-                        jTableyimiao.setValueAt(price * count, row, 8);
+                        try {
+                            int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
+                            float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
+                            jTableyimiao.setValueAt(price * count, row, 8);
+                        } catch (NumberFormatException e) {
+                            AssetMessage.ERRORSYS("第" + (row+1) + "个疫苗赊购数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+                            return;
+                        }
                     }
                     int rows = jTableyimiao.getRowCount();
                     total = 0;
@@ -553,7 +558,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         shenqingdan.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         shenqingdan.setDanjuleixingId(4);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
-        shenqingdan.setDanjujine(total);
+        total = 0;
 
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {

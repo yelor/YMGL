@@ -118,6 +118,9 @@
       <Properties>
         <Property name="name" type="java.lang.String" value="jTextFieldCangku" noResource="true"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new BaseTextField()"/>
+      </AuxValues>
     </Component>
     <Container class="javax.swing.JToolBar" name="jToolBar1">
       <Properties>
@@ -210,6 +213,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldzhidanren">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jTextFieldzhidanren" noResource="true"/>
       </Properties>
     </Component>
