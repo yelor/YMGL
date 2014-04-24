@@ -95,7 +95,7 @@ public class ToppagePane extends BasePanel {
         @Override
         public Object doBackgrounp() {
             try {
-                jEditorTopPage.setPage(Constants.HTTP + "/AssetsSys/service/toppage");
+                jEditorTopPage.setPage(Constants.HTTP + "/AssetsSys/service/toppage?client");
             } catch (IOException e) {
                 jEditorTopPage.setText(e.getMessage());
                 AssetMessage.ERRORSYS(e.getMessage());
