@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -48,13 +49,14 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private static final Logger logger = Logger.getLogger(YiMiaoYanShouDanJDialog.class);
     private Yimiaoyanshou_detail_tbFindEntity yimiaoyanshouEntity;
     private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
-    private List<Yimiaoyanshou_detail_tb> bindedMaplist;
-    private List<Yimiaoshenqingdantb> yimiaoshenqingdanMaplist;
     private Yimiaoyanshoutb yimiaoyanshou;
     private boolean isNew;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqi = new SimpleDateFormat("yyyy-MM-dd");
     private List<YimiaoshenqingliebiaoEntity> list;
+    private Map xiangdanIdmap;
+    private Map shenqingdanIdmap;
+    private Map piqianfaNomap;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -99,8 +101,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
         });
 
-        bindedMaplist = new ArrayList<Yimiaoyanshou_detail_tb>();
-
+        xiangdanIdmap = new HashMap();
+        shenqingdanIdmap = new HashMap();
+        piqianfaNomap = new HashMap();
         jTextFieldYimiaoyanshouId.setText(DanHao.getDanHao("YMYS"));
         jTextFieldYimiaoyanshouId.setEditable(false);
 
@@ -194,10 +197,13 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                         pihao = null;
                     }
 
+                    Object piqianfaNo = yimiaodengji.get("piqianfahegezhenno");
                     Object youxiaoqi = yimiaodengji.get("youxiaoqi");
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
+                    Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
+                    Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -210,15 +216,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     editTable.insertValue(8, buyprice);
                     editTable.insertValue(9, quantity);
 
-                    Yimiaoyanshou_detail_tb yanshou = new Yimiaoyanshou_detail_tb();
-                    yanshou.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
-                    bindedMaplist.add(yanshou);
-
-                    Yimiaoshenqingdantb yimiaoshenqing = new Yimiaoshenqingdantb();
-                    yimiaoshenqing.setXiangdanId(Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId"))));
-                    yimiaoshenqing.setShenqingdanId((String) yimiaoshenqingdan.get("shenqingdanId"));
-                    yimiaoshenqingdanMaplist.add(yimiaoshenqing);
-
+                    xiangdanIdmap.put(yimiaoId, xiangdanId);
+                    shenqingdanIdmap.put(yimiaoId, shenqingdanId);
+                    piqianfaNomap.put(yimiaoId, piqianfaNo);
                 }
 
             }
@@ -234,10 +234,10 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private void init() {
         regTextField1 = new JTextField();
         regTextField2 = new JTextField();
-        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd");
+        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser2.register(regTextField2);
         regTextField3 = new JTextField();
-        dateChooser3 = DateChooser.getInstance("yyyy-MM-dd");
+        dateChooser3 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser3.register(regTextField3);
     }
 
@@ -678,19 +678,15 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                                                         .addGap(5, 5, 5)
                                                         .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(80, 80, 80)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(80, 80, 80)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel14)
-                                            .addComponent(jLabel13)
-                                            .addComponent(jLabel16)
-                                            .addComponent(jLabel17)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel6)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(jLabel15)))))
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel15))))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -981,16 +977,16 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     //疫苗验收不合格情况
     @Action
     public Task buhege() {
-        if (bindedMaplist.size() < 1) {
+        if (jTable1.getRowCount() - 1 < 1) {
             AssetMessage.ERRORSYS("请选择要取消入库的疫苗！", this);
             return null;
         }
         List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
-        for (int i = 0; i < bindedMaplist.size(); i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
-            yimiaoshenqingdan.setShenqingdanId(yimiaoshenqingdanMaplist.get(i).getShenqingdanId());
-            yimiaoshenqingdan.setXiangdanId(yimiaoshenqingdanMaplist.get(i).getXiangdanId());
+            yimiaoshenqingdan.setShenqingdanId(shenqingdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString());
+            yimiaoshenqingdan.setXiangdanId(Integer.parseInt(xiangdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
             lb.setYimiaoshenqingdan(yimiaoshenqingdan);
             String reason = "";
             while (reason.isEmpty()) {
@@ -1081,8 +1077,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             yimiaoyanshou_detail.setFuheyuan((String) ("" + yimiaotable.getValue(i, "fuheyuan")));
             yimiaoyanshou_detail.setQuantity((Integer) yimiaotable.getValue(i, "quantity"));
             yimiaoyanshou_detail.setPrice(yimiaotable.getValue(i, "price") == null ? 0 : Float.parseFloat("" + yimiaotable.getValue(i, "price")));
-            yimiaoyanshou_detail.setPiqianfahegeno(bindedMaplist.get(i).getPiqianfahegeno());
-            yimiaoyanshou_detail.setXiangdanId(bindedMaplist.get(i).getXiangdanId());
+            yimiaoyanshou_detail.setPiqianfahegeno(piqianfaNomap.get(jTableyimiao.getValueAt(i, 0)).toString());
+            yimiaoyanshou_detail.setXiangdanId(Integer.parseInt(xiangdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
             list.add(yimiaoyanshou_detail);
         }
         yimiaoyanshouEntity.setYimiaoyanshou(yimiaoyanshou);

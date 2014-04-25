@@ -6,9 +6,9 @@
 package com.jskj.asset.client.panel.ckgl;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.OpenTabTask;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel;
-import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
 import com.jskj.asset.client.panel.ymgl.YiMiaoYunShuDanJDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -19,15 +19,15 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class SelectYiMiaochurukujiluJDialog extends javax.swing.JDialog {
+public class SelectYiMiaochurukujiluJDialog extends BaseDialog {
 
     YiMiaoChuRuKuJiLuJDialog ymcrkjl;
 
     /**
      * Creates new form ymcrkjl_select
      */
-    public SelectYiMiaochurukujiluJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public SelectYiMiaochurukujiluJDialog() {
+        super();
         initComponents();
     }
 
@@ -114,7 +114,7 @@ public class SelectYiMiaochurukujiluJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SelectYiMiaochurukujiluJDialog dialog = new SelectYiMiaochurukujiluJDialog(new javax.swing.JFrame(), true);
+                SelectYiMiaochurukujiluJDialog dialog = new SelectYiMiaochurukujiluJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

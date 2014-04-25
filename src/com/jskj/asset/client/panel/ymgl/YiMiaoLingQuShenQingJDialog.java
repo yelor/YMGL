@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -46,6 +46,7 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
     private Yimiaoshenqingdantb yimiaoshenqingdan;
     private YimiaoshenqingdantbFindEntity yimiaolingyong;
     private List<Yimiaoshenqingdantb> yimiaoshenqingdanlist = new ArrayList<Yimiaoshenqingdantb>();
+    private Map shenqingdanmap;
     private Shenqingdantb shenqingdan;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity;
@@ -59,6 +60,7 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
         initComponents();
         jTextFieldYimiaolingyongdanId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOLY));
         jTextFieldYimiaolingyongdanId.setEditable(false);
+        shenqingdanmap = new HashMap();
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
@@ -135,9 +137,7 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
 
-                    Yimiaoshenqingdantb yimiaoliebiao = new Yimiaoshenqingdantb();
-                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId")))));
-                    yimiaoshenqingdanlist.add(yimiaoliebiao);
+                    Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -154,6 +154,8 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
                     editTable.insertValue(5, unit);
                     editTable.insertValue(6, quantity);
 
+                    //                    保存对应单据的详单id
+                    shenqingdanmap.put(yimiaoId, xiangdanId);
                 }
 
             }
@@ -614,7 +616,7 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             System.out.println(yimiaotable.getValue(i, "quantity"));
             yimiaoshenqingdan.setQuantity((Integer) yimiaotable.getValue(i, "quantity"));
-            yimiaoshenqingdan.setYuandanId(yimiaoshenqingdanlist.get(i).getYuandanId());
+            yimiaoshenqingdan.setYuandanId(Integer.parseInt(shenqingdanmap.get(yimiaoshenqingdan.getYimiaoId().toString()).toString()));
             list.add(yimiaoshenqingdan);
         }
         yimiaolingyong.setShenqingdan(shenqingdan);

@@ -15,7 +15,7 @@ public class ChukuyimiaoFindEntity {
 
     private int count;
 
-    private List<ChukuyimiaoEntity> result;
+    private List<ChurukujiluyimiaoEntity> result;
 
     public int getCount() {
         return count;
@@ -25,11 +25,11 @@ public class ChukuyimiaoFindEntity {
         this.count = count;
     }
 
-    public List<ChukuyimiaoEntity> getResult() {
+    public List<ChurukujiluyimiaoEntity> getResult() {
         return result;
     }
 
-    public void setResult(List<ChukuyimiaoEntity> result) {
+    public void setResult(List<ChurukujiluyimiaoEntity> result) {
         this.result = result;
     }
 

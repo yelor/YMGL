@@ -56,42 +56,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jiliangdanwei.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("剂量单位")));
     }
 
-        
-//        默认仓库按钮
-//        ((BaseTextField) depottb$depotName).registerPopup(new IPopupBuilder() {
-//
-//            @Override
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_TEXT;
-//            }
-//
-//            @Override
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "cangku/";
-//            }
-//
-//            @Override
-//            public String getConditionSQL() {
-//                String sql = "";
-//                if (!depottb$depotName.getText().trim().equals("")) {
-//                    sql = "(depot_name like \"%" + depottb$depotName.getText() + "%\""+" or zujima like \"%"+depottb$depotName.getText().toLowerCase() + "%\")";
-//                }
-//                return sql;
-//            }
-//
-//            @Override
-//            public String[][] displayColumns() {
-//                return new String[][]{{"depotName", "仓库名"}, {"depotArea", "面积"}};
-//            }
-//
-//            @Override
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//                    depottb$depotName.setText(bindedMap.get("depotName").toString());
-//                    jTextFieldDepotID.setText(bindedMap.get("depotId").toString());
-//                }
-//            }
-//        });     
 
     /**
      * This method is called from within the constructor to initialize the form.

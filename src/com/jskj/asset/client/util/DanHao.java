@@ -82,7 +82,7 @@ public class DanHao {
         } else if (shenqingdanId.startsWith(TYPE_YIMIAOTJ)) {
             className = "com.jskj.asset.client.panel.ymgl.YiMiaoTiaoJiaJDialog";
         } else if (shenqingdanId.startsWith(TYPE_YIMIAOBS)) {
-            className = "com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun";
+            className = "com.jskj.asset.client.panel.ckgl.YiMiaoBaoSunJDialog";
         } else if (shenqingdanId.startsWith(TYPE_GDZC)) {
             className = "com.jskj.asset.client.panel.slgl.GuDingZiChanCaiGouShenQingJDialog";
         } else if (shenqingdanId.startsWith(TYPE_YHCG)) {

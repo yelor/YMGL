@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.event.TableModelEvent;
@@ -54,6 +55,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
     private YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity;
     private boolean isNew;
     private float total = 0;
+    private Map shenqingdanmap;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -63,7 +65,8 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         initComponents();
         jTextFieldYimiaocaigoudanId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOCG));
         jTextFieldYimiaocaigoudanId.setEditable(false);
-
+        shenqingdanmap = new HashMap();
+        
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
@@ -139,9 +142,8 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
 
-                    Yimiaoshenqingdantb yimiaoliebiao = new Yimiaoshenqingdantb();
-                    yimiaoliebiao.setYuandanId((Integer.parseInt((String) ("" + yimiaoshenqingdan.get("xiangdanId")))));
-                    yimiaoshenqingdanlist.add(yimiaoliebiao);
+                    
+                    Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -163,6 +165,9 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     editTable.insertValue(7, buyprice);
                     editTable.insertValue(8, totalprice);
 //                    editTable.insertValue(9, saleprice);
+                    
+                    //                    保存对应单据的详单id
+                    shenqingdanmap.put(yimiaoId, xiangdanId);
 
                 }
 
@@ -672,7 +677,8 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         shenqingdan.setDanjuleixingId(6);
         shenqingdan.setShenqingdanRemark(jTextAreaRemark.getText());
 
-        float total = 0;
+        total = 0;
+
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
@@ -684,7 +690,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
             yimiaoshenqingdan.setTotalprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "totalprice"))));
-            yimiaoshenqingdan.setYuandanId(yimiaoshenqingdanlist.get(i).getYuandanId());
+            yimiaoshenqingdan.setYuandanId(Integer.parseInt(shenqingdanmap.get(yimiaoshenqingdan.getYimiaoId().toString()).toString()));
             list.add(yimiaoshenqingdan);
             total += yimiaoshenqingdan.getTotalprice();
         }

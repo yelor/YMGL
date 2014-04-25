@@ -32,7 +32,7 @@ public class AssetClientApp extends SingleFrameApplication {
     private static UserSessionEntity sessionMap;
 
     private static JFrame loginWindow;
-    
+
     private static MessagePanel messagePanel;
 
     public static String[] DEFAULT_FONT = new String[]{
@@ -59,9 +59,9 @@ public class AssetClientApp extends SingleFrameApplication {
     public static void setSessionMap(UserSessionEntity aSessionMap) {
         sessionMap = aSessionMap;
     }
-    
-    public static MessagePanel getMessagePanel(){
-      return messagePanel;
+
+    public static MessagePanel getMessagePanel() {
+        return messagePanel;
     }
 
     /**
@@ -99,14 +99,14 @@ public class AssetClientApp extends SingleFrameApplication {
         UserSessionEntity session = AssetClientApp.getSessionMap();
         Departmenttb department = session.getDepartment();
         Usertb usertb = session.getUsertb();
-        
+
         if (department == null || usertb == null) {
-            logger.info(moudleName+"模块: 限制访问");
+            logger.info(moudleName + "模块: 限制访问");
             return false;
         }
         if (appparams != null) //权限控制
         {
-            boolean found=false;
+            boolean found = false;
             for (Appparam app : appparams) {
                 if (app.getAppparamName().equals(moudleName)) { //模块名一致
                     found = true;
@@ -121,33 +121,33 @@ public class AssetClientApp extends SingleFrameApplication {
                                 if (departRoles.length > 1) {
                                     for (int i = 1; i < departRoles.length; i++) {
                                         if (usertb.getUserRoles().indexOf(departRoles[i]) >= 0) {
-                                            logger.info(moudleName+"模块: 允许访问");
+                                            logger.info(moudleName + "模块: 允许访问");
                                             return true;
                                         }
                                     }
                                 } else {//只配置了部门
-                                    logger.info(moudleName+"模块: 允许访问");
+                                    logger.info(moudleName + "模块: 允许访问");
                                     return true;
                                 }
                             }
 
                         }
                     } else {
-                        logger.info(moudleName+"模块: 允许访问");
+                        logger.info(moudleName + "模块: 允许访问");
                         return true;
                     }
                     break;
                 }
 
             }
-            if(!found){
-               return true;
+            if (!found) {
+                return true;
             }
         } else {
-            logger.info(moudleName+"模块: 允许访问");
+            logger.info(moudleName + "模块: 允许访问");
             return true;
         }
-        logger.info(moudleName+"模块: 限制访问");
+        logger.info(moudleName + "模块: 限制访问");
         return false;
     }
 
@@ -183,7 +183,7 @@ public class AssetClientApp extends SingleFrameApplication {
 
         //消息初始化
         messagePanel = new MessagePanel();
-        
+
         //参数初始化
         ParamSession.getInstance().buildParamSession(view.loadMoudule()).execute();
 
@@ -254,15 +254,6 @@ public class AssetClientApp extends SingleFrameApplication {
     public static void startupApplication(String[] args, JFrame window, UserSessionEntity aSessionMap) {
         loginWindow = window;
         sessionMap = aSessionMap;
-//        try {
-//            BeautyEyeLNFHelper.translucencyAtFrameInactive = false;
-//            UIManager.put("ToolBar.isPaintPlainBackground", Boolean.TRUE);
-//            UIManager.put("RootPane.setupButtonVisible", false);
-//            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-//            UIManager.put("TabbedPane.tabAreaInsets", new javax.swing.plaf.InsetsUIResource(3, 20, 2, 20));
-//        } catch (Exception ex) {
-//            logger.error(ex);
-//        }
         launch(AssetClientApp.class, args);
     }
 

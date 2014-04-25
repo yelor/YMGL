@@ -425,7 +425,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymcrkjl == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymcrkjl = new SelectYiMiaochurukujiluJDialog(new javax.swing.JFrame(), true);
+                    ymcrkjl = new SelectYiMiaochurukujiluJDialog();
                     ymcrkjl.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymcrkjl);

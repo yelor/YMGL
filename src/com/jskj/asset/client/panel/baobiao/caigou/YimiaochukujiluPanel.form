@@ -163,7 +163,7 @@
                     <Component class="javax.swing.JButton" name="jButton17">
                       <Properties>
                         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                          <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel" id="pagePrev" methodName="pagePrev"/>
+                          <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel" id="pagePrev" methodName="pagePrev"/>
                         </Property>
                         <Property name="text" type="java.lang.String" resourceKey="jButton17.text"/>
                         <Property name="borderPainted" type="boolean" value="false"/>
@@ -186,7 +186,7 @@
                     <Component class="javax.swing.JButton" name="jButton18">
                       <Properties>
                         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                          <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel" id="pageNext" methodName="pageNext"/>
+                          <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel" id="pageNext" methodName="pageNext"/>
                         </Property>
                         <Property name="text" type="java.lang.String" resourceKey="jButton18.text"/>
                         <Property name="borderPainted" type="boolean" value="false"/>
@@ -414,7 +414,7 @@
         <Component class="javax.swing.JButton" name="jButton15">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel" id="reload" methodName="reload"/>
+              <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel" id="reload" methodName="reload"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton15.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton15.text"/>

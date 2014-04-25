@@ -177,7 +177,7 @@
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.baobiao.kucun.Yimiaokucun1Panel" id="picichaxunAction" methodName="picichaxunAction"/>
+                  <action class="com.jskj.asset.client.panel.baobiao.kucun.ErleiYimiaoKucunPanel" id="picichaxunAction" methodName="picichaxunAction"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>

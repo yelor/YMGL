@@ -5,7 +5,7 @@
  */
 package com.jskj.asset.client.panel.baobiao.caigou;
 
-import com.jskj.asset.client.bean.report.CaigouReport;
+import com.jskj.asset.client.bean.entity.ChurukujiluyimiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
@@ -14,11 +14,13 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import org.apache.log4j.Logger;
@@ -35,10 +37,11 @@ public class YimiaochukujiluPanel extends BasePanel {
     private int pageIndex;
     private final int pageSize;
     private int count;
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private List<CaigouReport> currentPageData;
+    private List<ChurukujiluyimiaoEntity> currentPageData;
 
-    private final BindTableHelper<CaigouReport> bindTable;
+    private final BindTableHelper<ChurukujiluyimiaoEntity> bindTable;
 
     private final HashMap parameterMap;
 
@@ -51,20 +54,20 @@ public class YimiaochukujiluPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 20;
         count = 0;
-        bindTable = new BindTableHelper<CaigouReport>(jTable1, new ArrayList<CaigouReport>());
+        bindTable = new BindTableHelper<ChurukujiluyimiaoEntity>(jTable1, new ArrayList<ChurukujiluyimiaoEntity>());
         bindTable.createTable(new String[][]{
-            {"yimiaoId", "日期", "false"}, {"yimiaoId", "入库数(支)", "false"}, {"yimiaoId", "出库数(支)", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"}, {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
+            {"churukudan.zhidandate", "日期", "false"}, {"churukudan.churukuId", "单据编号", "false"}, {"yimiao.yimiaoName", "疫苗名称", "false"}, {"chukuyimiao.rukuQuantity", "入库数(支)", "false"}, {"chukuyimiao.chukuQuantity", "出库数(支)", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
+            {"chukuyimiao.pihao", "批号", "false"}, {"chukuyimiao.youxiaoqi", "有效期", "false"}, {"yimiao.unitId", "单位", "false"}, {"chukuyimiao.piqianfahegeno", "批签发合格证编号", "false"}, {"yimiao.yimiaoPizhunwenhao", "批准文号", "true"},
             //            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, 
-            {"jingbanren", "往来单位", "true"}, {"gongyingdanwei", "价格(元)", "true"},
-            {"jingbanren", "经办人", "true"}, {"duifangjingbanren", "对方经办人", "true"}, {"duifangjingbanren", "累计库存(支)", "true"}});
-        bindTable.setColumnType(Date.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 80}, new int[]{2, 80}, new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 80}, new int[]{6, 80}).setRowHeight(25);
+            {"churukudan.gongyingdanwei", "往来单位", "true"}, {"chukuyimiao.price", "价格(元)", "true"},
+            {"churukudan.zhidanren", "经办人", "true"}, {"churukudan.zhidanren", "对方经办人", "true"}, {"churukudan.zhidanren", "累计库存(支)", "true"}});
+        bindTable.setColumnType(Date.class, 1, 10);
+        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 180}, new int[]{2, 150}, new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 80}, new int[]{6, 80}).setRowHeight(25);
 
         parameterMap = new HashMap();
         parameterMap.put("pagesize", String.valueOf(pageSize));
         parameterMap.put("pageindex", String.valueOf(pageIndex));
-        parameterMap.put("idflag", "YMS");
+        parameterMap.put("yimiaoName", "");
 
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
@@ -75,30 +78,27 @@ public class YimiaochukujiluPanel extends BasePanel {
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addkucunyimiao";
+                return Constants.HTTP + Constants.APPID + "addyimiao";
             }
 
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql += "stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.toString() + "%\"" + " or zujima like \"%" + jTextFieldYimiaoName.toString().toLowerCase() + "%\"))";
+                    sql += "(yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\" or zujima like \"%" + jTextFieldYimiaoName.getText().toString().toLowerCase() + "%\"))";
                 } else {
-                    sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
+                    sql += "";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
-                {"youxiaodate", "有效期"}};
+                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
+                {"yimiaoJixing", "剂型"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    Object yimiaomap = bindedMap.get("yimiao");
-                    HashMap yimiao = (HashMap) yimiaomap;
-
-                    jTextFieldYimiaoName.setText(yimiao.get("yimiaoName") == null ? "" : yimiao.get("yimiaoName").toString());
+                    jTextFieldYimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
                 }
             }
         });
@@ -400,11 +400,18 @@ public class YimiaochukujiluPanel extends BasePanel {
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         if (((JTabbedPane) evt.getSource()).getSelectedIndex() == 1) {
-            String startDate = jTextFieldStart.getText();
-            String endDate = jTextFieldEnd.getText();
+            Date startDate = null;
+            Date endDate = null;
+            try {
+                startDate = dateformate.parse(jTextFieldStart.getText());
+                endDate = dateformate.parse(jTextFieldEnd.getText());
+                System.out.println("查找开始的时间是：" + startDate);
+            } catch (ParseException ex) {
+                java.util.logging.Logger.getLogger(YimiaochukujiluPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
             parameterMap.put("startDate", startDate);
             parameterMap.put("endDate", endDate);
-            parameterMap.put("idflag", "YMS");
+            parameterMap.put("yimiaoName", "");
 
             jLabelImg.setText("loading chart...");
             jLabelImg.setIcon(null);
@@ -454,7 +461,36 @@ public class YimiaochukujiluPanel extends BasePanel {
     @Action
     public Task reload() {
         parameterMap.put("pageindex", 0);
+        String startDate = jTextFieldStart.getText();
+        String endDate = jTextFieldEnd.getText();
+        parameterMap.put("startDate", startDate);
+        parameterMap.put("endDate", endDate);
+        parameterMap.put("yimiaoName", jTextFieldYimiaoName.getText());
         return new RefreshTask(parameterMap);
+    }
+
+    private class ReloadTask extends org.jdesktop.application.Task<Object, Void> {
+
+        ReloadTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ReloadTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     @Override
@@ -470,6 +506,30 @@ public class YimiaochukujiluPanel extends BasePanel {
         return new RefreshTask(parameterMap);
     }
 
+    private class PagePrevTask extends org.jdesktop.application.Task<Object, Void> {
+
+        PagePrevTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to PagePrevTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public Task pageNext() {
         if (pageSize * (pageIndex) <= count) {
@@ -479,7 +539,31 @@ public class YimiaochukujiluPanel extends BasePanel {
         return new RefreshTask(parameterMap);
     }
 
-    public CaigouReport selectedDataFromTable() {
+    private class PageNextTask extends org.jdesktop.application.Task<Object, Void> {
+
+        PageNextTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to PageNextTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
+    public ChurukujiluyimiaoEntity selectedDataFromTable() {
         if (jTable1.getSelectedRow() >= 0) {
             if (currentPageData != null) {
                 return currentPageData.get(jTable1.getSelectedRow());
@@ -488,18 +572,18 @@ public class YimiaochukujiluPanel extends BasePanel {
         return null;
     }
 
-    public List<CaigouReport> getTableData() {
+    public List<ChurukujiluyimiaoEntity> getTableData() {
         return currentPageData;
     }
 
-    private class RefreshTask extends ReportCaiGouFindTask {
+    private class RefreshTask extends ChurukuyimiaoEntityFindTask {
 
         RefreshTask(HashMap parameterMap) {
-            super(parameterMap, "report/list");
+            super(parameterMap, "report/churukujilu/list");
         }
 
         @Override
-        public void responseResult(CommFindEntity<CaigouReport> response) {
+        public void responseResult(CommFindEntity<ChurukujiluyimiaoEntity> response) {
 
             count = response.getCount();
             jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
@@ -521,7 +605,7 @@ public class YimiaochukujiluPanel extends BasePanel {
         String endDate = jTextFieldEnd.getText();
         printMap.put("startDate", startDate);
         printMap.put("endDate", endDate);
-        printMap.put("idflag", "YMS");
+        printMap.put("yimiaoName", jTextFieldYimiaoName.getText());
         ReportCaiGouFindTask printData = new ReportCaiGouFindTask(printMap, "report/list") {
             @Override
             public void responseResult(CommFindEntity response) {
@@ -533,11 +617,11 @@ public class YimiaochukujiluPanel extends BasePanel {
 
     @Action
     public Task disDetail() {
-        CaigouReport selectedData = selectedDataFromTable();
+        ChurukujiluyimiaoEntity selectedData = selectedDataFromTable();
         if (selectedData == null) {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
         }
-        return new ReportCaiGouYimiaoTask(selectedData);
+        return null;
     }
 }

@@ -39,6 +39,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
     public int pageSize;
     private int count;
     private String conditionSql;
+    private String yimiaoName;
 
     private List<StockpiletbAll> stockpile;
 
@@ -65,7 +66,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{2, 3, 6};
+                return new int[]{};
             }
 
             @Override
@@ -103,29 +104,37 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
     @Action
     public Task picichaxunAction() {
         conditionSql = "";
+        yimiaoName = "";
         if (bindTable.getSelectedBean() != null) {
             conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + bindTable.getSelectedBean().getYimiao().getYimiaoName() + "%\"))";
+            yimiaoName=bindTable.getSelectedBean().getYimiao().getYimiaoName();
         } else {
             conditionSql = "";
+            yimiaoName = "";
         }
-        return new OpenTabTask("报表-疫苗批次查询", new Yimiaopicichaxun1Panel(conditionSql), false);
+        return new OpenTabTask("报表-疫苗批次查询", new Yimiaopicichaxun1Panel(conditionSql,yimiaoName), false);
 
     }
 
     private class PicichaxunActionTask extends org.jdesktop.application.Task<Object, Void> {
+
         PicichaxunActionTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to PicichaxunActionTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }
