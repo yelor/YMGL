@@ -18,6 +18,10 @@ public class GudingzichanAll extends Gudingzichantb{
     
     private ShenqingdanAll shenqingdan;
     
+    private ZiChanLieBiaotb liebiao;
+    
+    private Gudingzichankucuntb kucun;
+    
     private int count;
     
     private float saleprice;
@@ -72,6 +76,22 @@ public class GudingzichanAll extends Gudingzichantb{
 
     public void setSaleprice(float saleprice) {
         this.saleprice = saleprice;
+    }
+
+    public ZiChanLieBiaotb getLiebiao() {
+        return liebiao;
+    }
+
+    public void setLiebiao(ZiChanLieBiaotb liebiao) {
+        this.liebiao = liebiao;
+    }
+
+    public Gudingzichankucuntb getKucun() {
+        return kucun;
+    }
+
+    public void setKucun(Gudingzichankucuntb kucun) {
+        this.kucun = kucun;
     }
 
 }

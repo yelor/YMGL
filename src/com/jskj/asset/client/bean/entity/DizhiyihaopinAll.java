@@ -18,6 +18,10 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
 
     private ShenqingdanAll shenqingdan;
     
+    private ZiChanLieBiaotb liebiao;
+    
+    private Dizhiyihaopinkucuntb kucun;
+    
     private int count;
     
     private float saleprice;
@@ -72,6 +76,22 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
 
     public void setSaleprice(float saleprice) {
         this.saleprice = saleprice;
+    }
+
+    public ZiChanLieBiaotb getLiebiao() {
+        return liebiao;
+    }
+
+    public void setLiebiao(ZiChanLieBiaotb liebiao) {
+        this.liebiao = liebiao;
+    }
+
+    public Dizhiyihaopinkucuntb getKucun() {
+        return kucun;
+    }
+
+    public void setKucun(Dizhiyihaopinkucuntb kucun) {
+        this.kucun = kucun;
     }
     
 }

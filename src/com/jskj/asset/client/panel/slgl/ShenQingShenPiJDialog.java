@@ -124,6 +124,10 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
                             liucheng.setCheckId4(liucheng.getCheckId4() + "," + liucheng.getCheckUser4() + "," + DateHelper.formatTime(liucheng.getCheckTime4()));
                         }
 
+                        //领用单财务科提示不需要审批
+                        if(liucheng.getDanjuId().contains("LY") && liucheng.getCheckId1() != null){
+                            liucheng.setCheckId2("此流程不经由财务科审批");
+                        }
                     }
                 }
                 

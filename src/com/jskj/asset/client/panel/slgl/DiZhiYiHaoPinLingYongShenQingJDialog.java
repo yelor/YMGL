@@ -51,6 +51,8 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
     private float total = 0;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Map kucunmap;
+    private String pihao;
+    private float saleprice;
 
     /**
      * Creates new form GuDingZiChanRuKu
@@ -76,7 +78,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"}, {"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"}, {"dzyhpValue", "原值", "false"}, {"total", "合价"}});
+            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "批号", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -86,7 +88,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "dizhiyihaopin/";
+                return Constants.HTTP + Constants.APPID + "dizhiyihaopin/findly";
             }
 
             @Override
@@ -104,7 +106,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"}};
+                return new String[][]{{"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"},{"kucun.pihao", "批号"}};
             }
 
             @Override
@@ -114,17 +116,22 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                     Object dzyhpName = bindedMap.get("dzyhpName");
                     Object dzyhpType = bindedMap.get("dzyhpType");
                     Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
-                    Object dzyhpValue = bindedMap.get("dzyhpValue");
+//                    Object dzyhpValue = bindedMap.get("dzyhpValue");
                     Object gdzcXinghao = bindedMap.get("dzyhpXinghao");
-                    Object dzyhpKucun = bindedMap.get("count");
 
                     editTable.insertValue(0, dzyhpId);
                     editTable.insertValue(1, dzyhpName);
                     editTable.insertValue(2, dzyhpType);
                     editTable.insertValue(3, dzyhpPinpai);
                     editTable.insertValue(4, gdzcXinghao);
-                    editTable.insertValue(6, dzyhpValue);
 
+                    HashMap map = (HashMap)bindedMap.get("kucun");
+                    pihao = (String)map.get("pihao");
+                    saleprice = Float.parseFloat(map.get("price").toString());
+                    editTable.insertValue(6, saleprice);
+                    editTable.insertValue(8, pihao);
+                    Object gdzcKucun = map.get("quantity");
+                    
 //                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
 //                    zclb.setCgsqId(cgsqId.getText());
 //                    zclb.setCgzcId((Integer) gdzcId);
@@ -133,7 +140,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 //                    zc.add(zclb);
                     
                     //保存库存数，用来校验数据
-                    kucunmap.put(dzyhpId, dzyhpKucun);
+                    kucunmap.put(dzyhpId+pihao, gdzcKucun);
                 }
 
             }
@@ -282,9 +289,9 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
             }
             try {
                 int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
-                if (count > Integer.parseInt(kucunmap.get(zclb.getCgzcId()).toString())) {
+                if (count > Integer.parseInt(kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 8).toString()).toString())) {
                     AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的领取数量大于库存数，"
-                            + "请输入一个小于" + kucunmap.get(zclb.getCgzcId()) + "的数", this);
+                            + "请输入一个小于" + kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 8).toString()) + "的数", this);
                     return null;
                 }
                 zclb.setQuantity(count);
@@ -293,6 +300,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
                 return null;
             }
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
+            zclb.setPihao(jTable1.getValueAt(i, 8).toString());
             zclb.setSaleprice(price);
             zclb.setTotalprice(zclb.getQuantity() * price);
             zclb.setIsCompleted(0);

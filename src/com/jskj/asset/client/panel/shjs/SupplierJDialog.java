@@ -20,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Task;
 
 /**
  *
@@ -31,7 +30,7 @@ public class SupplierJDialog extends BaseDialog {
     private final static Logger logger = Logger.getLogger(SupplierJDialog.class);
     private JTextField regTextField1,regTextField2;
     private int supplierId;
-    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     /**
      * Creates new form FKDJDialog
@@ -44,7 +43,9 @@ public class SupplierJDialog extends BaseDialog {
         Calendar c = Calendar.getInstance();
         String month = c.get(Calendar.MONTH)+1 < 10 ? (0+""+(c.get(Calendar.MONTH)+1)) : ""+(c.get(Calendar.MONTH)+1);
         int year = c.get(Calendar.YEAR);
-        startDate.setText(year + "-" + month + "-01");
+        dateformate = new SimpleDateFormat("HH:mm:ss");
+        startDate.setText(year + "-" + month + "-01 " + dateformate.format(new Date()).toString());
+        dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         endDate.setText(dateformate.format(new Date()).toString());
 
         ((BaseTextField) supplier).registerPopup(new IPopupBuilder() {
@@ -82,8 +83,8 @@ public class SupplierJDialog extends BaseDialog {
     private void init() {
         regTextField1 = new BaseTextField();
         regTextField2 = new BaseTextField();
-        ((BaseTextField) regTextField1).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
-        ((BaseTextField) regTextField2).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
+        ((BaseTextField) regTextField1).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
+        ((BaseTextField) regTextField2).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
     }
     
     @Action
@@ -130,7 +131,6 @@ public class SupplierJDialog extends BaseDialog {
         startDate = regTextField1;
         jLabel9 = new javax.swing.JLabel();
         endDate = regTextField2;
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SupplierJDialog.class);
@@ -185,9 +185,6 @@ public class SupplierJDialog extends BaseDialog {
 
         endDate.setName("endDate"); // NOI18N
 
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -208,10 +205,6 @@ public class SupplierJDialog extends BaseDialog {
                         .addGap(18, 18, 18)
                         .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,9 +221,7 @@ public class SupplierJDialog extends BaseDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,7 +288,6 @@ public class SupplierJDialog extends BaseDialog {
     private javax.swing.JTextField endDate;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;

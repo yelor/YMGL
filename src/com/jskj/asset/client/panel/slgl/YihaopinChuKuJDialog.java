@@ -59,6 +59,8 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
     private Map yuandanmap;
+    private String pihao;
+    private float totalprice;
     /**
      * Creates new form GuDingZiChanChuKu
      * @param parent
@@ -118,7 +120,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpValue", "原值", "false"},{"quantity", "数量"}});
+            {"dzyhpXinghao", "型号"}, {"quantity", "数量"}, {"dzyhpValue", "采购价", "false"}, {"total", "合价"},{"liebiao.pihao", "批号", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -144,7 +146,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
 
             public String[][] displayColumns() {
                 return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
-                        ,{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"}};
+                        ,{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"},{"liebiao.pihao", "批号"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -153,19 +155,26 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     Object dzyhpName = bindedMap.get("dzyhpName");
                     Object dzyhpType = bindedMap.get("dzyhpType");
                     Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
-                    Object dzyhpValue = bindedMap.get("dzyhpValue");
+                    Object dzyhpValue = bindedMap.get("saleprice");
+                    Object dzyhpXinghao = bindedMap.get("dzyhpXinghao");
                     Object dzyhpCount = bindedMap.get("count");
 
                     editTable.insertValue(0, dzyhpId);
                     editTable.insertValue(1, dzyhpName);
                     editTable.insertValue(2, dzyhpType);
                     editTable.insertValue(3, dzyhpPinpai);
-                    editTable.insertValue(4, dzyhpValue);
+                    editTable.insertValue(4, dzyhpXinghao);
                     editTable.insertValue(5, dzyhpCount);
+                    editTable.insertValue(6, dzyhpValue);
                     
                     HashMap map = (HashMap)bindedMap.get("shenqingdan");
                     yuandanID = (String)map.get("shenqingdanId");
                     
+                    map = (HashMap)bindedMap.get("liebiao");
+                    pihao = (String)map.get("pihao");
+                    totalprice = Float.parseFloat(map.get("totalprice").toString());
+                    editTable.insertValue(7, totalprice);
+                    editTable.insertValue(8, pihao);
 //                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
 //                    zclb.setCgsqId(cgsqId.getText());
 //                    zclb.setCgzcId((Integer)gdzcId);
@@ -173,7 +182,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
 //                    zclb.setCgsqId(yuandanID);
 //                    zc.add(zclb);
                     //保存原单号
-                    yuandanmap.put(dzyhpId, yuandanID);
+                    yuandanmap.put(dzyhpId+pihao, yuandanID);
                 }
 
             }
@@ -343,7 +352,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            lb.setCgsqId(yuandanmap.get(lb.getCgzcId()).toString());
+            lb.setCgsqId(yuandanmap.get(lb.getCgzcId()+ jTable1.getValueAt(i, 8).toString()).toString());
             String reason = "";
             while (reason.isEmpty()) {
                 reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【"
@@ -384,9 +393,10 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()).toString());
+            zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 8).toString()).toString());
             zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 4));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
+            zclb.setPihao(jTable1.getValueAt(i, 8).toString());
             zclb.setSaleprice(price);
             zclb.setTotalprice(zclb.getQuantity()*price);
             zclb.setIsCompleted(0);
