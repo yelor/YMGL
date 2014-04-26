@@ -191,10 +191,10 @@ public class YiMiaoYunShuDanJDialog extends BaseDialog {
     private void init() {
         regTextField1 = new JTextField();
         regTextField2 = new JTextField();
-        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd");
+        dateChooser2 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser2.register(regTextField2);
         regTextField3 = new JTextField();
-        dateChooser3 = DateChooser.getInstance("yyyy-MM-dd");
+        dateChooser3 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser3.register(regTextField3);
     }
 

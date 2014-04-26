@@ -588,7 +588,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
             yimiaoshenqingdan.setDanjuleixingId(3);
-            yimiaoshenqingdan.setStatus(8);
+            yimiaoshenqingdan.setStatus(7);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "quantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入第"+(i+1)+"行的疫苗申报数量!");

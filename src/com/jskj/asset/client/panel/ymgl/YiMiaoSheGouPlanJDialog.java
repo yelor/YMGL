@@ -574,7 +574,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
             }
             yimiaoshenqingdan.setQuantity(Integer.parseInt((String) yimiaotable.getValue(i, "quantity")));
             yimiaoshenqingdan.setDanjuleixingId(4);
-            yimiaoshenqingdan.setStatus(8);
+            yimiaoshenqingdan.setStatus(7);
             if (yimiaotable.getValue(i, "buyprice").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗赊购进价!");
                 return null;
