@@ -12,8 +12,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -33,7 +35,6 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
-import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  *
@@ -45,6 +46,7 @@ public abstract class BaseDialog extends JDialog {
 
     public BaseDialog() {
         super(AssetClientApp.getApplication().getMainFrame());
+        setModal(true);
     }
 
     private Object getObject(String paramater, Object bean) throws Exception {
@@ -445,46 +447,79 @@ public abstract class BaseDialog extends JDialog {
         }
     }
 
-    protected void print(String title, Component[] topDisplayColumns, JTable table, Component[] bottomDisplayColumns) throws DRException {
-        int rowCount = table.getRowCount();
-        int columnCount = table.getColumnCount();
+    protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns) throws DRException {
+        setModal(false);
+        TextColumnBuilder[] itemColumns = null;
+        DRDataSource dataSource = null;
+        if (table != null) {
+            int rowCount = table.getRowCount();
+            int columnCount = table.getColumnCount();
 
-        TextColumnBuilder[] itemColumns = new TextColumnBuilder[columnCount];
-        String[] columnName = new String[columnCount];
-        for (int i = 0; i < columnCount; i++) {
-            Object headerValue = table.getTableHeader().getColumnModel().getColumn(i).getHeaderValue();
-            columnName[i] = "A" + i;
-            itemColumns[i] = col.column(headerValue.toString(), columnName[i], type.stringType());
+            itemColumns = new TextColumnBuilder[columnCount];
+            String[] columnName = new String[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                Object headerValue = table.getTableHeader().getColumnModel().getColumn(i).getHeaderValue();
+                columnName[i] = "A" + i;
+                itemColumns[i] = col.column(headerValue.toString(), columnName[i], type.stringType());
+            }
+
+            dataSource = new DRDataSource(columnName);
+            for (int i = 0; i < rowCount; i++) {
+                Object[] values = new Object[columnCount];
+                for (int j = 0; j < columnCount; j++) {
+                    Object valuObj = table.getValueAt(i, j);
+                    values[j] = valuObj.toString();
+
+                }
+                dataSource.add(values);
+            }
         }
 
-        DRDataSource dataSource = new DRDataSource(columnName);
-        for (int i = 0; i < rowCount; i++) {
-            Object[] values = new Object[columnCount];
-            for (int j = 0; j < columnCount; j++) {
-                Object valuObj = table.getValueAt(i, j);
-                values[j] = valuObj.toString();
-
+        List<String[]> leftArray = new ArrayList();
+        List<String[]> rightArray = new ArrayList();
+        List<String[]> bottomleftArray = new ArrayList();
+        List<String[]> bottomrightArray = new ArrayList();
+        if (topDisplayColumns != null) {
+            for (int i = 1; i <= topDisplayColumns.length; i++) {
+                if (i % 2 == 0) {
+                    rightArray.add(topDisplayColumns[i - 1]);
+                } else {
+                    leftArray.add(topDisplayColumns[i - 1]);
+                }
             }
-            dataSource.add(values);
+        }
+
+        if (bottomDisplayColumns != null) {
+            for (int i = 1; i <= bottomDisplayColumns.length; i++) {
+                if (i % 2 == 0) {
+                    bottomrightArray.add(bottomDisplayColumns[i - 1]);
+                } else {
+                    bottomleftArray.add(bottomDisplayColumns[i - 1]);
+                }
+            }
         }
 
         report().setTemplate(ReportTemplates.reportTemplate)
                 .columns(itemColumns)
                 .title(ReportTemplates.createTitleComponent(title),
                         cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
-                                cmp.hListCell(createCustomerComponent(null)).heightFixedOnTop()),
+                                cmp.hListCell(createCustomerComponent(leftArray)).heightFixedOnTop(),
+                                cmp.hListCell(createCustomerComponent(rightArray)).heightFixedOnTop()),
                         cmp.verticalGap(10))
                 .pageFooter(ReportTemplates.footerComponent)
                 //.sortBy(asc(itemColumn), desc(unitPriceColumn))
                 .setDataSource(dataSource)
+                .summary(cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
+                                cmp.hListCell(createCustomerComponent(bottomleftArray)).heightFixedOnTop(),
+                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop()))
                 .show(false);
     }
 
-    private ComponentBuilder<?, ?> createCustomerComponent(String customer) {
-        HorizontalListBuilder list = cmp.horizontalList().setBaseStyle(stl.style().setTopBorder(stl.pen1Point()).setLeftPadding(10));
-
-        list.add(cmp.text("A" + ":").setFixedColumns(8).setStyle(ReportTemplates.boldStyle), cmp.text("V")).newRow();
-
+    private ComponentBuilder<?, ?> createCustomerComponent(List<String[]> array) {
+        HorizontalListBuilder list = cmp.horizontalList().setBaseStyle(stl.style().setLeftPadding(10));
+        for (String[] cus : array) {
+            list.add(cmp.text(cus[0].trim().equals("")?"":(cus[0] + ":")).setFixedColumns(8).setStyle(ReportTemplates.boldStyle), cmp.text(cus.length > 1 ? cus[1] : "")).newRow();
+        }
         return cmp.verticalList(list);
     }
 

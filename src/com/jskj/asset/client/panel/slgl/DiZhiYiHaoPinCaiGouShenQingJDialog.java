@@ -111,7 +111,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "类别"}, {"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"},{"dzyhpValue", "采购价", "true"}, {"total", "合价"}});
+            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"}, {"dzyhpValue", "采购价", "true"}, {"total", "合价"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -160,7 +160,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
 
             }
         });
-        
+
         jTable1.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -177,17 +177,17 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
                     }
                     int rows = jTable1.getRowCount();
                     total = 0;
-                    for(int i = 0; i < rows; i++) {
-                        if(!(("" + jTable1.getValueAt(i, 7)).equals(""))){
+                    for (int i = 0; i < rows; i++) {
+                        if (!(("" + jTable1.getValueAt(i, 7)).equals(""))) {
                             total += Float.parseFloat("" + jTable1.getValueAt(i, 7));
                         }
                     }
                     totalprice.setText(total + "元");
                 }
             }
-            
+
         });
-        
+
         /*例子，把数量和采购价相乘，直接用system.out输出*/
         ((BaseTable) jTable1).addCellListener(new BaseCellFocusListener() {
 
@@ -198,8 +198,8 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
                     Object column6valueObj = jTable1.getValueAt(jTable1.getSelectedRow(), 6);
                     if (column5valueObj != null && column6valueObj != null) {
                         try {
-                            int column5value = column5valueObj.toString().trim().equals("")?0:Integer.parseInt(column5valueObj.toString());
-                            float column6value = column6valueObj.toString().trim().equals("")?0:Float.valueOf(column6valueObj.toString());
+                            int column5value = column5valueObj.toString().trim().equals("") ? 0 : Integer.parseInt(column5valueObj.toString());
+                            float column6value = column6valueObj.toString().trim().equals("") ? 0 : Float.valueOf(column6valueObj.toString());
                             float total = column5value * column6value;
                             System.out.println("total:" + total);
                         } catch (Exception e) {
@@ -269,13 +269,13 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         Object[][] o = new Object[size][6];
         for (int i = 0; i < size; i++) {
             YihaopinliebiaoEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getDzyhpId(), zclb.getDzyhpName(), zclb.getDzyhpType(), zclb.getDzyhpPinpai(), zclb.getDzyhpXinghao(),  zclb.getCount(), zclb.getSaleprice(),zclb.getSaleprice() * zclb.getCount()};
+            o[i] = new Object[]{zclb.getDzyhpId(), zclb.getDzyhpName(), zclb.getDzyhpType(), zclb.getDzyhpPinpai(), zclb.getDzyhpXinghao(), zclb.getCount(), zclb.getSaleprice(), zclb.getSaleprice() * zclb.getCount()};
         }
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "物品编号", "物品名称", "类别", "品牌", "型号",  "数量", "采购价", "合价"
+                    "物品编号", "物品名称", "类别", "品牌", "型号", "数量", "采购价", "合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -295,7 +295,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入供应单位！", this);
             return null;
         }
-        if (jTable1.getRowCount()-1 < 1) {
+        if (jTable1.getRowCount() - 1 < 1) {
             AssetMessage.ERRORSYS("请选择要采购的物品！", this);
             return null;
         }
@@ -315,13 +315,13 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         total = 0;
         zc = new ArrayList<ZiChanLieBiaotb>();
 //        for (int i = 0; i < zc.size(); i++) {
-        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+        for (int i = 0; i < jTable1.getRowCount() - 1; i++) {
             ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
             zclb.setCgsqId(cgsqId.getText());
-            try{
+            try {
                 zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
-            }catch(NumberFormatException e){
-                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
             if (jTable1.getValueAt(i, 5).toString().equals("")) {
@@ -332,18 +332,18 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个物品的采购价！", this);
                 return null;
             }
-            try{
+            try {
                 zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
-            }catch(NumberFormatException e){
-                AssetMessage.ERRORSYS("第" + (i+1) + "个物品的采购数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的采购数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            try{
+            try {
                 float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
                 zclb.setSaleprice(price);
                 zclb.setTotalprice(zclb.getQuantity() * price);
-            }catch(NumberFormatException e){
-                AssetMessage.ERRORSYS("第" + (i+1) + "个物品的采购价格输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的采购价格输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
             zclb.setIsCompleted(0);
@@ -698,7 +698,16 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
     @Action
     public void print() {
         try {
-            super.print("test", null, jTable1,null);
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", cgsqId.getText()},
+                    {"制单日期", shenqingdanDate.getText()},
+                    {"供应单位", supplier.getText()},
+                    {"申请人", jingbanren.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{{"", ""},
+                    {"总金额", totalprice.getText()}
+                    });
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);
