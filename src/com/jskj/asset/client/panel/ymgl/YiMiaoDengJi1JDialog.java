@@ -240,7 +240,6 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton1 = new ScanButton();
         jButton2 = new ScanButton();
         jButton4 = new javax.swing.JButton();
 
@@ -584,14 +583,6 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         jButton5.setFocusable(false);
         jButton5.setName("jButton5"); // NOI18N
         jToolBar1.add(jButton5);
-
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
 
         jButton2.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
@@ -970,7 +961,6 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

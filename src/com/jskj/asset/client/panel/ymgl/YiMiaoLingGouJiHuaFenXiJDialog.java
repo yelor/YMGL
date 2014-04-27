@@ -9,10 +9,12 @@ import com.jskj.asset.client.bean.entity.YimiaoCaigoujihuaFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigoujihuaEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
+import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoCaigoujihuaTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.List;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -189,6 +191,8 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoLingGouJiHuaFenXiJDialog.class, this);
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -213,7 +217,6 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         jButton5.setOpaque(false);
         jToolBar1.add(jButton5);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoLingGouJiHuaFenXiJDialog.class, this);
         jButton7.setAction(actionMap.get("exit")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
@@ -363,19 +366,23 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                YiMiaoLingGouJiHuaFenXiJDialog dialog = new YiMiaoLingGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"", ""},
+                    {"", ""}
+                    },
+                    jTableYimiao,
+                    new String[][]{{"", ""},
+                    {"", ""}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

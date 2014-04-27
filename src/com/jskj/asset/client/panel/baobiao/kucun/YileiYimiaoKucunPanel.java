@@ -53,13 +53,13 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         initComponents();
         pageIndex = 1;
         pageSize = 20;
-        conditionSql = "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id)";
+        conditionSql = "yimiao_id in (select distinct yimiao_id from yimiao where chengbenjia=0)";
         count = 0;
         bindTable = new BindTableHelper<StockpiletbAll>(jTableStockpile, new ArrayList<StockpiletbAll>());
         bindTable.createTable(new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoJixing", "剂型"},
         {"yimiao.yimiaoGuige", "疫苗规格"}, {"yimiao.unitId", "单位"}, {"stockpileQuantity", "库存数量"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
         bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 150}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 200}, new int[]{3, 100}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}).setRowHeight(30);
 
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 

@@ -36,6 +36,7 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -971,7 +972,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     //疫苗验收不合格情况
     @Action
     public Task buhege() {
-        if (jTable1.getRowCount() - 1 < 1) {
+        if (jTableyimiao.getRowCount() - 1 < 0) {
             AssetMessage.ERRORSYS("请选择要取消入库的疫苗！", this);
             return null;
         }
@@ -985,7 +986,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             String reason = "";
             while (reason.isEmpty()) {
                 reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【"
-                        + jTable1.getValueAt(i, 1) + "】的理由(必输)：");
+                        + jTableyimiao.getValueAt(i, 1) + "】的理由(必输)：");
                 if (reason == null) {
                     return null;
                 }
@@ -1182,6 +1183,25 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             YiMiaoYanShouDanJDialog yiMiaoYanShouJDialog = new YiMiaoYanShouDanJDialog();
             yiMiaoYanShouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);
+        }
+    }
+    
+     @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldYimiaoyanshouId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"部门", jTextFielddepartment.getText()},
+                    {"申请人", ""},
+                    {"备注", ""}}, 
+                    jTable1,
+                    new String[][]{{"", ""},
+                    {"总金额", ""}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
         }
     }
 

@@ -20,6 +20,7 @@ import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaodengjiUpdateTask;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -56,7 +57,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         init();
         initComponents();
         yimiaodengji = new Yimiaodengjitb();
-        isNew=false;
+        isNew = false;
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -142,44 +143,6 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
             }
         });
 
-        ((ScanButton) jButton1).registerPopup(new IPopupBuilder() {
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_SCAN;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
-            }
-
-            public String getConditionSQL() {
-                return "yimiao_tiaoxingma =";
-            }
-
-            public String[][] displayColumns() {
-                return null;
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    dateformate = new SimpleDateFormat("yyyy-MM-dd");
-                    jTextFieldYimiaoId.setText(bindedMap.get("yimiaoId") == null ? "" : bindedMap.get("yimiaoId").toString());
-                    jTextFieldYimiaoName.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldguige.setText(bindedMap.get("yimiaoGuige") == null ? "" : bindedMap.get("yimiaoGuige").toString());
-                    jTextFieldshengchanqiye.setText(bindedMap.get("shengchanqiye") == null ? "" : bindedMap.get("shengchanqiye").toString());
-                    jTextFieldpizhunwenhao.setText(bindedMap.get("pizhunwenhao") == null ? "" : bindedMap.get("pizhunwenhao").toString());
-                    jTextFieldpihao.setText(bindedMap.get("pihao") == null ? "" : bindedMap.get("pihao").toString());
-                    jTextFieldYouxiaoqi.setText(bindedMap.get("youxiaoqi") == null ? "" : dateformate.format(bindedMap.get("youxiaoqi")));
-                    jTextFieldunit.setText(bindedMap.get("unit") == null ? "" : bindedMap.get("unit").toString());
-                    jTextFieldpiqianfahege.setText(bindedMap.get("piqianfahegezhenNo") == null ? "" : bindedMap.get("piqianfahegezhenNo").toString());
-                    jTextFieldprice.setText(bindedMap.get("price") == null ? "" : bindedMap.get("price").toString());
-                    jTextFieldsaleprice.setText(bindedMap.get("saleprice") == null ? "" : bindedMap.get("saleprice").toString());
-                    jTextFieldkucunDown.setText(bindedMap.get("kucunDown") == null ? "" : bindedMap.get("kucunDown").toString());
-                    jTextFieldkucunUp.setText(bindedMap.get("kucunUp") == null ? "" : bindedMap.get("kucunUp").toString());
-                    yimiaodengji.setYimiaoId(bindedMap.get("yimiaoId") == null ? 0 : Integer.parseInt(bindedMap.get("yimiaoId").toString()));
-                }
-
-            }
-        });
     }
 
     DateChooser dateChooser1;
@@ -240,7 +203,6 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jToolBar1 = new javax.swing.JToolBar();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton1 = new ScanButton();
         jButton2 = new ScanButton();
         jButton4 = new javax.swing.JButton();
 
@@ -597,14 +559,6 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jButton5.setName("jButton5"); // NOI18N
         jToolBar1.add(jButton5);
 
-        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setOpaque(false);
-        jToolBar1.add(jButton1);
-
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
@@ -761,7 +715,6 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         });
     }
 
-
     public void setUpdatedData(Yimiaodengjitb yimiaodengji) {
         if (yimiaodengji == null) {
             return;
@@ -866,6 +819,23 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         isNew = true;
     }
 
+//    @Action
+//    public void generatorBar() {
+//        String barcode = jTextFieldtiaoxingma.getText();
+//        String label = jTextFieldYimiaoName.getText();
+//        if (barcode == null) {
+//            return;
+//        }
+//        if (label.trim().equals("")) {
+//            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+//            if (result != AssetMessage.OK_OPTION) {
+//                jTextFieldYimiaoName.grabFocus();
+//                return;
+//            }
+//        }
+//        DanHao.printBarCode128(label, barcode);
+//    }
+
     @Action
     public void exit() {
         if (isNew) {
@@ -967,7 +937,6 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
