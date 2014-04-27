@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -59,6 +61,8 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
     private String yuandanID;
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
+    private String sqid;
+    private boolean wait;
     
     /**
      * Creates new form GuDingZiChanRuKu
@@ -162,13 +166,21 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
             }
 
             public String getConditionSQL() {
+                wait = true;
+                chooseZichan();
+                while(wait) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PTGuDingZiChanDengJiJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 String sql = "";
-                //验收这里由于固定资产分了普通和IT类别分开登记，所以登记单关闭时无法保证一个单据中所有物品都已经登记
-                //而需求有要求，一个单据如果有物品没有登记，就该单据的物品就不能进入到验收这一步，所以
-                //在验收这一步就加了一个判断，筛选资产时只显示所有物品都登记了的单据，exit()中的sql做了相同修改
-                //其他资产和疫苗，如果一张单据的物品没有像固定资产一样分开在两个登记单中登记，则不需要如此修改
                 sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 1 "
                         + " and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=0 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
+                if(sqid != null){
+                    sql += " and cgsq_id = \"" + sqid + "\" ";
+                }
                 if (!jTextFieldZichan.getText().trim().equals("")) {
                     sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_name like \"%" + jTextFieldZichan.getText() + "%\"" 
                         + " or zujima like \"%" + jTextFieldZichan.getText().toLowerCase() + "%\")");
@@ -205,6 +217,9 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
 
     public void setNew(){
         isNew = true;
+        String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 1 "
+                + "and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=0 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
+        new OpenTask(sql).execute();
     }
     
     @Action
@@ -260,6 +275,73 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                 new Cancel(list).execute();
             }
             close();
+        }
+        
+    }
+    
+    private class OpenTask extends WeidengjizichanTask{
+
+        public OpenTask(String sql) {
+            super(sql);
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (ZichanliebiaotbAll zc : list) {
+                    string.append("单据").append(zc.getCgsqId()).append("有未验收项（")
+                            .append(zc.getZcName()).append(")\n");
+                }
+                string.append("是否继续验收？选“否”会要求输入原因，并不再验收以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
+                if (result == 0) {
+                    return;
+                }
+                for (ZichanliebiaotbAll lb : list) {
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回登记页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
+                    }
+                    lb.setReason("【验收】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+        }
+        
+    }
+    
+    public void chooseZichan(){
+        String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 1 "
+                + "and cgsq_id NOT IN( SELECT cgsq_id FROM (SELECT cgsq_id,COUNT(*) AS num FROM zichanliebiao WHERE STATUS=0 GROUP BY cgsq_id) AS a WHERE a.num > 0)";
+        new ChooseTask(sql).execute();
+    }
+    
+    private class ChooseTask extends WeidengjizichanTask{
+
+        public ChooseTask(String sql) {
+            super(sql);
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            sqid = null;
+            wait = false;
+            if(list.size() > 0){
+                sqid = list.get(0).getCgsqId();
+            }
         }
         
     }
@@ -676,7 +758,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                     .addComponent(jTextFieldFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldZhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -757,7 +839,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

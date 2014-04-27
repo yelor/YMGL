@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -55,6 +57,8 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
     private JFrame mainFrame;
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
+    private String sqid;    //申请单ID，保存未处理完毕的单据的ID，用来选择物品时筛选，只显示未处理完成的单据的物品
+    private boolean wait;   //执行Task完毕的标记
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -111,8 +115,22 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
             }
 
             public String getConditionSQL() {
+                //用wait标记查询Task是否执行完毕
+                wait = true;  //Task未执行
+                chooseZichan();   //执行ChooseTask，在选择物品时，先查询是否有未完成的单据，有的话把单据ID保存到sqid中
+                while(wait) {     //在ChooseTask未执行完毕时等待
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PTGuDingZiChanDengJiJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 String sql = "";
                 sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 0 ";
+                if(sqid != null){    //ChooseTask执行完毕之后，如果sqid为空，则没有未处理完毕的单据，不加单据id限制
+                    //如果有未处理完毕的单据，筛选物品时限制只能筛选出来未处理完毕的单据的物品
+                    sql += " and cgsq_id = \"" + sqid + "\" ";
+                }
                 if (!jTextFieldName.getText().trim().equals("")) {
                     sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_type like \"%普通%\" and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" 
                         + " or zujima like \"%" + jTextFieldName.getText().toLowerCase() + "%\"))");
@@ -153,6 +171,7 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
                 }
             }
         });
+        
     }
 
     private void init() {
@@ -164,6 +183,9 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
     
     public void setNew(){
         isNew = true;
+        //如果有未登记资产，即登记过程中异常退出系统，则重新打开界面的时候检查是否有未登记资产并提示
+        String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
+        new OpenTask(sql).execute();
     }
     
     @Action
@@ -218,6 +240,75 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
                 new Cancel(list).execute();
             }
             close();
+        }
+        
+    }
+    
+    //与closeTask内容基本一致，只是最后执行完毕没有  close();  语句，因为这里只是打开单据的检查，不是退出
+    private class OpenTask extends WeidengjizichanTask{
+
+        public OpenTask(String sql) {
+            super(sql,"普通");
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (ZichanliebiaotbAll zc : list) {
+                    string.append("单据").append(zc.getCgsqId()).append("有未登记项【")
+                            .append(zc.getZcName()).append("】\n");
+                }
+                string.append("是否继续登记？选“否”会要求输入原因，并不再登记以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
+                if (result == 0) {
+                    return;
+                }
+                for (ZichanliebiaotbAll lb : list) {
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回登记页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
+                    }
+                    lb.setReason("【登记】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+        }
+        
+    }
+    
+    //选择物品时检查是否有未处理完的单据
+    public void chooseZichan(){
+        String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
+        new ChooseTask(sql).execute();
+    }
+    
+    private class ChooseTask extends WeidengjizichanTask{
+
+        public ChooseTask(String sql) {
+            super(sql,"普通");
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            //如果查到有未处理完的物品的单据，把单据ID保存下来，筛选物品时只要这个单据的物品
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            sqid = null;
+            wait = false;   //执行完毕的标记，wait为FALSE，表示不需要再wait了
+            if(list.size() > 0){
+                sqid = list.get(0).getCgsqId();
+            }
         }
         
     }
@@ -641,12 +732,13 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog{
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldZctype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
-                        .addComponent(jTextFieldPihao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldPihao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldZctype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)

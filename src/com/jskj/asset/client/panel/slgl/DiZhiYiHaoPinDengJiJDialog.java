@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -55,6 +57,8 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
     private int zhijielingyong;
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
+    private String sqid;
+    private boolean wait;
 
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
@@ -111,8 +115,20 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
             }
 
             public String getConditionSQL() {
+                wait = true;
+                chooseZichan();
+                while(wait) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PTGuDingZiChanDengJiJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 String sql = "";
                 sql += " cgsq_id like \"%YHCG%\" and is_completed = 1 and status = 0 ";
+                if(sqid != null){
+                    sql += " and cgsq_id = \"" + sqid + "\" ";
+                }
                 if (!jTextFieldName.getText().trim().equals("")) {
                     sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + jTextFieldName.getText() + "%\""
                             + " or zujima like \"%" + jTextFieldName.getText().toLowerCase() + "%\")");
@@ -168,6 +184,9 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
 
     public void setNew(){
         isNew = true;
+        //如果有未登记资产，即登记过程中异常退出系统，则重新打开界面的时候检查是否有未登记资产并提示
+        String sql = " cgsq_id like \"YHCG%\" and is_completed = 1 and status = 0";
+        new OpenTask(sql).execute();
     }
     
     @Action
@@ -222,6 +241,72 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog{
                 new Cancel(list).execute();
             }
             close();
+        }
+        
+    }
+    
+    private class OpenTask extends WeidengjizichanTask{
+
+        public OpenTask(String sql) {
+            super(sql);
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            if (list != null && list.size() > 0) {
+                StringBuilder string = new StringBuilder();
+                for (ZichanliebiaotbAll zc : list) {
+                    string.append("单据").append(zc.getCgsqId()).append("有未登记项（")
+                            .append(zc.getZcName()).append(")\n");
+                }
+                string.append("是否继续登记？选“否”会要求输入原因，并不再登记以上所有资产");
+                int result = AssetMessage.showConfirmDialog(null, string.toString(),
+                        "确认",JOptionPane.YES_NO_OPTION);
+                if (result == 0) {
+                    return;
+                }
+                for (ZichanliebiaotbAll lb : list) {
+                    String reason = "";
+                    //修改在点击取消时不做处理，直接返回登记页面
+                    while (reason.isEmpty()) {
+                        reason = AssetMessage.showInputDialog(null, "请输入取消登记资产【"
+                                + lb.getZcName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
+                    }
+                    lb.setReason("【登记】" + reason);
+                }
+                new Cancel(list).execute();
+            }
+        }
+        
+    }
+    
+    public void chooseZichan(){
+        String sql = " cgsq_id like \"YHCG%\" and is_completed = 1 and status = 0";
+        new ChooseTask(sql).execute();
+    }
+    
+    private class ChooseTask extends WeidengjizichanTask{
+
+        public ChooseTask(String sql) {
+            super(sql);
+        }
+        
+        @Override
+        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            sqid = null;
+            wait = false;
+            if(list.size() > 0){
+                sqid = list.get(0).getCgsqId();
+            }
         }
         
     }
