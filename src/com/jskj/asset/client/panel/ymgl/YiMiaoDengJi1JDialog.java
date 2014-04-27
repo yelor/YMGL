@@ -19,6 +19,7 @@ import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaodengjiUpdateTask;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -58,6 +59,8 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         initComponents();
         yimiaodengji = new Yimiaodengjitb();
         isNew = false;
+        jTextFieldtiaoxingma.setText(DanHao.getDanHao("YM"));
+
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -102,10 +105,10 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
 
             public String getConditionSQL() {
                 String sql = "";
+                sql = " (shenqingdan_id like \"YMLQ%\") and is_completed = 1 and status = 0";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=5 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\" or yimiao.zujima like \"%" + jTextFieldYimiaoName.getText().toLowerCase() + "%\")) ";
-                } else {
-                    sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=5 and is_completed = 1 and status = 0)";
+                    sql += (" and yimiao_id in ( select yimiao_id  from yimiao where yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\""
+                            + " or zujima like \"%" + jTextFieldYimiaoName.getText().toLowerCase() + "%\")");
                 }
                 return sql;
             }
@@ -141,44 +144,44 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
             }
         });
 
-        ((ScanButton) jButton1).registerPopup(new IPopupBuilder() {
-            public int getType() {
-                return IPopupBuilder.TYPE_POPUP_SCAN;
-            }
-
-            public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "addyimiao";
-            }
-
-            public String getConditionSQL() {
-                return "yimiao_tiaoxingma =";
-            }
-
-            public String[][] displayColumns() {
-                return null;
-            }
-
-            public void setBindedMap(HashMap bindedMap) {
-                if (bindedMap != null) {
-                    dateformate = new SimpleDateFormat("yyyy-MM-dd");
-                    jTextFieldYimiaoId.setText(bindedMap.get("yimiaoId") == null ? "" : bindedMap.get("yimiaoId").toString());
-                    jTextFieldYimiaoJixing.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
-                    jTextFieldguige.setText(bindedMap.get("yimiaoGuige") == null ? "" : bindedMap.get("yimiaoGuige").toString());
-
-                    jTextFieldshengchanqiye.setText(bindedMap.get("shengchanqiye") == null ? "" : bindedMap.get("shengchanqiye").toString());
-                    jTextFieldpizhunwenhao.setText(bindedMap.get("pizhunwenhao") == null ? "" : bindedMap.get("pizhunwenhao").toString());
-                    jTextFieldpihao.setText(bindedMap.get("pihao") == null ? "" : bindedMap.get("pihao").toString());
-                    jTextFieldYouxiaoqi.setText(bindedMap.get("youxiaoqi") == null ? "" : dateformate.format(bindedMap.get("youxiaoqi")));
-                    jTextFieldunit.setText(bindedMap.get("unit") == null ? "" : bindedMap.get("unit").toString());
-                    jTextFieldpiqianfahege.setText(bindedMap.get("piqianfahegezhenNo") == null ? "" : bindedMap.get("piqianfahegezhenNo").toString());
-                    jTextFieldkucunDown.setText(bindedMap.get("kucunDown") == null ? "" : bindedMap.get("kucunDown").toString());
-                    jTextFieldkucunUp.setText(bindedMap.get("kucunUp") == null ? "" : bindedMap.get("kucunUp").toString());
-                    yimiaodengji.setYimiaoId((Integer) bindedMap.get("yimiaoId"));
-
-                }
-
-            }
-        });
+//        ((ScanButton) jButton2).registerPopup(new IPopupBuilder() {
+//            public int getType() {
+//                return IPopupBuilder.TYPE_POPUP_SCAN;
+//            }
+//
+//            public String getWebServiceURI() {
+//                return Constants.HTTP + Constants.APPID + "addyimiao";
+//            }
+//
+//            public String getConditionSQL() {
+//                return "yimiao_tiaoxingma =";
+//            }
+//
+//            public String[][] displayColumns() {
+//                return null;
+//            }
+//
+//            public void setBindedMap(HashMap bindedMap) {
+//                if (bindedMap != null) {
+//                    dateformate = new SimpleDateFormat("yyyy-MM-dd");
+//                    jTextFieldYimiaoId.setText(bindedMap.get("yimiaoId") == null ? "" : bindedMap.get("yimiaoId").toString());
+//                    jTextFieldYimiaoJixing.setText(bindedMap.get("yimiaoName") == null ? "" : bindedMap.get("yimiaoName").toString());
+//                    jTextFieldguige.setText(bindedMap.get("yimiaoGuige") == null ? "" : bindedMap.get("yimiaoGuige").toString());
+//
+//                    jTextFieldshengchanqiye.setText(bindedMap.get("shengchanqiye") == null ? "" : bindedMap.get("shengchanqiye").toString());
+//                    jTextFieldpizhunwenhao.setText(bindedMap.get("pizhunwenhao") == null ? "" : bindedMap.get("pizhunwenhao").toString());
+//                    jTextFieldpihao.setText(bindedMap.get("pihao") == null ? "" : bindedMap.get("pihao").toString());
+//                    jTextFieldYouxiaoqi.setText(bindedMap.get("youxiaoqi") == null ? "" : dateformate.format(bindedMap.get("youxiaoqi")));
+//                    jTextFieldunit.setText(bindedMap.get("unit") == null ? "" : bindedMap.get("unit").toString());
+//                    jTextFieldpiqianfahege.setText(bindedMap.get("piqianfahegezhenNo") == null ? "" : bindedMap.get("piqianfahegezhenNo").toString());
+//                    jTextFieldkucunDown.setText(bindedMap.get("kucunDown") == null ? "" : bindedMap.get("kucunDown").toString());
+//                    jTextFieldkucunUp.setText(bindedMap.get("kucunUp") == null ? "" : bindedMap.get("kucunUp").toString());
+//                    yimiaodengji.setYimiaoId((Integer) bindedMap.get("yimiaoId"));
+//
+//                }
+//
+//            }
+//        });
     }
 
     DateChooser dateChooser1;
@@ -232,6 +235,8 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         jLabel16 = new javax.swing.JLabel();
         jComboBoxSource = new javax.swing.JComboBox();
         jTextFieldYimiaoName = new BaseTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jTextFieldtiaoxingma = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -411,46 +416,45 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
             }
         });
 
+        jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
+        jLabel17.setName("jLabel17"); // NOI18N
+
+        jTextFieldtiaoxingma.setEditable(false);
+        jTextFieldtiaoxingma.setName("jTextFieldtiaoxingma"); // NOI18N
+        jTextFieldtiaoxingma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldtiaoxingmaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldkucunDown, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBoxSource, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldshengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldguige, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldYimiaoId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldpiqianfahege, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldpihao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(161, 161, 161)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldguige, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldYimiaoId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldshengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldpihao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldpiqianfahege, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxSource, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldkucunDown, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldtiaoxingma, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel16)
@@ -490,55 +494,69 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldYimiaoId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextFieldYimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldguige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextFieldYimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextFieldpizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextFieldshengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextFieldYouxiaoqi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextFieldpihao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextFieldunit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addComponent(jTextFieldpiqianfahege, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldtongguandanNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jComboBoxSource, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel16)
-                        .addComponent(jTextFieldkucunUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel15)
-                        .addComponent(jTextFieldkucunDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextFieldYimiaoId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldguige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldshengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldpihao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldpiqianfahege, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxSource, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldkucunDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldtiaoxingma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextFieldYimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel10)
+                            .addComponent(jTextFieldYimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jTextFieldpizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jTextFieldYouxiaoqi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jTextFieldunit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextFieldtongguandanNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel16)
+                                .addComponent(jTextFieldkucunUp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel17)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -575,6 +593,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton2.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
@@ -607,8 +626,8 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -685,6 +704,10 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldYimiaoNameActionPerformed
 
+    private void jTextFieldtiaoxingmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldtiaoxingmaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldtiaoxingmaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -734,6 +757,23 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
         this.yimiaodengji = yimiaodengji;
         jTextFieldYimiaoId.setText((yimiaodengji.getYmdjId()).toString());
 
+    }
+
+    @Action
+    public void generatorBar() {
+        String barcode = jTextFieldtiaoxingma.getText();
+        String label = jTextFieldYimiaoName.getText();
+        if (barcode == null) {
+            return;
+        }
+        if (label.trim().equals("")) {
+            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+            if (result != AssetMessage.OK_OPTION) {
+                jTextFieldYimiaoName.grabFocus();
+                return;
+            }
+        }
+        DanHao.printBarCode128(label, barcode);
     }
 
     @Action
@@ -944,6 +984,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -966,6 +1007,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldpiqianfahege;
     private javax.swing.JTextField jTextFieldpizhunwenhao;
     private javax.swing.JTextField jTextFieldshengchanqiye;
+    private javax.swing.JTextField jTextFieldtiaoxingma;
     private javax.swing.JTextField jTextFieldtongguandanNo;
     private javax.swing.JTextField jTextFieldunit;
     private javax.swing.JToolBar jToolBar1;
