@@ -698,7 +698,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
     @Action
     public void print() {
         try {
-            super.print("test", jTable1);
+            super.print("test", null, jTable1,null);
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);

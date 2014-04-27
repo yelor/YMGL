@@ -445,7 +445,7 @@ public abstract class BaseDialog extends JDialog {
         }
     }
 
-    protected void print(String title, JTable table) throws DRException {
+    protected void print(String title, Component[] topDisplayColumns, JTable table, Component[] bottomDisplayColumns) throws DRException {
         int rowCount = table.getRowCount();
         int columnCount = table.getColumnCount();
 
