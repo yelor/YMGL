@@ -20,6 +20,7 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.panel.ckgl.task.YimiaobaosunUpdateTask;
+import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.event.WindowEvent;
@@ -33,6 +34,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -65,7 +67,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldJingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
-        
+
         //库房的popup
         ((BaseTextField) jTextFieldCangku).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -216,6 +218,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
+        jButton3.setAction(actionMap.get("print")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setBorderPainted(false);
@@ -500,6 +503,22 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
         yimiaobaosunEntity.setResult(list);
         return new SubmitFormTask(yimiaobaosunEntity);
 
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldBaosunId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"经办人", jTextFieldJingbanren.getText()},
+                    {"仓库", jTextFieldCangku.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     @Action

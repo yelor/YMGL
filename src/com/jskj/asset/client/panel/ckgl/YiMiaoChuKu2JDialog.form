@@ -155,6 +155,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton16">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoChuKu2JDialog" id="print" methodName="print"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton16.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton16.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>

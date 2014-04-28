@@ -165,6 +165,7 @@
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
@@ -172,6 +173,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton5">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoLingGouJiHuaFenXiJDialog" id="reload" methodName="reload"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>
@@ -293,7 +297,7 @@
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoCaiGouJiHuaFenXiJDialog" id="pagePrev" methodName="pagePrev"/>
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoLingGouJiHuaFenXiJDialog" id="pagePrev" methodName="pagePrev"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
             <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
@@ -303,7 +307,7 @@
         <Component class="javax.swing.JButton" name="jButton8">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoCaiGouJiHuaFenXiJDialog" id="pageNext" methodName="pageNext"/>
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoLingGouJiHuaFenXiJDialog" id="pageNext" methodName="pageNext"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>
             <Property name="name" type="java.lang.String" value="jButton8" noResource="true"/>

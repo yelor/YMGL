@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import net.sf.dynamicreports.report.exception.DRException;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -41,6 +43,7 @@ import org.jdesktop.application.Task;
  */
 public class YiMiaoTiaoJiaJDialog extends BaseDialog {
 
+    private static final Logger logger = Logger.getLogger(YiMiaoTiaoJiaJDialog.class);
     private Yimiaotiaojia_detail_tbFindEntity yimiaotiaojiaEntity;
     private Yimiaotiaojia_detail_tb yimiaotiaojia_detail;
     private Yimiaotiaojiatb yimiaotiaojia;
@@ -243,6 +246,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -251,6 +255,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
+        jButton2.setAction(actionMap.get("print")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
@@ -589,6 +594,26 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         return new SubmitFormTask(yimiaotiaojiaEntity);
     }
 
+//    打印预览
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldTiaojiaId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"调价科目", jTextFieldKemu.getText()},
+                    {"调价金额", jTextFieldJine.getText()},
+                    {"经办人", jTextFieldjingbanren.getText()},
+                    {"部门", jTextFielddepartment.getText()},
+                    {"备注", jTextArea1.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+
     @Action
     public void exit() {
         this.dispose();
@@ -684,7 +709,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
             YimiaoAll yimiaoAll = yimiaotiaojiaDetailEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = yimiaotiaojiaDetailEntityList.get(i).getStockpileYimiao();
             o[i] = new Object[]{stockpile.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
-                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforebuyprice(), yimiaotiaojia_detailtb.getLastbuyprice(),yimiaotiaojia_detailtb.getBeforesaleprice(), yimiaotiaojia_detailtb.getLastsaleprice()};
+                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforebuyprice(), yimiaotiaojia_detailtb.getLastbuyprice(), yimiaotiaojia_detailtb.getBeforesaleprice(), yimiaotiaojia_detailtb.getLastsaleprice()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(

@@ -591,7 +591,7 @@
         <Component class="javax.swing.JButton" name="jButton7">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoZuZhuangChaiXie" id="save" methodName="save"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoZuZhuangChaiXieJDialog" id="save" methodName="save"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
@@ -630,7 +630,7 @@
         <Component class="javax.swing.JButton" name="jButton12">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoZuZhuangChaiXie" id="exit" methodName="exit"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoZuZhuangChaiXieJDialog" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton12.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton12.text"/>

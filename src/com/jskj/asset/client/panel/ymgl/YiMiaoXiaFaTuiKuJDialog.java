@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.XiaoshoutuihuoEntity;
 import com.jskj.asset.client.bean.entity.Backsaletb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -24,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JTextField;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -32,7 +34,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
+public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoXiaFaTuiKuJDialog.class);
     private XiaoshoutuihuoEntity yimiaoxiafaTuiku;
@@ -45,8 +47,8 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoXiaFaTuiKuJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoXiaFaTuiKuJDialog() {
+        super();
         init();
         initComponents();
         jTextFieldXiafaId.setText(DanHao.getDanHao("YMXFTK"));
@@ -310,6 +312,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -592,7 +595,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoXiaFaTuiKuJDialog dialog = new YiMiaoXiaFaTuiKuJDialog(new javax.swing.JFrame(), true);
+                YiMiaoXiaFaTuiKuJDialog dialog = new YiMiaoXiaFaTuiKuJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -661,6 +664,26 @@ public class YiMiaoXiaFaTuiKuJDialog extends javax.swing.JDialog {
         return new SubmitFormTask(yimiaoxiafaTuiku);
     }
 
+       //    打印预览
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldXiafaId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"客户单位", jTextFieldXiafadanwei.getText()},
+                    {"联系人", jTextFieldContactPerson.getText()},
+                    {"经办人", jTextFieldjingbanren.getText()},
+                    {"部门", jTextFielddepartment.getText()},
+                    {"备注", jTextArea1.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+    
     @Action
     public void exit() {
         this.dispose();

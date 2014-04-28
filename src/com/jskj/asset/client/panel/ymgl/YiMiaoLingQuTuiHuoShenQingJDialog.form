@@ -154,9 +154,15 @@
             <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton5">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoLingQuTuiHuoShenQingJDialog" id="exit" methodName="exit"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>
@@ -164,6 +170,9 @@
             <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

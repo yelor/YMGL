@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -95,7 +96,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         churukudan = new Churukudantb();
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMRK"));
         jTextFielddanjuNo.setEditable(false);
-        jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
+        jTextFieldzhidanDate.setText(dateformate.format(new Date()));
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
 
         xiangdanIdmap = new HashMap();
@@ -230,10 +231,10 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     Object supplierId = gongyingdanwei.get("supplierId");
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
-                    
-                    supplierIdmap.put(yimiaoId,supplierId);
-                    xiangdanIdmap.put(yimiaoId,xiangdanId);
-                    shenqingdanIdmap.put(yimiaoId,shenqingdanId);
+
+                    supplierIdmap.put(yimiaoId, supplierId);
+                    xiangdanIdmap.put(yimiaoId, xiangdanId);
+                    shenqingdanIdmap.put(yimiaoId, shenqingdanId);
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -318,6 +319,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         jButton1.setName("jButton1"); // NOI18N
         jToolBar1.add(jButton1);
 
+        jButton8.setAction(actionMap.get("print")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorderPainted(false);
@@ -551,7 +553,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             return null;
         }
         List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
-        for (int i = 0; i < jTableyimiao.getRowCount()-1; i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(shenqingdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString());
@@ -615,6 +617,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
             yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
+            yimiaoliebiao.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
             if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
                 AssetMessage.ERRORSYS("请输入入库疫苗!");
                 return null;
@@ -686,6 +689,23 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         isNew = true;
     }
 
+     @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFielddanjuNo.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"经办人", jTextFieldjingbanren.getText()},
+                    {"仓库", jTextFieldkufang.getText()},
+                    {"备注", jTextArea1.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"", ""},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+    
     @Action
     public void exit() {
         if (isNew) {

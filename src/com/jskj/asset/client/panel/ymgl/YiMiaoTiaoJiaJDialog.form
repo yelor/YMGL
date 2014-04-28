@@ -156,6 +156,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton4">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoTiaoJiaJDialog" id="print" methodName="print"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton4.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton4.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>
@@ -166,6 +169,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoTiaoJiaJDialog" id="print" methodName="print"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>

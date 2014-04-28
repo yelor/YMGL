@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -334,6 +335,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -367,6 +369,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
+        jTextFieldXiafaId.setEditable(false);
         jTextFieldXiafaId.setText(resourceMap.getString("jTextFieldXiafaId.text")); // NOI18N
         jTextFieldXiafaId.setName("jTextFieldXiafaId"); // NOI18N
 
@@ -719,6 +722,28 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
         return new SubmitFormTask(yimiaoxiafa);
     }
 
+    //    打印预览
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldXiafaId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"下发单位", jTextFieldXiafadanwei.getText()},
+                    {"供应类型", jTextFieldGongyingType.getText()},
+                    {"收货地址", jTextFieldAddr.getText()},
+                    {"收货电话", jTextFieldTel.getText()},
+                    {"经办人", jTextFieldjingbanren.getText()},
+                    {"部门", jTextFielddepartment.getText()},
+                    {"备注", jTextArea1.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+    
     @Action
     public void exit() {
         this.dispose();

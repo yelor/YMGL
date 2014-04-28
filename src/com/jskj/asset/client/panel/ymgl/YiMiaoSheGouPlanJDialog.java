@@ -18,6 +18,7 @@ import com.jskj.asset.client.layout.BaseCellFocusListener;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -135,14 +137,14 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
                             float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
                             jTableyimiao.setValueAt(price * count, row, 8);
                         } catch (NumberFormatException e) {
-                            AssetMessage.ERRORSYS("第" + (row+1) + "个疫苗赊购数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+                            AssetMessage.ERRORSYS("第" + (row + 1) + "个疫苗赊购数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                             return;
                         }
                     }
                     int rows = jTableyimiao.getRowCount();
                     total = 0;
-                    for(int i = 0; i < rows; i++) {
-                        if(!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))){
+                    for (int i = 0; i < rows; i++) {
+                        if (!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))) {
                             total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
                         }
                     }
@@ -264,6 +266,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -292,6 +295,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
+        jTextFieldYimiaoshegoudanId.setEditable(false);
         jTextFieldYimiaoshegoudanId.setName("jTextFieldYimiaoshegoudanId"); // NOI18N
 
         jTextFieldzhidanDate.setEditable(false);
@@ -592,6 +596,23 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
     }
 
     @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldYimiaoshegoudanId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"申请人", jTextFieldshenqingren.getText()},
+                    {"申请部门", jTextFielddepartment.getText()},
+                    {"备注", jTextAreaRemark.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+
+    @Action
     public void exit() {
         this.dispose();
     }
@@ -673,7 +694,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jTextFielddepartment.setText(yimiaocaigouxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
         jTextAreaRemark.setEditable(false);
         jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
-        totalPrice.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getDanjujine()+"元");
+        totalPrice.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getDanjujine() + "元");
 
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }
