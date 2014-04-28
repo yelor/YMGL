@@ -33,6 +33,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import net.sf.dynamicreports.report.exception.DRException;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -42,6 +44,7 @@ import org.jdesktop.application.Task;
  */
 public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
+    private static final Logger logger = Logger.getLogger(DiZhiYiHaoPinLingYongShenQingJDialog.class);
     private ShenQingDetailEntity lysq;
     private int userId;
     private String userName;
@@ -480,6 +483,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -654,6 +658,25 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 //                dialog.setVisible(true);
 //            }
 //        });
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", cgsqId.getText()},
+                    {"制单日期", lysqDate.getText()},
+                    {"申请人", jingbanren.getText()},
+                    {"部门", dept.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{{"", ""},
+                    {"总金额", totalprice.getText()}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

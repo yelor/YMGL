@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -339,6 +340,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -606,6 +608,27 @@ public class ShouKuanDanJDialog extends BaseDialog {
         }
         //</editor-fold>
 
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", shoukuandanId.getText()},
+                    {"制单日期", shoukuandanDate.getText()},
+                    {"客户单位", supplier.getText()},
+                    {"结算账户", accountNum.getText()},
+                    {"收款金额", fukuan.getText()},
+                    {"优惠", youhui.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{{"制单人", shenqingren.getText()},
+                    {"应收总金额", yingfu.getText()}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

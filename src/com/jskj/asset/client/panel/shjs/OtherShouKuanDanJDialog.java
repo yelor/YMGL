@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import net.sf.dynamicreports.report.exception.DRException;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -41,6 +43,7 @@ import org.jdesktop.application.Task;
  */
 public class OtherShouKuanDanJDialog extends BaseDialog {
     
+    private final static Logger logger = Logger.getLogger(OtherShouKuanDanJDialog.class);
     private int userId;
     private String userName;
     private int supplierId;
@@ -285,6 +288,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -516,6 +520,24 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", shoukuandanId.getText()},
+                    {"制单日期", fukuandanDate.getText()},
+                    {"客户单位", supplier.getText()},
+                    {"结算账户", accountNum.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{{"经办人", jingbanren.getText()}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

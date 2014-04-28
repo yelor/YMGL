@@ -17,6 +17,7 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import static com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinCaiGouShenQingJDialog.logger;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.event.WindowEvent;
@@ -33,6 +34,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -483,6 +485,7 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -656,6 +659,25 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 //                dialog.setVisible(true);
 //            }
 //        });
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", cgsqId.getText()},
+                    {"制单日期", shenqingdanDate.getText()},
+                    {"申请人", jingbanren.getText()},
+                    {"部门", dept.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{{"", ""},
+                    {"总金额", totalprice.getText()}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

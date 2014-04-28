@@ -19,7 +19,6 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.event.WindowEvent;
@@ -30,14 +29,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import net.sf.dynamicreports.report.exception.DRException;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -47,6 +45,7 @@ import org.jdesktop.application.Task;
  */
 public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
 
+    public static final Logger logger = Logger.getLogger(DiZhiYiHaoPinCaiGouShenQingJDialog.class);
     private ShenQingDetailEntity cgsq;
     private int userId;
     private String userName;

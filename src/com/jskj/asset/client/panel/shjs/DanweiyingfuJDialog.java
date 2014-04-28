@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 
@@ -273,6 +274,7 @@ public class DanweiyingfuJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -471,6 +473,24 @@ public class DanweiyingfuJDialog extends BaseDialog {
         }
         //</editor-fold>
 
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{
+                    {"供应单位", supplier.getText()},
+                    {"起始日期", startDate.getText()},
+                    {"应付总金额", yingfu.getText()},
+                    {"结束日期", endDate.getText()}}, 
+                    jTable1,
+                    new String[][]{
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

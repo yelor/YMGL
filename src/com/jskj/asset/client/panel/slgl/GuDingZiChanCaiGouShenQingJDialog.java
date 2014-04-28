@@ -33,6 +33,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import net.sf.dynamicreports.report.exception.DRException;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -42,6 +44,7 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
 
+    public static final Logger logger = Logger.getLogger(GuDingZiChanCaiGouShenQingJDialog.class);
     private ShenQingDetailEntity cgsq;
     private int userId;
     private String userName;
@@ -525,6 +528,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         jButton10.setOpaque(false);
         jToolBar1.add(jButton10);
 
+        jButton13.setAction(actionMap.get("print")); // NOI18N
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
         jButton13.setBorderPainted(false);
@@ -638,6 +642,25 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
 //                dialog.setVisible(true);
 //            }
 //        });
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", cgsqId.getText()},
+                    {"制单日期", shenqingdanDate.getText()},
+                    {"供应单位", supplier.getText()},
+                    {"申请人", jingbanren.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{{"", ""},
+                    {"总金额", totalprice.getText()}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

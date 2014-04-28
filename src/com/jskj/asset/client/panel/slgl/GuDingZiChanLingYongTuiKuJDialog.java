@@ -13,6 +13,7 @@ import com.jskj.asset.client.bean.entity.Lingyongtuikudantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.DanHao;
@@ -26,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
@@ -35,7 +37,7 @@ import org.jdesktop.application.Task;
  *
  * @author tt
  */
-public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
+public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
 
     private static final Log logger = LogFactory.getLog(GuDingZiChanLingYongTuiKuJDialog.class);
     
@@ -49,8 +51,8 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
     /**
      * Creates new form GuDingZiChanRuKu
      */
-    public GuDingZiChanLingYongTuiKuJDialog(java.awt.Frame parent) {
-        super(parent);
+    public GuDingZiChanLingYongTuiKuJDialog() {
+        super();
         initComponents();
         
         zc = new ArrayList<ZiChanLieBiaotb>();
@@ -227,7 +229,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "提交成功！");
             exit();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            GuDingZiChanLingYongTuiKuJDialog guDingZiChanTuiKuJDialog = new GuDingZiChanLingYongTuiKuJDialog(mainFrame);
+            GuDingZiChanLingYongTuiKuJDialog guDingZiChanTuiKuJDialog = new GuDingZiChanLingYongTuiKuJDialog();
             guDingZiChanTuiKuJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(guDingZiChanTuiKuJDialog);
         }
@@ -373,6 +375,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -537,7 +540,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GuDingZiChanLingYongTuiKuJDialog dialog = new GuDingZiChanLingYongTuiKuJDialog(new javax.swing.JFrame());
+                GuDingZiChanLingYongTuiKuJDialog dialog = new GuDingZiChanLingYongTuiKuJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -547,6 +550,25 @@ public class GuDingZiChanLingYongTuiKuJDialog extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextField1.getText()},
+                    {"制单日期", jTextField2.getText()},
+                    {"退库人", jTextFieldShenqingren.getText()},
+                    {"部门", jTextFieldDept.getText()},
+                    {"备注", jTextArea1.getText()}}, 
+                    jTable1,
+                    new String[][]{{"", ""},
+                    {"总金额", totalprice.getText()}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

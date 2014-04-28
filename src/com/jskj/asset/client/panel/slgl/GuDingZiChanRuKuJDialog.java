@@ -41,6 +41,7 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -50,6 +51,7 @@ import org.jdesktop.application.Task;
  */
 public class GuDingZiChanRuKuJDialog extends BaseDialog{
 
+    public static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(GuDingZiChanRuKuJDialog.class);
     private RukudanDetailEntity cgsq;
     private int userId;
     private String userName;
@@ -731,6 +733,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
         jButton2.setOpaque(false);
         jToolBar1.add(jButton2);
 
+        jButton13.setAction(actionMap.get("print")); // NOI18N
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
         jButton13.setBorderPainted(false);
@@ -839,6 +842,24 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
                 dialog.setVisible(true);
             }
         });
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", cgsqId.getText()},
+                    {"制单日期", shenqingdanDate.getText()},
+                    {"制单人", jingbanren.getText()},
+                    {"仓库", cangku.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

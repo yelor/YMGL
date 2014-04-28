@@ -513,7 +513,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
 
@@ -787,14 +786,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jButton3.setOpaque(false);
         jToolBar1.add(jButton3);
 
-        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
-        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setBorderPainted(false);
-        jButton4.setFocusable(false);
-        jButton4.setName("jButton4"); // NOI18N
-        jButton4.setOpaque(false);
-        jToolBar1.add(jButton4);
-
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setBorderPainted(false);
@@ -894,7 +885,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

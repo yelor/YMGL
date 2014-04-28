@@ -104,12 +104,12 @@ public class SupplierJDialog extends BaseDialog {
         map.put("supplierId", supplierId);
         map.put("supplierName", supplier.getText());
         
+        this.dispose();
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
         DanweiyingfuJDialog dwyfJDialog = new DanweiyingfuJDialog(map);
         dwyfJDialog.setLocationRelativeTo(mainFrame);
         AssetClientApp.getApplication().show(dwyfJDialog);
 
-        this.dispose();
     }
 
     /**

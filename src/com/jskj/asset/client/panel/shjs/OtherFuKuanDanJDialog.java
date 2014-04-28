@@ -8,7 +8,6 @@ package com.jskj.asset.client.panel.shjs;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Fukuandantb;
 import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.QitafukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.QitafukuanDetailEntity;
 import com.jskj.asset.client.bean.entity.Qitafukuanliebiaotb;
 import com.jskj.asset.client.constants.Constants;
@@ -18,7 +17,6 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
-import com.jskj.asset.client.panel.shjs.task.FukuandanTask;
 import com.jskj.asset.client.panel.shjs.task.QitafukuandanTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
@@ -27,11 +25,12 @@ import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JDialog;
+import net.sf.dynamicreports.report.exception.DRException;
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -41,6 +40,7 @@ import org.jdesktop.application.Task;
  */
 public class OtherFuKuanDanJDialog extends BaseDialog {
 
+    private final static Logger logger = Logger.getLogger(OtherFuKuanDanJDialog.class);
     private int userId;
     private String userName;
     private int supplierId;
@@ -62,7 +62,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
 
         fukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_QTFK));
         fukuandanDate.setText(dateformate.format(new Date()).toString());
-        shenqingren.setText(userName);
+        jingbanren.setText(userName);
 
         ((BaseTextField) supplier).registerPopup(new IPopupBuilder() {
 
@@ -149,7 +149,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         supplier.setEditable(false);
         accountNum.setEditable(false);
         shenqingdanRemark.setEditable(false);
-        shenqingren.setText(detail.getShenqingren());
+        jingbanren.setText(detail.getShenqingren());
 
         setListTable(detail.getQtlist());
     }
@@ -266,7 +266,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         jTable1 = new BaseTable(null);
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        shenqingren = new BaseTextField();
+        jingbanren = new BaseTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(OtherFuKuanDanJDialog.class);
@@ -292,6 +292,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -460,8 +461,8 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
-        shenqingren.setEditable(false);
-        shenqingren.setName("shenqingren"); // NOI18N
+        jingbanren.setEditable(false);
+        jingbanren.setName("jingbanren"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -473,7 +474,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(shenqingren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -485,7 +486,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(shenqingren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -534,6 +535,24 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
 //        });
     }
 
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", fukuandanId.getText()},
+                    {"制单日期", fukuandanDate.getText()},
+                    {"供应单位", supplier.getText()},
+                    {"结算账户", accountNum.getText()},
+                    {"备注", shenqingdanRemark.getText()}}, 
+                    jTable1,
+                    new String[][]{{"经办人", jingbanren.getText()}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField accountNum;
     private javax.swing.JTextField fukuandanDate;
@@ -554,8 +573,8 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField jingbanren;
     private javax.swing.JTextArea shenqingdanRemark;
-    private javax.swing.JTextField shenqingren;
     private javax.swing.JTextField supplier;
     // End of variables declaration//GEN-END:variables
 }
