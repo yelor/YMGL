@@ -36,6 +36,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -341,6 +342,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -700,6 +702,25 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         return new SubmitFormTask(yimiaocaigou);
     }
 
+      @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldYimiaocaigoudanId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"经办人", jTextFieldjingbanren.getText()},
+                    {"部门", jTextFielddepartment.getText()},
+                    {"供应单位", jTextFieldSupplierName.getText()},
+                    {"联系人", jTextFieldConstactperson.getText()},
+                    {"备注", jTextAreaRemark.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()}});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+    
     @Action
     public void exit() {
         this.dispose();

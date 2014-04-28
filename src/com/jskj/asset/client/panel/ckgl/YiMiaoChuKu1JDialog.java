@@ -23,6 +23,7 @@ import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.ckgl.task.CancelChuKu;
 import com.jskj.asset.client.panel.ckgl.task.WeiChuKuYimiaoTask;
+import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -48,7 +50,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     private List<Kehudanweitb> kehudanweilist = new ArrayList<Kehudanweitb>();
     private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private List<SaleyimiaoEntity> list;
-    private List<Sale_detail_tb> saledetailMaplist= new ArrayList<Sale_detail_tb>();
+    private List<Sale_detail_tb> saledetailMaplist = new ArrayList<Sale_detail_tb>();
     private boolean isNew;
     private Map saledetailIdmap;
     private Map saleIdmap;
@@ -67,7 +69,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         saledetailIdmap = new HashMap();
         saleIdmap = new HashMap();
         kehudanweiIdmap = new HashMap();
-        
+
         //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -255,6 +257,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         jButton1.setName("jButton1"); // NOI18N
         jToolBar1.add(jButton1);
 
+        jButton8.setAction(actionMap.get("print")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorderPainted(false);
@@ -545,6 +548,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
             yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
+            yimiaoliebiao.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
             yimiaoliebiao.setPihao((String) yimiaotable.getValue(i, "pihao"));
             yimiaoliebiao.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
             yimiaoliebiao.setPrice(0f);
@@ -610,6 +614,23 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     }
 
     @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFielddanjuNo.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"经办人", jTextFieldzhidanren.getText()},
+                    {"仓库", jTextFieldkufang.getText()},
+                    {"备注", jTextArea1.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"", ""},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+
+    @Action
     public void exit() {
         if (isNew) {
             close();
@@ -647,10 +668,13 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     return;
                 }
                 for (SaleyimiaoEntity lb : list) {
-                    String reason = null;
-                    while (reason == null || reason.isEmpty()) {
+                    String reason = "";
+                    while (reason.isEmpty()) {
                         reason = AssetMessage.showInputDialog(null, "请输入取消出库疫苗【"
                                 + lb.getYimiaoAll().getYimiaoName() + "】的理由(必输)：");
+                        if (reason == null) {
+                            return;
+                        }
                     }
                     lb.getSale_detail_tb().setReason("【出库】" + reason);
                 }

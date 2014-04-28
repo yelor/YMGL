@@ -74,7 +74,7 @@
             <Component class="javax.swing.JButton" name="jButtonReload">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.user.UserPanel" id="reload" methodName="reload"/>
+                  <action class="com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel" id="reload" methodName="reload"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButtonReload.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButtonReload.text"/>

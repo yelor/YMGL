@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Backsaletb;
 import com.jskj.asset.client.bean.entity.XiaoshoutuihuoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -24,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JTextField;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -32,7 +34,7 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
+public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
 
     private static final Logger logger = Logger.getLogger(YiMiaoXiaoShouTuiHuoJDialog.class);
     private XiaoshoutuihuoEntity yimiaoxiaoshouTuihuo;
@@ -45,8 +47,8 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoXiaoShouTuiHuoJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public YiMiaoXiaoShouTuiHuoJDialog() {
+        super();
         init();
         initComponents();
         jTextFieldXiaoshouTuihuoId.setText(DanHao.getDanHao("YMXSTH"));
@@ -328,6 +330,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -611,7 +614,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoXiaoShouTuiHuoJDialog dialog = new YiMiaoXiaoShouTuiHuoJDialog(new javax.swing.JFrame(), true);
+                YiMiaoXiaoShouTuiHuoJDialog dialog = new YiMiaoXiaoShouTuiHuoJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -684,6 +687,26 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends javax.swing.JDialog {
         return new SubmitFormTask(yimiaoxiaoshouTuihuo);
     }
 
+         //    打印预览
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldXiaoshouTuihuoId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"退货单位", jTextFieldXiaoshoudanwei.getText()},
+                    {"联系人", jTextFieldContactPerson.getText()},
+                    {"经办人", jTextFieldjingbanren.getText()},
+                    {"部门", jTextFielddepartment.getText()},
+                    {"备注", jTextArea1.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
+    }
+    
     @Action
     public void exit() {
         this.dispose();

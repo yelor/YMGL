@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -345,6 +346,7 @@ public class YiMiaoYunShuDanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -921,7 +923,45 @@ public class YiMiaoYunShuDanJDialog extends BaseDialog {
             }
 
         };
-//        return new SubmitFormTask(yimiaoyunshuEntity);
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldYimiaoyanshouId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"部门", jTextFielddepartment.getText()},
+                    {"送苗人", jTextFieldzhidanDate.getText()},
+                    {"操作员", jTextFielddepartment.getText()},
+                    {"库房", jTextFieldzhidanDate.getText()},
+                    {"驾驶员", jTextFielddepartment.getText()},
+                    {"运输设备名称", jTextFieldzhidanDate.getText()},
+                    {"发苗单位", jTextFielddepartment.getText()},
+                    {"发苗人", jTextFieldzhidanDate.getText()},
+                    {"冷藏方式", jTextFielddepartment.getText()},
+                    {"起运时间", jTextFieldzhidanDate.getText()},
+                    {"起运疫苗存储温度", jTextFielddepartment.getText()},
+                    {"起运疫苗环境温度", jTextFieldzhidanDate.getText()},
+                    {"途中累计时间", jTextFielddepartment.getText()},
+                    {"到达疫苗存储温度", jTextFieldzhidanDate.getText()},
+                    {"到达疫苗环境温度", jTextFielddepartment.getText()},
+                    {"到达时间", jTextFieldzhidanDate.getText()},
+                    {"车辆及制冷情况", jTextFielddepartment.getText()},
+                    {"出车前里程数", jTextFieldzhidanDate.getText()},
+                    {"返回时里程数", jTextFielddepartment.getText()},
+                    {"行驶公里", jTextFieldzhidanDate.getText()},
+                    {"收苗单位", jTextFielddepartment.getText()},
+                    {"收苗人", ""},
+                    {"备注", ""}},
+                    jTableyimiao,
+                    new String[][]{{"", ""},
+                    {"", ""}
+                    });
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     @Action

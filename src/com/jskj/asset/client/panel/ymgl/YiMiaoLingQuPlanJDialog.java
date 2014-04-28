@@ -17,6 +17,7 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
@@ -32,6 +33,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -118,102 +120,6 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
 
             }
         });
-
-//        editTable.registerPopup(4, new IPopupBuilder() {
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_TABLE;
-//            }
-//
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "addyimiao";
-//            }
-//
-//            public String getConditionSQL() {
-//                int selectedColumn = jTableyimiao.getSelectedColumn();
-//                int selectedRow = jTableyimiao.getSelectedRow();
-//                Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
-//                String sql = "";
-//                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-//                    sql += "yimiao_shengchanqiye like \"%" + newColumnObj.toString() + "%\" and yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
-//                } else {
-//                    sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
-//                }
-//                return sql;
-//            }
-//
-//            public String[][] displayColumns() {
-//                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-//                {"yimiaoJixing", "剂型"}};
-//            }
-//
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//                    Object yimiaoId = bindedMap.get("yimiaoId");
-//                    Object yimiaoName = bindedMap.get("yimiaoName");
-//                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-//                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-//                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-//                    Object unit = bindedMap.get("unitId");
-//
-//                    editTable.insertValue(0, yimiaoId);
-//                    editTable.insertValue(1, yimiaoName);
-//                    editTable.insertValue(2, yimiaoGuige);
-//                    editTable.insertValue(3, yimiaoJixing);
-//                    editTable.insertValue(4, shengchanqiye);
-//                    editTable.insertValue(5, unit);
-//
-//                }
-//
-//            }
-//        });
-//
-//        editTable.registerPopup(3, new IPopupBuilder() {
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_TABLE;
-//            }
-//
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "addyimiao";
-//            }
-//
-//            public String getConditionSQL() {
-//                int selectedColumn = jTableyimiao.getSelectedColumn();
-//                int selectedRow = jTableyimiao.getSelectedRow();
-//                Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
-//                String sql = "";
-//                if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-//                    sql += "yimiao_jixing like \"%" + newColumnObj.toString() + "%\" and yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
-//                } else {
-//                    sql += "yimiao_id in (select distinct yimiao_id from yimiao where yimiao_type=\"Ⅰ类疫苗\")";
-//                }
-//                return sql;
-//            }
-//
-//            public String[][] displayColumns() {
-//                return new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"},
-//                {"yimiaoJixing", "剂型"}};
-//            }
-//
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//                    Object yimiaoId = bindedMap.get("yimiaoId");
-//                    Object yimiaoName = bindedMap.get("yimiaoName");
-//                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-//                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-//                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-//                    Object unit = bindedMap.get("unitId");
-//
-//                    editTable.insertValue(0, yimiaoId);
-//                    editTable.insertValue(1, yimiaoName);
-//                    editTable.insertValue(2, yimiaoGuige);
-//                    editTable.insertValue(3, yimiaoJixing);
-//                    editTable.insertValue(4, shengchanqiye);
-//                    editTable.insertValue(5, unit);
-//
-//                }
-//
-//            }
-//        });
 
     }
 
@@ -324,6 +230,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -591,7 +498,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
             yimiaoshenqingdan.setStatus(7);
             yimiaoshenqingdan.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "quantity").equals("")) {
-                AssetMessage.ERRORSYS("请输入第"+(i+1)+"行的疫苗申报数量!");
+                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "行的疫苗申报数量!");
                 return null;
             }
             yimiaoshenqingdan.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
@@ -601,6 +508,23 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         yimiaoshenbao.setYimiaoshenqingdans(list);
 
         return new SubmitFormTask(yimiaoshenbao);
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldYimiaoshenbaodanId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"申请人", jTextFieldshenqingren.getText()},
+                    {"申请部门", jTextFielddepartment.getText()},
+                    {"备注", jTextAreaRemark.getText()}},
+                    jTableyimiao,
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()}});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+        }
     }
 
     @Action

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.layout.BaseDialog;
@@ -28,14 +27,15 @@ public class YiMiaoCaiGouTuiHuoJDialog extends BaseDialog {
         init();
         initComponents();
     }
-    
+
     DateChooser dateChooser1;
     JTextField regTextField;
+
     private void init() {
         regTextField = new JTextField();
         dateChooser1 = DateChooser.getInstance("yyyy-MM-dd");
         dateChooser1.register(regTextField);
-    }    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,7 +151,7 @@ public class YiMiaoCaiGouTuiHuoJDialog extends BaseDialog {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jButton5.setAction(actionMap.get("quit")); // NOI18N
+        jButton5.setAction(actionMap.get("exit")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setBorderPainted(false);
@@ -386,7 +386,7 @@ public class YiMiaoCaiGouTuiHuoJDialog extends BaseDialog {
         });
     }
 
-        @Action
+    @Action
     public void print() {
         try {
             super.print(this.getTitle(),
@@ -394,16 +394,20 @@ public class YiMiaoCaiGouTuiHuoJDialog extends BaseDialog {
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"供应单位", supplier.getText()},
                     {"申请人", jingbanren.getText()},
-                    {"备注", shenqingdanRemark.getText()}}, 
+                    {"备注", shenqingdanRemark.getText()}},
                     jTable1,
-                    new String[][]{{"", ""},
-                    });
+                    new String[][]{{"", ""},});
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);
         }
     }
-    
+
+    @Action
+    public void exit() {
+        this.dispose();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;

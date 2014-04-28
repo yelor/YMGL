@@ -9,7 +9,6 @@ import com.jskj.asset.client.bean.entity.YimiaoCaigoujihuaFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigoujihuaEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
-import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoCaigoujihuaTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"},
         {"unit", "单位"}, {"kucunQuantity", "库存数量"}, {"kucunXiaxian", "库存下限"}, {"kucunShangxian", "库存上限"}, {"jihuaQuantity", "计划采购数量"}, {"tuijianQuantity", "推荐采购数量"}});
         bindTable.setIntegerType(1, 6, 7, 8, 9, 10);
-        bindTable.bind().setColumnWidth(new int[]{3, 60}, new int[]{4, 60}, new int[]{5, 60}, new int[]{6, 60}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{1, 200},new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 60}, new int[]{6, 60}).setRowHeight(30);
         new RefureTask(0).execute();
     }
 
@@ -204,11 +203,13 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
+        jButton1.setEnabled(false);
         jButton1.setFocusable(false);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
 
+        jButton5.setAction(actionMap.get("reload")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setBorderPainted(false);
@@ -368,6 +369,12 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
 
     }
 
+     @Action
+     public void reload(){
+         new RefureTask(0).execute();
+     }
+     
+    
     @Action
     public void print() {
         try {

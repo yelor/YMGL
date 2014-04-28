@@ -160,7 +160,7 @@
         <Component class="javax.swing.JButton" name="jButton5">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="org.jdesktop.application.Application" id="quit" methodName="quit"/>
+              <action class="com.jskj.asset.client.panel.ymgl.YiMiaoCaiGouTuiHuoJDialog" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>

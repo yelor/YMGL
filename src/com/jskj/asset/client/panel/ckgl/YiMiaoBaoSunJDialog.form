@@ -140,7 +140,7 @@
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun" id="submitForm" methodName="submitForm"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoBaoSunJDialog" id="submitForm" methodName="submitForm"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
@@ -153,6 +153,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoBaoSunJDialog" id="print" methodName="print"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>
             <Property name="borderPainted" type="boolean" value="false"/>
@@ -176,7 +179,7 @@
         <Component class="javax.swing.JButton" name="jButton8">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoBaoSun" id="exit" methodName="exit"/>
+              <action class="com.jskj.asset.client.panel.ckgl.YiMiaoBaoSunJDialog" id="exit" methodName="exit"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton8.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton8.text"/>

@@ -23,6 +23,10 @@ public class Yimiaodengjitb {
 
     private String tongguandanno;
 
+    private String duifangjingbanren;
+
+    private String barcode;
+
     private Integer xiangdanId;
 
     public Integer getYmdjId() {
@@ -95,6 +99,22 @@ public class Yimiaodengjitb {
 
     public void setTongguandanno(String tongguandanno) {
         this.tongguandanno = tongguandanno == null ? null : tongguandanno.trim();
+    }
+
+    public String getDuifangjingbanren() {
+        return duifangjingbanren;
+    }
+
+    public void setDuifangjingbanren(String duifangjingbanren) {
+        this.duifangjingbanren = duifangjingbanren == null ? null : duifangjingbanren.trim();
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode == null ? null : barcode.trim();
     }
 
     public Integer getXiangdanId() {

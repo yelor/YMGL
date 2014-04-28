@@ -799,6 +799,7 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
             yimiaodengji.setTongguandanno(null);
         }
         yimiaodengji.setSource((String) jComboBoxSource.getSelectedItem());
+        yimiaodengji.setBarcode(jTextFieldtiaoxingma.getText());
         return new SubmitFormTask(yimiaodengji);
     }
 

@@ -9,10 +9,12 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Yimiaozuzhuangchaixie;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
 import java.text.ParseException;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -29,7 +32,7 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoZuZhuangChaiXieJDialog extends javax.swing.JDialog {
+public class YiMiaoZuZhuangChaiXieJDialog extends BaseDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     boolean zz;
@@ -39,7 +42,7 @@ public class YiMiaoZuZhuangChaiXieJDialog extends javax.swing.JDialog {
      * Creates new form ymzzcx
      */
     public YiMiaoZuZhuangChaiXieJDialog(java.awt.Frame parent, boolean modal, boolean zzz) {
-        super(parent, modal);
+        super();
         init();
         initComponents();
         if (zzz == true) {
@@ -791,6 +794,26 @@ public class YiMiaoZuZhuangChaiXieJDialog extends javax.swing.JDialog {
         protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
+        }
+    }
+
+    @Action
+    public void print() {
+        try {
+            super.print(this.getTitle(),
+                    new String[][]{{"单据编号", jTextFieldDanjuId.getText()},
+                    {"制单日期", jTextFieldzhidanDate.getText()},
+                    {"经办人", jTextFieldjingbanren.getText()},
+                    {"部门", jTextFieldbumen.getText()},
+                    {"组装费用", jTextFieldzuzhuangfeiyong.getText()},
+                    {"费用类型", jTextFieldfeiyongType.getText()},
+                    {"备注", jTextArea1.getText()}},
+                    jTableyimiao1,
+//                    jTableyimiao2,                    
+                    new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
+        } catch (DRException ex) {
+            ex.printStackTrace();
+            logger.error(ex);
         }
     }
 

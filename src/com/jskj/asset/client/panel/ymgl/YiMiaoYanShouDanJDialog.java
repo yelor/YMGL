@@ -406,6 +406,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jButton2.setName("jButton2"); // NOI18N
         jToolBar1.add(jButton2);
 
+        jButton4.setAction(actionMap.get("print")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
@@ -447,6 +448,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        jTextFieldYimiaoyanshouId.setEditable(false);
         jTextFieldYimiaoyanshouId.setText(resourceMap.getString("jTextFieldYimiaoyanshouId.text")); // NOI18N
         jTextFieldYimiaoyanshouId.setName("jTextFieldYimiaoyanshouId"); // NOI18N
 
@@ -1084,6 +1086,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     public void setNew() {
         isNew = true;
     }
+    
 
     @Action
     public void exit() {
@@ -1123,7 +1126,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     return;
                 }
                 for (YimiaoshenqingliebiaoEntity lb : list) {
-                    String reason = null;
+                    String reason = "";
                     while (reason.isEmpty()) {
                         reason = AssetMessage.showInputDialog(null, "请输入取消验收疫苗【"
                                 + lb.getYimiao().getYimiaoName() + "】的理由(必输)：");
@@ -1185,19 +1188,39 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             AssetClientApp.getApplication().show(yiMiaoYanShouJDialog);
         }
     }
-    
-     @Action
+
+    @Action
     public void print() {
         try {
             super.print(this.getTitle(),
                     new String[][]{{"单据编号", jTextFieldYimiaoyanshouId.getText()},
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"部门", jTextFielddepartment.getText()},
-                    {"申请人", ""},
-                    {"备注", ""}}, 
-                    jTable1,
+                    {"送苗人", jTextFieldzhidanDate.getText()},
+                    {"操作员", jTextFielddepartment.getText()},
+                    {"库房", jTextFieldzhidanDate.getText()},
+                    {"驾驶员", jTextFielddepartment.getText()},
+                    {"运输设备名称", jTextFieldzhidanDate.getText()},
+                    {"发苗单位", jTextFielddepartment.getText()},
+                    {"发苗人", jTextFieldzhidanDate.getText()},
+                    {"冷藏方式", jTextFielddepartment.getText()},
+                    {"起运时间", jTextFieldzhidanDate.getText()},
+                    {"起运疫苗存储温度", jTextFielddepartment.getText()},
+                    {"起运疫苗环境温度", jTextFieldzhidanDate.getText()},
+                    {"途中累计时间", jTextFielddepartment.getText()},
+                    {"到达疫苗存储温度", jTextFieldzhidanDate.getText()},
+                    {"到达疫苗环境温度", jTextFielddepartment.getText()},
+                    {"到达时间", jTextFieldzhidanDate.getText()},
+                    {"车辆及制冷情况", jTextFielddepartment.getText()},
+                    {"出车前里程数", jTextFieldzhidanDate.getText()},
+                    {"返回时里程数", jTextFielddepartment.getText()},
+                    {"行驶公里", jTextFieldzhidanDate.getText()},
+                    {"收苗单位", jTextFielddepartment.getText()},
+                    {"收苗人", ""},
+                    {"备注", ""}},
+                    jTableyimiao,
                     new String[][]{{"", ""},
-                    {"总金额", ""}
+                    {"", ""}
                     });
         } catch (DRException ex) {
             ex.printStackTrace();
