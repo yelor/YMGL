@@ -19,6 +19,8 @@ public class Zichandengjitb {
 
     private String pihao;
 
+    private String barcode;
+
     public String getYuandanId() {
         return yuandanId;
     }
@@ -73,5 +75,13 @@ public class Zichandengjitb {
 
     public void setPihao(String pihao) {
         this.pihao = pihao == null ? null : pihao.trim();
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode == null ? null : barcode.trim();
     }
 }
