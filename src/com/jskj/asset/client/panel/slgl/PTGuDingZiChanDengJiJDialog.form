@@ -432,18 +432,11 @@
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton7">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
-                <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="jButton6">
               <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.slgl.PTGuDingZiChanDengJiJDialog" id="generatorBar" methodName="generatorBar"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton6.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>

@@ -46,7 +46,6 @@ public abstract class BaseDialog extends JDialog {
 
     public BaseDialog() {
         super(AssetClientApp.getApplication().getMainFrame());
-        setModal(true);
     }
 
     private Object getObject(String paramater, Object bean) throws Exception {
@@ -448,7 +447,6 @@ public abstract class BaseDialog extends JDialog {
     }
 
     protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns) throws DRException {
-        setModal(false);
         TextColumnBuilder[] itemColumns = null;
         DRDataSource dataSource = null;
         if (table != null) {

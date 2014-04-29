@@ -764,7 +764,16 @@ public class YiMiaoDengJi1JDialog extends BaseDialog {
                 return;
             }
         }
-        DanHao.printBarCode128(label, barcode);
+        String totalStr = jTextFieldQuantity.getText();
+        int total = 1;
+        try {
+            if (!totalStr.trim().equals("")) {
+                total = Integer.parseInt(totalStr);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        DanHao.printBarCode128(label, barcode,total);
     }
 
     @Action

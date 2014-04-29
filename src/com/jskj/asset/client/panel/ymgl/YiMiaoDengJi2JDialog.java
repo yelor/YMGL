@@ -572,6 +572,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jButton5.setName("jButton5"); // NOI18N
         jToolBar1.add(jButton5);
 
+        jButton2.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
@@ -833,22 +834,31 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         isNew = true;
     }
 
-//    @Action
-//    public void generatorBar() {
-//        String barcode = jTextFieldtiaoxingma.getText();
-//        String label = jTextFieldYimiaoName.getText();
-//        if (barcode == null) {
-//            return;
-//        }
-//        if (label.trim().equals("")) {
-//            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
-//            if (result != AssetMessage.OK_OPTION) {
-//                jTextFieldYimiaoName.grabFocus();
-//                return;
-//            }
-//        }
-//        DanHao.printBarCode128(label, barcode);
-//    }
+    @Action
+    public void generatorBar() {
+        String barcode = jTextFieldtiaoxingma.getText();
+        String label = jTextFieldYimiaoName.getText();
+        if (barcode == null) {
+            return;
+        }
+        if (label.trim().equals("")) {
+            int result = AssetMessage.CONFIRM(this, "没有标签名，确定打印吗?");
+            if (result != AssetMessage.OK_OPTION) {
+                jTextFieldYimiaoName.grabFocus();
+                return;
+            }
+        }
+        String totalStr = jTextFieldQuantity.getText();
+        int total = 1;
+        try {
+            if (!totalStr.trim().equals("")) {
+                total = Integer.parseInt(totalStr);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        DanHao.printBarCode128(label, barcode,total);
+    }
 
     @Action
     public void exit() {

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.panel.slgl.task.DengjiTask;
@@ -23,6 +22,7 @@ import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.slgl.task.CancelDengji;
 import com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask;
 import static com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask.logger;
+import com.jskj.asset.client.util.DanHao;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
@@ -44,11 +44,11 @@ import org.jdesktop.application.Task;
  *
  * @author tt
  */
-public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
+public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
 
     private static final Log logger = LogFactory.getLog(ITGuDingZiChanDengJiJDialog.class);
-    
-    private JTextField regTextField,regTextField1;
+
+    private JTextField regTextField, regTextField1;
     private String imageUri;
     private ZichandengjiAll zc;
     private int userId;
@@ -62,6 +62,8 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
     private boolean isNew;
     private String sqid;
     private boolean wait;
+    private String barcode;
+
     /**
      * Creates new form PTGuDingZiChanDengJiJDialog
      */
@@ -73,7 +75,8 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         mainFrame = AssetClientApp.getApplication().getMainFrame();
         isNew = false;
-        
+        barcode = DanHao.getDanHao("ITZC");
+
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -106,7 +109,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
             }
 
         });
-        
+
         ((BaseTextField) jTextFieldName).registerPopup(new IPopupBuilder() {
 
             public int getType() {
@@ -120,7 +123,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
             public String getConditionSQL() {
                 wait = true;
                 chooseZichan();
-                while(wait) {
+                while (wait) {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
@@ -129,12 +132,12 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
                 }
                 String sql = "";
                 sql += " cgsq_id like \"%GDZC%\" and is_completed = 1 and status = 0 ";
-                if(sqid != null){
+                if (sqid != null) {
                     sql += " and cgsq_id = \"" + sqid + "\" ";
                 }
                 if (!jTextFieldName.getText().trim().equals("")) {
-                    sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_type like \"%IT%\" and (gdzc_name like \"%" + jTextFieldName.getText() + "%\"" 
-                        + " or zujima like \"%" + jTextFieldName.getText().toLowerCase() + "%\"))");
+                    sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_type like \"%IT%\" and (gdzc_name like \"%" + jTextFieldName.getText() + "%\""
+                            + " or zujima like \"%" + jTextFieldName.getText().toLowerCase() + "%\"))");
                 } else {
                     sql += (" and cgzc_id in ( select gdzc_id  from gudingzichan where gdzc_type like \"%IT%\" )");
                 }
@@ -142,8 +145,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
-                        ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+                return new String[][]{{"shenqingdan.shenqingdanId", "源单号"}, {"shenqingdan.zhidanren", "申请人"}, {"gdzcId", "资产ID"}, {"gdzcName", "资产名称"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -163,10 +165,10 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
 //                    jTextFieldBaoxiuqi.setEditable(false);
                     jTextFieldQuantity.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
                     jTextFieldQuantity.setEditable(false);
-                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
-                    yuandanID = (String)map.get("shenqingdanId");
-                    map = (HashMap)bindedMap.get("suppliertb");
-                    supplier = (String)map.get("supplierName");
+                    HashMap map = (HashMap) bindedMap.get("shenqingdan");
+                    yuandanID = (String) map.get("shenqingdanId");
+                    map = (HashMap) bindedMap.get("suppliertb");
+                    supplier = (String) map.get("supplierName");
                     jTextFieldSupplier.setText(supplier);
                 }
             }
@@ -179,34 +181,34 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         ((BaseTextField) regTextField).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
         ((BaseTextField) regTextField1).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd");
     }
-    
-    public void setNew(){
+
+    public void setNew() {
         isNew = true;
         //如果有未登记资产，即登记过程中异常退出系统，则重新打开界面的时候检查是否有未登记资产并提示
         String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
         new OpenTask(sql).execute();
     }
-    
+
     @Action
     public void exit() {
-        if(isNew){
+        if (isNew) {
             close();
             return;
         }
         String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
         new CloseTask(sql).execute();
     }
-    
-    public void close(){
+
+    public void close() {
         this.dispose();
     }
-    
-    private class CloseTask extends WeidengjizichanTask{
+
+    private class CloseTask extends WeidengjizichanTask {
 
         public CloseTask(String sql) {
-            super(sql,"IT");
+            super(sql, "IT");
         }
-        
+
         @Override
         public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
 
@@ -220,7 +222,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
                 }
                 string.append("是否继续登记？选“否”会要求输入原因，并不再登记以上所有资产");
                 int result = AssetMessage.showConfirmDialog(null, string.toString(),
-                        "确认",JOptionPane.YES_NO_OPTION);
+                        "确认", JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
@@ -240,15 +242,15 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
             }
             close();
         }
-        
+
     }
-    
-    private class OpenTask extends WeidengjizichanTask{
+
+    private class OpenTask extends WeidengjizichanTask {
 
         public OpenTask(String sql) {
-            super(sql,"IT");
+            super(sql, "IT");
         }
-        
+
         @Override
         public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
 
@@ -262,7 +264,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
                 }
                 string.append("是否继续登记？选“否”会要求输入原因，并不再登记以上所有资产");
                 int result = AssetMessage.showConfirmDialog(null, string.toString(),
-                        "确认",JOptionPane.YES_NO_OPTION);
+                        "确认", JOptionPane.YES_NO_OPTION);
                 if (result == 0) {
                     return;
                 }
@@ -280,22 +282,22 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
                 }
                 new Cancel(list).execute();
             }
-            
+
         }
-        
+
     }
-    
-    public void chooseZichan(){
+
+    public void chooseZichan() {
         String sql = " cgsq_id like \"GDZC%\" and is_completed = 1 and status = 0";
         new ChooseTask(sql).execute();
     }
-    
-    private class ChooseTask extends WeidengjizichanTask{
+
+    private class ChooseTask extends WeidengjizichanTask {
 
         public ChooseTask(String sql) {
-            super(sql,"IT");
+            super(sql, "IT");
         }
-        
+
         @Override
         public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
 
@@ -303,19 +305,19 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
             list = response.getResult();
             sqid = null;
             wait = false;
-            if(list.size() > 0){
+            if (list.size() > 0) {
                 sqid = list.get(0).getCgsqId();
             }
         }
-        
+
     }
-    
-    private class Cancel extends CancelDengji{
+
+    private class Cancel extends CancelDengji {
 
         public Cancel(List<ZichanliebiaotbAll> zc) {
             super(zc);
         }
-   
+
         @Override
         public void onSucceeded(Object object) {
             if (object instanceof Exception) {
@@ -332,7 +334,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         }
 
     }
-    
+
     @Action
     public Task uploadPic() {
         BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
@@ -348,16 +350,16 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         }
         return null;
     }
-    
+
     //单个资产登记不合格情况
     @Action
-    public Task buhege(){
-        if(jTextFieldName.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入资产名称！",this);
+    public Task buhege() {
+        if (jTextFieldName.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入资产名称！", this);
             return null;
         }
-        if(jTextFieldZcid.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入资产编号！",this);
+        if (jTextFieldZcid.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入资产编号！", this);
             return null;
         }
         List<ZichanliebiaotbAll> list = new ArrayList<ZichanliebiaotbAll>();
@@ -376,10 +378,10 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         list.add(lb);
         return new Cancel(list);
     }
-    
+
     @Action
-    public void fushuliebiao(){
-        if(fslb == null){
+    public void fushuliebiao() {
+        if (fslb == null) {
             fslb = new FushuliebiaoJDialog();
             fslb.setLocationRelativeTo(mainFrame);
         }
@@ -387,8 +389,8 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
     }
 
     @Action
-    public void kuozhan(){
-        if(kzxx == null){
+    public void kuozhan() {
+        if (kzxx == null) {
             kzxx = new KuozhanxinxiJDialog();
             kzxx.setLocationRelativeTo(mainFrame);
         }
@@ -396,30 +398,30 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
     }
 
     @Action
-    public Task submitForm() throws ParseException{
-        if(jTextFieldName.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入资产名称！",this);
+    public Task submitForm() throws ParseException {
+        if (jTextFieldName.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入资产名称！", this);
             return null;
         }
-        if(jTextFieldQuantity.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入登记数量！",this);
+        if (jTextFieldQuantity.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入登记数量！", this);
             return null;
         }
-        if(jTextField12.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入购置日期！",this);
+        if (jTextField12.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入购置日期！", this);
             return null;
         }
-        if(jTextFieldPihao.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入批号！",this);
+        if (jTextFieldPihao.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入批号！", this);
             return null;
         }
-        if(jTextFieldBaoxiuqi.getText().isEmpty()){
-            AssetMessage.ERRORSYS("请输入保修期！",this);
+        if (jTextFieldBaoxiuqi.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入保修期！", this);
             return null;
         }
         zc = new ZichandengjiAll();
         zc.setGdzcId(Integer.parseInt(jTextFieldZcid.getText()));
-        SimpleDateFormat dateformate=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
         zc.setGouzhiDate(dateformate.parse(jTextField12.getText()));
         zc.setDengjirenId(userId);
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
@@ -427,34 +429,35 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         zc.setImguri(imageUri);
         zc.setBaoxiuqi(dateformate.parse(jTextFieldBaoxiuqi.getText()));
         zc.setPihao(jTextFieldPihao.getText());
-        if(fslb != null) {
-             List<Fushuliebiaotb> list = fslb.getList();
-            if(list != null && list.size() > 0){
-                for(Fushuliebiaotb lb:list){
+        zc.setBarcode(barcode);
+        if (fslb != null) {
+            List<Fushuliebiaotb> list = fslb.getList();
+            if (list != null && list.size() > 0) {
+                for (Fushuliebiaotb lb : list) {
                     lb.setZhuzcId(zc.getGdzcId());
                 }
             }
             zc.setFushulist(list);
         }
-        if(kzxx != null) {
-             List<Kuozhanxinxitb> kzlist = kzxx.getList();
-            if(kzlist != null && kzlist.size() > 0){
-                for(Kuozhanxinxitb lb:kzlist){
+        if (kzxx != null) {
+            List<Kuozhanxinxitb> kzlist = kzxx.getList();
+            if (kzlist != null && kzlist.size() > 0) {
+                for (Kuozhanxinxitb lb : kzlist) {
                     lb.setZhuzcId(zc.getGdzcId());
                 }
             }
             zc.setKuozhanlist(kzlist);
         }
-        
+
         return new submitTask(zc);
     }
-    
-    private class submitTask extends DengjiTask{
+
+    private class submitTask extends DengjiTask {
 
         public submitTask(ZichandengjiAll zc) {
             super(zc);
         }
-        
+
         @Override
         protected void succeeded(Object result) {
             if (result instanceof Exception) {
@@ -471,7 +474,40 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
             AssetClientApp.getApplication().show(iTGuDingZiChanDengJiJDialog);
         }
     }
-    
+
+    @Action
+    public void generatorBar() {
+        String label = jTextFieldName.getText();
+        if (barcode == null) {
+            return;
+        }
+        if (label.trim().equals("")) {
+            int result = AssetMessage.CONFIRM(this, "没有资产名，确定打印吗?");
+            if (result != AssetMessage.OK_OPTION) {
+                jTextFieldName.grabFocus();
+                return;
+            }
+        }
+        String totalStr = jTextFieldQuantity.getText();
+        int total = 1;
+        try {
+            if (!totalStr.trim().equals("")) {
+                total = Integer.parseInt(totalStr);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        DanHao.printBarCode128ForAsset(new String[]{"", barcode},
+                new String[][]{
+                    {"资产名", jTextFieldName.getText()},
+                    {"资产类别", jTextFieldZctype.getText()},
+                    {"序列号", jTextFieldPihao.getText()},
+                    {"购置日期", jTextField12.getText()},
+                    {"保修期至", jTextFieldBaoxiuqi.getText()},
+                    {"登记人", userName}},total);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -516,7 +552,6 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         jToolBar1 = new javax.swing.JToolBar();
         jButton5 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -644,14 +679,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
         jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
-        jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setBorderPainted(false);
-        jButton7.setFocusable(false);
-        jButton7.setName("jButton7"); // NOI18N
-        jButton7.setOpaque(false);
-        jToolBar1.add(jButton7);
-
+        jButton6.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setBorderPainted(false);
@@ -872,7 +900,6 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog{
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

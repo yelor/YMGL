@@ -16,7 +16,6 @@ import net.sf.dynamicreports.report.builder.barcode.Code128BarcodeBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
-import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
@@ -59,6 +58,7 @@ public class DanHao {
     //资产相关
     public final static String TYPE_SKDJ = "SKDJ";
     public final static String TYPE_QTSK = "QTSK";
+
     /**
      *
      * @param shenqingdanId
@@ -97,7 +97,7 @@ public class DanHao {
             className = "com.jskj.asset.client.panel.slgl.GuDingZiChanWeiXiuShenQingJDialog";
         } else if (shenqingdanId.startsWith(TYPE_FKDJ)) {
             className = "com.jskj.asset.client.panel.shjs.FuKuanDanJDialog";
-        }else if (shenqingdanId.startsWith(TYPE_QTFK)) {
+        } else if (shenqingdanId.startsWith(TYPE_QTFK)) {
             className = "com.jskj.asset.client.panel.shjs.OtherFuKuanDanJDialog";
         }
 
@@ -110,27 +110,87 @@ public class DanHao {
 
     }
 
+    private final static StyleBuilder font10Style = stl.style(ReportTemplates.columnStyle).setFontSize(10);
+
     public static void printBarCode128(String label, String barcode) {
         try {
             StyleBuilder bold14Style = stl.style(ReportTemplates.boldStyle).setFontSize(14);
             Code128BarcodeBuilder postalCode = bcode.code128(barcode)
-                    .setModuleWidth(2.5)
+                    .setModuleWidth(1d)
                     .setStyle(bold14Style);
 
             report()
-                    .setTemplate(template()).setPageFormat(PageType.A7, PageOrientation.LANDSCAPE)
+                    .setTemplate(template().setBarcodeWidth(179).setBarcodeHeight(50)).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
                     .title(createBarcodeCellComponent(label, postalCode))
-                    .print(true);
+                    .print(false);
         } catch (DRException e) {
             logger.error(e);
             e.printStackTrace();
         }
     }
 
+    public static void printBarCode128(String label, String barcode, int total) {
+        for (int i = 0; i < total; i++) {
+            printBarCode128(label, barcode + (i+1));
+        }
+    }
+
+    public static void printBarCode128ForAsset(String[] labelAndbarcode, String[][] parameters, int total) {
+        for (int i = 0; i < total; i++) {
+            if (labelAndbarcode == null || labelAndbarcode.length <= 1) {
+                return;
+            }
+            labelAndbarcode[1]+=(i+1);
+            printBarCode128ForAsset(labelAndbarcode, parameters);
+        }
+    }
+
+    public static void printBarCode128ForAsset(String[] labelAndbarcode, String[][] parameters) {
+
+        if (labelAndbarcode == null || labelAndbarcode.length <= 1) {
+            return;
+        }
+
+        try {
+            StyleBuilder textStyle = stl.style().setFontSize(12);
+
+            Code128BarcodeBuilder shippingContainerCode = bcode.code128(labelAndbarcode[1])
+                    .setModuleWidth(1d)
+                    .setStyle(textStyle);
+            report().setTemplate(template())
+                    .setPageFormat(PageType.B5).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
+                    .setTextStyle(textStyle)
+                    .title(
+                            cmp.horizontalList(
+                                    createCustomerComponent(returnNotNullValue(0, 0, parameters), returnNotNullValue(0, 1, parameters))),
+                            cmp.horizontalList(
+                                    cmp.verticalList(
+                                            cmp.horizontalList(
+                                                    createCellComponent(returnNotNullValue(1, 0, parameters), cmp.text(returnNotNullValue(1, 1, parameters))),
+                                                    createCellComponent(returnNotNullValue(2, 0, parameters), cmp.text(returnNotNullValue(2, 1, parameters)))),
+                                            cmp.horizontalList(
+                                                    createCellComponent(returnNotNullValue(3, 0, parameters), cmp.text(returnNotNullValue(3, 1, parameters))),
+                                                    createCellComponent(returnNotNullValue(4, 0, parameters), cmp.text(returnNotNullValue(4, 1, parameters)))),
+                                            createCellComponent(returnNotNullValue(5, 0, parameters), cmp.text(returnNotNullValue(5, 1, parameters))))),
+                            createCellComponent(labelAndbarcode[0], shippingContainerCode)).print(false);
+        } catch (Exception e) {
+            logger.error(e);
+            e.printStackTrace();
+        }
+    }
+
+    private static String returnNotNullValue(int a, int b, String[][] parameters) {
+        if (parameters == null || parameters.length < (a + 1) || parameters[a].length < (b + 1)) {
+            return "";
+        }
+
+        return parameters[a][b];
+    }
+
     private static ComponentBuilder<?, ?> createBarcodeCellComponent(String label, ComponentBuilder<?, ?> content) {
-        StyleBuilder bold14Style = stl.style(ReportTemplates.boldStyle).setFontSize(14);
+
         VerticalListBuilder cell = cmp.verticalList(
-                cmp.text(label).setStyle(bold14Style),
+                cmp.text(label).setStyle(font10Style),
                 cmp.horizontalList(
                         cmp.horizontalGap(5),
                         content,
@@ -138,8 +198,34 @@ public class DanHao {
         return cell;
     }
 
+    private static ComponentBuilder<?, ?> createCustomerComponent(String label, String content) {
+        VerticalListBuilder contentBuilder = cmp.verticalList(
+                cmp.text(content));
+        return createCellComponent(label, contentBuilder);
+    }
+
+    private static ComponentBuilder<?, ?> createCellComponent(String label, ComponentBuilder<?, ?> content) {
+        VerticalListBuilder cell = cmp.verticalList(
+                cmp.text(label).setStyle(font10Style),
+                cmp.horizontalList(
+                        cmp.horizontalGap(5),
+                        content,
+                        cmp.horizontalGap(5)));
+        cell.setStyle(stl.style(stl.pen2Point()));
+        return cell;
+    }
+
     //测试用main函数
-//    public static void main(String[] args){
-//        System.out.println(DanHao.getDanHao("cgsq"));
-//    }
+    public static void main(String[] args) {
+        System.out.println(DanHao.getDanHao("cgsq"));
+        DanHao.printBarCode128("", DanHao.getDanHao("cgsq") + 88);
+//        DanHao.printBarCode128ForAsset(new String[]{"编号",DanHao.getDanHao("cgsq")+88},
+//                new String[][]{
+//                {"资产名","12313"},
+//                {"资产类别","345"},
+//                {"序列号","54hrfgh"},
+//                {"购置日期","fghwe"},
+//                {"保修期至","wr324"},
+//                {"登记人","234234"}});
+    }
 }
