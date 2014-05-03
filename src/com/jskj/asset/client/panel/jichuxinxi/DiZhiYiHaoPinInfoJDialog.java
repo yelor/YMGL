@@ -130,7 +130,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         if (paramData == null) {
             return;
         }
-        unitPhoto.setModel(new BaseListModel<String>(new ArrayList(), ""));
         jTextFieldDepotID.setText("");
         jTextFieldSupplier.setText("");
         //自动绑定所有的值
@@ -164,18 +163,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                 if (deportId > 0) {
                     jTextFieldDepotID.setText(String.valueOf(deportId));
                 }
-            }
-
-            String imagePaths = paramData.getUnitPhoto();
-            if (imagePaths != null && !imagePaths.trim().equals("")) {
-                BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
-                List source = mode.getSource();
-                String[] images = imagePaths.split(";");
-                for (String m : images) {
-                    source.add(m);
-                }
-                BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-                unitPhoto.setModel(newMode);
             }
         }
 
@@ -216,19 +203,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         //单独保存barcode
         appParam.setDzyhpBarcode(barcode);
         
-        /*得到图片路径*/
-        BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
-        List source = mode.getSource();
-        String imgPaths = "";
-        for (int i = 0; i < source.size(); i++) {
-            if (i == (source.size() - 1)) {
-                imgPaths += source.get(i).toString();
-            } else {
-                imgPaths += source.get(i) + ";";
-            }
-        }
-        appParam.setUnitPhoto(imgPaths);
-
         String serviceId = "dizhiyihaopin/add";
         if (appParam.getDzyhpId() != null && appParam.getDzyhpId() > 0) {
             serviceId = "dizhiyihaopin/update";
@@ -243,11 +217,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                         dispose();
                     } else {
                         AssetMessage.showMessageDialog(null, "保存成功！");
-                        BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
-                        List<String> source = mode.getSource();
-                        source.clear();
-                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-                        unitPhoto.setModel(newMode);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), DiZhiYiHaoPinInfoJDialog.this);
@@ -283,14 +252,9 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jLabel7 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         dzyhpPinpai = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         dzyhpType = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         dzyhpGuige = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        unitPhoto = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
         unitId = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -304,8 +268,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DiZhiYiHaoPinInfoJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
-        setMaximumSize(new java.awt.Dimension(796, 418));
-        setMinimumSize(new java.awt.Dimension(796, 418));
+        setMaximumSize(null);
+        setMinimumSize(null);
         setName("Form"); // NOI18N
         setResizable(false);
 
@@ -375,30 +339,13 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
 
         dzyhpPinpai.setName("dzyhpPinpai"); // NOI18N
 
-        jButton6.setAction(actionMap.get("deletePic")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setName("jButton6"); // NOI18N
-
-        jButton7.setAction(actionMap.get("uploadPic")); // NOI18N
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setName("jButton7"); // NOI18N
-
-        dzyhpType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通固定资产", "IT固定资产" }));
+        dzyhpType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "低值易耗品", "高值易耗品" }));
         dzyhpType.setName("dzyhpType"); // NOI18N
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
 
         dzyhpGuige.setName("dzyhpGuige"); // NOI18N
-
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        unitPhoto.setName("unitPhoto"); // NOI18N
-        jScrollPane3.setViewportView(unitPhoto);
-
-        jButton1.setAction(actionMap.get("imagePreview")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
 
         unitId.setName("unitId"); // NOI18N
 
@@ -407,7 +354,7 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel7)
@@ -415,37 +362,24 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(dzyhpName)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel18))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(dzyhpXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dzyhpXinghao, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(unitId))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dzyhpGuige)
-                            .addComponent(dzyhpPinpai, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dzyhpPinpai)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton7)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1)
-                                .addComponent(jButton6)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dzyhpType, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(dzyhpName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addGap(12, 12, 12)
+                        .addComponent(dzyhpType, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,29 +391,18 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                     .addComponent(jLabel8)
                     .addComponent(dzyhpType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(dzyhpGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(dzyhpXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addGap(13, 13, 13)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel18)
-                                    .addComponent(dzyhpPinpai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap())
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dzyhpGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(dzyhpXinghao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel18)
+                    .addComponent(dzyhpPinpai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
@@ -523,9 +446,9 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,107 +512,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     }
 
     @Action
-    public Task uploadPic() {
-        BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
-        String selectedPath = fileChoose.openDialog();
-        if (!selectedPath.trim().equals("")) {
-            addObjectToList("uploading...");
-            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "dizhiyihaopin") {
-                @Override
-                public void responseResult(String file) {
-                    removeObjectFromList("uploading...");
-                    BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
-                    List source = mode.getSource();
-                    if (source.contains(file)) {
-                        return;
-                    }
-                    source.add(file);
-                    BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-                    unitPhoto.setModel(newMode);
-                }
-            };
-        }
-        return null;
-    }
-
-    private void addObjectToList(String name) {
-
-        BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
-        List source = mode.getSource();
-        if (source.contains(name)) {
-            return;
-        }
-        source.add(name);
-        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-        unitPhoto.setModel(newMode);
-    }
-
-    private void removeObjectFromList(String name) {
-        BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
-        List<String> source = mode.getSource();
-        source.remove(name);
-        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-        unitPhoto.setModel(newMode);
-    }
-
-    @Action
-    public Task deletePic() {
-        Object selectedValue = unitPhoto.getSelectedValue();
-        if (selectedValue == null) {
-            return null;
-        }
-        removeObjectFromList(selectedValue.toString());
-        if (!selectedValue.toString().equals("")) {
-            return new FileTask(FileTask.TYPE_DELETE, selectedValue.toString(), "dizhiyihaopin") {
-                @Override
-                public void responseResult(String file) {
-                }
-            };
-        }
-        return null;
-    }
-
-    @Action
     public void close() {
         this.dispose();
-
-        BaseListModel<String> mode = (BaseListModel<String>) unitPhoto.getModel();
-        List<String> source = mode.getSource();
-        if (source.size() > 0) {
-            for (int i = 0; i < source.size(); i++) {
-                if (!source.get(i).equals("")) {
-                    FileTask task = new FileTask(FileTask.TYPE_DELETE, source.get(i), "dizhiyihaopin") {
-                        @Override
-                        public void responseResult(String file) {
-                            removeObjectFromList(file);
-                        }
-                    };
-                    task.execute();
-                }
-            }
-        }
-    }
-
-    @Action
-    public Task imagePreview() {
-        final Object obj = unitPhoto.getSelectedValue();
-        if (obj != null) {
-            return new FileTask(FileTask.TYPE_DOWNLOAD, obj.toString(), "dizhiyihaopin") {
-                @Override
-                public void responseResult(final String file) {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                            ImagePreview imagePreview = new ImagePreview(file, true);
-                            imagePreview.setLocationRelativeTo(mainFrame);
-                            AssetClientApp.getApplication().show(imagePreview);
-                        }
-                    });
-                }
-            };
-        }
-        return null;
     }
 
 //    @Action
@@ -716,11 +540,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     private javax.swing.JTextArea dzyhpRemark;
     private javax.swing.JComboBox dzyhpType;
     private javax.swing.JTextField dzyhpXinghao;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBoxCont;
     private javax.swing.JCheckBox jCheckBoxzjly;
     private javax.swing.JLabel jLabel10;
@@ -734,10 +555,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextFieldDepotID;
     private javax.swing.JTextField jTextFieldSupplier;
     private javax.swing.JTextField unitId;
-    private javax.swing.JList unitPhoto;
     // End of variables declaration//GEN-END:variables
 }

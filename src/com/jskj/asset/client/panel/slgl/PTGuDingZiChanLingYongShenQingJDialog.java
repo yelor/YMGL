@@ -236,13 +236,13 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
         Object[][] o = new Object[size][6];
         for (int i = 0; i < size; i++) {
             ZichanliebiaoDetailEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getGdzcId(), zclb.getGdzcName(), zclb.getGdzcType(), zclb.getGdzcPinpai(), zclb.getCount(), zclb.getGdzcValue(),  zclb.getSaleprice() * zclb.getCount()};
+            o[i] = new Object[]{zclb.getGdzcId(), zclb.getGdzcName(), zclb.getGdzcType(), zclb.getGdzcPinpai(), zclb.getCount(), zclb.getSaleprice(),  zclb.getSaleprice() * zclb.getCount()};
         }
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "数量", "原值", "合价"
+                    "资产编号", "资产名称", "类别", "品牌", "数量", "采购价", "合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{

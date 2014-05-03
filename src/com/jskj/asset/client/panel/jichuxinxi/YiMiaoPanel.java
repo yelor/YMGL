@@ -58,7 +58,7 @@ public class YiMiaoPanel extends BasePanel {
         conditionSql = "";
 
         bindTable = new BindTableHelper<YimiaoAll>(jTableYiMiao, new ArrayList<YimiaoAll>());
-        bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"unitId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}, {"yimiaoTiaoxingma", "条形码"}});
+        bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"unitId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}});
         bindTable.setIntegerType(1, 7, 8);
         bindTable.bind().setColumnWidth(new int[]{0, 80}).setRowHeight(30);;
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
@@ -66,7 +66,7 @@ public class YiMiaoPanel extends BasePanel {
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{0,1,2,4,8};
+                return new int[]{0,1,2,4};
             }
 
             @Override
@@ -85,9 +85,6 @@ public class YiMiaoPanel extends BasePanel {
                     }
                     if (!searchKeys.get(4).trim().equals("")) {
                         sql.append("yimiao_jixing like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
-                    }
-                    if (!searchKeys.get(8).trim().equals("")) {
-                        sql.append("yimiao_tiaoxingma = ").append(searchKeys.get(8).trim()).append(" and ");
                     }
                     if (sql.length() > 0) {
                         sql.delete(sql.length() - 5, sql.length() - 1);

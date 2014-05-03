@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jskj.asset.client.panel.shjs;
+package com.jskj.asset.client.panel.slgl;
 
+import com.jskj.asset.client.panel.shjs.*;
+import com.jskj.asset.client.panel.slgl.*;
 import com.jskj.asset.client.panel.ckgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.BaseDialog;
@@ -16,12 +18,12 @@ import org.jdesktop.application.Action;
  *
  * @author Administrator
  */
-public class SelectPandianJDialog extends BaseDialog {
+public class SelectFukuanJDialog extends BaseDialog {
 
     /**
      * Creates new form ymcrk
      */
-    public SelectPandianJDialog() {
+    public SelectFukuanJDialog() {
         super();
         initComponents();
     }
@@ -37,63 +39,44 @@ public class SelectPandianJDialog extends BaseDialog {
 
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectPandianJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(SelectFukuanJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectPandianJDialog.class, this);
-        jButton1.setAction(actionMap.get("zwpd_pop")); // NOI18N
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectFukuanJDialog.class, this);
+        jButton1.setAction(actionMap.get("qtfkd_pop")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
-        jButton3.setAction(actionMap.get("gdzcpd_pop")); // NOI18N
+        jButton3.setAction(actionMap.get("fkd_pop")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setActionCommand(resourceMap.getString("jButton3.actionCommand")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
-
-        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
-
-        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
-        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setName("jButton4"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,37 +125,35 @@ public class SelectPandianJDialog extends BaseDialog {
     }
 
     @Action
-    public void gdzcpd_pop() {
+    public void fkd_pop() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                ShiWuPanDianJDialog shiWuPanDianJDialog = new ShiWuPanDianJDialog(new javax.swing.JFrame(), true);
-                shiWuPanDianJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(shiWuPanDianJDialog);
+                FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog();
+                fkdJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(fkdJDialog);
             }
         });
     }
 
     @Action
-    public void zwpd_pop() {
+    public void qtfkd_pop() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                ZhangWuPanDianJDialog zhangWuPanDianJDialog = new ZhangWuPanDianJDialog(new javax.swing.JFrame(), true);
-                zhangWuPanDianJDialog.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(zhangWuPanDianJDialog);
+                OtherFuKuanDanJDialog otherfkdJDialog = new OtherFuKuanDanJDialog();
+                otherfkdJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(otherfkdJDialog);
             }
         });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     // End of variables declaration//GEN-END:variables
 }
