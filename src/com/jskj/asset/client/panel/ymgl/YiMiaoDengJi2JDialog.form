@@ -238,6 +238,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldYimiaoId">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldYimiaoId.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldYimiaoId" noResource="true"/>
           </Properties>
@@ -270,6 +271,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldguige">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldguige" noResource="true"/>
           </Properties>
           <Events>
@@ -284,6 +286,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldshengchanqiye">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldshengchanqiye" noResource="true"/>
           </Properties>
           <Events>
@@ -327,6 +330,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldunit">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldunit" noResource="true"/>
           </Properties>
           <Events>
@@ -358,6 +362,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldpizhunwenhao">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldpizhunwenhao.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldpizhunwenhao" noResource="true"/>
           </Properties>
@@ -407,6 +412,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldQuantity">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldQuantity" noResource="true"/>
           </Properties>
           <Events>
@@ -427,6 +433,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldkucunDown">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldkucunDown" noResource="true"/>
           </Properties>
           <Events>
@@ -435,6 +442,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldkucunUp">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldkucunUp" noResource="true"/>
           </Properties>
           <Events>
@@ -455,6 +463,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldprice">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldprice" noResource="true"/>
           </Properties>
           <Events>
@@ -463,6 +472,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldsaleprice">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldsaleprice" noResource="true"/>
           </Properties>
           <Events>
@@ -491,6 +501,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldYimiaoJixing">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldYimiaoJixing.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldYimiaoJixing" noResource="true"/>
           </Properties>

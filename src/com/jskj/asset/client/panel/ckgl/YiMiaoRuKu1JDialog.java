@@ -198,7 +198,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     }
                     Object youxiaoqi;
                     try {
-                        youxiaoqi = yimiaodengji.get("youxiaoqi");
+                        youxiaoqi = yimiaodengji.get("youxiaodate").toString().subSequence(0, 10);
                     } catch (Exception e) {
                         youxiaoqi = "";
                     }

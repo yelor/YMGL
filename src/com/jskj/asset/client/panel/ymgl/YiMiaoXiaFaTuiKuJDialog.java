@@ -133,7 +133,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
-                    Object youxiaoqi = bindedMap.get("youxiaodate");
+                    Object youxiaoqi = bindedMap.get("youxiaodate").toString().subSequence(0, 10);
                     Object pihao = bindedMap.get("pihao");
 
                     editTable.insertValue(0, kucunId);

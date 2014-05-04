@@ -152,7 +152,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
                     Object unit = yimiaoAll.get("unitId");
                     Object pihao = stockpile.get("pihao");
-                    Object youxiaoqi = stockpile.get("youxiaodate");
+                    Object youxiaoqi = stockpile.get("youxiaodate").toString().subSequence(0, 10);
                     Object piqianfaNo = stockpile.get("piqianfano");
                     Object pizhunwenhao = yimiaoAll.get("yimiaoPizhunwenhao");
                     Object source = stockpile.get("source");

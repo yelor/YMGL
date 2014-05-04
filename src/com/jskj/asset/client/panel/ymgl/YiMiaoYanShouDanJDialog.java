@@ -199,7 +199,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     }
 
                     Object piqianfaNo = yimiaodengji.get("piqianfahegezhenno");
-                    Object youxiaoqi = yimiaodengji.get("youxiaoqi");
+                    Object youxiaoqi = yimiaodengji.get("youxiaodate").toString().subSequence(0, 10);
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
                     Object buyprice = yimiaoshenqingdan.get("buyprice");

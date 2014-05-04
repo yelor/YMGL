@@ -219,6 +219,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jTextFieldYimiaoId.setEditable(false);
         jTextFieldYimiaoId.setText(resourceMap.getString("jTextFieldYimiaoId.text")); // NOI18N
         jTextFieldYimiaoId.setName("jTextFieldYimiaoId"); // NOI18N
         jTextFieldYimiaoId.addActionListener(new java.awt.event.ActionListener() {
@@ -240,6 +241,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
 
+        jTextFieldguige.setEditable(false);
         jTextFieldguige.setName("jTextFieldguige"); // NOI18N
         jTextFieldguige.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,6 +252,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        jTextFieldshengchanqiye.setEditable(false);
         jTextFieldshengchanqiye.setName("jTextFieldshengchanqiye"); // NOI18N
         jTextFieldshengchanqiye.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,6 +284,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
+        jTextFieldunit.setEditable(false);
         jTextFieldunit.setName("jTextFieldunit"); // NOI18N
         jTextFieldunit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,6 +305,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel9.setText(resourceMap.getString("jLabel9.text")); // NOI18N
         jLabel9.setName("jLabel9"); // NOI18N
 
+        jTextFieldpizhunwenhao.setEditable(false);
         jTextFieldpizhunwenhao.setText(resourceMap.getString("jTextFieldpizhunwenhao.text")); // NOI18N
         jTextFieldpizhunwenhao.setName("jTextFieldpizhunwenhao"); // NOI18N
         jTextFieldpizhunwenhao.addActionListener(new java.awt.event.ActionListener() {
@@ -335,6 +340,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
         jLabel13.setName("jLabel13"); // NOI18N
 
+        jTextFieldQuantity.setEditable(false);
         jTextFieldQuantity.setName("jTextFieldQuantity"); // NOI18N
         jTextFieldQuantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,6 +354,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel15.setText(resourceMap.getString("jLabel15.text")); // NOI18N
         jLabel15.setName("jLabel15"); // NOI18N
 
+        jTextFieldkucunDown.setEditable(false);
         jTextFieldkucunDown.setName("jTextFieldkucunDown"); // NOI18N
         jTextFieldkucunDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,6 +362,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
             }
         });
 
+        jTextFieldkucunUp.setEditable(false);
         jTextFieldkucunUp.setName("jTextFieldkucunUp"); // NOI18N
         jTextFieldkucunUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -368,6 +376,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
+        jTextFieldprice.setEditable(false);
         jTextFieldprice.setName("jTextFieldprice"); // NOI18N
         jTextFieldprice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -375,6 +384,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
             }
         });
 
+        jTextFieldsaleprice.setEditable(false);
         jTextFieldsaleprice.setName("jTextFieldsaleprice"); // NOI18N
         jTextFieldsaleprice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,6 +403,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
             }
         });
 
+        jTextFieldYimiaoJixing.setEditable(false);
         jTextFieldYimiaoJixing.setText(resourceMap.getString("jTextFieldYimiaoJixing.text")); // NOI18N
         jTextFieldYimiaoJixing.setName("jTextFieldYimiaoJixing"); // NOI18N
 
