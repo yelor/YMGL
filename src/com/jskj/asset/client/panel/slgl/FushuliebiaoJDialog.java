@@ -275,7 +275,7 @@ public class FushuliebiaoJDialog extends BaseDialog implements WindowListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        exit();
+        cancel();
     }
 
     @Override

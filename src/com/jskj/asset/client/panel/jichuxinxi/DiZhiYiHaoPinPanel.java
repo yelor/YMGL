@@ -53,7 +53,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         conditionSql="";
         bindTable = new BindTableHelper<DizhiyihaopinAll>(jTable1, new ArrayList<DizhiyihaopinAll>());
         bindTable.createTable(new String[][]{{"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称"}, {"dzyhpType", "物品类别"}, {"dzyhpGuige", "规格"},
-        {"dzyhpXinghao", "型号"}, {"unitId", "单位"}, {"dzyhpKucunshangxian", "库存上限"}, {"dzyhpKucunxiaxian", "库存下限"}, {"dzyhpBarcode", "条形码"}});
+        {"dzyhpXinghao", "型号"}, {"unitId", "单位"}, {"dzyhpKucunshangxian", "库存上限"}, {"dzyhpKucunxiaxian", "库存下限"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
@@ -61,7 +61,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{0,1,2,3,4,8};
+                return new int[]{0,1,2,3,4};
             }
 
             @Override
@@ -83,9 +83,6 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
                     }
                     if (!searchKeys.get(4).trim().equals("")) {
                         sql.append("dzyhp_xinghao like \"%").append(searchKeys.get(4).trim()).append("%\"").append(" and ");
-                    }
-                    if (!searchKeys.get(8).trim().equals("")) {
-                        sql.append("dzyhp_barcode = ").append(searchKeys.get(8).trim()).append(" and ");
                     }
                     if (sql.length() > 0) {
                         sql.delete(sql.length() - 5, sql.length() - 1);
