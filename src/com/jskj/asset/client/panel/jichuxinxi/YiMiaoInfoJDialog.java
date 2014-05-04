@@ -32,8 +32,8 @@ import org.jdesktop.application.Task;
  */
 public class YiMiaoInfoJDialog extends BaseDialog {
 
-    private static final Logger logger = Logger.getLogger(DanWeiInfoJDialog.class);
-    
+    private static final Logger logger = Logger.getLogger(YiMiaoInfoJDialog.class);
+
     private YimiaoAll appParam;
     private BasePanel parentPanel;
 
@@ -55,7 +55,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         yimiaoFuzhuunit.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("辅助单位")));
         jiliangdanwei.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("剂量单位")));
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -504,8 +503,8 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void yimiaoTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yimiaoTypeActionPerformed
-        
-         if (yimiaoType.getSelectedIndex() == 0) {
+
+        if (yimiaoType.getSelectedIndex() == 0) {
             chengbenjia.setEditable(true);
             yimiaoYushoujia.setEditable(true);
         } else {
@@ -572,6 +571,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         if (appParam.getYimiaoId() == null || appParam.getYimiaoId() <= 0) { //新建
             jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("疫苗信息")); // NOI18N
+            yimiaoPizhunwenhao.setText("国药准字");
             //jCheckBox2.setSelected(false);
             jCheckBoxCont.setEnabled(true);
 //            yimiaoTiaoxingma.setText(DanHao.getDanHao("YM"));
@@ -766,7 +766,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         return null;
     }
 
-    
 //   条形码打印功能
 //    
 //    @Action
@@ -785,7 +784,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 //        }
 //        DanHao.printBarCode128(label, barcode);
 //    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chengbenjia;

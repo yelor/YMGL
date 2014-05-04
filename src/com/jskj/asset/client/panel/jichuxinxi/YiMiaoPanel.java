@@ -109,6 +109,25 @@ public class YiMiaoPanel extends BasePanel {
         return new RefreshTask(0, pageSize);
     }
 
+    private class ReloadTask extends org.jdesktop.application.Task<Object, Void> {
+        ReloadTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ReloadTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
+
     @Action
     public void pagePrev() {
         pageIndex = pageIndex - 1;
@@ -469,6 +488,25 @@ public class YiMiaoPanel extends BasePanel {
         }
         return null;
     }
+
+    private class DeleteYiMiaotbTask extends org.jdesktop.application.Task<Object, Void> {
+        DeleteYiMiaotbTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeleteYiMiaotbTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
   
      @Action
     public Task print() {
@@ -491,5 +529,24 @@ public class YiMiaoPanel extends BasePanel {
         }
         };
         return printData;
+    }
+
+    private class PrintTask extends org.jdesktop.application.Task<Object, Void> {
+        PrintTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to PrintTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 }

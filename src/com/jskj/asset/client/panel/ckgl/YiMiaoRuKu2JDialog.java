@@ -136,11 +136,11 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"xaingdanId", "详单编号", "false"},{"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"}, {"price", "单价", "true"}, {"totalPrice", "合价", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
-        editTable.registerPopup(1, new IPopupBuilder() {
+        editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
             }
@@ -236,28 +236,29 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
 
-                    supplierIdmap.put(yimiaoId, supplierId);
-                    xiangdanIdmap.put(yimiaoId, xiangdanId);
-                    shenqingdanIdmap.put(yimiaoId, shenqingdanId);
+                    supplierIdmap.put(xiangdanId, supplierId);
+                    xiangdanIdmap.put(xiangdanId, xiangdanId);
+                    shenqingdanIdmap.put(xiangdanId, shenqingdanId);
 
-                    editTable.insertValue(0, yimiaoId);
-                    editTable.insertValue(1, yimiaoName);
-                    editTable.insertValue(2, source);
-                    editTable.insertValue(3, tongguandanno);
-                    editTable.insertValue(4, quantity);
-                    editTable.insertValue(5, yimiaoGuige);
-                    editTable.insertValue(6, yimiaoJixing);
-                    editTable.insertValue(7, shengchanqiye);
-                    editTable.insertValue(8, pihao);
-                    editTable.insertValue(9, youxiaoqi);
-                    editTable.insertValue(10, unit);
-                    editTable.insertValue(11, piqianfahegezhenno);
-                    editTable.insertValue(12, yimiaoPizhunwenhao);
-                    editTable.insertValue(13, buyprice);
-                    editTable.insertValue(14, totalprice);
-                    editTable.insertValue(15, AssetClientApp.getSessionMap().getUsertb().getUserName());
-                    editTable.insertValue(16, gongyingdanweiName);
-                    editTable.insertValue(17, userName);
+                    editTable.insertValue(0, xiangdanId);
+                    editTable.insertValue(1, yimiaoId);
+                    editTable.insertValue(2, yimiaoName);
+                    editTable.insertValue(3, source);
+                    editTable.insertValue(4, tongguandanno);
+                    editTable.insertValue(5, quantity);
+                    editTable.insertValue(6, yimiaoGuige);
+                    editTable.insertValue(7, yimiaoJixing);
+                    editTable.insertValue(8, shengchanqiye);
+                    editTable.insertValue(9, pihao);
+                    editTable.insertValue(10, youxiaoqi);
+                    editTable.insertValue(11, unit);
+                    editTable.insertValue(12, piqianfahegezhenno);
+                    editTable.insertValue(13, yimiaoPizhunwenhao);
+                    editTable.insertValue(14, buyprice);
+                    editTable.insertValue(15, totalprice);
+                    editTable.insertValue(16, AssetClientApp.getSessionMap().getUsertb().getUserName());
+                    editTable.insertValue(17, gongyingdanweiName);
+                    editTable.insertValue(18, userName);
 
                 }
 

@@ -145,11 +145,11 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
+            {"xiangdanId", "详单编号"},{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
             {"quantity", "数量", "false"}, {"fuheyuan", "复核员", "true"}, {"fahuoyuan", "发货员", "true"}});
 
-        editTable.registerPopup(1, new IPopupBuilder() {
+        editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
             }
@@ -206,20 +206,21 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
 
-                    editTable.insertValue(0, yimiaoId);
-                    editTable.insertValue(1, yimiaoName);
-                    editTable.insertValue(2, yimiaoGuige);
-                    editTable.insertValue(3, yimiaoJixing);
-                    editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, pihao);
-                    editTable.insertValue(6, youxiaoqi);
-                    editTable.insertValue(7, unit);
-                    editTable.insertValue(8, buyprice);
-                    editTable.insertValue(9, quantity);
+                    editTable.insertValue(0, xiangdanId);
+                    editTable.insertValue(1, yimiaoId);
+                    editTable.insertValue(2, yimiaoName);
+                    editTable.insertValue(3, yimiaoGuige);
+                    editTable.insertValue(4, yimiaoJixing);
+                    editTable.insertValue(5, shengchanqiye);
+                    editTable.insertValue(6, pihao);
+                    editTable.insertValue(7, youxiaoqi);
+                    editTable.insertValue(8, unit);
+                    editTable.insertValue(9, buyprice);
+                    editTable.insertValue(10, quantity);
 
-                    xiangdanIdmap.put(yimiaoId, xiangdanId);
-                    shenqingdanIdmap.put(yimiaoId, shenqingdanId);
-                    piqianfaNomap.put(yimiaoId, piqianfaNo);
+                    xiangdanIdmap.put(xiangdanId, xiangdanId);
+                    shenqingdanIdmap.put(xiangdanId, shenqingdanId);
+                    piqianfaNomap.put(xiangdanId, piqianfaNo);
                 }
 
             }

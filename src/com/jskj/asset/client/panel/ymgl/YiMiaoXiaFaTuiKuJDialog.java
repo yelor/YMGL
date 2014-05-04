@@ -93,7 +93,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"tuihuoQuantity", "数量", "true"}});
+            {"yimiaoJixing", "剂型", "false"}, {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"tuihuoQuantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -134,14 +134,16 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
                     Object youxiaoqi = bindedMap.get("youxiaodate");
+                    Object pihao = bindedMap.get("pihao");
 
                     editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, unit);
-                    editTable.insertValue(6, youxiaoqi);
+                    editTable.insertValue(5, pihao);
+                    editTable.insertValue(6, unit);
+                    editTable.insertValue(7, youxiaoqi);
 
                 }
 
