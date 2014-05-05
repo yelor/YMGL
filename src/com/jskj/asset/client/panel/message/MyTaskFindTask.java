@@ -10,8 +10,10 @@ import com.jskj.asset.client.layout.ws.*;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
+import com.jskj.asset.client.panel.shjs.FukuanShenPiJDialog;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
 import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
+import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -81,6 +83,18 @@ public abstract class MyTaskFindTask extends BaseTask {
                 ShenQingShenPiJDialog sqsp = new ShenQingShenPiJDialog(new javax.swing.JFrame(), true);
                 sqsp.setLocationRelativeTo(mainFrame);
                 AssetClientApp.getApplication().show(sqsp);
+            }
+        });
+    }
+
+    @Action
+    public void selecteShenpiFukuandanAction() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                FukuanShenPiJDialog fkdJDialog = new FukuanShenPiJDialog(new javax.swing.JFrame(), true);
+                fkdJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(fkdJDialog);
             }
         });
     }
@@ -166,6 +180,8 @@ public abstract class MyTaskFindTask extends BaseTask {
                         if (re.getShenqingdanId().toUpperCase().startsWith("YM")) {
                             //疫苗审批
                             gotoShenpi();
+                        }else if(re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_FKDJ) || re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_QTFK)){//资产审批
+                            selecteShenpiFukuandanAction();
                         } else {//资产审批
                             selectShenPiDanAction();
                         }
@@ -281,13 +297,13 @@ public abstract class MyTaskFindTask extends BaseTask {
                     messageApp.setToolTipText("点击打开我的申请单:" + re.getShenqingdanId());
                     messageApp.setOpaque(true);
 
-                    messageApp.addMouseListener(new DanjuMouseAdapter(){
+                    messageApp.addMouseListener(new DanjuMouseAdapter() {
 
                         @Override
                         public String getShenqingdanID() {
                             return re.getShenqingdanId();
                         }
-                        
+
                     });
                 }
             }
@@ -384,13 +400,13 @@ public abstract class MyTaskFindTask extends BaseTask {
                     messageApp.setToolTipText("点击打开我的审批单:" + re.getShenqingdanId());
                     messageApp.setOpaque(true);
 
-                    messageApp.addMouseListener(new DanjuMouseAdapter(){
+                    messageApp.addMouseListener(new DanjuMouseAdapter() {
 
                         @Override
                         public String getShenqingdanID() {
                             return re.getShenqingdanId();
                         }
-                        
+
                     });
                 }
             }
