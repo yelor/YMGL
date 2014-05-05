@@ -131,6 +131,7 @@
             </Container>
             <Container class="javax.swing.JPanel" name="rightMainPanel">
               <Properties>
+                <Property name="background" type="java.awt.Color" resourceKey="rightMainPanel.background"/>
                 <Property name="name" type="java.lang.String" value="rightMainPanel" noResource="true"/>
               </Properties>
               <Constraints>

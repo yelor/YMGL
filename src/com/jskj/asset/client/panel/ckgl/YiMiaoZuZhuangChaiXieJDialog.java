@@ -497,6 +497,7 @@ public class YiMiaoZuZhuangChaiXieJDialog extends BaseDialog {
         jButton7.setOpaque(false);
         jToolBar2.add(jButton7);
 
+        jButton8.setAction(actionMap.get("print")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setBorderPainted(false);
@@ -807,9 +808,8 @@ public class YiMiaoZuZhuangChaiXieJDialog extends BaseDialog {
                     {"部门", jTextFieldbumen.getText()},
                     {"组装费用", jTextFieldzuzhuangfeiyong.getText()},
                     {"费用类型", jTextFieldfeiyongType.getText()},
-                    {"备注", jTextArea1.getText()}},
-                    jTableyimiao1,
-//                    jTableyimiao2,                    
+                    {"备注", jTextAreaRemark.getText()}},
+                    new javax.swing.JTable[]{jTableyimiao1,jTableyimiao2},  
                     new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
         } catch (DRException ex) {
             ex.printStackTrace();

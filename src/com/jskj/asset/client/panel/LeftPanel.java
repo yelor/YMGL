@@ -11,7 +11,9 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.AssetNode;
 import com.jskj.asset.client.layout.AssetTreeNode;
 import com.jskj.asset.client.layout.BaseTreePane;
-import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class LeftPanel extends BaseTreePane {
      */
     public LeftPanel() {
         initComponents();
+
     }
 
     /**
@@ -63,6 +66,7 @@ public class LeftPanel extends BaseTreePane {
             }
         });
 
+        setBackground(resourceMap.getColor("Form.background")); // NOI18N
         setName("Form"); // NOI18N
 
         jToolBar1.setBackground(resourceMap.getColor("jToolBar1.background")); // NOI18N
@@ -70,6 +74,7 @@ public class LeftPanel extends BaseTreePane {
         jToolBar1.setFloatable(false);
         jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
+        jToolBar1.setAlignmentY(0.0F);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
@@ -201,6 +206,21 @@ public class LeftPanel extends BaseTreePane {
 
                     jToolBar1.add(leftButton);
                 }
+//                BoxLayout grid = new BoxLayout(jToolBar1,BoxLayout.Y_AXIS);
+                // grid.setVgap(0);
+//                GridBagLayout gb = new GridBagLayout();
+//
+//                GridBagConstraints gbc_tabButton = new GridBagConstraints();
+//                gbc_tabButton.anchor = GridBagConstraints.NORTH;
+//                gbc_tabButton.insets = new Insets(0, 0, 0, 0);
+//                //gbc_tabButton.fill = GridBagConstraints.BOTH;
+//                gbc_tabButton.gridx = 0;
+//                gbc_tabButton.gridy = 0;
+//                gbc_tabButton.gridwidth = 1;
+//                gbc_tabButton.gridheight = 5;
+//                gb.setConstraints(jToolBar1, gbc_tabButton);
+//                jToolBar1.setLayout(gb);
+                
                 repaint();
                 validate();
 

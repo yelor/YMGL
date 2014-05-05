@@ -155,6 +155,7 @@ public class MainWorkPane extends BasePanel {
 
         jSplitMain.setLeftComponent(LeftPane);
 
+        rightMainPanel.setBackground(resourceMap.getColor("rightMainPanel.background")); // NOI18N
         rightMainPanel.setName("rightMainPanel"); // NOI18N
 
         rightPane.setBackground(resourceMap.getColor("rightPane.background")); // NOI18N

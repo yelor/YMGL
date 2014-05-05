@@ -21,6 +21,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
+    <Property name="background" type="java.awt.Color" resourceKey="Form.background"/>
     <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
   </Properties>
   <AuxValues>
@@ -57,6 +58,7 @@
         <Property name="floatable" type="boolean" value="false"/>
         <Property name="orientation" type="int" value="1"/>
         <Property name="rollover" type="boolean" value="true"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
         <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
       </Properties>
 

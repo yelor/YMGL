@@ -25,6 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
@@ -33,8 +35,12 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 
 /**
  *
@@ -446,32 +452,55 @@ public abstract class BaseDialog extends JDialog {
         }
     }
 
-    protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns) throws DRException {
-        TextColumnBuilder[] itemColumns = null;
-        DRDataSource dataSource = null;
-        if (table != null) {
-            int rowCount = table.getRowCount();
-            int columnCount = table.getColumnCount();
+    protected void print(String title, String[][] topDisplayColumns, JTable[] table, String[][] bottomDisplayColumns) throws DRException {
 
-            itemColumns = new TextColumnBuilder[columnCount];
-            String[] columnName = new String[columnCount];
-            for (int i = 0; i < columnCount; i++) {
-                Object headerValue = table.getTableHeader().getColumnModel().getColumn(i).getHeaderValue();
-                columnName[i] = "A" + i;
-                itemColumns[i] = col.column(headerValue.toString(), columnName[i], type.stringType());
-            }
-
-            dataSource = new DRDataSource(columnName);
-            for (int i = 0; i < rowCount; i++) {
-                Object[] values = new Object[columnCount];
-                for (int j = 0; j < columnCount; j++) {
-                    Object valuObj = table.getValueAt(i, j);
-                    values[j] = valuObj.toString();
-
+        List<String[]> leftArray = new ArrayList();
+        List<String[]> rightArray = new ArrayList();
+        List<String[]> bottomleftArray = new ArrayList();
+        List<String[]> bottomrightArray = new ArrayList();
+        if (topDisplayColumns != null) {
+            for (int i = 1; i <= topDisplayColumns.length; i++) {
+                if (i % 2 == 0) {
+                    rightArray.add(topDisplayColumns[i - 1]);
+                } else {
+                    leftArray.add(topDisplayColumns[i - 1]);
                 }
-                dataSource.add(values);
             }
         }
+
+        if (bottomDisplayColumns != null) {
+            for (int i = 1; i <= bottomDisplayColumns.length; i++) {
+                if (i % 2 == 0) {
+                    bottomrightArray.add(bottomDisplayColumns[i - 1]);
+                } else {
+                    bottomleftArray.add(bottomDisplayColumns[i - 1]);
+                }
+            }
+        }
+
+        SubreportBuilder subreport = cmp.subreport(new SubreportExpression(table))
+                .setDataSource(new SubreportDataSourceExpression(table));
+
+        report().setTemplate(ReportTemplates.reportTemplate)
+                .title(ReportTemplates.createTitleComponent(title),
+                        cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
+                                cmp.hListCell(createCustomerComponent(leftArray)).heightFixedOnTop(),
+                                cmp.hListCell(createCustomerComponent(rightArray)).heightFixedOnTop()),
+                        cmp.verticalGap(10))
+                .detail(subreport, cmp.verticalGap(20))
+                .pageFooter(ReportTemplates.footerComponent)
+                //.sortBy(asc(itemColumn), desc(unitPriceColumn))
+                .setDataSource(new JREmptyDataSource(table.length))
+                .summary(cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
+                                cmp.hListCell(createCustomerComponent(bottomleftArray)).heightFixedOnTop(),
+                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop()))
+                .show(false);
+    }
+
+    protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns) throws DRException {
+        int columnCount = table==null?1:table.getColumnCount();
+        TextColumnBuilder[] itemColumns = new TextColumnBuilder[columnCount];
+        DRDataSource dataSource = getDatasourceByTable(table, itemColumns);
 
         List<String[]> leftArray = new ArrayList();
         List<String[]> rightArray = new ArrayList();
@@ -516,9 +545,85 @@ public abstract class BaseDialog extends JDialog {
     private ComponentBuilder<?, ?> createCustomerComponent(List<String[]> array) {
         HorizontalListBuilder list = cmp.horizontalList().setBaseStyle(stl.style().setLeftPadding(10));
         for (String[] cus : array) {
-            list.add(cmp.text(cus[0].trim().equals("")?"":(cus[0] + ":")).setFixedColumns(8).setStyle(ReportTemplates.boldStyle), cmp.text(cus.length > 1 ? cus[1] : "")).newRow();
+            list.add(cmp.text(cus[0].trim().equals("") ? "" : (cus[0] + ":")).setFixedColumns(8).setStyle(ReportTemplates.boldStyle), cmp.text(cus.length > 1 ? cus[1] : "")).newRow();
         }
         return cmp.verticalList(list);
+    }
+
+    private DRDataSource getDatasourceByTable(JTable table, TextColumnBuilder[] itemColumns) {
+        DRDataSource dataSource = null;
+        if (table != null) {
+            int rowCount = table.getRowCount();
+            int columnCount = table.getColumnCount();
+            String[] columnName = new String[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                Object headerValue = table.getTableHeader().getColumnModel().getColumn(i).getHeaderValue();
+                columnName[i] = "A" + i;
+                itemColumns[i] = col.column(headerValue.toString(), columnName[i], type.stringType());
+            }
+
+            dataSource = new DRDataSource(columnName);
+            for (int i = 0; i < rowCount; i++) {
+                Object[] values = new Object[columnCount];
+                for (int j = 0; j < columnCount; j++) {
+                    Object valuObj = table.getValueAt(i, j);
+                    values[j] = valuObj.toString();
+
+                }
+                dataSource.add(values);
+            }
+        }
+        return dataSource;
+    }
+
+    private class SubreportExpression extends AbstractSimpleExpression<JasperReportBuilder> {
+
+        private static final long serialVersionUID = 1L;
+
+        private JTable[] tables;
+
+        public SubreportExpression(JTable[] tables) {
+            this.tables = tables;
+        }
+
+        @Override
+        public JasperReportBuilder evaluate(ReportParameters reportParameters) {
+            int masterRowNumber = reportParameters.getReportRowNumber();
+            JasperReportBuilder report = report();
+            if (masterRowNumber <= tables.length) {
+                report
+                        .setTemplate(ReportTemplates.reportTemplate);
+
+                int columnCount = tables[masterRowNumber - 1].getColumnCount();
+                TextColumnBuilder[] itemColumns = new TextColumnBuilder[columnCount];
+                DRDataSource dataSource = getDatasourceByTable(tables[masterRowNumber - 1], itemColumns);
+                report.addColumn(itemColumns);
+            }
+            return report;
+        }
+    }
+
+    private class SubreportDataSourceExpression extends AbstractSimpleExpression<JRDataSource> {
+
+        private static final long serialVersionUID = 1L;
+
+        private JTable[] tables;
+
+        public SubreportDataSourceExpression(JTable[] tables) {
+            this.tables = tables;
+        }
+
+        @Override
+        public JRDataSource evaluate(ReportParameters reportParameters) {
+            int masterRowNumber = reportParameters.getReportRowNumber();
+            if (masterRowNumber <= tables.length) {
+                int columnCount = tables[masterRowNumber - 1].getColumnCount();
+                TextColumnBuilder[] itemColumns = new TextColumnBuilder[columnCount];
+                DRDataSource dataSource = getDatasourceByTable(tables[masterRowNumber - 1], itemColumns);
+                return dataSource;
+            }
+            return null;
+        }
     }
 
 }
