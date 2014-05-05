@@ -14,10 +14,12 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseFileChoose;
+import com.jskj.asset.client.layout.BaseListModel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.FileTask;
+import com.jskj.asset.client.panel.ImagePreview;
 import com.jskj.asset.client.panel.slgl.task.CancelDengji;
 import com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask;
 import com.jskj.asset.client.util.DanHao;
@@ -33,6 +35,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
@@ -74,6 +77,8 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         isNew = false;
         barcode = DanHao.getDanHao("PTZC");
 
+        gdzcPhoto.setModel(new BaseListModel<String>(new ArrayList(), ""));
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -371,17 +376,85 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
         String selectedPath = fileChoose.openDialog();
         if (!selectedPath.trim().equals("")) {
-            jTextFieldFile.setText(selectedPath);
-            imageUri = selectedPath;
+            addObjectToList("uploading...");
             return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "gudingzhichan") {
                 @Override
                 public void responseResult(String file) {
+                    removeObjectFromList("uploading...");
+                    BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+                    List source = mode.getSource();
+                    if (source.contains(file)) {
+                        return;
+                    }
+                    source.add(file);
+                    BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+                    gdzcPhoto.setModel(newMode);
                 }
             };
         }
         return null;
     }
 
+    private void addObjectToList(String name) {
+
+        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+        List source = mode.getSource();
+        if (source.contains(name)) {
+            return;
+        }
+        source.add(name);
+        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+        gdzcPhoto.setModel(newMode);
+    }
+
+    private void removeObjectFromList(String name) {
+        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+        List<String> source = mode.getSource();
+        source.remove(name);
+        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+        gdzcPhoto.setModel(newMode);
+    }
+
+    @Action
+    public Task deletePic() {
+        Object selectedValue = gdzcPhoto.getSelectedValue();
+        if (selectedValue == null) {
+            return null;
+        }
+        removeObjectFromList(selectedValue.toString());
+        if (!selectedValue.toString().equals("")) {
+            return new FileTask(FileTask.TYPE_DELETE, selectedValue.toString(), "gudingzhichan") {
+                @Override
+                public void responseResult(String file) {
+
+                }
+            };
+        }
+        return null;
+    }
+    
+    @Action
+    public Task imagePreview() {
+        final Object obj = gdzcPhoto.getSelectedValue();
+        if (obj != null) {
+            return new FileTask(FileTask.TYPE_DOWNLOAD, obj.toString(), "gudingzhichan") {
+                @Override
+                public void responseResult(final String file) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                            ImagePreview imagePreview = new ImagePreview(file, true);
+                            imagePreview.setLocationRelativeTo(mainFrame);
+                            AssetClientApp.getApplication().show(imagePreview);
+                        }
+                    });
+                }
+            };
+        }
+        return null;
+    }
+    
     @Action
     public void fushuliebiao() {
         if (fslb == null) {
@@ -420,10 +493,24 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         zc.setDengjirenId(userId);
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         zc.setYuandanId(yuandanID);
-        zc.setImguri(imageUri);
+//        zc.setImguri(imageUri);
         zc.setBaoxiuqi(dateformate.parse(jTextFieldBaoxiuqi.getText()));
         zc.setPihao(jTextFieldPihao.getText());
         zc.setBarcode(barcode);
+        
+        /*得到图片路径*/
+        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
+        List source = mode.getSource();
+        String imgPaths = "";
+        for (int i = 0; i < source.size(); i++) {
+            if (i == (source.size() - 1)) {
+                imgPaths += source.get(i).toString();
+            } else {
+                imgPaths += source.get(i) + ";";
+            }
+        }
+        zc.setImguri(imgPaths);
+        
         if (fslb != null) {
             List<Fushuliebiaotb> list = fslb.getList();
             if (list != null && list.size() > 0) {
@@ -490,7 +577,7 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
                     {"序列号", jTextFieldPihao.getText()},
                     {"购置日期", jTextField.getText()},
                     {"保修期至", jTextFieldBaoxiuqi.getText()},
-                    {"登记人", userName}},total);
+                    {"责任人", userName}},total);
 
     }
 
@@ -531,7 +618,6 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         jTextFieldXuliehao = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaRemark = new javax.swing.JTextArea();
@@ -540,9 +626,13 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         jButton1 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jTextFieldFile = new javax.swing.JTextField();
         jTextFieldPihao = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        gdzcPhoto = new javax.swing.JList();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(PTGuDingZiChanDengJiJDialog.class);
@@ -623,10 +713,6 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         jLabel16.setName("jLabel16"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(PTGuDingZiChanDengJiJDialog.class, this);
-        jButton2.setAction(actionMap.get("uploadPic")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
-
         jButton3.setAction(actionMap.get("fushuliebiao")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
@@ -682,13 +768,27 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jTextFieldFile.setEditable(false);
-        jTextFieldFile.setName("jTextFieldFile"); // NOI18N
-
         jTextFieldPihao.setName("jTextFieldPihao"); // NOI18N
 
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        gdzcPhoto.setName("gdzcPhoto"); // NOI18N
+        jScrollPane3.setViewportView(gdzcPhoto);
+
+        jButton7.setAction(actionMap.get("uploadPic")); // NOI18N
+        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setName("jButton7"); // NOI18N
+
+        jButton8.setAction(actionMap.get("deletePic")); // NOI18N
+        jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setName("jButton8"); // NOI18N
+
+        jButton9.setAction(actionMap.get("imagePreview")); // NOI18N
+        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
+        jButton9.setName("jButton9"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -696,17 +796,9 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldFile))))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel3)
@@ -748,7 +840,18 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
                                     .addComponent(jTextFieldXinghao)
                                     .addComponent(jTextFieldSupplier)
                                     .addComponent(jTextFieldName)))
-                            .addComponent(jScrollPane1))))
+                            .addComponent(jScrollPane1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton3)
+                            .addComponent(jButton8))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton7)
+                            .addComponent(jButton9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
@@ -803,24 +906,32 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -869,12 +980,15 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList gdzcPhoto;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -892,10 +1006,10 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextAreaRemark;
     private javax.swing.JTextField jTextField;
     private javax.swing.JTextField jTextFieldBaoxiuqi;
-    private javax.swing.JTextField jTextFieldFile;
     private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldPihao;

@@ -16,12 +16,15 @@ import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.bean.entity.Zichanshenpiliuchengtb;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.RowRender;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -126,12 +129,30 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
 
                         //领用单财务科提示不需要审批
                         if(liucheng.getDanjuId().contains("LY") && liucheng.getCheckId1() != null){
-                            liucheng.setCheckId2("此流程不经由财务科审批");
+                            liucheng.setCheckId2("本流程无此审批环节");
                         }
                     }
                 }
                 
                 bindTable.refreshData(cgsq);
+                
+                jSQTable.getColumnModel().getColumn(2).setCellRenderer(new RowRender() {
+                    
+                    @Override
+                    public void setRender(JTable t, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                        setBackground(Color.white);
+
+                        if (value instanceof String) {
+                            String text = value.toString();
+                            if (text.equals("本流程无此审批环节")) {
+                                setBackground(Color.RED);
+                            } else {
+                                setBackground(Color.white);
+                            }
+                        }
+                    }
+                    
+                });
             }
         }
     }

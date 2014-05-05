@@ -51,6 +51,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
     private Sale_detail_tb sale_detail;
     private Saletb sale;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
     private List<Stockpiletb> stockpileList = new ArrayList<Stockpiletb>();
     private Map kucunmap;
@@ -107,7 +108,8 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称", "true"}, {"yimiao.yimiaoGuige", "规格", "false"},
-            {"yimiao.yimiaoJixing", "剂型", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"}});
+            {"yimiao.yimiaoJixing", "剂型", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"},
+            {"unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -154,7 +156,9 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
                     Object pihao = bindedMap.get("pihao");
-                    Object youxiaoqi = bindedMap.get("youxiaodate");
+                    Object youxiaoqi = bindedMap.get("youxiaodate").toString().subSequence(0, 10);
+                    
+                    System.out.println(youxiaoqi);
 
                     editTable.insertValue(0, stockpileId);
                     editTable.insertValue(1, yimiaoName);
@@ -832,6 +836,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
         jTextFieldzhidanren.setText("" + yimiaoxiaoshouxiangdanEntity.getUserAll().getUserName());
         jTextArea1.setEditable(false);
         jTextArea1.setText("" + yimiaoxiaoshouxiangdanEntity.getSaletb().getRemark());
+        
 
         setListTable(yimiaoxiaoshouxiangdanEntity.getResult());
     }
@@ -845,8 +850,9 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
             YimiaoAll yimiaoAll = saleyimiaoEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = saleyimiaoEntityList.get(i).getStockpile();
             o[i] = new Object[]{yimiaoAll.getYimiaoId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(),stockpile.getPihao(), yimiaoAll.getUnitId(),
-                stockpile.getYouxiaodate(), saledetailtb.getQuantity()};
+                new SimpleDateFormat("yyyy-MM-dd").format((Date)stockpile.getYouxiaodate()), saledetailtb.getQuantity()};
         }
+        
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,

@@ -5,11 +5,14 @@
  */
 package com.jskj.asset.client.panel.baobiao.caigou;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.bean.entity.ChurukujiluyimiaoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.BaseTreePane;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.util.BindTableHelper;
@@ -25,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
 
 /**
@@ -333,7 +337,7 @@ public class YimiaochukujiluPanel extends BasePanel {
         jButton15.setName("jButton15"); // NOI18N
         jButton15.setOpaque(false);
 
-        jButton16.setAction(actionMap.get("reload")); // NOI18N
+        jButton16.setAction(actionMap.get("close")); // NOI18N
         jButton16.setIcon(resourceMap.getIcon("jButton16.icon")); // NOI18N
         jButton16.setText(resourceMap.getString("jButton16.text")); // NOI18N
         jButton16.setBorder(null);
@@ -606,13 +610,37 @@ public class YimiaochukujiluPanel extends BasePanel {
         printMap.put("startDate", startDate);
         printMap.put("endDate", endDate);
         printMap.put("yimiaoName", jTextFieldYimiaoName.getText());
-        ReportCaiGouFindTask printData = new ReportCaiGouFindTask(printMap, "report/list") {
+        ChurukuyimiaoEntityFindTask printData = new ChurukuyimiaoEntityFindTask(printMap, "report/churukujilu/list") {
             @Override
             public void responseResult(CommFindEntity response) {
-                bindTable.createPrinter("疫苗采购明细报表", response.getResult()).buildInBackgound().execute();
+                bindTable.createPrinter("疫苗出入库记录", response.getResult()).buildInBackgound().execute();
             }
         };
         return printData;
+    }
+
+    private class PrintTask extends org.jdesktop.application.Task<Object, Void> {
+
+        PrintTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to PrintTask fields, here.
+            super(app);
+        }
+
+        @Override
+        protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+
+        @Override
+        protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     @Action
@@ -624,4 +652,13 @@ public class YimiaochukujiluPanel extends BasePanel {
         }
         return null;
     }
+
+    @Action
+    public void close() {
+
+        ((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getMainViewPane().getRightPane().remove(this);
+        BaseTreePane.disTabCount.remove(this.getName());
+
+    }
+
 }

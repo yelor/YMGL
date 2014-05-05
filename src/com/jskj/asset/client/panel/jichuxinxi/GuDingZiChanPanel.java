@@ -54,7 +54,7 @@ public class GuDingZiChanPanel extends BasePanel {
         count = 0;
         bindTable = new BindTableHelper<GudingzichanAll>(jTable1, new ArrayList<GudingzichanAll>());
         bindTable.createTable(new String[][]{{"gdzcId", "固定资产编号"}, {"gdzcName", "固定资产名称"}, {"gdzcType", "资产类型"}, {"gdzcGuige", "规格"},
-        {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"kucunshangxian", "库存上限"}, {"kucunxiaxian", "库存下限"}, {"gdzcSequence", "条形码"}});
+        {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"kucunshangxian", "库存上限"}, {"kucunxiaxian", "库存下限"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
 
@@ -63,7 +63,7 @@ public class GuDingZiChanPanel extends BasePanel {
             @Override
             public int[] getFilterColumnHeader() {
                 //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-                return new int[]{0,1, 2, 3, 4,8};
+                return new int[]{0,1, 2, 3, 4};
             }
 
             @Override
@@ -88,9 +88,6 @@ public class GuDingZiChanPanel extends BasePanel {
                     }
                     if (sql.length() > 0) {
                         sql.delete(sql.length() - 5, sql.length() - 1);
-                    }
-                     if (!searchKeys.get(8).trim().equals("")) {
-                        sql.append("gdzc_sequence = ").append(searchKeys.get(8).trim()).append(" and ");
                     }
                     conditionSql = sql.toString();
                 } else {

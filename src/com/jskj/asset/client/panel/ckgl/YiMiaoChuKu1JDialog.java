@@ -47,10 +47,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private Churukudantb churukudan;
-    private List<Kehudanweitb> kehudanweilist = new ArrayList<Kehudanweitb>();
-    private List<Churukudanyimiaoliebiaotb> bindedMapyimiaoliebiaoList = new ArrayList<Churukudanyimiaoliebiaotb>();
     private List<SaleyimiaoEntity> list;
-    private List<Sale_detail_tb> saledetailMaplist = new ArrayList<Sale_detail_tb>();
     private boolean isNew;
     private Map saledetailIdmap;
     private Map saleIdmap;
@@ -101,11 +98,11 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         });
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"stockpileId", "库存编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"xiangdanId", "详单编号", "false"},{"stockpileId", "库存编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "收货单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
-        editTable.registerPopup(1, new IPopupBuilder() {
+        editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
             }
@@ -136,24 +133,18 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiaoAll");
                     Object stockpilemap = bindedMap.get("stockpile");
-                    Object saletbmap = bindedMap.get("saletb");
                     Object sale_detail_tbmap = bindedMap.get("sale_detail_tb");
                     Object kehudanweimap = bindedMap.get("kehudanwei");
                     HashMap yimiaoAll = (HashMap) yimiaomap;
                     HashMap stockpile = (HashMap) stockpilemap;
-                    HashMap saletb = (HashMap) saletbmap;
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
                     HashMap kehudanwei = (HashMap) kehudanweimap;
 
-                    Churukudanyimiaoliebiaotb chukudan = new Churukudanyimiaoliebiaotb();
-                    chukudan.setXiangdanId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
-                    bindedMapyimiaoliebiaoList.add(chukudan);
 
-                    Sale_detail_tb saledetail = new Sale_detail_tb();
-                    saledetail.setSaleDetailId(Integer.parseInt((String) ("" + sale_detail_tb.get("saleDetailId"))));
-                    saledetail.setSaleId((String) sale_detail_tb.get("saleId"));
-                    saledetailMaplist.add(saledetail);
 
+                    Object xiangdanId = sale_detail_tb.get("saleDetailId");
+                    Object saleId = sale_detail_tb.get("saleId");
+                    Object kehudanweiId = kehudanwei.get("kehudanweiId");
                     Object yimiaoId = stockpile.get("stockpileId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
                     Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
@@ -161,7 +152,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
                     Object unit = yimiaoAll.get("unitId");
                     Object pihao = stockpile.get("pihao");
-                    Object youxiaoqi = stockpile.get("youxiaodate");
+                    Object youxiaoqi = stockpile.get("youxiaodate").toString().subSequence(0, 10);
                     Object piqianfaNo = stockpile.get("piqianfano");
                     Object pizhunwenhao = yimiaoAll.get("yimiaoPizhunwenhao");
                     Object source = stockpile.get("source");
@@ -170,26 +161,28 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     Object kehudanweiName = kehudanwei.get("kehudanweiName");
                     Object duifangjinbangren = kehudanwei.get("kehudanweiConstactperson");
 
-                    editTable.insertValue(0, yimiaoId);
-                    editTable.insertValue(1, yimiaoName);
-                    editTable.insertValue(2, source);
-                    editTable.insertValue(3, tongguandanNo);
-                    editTable.insertValue(4, quantity);
-                    editTable.insertValue(5, yimiaoGuige);
-                    editTable.insertValue(6, yimiaoJixing);
-                    editTable.insertValue(7, shengchanqiye);
-                    editTable.insertValue(8, pihao);
-                    editTable.insertValue(9, youxiaoqi);
-                    editTable.insertValue(10, unit);
-                    editTable.insertValue(11, piqianfaNo);
-                    editTable.insertValue(12, pizhunwenhao);
-                    editTable.insertValue(13, AssetClientApp.getSessionMap().getUsertb().getUserName());
-                    editTable.insertValue(14, kehudanweiName);
-                    editTable.insertValue(15, duifangjinbangren);
+                    editTable.insertValue(0, xiangdanId);
+                    editTable.insertValue(1, yimiaoId);
+                    editTable.insertValue(2, yimiaoName);
+                    editTable.insertValue(3, source);
+                    editTable.insertValue(4, tongguandanNo);
+                    editTable.insertValue(5, quantity);
+                    editTable.insertValue(6, yimiaoGuige);
+                    editTable.insertValue(7, yimiaoJixing);
+                    editTable.insertValue(8, shengchanqiye);
+                    editTable.insertValue(9, pihao);
+                    editTable.insertValue(10, youxiaoqi);
+                    editTable.insertValue(11, unit);
+                    editTable.insertValue(12, piqianfaNo);
+                    editTable.insertValue(13, pizhunwenhao);
+                    editTable.insertValue(14, AssetClientApp.getSessionMap().getUsertb().getUserName());
+                    editTable.insertValue(15, kehudanweiName);
+                    editTable.insertValue(16, duifangjinbangren);
 
-                    Kehudanweitb kehudanwei1 = new Kehudanweitb();
-                    kehudanwei1.setKehudanweiId(Integer.parseInt("" + kehudanwei.get("kehudanweiId")));
-                    kehudanweilist.add(kehudanwei1);
+                    
+                    saledetailIdmap.put(xiangdanId, xiangdanId);
+                    saleIdmap.put(xiangdanId, saleId);
+                    kehudanweiIdmap.put(xiangdanId, kehudanweiId);
                 }
 
             }
@@ -475,16 +468,16 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     //疫苗取消入库情况
     @Action
     public Task buhege() {
-        if (bindedMapyimiaoliebiaoList.size() < 1) {
+        if (jTableyimiao.getRowCount() < 1) {
             AssetMessage.ERRORSYS("请选择要取消出库的疫苗！", this);
             return null;
         }
         List<SaleyimiaoEntity> lst = new ArrayList<SaleyimiaoEntity>();
-        for (int i = 0; i < bindedMapyimiaoliebiaoList.size(); i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount()-1; i++) {
             SaleyimiaoEntity lb = new SaleyimiaoEntity();
             Sale_detail_tb saledetail = new Sale_detail_tb();
-            saledetail.setSaleDetailId(saledetailMaplist.get(i).getSaleDetailId());
-            saledetail.setSaleId(saledetailMaplist.get(i).getSaleId());
+            saledetail.setSaleDetailId(Integer.parseInt(saledetailIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
+            saledetail.setSaleId(saleIdmap.get(jTableyimiao.getValueAt(i, 0)).toString());
             lb.setSale_detail_tb(saledetail);
             String reason = "";
             while (reason.isEmpty()) {
@@ -558,8 +551,8 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
             yimiaoliebiao.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "stockpileId").toString()));
             yimiaoliebiao.setChukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getPrice());
-            yimiaoliebiao.setXiangdanId(bindedMapyimiaoliebiaoList.get(i).getXiangdanId());
-            yimiaoliebiao.setWanglaidanweiId(kehudanweilist.get(i).getKehudanweiId());
+            yimiaoliebiao.setXiangdanId(Integer.parseInt(saledetailIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
+            yimiaoliebiao.setWanglaidanweiId(Integer.parseInt(kehudanweiIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
             list.add(yimiaoliebiao);
         }
         yimiaochukuEntity.setResult(list);

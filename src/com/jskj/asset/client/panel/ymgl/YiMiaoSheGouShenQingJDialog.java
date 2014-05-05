@@ -67,7 +67,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         jTextFieldYimiaocaigoudanId.setText(DanHao.getDanHao(DanHao.TYPE_YIMIAOCG));
         jTextFieldYimiaocaigoudanId.setEditable(false);
         shenqingdanmap = new HashMap();
-        
+
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
@@ -106,10 +106,10 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"xiangdanId", "详单编号"}, {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"totalprice", "合价", "true"}});
 
-        editTable.registerPopup(1, new IPopupBuilder() {
+        editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
             }
@@ -143,7 +143,6 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
 
-                    
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -156,75 +155,91 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     Object totalprice = yimiaoshenqingdan.get("totalprice");
 //                    Object saleprice = yimiaoAll.get("yimiaoYushoujia");
 
-                    editTable.insertValue(0, yimiaoId);
-                    editTable.insertValue(1, yimiaoName);
-                    editTable.insertValue(2, yimiaoGuige);
-                    editTable.insertValue(3, yimiaoJixing);
-                    editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, unit);
-                    editTable.insertValue(6, quantity);
-                    editTable.insertValue(7, buyprice);
-                    editTable.insertValue(8, totalprice);
-//                    editTable.insertValue(9, saleprice);
-                    
+                    editTable.insertValue(0, xiangdanId);
+                    editTable.insertValue(1, yimiaoId);
+                    editTable.insertValue(2, yimiaoName);
+                    editTable.insertValue(3, yimiaoGuige);
+                    editTable.insertValue(4, yimiaoJixing);
+                    editTable.insertValue(5, shengchanqiye);
+                    editTable.insertValue(6, unit);
+                    editTable.insertValue(7, quantity);
+                    editTable.insertValue(8, buyprice);
+                    editTable.insertValue(9, totalprice);
+
                     //                    保存对应单据的详单id
-                    shenqingdanmap.put(yimiaoId, xiangdanId);
+                    shenqingdanmap.put(xiangdanId, xiangdanId);
 
                 }
 
             }
         });
 
-        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
-            public void editingStopped(int selectedRow, int selectedColumn) {
-                int col = selectedColumn;
-                int row = selectedRow;
+//        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
+//            public void editingStopped(int selectedRow, int selectedColumn) {
+//                int col = selectedColumn;
+//                int row = selectedRow;
+//
+//                if (col == 3) {
+//                    if ((!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))
+//                            && (!(("" + jTableyimiao.getValueAt(row, 8)).equals("")))) {
+//                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 7));
+//                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 8));
+//                        jTableyimiao.setValueAt(price * count, row, 9);
+//                    }
+//                    int rows = jTableyimiao.getRowCount();
+//                    total = 0;
+//                    for (int i = 0; i < rows; i++) {
+//                        if (!(("" + jTableyimiao.getValueAt(i, 9)).equals(""))) {
+//                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 9));
+//                        }
+//                    }
+//                    totalPrice.setText(total + "元");
+//                }
+//            }
+//        }
+//        );
+//        jTableyimiao.getModel().addTableModelListener(new TableModelListener() {
+//            @Override
+//            public void tableChanged(TableModelEvent e) {
+//
+//                int col = e.getColumn();
+//                int row = e.getFirstRow();
+//
+//                if (col == 3) {
+//                    if ((!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))
+//                            && (!(("" + jTableyimiao.getValueAt(row, 8)).equals("")))) {
+//                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 7));
+//                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 8));
+//                        jTableyimiao.setValueAt(price * count, row, 9);
+//                    }
+//                    int rows = jTableyimiao.getRowCount();
+//                    total = 0;
+//                    for (int i = 0; i < rows; i++) {
+//                        if (!(("" + jTableyimiao.getValueAt(i, 9)).equals(""))) {
+//                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 9));
+//                        }
+//                    }
+//                    totalPrice.setText(total + "元");
+//                }
+//            }
+//
+//        });
 
-                if (col == 2) {
-                    if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
-                            && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
-                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
-                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
-                        jTableyimiao.setValueAt(price * count, row, 8);
-                    }
-                    int rows = jTableyimiao.getRowCount();
-                    total = 0;
-                    for (int i = 0; i < rows; i++) {
-                        if (!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))) {
-                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
-                        }
-                    }
-                    totalPrice.setText(total + "元");
-                }
-            }
-        }
-        );
-
-        jTableyimiao.getModel().addTableModelListener(new TableModelListener() {
+        ((BaseTable) jTableyimiao).addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void tableChanged(TableModelEvent e) {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 1) { //是单//击事件。
 
-                int col = e.getColumn();
-                int row = e.getFirstRow();
-
-                if (col == 2) {
-                    if ((!(("" + jTableyimiao.getValueAt(row, 6)).equals("")))
-                            && (!(("" + jTableyimiao.getValueAt(row, 7)).equals("")))) {
-                        int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 6));
-                        float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 7));
-                        jTableyimiao.setValueAt(price * count, row, 8);
-                    }
                     int rows = jTableyimiao.getRowCount();
                     total = 0;
                     for (int i = 0; i < rows; i++) {
-                        if (!(("" + jTableyimiao.getValueAt(i, 8)).equals(""))) {
-                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 8));
+                        if (!(("" + jTableyimiao.getValueAt(i, 9)).equals(""))) {
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 9));
                         }
                     }
                     totalPrice.setText(total + "元");
                 }
             }
-
         });
 
     }
@@ -627,19 +642,6 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                YiMiaoSheGouShenQingJDialog dialog = new YiMiaoSheGouShenQingJDialog(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
     }
 
     public void setAddOrUpdate(boolean b) {
@@ -692,7 +694,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
             yimiaoshenqingdan.setQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoshenqingdan.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "buyprice"))));
             yimiaoshenqingdan.setTotalprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "totalprice"))));
-            yimiaoshenqingdan.setYuandanId(Integer.parseInt(shenqingdanmap.get(yimiaoshenqingdan.getYimiaoId()).toString()));
+            yimiaoshenqingdan.setYuandanId(Integer.parseInt(shenqingdanmap.get((Integer) yimiaotable.getValue(i, "xiangdanId")).toString()));
             list.add(yimiaoshenqingdan);
             total += yimiaoshenqingdan.getTotalprice();
         }
@@ -702,7 +704,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         return new SubmitFormTask(yimiaocaigou);
     }
 
-      @Action
+    @Action
     public void print() {
         try {
             super.print(this.getTitle(),
@@ -720,7 +722,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
             logger.error(ex);
         }
     }
-    
+
     @Action
     public void exit() {
         this.dispose();

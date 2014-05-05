@@ -99,7 +99,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "库存编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "单价", "true"}});
+            {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "单价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -139,6 +139,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
                     HashMap yimiao = (HashMap) yimiaomap;
 
                     Object kucunId = bindedMap.get("stockpileId");
+                    Object pihao = bindedMap.get("pihao");
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
@@ -153,9 +154,10 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
                     editTable.insertValue(2, yimiaoGuige);
                     editTable.insertValue(3, yimiaoJixing);
                     editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, unit);
-                    editTable.insertValue(6, youxiaoqi);
-                    editTable.insertValue(8, stockpilePrice);
+                    editTable.insertValue(5, pihao);
+                    editTable.insertValue(6, unit);
+                    editTable.insertValue(7, youxiaoqi);
+                    editTable.insertValue(9, stockpilePrice);
 
                 }
 

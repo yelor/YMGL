@@ -24,6 +24,7 @@ import com.jskj.asset.client.panel.shjs.FukuanShenPiJDialog;
 import com.jskj.asset.client.panel.shjs.SelectDanweiJDialog;
 import com.jskj.asset.client.panel.shjs.SelectPandianJDialog;
 import com.jskj.asset.client.panel.shjs.SelectShoufukuanJDialog;
+import com.jskj.asset.client.panel.slgl.SelectFukuanJDialog;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
 import com.jskj.asset.client.panel.slgl.selectCaiGouDanJDialog;
 import com.jskj.asset.client.panel.slgl.selectLingYongDanJDialog;
@@ -67,6 +68,7 @@ public class BaseMainPanel extends BasePanel {
     private selectLingYongDanJDialog selectLingYongDanJDialog;
     private selectYanShouDengJiDanJDialog selectYanShouDengJiDanJDialog;
     private selectWeiXiuDiaoBoDanJDialog selectWeiXiuDiaoBoDanJDialog;
+    private SelectFukuanJDialog selectFukuandanJDialog;
 
     public final static int TYPE_CK = 0;
     public final static int TYPE_SH = 1;
@@ -610,6 +612,21 @@ public class BaseMainPanel extends BasePanel {
                     selectWeiXiuDiaoBoDanJDialog.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(selectWeiXiuDiaoBoDanJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void selecteFukuanshenqingAction() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (selectFukuandanJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selectFukuandanJDialog = new SelectFukuanJDialog();
+                    selectFukuandanJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selectFukuandanJDialog);
             }
         });
     }

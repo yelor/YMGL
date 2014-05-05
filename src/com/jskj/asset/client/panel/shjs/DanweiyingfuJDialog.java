@@ -128,7 +128,7 @@ public class DanweiyingfuJDialog extends BaseDialog {
         if(fksqdan.getYuandanId().contains("FKDJ") || fksqdan.getYuandanId().contains("QTFK")){
             new FKDetailTask(fksqdan.getYuandanId()).execute();
         } else if(fksqdan.getYuandanId().contains("GDZC") || fksqdan.getYuandanId().contains("YHCG") 
-                || fksqdan.getYuandanId().contains("YMCG")){
+                || fksqdan.getYuandanId().contains("YMSG")){
             new DetailTask(fksqdan.getYuandanId()).execute();
         }
         
