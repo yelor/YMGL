@@ -1178,7 +1178,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         yimiaoyanshou.setYmysStarttime(riqi.parse(jTextFieldStarttime.getText()));
         yimiaoyanshou.setYmysStrattemp1(Float.valueOf(jTextFieldstarttemp1.getText().trim().equals("") ? "0" : jTextFieldstarttemp1.getText()));
         yimiaoyanshou.setYmysStarttemp2(Float.valueOf(jTextFieldstarttemp2.getText().trim().equals("") ? "0" : jTextFieldstarttemp2.getText()));
-        yimiaoyanshou.setYmysTotaltime(Float.valueOf(jTextFieldTotaltime.getText().trim().equals("") ? "0" : jTextFieldTotaltime.getText()));
+        yimiaoyanshou.setYmysTotaltime(jTextFieldTotaltime.getText());
         yimiaoyanshou.setYmysArrivetemp1(Float.valueOf(jTextFieldArrivetemp1.getText().trim().equals("") ? "0" : jTextFieldArrivetemp1.getText()));
         yimiaoyanshou.setYmysArrivetemp2(Float.valueOf(jTextFieldArrivetemp2.getText().trim().equals("") ? "0" : jTextFieldArrivetemp2.getText()));
         yimiaoyanshou.setYmysArrivetime(riqi.parse(jTextFieldArrivetime.getText()));
