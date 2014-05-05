@@ -16,6 +16,7 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.slgl.PTGuDingZiChanDengJiJDialog;
 import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
@@ -29,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
@@ -48,6 +50,8 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
     private List<YimiaoshenqingliebiaoEntity> list;
     private int xiangdanID;
     private String shengqingdanID;
+    private boolean wait;
+    private String sqid;
 
     /**
      * Creates new form YiMiaoDengJi1JDialog
@@ -101,11 +105,23 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
+                wait = true;
+                chooseYimiao();
+                while (wait) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(YiMiaoDengJi2JDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 String sql = "";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
                     sql += "xiangdan_id in (select distinct yimiaoshenqingdan.xiangdan_id from yimiaoshenqingdan,yimiao where yimiaoshenqingdan.danjuleixing_id=6 and yimiaoshenqingdan.is_completed = 1 and yimiaoshenqingdan.status = 0 and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText() + "%\" or yimiao.zujima like \"%" + jTextFieldYimiaoName.getText().toLowerCase() + "%\")) ";
                 } else {
                     sql += "xiangdan_id in (select distinct xiangdan_id from yimiaoshenqingdan where danjuleixing_id=6 and is_completed = 1 and status = 0)";
+                }
+                if (sqid != null) {
+                    sql += " and shenqingdan_id = \"" + sqid + "\" ";
                 }
                 return sql;
             }
@@ -868,7 +884,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         } catch (Exception e) {
             logger.error(e);
         }
-        DanHao.printBarCode128(label, barcode,total);
+        DanHao.printBarCode128(label, barcode, total);
     }
 
     @Action
@@ -921,6 +937,31 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
                 new YiMiaoDengJi2JDialog.Cancel(list).execute();
             }
             close();
+        }
+
+    }
+
+    public void chooseYimiao() {
+        String sql = " shenqingdan_id like \"YMSG%\" and is_completed = 1 and status = 0";
+        new ChooseTask(sql).execute();
+    }
+
+    private class ChooseTask extends WeidengjiyimiaoTask {
+
+        public ChooseTask(String sql) {
+            super(sql, "IT");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<YimiaoshenqingliebiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            sqid = null;
+            wait = false;
+            if (list.size() > 0) {
+                sqid = list.get(0).getYimiaoshenqingdan().getShenqingdanId();
+            }
         }
 
     }

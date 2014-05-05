@@ -20,6 +20,7 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import com.jskj.asset.client.panel.ymgl.YiMiaoYanShouDanJDialog;
 import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
@@ -33,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -53,6 +55,8 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
     private Map xiangdanIdmap;
     private Map shenqingdanIdmap;
     private Map supplierIdmap;
+    private boolean wait;
+    private String sqid;
 
     /**
      * Creates new form ymcrk1
@@ -134,7 +138,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"xiangdanId", "详单编号", "false"},{"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"xiangdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
@@ -149,6 +153,15 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
+                wait = true;
+                chooseYimiao();
+                while (wait) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(YiMiaoRuKu1JDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 int selectedColumn = jTableyimiao.getSelectedColumn();
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
@@ -158,6 +171,9 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and yimiao_id in ( select yimiao_id  from yimiao where yimiao_name like \"%" + newColumnObj.toString() + "%\""
                             + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
+                }
+                if (sqid != null) {
+                    sql += " and shenqingdan_id = \"" + sqid + "\" ";
                 }
                 return sql;
             }
@@ -198,7 +214,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     }
                     Object youxiaoqi;
                     try {
-                        youxiaoqi = yimiaodengji.get("youxiaodate").toString().subSequence(0, 10);
+                        youxiaoqi = yimiaodengji.get("youxiaoqi").toString().subSequence(0, 10);
                     } catch (Exception e) {
                         youxiaoqi = "";
                     }
@@ -690,7 +706,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         isNew = true;
     }
 
-     @Action
+    @Action
     public void print() {
         try {
             super.print(this.getTitle(),
@@ -706,7 +722,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             logger.error(ex);
         }
     }
-    
+
     @Action
     public void exit() {
         if (isNew) {
@@ -758,6 +774,31 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                 new YiMiaoRuKu1JDialog.Cancel(list).execute();
             }
             close();
+        }
+
+    }
+
+    public void chooseYimiao() {
+        String sql = "shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2";
+        new ChooseTask(sql).execute();
+    }
+
+    private class ChooseTask extends WeidengjiyimiaoTask {
+
+        public ChooseTask(String sql) {
+            super(sql, "");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<YimiaoshenqingliebiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            sqid = null;
+            wait = false;
+            if (list.size() > 0) {
+                sqid = list.get(0).getYimiaoshenqingdan().getShenqingdanId();
+            }
         }
 
     }
