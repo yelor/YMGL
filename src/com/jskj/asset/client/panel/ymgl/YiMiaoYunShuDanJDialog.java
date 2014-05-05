@@ -27,8 +27,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -180,6 +183,122 @@ public class YiMiaoYunShuDanJDialog extends BaseDialog {
                 }
 
             }
+        });
+
+        jTextFieldStarttime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
+
+        jTextFieldArrivetime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
         });
     }
 
@@ -875,7 +994,7 @@ public class YiMiaoYunShuDanJDialog extends BaseDialog {
         yimiaoyunshu.setYmysStarttime(riqi.parse(jTextFieldStarttime.getText()));
         yimiaoyunshu.setYmysStrattemp1(Float.valueOf(jTextFieldstarttemp1.getText().trim().equals("") ? "0" : jTextFieldstarttemp1.getText()));
         yimiaoyunshu.setYmysStarttemp2(Float.valueOf(jTextFieldstarttemp2.getText().trim().equals("") ? "0" : jTextFieldstarttemp2.getText()));
-        yimiaoyunshu.setYmysTotaltime(Float.valueOf(jTextFieldTotaltime.getText().trim().equals("") ? "0" : jTextFieldTotaltime.getText()));
+        yimiaoyunshu.setYmysTotaltime(jTextFieldTotaltime.getText());
         yimiaoyunshu.setYmysArrivetemp1(Float.valueOf(jTextFieldArrivetemp1.getText().trim().equals("") ? "0" : jTextFieldArrivetemp1.getText()));
         yimiaoyunshu.setYmysArrivetemp2(Float.valueOf(jTextFieldArrivetemp2.getText().trim().equals("") ? "0" : jTextFieldArrivetemp2.getText()));
         yimiaoyunshu.setYmysArrivetime(riqi.parse(jTextFieldArrivetime.getText()));

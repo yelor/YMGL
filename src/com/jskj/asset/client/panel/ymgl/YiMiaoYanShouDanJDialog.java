@@ -24,6 +24,8 @@ import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.Yimiaoyanshou_detailUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.ParseException;
@@ -33,9 +35,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import javax.print.Doc;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -58,6 +64,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private Map xiangdanIdmap;
     private Map shenqingdanIdmap;
     private Map piqianfaNomap;
+    private boolean wait;
+    private String sqid;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -109,6 +117,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jTextFieldYimiaoyanshouId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
+        jTextFieldStarttime.setText(dateformate.format(new Date()).toString());
+        jTextFieldArrivetime.setText(dateformate.format(new Date()).toString());
         jTextFieldjingbanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
 
@@ -145,7 +155,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"xiangdanId", "详单编号"},{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
+            {"xiangdanId", "详单编号"}, {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
             {"quantity", "数量", "false"}, {"fuheyuan", "复核员", "true"}, {"fahuoyuan", "发货员", "true"}});
 
@@ -159,15 +169,28 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
+                wait = true;
+                chooseYimiao();
+                while (wait) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 int selectedColumn = jTableyimiao.getSelectedColumn();
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
+
                 sql = " (shenqingdan_id like \"YMLQ%\" OR shenqingdan_id like \"YMSG%\") and is_completed = 1 and status = 1"
                         + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=0 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and yimiao_id in ( select yimiao_id  from yimiao where yimiao_name like \"%" + newColumnObj.toString() + "%\""
                             + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
+                }
+                if (sqid != null) {
+                    sql += " and shenqingdan_id = \"" + sqid + "\" ";
                 }
                 return sql;
             }
@@ -199,7 +222,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     }
 
                     Object piqianfaNo = yimiaodengji.get("piqianfahegezhenno");
-                    Object youxiaoqi = yimiaodengji.get("youxiaodate").toString().subSequence(0, 10);
+                    Object youxiaoqi = yimiaodengji.get("youxiaoqi").toString().subSequence(0, 10);
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
@@ -225,6 +248,123 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
             }
         });
+
+        jTextFieldStarttime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
+
+        jTextFieldArrivetime.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                try {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date end = df.parse(jTextFieldStarttime.getText());
+                    long l = begin.getTime() - end.getTime();
+                    long day = l / (24 * 60 * 60 * 1000);
+                    long hour = (l / (60 * 60 * 1000) - day * 24);
+                    long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+                    long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                    System.out.println("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                    jTextFieldTotaltime.setText("" + day + "天" + hour + "小时" + min + "分" + s + "秒");
+                } catch (ParseException ex) {
+                    java.util.logging.Logger.getLogger(YiMiaoYanShouDanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
+
     }
 
     JTextField regTextField1;
@@ -236,9 +376,11 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private void init() {
         regTextField1 = new JTextField();
         regTextField2 = new JTextField();
+        regTextField3 = new JTextField();
+
         dateChooser2 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser2.register(regTextField2);
-        regTextField3 = new JTextField();
+
         dateChooser3 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser3.register(regTextField3);
     }
@@ -1051,7 +1193,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         yimiaoyanshou.setYmysStarttime(riqi.parse(jTextFieldStarttime.getText()));
         yimiaoyanshou.setYmysStrattemp1(Float.valueOf(jTextFieldstarttemp1.getText().trim().equals("") ? "0" : jTextFieldstarttemp1.getText()));
         yimiaoyanshou.setYmysStarttemp2(Float.valueOf(jTextFieldstarttemp2.getText().trim().equals("") ? "0" : jTextFieldstarttemp2.getText()));
-        yimiaoyanshou.setYmysTotaltime(Float.valueOf(jTextFieldTotaltime.getText().trim().equals("") ? "0" : jTextFieldTotaltime.getText()));
+        yimiaoyanshou.setYmysTotaltime(jTextFieldTotaltime.getText());
         yimiaoyanshou.setYmysArrivetemp1(Float.valueOf(jTextFieldArrivetemp1.getText().trim().equals("") ? "0" : jTextFieldArrivetemp1.getText()));
         yimiaoyanshou.setYmysArrivetemp2(Float.valueOf(jTextFieldArrivetemp2.getText().trim().equals("") ? "0" : jTextFieldArrivetemp2.getText()));
         yimiaoyanshou.setYmysArrivetime(riqi.parse(jTextFieldArrivetime.getText()));
@@ -1087,7 +1229,6 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     public void setNew() {
         isNew = true;
     }
-    
 
     @Action
     public void exit() {
@@ -1107,7 +1248,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     private class CloseTask extends WeidengjiyimiaoTask {
 
         public CloseTask(String sql) {
-            super(sql, "普通");
+            super(sql, "");
         }
 
         @Override
@@ -1140,6 +1281,31 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 new YiMiaoYanShouDanJDialog.Cancel(list).execute();
             }
             close();
+        }
+
+    }
+
+    public void chooseYimiao() {
+        String sql = "(shenqingdan_id like \"YMLQ%\" OR shenqingdan_id like \"YMSG%\") and is_completed = 1 and status = 1";
+        new ChooseTask(sql).execute();
+    }
+
+    private class ChooseTask extends WeidengjiyimiaoTask {
+
+        public ChooseTask(String sql) {
+            super(sql, "");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<YimiaoshenqingliebiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            sqid = null;
+            wait = false;
+            if (list.size() > 0) {
+                sqid = list.get(0).getYimiaoshenqingdan().getShenqingdanId();
+            }
         }
 
     }
