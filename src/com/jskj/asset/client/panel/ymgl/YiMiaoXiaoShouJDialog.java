@@ -50,10 +50,10 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
     private Sale_detail_tb sale_detail;
     private Saletb sale;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
     private Sale_detail_tbFindEntity yimiaoxiaoshou;
     private XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntity;
-    private List<Stockpiletb> stockpileList = new ArrayList<Stockpiletb>();
     private Map kucunmap;
     private float total = 0;
 
@@ -143,22 +143,15 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Object yimiaomap = bindedMap.get("yimiao");
                     HashMap yimiao = (HashMap) yimiaomap;
 
-//                    Stockpiletb stockpile = new Stockpiletb();
-//                    stockpile.setStockpileQuantity(Integer.parseInt("" + bindedMap.get("stockpileQuantity")));
-//                    stockpileList.add(stockpile);
-//                    
-//                    System.out.println(stockpileList.get(0).getStockpileQuantity());
-//                    System.out.println(bindedMap.get("stockpileQuantity"));
                     Object stockpileId = bindedMap.get("stockpileId");
                     Object stockpileQuantity = bindedMap.get("stockpileQuantity");
-//                    Object yimiaoId = yimiao.get("yimiaoId");
                     Object yimiaoName = yimiao.get("yimiaoName");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
                     Float stockpilePrice = Float.parseFloat("" + yimiao.get("yimiaoYushoujia"));
-                    Object youxiaoqi = bindedMap.get("youxiaodate");
+                    Object youxiaoqi = bindedMap.get("youxiaodate").toString().subSequence(0, 10);
                     Object pihao = bindedMap.get("pihao");
 
                     editTable.insertValue(0, stockpileId);
@@ -878,7 +871,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             YimiaoAll yimiaoAll = saleyimiaoEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = saleyimiaoEntityList.get(i).getStockpile();
             o[i] = new Object[]{saledetailtb.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), stockpile.getPihao(), yimiaoAll.getUnitId(),
-                stockpile.getYouxiaodate(), saledetailtb.getQuantity(), saledetailtb.getPrice(), saledetailtb.getTotalprice()};
+                new SimpleDateFormat("yyyy-MM-dd").format((Date) stockpile.getYouxiaodate()), saledetailtb.getQuantity(), saledetailtb.getPrice(), saledetailtb.getTotalprice()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(

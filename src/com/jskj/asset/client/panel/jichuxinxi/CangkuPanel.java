@@ -63,7 +63,7 @@ public final class CangkuPanel extends BasePanel {
         bindTable.createTable(new String[][]{{"depotId", "仓库ID"}, {"depotName", "仓库名"}, {"depotArea", "面积"},
         {"depotAddr", "仓库地址"}});
         bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 50}, new int[]{1, 200}, new int[]{2, 80}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 200}, new int[]{2, 80}).setRowHeight(25);
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 
             @Override

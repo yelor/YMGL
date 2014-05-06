@@ -12,6 +12,7 @@ import com.jskj.asset.client.layout.ReportTemplates;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
@@ -74,6 +75,7 @@ public class BindTableHelper<T> {
     private boolean isShow;
     private BaseTableHeaderPopup baseTableHeaderPopup;
     private final Icon searchIcon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TEXT));
+    private int[] filterColumnHeader;
 
     public BindTableHelper(JTable jtable, List<T> data) {
         bindingGroup = new BindingGroup();
@@ -152,7 +154,11 @@ public class BindTableHelper<T> {
         for (int column : popupBuilder.getFilterColumnHeader()) {
             savedSearchKey.put(column, "");
             /*tableheader*/
+        }
 
+        filterColumnHeader = popupBuilder.getFilterColumnHeader();
+
+        for (int column = 0; column < jTableFormat.getJtable().getColumnModel().getColumnCount(); column++) {
             TableColumn tableColumn = jTableFormat.getJtable().getColumnModel().getColumn(column);
             tableColumn.setHeaderRenderer(new AssetHeaderRender(""));
         }
@@ -401,12 +407,9 @@ public class BindTableHelper<T> {
 
         /*tableheader*/
         if (savedSearchKey.size() > 0) {
-            Set keyColumns = savedSearchKey.keySet();
-            Iterator it = keyColumns.iterator();
-            while (it.hasNext()) {
-                int columnIndex = Integer.parseInt(it.next().toString());
-                TableColumn tableColumn = jTableFormat.getJtable().getColumnModel().getColumn(columnIndex);
-                tableColumn.setHeaderRenderer(new AssetHeaderRender(savedSearchKey.get(columnIndex)));
+            for (int column = 0; column < jTableFormat.getJtable().getColumnModel().getColumnCount(); column++) {
+                TableColumn tableColumn = jTableFormat.getJtable().getColumnModel().getColumn(column);
+                tableColumn.setHeaderRenderer(new AssetHeaderRender(savedSearchKey.get(column)));
 
             }
         }
@@ -426,19 +429,43 @@ public class BindTableHelper<T> {
 
             if (value instanceof String) {
                 JButton tabCloseButton = new JButton();
+                // JLabel tabCloseButton = new JLabel();
+                boolean haveValue = false;
+                for (int searchColumn : filterColumnHeader) {
+                    if (searchColumn == column) {
+                        haveValue = true;
+                        break;
+                    }
+                }
+
                 String newValue = value.toString();
-                if (!key.equals("")) {
+                if (key != null && !key.equals("")) {
                     newValue = ":" + key;
                     tabCloseButton.setForeground(Color.red);
                 }
                 tabCloseButton.setText(newValue);
-                tabCloseButton.setIcon(searchIcon);
-                tabCloseButton.setOpaque(false);
+                if (haveValue) {
+                    tabCloseButton.setIcon(searchIcon);
+                    tabCloseButton.setToolTipText("点击查询");
+                }else{
+                   tabCloseButton.setToolTipText(newValue);
+                }
+//                tabCloseButton.setMargin(new Insets(0,0,0,0));
+//                tabCloseButton.setOpaque(false);
 //                tabCloseButton.setBorder(null);
-//                tabCloseButton.setBorderPainted(false);
-                tabCloseButton.setContentAreaFilled(false);
-                tabCloseButton.setToolTipText("点击查询");
-                tabCloseButton.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+//               tabCloseButton.setBorderPainted(false);
+//                tabCloseButton.setContentAreaFilled(false);
+
+                Color background = UIManager.getColor("TableHeader.background");
+                Color foreground = UIManager.getColor("TableHeader.foreground");
+                Font font = UIManager.getFont("TableHeader.font");
+                boolean opaque = UIManager.getBoolean("TableHeader.opaque");
+
+                tabCloseButton.setBackground(background);
+                tabCloseButton.setForeground(foreground);
+                tabCloseButton.setFont(font);
+                tabCloseButton.setOpaque(opaque);
+
                 return tabCloseButton;
             }
 
@@ -513,7 +540,7 @@ public class BindTableHelper<T> {
                                 Object temp = getObject(columnParameter[j], bean, jTableBinding.getColumnBinding(j).getColumnClass());
                                 if (temp == null) {
                                     ColumnBinding binder = jTableBinding.getColumnBinding(j);
-                                    Class<?> classType = getFieldType(columnParameter[j],bean, binder.getClass());
+                                    Class<?> classType = getFieldType(columnParameter[j], bean, binder.getClass());
                                     if (classType == String.class) {
                                         temp = "";
                                     } else if (classType == Data.class) {
@@ -524,7 +551,7 @@ public class BindTableHelper<T> {
                                         temp = -1f;
                                     } else if (classType == Double.class) {
                                         temp = -1d;
-                                    }else if (classType == Long.class) {
+                                    } else if (classType == Long.class) {
                                         temp = -1l;
                                     } else {
                                         temp = -1;
@@ -590,7 +617,7 @@ public class BindTableHelper<T> {
                     Object temp = method.invoke(bean, new Object[0]);
                     return getFieldType(paramater.substring(firstPara.length() + 1), temp, finalClass);
                 } catch (Exception ex) {
-                    logger.error("getClassType:"+paramater+",");
+                    logger.error("getClassType:" + paramater + ",");
                 }
             }
             return String.class;
@@ -612,8 +639,8 @@ public class BindTableHelper<T> {
             }
 
             for (int i = 0; i < columnParameter.length; i++) {
-                 ColumnBinding binder = jTableBinding.getColumnBinding(i);
-                 Class<?> classType = getFieldType(columnParameter[i],firstRowData, binder.getClass());
+                ColumnBinding binder = jTableBinding.getColumnBinding(i);
+                Class<?> classType = getFieldType(columnParameter[i], firstRowData, binder.getClass());
                 // System.out.println("@@@@@@@@@@@@@@@@@@@@columnParameter:"+columnParameter[i]+",classType:"+classType);
                 if (classType == String.class) {
                     TextColumnBuilder<String> itemColumn = col.column(columnString[i], columnParameter[i], type.stringType());

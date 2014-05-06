@@ -60,7 +60,7 @@ public class YiMiaoPanel extends BasePanel {
         bindTable = new BindTableHelper<YimiaoAll>(jTableYiMiao, new ArrayList<YimiaoAll>());
         bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"unitId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}});
         bindTable.setIntegerType(1, 7, 8);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}).setRowHeight(30);;
+        bindTable.bind().setColumnWidth(new int[]{0, 120}).setRowHeight(30);;
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 
             @Override
@@ -104,6 +104,25 @@ public class YiMiaoPanel extends BasePanel {
     @Override
     public Task reload() {
         return new RefreshTask(0, pageSize);
+    }
+
+    private class ReloadTask extends org.jdesktop.application.Task<Object, Void> {
+        ReloadTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ReloadTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     @Action
@@ -466,6 +485,25 @@ public class YiMiaoPanel extends BasePanel {
         }
         return null;
     }
+
+    private class DeleteYiMiaotbTask extends org.jdesktop.application.Task<Object, Void> {
+        DeleteYiMiaotbTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DeleteYiMiaotbTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
   
      @Action
     public Task print() {
@@ -488,5 +526,24 @@ public class YiMiaoPanel extends BasePanel {
         }
         };
         return printData;
+    }
+
+    private class PrintTask extends org.jdesktop.application.Task<Object, Void> {
+        PrintTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to PrintTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 }

@@ -25,7 +25,7 @@ public class Yimiaoyanshoutb {
 
     private Float ymysStarttemp2;
 
-    private Float ymysTotaltime;
+    private String ymysTotaltime;
 
     private Float ymysArrivetemp1;
 
@@ -125,12 +125,12 @@ public class Yimiaoyanshoutb {
         this.ymysStarttemp2 = ymysStarttemp2;
     }
 
-    public Float getYmysTotaltime() {
+    public String getYmysTotaltime() {
         return ymysTotaltime;
     }
 
-    public void setYmysTotaltime(Float ymysTotaltime) {
-        this.ymysTotaltime = ymysTotaltime;
+    public void setYmysTotaltime(String ymysTotaltime) {
+        this.ymysTotaltime = ymysTotaltime == null ? null : ymysTotaltime.trim();
     }
 
     public Float getYmysArrivetemp1() {

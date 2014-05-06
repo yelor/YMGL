@@ -16,6 +16,7 @@ import net.sf.dynamicreports.report.builder.barcode.Code128BarcodeBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.Orientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
@@ -120,7 +121,8 @@ public class DanHao {
                     .setStyle(bold14Style);
 
             report()
-                    .setTemplate(template().setBarcodeWidth(179).setBarcodeHeight(50)).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
+                    .setTemplate(template().setBarcodeWidth(179).setBarcodeHeight(50)
+                    .setPrintOrder(Orientation.HORIZONTAL)).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
                     .title(createBarcodeCellComponent(label, postalCode))
                     .print(false);
         } catch (DRException e) {
@@ -157,7 +159,7 @@ public class DanHao {
             Code128BarcodeBuilder shippingContainerCode = bcode.code128(labelAndbarcode[1])
                     .setModuleWidth(1d)
                     .setStyle(textStyle);
-            report().setTemplate(template())
+            report().setTemplate(template().setBarcodeWidth(179).setBarcodeHeight(50).setPrintOrder(Orientation.HORIZONTAL))
                     .setPageFormat(PageType.B5).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
                     .setTextStyle(textStyle)
                     .title(

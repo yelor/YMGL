@@ -11,6 +11,7 @@
 package com.jskj.asset.client.panel.baobiao.kucun;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.panel.user.*;
 import com.jskj.asset.client.bean.entity.StockpiletbAll;
 import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
@@ -20,6 +21,7 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
+import com.jskj.asset.client.layout.BaseTreePane;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
 
 /**
@@ -50,7 +53,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     /**
      * Creates new form NoFoundPane
      */
-    public Yimiaopicichaxun1Panel(String conditionSql,String yimiaoName) {
+    public Yimiaopicichaxun1Panel(String conditionSql, String yimiaoName) {
         super();
         initComponents();
         pageIndex = 1;
@@ -178,7 +181,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                 //存下所有的数据
                 stockpile = stockpileEntiy.getResult();
                 bindTable.refreshData(stockpile);
-                
+
             }
         }
     }
@@ -257,7 +260,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
-        jButton2.setAction(actionMap.get("quit")); // NOI18N
+        jButton2.setAction(actionMap.get("close")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
 
@@ -384,6 +387,14 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
 
         };
         return printData;
+    }
+
+    @Action
+    public void close() {
+
+        ((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getMainViewPane().getRightPane().remove(this);
+        BaseTreePane.disTabCount.remove(this.getName());
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

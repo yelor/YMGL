@@ -577,7 +577,7 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
                     {"序列号", jTextFieldXuliehao.getText()},
                     {"购置日期", jTextField.getText()},
                     {"保修期至", jTextFieldBaoxiuqi.getText()},
-                    {"登记人", userName}},total);
+                    {"责任人", userName}},total);
 
     }
 

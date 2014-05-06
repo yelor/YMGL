@@ -77,7 +77,7 @@
             <Component class="javax.swing.JButton" name="jButton6">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.YiMiaoJDialog" id="addYiMiao" methodName="addYiMiao"/>
+                  <action class="com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel" id="addYiMiao" methodName="addYiMiao"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton6.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>
@@ -94,7 +94,7 @@
             <Component class="javax.swing.JButton" name="jButton7">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.YiMiaoJDialog" id="updateYiMiao" methodName="updateYiMiao"/>
+                  <action class="com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel" id="updateYiMiao" methodName="updateYiMiao"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton7.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>

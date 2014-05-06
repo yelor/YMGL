@@ -101,10 +101,10 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
+            {"xiangdanId", "详单编号"},{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "false"}});
 
-        editTable.registerPopup(1, new IPopupBuilder() {
+        editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
             }
@@ -147,62 +147,22 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
 
-                    editTable.insertValue(0, yimiaoId);
-                    editTable.insertValue(1, yimiaoName);
-                    editTable.insertValue(2, yimiaoGuige);
-                    editTable.insertValue(3, yimiaoJixing);
-                    editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, unit);
-                    editTable.insertValue(6, quantity);
+                    editTable.insertValue(0, xiangdanId);
+                    editTable.insertValue(1, yimiaoId);
+                    editTable.insertValue(2, yimiaoName);
+                    editTable.insertValue(3, yimiaoGuige);
+                    editTable.insertValue(4, yimiaoJixing);
+                    editTable.insertValue(5, shengchanqiye);
+                    editTable.insertValue(6, unit);
+                    editTable.insertValue(7, quantity);
 
                     //                    保存对应单据的详单id
-                    shenqingdanmap.put(yimiaoId, xiangdanId);
+                    shenqingdanmap.put(xiangdanId, xiangdanId);
                 }
 
             }
         });
 
-//        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
-//            public int getType() {
-//                return IPopupBuilder.TYPE_POPUP_SCAN;
-//            }
-//
-//            public String getWebServiceURI() {
-//                return Constants.HTTP + Constants.APPID + "addyimiao";
-//            }
-//
-//            public String getConditionSQL() {
-//                return "yimiao_tiaoxingma =";
-//            }
-//
-//            public String[][] displayColumns() {
-//                return null;
-//            }
-//
-//            public void setBindedMap(HashMap bindedMap) {
-//                if (bindedMap != null) {
-//
-//                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
-//
-//                    Object yimiaoId = bindedMap.get("yimiaoId");
-//                    Object yimiaoName = bindedMap.get("yimiaoName");
-//                    Object yimiaoGuige = bindedMap.get("yimiaoGuige");
-//                    Object yimiaoJixing = bindedMap.get("yimiaoJixing");
-//                    Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
-//                    Object unit = bindedMap.get("unitId");
-//
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
-//                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
-//
-//                    editTable.addNewRow();
-//                }
-//
-//            }
-//        });
     }
 
     /**
@@ -619,7 +579,7 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
             System.out.println(yimiaotable.getValue(i, "quantity"));
             yimiaoshenqingdan.setQuantity((Integer) yimiaotable.getValue(i, "quantity"));
             System.out.println(shenqingdanmap);
-            yimiaoshenqingdan.setYuandanId(Integer.parseInt(shenqingdanmap.get(yimiaoshenqingdan.getYimiaoId()).toString()));
+            yimiaoshenqingdan.setYuandanId(Integer.parseInt(shenqingdanmap.get((Integer) yimiaotable.getValue(i, "xiangdanId")).toString()));
             list.add(yimiaoshenqingdan);
         }
         yimiaolingyong.setShenqingdan(shenqingdan);
