@@ -55,7 +55,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         bindTable.createTable(new String[][]{{"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称"}, {"dzyhpType", "物品类别"}, {"dzyhpGuige", "规格"},
         {"dzyhpXinghao", "型号"}, {"unitId", "单位"}, {"dzyhpKucunshangxian", "库存上限"}, {"dzyhpKucunxiaxian", "库存下限"}});
         bindTable.setColumnType(Integer.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 80}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{0, 140}, new int[]{1, 140}, new int[]{2, 200}, new int[]{3, 140}).setRowHeight(30);
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 
             @Override

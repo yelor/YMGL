@@ -56,7 +56,7 @@ public class GongYingDanWeiPanel extends BasePanel {
         bindTable = new BindTableHelper<Supplier>(jTableSupplier, new ArrayList<Supplier>());
         bindTable.createTable(new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}, {"supplierPhone", "电话"}, {"supplierFax", "传真"}, {"supplierAddr", "单位地址"}, {"supplierRemark", "备注"}});
         bindTable.setIntegerType(1);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}).setRowHeight(30);
+        bindTable.bind().setColumnWidth(new int[]{0, 140}).setRowHeight(30);
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 
             @Override

@@ -60,7 +60,7 @@ public class YiMiaoPanel extends BasePanel {
         bindTable = new BindTableHelper<YimiaoAll>(jTableYiMiao, new ArrayList<YimiaoAll>());
         bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"}, {"unitId", "单位"}, {"yimiaoStockdown", "库存下限"}, {"yimiaoStockup", "库存上限"}});
         bindTable.setIntegerType(1, 7, 8);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}).setRowHeight(30);;
+        bindTable.bind().setColumnWidth(new int[]{0, 120}).setRowHeight(30);;
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 
             @Override
