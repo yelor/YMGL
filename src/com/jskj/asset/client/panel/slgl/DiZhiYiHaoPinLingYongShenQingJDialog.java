@@ -81,7 +81,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"}, {"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "批号", "false"}});
+            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "条码", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -109,7 +109,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"},{"kucun.pihao", "批号"}};
+                return new String[][]{{"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"},{"kucun.pihao", "条码"}};
             }
 
             @Override

@@ -419,8 +419,8 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入购置日期！", this);
             return null;
         }
-        if (jTextFieldPihao.getText().isEmpty()) {
-            AssetMessage.ERRORSYS("请输入批号！", this);
+        if (jTextFieldSequence.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入序列号！", this);
             return null;
         }
         if (jTextFieldBaoxiuqi.getText().isEmpty()) {
@@ -435,7 +435,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
         zc.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         zc.setYuandanId(yuandanID);
         zc.setBaoxiuqi(dateformate.parse(jTextFieldBaoxiuqi.getText()));
-        zc.setPihao(jTextFieldPihao.getText());
+        zc.setPihao(barcode);
         zc.setBarcode(barcode);
 
         return new submitTask(zc);
@@ -509,8 +509,6 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
         jButton8 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jTextFieldPihao = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DiZhiYiHaoPinDengJiJDialog.class);
@@ -650,11 +648,6 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jTextFieldPihao.setName("jTextFieldPihao"); // NOI18N
-
-        jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
-        jLabel10.setName("jLabel10"); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -691,19 +684,16 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
                             .addComponent(jLabel2)
                             .addComponent(jLabel7)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel15))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldPihao)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextFieldSequence, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                                .addComponent(jTextFieldBaoxiuqi)
-                                .addComponent(jTextFieldUnit)
-                                .addComponent(jTextFieldXinghao)
-                                .addComponent(jTextFieldSupplier)
-                                .addComponent(jTextFieldName)))
-                        .addGap(22, 22, 22))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldSequence, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                            .addComponent(jTextFieldBaoxiuqi)
+                            .addComponent(jTextFieldUnit)
+                            .addComponent(jTextFieldXinghao)
+                            .addComponent(jTextFieldSupplier)
+                            .addComponent(jTextFieldName))
+                        .addContainerGap(23, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel14)
@@ -732,9 +722,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldZctype, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextFieldPihao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -860,7 +848,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
                 new String[][]{
                     {"资产名", jTextFieldName.getText()},
                     {"资产类别", jTextFieldZctype.getText()},
-                    {"序列号", jTextFieldPihao.getText()},
+                    {"序列号", jTextFieldSequence.getText()},
                     {"购置日期", jTextField12.getText()},
                     {"保修期至", jTextFieldBaoxiuqi.getText()},
                     {"登记人", userName}},total);
@@ -874,7 +862,6 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -895,7 +882,6 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldBaoxiuqi;
     private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldName;
-    private javax.swing.JTextField jTextFieldPihao;
     private javax.swing.JTextField jTextFieldPinpai;
     private javax.swing.JTextField jTextFieldPrice;
     private javax.swing.JTextField jTextFieldQuantity;

@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -52,6 +53,8 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     private Map saledetailIdmap;
     private Map saleIdmap;
     private Map kehudanweiIdmap;
+    private boolean wait;
+    private String sqid;
 
     /**
      * Creates new form ymcrk1
@@ -118,6 +121,15 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
+                wait = true;
+                chooseYimiao();
+                while (wait) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 int selectedColumn = jTableyimiao.getSelectedColumn();
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
@@ -126,6 +138,9 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     sql += "sale_detail_id in (select distinct sale_detail.sale_detail_id from sale_detail,yimiao where sale_detail.is_completed = 1 and sale_detail.status = 0 and sale_detail.price>0 and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\" or yimiao.zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")) ";
                 } else {
                     sql += "sale_detail_id in (select distinct sale_detail_id from sale_detail where is_completed = 1 and status = 0 and price>0 )";
+                }
+                if (sqid != null) {
+                    sql += " and sale_id = \"" + sqid + "\" ";
                 }
                 return sql;
             }
@@ -733,6 +748,31 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
 
     }
 
+      public void chooseYimiao() {
+        String sql = "shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2";
+        new ChooseTask(sql).execute();
+    }
+
+    private class ChooseTask extends WeiChuKuYimiaoTask {
+
+        public ChooseTask(String sql) {
+            super(sql, "");
+        }
+
+        @Override
+        public void responseResult(CommFindEntity<SaleyimiaoEntity> response) {
+
+            logger.debug("get current size:" + response.getResult().size());
+            list = response.getResult();
+            sqid = null;
+            wait = false;
+            if (list.size() > 0) {
+                sqid = list.get(0).getSale_detail_tb().getSaleId();
+            }
+        }
+
+    }
+    
     private class Cancel extends CancelChuKu {
 
         public Cancel(List<SaleyimiaoEntity> zc) {
