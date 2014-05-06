@@ -13,7 +13,6 @@ import com.jskj.asset.client.bean.entity.YimiaobaosunxiangdanEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.YimiaotiaojiaxiangdanEntity;
 import com.jskj.asset.client.layout.BaseDialog;
-import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.panel.slgl.task.ShenqingDetailTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
 import com.jskj.asset.client.util.ClassHelper;
@@ -23,13 +22,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author 305027939
  */
 public abstract class DanjuMouseAdapter extends MouseAdapter {
-
+ private static final Logger logger = Logger.getLogger(DanjuMouseAdapter.class);
     boolean isDoubleClick;
 
     public DanjuMouseAdapter() {
@@ -40,9 +41,8 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
         this.isDoubleClick = isDoubleClick;
     }
 
-
     public abstract String getShenqingdanID();
-    
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
@@ -110,20 +110,26 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
         }
     }
 
-    private void openDialog(String className, Object entity, Class entityClassType) {
-        try {
-            ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, JDialog.class, entityClassType);
-            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            BaseDialog jdialog = helper.newInstance(null, entity);
-            jdialog.setLocationRelativeTo(mainFrame);
-            //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
-            jdialog.setVisible(true);
-        } catch (Exception ex) {
-            logger.error("StaticDialog:" + ex);
-        }
+    private void openDialog(final String className, final Object entity, final Class entityClassType) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ClassHelper<BaseDialog> helper = new ClassHelper<BaseDialog>(className, JDialog.class, entityClassType);
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    BaseDialog jdialog = helper.newInstance(null, entity);
+                    jdialog.setLocationRelativeTo(mainFrame);
+                    //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
+                    jdialog.setVisible(true);
+                } catch (Exception ex) {
+                    logger.error("StaticDialog:" + ex);
+                }
+            }
+        });
     }
 
     @Override
+
     public void mouseEntered(MouseEvent e) {
         e.getComponent().setBackground(Color.WHITE);
     }

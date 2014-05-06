@@ -479,7 +479,7 @@ public class LoginMain extends javax.swing.JFrame {
                 timetask = new TimerTask() {
                     double step = 1d;
                     double a = nextToX - toX;
-                    double stepPre = 1d;
+                    double stepPre = 2d;
 
                     @Override
                     public void run() {
