@@ -125,7 +125,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcValue", "采购价", "false"},{"quantity", "数量", "false"},{"liebiao.pihao", "批号", "false"}});
+            {"gdzcValue", "采购价", "false"},{"quantity", "数量", "false"},{"liebiao.pihao", "条码", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -164,7 +164,7 @@ public class GuDingZiChanRuKuJDialog extends BaseDialog{
 
             public String[][] displayColumns() {
                 return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
-                        ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"},{"liebiao.pihao", "批号"}};
+                        ,{"gdzcId", "资产ID"},{"gdzcName", "资产名称"},{"liebiao.pihao", "条码"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
