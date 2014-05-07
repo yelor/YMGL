@@ -81,7 +81,7 @@ public class ITGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"}, {"gdzcPinpai", "品牌", "false"},
-            {"gdzcXinghao", "型号"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "批号", "false"}});
+            {"gdzcXinghao", "型号"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "条码", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -110,7 +110,7 @@ public class ITGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"}, {"gdzcName", "资产名称"},{"kucun.pihao", "批号"}};
+                return new String[][]{{"gdzcId", "资产ID"}, {"gdzcName", "资产名称"},{"kucun.pihao", "条码"}};
             }
 
             @Override

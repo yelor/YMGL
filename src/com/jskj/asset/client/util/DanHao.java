@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.util;
 
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.ReportTemplates;
 import java.util.Date;
 import static net.sf.dynamicreports.report.builder.DynamicReports.bcode;
@@ -125,6 +126,7 @@ public class DanHao {
                     .setPrintOrder(Orientation.HORIZONTAL)).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
                     .title(createBarcodeCellComponent(label, postalCode))
                     .print(false);
+            AssetMessage.INFO("打印完成.");
         } catch (DRException e) {
             logger.error(e);
             e.printStackTrace();
@@ -175,6 +177,7 @@ public class DanHao {
                                                     createCellComponent(returnNotNullValue(4, 0, parameters), cmp.text(returnNotNullValue(4, 1, parameters)))),
                                             createCellComponent(returnNotNullValue(5, 0, parameters), cmp.text(returnNotNullValue(5, 1, parameters))))),
                             createCellComponent(labelAndbarcode[0], shippingContainerCode)).print(false);
+            AssetMessage.INFO("打印完成.");
         } catch (Exception e) {
             logger.error(e);
             e.printStackTrace();

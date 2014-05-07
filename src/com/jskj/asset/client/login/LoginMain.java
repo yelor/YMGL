@@ -11,13 +11,21 @@ import com.jskj.asset.client.bean.PathCacheBean.PathBean;
 import com.jskj.asset.client.bean.UserSessionEntity;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.constants.Constants;
+import static com.jskj.asset.client.layout.AssetMessage.INFO_MESSAGE;
+import com.jskj.asset.client.panel.message.MessagePanel;
 import com.jskj.asset.client.util.XMLHelper;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,6 +48,10 @@ public class LoginMain extends javax.swing.JFrame {
     private JTextField serviceText;
     private JTextField portText;
     private boolean isDisplay;
+
+    java.util.Timer timer = new java.util.Timer(true);
+    TimerTask timetask;
+    Thread clearThread;
 
     /**
      * Creates new form LoginMain
@@ -409,25 +421,11 @@ public class LoginMain extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-    private void setWarningMsg(String mgs) {
-        warningMsg.setText(mgs);
-        Thread one1 = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(10000);
-                    warningMsg.setText("");
-                } catch (InterruptedException ex) {
-                }
-            }
-
-        });
-        one1.start();
-    }
-
     @Action
     public Task sendLogin() {
         String userName = userNameFiled.getText();
         String serviceAdd = serviceText.getText();
+        drawLoopLine(10, 40);
         String password = String.valueOf(passwordFiled.getPassword());
         if (userName.trim().equals("")) {
             setWarningMsg("请输入用户名!");
@@ -443,12 +441,81 @@ public class LoginMain extends javax.swing.JFrame {
 
         setWarningMsg("");
         new LoginInfoTask(LoginInfoTask.WRITE_XML).execute();
-
+        drawLoopLine(40, 80);
         HashMap map = new HashMap();
         map.put("userName", userName);
         map.put("userPassword", password);
         loginButton.setEnabled(false);
         return new SendLoginTask(map);
+    }
+
+    private void setWarningMsg(String mgs) {
+        if (timetask != null) {
+            timetask.cancel();
+        }
+        warningMsg.setText(mgs);
+        if (clearThread == null || !clearThread.isAlive()) {
+            clearThread = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Thread.sleep(10000);
+                        warningMsg.setText("");
+                    } catch (InterruptedException ex) {
+                    }
+                }
+
+            });
+            clearThread.start();
+        }
+    }
+
+    private void drawLoopLine(final double toX, final double nextToX) {
+        if (timetask != null) {
+            timetask.cancel();
+        }
+
+        if (nextToX > 0) {
+            if (toX < 100) {
+                timetask = new TimerTask() {
+                    double step = 1d;
+                    double a = nextToX - toX;
+                    double stepPre = 2d;
+
+                    @Override
+                    public void run() {
+
+                        if (toX + step >= nextToX) {
+                            stepPre = (stepPre / 10);
+                        }
+                        step = step + stepPre;
+
+                        drawProgress(toX + step);
+
+                    }
+                };
+                timer.schedule(timetask, 1, 1000);
+            } else {
+                drawProgress(100);
+            }
+        }
+    }
+
+    private void drawProgress(double toX) {
+        if (clearThread.isAlive()) {
+            clearThread.interrupt();
+        }
+        setColorAndDrawGraphics(warningMsg.getGraphics(), toX);
+    }
+
+    public void setColorAndDrawGraphics(Graphics g, double toX) {
+        g.setColor(new Color(122,163,204));
+        g.setFont(new Font(g.getFont().getFontName(), Font.BOLD, 14));
+        double per = toX / 100;
+        int width = warningMsg.getWidth();
+        double correctProc = width * per;
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+        g.drawLine(0, 0, (int) correctProc, 0);
     }
 
     private class LoginInfoTask extends Task<Object, Void> {
@@ -528,6 +595,7 @@ public class LoginMain extends javax.swing.JFrame {
         @Override
         public void onSucceeded(Object object) {
             loginButton.setEnabled(true);
+            drawLoopLine(80, 100);
             if (object == null) {
                 setWarningMsg("服务端异常!");
                 return;
@@ -546,6 +614,7 @@ public class LoginMain extends javax.swing.JFrame {
                         AssetClientApp.getApplication().getMainFrame().dispose();
                     }
                     AssetClientApp.startupApplication(args, LoginMain.this, session);
+                    drawLoopLine(100, 100);
                     dispose();
                     logined = true;
                 } else {
