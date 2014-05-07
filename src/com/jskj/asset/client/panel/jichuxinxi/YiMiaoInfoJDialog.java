@@ -590,6 +590,10 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         } else if (yimiaoJixing.getSelectedItem().toString().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗剂型!");
             return null;
+        } else if (yimiaoType.getSelectedIndex() == 0 && chengbenjia.getText().trim().equals("")
+                && yimiaoYushoujia.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("该疫苗是Ⅱ类疫苗，成本价和预售价不能为空，请填入数字!");
+            return null;
         }
 
         String zujima = PingYinUtil.getFirstSpell(yimiaoName.getText().trim());

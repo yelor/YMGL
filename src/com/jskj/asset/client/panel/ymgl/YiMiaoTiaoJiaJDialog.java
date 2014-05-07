@@ -570,6 +570,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         yimiaotiaojia.setIsCompleted(0);
         List<Yimiaotiaojia_detail_tb> list = new ArrayList<Yimiaotiaojia_detail_tb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            yimiaotiaojia_detail=new Yimiaotiaojia_detail_tb();
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaotiaojia_detail.setTiaojiaId(jTextFieldTiaojiaId.getText());
             yimiaotiaojia_detail.setKucunyimiaoId((Integer) yimiaotable.getValue(i, "stockpileId"));
@@ -703,23 +704,23 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
     public void setListTable(List<YimiaotiaojiaDetailEntity> yimiaotiaojiaDetailEntityList) {
 
         int size = yimiaotiaojiaDetailEntityList.size();
-        Object[][] o = new Object[size][11];
+        Object[][] o = new Object[size][10];
         for (int i = 0; i < size; i++) {
             Yimiaotiaojia_detail_tb yimiaotiaojia_detailtb = yimiaotiaojiaDetailEntityList.get(i).getYimiaotiaojia_detail_tb();
             YimiaoAll yimiaoAll = yimiaotiaojiaDetailEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = yimiaotiaojiaDetailEntityList.get(i).getStockpileYimiao();
             o[i] = new Object[]{stockpile.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), yimiaoAll.getUnitId(),
-                stockpile.getYouxiaodate(), yimiaotiaojia_detailtb.getBeforebuyprice(), yimiaotiaojia_detailtb.getLastbuyprice(), yimiaotiaojia_detailtb.getBeforesaleprice(), yimiaotiaojia_detailtb.getLastsaleprice()};
+                yimiaotiaojia_detailtb.getBeforebuyprice(), yimiaotiaojia_detailtb.getLastbuyprice(), yimiaotiaojia_detailtb.getBeforesaleprice(), yimiaotiaojia_detailtb.getLastsaleprice()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "有效期", "调前进价", "调后进价", "调前售价", "调后售价"
+                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "调前进价", "调后进价", "调前售价", "调后售价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
         });
     }

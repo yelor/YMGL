@@ -749,7 +749,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     }
 
       public void chooseYimiao() {
-        String sql = "shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2";
+        String sql = " (sale_id like \"YMXS%\") and is_completed = 1 and status = 0";
         new ChooseTask(sql).execute();
     }
 
@@ -793,7 +793,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             yimiaochuku.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaochuku);
         }
-
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -213,7 +213,6 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTableResult.setFont(new java.awt.Font("宋体", 0, 12)); // NOI18N
         jTableResult.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {}
@@ -241,7 +240,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
         );
 
         jPanelTop.setBackground(resourceMap.getColor("jPanelTop.background")); // NOI18N
@@ -292,7 +291,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
             jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
