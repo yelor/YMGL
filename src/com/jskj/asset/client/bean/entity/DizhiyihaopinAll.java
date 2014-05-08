@@ -22,6 +22,8 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
     
     private Dizhiyihaopinkucuntb kucun;
     
+    private Lingyongliebiaotb lylb;
+    
     private int count;
     
     private float saleprice;
@@ -94,4 +96,12 @@ public class DizhiyihaopinAll extends Dizhiyihaopin{
         this.kucun = kucun;
     }
     
+    public Lingyongliebiaotb getLylb() {
+        return lylb;
+    }
+
+    public void setLylb(Lingyongliebiaotb lylb) {
+        this.lylb = lylb;
+    }
+
 }

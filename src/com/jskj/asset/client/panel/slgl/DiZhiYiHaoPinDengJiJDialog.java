@@ -419,10 +419,10 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入购置日期！", this);
             return null;
         }
-        if (jTextFieldSequence.getText().isEmpty()) {
-            AssetMessage.ERRORSYS("请输入序列号！", this);
-            return null;
-        }
+//        if (jTextFieldSequence.getText().isEmpty()) {
+//            AssetMessage.ERRORSYS("请输入序列号！", this);
+//            return null;
+//        }
         if (jTextFieldBaoxiuqi.getText().isEmpty()) {
             AssetMessage.ERRORSYS("请输入保修期！", this);
             return null;

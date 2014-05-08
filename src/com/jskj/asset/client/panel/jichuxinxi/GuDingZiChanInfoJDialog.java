@@ -15,6 +15,7 @@ import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.PingYinUtil;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -217,16 +218,20 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             public void responseResult(ComResponse<GudingzichanAll> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
-                    if (!jCheckBoxCont.isSelected()) {
-                        dispose();
-                    } else {
-                        AssetMessage.showMessageDialog(null, "保存成功！");
+                    if (jCheckBoxCont.isSelected()) {
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        GuDingZiChanInfoJDialog guDingZhiChanInfoJDialog = new GuDingZiChanInfoJDialog(parentPanel);
+                        guDingZhiChanInfoJDialog.setLocationRelativeTo(mainFrame);
+                        guDingZhiChanInfoJDialog.setUpdatedData(new GudingzichanAll());
+                        AssetClientApp.getApplication().show(guDingZhiChanInfoJDialog);
 //                        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
 //                        List<String> source = mode.getSource();
 //                        source.clear();
 //                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
 //                        gdzcPhoto.setModel(newMode);
                     }
+                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    dispose();
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanInfoJDialog.this);
                 }

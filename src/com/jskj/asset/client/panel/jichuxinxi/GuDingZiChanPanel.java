@@ -54,7 +54,7 @@ public class GuDingZiChanPanel extends BasePanel {
         count = 0;
         bindTable = new BindTableHelper<GudingzichanAll>(jTable1, new ArrayList<GudingzichanAll>());
         bindTable.createTable(new String[][]{{"gdzcId", "固定资产编号"}, {"gdzcName", "固定资产名称"}, {"gdzcType", "资产类型"}, {"gdzcGuige", "规格"},
-        {"gdzcXinghao", "型号"}, {"unitId", "单位"}, {"kucunshangxian", "库存上限"}, {"kucunxiaxian", "库存下限"}});
+        {"gdzcXinghao", "型号"}, {"unitId", "单位"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 140}, new int[]{1, 200}, new int[]{2, 160}, new int[]{3, 120}).setRowHeight(30);
 

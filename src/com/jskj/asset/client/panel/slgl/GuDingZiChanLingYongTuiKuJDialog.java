@@ -9,7 +9,7 @@ package com.jskj.asset.client.panel.slgl;
 import com.jskj.asset.client.panel.slgl.task.LingyongtuikuTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
-import com.jskj.asset.client.bean.entity.Lingyongtuikudantb;
+import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -48,6 +49,9 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
     private List<ZiChanLieBiaotb> zc;
     private float total = 0;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Map kucunmap;
+    private String pihao;
+    private float saleprice;
     /**
      * Creates new form GuDingZiChanRuKu
      */
@@ -59,6 +63,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         department = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
+        kucunmap = new HashMap();
         
         jTextFieldShenqingren.setText(userName);
         jTextFieldDept.setText(department);
@@ -70,8 +75,8 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         jTextField2.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcXinghao", "型号"}, {"quantity", "数量", "true"}, {"gdzcValue", "原值", "false"}, {"total", "合价"}});
+            {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"}, {"gdzcPinpai", "品牌", "false"},
+            {"gdzcXinghao", "型号"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "条码", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -81,7 +86,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
 
             @Override
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "gdzc";
+                return Constants.HTTP + Constants.APPID + "tkgdzc";
             }
 
             @Override
@@ -98,7 +103,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"}};
+                return new String[][]{{"gdzcId", "资产ID"},{"gdzcName", "资产名称"},{"kucun.pihao", "条码"}};
             }
 
             @Override
@@ -108,7 +113,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
                     Object gdzcName = bindedMap.get("gdzcName");
                     Object gdzcType = bindedMap.get("gdzcType");
                     Object gdzcPinpai = bindedMap.get("gdzcPinpai");
-                    Object gdzcValue = bindedMap.get("gdzcValue");
+//                    Object gdzcValue = bindedMap.get("gdzcValue");
                     Object gdzcXinghao = bindedMap.get("gdzcXinghao");
 
                     editTable.insertValue(0, gdzcId);
@@ -116,13 +121,22 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
                     editTable.insertValue(2, gdzcType);
                     editTable.insertValue(3, gdzcPinpai);
                     editTable.insertValue(4, gdzcXinghao);
-                    editTable.insertValue(6, gdzcValue);
 
+                    HashMap map = (HashMap)bindedMap.get("kucun");
+                    pihao = (String)map.get("pihao");
+                    saleprice = Float.parseFloat(map.get("price").toString());
+                    editTable.insertValue(6, saleprice);
+                    editTable.insertValue(8, pihao);
+                    Object lycount = bindedMap.get("count");
+                    
 //                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
 //                    zclb.setCgsqId(jTextField1.getText());
 //                    zclb.setCgzcId((Integer)gdzcId);
 //                    zclb.setQuantity(0);
 //                    zc.add(zclb);
+                    
+                    //保存库存数，用来校验数据
+                    kucunmap.put(gdzcId+pihao, lycount);
                 }
 
             }
@@ -170,12 +184,13 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         jTable1.getCellEditor(jTable1.getSelectedRow(),
                 jTable1.getSelectedColumn()).stopCellEditing();
         lytk = new LingyongtuikuDetailEntity();
-        Lingyongtuikudantb sqd = new Lingyongtuikudantb();
-        sqd.setLytkId(jTextField1.getText());
-        sqd.setLytkDate(dateformate.parse(jTextField2.getText()));
-        sqd.setLytkRemark(jTextArea1.getText());
-        sqd.setShenqingrenId(userId);
+        Shenqingdantb sqd = new Shenqingdantb();
+        sqd.setShenqingdanId(jTextField1.getText());
+        sqd.setShenqingdanDate(dateformate.parse(jTextField2.getText()));
+        sqd.setShenqingdanRemark(jTextArea1.getText());
+        sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
+        sqd.setDanjuleixingId(22);
         
         zc = new ArrayList<ZiChanLieBiaotb>();
 //        for (int i = 0; i < zc.size(); i++) {
@@ -193,16 +208,23 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
                 return null;
             }
             try {
-                zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 5));
+                if (count > Integer.parseInt(kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 8).toString()).toString())) {
+                    AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的退库数量大于领取数，"
+                            + "请输入一个小于" + kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 8).toString()) + "的数", this);
+                    return null;
+                }
+                zclb.setQuantity(count);
             } catch (NumberFormatException e) {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的退库数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
+            zclb.setPihao(jTable1.getValueAt(i, 8).toString());
             zclb.setSaleprice(price);
             zclb.setTotalprice(zclb.getQuantity()*price);
             zclb.setIsCompleted(1);
-            zclb.setStatus(9);
+            zclb.setStatus(3);
             zc.add(zclb);
         }
         
