@@ -151,7 +151,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
                     jTextFieldPinpai.setText(bindedMap.get("dzyhpPinpai") == null ? "" : bindedMap.get("dzyhpPinpai").toString());
                     jTextFieldXinghao.setText(bindedMap.get("dzyhpXinghao") == null ? "" : bindedMap.get("dzyhpXinghao").toString());
                     jTextFieldGuige.setText(bindedMap.get("dzyhpGuige") == null ? "" : bindedMap.get("dzyhpGuige").toString());
-                    jTextFieldPrice.setText(bindedMap.get("dzyhpValue") == null ? "" : bindedMap.get("dzyhpValue").toString());
+                    jTextFieldPrice.setText(bindedMap.get("saleprice") == null ? "" : bindedMap.get("saleprice").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
                     HashMap map = (HashMap) bindedMap.get("suppliertb");
                     if (map != null) {
@@ -575,6 +575,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
 
         jTextFieldBaoxiuqi.setName("jTextFieldBaoxiuqi"); // NOI18N
 
+        jTextFieldPrice.setEditable(false);
         jTextFieldPrice.setName("jTextFieldPrice"); // NOI18N
 
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N

@@ -198,7 +198,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                     jTextFieldZichan.setText(bindedMap.get("gdzcName") == null ? "" : bindedMap.get("gdzcName").toString());
                     jTextFieldXinghao.setText(bindedMap.get("gdzcXinghao") == null ? "" : bindedMap.get("gdzcXinghao").toString());
                     jTextFieldGuige.setText(bindedMap.get("gdzcGuige") == null ? "" : bindedMap.get("gdzcGuige").toString());
-                    jTextFieldPrice.setText(bindedMap.get("gdzcValue") == null ? "" : bindedMap.get("gdzcValue").toString());
+                    jTextFieldPrice.setText(bindedMap.get("saleprice") == null ? "" : bindedMap.get("saleprice").toString());
                     jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
                     jTextFieldQuantity.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
                     jTextFieldQuantity.setEditable(false);
@@ -521,7 +521,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel1.setMinimumSize(null);
         jPanel1.setName("jPanel1"); // NOI18N
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -591,6 +590,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
+        jTextFieldPrice.setEditable(false);
         jTextFieldPrice.setName("jTextFieldPrice"); // NOI18N
         jTextFieldPrice.setPreferredSize(new java.awt.Dimension(0, 30));
 
