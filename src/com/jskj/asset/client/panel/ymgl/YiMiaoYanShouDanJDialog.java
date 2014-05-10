@@ -237,6 +237,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
                     
                     jTextFieldSupplierName.setText((String) gongyingdanwei.get("supplierName"));
+                    jTextFieldFamiaoperson.setText(gongyingdanwei.get("supplierConstactperson")== null ? "" : (String) gongyingdanwei.get("supplierConstactperson"));
 
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
@@ -664,6 +665,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jTextField7.setText(resourceMap.getString("jTextField7.text")); // NOI18N
         jTextField7.setName("jTextField7"); // NOI18N
 
+        jTextFieldFamiaoperson.setEditable(false);
         jTextFieldFamiaoperson.setText(resourceMap.getString("jTextFieldFamiaoperson.text")); // NOI18N
         jTextFieldFamiaoperson.setName("jTextFieldFamiaoperson"); // NOI18N
 

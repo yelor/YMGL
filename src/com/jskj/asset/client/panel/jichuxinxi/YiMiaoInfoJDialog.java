@@ -627,13 +627,20 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
                     if (!jCheckBoxCont.isSelected()) {
+                        AssetMessage.INFO("提交成功！", YiMiaoInfoJDialog.this);
                         dispose();
                     } else {
-                        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-                        List<String> source = mode.getSource();
-                        source.clear();
-                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-                        yimiaoPicture.setModel(newMode);
+                        AssetMessage.INFO("提交成功！", YiMiaoInfoJDialog.this);
+                        dispose();
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        YiMiaoInfoJDialog yiMiaoInfoJDialog = new YiMiaoInfoJDialog(parentPanel);
+                        yiMiaoInfoJDialog.setLocationRelativeTo(mainFrame);
+                        AssetClientApp.getApplication().show(yiMiaoInfoJDialog);
+//                        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//                        List<String> source = mode.getSource();
+//                        source.clear();
+//                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+//                        yimiaoPicture.setModel(newMode);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), YiMiaoInfoJDialog.this);

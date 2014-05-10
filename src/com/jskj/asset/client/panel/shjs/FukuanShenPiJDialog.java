@@ -210,6 +210,25 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         fksq.remove(jSQTable.getSelectedRow());
         return new SPTask(fksqdan);
     }
+
+    private class ShenPiYTask extends org.jdesktop.application.Task<Object, Void> {
+        ShenPiYTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to ShenPiYTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
     
     @Action
     public Task shenPiN(){
@@ -541,7 +560,7 @@ public class FukuanShenPiJDialog extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+            .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
         );
         jPanel2Layout.setVerticalGroup(

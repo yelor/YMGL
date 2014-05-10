@@ -617,6 +617,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldFamiaoperson">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" resourceKey="jTextFieldFamiaoperson.text"/>
             <Property name="name" type="java.lang.String" value="jTextFieldFamiaoperson" noResource="true"/>
           </Properties>
