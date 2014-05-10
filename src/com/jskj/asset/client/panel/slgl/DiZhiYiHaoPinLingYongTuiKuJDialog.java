@@ -9,7 +9,7 @@ package com.jskj.asset.client.panel.slgl;
 import com.jskj.asset.client.panel.slgl.task.LingyongtuikuTask;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
-import com.jskj.asset.client.bean.entity.Lingyongtuikudantb;
+import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -50,6 +51,9 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
     private List<ZiChanLieBiaotb> zc;
     private float total = 0;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private Map kucunmap;
+    private String pihao;
+    private float saleprice;
     /**
      * Creates new form GuDingZiChanRuKu
      */
@@ -61,6 +65,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         department = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
+        kucunmap = new HashMap();
         
         jTextFieldShenqingren.setText(userName);
         jTextFieldDept.setText(department);
@@ -72,8 +77,8 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
         jTextField2.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpXinghao", "型号"}, {"quantity", "数量", "true"},{"dzyhpValue", "原值", "false"}, {"total", "合价"}});
+            {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"}, {"dzyhpPinpai", "品牌", "false"},
+            {"dzyhpXinghao", "型号"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "条码", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -83,7 +88,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
 
             @Override
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "dizhiyihaopin/";
+                return Constants.HTTP + Constants.APPID + "dizhiyihaopin/findtk";
             }
 
             @Override
@@ -100,7 +105,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"}};
+                return new String[][]{{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"},{"kucun.pihao", "条码"}};
             }
 
             @Override
@@ -111,20 +116,31 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
                     Object dzyhpType = bindedMap.get("dzyhpType");
                     Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
                     Object gdzcXinghao = bindedMap.get("dzyhpXinghao");
-                    Object dzyhpValue = bindedMap.get("dzyhpValue");
+//                    Object dzyhpValue = bindedMap.get("dzyhpValue");
+                    Object gdzcDanwei = bindedMap.get("unitId");
 
                     editTable.insertValue(0, dzyhpId);
                     editTable.insertValue(1, dzyhpName);
                     editTable.insertValue(2, dzyhpType);
                     editTable.insertValue(3, dzyhpPinpai);
                     editTable.insertValue(4, gdzcXinghao);
-                    editTable.insertValue(6, dzyhpValue);
+                    editTable.insertValue(5, gdzcDanwei);
 
+                    HashMap map = (HashMap)bindedMap.get("kucun");
+                    pihao = (String)map.get("pihao");
+                    saleprice = Float.parseFloat(map.get("price").toString());
+                    editTable.insertValue(7, saleprice);
+                    editTable.insertValue(9, pihao);
+                    Object lycount = bindedMap.get("count");
+                    
 //                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
 //                    zclb.setCgsqId(jTextField1.getText());
 //                    zclb.setCgzcId((Integer)dzyhpId);
 //                    zclb.setQuantity(0);
 //                    zc.add(zclb);
+                    
+                    //保存库存数，用来校验数据
+                    kucunmap.put(dzyhpId+pihao, lycount);
                 }
 
             }
@@ -137,18 +153,18 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
                 int col = e.getColumn();
                 int row = e.getFirstRow();
 
-                if (col == 5 || col == 6) {
-                    if ((!(("" + jTable1.getValueAt(row, 5)).equals("")))
-                            && (!(("" + jTable1.getValueAt(row, 6)).equals("")))) {
-                        int count = Integer.parseInt("" + jTable1.getValueAt(row, 5));
-                        float price = Float.parseFloat("" + jTable1.getValueAt(row, 6));
-                        jTable1.setValueAt(price * count, row, 7);
+                if (col == 6 || col == 7) {
+                    if ((!(("" + jTable1.getValueAt(row, 6)).equals("")))
+                            && (!(("" + jTable1.getValueAt(row, 7)).equals("")))) {
+                        int count = Integer.parseInt("" + jTable1.getValueAt(row, 6));
+                        float price = Float.parseFloat("" + jTable1.getValueAt(row, 7));
+                        jTable1.setValueAt(price * count, row, 8);
                     }
                     int rows = jTable1.getRowCount();
                     total = 0;
                     for(int i = 0; i < rows; i++) {
-                        if(!(("" + jTable1.getValueAt(i, 7)).equals(""))){
-                            total += Float.parseFloat("" + jTable1.getValueAt(i, 7));
+                        if(!(("" + jTable1.getValueAt(i, 8)).equals(""))){
+                            total += Float.parseFloat("" + jTable1.getValueAt(i, 8));
                         }
                     }
                     totalprice.setText(total + "元");
@@ -172,12 +188,13 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
         jTable1.getCellEditor(jTable1.getSelectedRow(),
                 jTable1.getSelectedColumn()).stopCellEditing();
         lytk = new LingyongtuikuDetailEntity();
-        Lingyongtuikudantb sqd = new Lingyongtuikudantb();
-        sqd.setLytkId(jTextField1.getText());
-        sqd.setLytkDate(dateformate.parse(jTextField2.getText()));
-        sqd.setLytkRemark(jTextArea1.getText());
-        sqd.setShenqingrenId(userId);
+        Shenqingdantb sqd = new Shenqingdantb();
+        sqd.setShenqingdanId(jTextField1.getText());
+        sqd.setShenqingdanDate(dateformate.parse(jTextField2.getText()));
+        sqd.setShenqingdanRemark(jTextArea1.getText());
+        sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
+        sqd.setDanjuleixingId(23);
         
         zc = new ArrayList<ZiChanLieBiaotb>();
 //        for (int i = 0; i < zc.size(); i++) {
@@ -190,21 +207,28 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            if (jTable1.getValueAt(i, 5).toString().equals("")) {
+            if (jTable1.getValueAt(i, 6).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个物品的退库数量！", this);
                 return null;
             }
             try {
-                zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 5)));
+                int count = Integer.parseInt("" + jTable1.getValueAt(i, 6));
+                if (count > Integer.parseInt(kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString())) {
+                    AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的退库数量大于领取数，"
+                            + "请输入一个小于" + kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()) + "的数", this);
+                    return null;
+                }
+                zclb.setQuantity(count);
             } catch (NumberFormatException e) {
                 AssetMessage.ERRORSYS("第" + (i + 1) + "个物品的退库数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
+            float price = Float.parseFloat("" + jTable1.getValueAt(i, 7));
+            zclb.setPihao(jTable1.getValueAt(i, 9).toString());
             zclb.setSaleprice(price);
             zclb.setTotalprice(zclb.getQuantity()*price);
             zclb.setIsCompleted(1);
-            zclb.setStatus(9);
+            zclb.setStatus(3);
             zc.add(zclb);
         }
         
@@ -214,25 +238,6 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
         return new submitTask(lytk);
     }
 
-    private class SubmitFormTask extends org.jdesktop.application.Task<Object, Void> {
-        SubmitFormTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to SubmitFormTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-    
     private class submitTask extends LingyongtuikuTask{
 
         public submitTask(LingyongtuikuDetailEntity lytk) {
@@ -359,7 +364,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)

@@ -22,6 +22,8 @@ public class GudingzichanAll extends Gudingzichantb{
     
     private Gudingzichankucuntb kucun;
     
+    private Lingyongliebiaotb lylb;
+    
     private int count;
     
     private float saleprice;
@@ -92,6 +94,14 @@ public class GudingzichanAll extends Gudingzichantb{
 
     public void setKucun(Gudingzichankucuntb kucun) {
         this.kucun = kucun;
+    }
+
+    public Lingyongliebiaotb getLylb() {
+        return lylb;
+    }
+
+    public void setLylb(Lingyongliebiaotb lylb) {
+        this.lylb = lylb;
     }
 
 }

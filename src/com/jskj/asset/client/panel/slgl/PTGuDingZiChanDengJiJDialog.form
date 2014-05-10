@@ -333,6 +333,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPrice">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jTextFieldPrice" noResource="true"/>
           </Properties>
         </Component>

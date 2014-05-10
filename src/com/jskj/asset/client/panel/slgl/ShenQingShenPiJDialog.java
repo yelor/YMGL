@@ -145,7 +145,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
                         if (value instanceof String) {
                             String text = value.toString();
                             if (text.equals("本流程无此审批环节")) {
-                                setBackground(Color.RED);
+                                setBackground(Color.LIGHT_GRAY);
                             } else {
                                 setBackground(Color.white);
                             }

@@ -14,11 +14,11 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LingyongtuikuDetailEntity {
     
-    Lingyongtuikudantb sqd;
+    Shenqingdantb sqd;
     
     List<ZiChanLieBiaotb> zc;
 
-    public Lingyongtuikudantb getSqd() {
+    public Shenqingdantb getSqd() {
         return sqd;
     }
 
@@ -26,7 +26,7 @@ public class LingyongtuikuDetailEntity {
         return zc;
     }
 
-    public void setSqd(Lingyongtuikudantb sqd) {
+    public void setSqd(Shenqingdantb sqd) {
         this.sqd = sqd;
     }
 

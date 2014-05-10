@@ -8,8 +8,8 @@ package com.jskj.asset.client.panel.slgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.ChukudanDetailEntity;
-import com.jskj.asset.client.bean.entity.Zichanchukudantb;
+import com.jskj.asset.client.bean.entity.RukudanDetailEntity;
+import com.jskj.asset.client.bean.entity.Zichanrukudantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
 import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
@@ -17,6 +17,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
+import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
@@ -31,7 +32,6 @@ import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,10 +51,10 @@ import org.jdesktop.application.Task;
  *
  * @author tt
  */
-public class YihaopinChuKuJDialog extends BaseDialog {
+public class YihaopinTuiKuJDialog extends BaseDialog {
 
-    public static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(YihaopinChuKuJDialog.class);
-    private ChukudanDetailEntity cgsq;
+    public static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(YihaopinTuiKuJDialog.class);
+    private RukudanDetailEntity cgsq;
     private int userId;
     private String userName;
     private int supplierId;
@@ -62,20 +62,20 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     CaigoushenqingDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
+    private String pihao;
+    private Double totalprice;
+    private float total = 0;
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
     private Map yuandanmap;
-    private String pihao;
-    private float totalprice;
-    private float total = 0;
     private String sqid;
     private boolean wait;
     /**
-     * Creates new form GuDingZiChanChuKu
+     * Creates new form GuDingZiChanRuKu
      * @param parent
      * @param modal
      */
-    public YihaopinChuKuJDialog(java.awt.Frame parent,boolean modal) {
+    public YihaopinTuiKuJDialog() {
         super();
         initComponents();
         
@@ -85,40 +85,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         isNew = false;
         yuandanmap = new HashMap();
         
-        this.addWindowListener(new WindowListener() {
-
-            @Override
-            public void windowOpened(WindowEvent e) {
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                exit();
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-            }
-
-        });
-        
-        cgsqId.setText(DanHao.getDanHao("YHCK"));
+        cgsqId.setText(DanHao.getDanHao("YHLT"));
         cgsqId.setEditable(false);
         
         shenqingdanDate.setText(dateformate.format(new Date()).toString());
@@ -128,8 +95,8 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jingbanren.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
-            {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "类别"},{"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpXinghao", "型号"}, {"unitId", "单位", "false"}, {"quantity", "数量", "false"}, {"dzyhpValue", "采购价", "false"}, {"total", "合价"},{"liebiao.pihao", "条码", "false"}});
+            {"dzyhpId", "资产编号"}, {"dzyhpName", "资产名称", "true"}, {"dzyhpType", "类别"},{"dzyhpPinpai", "品牌", "false"},
+            {"dzyhpXinghao", "型号"}, {"unitId", "单位", "false"}, {"quantity", "数量", "false"}, {"saleprice", "采购价", "false"}, {"liebiao.totalprice", "合价"},{"liebiao.pihao", "条码", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -141,23 +108,11 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
-                wait = true;
-                chooseZichan();
-                while(wait) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(PTGuDingZiChanDengJiJDialog.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
                 int selectedColumn = jTable1.getSelectedColumn();
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " cgsq_id like \"%YHLY%\" and is_completed = 1 and status = 7 ";
-                if(sqid != null){
-                    sql += " and cgsq_id = \"" + sqid + "\" ";
-                }
+                sql += " cgsq_id like \"%YHTK%\" and status = 3 ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + newColumnObj.toString() + "%\"" 
                         + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
@@ -167,7 +122,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
 
             public String[][] displayColumns() {
                 return new String[][]{{"shenqingdan.shenqingdanId", "源单号"},{"shenqingdan.zhidanren", "申请人"}
-                        ,{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"},{"liebiao.pihao", "条码"}};
+                        ,{"dzyhpId", "资产ID"},{"dzyhpName", "资产名称"},{"liebiao.pihao", "条码"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -177,8 +132,8 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     Object dzyhpType = bindedMap.get("dzyhpType");
                     Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
                     Object dzyhpValue = bindedMap.get("saleprice");
-                    Object dzyhpXinghao = bindedMap.get("dzyhpXinghao");
                     Object dzyhpCount = bindedMap.get("count");
+                    Object dzyhpXinghao = bindedMap.get("dzyhpXinghao");
                     Object gdzcDanwei = bindedMap.get("unitId");
 
                     editTable.insertValue(0, dzyhpId);
@@ -189,15 +144,16 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     editTable.insertValue(5, gdzcDanwei);
                     editTable.insertValue(6, dzyhpCount);
                     editTable.insertValue(7, dzyhpValue);
-                    
+
                     HashMap map = (HashMap)bindedMap.get("shenqingdan");
                     yuandanID = (String)map.get("shenqingdanId");
                     
                     map = (HashMap)bindedMap.get("liebiao");
                     pihao = (String)map.get("pihao");
-                    totalprice = Float.parseFloat(map.get("totalprice").toString());
+                    totalprice = (Double)map.get("totalprice");
                     editTable.insertValue(8, totalprice);
                     editTable.insertValue(9, pihao);
+                    
 //                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
 //                    zclb.setCgsqId(cgsqId.getText());
 //                    zclb.setCgzcId((Integer)gdzcId);
@@ -211,6 +167,36 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             }
         });
         
+        //库房的popup
+        ((BaseTextField) cangku).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_TEXT;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "cangku/finddepot";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                if (!cangku.getText().trim().equals("")) {
+                    sql = "(depot_name like \"%" + cangku.getText() + "%\"" + " or zujima like \"%" + cangku.getText().trim().toLowerCase() + "%\")";
+                }
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return new String[][]{{"depotId", "仓库编号"}, {"depotName", "仓库名称"}};
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+//                    shenqingdan.setSupplierId((Integer) (bindedMap.get("supplierId")));
+                    cangku.setText(bindedMap.get("depotName") == null ? "" : bindedMap.get("depotName").toString());
+                }
+            }
+        });
+
         jTable1.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -227,7 +213,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         });
     }
     
-    public YihaopinChuKuJDialog(final JDialog parent,CaigoushenqingDetailEntity detail){
+    public YihaopinTuiKuJDialog(final JDialog parent,CaigoushenqingDetailEntity detail){
         super();
         initComponents();
         this.detail = detail;
@@ -275,13 +261,13 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         Object[][] o = new Object[size][6];
         for( int i = 0; i < size; i++){
             ZichanliebiaoDetailEntity zclb = zclist.get(i);
-            o[i] = new Object[]{zclb.getGdzcId(),zclb.getGdzcName(),zclb.getGdzcType(),zclb.getGdzcPinpai(),zclb.getGdzcValue(),zclb.getCount()};
+            o[i] = new Object[]{zclb.getGdzcId(), zclb.getGdzcName(), zclb.getGdzcType(), zclb.getGdzcPinpai(),zclb.getGdzcXinghao(), zclb.getUnitId(), zclb.getCount(), zclb.getSaleprice(), zclb.getSaleprice() * zclb.getCount()};
         }
-        
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "资产编号", "资产名称", "类别", "品牌", "原值", "数量"
+                    "资产编号", "资产名称", "类别", "品牌", "型号", "单位", "数量","采购价", "合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -290,133 +276,13 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         });
     }
 
-    public void setNew(){
-        isNew = true;
-        //如果有未登记资产，即登记过程中异常退出系统，则重新打开界面的时候检查是否有未登记资产并提示
-        String sql = " cgsq_id like \"YHLY%\" and is_completed = 1 and status = 7";
-        new OpenTask(sql).execute();
-    }
-    
     @Action
     public void exit() {
-        if(isNew){
-            close();
-            return;
-        }
-        String sql = " cgsq_id like \"YHLY%\" and is_completed = 1 and status = 7";
-        new CloseTask(sql).execute();
+        this.dispose();
     }
     
     public void close(){
         this.dispose();
-    }
-    
-    private class CloseTask extends WeidengjizichanTask{
-
-        public CloseTask(String sql) {
-            super(sql);
-        }
-        
-        @Override
-        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
-
-            logger.debug("get current size:" + response.getResult().size());
-            list = response.getResult();
-            if (list != null && list.size() > 0) {
-                StringBuilder string = new StringBuilder();
-                for (ZichanliebiaotbAll zc : list) {
-                    string.append("单据").append(zc.getCgsqId()).append("有未出库项【")
-                            .append(zc.getZcName()).append("】\n");
-                }
-                string.append("是否继续出库？选“否”会要求输入原因，并不再出库以上所有资产");
-                int result = AssetMessage.showConfirmDialog(null, string.toString(),
-                        "确认",JOptionPane.YES_NO_OPTION);
-                if (result == 0) {
-                    return;
-                }
-                for (ZichanliebiaotbAll lb : list) {
-                    String reason = "";
-                    //修改在点击取消时不做处理，直接返回入库页面
-                    while (reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【"
-                                + lb.getZcName() + "】的理由(必输)：");
-                        if (reason == null) {
-                            return;
-                        }
-                    }
-                    lb.setReason("【出库】" + reason);
-                }
-                new Cancel(list).execute();
-            }
-            close();
-        }
-        
-    }
-    
-    private class OpenTask extends WeidengjizichanTask{
-
-        public OpenTask(String sql) {
-            super(sql);
-        }
-        
-        @Override
-        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
-
-            logger.debug("get current size:" + response.getResult().size());
-            list = response.getResult();
-            if (list != null && list.size() > 0) {
-                StringBuilder string = new StringBuilder();
-                for (ZichanliebiaotbAll zc : list) {
-                    string.append("单据").append(zc.getCgsqId()).append("有未出库项【")
-                            .append(zc.getZcName()).append("】\n");
-                }
-                string.append("是否继续出库？选“否”会要求输入原因，并不再出库以上所有资产");
-                int result = AssetMessage.showConfirmDialog(null, string.toString(),
-                        "确认",JOptionPane.YES_NO_OPTION);
-                if (result == 0) {
-                    return;
-                }
-                for (ZichanliebiaotbAll lb : list) {
-                    String reason = "";
-                    //修改在点击取消时不做处理，直接返回入库页面
-                    while (reason.isEmpty()) {
-                        reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【"
-                                + lb.getZcName() + "】的理由(必输)：");
-                        if (reason == null) {
-                            return;
-                        }
-                    }
-                    lb.setReason("【出库】" + reason);
-                }
-                new Cancel(list).execute();
-            }
-        }
-        
-    }
-    
-    public void chooseZichan(){
-        String sql = " cgsq_id like \"YHLY%\" and is_completed = 1 and status = 7";
-        new ChooseTask(sql).execute();
-    }
-    
-    private class ChooseTask extends WeidengjizichanTask{
-
-        public ChooseTask(String sql) {
-            super(sql);
-        }
-        
-        @Override
-        public void responseResult(CommFindEntity<ZichanliebiaotbAll> response) {
-
-            logger.debug("get current size:" + response.getResult().size());
-            list = response.getResult();
-            sqid = null;
-            wait = false;
-            if(list.size() > 0){
-                sqid = list.get(0).getCgsqId();
-            }
-        }
-        
     }
     
     private class Cancel extends CancelDengji{
@@ -435,9 +301,9 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             }
             close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            YihaopinChuKuJDialog zichanchuku = new YihaopinChuKuJDialog(new javax.swing.JFrame(), true);
-            zichanchuku.setLocationRelativeTo(mainFrame);
-            AssetClientApp.getApplication().show(zichanchuku);
+            YihaopinTuiKuJDialog zichanruku = new YihaopinTuiKuJDialog();
+            zichanruku.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(zichanruku);
         }
 
     }
@@ -446,7 +312,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     @Action
     public Task buhege(){
         if(jTable1.getRowCount()-1 < 1){
-            AssetMessage.ERRORSYS("请选择要取消出库的资产！",this);
+            AssetMessage.ERRORSYS("请选择要取消退库的资产！",this);
             return null;
         }
         List<ZichanliebiaotbAll> lst = new ArrayList<ZichanliebiaotbAll>();
@@ -458,16 +324,16 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
-            lb.setCgsqId(yuandanmap.get(lb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
+            lb.setCgsqId(yuandanmap.get(lb.getCgzcId() + jTable1.getValueAt(i, 9).toString()).toString());
             String reason = "";
             while (reason.isEmpty()) {
-                reason = AssetMessage.showInputDialog(null, "请输入取消出库资产【"
+                reason = AssetMessage.showInputDialog(null, "请输入取消退库资产【"
                         + jTable1.getValueAt(i, 1) + "】的理由(必输)：");
                 if (reason == null) {
                     return null;
                 }
             }
-            lb.setReason("【出库】" + reason);
+            lb.setReason("【退库】" + reason);
             lst.add(lb);
         }
         return new Cancel(lst);
@@ -475,19 +341,24 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     
     @Action
     public Task submitForm() throws ParseException{
+        if (cangku.getText().isEmpty()) {
+            AssetMessage.ERRORSYS("请输入仓库！", this);
+            return null;
+        }
         if(jTable1.getRowCount()-1 < 1){
-            AssetMessage.ERRORSYS("请选择要领用的物品！",this);
+            AssetMessage.ERRORSYS("请选择要退库的物品！",this);
             return null;
         }
         jTable1.getCellEditor(jTable1.getSelectedRow(),
                 jTable1.getSelectedColumn()).stopCellEditing();
-        cgsq = new ChukudanDetailEntity();
-        Zichanchukudantb sqd = new Zichanchukudantb();
-        sqd.setChukudanId(cgsqId.getText());
-        sqd.setChukudanDate(dateformate.parse(shenqingdanDate.getText()));
+        cgsq = new RukudanDetailEntity();
+        Zichanrukudantb sqd = new Zichanrukudantb();
+        sqd.setRukudanId(cgsqId.getText());
+        sqd.setRukudanDate(dateformate.parse(shenqingdanDate.getText()));
         sqd.setZhidanrenId(userId);
-        sqd.setDanjuleixingId(24);
+        sqd.setDanjuleixingId(23);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
+        sqd.setKufang(cangku.getText());
         
         zc = new ArrayList<ZiChanLieBiaotb>();
 //        for (int i = 0; i < zc.size(); i++) {
@@ -510,23 +381,23 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             zc.add(zclb);
         }
         
-        cgsq.setChukudan(sqd);
+        cgsq.setRukudan(sqd);
         cgsq.setZc(zc);        
         
-        String serviceId = "yhp/chuku";
-        return new CommUpdateTask<ChukudanDetailEntity>(cgsq,serviceId) {
+        String serviceId = "yhp/tuiku";
+        return new CommUpdateTask<RukudanDetailEntity>(cgsq,serviceId) {
 
             @Override
-            public void responseResult(ComResponse<ChukudanDetailEntity> response) {
+            public void responseResult(ComResponse<RukudanDetailEntity> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     AssetMessage.showMessageDialog(null, "提交成功！");
                     close();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YihaopinChuKuJDialog zichanchuku = new YihaopinChuKuJDialog(new javax.swing.JFrame(), true);
-                    zichanchuku.setLocationRelativeTo(mainFrame);
-                    AssetClientApp.getApplication().show(zichanchuku);
+                    YihaopinTuiKuJDialog zichanruku = new YihaopinTuiKuJDialog();
+                    zichanruku.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(zichanruku);
                 } else {
-                    AssetMessage.ERROR(response.getErrorMessage(), YihaopinChuKuJDialog.this);
+                    AssetMessage.ERROR(response.getErrorMessage(), YihaopinTuiKuJDialog.this);
                 }
             }
         };
@@ -550,6 +421,10 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jLabel14 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         shenqingdanRemark = new javax.swing.JTextArea();
+        jingbanren = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cangku = new BaseTextField();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
         jToolBar1 = new javax.swing.JToolBar();
@@ -558,18 +433,16 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jButton13 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jingbanren = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         totalpricelabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YihaopinChuKuJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YihaopinTuiKuJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel2.setMinimumSize(new java.awt.Dimension(796, 577));
+        jPanel2.setMinimumSize(null);
         jPanel2.setName("jPanel2"); // NOI18N
 
         middlePanel.setName("middlePanel"); // NOI18N
@@ -595,17 +468,35 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         shenqingdanRemark.setName("shenqingdanRemark"); // NOI18N
         jScrollPane2.setViewportView(shenqingdanRemark);
 
+        jingbanren.setName("jingbanren"); // NOI18N
+
+        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
+        jLabel4.setName("jLabel4"); // NOI18N
+
+        cangku.setName("cangku"); // NOI18N
+
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+
         javax.swing.GroupLayout middlePanelLayout = new javax.swing.GroupLayout(middlePanel);
         middlePanel.setLayout(middlePanelLayout);
         middlePanelLayout.setHorizontalGroup(
             middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(middlePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(middlePanelLayout.createSequentialGroup()
+                        .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(cangku, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(middlePanelLayout.createSequentialGroup()
                         .addComponent(cgsqId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 428, Short.MAX_VALUE)
@@ -624,6 +515,14 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     .addComponent(cgsqId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(shenqingdanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))
+                    .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel3)
+                        .addComponent(cangku, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -669,7 +568,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YihaopinChuKuJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YihaopinTuiKuJDialog.class, this);
         jButton10.setAction(actionMap.get("submitForm")); // NOI18N
         jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
         jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
@@ -716,11 +615,6 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jButton15.setOpaque(false);
         jToolBar1.add(jButton15);
 
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
-
-        jingbanren.setName("jingbanren"); // NOI18N
-
         jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
         jLabel6.setName("jLabel6"); // NOI18N
 
@@ -733,17 +627,12 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(middlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(totalpricelabel)))
@@ -756,15 +645,11 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(middlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(totalpricelabel))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(totalpricelabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -778,11 +663,9 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+            .addGap(0, 574, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -805,20 +688,20 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YihaopinChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YihaopinTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YihaopinChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YihaopinTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YihaopinChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YihaopinTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YihaopinChuKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YihaopinTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YihaopinChuKuJDialog dialog = new YihaopinChuKuJDialog(new javax.swing.JFrame(),true);
+                YihaopinTuiKuJDialog dialog = new YihaopinTuiKuJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -836,10 +719,11 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             super.print(this.getTitle(),
                     new String[][]{{"单据编号", cgsqId.getText()},
                     {"制单日期", shenqingdanDate.getText()},
+                    {"制单人", jingbanren.getText()},
+                    {"仓库", cangku.getText()},
                     {"备注", shenqingdanRemark.getText()}}, 
                     jTable1,
                     new String[][]{
-                    {"制单人", jingbanren.getText()}
                     });
         } catch (DRException ex) {
             ex.printStackTrace();
@@ -848,6 +732,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cangku;
     private javax.swing.JTextField cgsqId;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -857,6 +742,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
