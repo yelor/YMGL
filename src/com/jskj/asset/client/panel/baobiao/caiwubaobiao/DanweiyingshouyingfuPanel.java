@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.baobiao.caiwubaobiao;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.DanweiyingshouyingfuEntity;
 import com.jskj.asset.client.bean.entity.DanweiyingshouyingfuFindEntity;
 import com.jskj.asset.client.panel.baobiao.caigou.*;
@@ -14,6 +15,7 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.shjs.SelectDanweiJDialog;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.io.File;
 import java.util.ArrayList;
@@ -21,7 +23,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -40,6 +44,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     private List<DanweiyingshouyingfuEntity> currentPageData;
 
     private final BindTableHelper<DanweiyingshouyingfuEntity> bindTable;
+    private SelectDanweiJDialog selectDanweiJDialog;
 
     /**
      * Creates new form YimiaocaigoumingxiJDialog
@@ -125,7 +130,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         jButton12.setOpaque(false);
         jToolBar2.add(jButton12);
 
-        jButton1.setAction(actionMap.get("disDetail")); // NOI18N
+        jButton1.setAction(actionMap.get("selecteInvoice1Action")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorder(null);
@@ -447,13 +452,18 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         return printData;
     }
 
-    @Action
-    public Task disDetail() {
-        DanweiyingshouyingfuEntity selectedData = selectedDataFromTable();
-        if (selectedData == null) {
-            AssetMessage.ERRORSYS("请选择一条数据!");
-            return null;
-        }
-        return null;
+   @Action
+    public void selecteInvoice1Action() {
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (selectDanweiJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selectDanweiJDialog = new SelectDanweiJDialog();
+                    selectDanweiJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selectDanweiJDialog);
+            }
+        });
     }
 }

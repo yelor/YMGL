@@ -5,12 +5,14 @@
  */
 package com.jskj.asset.client.panel.baobiao.caigou;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.report.CaigouReport;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.shjs.SelectDanweiJDialog;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +20,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -39,6 +43,7 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
     private final BindTableHelper<CaigouReport> bindTable;
 
     private final HashMap parameterMap;
+    
 
     /**
      * Creates new form YimiaocaigoumingxiJDialog
@@ -290,7 +295,6 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton15.setName("jButton15"); // NOI18N
         jButton15.setOpaque(false);
-        jButton15.setRolloverEnabled(true);
         jToolBar1.add(jButton15);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -475,7 +479,26 @@ public class YimiaocaigoumingxiPanel extends BasePanel {
         if (selectedData == null) {
             AssetMessage.ERRORSYS("请选择一条数据!");
             return null;
-        }
+    }
         return new ReportCaiGouYimiaoTask(selectedData);
+    }
+
+    private class DisDetailTask extends org.jdesktop.application.Task<Object, Void> {
+        DisDetailTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to DisDetailTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 }
