@@ -54,7 +54,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         bindTable.createTable(new String[][]{{"danweiId", "单位编号"}, {"danweiName", "单位全名"}, {"yingshoujine", "应收余额"}, {"yingfujine", "应付余额"}, {"fuzeren", "负责人"},
         {"telephone", "电话"}, {"danweiAddr", "地址"}});
 //        bindTable.setColumnType(Date.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}, new int[]{3, 200}, new int[]{4, 200}, new int[]{5, 200}, new int[]{6, 200}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 100}, new int[]{3, 100}, new int[]{4, 80}, new int[]{5, 200}, new int[]{6, 200}).setRowHeight(25);
 
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
