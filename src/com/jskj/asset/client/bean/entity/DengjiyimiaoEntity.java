@@ -12,7 +12,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DengjiyimiaoEntity extends ShenbaoyimiaoEntity {
 
+    private Supplier gongyingdanwei;
+
     private Yimiaodengjitb yimiaodengji;
+
+    public Supplier getGongyingdanwei() {
+        return gongyingdanwei;
+    }
+
+    public void setGongyingdanwei(Supplier gongyingdanwei) {
+        this.gongyingdanwei = gongyingdanwei;
+    }
 
     public Yimiaodengjitb getYimiaodengji() {
 
@@ -20,7 +30,7 @@ public class DengjiyimiaoEntity extends ShenbaoyimiaoEntity {
     }
 
     public void setYimiaodengji(Yimiaodengjitb yimiaodengji) {
-        
+
         this.yimiaodengji = yimiaodengji;
     }
 

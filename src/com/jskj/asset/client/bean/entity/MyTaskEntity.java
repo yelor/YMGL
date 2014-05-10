@@ -1,11 +1,11 @@
 /*
  * 2014 Chengdu JunChen Technology
  */
-
 package com.jskj.asset.client.bean.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -13,12 +13,14 @@ import java.util.Date;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MyTaskEntity {
+
     private String shenqingdanId;
     private Date submitDate;
     private String danjuleixing;
     private String owner;
     private String department;
     private String context;
+    private List<YimiaocaigouEntity> list;
 
     /**
      * @return the shenqingdanId
@@ -33,6 +35,7 @@ public class MyTaskEntity {
     public void setShenqingdanId(String shenqingdanId) {
         this.shenqingdanId = shenqingdanId;
     }
+
     /**
      * @return the submitDate
      */
@@ -102,6 +105,13 @@ public class MyTaskEntity {
     public void setDepartment(String department) {
         this.department = department;
     }
-    
-    
+
+    public List<YimiaocaigouEntity> getList() {
+        return list;
+    }
+
+    public void setList(List<YimiaocaigouEntity> list) {
+        this.list = list;
+    }
+
 }

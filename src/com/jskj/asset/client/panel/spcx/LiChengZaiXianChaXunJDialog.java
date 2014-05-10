@@ -272,19 +272,6 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         }
         //</editor-fold>
 
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                YiMiaoLingGouJiHuaFenXiJDialog dialog = new YiMiaoLingGouJiHuaFenXiJDialog(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
     }
     
     @Action
@@ -303,23 +290,6 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
                 Collections.sort(resultArray, comparator);
                 bindTable.refreshData(resultArray);
 
-//                jTable4.getColumnModel().getColumn(5).setCellRenderer(new RowRender() {
-//
-//                    @Override
-//                    public void setRender(JTable t, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//                        setBackground(Color.white);
-//
-//                        if (value instanceof String) {
-//                            String maoli = value.toString();
-//                            if (maoli.startsWith("-")) {
-//                                setBackground(new Color(223, 131, 123));
-//                            } else {
-//                                setBackground(new Color(107, 209, 143));
-//                            }
-//                        }
-//
-//                    }
-//                });
             }
             
         };

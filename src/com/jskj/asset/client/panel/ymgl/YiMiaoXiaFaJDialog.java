@@ -135,7 +135,7 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
 
             public String[][] displayColumns() {
                 return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
-                {"youxiaodate", "有效期"}};
+                {"youxiaodate", "有效期"}, {"stockpileQuantity", "库存数量"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {

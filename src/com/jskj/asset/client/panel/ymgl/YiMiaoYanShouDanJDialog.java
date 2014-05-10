@@ -28,6 +28,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +45,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -208,6 +213,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
                     HashMap yimiaodengji = (HashMap) yimiaodengjimap;
+                    Object gongyingdanweimap = bindedMap.get("gongyingdanwei");
+                    HashMap gongyingdanwei = (HashMap) gongyingdanweimap;
 
                     Object yimiaoId = yimiaoAll.get("yimiaoId");
                     Object yimiaoName = yimiaoAll.get("yimiaoName");
@@ -228,6 +235,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
+                    
+                    jTextFieldSupplierName.setText((String) gongyingdanwei.get("supplierName"));
+                    jTextFieldFamiaoperson.setText(gongyingdanwei.get("supplierConstactperson")== null ? "" : (String) gongyingdanwei.get("supplierConstactperson"));
 
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
@@ -248,6 +258,17 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
             }
         });
+
+//        jTableyimiao.getModel().addTableModelListener(new TableModelListener(){
+//            @Override
+//            public void tableChanged(TableModelEvent e) {
+//
+//              if(jTextFieldSupplierName.getText().trim().equals("")){
+//                  String danweiSql="and supplier_id in Selecte where shenqingdan";
+//              }
+//            }
+//
+//        });
 
         jTextFieldStarttime.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -331,7 +352,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             public void removeUpdate(DocumentEvent e) {
                 try {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date begin = df.parse(jTextFieldArrivetime.getText());
+                    Date begin = df.parse("" + jTextFieldArrivetime.getText());
                     Date end = df.parse(jTextFieldStarttime.getText());
                     long l = begin.getTime() - end.getTime();
                     long day = l / (24 * 60 * 60 * 1000);
@@ -644,6 +665,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jTextField7.setText(resourceMap.getString("jTextField7.text")); // NOI18N
         jTextField7.setName("jTextField7"); // NOI18N
 
+        jTextFieldFamiaoperson.setEditable(false);
         jTextFieldFamiaoperson.setText(resourceMap.getString("jTextFieldFamiaoperson.text")); // NOI18N
         jTextFieldFamiaoperson.setName("jTextFieldFamiaoperson"); // NOI18N
 
@@ -711,6 +733,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jTextField18.setText(resourceMap.getString("jTextField18.text")); // NOI18N
         jTextField18.setName("jTextField18"); // NOI18N
 
+        jTextFieldSupplierName.setEditable(false);
         jTextFieldSupplierName.setText(resourceMap.getString("jTextFieldSupplierName.text")); // NOI18N
         jTextFieldSupplierName.setName("jTextFieldSupplierName"); // NOI18N
 
@@ -1024,10 +1047,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5)
-                .addContainerGap())
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

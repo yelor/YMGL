@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Backsaletb;
 import com.jskj.asset.client.bean.entity.XiaoshoutuihuoEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseCellFocusListener;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
@@ -43,6 +44,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
+    private float total = 0;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -99,7 +101,8 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "库存编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "单价", "true"}});
+            {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"},
+            {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "单价", "false"}, {"yimiaoHejia", "合价", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -163,6 +166,37 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
 
             }
         });
+        
+        //        自动计算出疫苗的合价显示
+        ((BaseTable) jTableyimiao).addCellListener(new BaseCellFocusListener() {
+            public void editingStopped(int selectedRow, int selectedColumn) {
+                int col = selectedColumn;
+                int row = selectedRow;
+
+                if (col == 8) {
+                    if ((!(("" + jTableyimiao.getValueAt(row, 8)).equals("")))
+                            && (!(("" + jTableyimiao.getValueAt(row, 9)).equals("")))) {
+                        try {
+                            int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 8));
+                            float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 9));
+                            jTableyimiao.setValueAt(price * count, row, 10);
+                        } catch (NumberFormatException e) {
+                            AssetMessage.ERRORSYS("第" + (row + 1) + "个疫苗销售退货数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
+                            return;
+                        }
+                    }
+                    int rows = jTableyimiao.getRowCount();
+                    total = 0;
+                    for (int i = 0; i < rows; i++) {
+                        if (!(("" + jTableyimiao.getValueAt(i, 10)).equals(""))) {
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 10));
+                        }
+                    }
+                    totalPrice.setText(total + "元");
+                }
+            }
+        }
+        );
 
         ((ScanButton) jButton2).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -260,6 +294,8 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
         jLabel13 = new javax.swing.JLabel();
         jTextFieldContactPerson = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        totalPrice = new javax.swing.JLabel();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -478,6 +514,12 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
 
+        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
+        jLabel5.setName("jLabel5"); // NOI18N
+
+        totalPrice.setText(resourceMap.getString("totalPrice.text")); // NOI18N
+        totalPrice.setName("totalPrice"); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -519,7 +561,11 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalPrice)
+                        .addGap(27, 27, 27)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -560,7 +606,9 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldzhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(totalPrice))
                 .addContainerGap())
         );
 
@@ -745,6 +793,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -766,5 +815,6 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
     private javax.swing.JTextField jTextFieldzhidanDate;
     private javax.swing.JTextField jTextFieldzhidanren;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel totalPrice;
     // End of variables declaration//GEN-END:variables
 }

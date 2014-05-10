@@ -590,6 +590,10 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         } else if (yimiaoJixing.getSelectedItem().toString().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入疫苗剂型!");
             return null;
+        } else if (yimiaoType.getSelectedIndex() == 0 && chengbenjia.getText().trim().equals("")
+                && yimiaoYushoujia.getText().trim().equals("")) {
+            AssetMessage.ERRORSYS("该疫苗是Ⅱ类疫苗，成本价和预售价不能为空，请填入数字!");
+            return null;
         }
 
         String zujima = PingYinUtil.getFirstSpell(yimiaoName.getText().trim());
@@ -623,13 +627,20 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
                     if (!jCheckBoxCont.isSelected()) {
+                        AssetMessage.INFO("提交成功！", YiMiaoInfoJDialog.this);
                         dispose();
                     } else {
-                        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-                        List<String> source = mode.getSource();
-                        source.clear();
-                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-                        yimiaoPicture.setModel(newMode);
+                        AssetMessage.INFO("提交成功！", YiMiaoInfoJDialog.this);
+                        dispose();
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        YiMiaoInfoJDialog yiMiaoInfoJDialog = new YiMiaoInfoJDialog(parentPanel);
+                        yiMiaoInfoJDialog.setLocationRelativeTo(mainFrame);
+                        AssetClientApp.getApplication().show(yiMiaoInfoJDialog);
+//                        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//                        List<String> source = mode.getSource();
+//                        source.clear();
+//                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+//                        yimiaoPicture.setModel(newMode);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), YiMiaoInfoJDialog.this);
