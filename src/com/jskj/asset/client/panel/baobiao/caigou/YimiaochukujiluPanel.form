@@ -133,7 +133,7 @@
                     <Component class="javax.swing.JButton" name="jButton1">
                       <Properties>
                         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                          <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaocaigoumingxiPanel" id="disDetail" methodName="disDetail"/>
+                          <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel" id="disDetail" methodName="disDetail"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" resourceKey="jButton1.icon"/>
                         <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
