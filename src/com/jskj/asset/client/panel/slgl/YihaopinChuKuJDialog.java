@@ -65,6 +65,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
     private Map yuandanmap;
+    private Map kcmap;
     private String pihao;
     private float totalprice;
     private float total = 0;
@@ -84,6 +85,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         isNew = false;
         yuandanmap = new HashMap();
+        kcmap = new HashMap();
         
         this.addWindowListener(new WindowListener() {
 
@@ -198,6 +200,9 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     totalprice = Float.parseFloat(map.get("totalprice").toString());
                     editTable.insertValue(8, totalprice);
                     editTable.insertValue(9, pihao);
+                    
+                    map = (HashMap)bindedMap.get("kucun");
+                    Object gdzcKucun = map.get("quantity");
 //                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
 //                    zclb.setCgsqId(cgsqId.getText());
 //                    zclb.setCgzcId((Integer)gdzcId);
@@ -206,6 +211,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
 //                    zc.add(zclb);
                     //保存原单号
                     yuandanmap.put(dzyhpId+pihao, yuandanID);
+                    kcmap.put(dzyhpId+pihao, gdzcKucun);
                 }
 
             }
@@ -501,6 +507,11 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             }
             zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
             zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 6)));
+            int kucun = Integer.parseInt(kcmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
+            if(zclb.getQuantity() > kucun){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个物品的出库数量大于库存数："+kucun+"，出库失败！");
+                return null;
+            }
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 7));
             zclb.setPihao(jTable1.getValueAt(i, 9).toString());
             zclb.setSaleprice(price);

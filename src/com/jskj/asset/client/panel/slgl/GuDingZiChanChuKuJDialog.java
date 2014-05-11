@@ -64,6 +64,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
     private Map yuandanmap;
+    private Map kcmap;
     private String pihao;
     private float totalprice;
     private float total = 0;
@@ -83,6 +84,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         isNew = false;
         yuandanmap = new HashMap();
+        kcmap = new HashMap();
         
         this.addWindowListener(new WindowListener() {
 
@@ -197,6 +199,9 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     totalprice = Float.parseFloat(map.get("totalprice").toString());
                     editTable.insertValue(8, totalprice);
                     editTable.insertValue(9, pihao);
+                    
+                    map = (HashMap)bindedMap.get("kucun");
+                    Object gdzcKucun = map.get("quantity");
 //                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
 //                    zclb.setCgsqId(cgsqId.getText());
 //                    zclb.setCgzcId((Integer)gdzcId);
@@ -205,6 +210,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
 //                    zc.add(zclb);
                     //保存原单号
                     yuandanmap.put(gdzcId+pihao, yuandanID);
+                    kcmap.put(gdzcId+pihao, gdzcKucun);
                 }
 
             }
@@ -500,6 +506,11 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
             }
             zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
             zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 6)));
+            int kucun = Integer.parseInt(kcmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
+            if(zclb.getQuantity() > kucun){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的出库数量大于库存数："+kucun+"，出库失败！");
+                return null;
+            }
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 7));
             zclb.setPihao(jTable1.getValueAt(i, 9).toString());
             zclb.setSaleprice(price);
@@ -757,12 +768,13 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(totalpricelabel)))
+                        .addComponent(totalpricelabel))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

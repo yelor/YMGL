@@ -46,6 +46,8 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     private final BindTableHelper<DanweiyingshouyingfuEntity> bindTable;
     private SelectDanweiJDialog selectDanweiJDialog;
 
+    private final HashMap parameterMap;
+    private final String conditionSql;
     /**
      * Creates new form YimiaocaigoumingxiJDialog
      */
@@ -55,14 +57,21 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         pageIndex = 1;
         pageSize = 20;
         count = 0;
+        conditionSql = "";
+        parameterMap = new HashMap();
+        parameterMap.put("conditionSql", conditionSql);
+        parameterMap.put("serviceId", "danweiyingshouyingfu");
+        
         bindTable = new BindTableHelper<DanweiyingshouyingfuEntity>(jTable1, new ArrayList<DanweiyingshouyingfuEntity>());
         bindTable.createTable(new String[][]{{"danweiId", "单位编号"}, {"danweiName", "单位全名"}, {"yingshoujine", "应收余额"}, {"yingfujine", "应付余额"}, {"fuzeren", "负责人"},
         {"telephone", "电话"}, {"danweiAddr", "地址"}});
 //        bindTable.setColumnType(Date.class, 1);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}, new int[]{3, 200}, new int[]{4, 200}, new int[]{5, 200}, new int[]{6, 200}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 100}, new int[]{3, 100}, new int[]{4, 80}, new int[]{5, 200}, new int[]{6, 200}).setRowHeight(25);
 
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
+        
+        reload();
     }
 
     /**
@@ -377,6 +386,17 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     @Override
     @Action
     public Task reload() {
+        String startDate = jTextFieldStart.getText();
+        String endDate = jTextFieldEnd.getText();
+        if(startDate.isEmpty()) {
+            startDate = null;
+        }
+        if(endDate.isEmpty()) {
+            endDate = null;
+        }
+        parameterMap.put("startDate", startDate);
+        parameterMap.put("endDate", endDate);
+        parameterMap.put("pageIndex", pageIndex);
         return new RefreshTask();
     }
 
@@ -389,7 +409,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     public Task pagePrev() {
         pageIndex = pageIndex - 1;
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
-        return new RefreshTask();
+        return reload();
     }
 
     @Action
@@ -397,7 +417,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         if (pageSize * (pageIndex) <= count) {
             pageIndex = pageIndex + 1;
         }
-        return new RefreshTask();
+        return reload();
     }
 
     public DanweiyingshouyingfuEntity selectedDataFromTable() {
@@ -416,7 +436,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     private class RefreshTask extends DanweiyingshouyingfuFindTask {
 
         RefreshTask() {
-            super("danweiyingshouyingfu");
+            super(parameterMap);
         }
 
         @Override
