@@ -322,7 +322,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         }
 
         @Override
-        protected void succeeded(Object result) {
+        public void onSucceeded(Object result) {
             if (result instanceof Exception) {
                 Exception e = (Exception) result;
                 AssetMessage.ERRORSYS(e.getMessage());

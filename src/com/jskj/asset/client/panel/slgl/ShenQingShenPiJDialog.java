@@ -323,7 +323,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         }
         
         @Override
-        protected void succeeded(Object result){
+        public void onSucceeded(Object result){
             reload();
             AssetMessage.showMessageDialog(null, "审批完成！");
         }
@@ -347,7 +347,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton12 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jToolBar2 = new javax.swing.JToolBar();
         jLabelTotal = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -428,11 +428,18 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton15.setOpaque(false);
         jToolBar1.add(jButton15);
 
-        jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setOpaque(false);
+        jToolBar2.setFloatable(false);
+        jToolBar2.setRollover(true);
+        jToolBar2.setBorderPainted(false);
+        jToolBar2.setName("jToolBar2"); // NOI18N
+        jToolBar2.setOpaque(false);
 
         jLabelTotal.setText(resourceMap.getString("jLabelTotal.text")); // NOI18N
+        jLabelTotal.setMaximumSize(new java.awt.Dimension(80, 40));
+        jLabelTotal.setMinimumSize(new java.awt.Dimension(80, 40));
         jLabelTotal.setName("jLabelTotal"); // NOI18N
+        jLabelTotal.setPreferredSize(new java.awt.Dimension(80, 40));
+        jToolBar2.add(jLabelTotal);
 
         jButton1.setAction(actionMap.get("pagePrev")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -440,56 +447,39 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jButton1.setBorderPainted(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setMaximumSize(new java.awt.Dimension(60, 25));
+        jButton1.setMinimumSize(new java.awt.Dimension(60, 25));
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
+        jButton1.setPreferredSize(new java.awt.Dimension(60, 25));
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton1);
 
         jButton3.setAction(actionMap.get("pageNext")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setBorder(null);
         jButton3.setBorderPainted(false);
+        jButton3.setMaximumSize(new java.awt.Dimension(60, 25));
+        jButton3.setMinimumSize(new java.awt.Dimension(60, 25));
         jButton3.setName("jButton3"); // NOI18N
         jButton3.setOpaque(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(283, Short.MAX_VALUE)
-                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addGap(2, 2, 2))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jButton3.setPreferredSize(new java.awt.Dimension(60, 25));
+        jToolBar2.add(jButton3);
 
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
         ctrlPane.setLayout(ctrlPaneLayout);
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                .addGap(196, 196, 196)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(79, 79, 79))
+            .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -502,10 +492,10 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -520,7 +510,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -581,10 +571,10 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabelTotal;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTable jSQTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables
 }
