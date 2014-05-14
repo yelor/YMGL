@@ -109,7 +109,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称", "true"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
             {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"yimiao.unitId", "单位", "false"}, {"youxiaodate", "有效期至", "false"}, {"saleQuantity", "数量", "true"},
-            {"stockpilePrice", "单价", "false"}, {"hejia", "合价", "false"}});
+            {"yushouPrice", "单价", "false"}, {"hejia", "合价", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -134,8 +134,10 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             }
 
             public String[][] displayColumns() {
+                
                 return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
                 {"youxiaodate", "有效期"}, {"stockpileQuantity", "库存数量"}};
+                
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -150,7 +152,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
-                    Float stockpilePrice = Float.parseFloat("" + yimiao.get("yimiaoYushoujia"));
+                    Float yushouPrice = Float.parseFloat("" + yimiao.get("yimiaoYushoujia"));
                     Object youxiaoqi = bindedMap.get("youxiaodate").toString().subSequence(0, 10);
                     Object pihao = bindedMap.get("pihao");
 
@@ -162,7 +164,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     editTable.insertValue(5, pihao);
                     editTable.insertValue(6, unit);
                     editTable.insertValue(7, youxiaoqi);
-                    editTable.insertValue(9, stockpilePrice);
+                    editTable.insertValue(9, yushouPrice);
 
 //                    保存库存数量
                     kucunmap.put(stockpileId, stockpileQuantity);
@@ -733,7 +735,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 return null;
             }
             sale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "saleQuantity").toString()));
-            sale_detail.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "stockpilePrice"))));
+            sale_detail.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yushouPrice"))));
             sale_detail.setTotalprice(sale_detail.getQuantity() * sale_detail.getPrice());
             sale_detail.setStatus(0);
             list.add(sale_detail);
