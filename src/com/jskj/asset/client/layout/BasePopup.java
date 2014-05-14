@@ -259,7 +259,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(BasePopup.class, this);
         prepPageBubtton.setAction(actionMap.get("pagePrev")); // NOI18N
-        prepPageBubtton.setFont(new java.awt.Font("宋体", 1, 14)); // NOI18N
+        prepPageBubtton.setFont(resourceMap.getFont("prepPageBubtton.font")); // NOI18N
         prepPageBubtton.setForeground(resourceMap.getColor("prepPageBubtton.foreground")); // NOI18N
         prepPageBubtton.setText(resourceMap.getString("prepPageBubtton.text")); // NOI18N
         prepPageBubtton.setBorder(null);
@@ -272,7 +272,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         jToolBar1.add(prepPageBubtton);
 
         nextPageButton.setAction(actionMap.get("pageNext")); // NOI18N
-        nextPageButton.setFont(new java.awt.Font("宋体", 1, 14)); // NOI18N
+        nextPageButton.setFont(resourceMap.getFont("nextPageButton.font")); // NOI18N
         nextPageButton.setForeground(resourceMap.getColor("nextPageButton.foreground")); // NOI18N
         nextPageButton.setText(resourceMap.getString("nextPageButton.text")); // NOI18N
         nextPageButton.setBorder(null);
@@ -281,7 +281,6 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         nextPageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         nextPageButton.setName("nextPageButton"); // NOI18N
         nextPageButton.setOpaque(false);
-        nextPageButton.setPreferredSize(new java.awt.Dimension(37, 27));
         nextPageButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(nextPageButton);
 
@@ -291,13 +290,14 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
             jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelTopLayout.setVerticalGroup(
             jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
+            .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 

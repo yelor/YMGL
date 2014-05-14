@@ -425,7 +425,7 @@ public class LoginMain extends javax.swing.JFrame {
     public Task sendLogin() {
         String userName = userNameFiled.getText();
         String serviceAdd = serviceText.getText();
-        drawLoopLine(10, 40);
+        drawLoopLine(1, 10);
         String password = String.valueOf(passwordFiled.getPassword());
         if (userName.trim().equals("")) {
             setWarningMsg("请输入用户名!");
@@ -441,7 +441,7 @@ public class LoginMain extends javax.swing.JFrame {
 
         setWarningMsg("");
         new LoginInfoTask(LoginInfoTask.WRITE_XML).execute();
-        drawLoopLine(40, 80);
+        drawLoopLine(10, 80);
         HashMap map = new HashMap();
         map.put("userName", userName);
         map.put("userPassword", password);
@@ -479,7 +479,7 @@ public class LoginMain extends javax.swing.JFrame {
                 timetask = new TimerTask() {
                     double step = 1d;
                     double a = nextToX - toX;
-                    double stepPre = 2d;
+                    double stepPre = 5d;
 
                     @Override
                     public void run() {

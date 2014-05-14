@@ -15,6 +15,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -38,6 +40,14 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         super();
         hasRegister = false;
         isShow = false;
+
+        this.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (!isShow) {
+                    showPanel();
+                }
+            }
+        });
 
     }
 
@@ -176,13 +186,13 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
                 JTable table = basePopup.getTable();
                 int selectedrow = table.getSelectedRow();
                 int upRow = selectedrow - 1;
-               // System.out.println("keyCodekeyCode:VK_UP:" + upRow);
+                // System.out.println("keyCodekeyCode:VK_UP:" + upRow);
                 if (upRow >= 0) {
                     table.setRowSelectionInterval(upRow, upRow);
-                }else{
-                   table.clearSelection();
+                } else {
+                    table.clearSelection();
                 }
-                
+
             }
         }
     }

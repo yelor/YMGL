@@ -33,6 +33,7 @@ public class LeftPanel extends BaseTreePane {
      */
     public LeftPanel() {
         initComponents();
+        this.setLayout(null);
 
     }
 
@@ -64,9 +65,6 @@ public class LeftPanel extends BaseTreePane {
             }
         });
 
-        setBackground(resourceMap.getColor("Form.background")); // NOI18N
-        setName("Form"); // NOI18N
-
         jToolBar1.setBackground(resourceMap.getColor("jToolBar1.background")); // NOI18N
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
@@ -75,15 +73,18 @@ public class LeftPanel extends BaseTreePane {
         jToolBar1.setAlignmentY(0.0F);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
+        setBackground(resourceMap.getColor("Form.background")); // NOI18N
+        setName("Form"); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(0, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(0, 0, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -164,6 +165,9 @@ public class LeftPanel extends BaseTreePane {
 
                 List<AssetNode> permissionArrMoudle = new ArrayList<AssetNode>();
                 int i = 0;
+                int baseW = 220;
+                int baseH = 54;
+                int j = 0;
                 for (AssetNode node : assetNodes) {
                     String icon = node.getNodeIcon();
                     String name = node.getNodeName();
@@ -201,9 +205,13 @@ public class LeftPanel extends BaseTreePane {
                     leftButton.addActionListener(new AssetNodeActionListener(node));
 
                     leftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                    
+                    leftButton.setBounds(0, baseH*(j), baseW, baseH);
+                    
+                    j++;
 
                     
-                    jToolBar1.add(leftButton);
+                    LeftPanel.this.add(leftButton);
                 }
 
                 repaint();
