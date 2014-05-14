@@ -61,7 +61,7 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
                 if (shenqingdan.startsWith("YM")) {//疫苗相关
                     new YimiaoXiaoshouXiangdanTask(shenqingdan) {
                         @Override
-                        protected void succeeded(Object result) {
+                        public void onSucceeded(Object result) {
                             if (result != null) {
                                 if (shenqingdan.startsWith(DanHao.TYPE_YIMIAOXF) || shenqingdan.startsWith(DanHao.TYPE_YIMIAOXS)) {
                                     openDialog(className, result, XiaoshoushenpixiangdanEntity.class);
@@ -82,8 +82,9 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
 
                 } else if (!shenqingdan.startsWith(DanHao.TYPE_FKDJ) && !shenqingdan.startsWith(DanHao.TYPE_QTFK)) {//资产相关
                     new ShenqingDetailTask(shenqingdan) {
+                     
                         @Override
-                        protected void succeeded(Object result) {
+                        public void onSucceeded(Object result) {
                             if (result != null) {
                                 openDialog(className, result, CaigoushenqingDetailEntity.class);
                             } else {
@@ -94,8 +95,9 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
                 } else {//付款单据
 
                     new com.jskj.asset.client.panel.shjs.task.FkShenqingDetailTask(shenqingdan) {
+               
                         @Override
-                        protected void succeeded(Object result) {
+                        public void onSucceeded(Object result) {
                             if (result != null) {
                                 openDialog(className, result, FukuanshenqingDetailEntity.class);
                             } else {
@@ -120,7 +122,8 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
                     BaseDialog jdialog = helper.newInstance(null, entity);
                     jdialog.setLocationRelativeTo(mainFrame);
                     //AssetClientApp.getApplication().show(yimiaoShenPiJDialog);
-                    jdialog.setVisible(true);
+                    //jdialog.setVisible(true);
+                    AssetClientApp.getApplication().show(jdialog);
                 } catch (Exception ex) {
                     logger.error("StaticDialog:" + ex);
                 }
