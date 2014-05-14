@@ -70,7 +70,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         bindTable.bind().setColumnWidth(new int[]{0, 200}, new int[]{1, 200}).setRowHeight(25);
         detailPanel = new DetailPanel();
         
-        jTable4.addMouseListener(new DanjuMouseAdapter(true){
+        jTable4.addMouseListener(new DanjuMouseAdapter(true,false){
 
             @Override
             public String getShenqingdanID() {

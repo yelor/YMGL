@@ -30,15 +30,23 @@ import org.apache.log4j.Logger;
  * @author 305027939
  */
 public abstract class DanjuMouseAdapter extends MouseAdapter {
- private static final Logger logger = Logger.getLogger(DanjuMouseAdapter.class);
+
+    private static final Logger logger = Logger.getLogger(DanjuMouseAdapter.class);
     boolean isDoubleClick;
 
+    boolean isMouseOverStyle;
+
     public DanjuMouseAdapter() {
-        this(false);
+        this(false, true);
+    }
+
+    public DanjuMouseAdapter(boolean isDoubleClick, boolean isMouseOverStyle) {
+        this.isDoubleClick = isDoubleClick;
+        this.isMouseOverStyle = isMouseOverStyle;
     }
 
     public DanjuMouseAdapter(boolean isDoubleClick) {
-        this.isDoubleClick = isDoubleClick;
+        this(isDoubleClick, true);
     }
 
     public abstract String getShenqingdanID();
@@ -82,7 +90,7 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
 
                 } else if (!shenqingdan.startsWith(DanHao.TYPE_FKDJ) && !shenqingdan.startsWith(DanHao.TYPE_QTFK)) {//资产相关
                     new ShenqingDetailTask(shenqingdan) {
-                     
+
                         @Override
                         public void onSucceeded(Object result) {
                             if (result != null) {
@@ -95,7 +103,7 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
                 } else {//付款单据
 
                     new com.jskj.asset.client.panel.shjs.task.FkShenqingDetailTask(shenqingdan) {
-               
+
                         @Override
                         public void onSucceeded(Object result) {
                             if (result != null) {
@@ -134,12 +142,16 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
     @Override
 
     public void mouseEntered(MouseEvent e) {
-        e.getComponent().setBackground(Color.WHITE);
+        if (isMouseOverStyle) {
+            e.getComponent().setBackground(Color.WHITE);
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        e.getComponent().setBackground(null);
+        if (isMouseOverStyle) {
+            e.getComponent().setBackground(null);
+        }
     }
 
 }

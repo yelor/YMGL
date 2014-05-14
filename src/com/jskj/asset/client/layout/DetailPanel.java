@@ -76,7 +76,7 @@ public class DetailPanel extends BasePanel {
     }
 
     public void setText(String context) {
-        StringBuilder sb = new StringBuilder("<html><font color=white>");
+        StringBuilder sb = new StringBuilder("<html><font color=#000000>");
         sb.append(context);
         sb.append("</font></html>");
         jEditorPane1.setText(sb.toString());

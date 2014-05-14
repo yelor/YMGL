@@ -5,6 +5,7 @@
 package com.jskj.asset.client.constants;
 
 import java.awt.Font;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -13,7 +14,8 @@ import java.awt.Font;
 public class Constants {
 
     public final static String VERSION = "v1.00";
-    
+    public final static ImageIcon logoIcon = new ImageIcon(Constants.class.getResource("/com/jskj/asset/client/resources/icon.png"));
+
     /*HTTP conifg*/
     public static String HTTP = "";
     public static String APPID = "/AssetsSys/service/";

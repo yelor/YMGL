@@ -11,6 +11,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.layout.ReportTemplates;
+import static com.jskj.asset.client.layout.ReportTemplates.viewer;
 import com.jskj.asset.client.util.BeanFactory;
 import java.math.BigDecimal;
 import java.util.List;
@@ -59,7 +60,7 @@ public class ReportCaiGouDZYHTask extends BaseTask {
                 /*开始制作报表*/
                 DRDataSource dataSource = new DRDataSource("item", "quantity", "unitprice", "totalprice");
                 for (CaiGouDizhiyihaopinReport caigou : caigous) {
-                    dataSource.add(caigou.getDizhiyihaopintb().getDzyhpName(), 
+                    dataSource.add(caigou.getDizhiyihaopintb().getDzyhpName(),
                             caigou.getQuantity() == null ? 0 : caigou.getQuantity(),
                             new BigDecimal(0),
                             new BigDecimal(0));
@@ -72,24 +73,18 @@ public class ReportCaiGouDZYHTask extends BaseTask {
                 TextColumnBuilder<BigDecimal> unitPriceColumn = col.column("单价", "unitprice", type.bigDecimalType());
                 TextColumnBuilder<BigDecimal> totalPriceColumn = col.column("总价", "totalprice", type.bigDecimalType());
 
-                try {
-                    report()
-                            .setTemplate(ReportTemplates.reportTemplate)
-                            .columns(itemColumn, quantityColumn, unitPriceColumn,totalPriceColumn)
-                            .summary(
-                                    cht.pie3DChart()
-                                    .setTitle(selectedData.getShenqingdanId())
-                                    .setTitleFont(boldFont)
-                                    .setKey(itemColumn)
-                                    .series(
-                                            cht.serie(totalPriceColumn)))
-                            .pageFooter(ReportTemplates.footerComponent)
-                            .setDataSource(dataSource)
-                            .show(false);
-                } catch (DRException e) {
-                    e.printStackTrace();
-                    throw e;
-                }
+                viewer(report()
+                        .setTemplate(ReportTemplates.reportTemplate)
+                        .columns(itemColumn, quantityColumn, unitPriceColumn, totalPriceColumn)
+                        .summary(
+                                cht.pie3DChart()
+                                .setTitle(selectedData.getShenqingdanId())
+                                .setTitleFont(boldFont)
+                                .setKey(itemColumn)
+                                .series(
+                                        cht.serie(totalPriceColumn)))
+                        .pageFooter(ReportTemplates.footerComponent)
+                        .setDataSource(dataSource));
 
             } else {
                 clientView.setStatus("response data is null", AssetMessage.ERROR_MESSAGE);

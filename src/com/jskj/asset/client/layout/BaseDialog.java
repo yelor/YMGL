@@ -6,6 +6,7 @@
 package com.jskj.asset.client.layout;
 
 import com.jskj.asset.client.AssetClientApp;
+import static com.jskj.asset.client.layout.ReportTemplates.viewer;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.KeyAdapter;
@@ -481,7 +482,8 @@ public abstract class BaseDialog extends JDialog {
         SubreportBuilder subreport = cmp.subreport(new SubreportExpression(table))
                 .setDataSource(new SubreportDataSourceExpression(table));
 
-        report().setTemplate(ReportTemplates.reportTemplate)
+        
+        viewer(report().setTemplate(ReportTemplates.reportTemplate)
                 .title(ReportTemplates.createTitleComponent(title),
                         cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
                                 cmp.hListCell(createCustomerComponent(leftArray)).heightFixedOnTop(),
@@ -493,8 +495,7 @@ public abstract class BaseDialog extends JDialog {
                 .setDataSource(new JREmptyDataSource(table.length))
                 .summary(cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
                                 cmp.hListCell(createCustomerComponent(bottomleftArray)).heightFixedOnTop(),
-                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop()))
-                .show(false);
+                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop())));
     }
 
     protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns) throws DRException {
@@ -526,7 +527,7 @@ public abstract class BaseDialog extends JDialog {
             }
         }
 
-        report().setTemplate(ReportTemplates.reportTemplate)
+        viewer(report().setTemplate(ReportTemplates.reportTemplate)
                 .columns(itemColumns)
                 .title(ReportTemplates.createTitleComponent(title),
                         cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
@@ -538,8 +539,7 @@ public abstract class BaseDialog extends JDialog {
                 .setDataSource(dataSource)
                 .summary(cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
                                 cmp.hListCell(createCustomerComponent(bottomleftArray)).heightFixedOnTop(),
-                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop()))
-                .show(false);
+                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop())));
     }
 
     private ComponentBuilder<?, ?> createCustomerComponent(List<String[]> array) {

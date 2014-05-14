@@ -508,7 +508,7 @@ public class LoginMain extends javax.swing.JFrame {
     }
 
     private void drawProgress(double toX) {
-        if (clearThread.isAlive()) {
+        if (clearThread!=null&&clearThread.isAlive()) {
             clearThread.interrupt();
         }
         setColorAndDrawGraphics(warningMsg.getGraphics(), toX);
@@ -521,7 +521,7 @@ public class LoginMain extends javax.swing.JFrame {
         int width = warningMsg.getWidth();
         double correctProc = width * per;
         Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
+        g2.setStroke(new BasicStroke(6));
         g.drawLine(0, 0, (int) correctProc, 0);
     }
 
