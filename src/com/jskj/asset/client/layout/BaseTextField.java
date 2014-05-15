@@ -35,15 +35,18 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
     private boolean isShow;
     private BasePopup basePopup;
     private boolean hasRegister;
+    
+    private boolean openWhenClick;
 
     public BaseTextField() {
         super();
         hasRegister = false;
         isShow = false;
+        openWhenClick = false;
 
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (!isShow) {
+                if (!isShow && openWhenClick) {
                     showPanel();
                 }
             }
@@ -134,6 +137,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
         };
         hasRegister = true;
+        openWhenClick = true;
     }
 
     @Override

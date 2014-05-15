@@ -45,7 +45,8 @@ public class AssetClientApp extends SingleFrameApplication {
         "TabbedPane.font", "RadioButton.font", "CheckBoxMenuItem.font",
         "TextPane.font", "PopupMenu.font", "TitledBorder.font", "ComboBox.font"
     };
-
+    
+    
     /**
      * @return the sessionMap
      */
@@ -215,8 +216,8 @@ public class AssetClientApp extends SingleFrameApplication {
     @Override
     protected void configureWindow(java.awt.Window root) {
         try {
-            ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png"));
-            root.setIconImage(icon.getImage());
+            //ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png"));
+            root.setIconImage(Constants.logoIcon.getImage());
             Font font = Constants.GLOBAL_FONT;
             for (String DEFAULT_FONT1 : AssetClientApp.DEFAULT_FONT) {
                 UIManager.put(DEFAULT_FONT1, font);

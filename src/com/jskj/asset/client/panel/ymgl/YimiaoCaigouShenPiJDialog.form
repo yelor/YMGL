@@ -76,8 +76,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jToolBar1" pref="325" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="332" max="-2" attributes="0"/>
-                      <Component id="jToolBar2" min="-2" pref="172" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="291" max="-2" attributes="0"/>
+                      <Component id="jToolBar2" min="-2" pref="213" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

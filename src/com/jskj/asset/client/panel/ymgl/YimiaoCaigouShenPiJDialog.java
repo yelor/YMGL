@@ -214,7 +214,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
 
         @Override
-        protected void succeeded(Object result) {
+        public void onSucceeded(Object result) {
             if (result != null && result instanceof ShenPiEntity) {
                 ShenPiEntity entity = (ShenPiEntity) result;
                 AssetMessage.INFO(entity.getResult(), YimiaoCaigouShenPiJDialog.this);
@@ -344,8 +344,8 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                .addGap(332, 332, 332)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(291, 291, 291)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,7 +479,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
 
         @Override
-        protected void succeeded(Object result) {
+        public void onSucceeded(Object result) {
             XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntiy = (XiaoshoushenpixiangdanEntity) result;
             xiaoshouxiangdandetailshow(yimiaoxiaoshouxiangdanEntiy, yimiaoxiaoshouxiangdanEntiy.getSaletb().getSaleId());
 
@@ -493,7 +493,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
 
         @Override
-        protected void succeeded(Object result) {
+        public void onSucceeded(Object result) {
             YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntiy = (YimiaocaigouxiangdanEntity) result;
             yimiaocaigouxiangdandetailshow(yimiaocaigouxiangdanEntiy, yimiaocaigouxiangdanEntiy.getShenqingdantb().getShenqingdanId());
 
@@ -507,7 +507,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
 
         @Override
-        protected void succeeded(Object result) {
+        public void onSucceeded(Object result) {
             YimiaobaosunxiangdanEntity yimiaobaosunxiangdanEntiy = (YimiaobaosunxiangdanEntity) result;
             yimiaobaosunxiangdanshow(yimiaobaosunxiangdanEntiy);
 
@@ -521,7 +521,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
         }
 
         @Override
-        protected void succeeded(Object result) {
+        public void onSucceeded(Object result) {
             YimiaotiaojiaxiangdanEntity yimiaotiaojiaxiangdanEntiy = (YimiaotiaojiaxiangdanEntity) result;
             yimiaotiaojiaxiangdanshow(yimiaotiaojiaxiangdanEntiy);
 

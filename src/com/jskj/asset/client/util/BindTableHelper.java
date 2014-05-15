@@ -9,6 +9,7 @@ import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.layout.ReportTemplates;
+import static com.jskj.asset.client.layout.ReportTemplates.viewer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -671,13 +672,12 @@ public class BindTableHelper<T> {
                     itemColumns[i] = itemColumn;
                 }
             }
-            report().setTemplate(ReportTemplates.reportTemplate)
+            viewer(report().setTemplate(ReportTemplates.reportTemplate)
                     .columns(itemColumns)
                     .title(ReportTemplates.createTitleComponent(reportName))
                     .pageFooter(ReportTemplates.footerComponent)
                     //.sortBy(asc(itemColumn), desc(unitPriceColumn))
-                    .setDataSource(dataSource)
-                    .show(false);
+                    .setDataSource(dataSource));
 
             logger.debug("show report:" + reportName);
 

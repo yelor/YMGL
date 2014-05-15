@@ -368,7 +368,7 @@ public class BuMenPanel extends BasePanel {
         }
 
         @Override
-        protected void succeeded(Object result) {
+        public void onSucceeded(Object result) {
             reload().execute();
         }
     }

@@ -12,6 +12,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.layout.ReportTemplates;
+import static com.jskj.asset.client.layout.ReportTemplates.viewer;
 import com.jskj.asset.client.util.BeanFactory;
 import java.math.BigDecimal;
 import java.util.List;
@@ -78,7 +79,7 @@ public class ReportCaiGouGDZCTask extends BaseTask {
                 TextColumnBuilder<BigDecimal> totalPriceColumn = col.column("总价", "totalprice", type.bigDecimalType());
 
                 try {
-                    report()
+                    viewer(report()
                             .setTemplate(ReportTemplates.reportTemplate)
                             .columns(itemColumn, quantityColumn, unitPriceColumn,totalPriceColumn)
                             .summary(
@@ -90,7 +91,7 @@ public class ReportCaiGouGDZCTask extends BaseTask {
                                             cht.serie(totalPriceColumn)))
                             .pageFooter(ReportTemplates.footerComponent)
                             .setDataSource(dataSource)
-                            .show(false);
+                            .show(false));
                 } catch (DRException e) {
                     e.printStackTrace();
                     throw e;

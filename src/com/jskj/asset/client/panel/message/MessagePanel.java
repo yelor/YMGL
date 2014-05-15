@@ -7,6 +7,7 @@ package com.jskj.asset.client.panel.message;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.AssetClientView;
+import com.jskj.asset.client.constants.Constants;
 import static com.jskj.asset.client.layout.AssetMessage.INFO_MESSAGE;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.PopupButton;
@@ -90,6 +91,8 @@ public class MessagePanel extends BasePanel {
             }
         };
         ((PopupButton) jButton2).registerPopup(messageConf);
+        
+        messageMain.setFont(Constants.FONT_12);
     }
 
     /**

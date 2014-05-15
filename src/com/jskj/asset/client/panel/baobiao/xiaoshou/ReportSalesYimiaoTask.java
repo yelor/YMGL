@@ -12,6 +12,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.layout.ReportTemplates;
+import static com.jskj.asset.client.layout.ReportTemplates.viewer;
 import java.math.BigDecimal;
 import java.util.List;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cht;
@@ -59,9 +60,9 @@ public class ReportSalesYimiaoTask extends BaseTask {
                 /*开始制作报表*/
                 DRDataSource dataSource = new DRDataSource("item", "quantity", "unitprice", "totalprice");
                 for (SalesYimiaoReport caigouYimiao : caigouYimiaos) {
-                    dataSource.add(caigouYimiao.getYimiaotb().getYimiaoName(), 
+                    dataSource.add(caigouYimiao.getYimiaotb().getYimiaoName(),
                             caigouYimiao.getQuantity() == null ? 0 : caigouYimiao.getQuantity(),
-                            new BigDecimal(caigouYimiao.getPrice()== null ? 0 : caigouYimiao.getPrice()),
+                            new BigDecimal(caigouYimiao.getPrice() == null ? 0 : caigouYimiao.getPrice()),
                             new BigDecimal(caigouYimiao.getTotalprice() == null ? 0 : caigouYimiao.getTotalprice()));
                 }
 
@@ -72,24 +73,18 @@ public class ReportSalesYimiaoTask extends BaseTask {
                 TextColumnBuilder<BigDecimal> unitPriceColumn = col.column("单价", "unitprice", type.bigDecimalType());
                 TextColumnBuilder<BigDecimal> totalPriceColumn = col.column("总价", "totalprice", type.bigDecimalType());
 
-                try {
-                    report()
-                            .setTemplate(ReportTemplates.reportTemplate)
-                            .columns(itemColumn, quantityColumn, unitPriceColumn,totalPriceColumn)
-                            .summary(
-                                    cht.pie3DChart()
-                                    .setTitle(selectedData.getSaleId())
-                                    .setTitleFont(boldFont)
-                                    .setKey(itemColumn)
-                                    .series(
-                                            cht.serie(totalPriceColumn)))
-                            .pageFooter(ReportTemplates.footerComponent)
-                            .setDataSource(dataSource)
-                            .show(false);
-                } catch (DRException e) {
-                    e.printStackTrace();
-                    throw e;
-                }
+                viewer(report()
+                        .setTemplate(ReportTemplates.reportTemplate)
+                        .columns(itemColumn, quantityColumn, unitPriceColumn, totalPriceColumn)
+                        .summary(
+                                cht.pie3DChart()
+                                .setTitle(selectedData.getSaleId())
+                                .setTitleFont(boldFont)
+                                .setKey(itemColumn)
+                                .series(
+                                        cht.serie(totalPriceColumn)))
+                        .pageFooter(ReportTemplates.footerComponent)
+                        .setDataSource(dataSource));
 
             } else {
                 clientView.setStatus("response data is null", AssetMessage.ERROR_MESSAGE);

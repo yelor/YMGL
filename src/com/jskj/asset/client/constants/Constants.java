@@ -5,6 +5,7 @@
 package com.jskj.asset.client.constants;
 
 import java.awt.Font;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -13,7 +14,8 @@ import java.awt.Font;
 public class Constants {
 
     public final static String VERSION = "v1.00";
-    
+    public final static ImageIcon logoIcon = new ImageIcon(Constants.class.getResource("/com/jskj/asset/client/resources/icon.png"));
+
     /*HTTP conifg*/
     public static String HTTP = "";
     public static String APPID = "/AssetsSys/service/";
@@ -24,9 +26,11 @@ public class Constants {
     /*字体设置*/
     public final static Font GLOBAL_FONT = new Font("微软雅黑", Font.PLAIN, 14 );
     public final static Font TREE_FONT = new Font("微软雅黑", Font.PLAIN, 18 );
+    public final static Font FONT_12 = new Font("微软雅黑", Font.PLAIN, 12 );
+    
     /*Global config*/
     public static String WINTITLE = "广安疾控资产管理系统";
-    public static int LOGIN_WIDTH = 371;
+    public static int LOGIN_WIDTH = 360;
     public static int LOGIN_HEIGHT = 274;
 
     /*左边树*/
