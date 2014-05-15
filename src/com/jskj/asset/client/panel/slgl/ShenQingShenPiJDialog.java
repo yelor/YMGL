@@ -140,7 +140,7 @@ public class ShenQingShenPiJDialog extends javax.swing.JDialog {
                     
                     @Override
                     public void setRender(JTable t, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                        setBackground(Color.white);
+                        //setBackground(Color.white);
 
                         if (value instanceof String) {
                             String text = value.toString();
