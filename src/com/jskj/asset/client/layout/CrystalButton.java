@@ -6,6 +6,7 @@
 package com.jskj.asset.client.layout;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -64,7 +65,6 @@ public class CrystalButton extends JButton {
         Graphics2D g2 = (Graphics2D) g;
         // 绘制渐变底色  
         if (this.isMouseEntered) {
-            System.out.println("@@@@@@@@@:isMouseEntered");
             AlphaComposite composite = AlphaComposite.getInstance(
                     AlphaComposite.SRC_OVER, alpha);
             g2.setComposite(composite);
@@ -89,20 +89,22 @@ public class CrystalButton extends JButton {
             Color c1, Color c2, Color c3, Color c4, Color frameColor) {
 
         g2.setColor(frameColor);
-        g2.drawRoundRect(1, 1, bt.getWidth() - 4, bt.getHeight() - 2, 3, 3);
+        g2.setStroke(new BasicStroke(2));
+        //g2.drawRoundRect(1, 1, bt.getWidth() - 4, bt.getHeight() - 2, 10, 10);
 
-        // 渐变背景  
-        g2.setPaint(new GradientPaint(2, 2, c1, 1, bt.getHeight() / 3, c2));
-        g2.fillRect(2, 2, bt.getWidth() - 5, bt.getHeight() / 3);
-        // 渐变二段  
-        g2.setPaint(new GradientPaint(1, bt.getHeight() / 3, c3, 1, bt
-                .getHeight(), c4));
-        g2.fillRect(2, bt.getHeight() / 3, bt.getWidth() - 5,
-                bt.getHeight() / 3 * 2 - 1);
+        g2.drawLine(1, bt.getHeight() - 2, bt.getWidth() - 4, bt.getHeight() - 2);
+//        // 渐变背景  
+////        g2.setPaint(new GradientPaint(2, 2, c1, 1, bt.getHeight() / 3, c2));
+//        g2.drawRect(2, 2, bt.getWidth() - 5, bt.getHeight() / 3);
+//        // 渐变二段  
+////        g2.setPaint(new GradientPaint(1, bt.getHeight() / 3, c3, 1, bt
+////                .getHeight(), c4));
+//        g2.drawRect(2, bt.getHeight() / 3, bt.getWidth() - 5,
+//                bt.getHeight() / 3 * 2 - 1);
     }
 
     private static void drawButtonBackground(Graphics2D g2, JButton bt,
             Color c1, Color c2, Color c3, Color c4) {
-        drawButtonBackground(g2, bt, c1, c2, c3, c4, Color.WHITE);
+        drawButtonBackground(g2, bt, c1, c2, c3, c4, new Color(122,163,204));
     }
 }

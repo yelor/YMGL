@@ -100,6 +100,9 @@
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton_center" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CrystalButton(&quot;&quot;)"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_topleft">
           <Properties>
@@ -116,6 +119,9 @@
             <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="name" type="java.lang.String" value="jButton_topleft" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CrystalButton(&quot;&quot;)"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_topright">
           <Properties>
@@ -131,6 +137,9 @@
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton_topright" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CrystalButton(&quot;&quot;)"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_bottomleft">
           <Properties>
@@ -146,6 +155,9 @@
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton_bottomleft" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CrystalButton(&quot;&quot;)"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_bottomright">
           <Properties>
@@ -161,6 +173,9 @@
             <Property name="contentAreaFilled" type="boolean" value="false"/>
             <Property name="name" type="java.lang.String" value="jButton_bottomright" noResource="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CrystalButton(&quot;&quot;)"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

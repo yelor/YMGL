@@ -392,7 +392,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                     builder.append("<font color=\"green\" style=\"FONT-FAMILY:");
 
                     builder.append(Constants.GLOBAL_FONT.getFontName()).append("\" >");
-                    builder.append("&nbsp;审批单").append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append(",").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出\"").append(",\"")
+                    builder.append("&nbsp;审批单").append(": ").append(DateHelper.formatTime(re.getSubmitDate())).append(",").append(re.getOwner()).append("[").append(re.getDepartment()).append("],提出").append("\"")
                             .append(re.getDanjuleixing()).append("\"[").append(re.getShenqingdanId()).append("],状态[").append(re.getContext()).append("]").append("<br />");
                     builder.append("</font></html>");
 

@@ -13,6 +13,7 @@ package com.jskj.asset.client.panel;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.BasePanel;
+import com.jskj.asset.client.layout.CrystalButton;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel;
 import com.jskj.asset.client.panel.ckgl.SelectKucunchaxunJDialog;
@@ -194,11 +195,11 @@ public class BaseMainPanel extends BasePanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton_center = new javax.swing.JButton();
-        jButton_topleft = new javax.swing.JButton();
-        jButton_topright = new javax.swing.JButton();
-        jButton_bottomleft = new javax.swing.JButton();
-        jButton_bottomright = new javax.swing.JButton();
+        jButton_center = new CrystalButton("");
+        jButton_topleft = new CrystalButton("");
+        jButton_topright = new CrystalButton("");
+        jButton_bottomleft = new CrystalButton("");
+        jButton_bottomright = new CrystalButton("");
         jLabel1 = new javax.swing.JLabel();
 
         setName("Form"); // NOI18N
