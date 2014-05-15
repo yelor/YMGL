@@ -55,6 +55,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     private Map kehudanweiIdmap;
     private boolean wait;
     private String sqid;
+    private Map kucunmap;
 
     /**
      * Creates new form ymcrk1
@@ -75,6 +76,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         saledetailIdmap = new HashMap();
         saleIdmap = new HashMap();
         kehudanweiIdmap = new HashMap();
+        kucunmap = new HashMap();
 
         //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
@@ -183,6 +185,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     Object totalPrice = sale_detail_tb.get("totalprice");
                     Object kehudanweiName = kehudanwei.get("kehudanweiName");
                     Object duifangjinbangren = kehudanwei.get("kehudanweiConstactperson");
+                    Object stockpileQuantity = stockpile.get("stockpileQuantity");
 
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
@@ -207,6 +210,8 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     saledetailIdmap.put(xiangdanId, xiangdanId);
                     saleIdmap.put(xiangdanId, saleId);
                     kehudanweiIdmap.put(xiangdanId, kehudanweiId);
+                    //                    保存库存数量
+                    kucunmap.put(xiangdanId, stockpileQuantity);
 
                 }
 
@@ -619,6 +624,10 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
             yimiaoliebiao.setKucunId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "stockpileId"))));
+            if (Integer.parseInt("" + yimiaotable.getValue(i, "quantity")) > Integer.parseInt(kucunmap.get(jTableyimiao.getValueAt(i, 0)).toString())) {
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiaoName").toString() + "销售数量不能大于库存数量:" + Integer.parseInt(kucunmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
+                return null;
+            }
             yimiaoliebiao.setChukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getChukuQuantity());
             yimiaoliebiao.setXiangdanId(Integer.parseInt(saledetailIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
@@ -748,7 +757,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
 
     }
 
-      public void chooseYimiao() {
+    public void chooseYimiao() {
         String sql = " (sale_id like \"YMXS%\") and is_completed = 1 and status = 0";
         new ChooseTask(sql).execute();
     }
@@ -772,7 +781,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         }
 
     }
-    
+
     private class Cancel extends CancelChuKu {
 
         public Cancel(List<SaleyimiaoEntity> zc) {
@@ -793,7 +802,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             yimiaochuku.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaochuku);
         }
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
