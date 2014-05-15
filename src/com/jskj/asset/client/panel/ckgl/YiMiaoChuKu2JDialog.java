@@ -129,7 +129,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
-                        java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class.getName()).log(Level.SEVERE, null, ex);
+                        java.util.logging.Logger.getLogger(YiMiaoChuKu2JDialog.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 int selectedColumn = jTableyimiao.getSelectedColumn();
@@ -758,7 +758,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     }
 
     public void chooseYimiao() {
-        String sql = " (sale_id like \"YMXS%\") and is_completed = 1 and status = 0";
+        String sql = " sale_id like \"YMXS%\" and is_completed = 1 and status = 0";
         new ChooseTask(sql).execute();
     }
 

@@ -134,10 +134,10 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
             }
 
             public String[][] displayColumns() {
-                
+
                 return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
                 {"youxiaodate", "有效期"}, {"stockpileQuantity", "库存数量"}};
-                
+
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -156,6 +156,13 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     Object youxiaoqi = bindedMap.get("youxiaodate").toString().subSequence(0, 10);
                     Object pihao = bindedMap.get("pihao");
 
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "stockpileId").toString().trim().equals("" + bindedMap.get("stockpileId"))) {
+                            AssetMessage.INFO("不可以添加相同的疫苗！", YiMiaoXiaoShouJDialog.this);
+                            return;
+                        }
+                    }
                     editTable.insertValue(0, stockpileId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
