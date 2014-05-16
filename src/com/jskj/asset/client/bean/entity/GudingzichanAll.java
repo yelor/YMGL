@@ -5,6 +5,7 @@
 package com.jskj.asset.client.bean.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Date;
 
 /**
  *
@@ -27,6 +28,8 @@ public class GudingzichanAll extends Gudingzichantb{
     private int count;
     
     private float saleprice;
+    
+    private Date gouzhidate;
 
     /**
      * @return the depottb
@@ -102,6 +105,14 @@ public class GudingzichanAll extends Gudingzichantb{
 
     public void setLylb(Lingyongliebiaotb lylb) {
         this.lylb = lylb;
+    }
+
+    public Date getGouzhidate() {
+        return gouzhidate;
+    }
+
+    public void setGouzhidate(Date gouzhidate) {
+        this.gouzhidate = gouzhidate;
     }
 
 }

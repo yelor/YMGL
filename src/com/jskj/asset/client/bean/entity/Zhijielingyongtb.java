@@ -11,9 +11,15 @@ public class Zhijielingyongtb {
 
     private Date gouzhiDate;
 
+    private Date baoxiuDate;
+
     private Integer dengjirenId;
 
     private Integer quantity;
+
+    private Float price;
+
+    private String barcode;
 
     public String getYuandanId() {
         return yuandanId;
@@ -39,6 +45,14 @@ public class Zhijielingyongtb {
         this.gouzhiDate = gouzhiDate;
     }
 
+    public Date getBaoxiuDate() {
+        return baoxiuDate;
+    }
+
+    public void setBaoxiuDate(Date baoxiuDate) {
+        this.baoxiuDate = baoxiuDate;
+    }
+
     public Integer getDengjirenId() {
         return dengjirenId;
     }
@@ -53,5 +67,21 @@ public class Zhijielingyongtb {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode == null ? null : barcode.trim();
     }
 }

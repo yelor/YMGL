@@ -351,9 +351,12 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
         zjly.setYhpId(Integer.parseInt(jTextFieldZcid.getText()));
         SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd");
         zjly.setGouzhiDate(dateformate.parse(jTextField12.getText()));
+        zjly.setBaoxiuDate(dateformate.parse(jTextFieldBaoxiuqi.getText()));
         zjly.setDengjirenId(userId);
         zjly.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         zjly.setYuandanId(yuandanID);
+        zjly.setBarcode(barcode);
+        zjly.setPrice(Float.parseFloat(jTextFieldPrice.getText()));
 
         return new zjlyTask(zjly);
     }
@@ -632,6 +635,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
         jButton8.setOpaque(false);
         jToolBar1.add(jButton8);
 
+        jButton6.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setBorderPainted(false);

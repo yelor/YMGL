@@ -525,7 +525,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
         sqd.setRukudanId(cgsqId.getText());
         sqd.setRukudanDate(dateformate.parse(shenqingdanDate.getText()));
         sqd.setZhidanrenId(userId);
-        sqd.setDanjuleixingId(23);
+        sqd.setDanjuleixingId(26);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         sqd.setKufang(cangku.getText());
         

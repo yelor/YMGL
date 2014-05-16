@@ -62,10 +62,12 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     CaigoushenqingDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
+    private String zhidanren;
     private List<ZichanliebiaotbAll> list;
     private boolean isNew;
     private Map yuandanmap;
     private Map kcmap;
+    private Map usermap;
     private String pihao;
     private float totalprice;
     private float total = 0;
@@ -86,6 +88,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         isNew = false;
         yuandanmap = new HashMap();
         kcmap = new HashMap();
+        usermap = new HashMap();
         
         this.addWindowListener(new WindowListener() {
 
@@ -194,6 +197,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     
                     HashMap map = (HashMap)bindedMap.get("shenqingdan");
                     yuandanID = (String)map.get("shenqingdanId");
+                    zhidanren = (String)map.get("zhidanren");
                     
                     map = (HashMap)bindedMap.get("liebiao");
                     pihao = (String)map.get("pihao");
@@ -212,6 +216,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     //保存原单号
                     yuandanmap.put(dzyhpId+pihao, yuandanID);
                     kcmap.put(dzyhpId+pihao, gdzcKucun);
+                    usermap.put(dzyhpId+pihao, zhidanren);
                 }
 
             }
@@ -492,7 +497,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         sqd.setChukudanId(cgsqId.getText());
         sqd.setChukudanDate(dateformate.parse(shenqingdanDate.getText()));
         sqd.setZhidanrenId(userId);
-        sqd.setDanjuleixingId(24);
+        sqd.setDanjuleixingId(25);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
         zc = new ArrayList<ZichanliebiaotbAll>();
@@ -568,6 +573,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jButton2 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jingbanren = new javax.swing.JTextField();
@@ -712,11 +718,20 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
+        jButton1.setEnabled(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.setOpaque(false);
         jToolBar1.add(jButton1);
+
+        jButton3.setAction(actionMap.get("generatorBar")); // NOI18N
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton3.setName("jButton3"); // NOI18N
+        jToolBar1.add(jButton3);
 
         jButton15.setAction(actionMap.get("exit")); // NOI18N
         jButton15.setIcon(resourceMap.getIcon("jButton15.icon")); // NOI18N
@@ -858,6 +873,46 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         }
     }
 
+    @Action
+    public void generatorBar() {
+        if(jTable1.getRowCount()-1 < 1){
+            AssetMessage.ERRORSYS("请选择要领用的物品！",this);
+            return;
+        }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
+        for (int i = 0; i < jTable1.getRowCount()-1; i++) {
+            ZichanliebiaotbAll zclb = new ZichanliebiaotbAll();
+            try{
+                zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
+                return;
+            }
+            zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 6)));
+            int kucun = Integer.parseInt(kcmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
+            if(zclb.getQuantity() > kucun){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个资产的出库数量大于库存数："+kucun+"，出库失败！");
+                return;
+            }
+            zclb.setPihao(jTable1.getValueAt(i, 9).toString());
+            
+            for (int j = 0; j < zclb.getQuantity(); j++) {
+                DanHao.printBarCode128ForAsset(new String[]{"", zclb.getPihao()},
+                        new String[][]{
+                            {"资产名", jTable1.getValueAt(i, 1).toString()},
+                            {"资产类别", jTable1.getValueAt(i, 2).toString()},
+                            {"领用人", usermap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString()},
+                            {"批号", zclb.getPihao()},
+                            {},
+                            {"领用日期", shenqingdanDate.getText()}
+                        });
+            }
+            
+        }
+        
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cgsqId;
     private javax.swing.JButton jButton1;
@@ -865,6 +920,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;

@@ -78,7 +78,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"dzyhpId", "物品编号"}, {"dzyhpName", "物品名称", "true"}, {"dzyhpType", "物品类别"}, {"dzyhpPinpai", "品牌", "false"},
-            {"dzyhpXinghao", "型号"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"kucun.price", "采购价", "false"}, {"total", "合价"},{"kucun.pihao", "条码", "false"}});
+            {"dzyhpXinghao", "型号"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"lylb.price", "采购价", "false"}, {"total", "合价"},{"lylb.pihao", "条码", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -105,7 +105,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"},{"kucun.pihao", "条码"}};
+                return new String[][]{{"dzyhpId", "物品ID"},{"dzyhpName", "物品名称"},{"lylb.pihao", "条码"}};
             }
 
             @Override
@@ -126,7 +126,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
                     editTable.insertValue(4, gdzcXinghao);
                     editTable.insertValue(5, gdzcDanwei);
 
-                    HashMap map = (HashMap)bindedMap.get("kucun");
+                    HashMap map = (HashMap)bindedMap.get("lylb");
                     pihao = (String)map.get("pihao");
                     saleprice = Float.parseFloat(map.get("price").toString());
                     editTable.insertValue(7, saleprice);
