@@ -156,7 +156,13 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
                     HashMap kehudanwei = (HashMap) kehudanweimap;
 
-
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + sale_detail_tb.get("saleDetailId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoChuKu1JDialog.this);
+                            return;
+                        }
+                    }
 
                     Object xiangdanId = sale_detail_tb.get("saleDetailId");
                     Object saleId = sale_detail_tb.get("saleId");
