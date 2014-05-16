@@ -18,13 +18,13 @@ public class ChukudanDetailEntity {
     
     Zichanchukudantb chukudan;
     
-    List<ZiChanLieBiaotb> zc;
+    List<ZichanliebiaotbAll> zc;
 
     public Zichanchukudantb getChukudan() {
         return chukudan;
     }
 
-    public List<ZiChanLieBiaotb> getZc() {
+    public List<ZichanliebiaotbAll> getZc() {
         return zc;
     }
 
@@ -32,7 +32,7 @@ public class ChukudanDetailEntity {
         this.chukudan = chukudan;
     }
 
-    public void setZc(List<ZiChanLieBiaotb> zc) {
+    public void setZc(List<ZichanliebiaotbAll> zc) {
         this.zc = zc;
     }
     

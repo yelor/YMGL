@@ -18,6 +18,10 @@ public class Lingyongliebiaotb {
 
     private String depart;
 
+    private String didian;
+
+    private String xuliehao;
+
     private String barcode;
 
     public Integer getLylbId() {
@@ -74,6 +78,22 @@ public class Lingyongliebiaotb {
 
     public void setDepart(String depart) {
         this.depart = depart == null ? null : depart.trim();
+    }
+
+    public String getDidian() {
+        return didian;
+    }
+
+    public void setDidian(String didian) {
+        this.didian = didian == null ? null : didian.trim();
+    }
+
+    public String getXuliehao() {
+        return xuliehao;
+    }
+
+    public void setXuliehao(String xuliehao) {
+        this.xuliehao = xuliehao == null ? null : xuliehao.trim();
     }
 
     public String getBarcode() {

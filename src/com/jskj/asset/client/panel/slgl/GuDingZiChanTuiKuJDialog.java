@@ -434,7 +434,6 @@ public class GuDingZiChanTuiKuJDialog extends BaseDialog{
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel2.setMinimumSize(null);
         jPanel2.setName("jPanel2"); // NOI18N
 
         middlePanel.setName("middlePanel"); // NOI18N

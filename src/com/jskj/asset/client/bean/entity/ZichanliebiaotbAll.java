@@ -14,6 +14,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ZichanliebiaotbAll extends ZiChanLieBiaotb{
     
     private String zcName;
+    
+    private String barcode;
+    
+    private String didian;
+    
+    private String xuliehao;
 
     public String getZcName() {
         return zcName;
@@ -21,6 +27,30 @@ public class ZichanliebiaotbAll extends ZiChanLieBiaotb{
 
     public void setZcName(String zcName) {
         this.zcName = zcName;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public String getDidian() {
+        return didian;
+    }
+
+    public String getXuliehao() {
+        return xuliehao;
+    }
+
+    public void setDidian(String didian) {
+        this.didian = didian;
+    }
+
+    public void setXuliehao(String xuliehao) {
+        this.xuliehao = xuliehao;
     }
     
 }

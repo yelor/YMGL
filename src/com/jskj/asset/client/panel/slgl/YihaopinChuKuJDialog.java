@@ -10,7 +10,7 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ChukudanDetailEntity;
 import com.jskj.asset.client.bean.entity.Zichanchukudantb;
-import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
+import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
 import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.constants.Constants;
@@ -58,7 +58,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
     private int userId;
     private String userName;
     private int supplierId;
-    private List<ZiChanLieBiaotb> zc;
+    private List<ZichanliebiaotbAll> zc;
     CaigoushenqingDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
@@ -80,7 +80,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         super();
         initComponents();
         
-        zc = new ArrayList<ZiChanLieBiaotb>();
+        zc = new ArrayList<ZichanliebiaotbAll>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         isNew = false;
@@ -203,7 +203,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
                     
                     map = (HashMap)bindedMap.get("kucun");
                     Object gdzcKucun = map.get("quantity");
-//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    ZichanliebiaotbAll zclb = new ZichanliebiaotbAll();
 //                    zclb.setCgsqId(cgsqId.getText());
 //                    zclb.setCgzcId((Integer)gdzcId);
 //                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
@@ -495,10 +495,10 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         sqd.setDanjuleixingId(24);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
-        zc = new ArrayList<ZiChanLieBiaotb>();
+        zc = new ArrayList<ZichanliebiaotbAll>();
 //        for (int i = 0; i < zc.size(); i++) {
         for (int i = 0; i < jTable1.getRowCount()-1; i++) {
-            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            ZichanliebiaotbAll zclb = new ZichanliebiaotbAll();
             try{
                 zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
             }catch(NumberFormatException e){
@@ -522,7 +522,7 @@ public class YihaopinChuKuJDialog extends BaseDialog {
         }
         
         cgsq.setChukudan(sqd);
-        cgsq.setZc(zc);        
+        cgsq.setZc(zc);      
         
         String serviceId = "yhp/chuku";
         return new CommUpdateTask<ChukudanDetailEntity>(cgsq,serviceId) {

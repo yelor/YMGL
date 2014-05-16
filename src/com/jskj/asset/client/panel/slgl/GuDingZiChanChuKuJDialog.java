@@ -10,7 +10,7 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ChukudanDetailEntity;
 import com.jskj.asset.client.bean.entity.Zichanchukudantb;
-import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
+import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
 import com.jskj.asset.client.bean.entity.ZichanliebiaotbAll;
 import com.jskj.asset.client.constants.Constants;
@@ -57,7 +57,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
     private int userId;
     private String userName;
     private int supplierId;
-    private List<ZiChanLieBiaotb> zc;
+    private List<ZichanliebiaotbAll> zc;
     CaigoushenqingDetailEntity detail;
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String yuandanID;
@@ -79,7 +79,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         super();
         initComponents();
         
-        zc = new ArrayList<ZiChanLieBiaotb>();
+        zc = new ArrayList<ZichanliebiaotbAll>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
         isNew = false;
@@ -130,7 +130,9 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"},{"gdzcPinpai", "品牌", "false"},
-            {"gdzcXinghao", "型号"}, {"unitId", "单位", "false"}, {"quantity", "数量"}, {"gdzcValue", "采购价", "false"}, {"total", "合价"},{"liebiao.pihao", "条码", "false"}});
+            {"gdzcXinghao", "型号"}, {"unitId", "单位", "false"}, {"quantity", "数量"}, 
+            {"gdzcValue", "采购价", "false"}, {"total", "合价"},{"liebiao.pihao", "条码", "false"},
+            {"didian", "存放地点", "true"}, {"xuliehao", "序列号","true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -202,7 +204,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     
                     map = (HashMap)bindedMap.get("kucun");
                     Object gdzcKucun = map.get("quantity");
-//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    ZichanliebiaotbAll zclb = new ZichanliebiaotbAll();
 //                    zclb.setCgsqId(cgsqId.getText());
 //                    zclb.setCgzcId((Integer)gdzcId);
 //                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
@@ -494,10 +496,10 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
         sqd.setDanjuleixingId(18);
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         
-        zc = new ArrayList<ZiChanLieBiaotb>();
+        zc = new ArrayList<ZichanliebiaotbAll>();
 //        for (int i = 0; i < zc.size(); i++) {
         for (int i = 0; i < jTable1.getRowCount()-1; i++) {
-            ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+            ZichanliebiaotbAll zclb = new ZichanliebiaotbAll();
             try{
                 zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
             }catch(NumberFormatException e){
@@ -511,6 +513,22 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的出库数量大于库存数："+kucun+"，出库失败！");
                 return null;
             }
+            
+            if (jTable1.getValueAt(i, 10).toString().equals("")) {
+                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的存放地点！", this);
+                return null;
+            }
+            if (jTable1.getValueAt(i, 11).toString().equals("")) {
+                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的序列号！每个物品的序列号用分号隔开", this);
+                return null;
+            }
+            String xuliehao = jTable1.getValueAt(i, 11).toString();
+            if(xuliehao.split(";").length != zclb.getQuantity() ){
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产要出库"+ zclb.getQuantity() +"个，请输入"+ zclb.getQuantity() +"个序列号！每个物品的序列号用分号隔开", this);
+                return null;
+            }
+            zclb.setDidian(jTable1.getValueAt(i, 10).toString());
+            zclb.setXuliehao(xuliehao);
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 7));
             zclb.setPihao(jTable1.getValueAt(i, 9).toString());
             zclb.setSaleprice(price);
@@ -768,13 +786,12 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(totalpricelabel))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(totalpricelabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
