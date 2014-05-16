@@ -186,6 +186,14 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     Object kehudanweiName = kehudanwei.get("kehudanweiName");
                     Object duifangjinbangren = kehudanwei.get("kehudanweiConstactperson");
                     Object stockpileQuantity = stockpile.get("stockpileQuantity");
+                    
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + sale_detail_tb.get("saleDetailId"))) {
+                            AssetMessage.INFO("不可以添加相同的疫苗！", YiMiaoChuKu2JDialog.this);
+                            return;
+                        }
+                    }
 
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);

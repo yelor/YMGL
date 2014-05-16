@@ -159,7 +159,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
                         BaseTable yimiaotable = ((BaseTable) jTableyimiao);
                         if (yimiaotable.getValue(i, "stockpileId").toString().trim().equals("" + bindedMap.get("stockpileId"))) {
-                            AssetMessage.INFO("不可以添加相同的疫苗！", YiMiaoXiaoShouJDialog.this);
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoXiaoShouJDialog.this);
                             return;
                         }
                     }

@@ -158,7 +158,13 @@ public class YiMiaoXiaFaJDialog extends BaseDialog {
                     Object pihao = bindedMap.get("pihao");
                     Object youxiaoqi = bindedMap.get("youxiaodate").toString().subSequence(0, 10);
                     
-                    System.out.println(youxiaoqi);
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "stockpileId").toString().trim().equals("" + bindedMap.get("stockpileId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoXiaFaJDialog.this);
+                            return;
+                        }
+                    }
 
                     editTable.insertValue(0, stockpileId);
                     editTable.insertValue(1, yimiaoName);
