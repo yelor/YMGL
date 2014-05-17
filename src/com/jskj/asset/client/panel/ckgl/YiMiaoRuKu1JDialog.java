@@ -20,7 +20,6 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
-import com.jskj.asset.client.panel.ymgl.YiMiaoYanShouDanJDialog;
 import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;

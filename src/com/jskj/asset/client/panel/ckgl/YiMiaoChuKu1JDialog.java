@@ -8,7 +8,6 @@ package com.jskj.asset.client.panel.ckgl;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Churukudantb;
 import com.jskj.asset.client.bean.entity.Churukudanyimiaoliebiaotb;
-import com.jskj.asset.client.bean.entity.Kehudanweitb;
 import com.jskj.asset.client.bean.entity.Sale_detail_tb;
 import com.jskj.asset.client.bean.entity.SaleyimiaoEntity;
 import com.jskj.asset.client.bean.entity.YimiaochurukuEntity;
@@ -55,6 +54,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
     private Map kehudanweiIdmap;
     private boolean wait;
     private String sqid;
+    private Map kucunmap;
 
     public YiMiaoChuKu1JDialog() {
         super();
@@ -69,6 +69,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
         saledetailIdmap = new HashMap();
         saleIdmap = new HashMap();
         kehudanweiIdmap = new HashMap();
+        kucunmap = new HashMap();
 
         //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
@@ -155,7 +156,13 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     HashMap sale_detail_tb = (HashMap) sale_detail_tbmap;
                     HashMap kehudanwei = (HashMap) kehudanweimap;
 
-
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + sale_detail_tb.get("saleDetailId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoChuKu1JDialog.this);
+                            return;
+                        }
+                    }
 
                     Object xiangdanId = sale_detail_tb.get("saleDetailId");
                     Object saleId = sale_detail_tb.get("saleId");
@@ -175,6 +182,7 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     Object quantity = sale_detail_tb.get("quantity");
                     Object kehudanweiName = kehudanwei.get("kehudanweiName");
                     Object duifangjinbangren = kehudanwei.get("kehudanweiConstactperson");
+                    Object stockpileQuantity = stockpile.get("stockpileQuantity");
 
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
@@ -198,6 +206,8 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
                     saledetailIdmap.put(xiangdanId, xiangdanId);
                     saleIdmap.put(xiangdanId, saleId);
                     kehudanweiIdmap.put(xiangdanId, kehudanweiId);
+                                        //                    保存库存数量
+                    kucunmap.put(xiangdanId, stockpileQuantity);
                 }
 
             }
@@ -564,6 +574,10 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
             yimiaoliebiao.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "stockpileId").toString()));
+            if (Integer.parseInt("" + yimiaotable.getValue(i, "quantity")) > Integer.parseInt(kucunmap.get(jTableyimiao.getValueAt(i, 0)).toString())) {
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiaoName").toString() + "销售数量不能大于库存数量:" + Integer.parseInt(kucunmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
+                return null;
+            }
             yimiaoliebiao.setChukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getPrice());
             yimiaoliebiao.setXiangdanId(Integer.parseInt(saledetailIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));

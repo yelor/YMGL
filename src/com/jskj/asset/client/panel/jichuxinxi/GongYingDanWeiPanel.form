@@ -143,7 +143,7 @@
             <Component class="javax.swing.JButton" name="jButton6">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.panel.jichuxinxi.GongYingDanWeiJDialog" id="addGongYingDanWei" methodName="addGongYingDanWei"/>
+                  <action class="com.jskj.asset.client.panel.jichuxinxi.GongYingDanWeiPanel" id="addGongYingDanWei" methodName="addGongYingDanWei"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton6.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton6.text"/>

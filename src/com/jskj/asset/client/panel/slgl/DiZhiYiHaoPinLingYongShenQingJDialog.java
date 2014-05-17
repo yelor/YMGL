@@ -275,7 +275,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
         sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
-        sqd.setDanjuleixingId(22);
+        sqd.setDanjuleixingId(24);
         total = 0;
         zc = new ArrayList<ZiChanLieBiaotb>();
 //        for (int i = 0; i < zc.size(); i++) {

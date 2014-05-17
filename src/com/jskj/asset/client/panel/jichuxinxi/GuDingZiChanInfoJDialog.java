@@ -224,11 +224,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
                         guDingZhiChanInfoJDialog.setLocationRelativeTo(mainFrame);
                         guDingZhiChanInfoJDialog.setUpdatedData(new GudingzichanAll());
                         AssetClientApp.getApplication().show(guDingZhiChanInfoJDialog);
-//                        BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
-//                        List<String> source = mode.getSource();
-//                        source.clear();
-//                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-//                        gdzcPhoto.setModel(newMode);
                     }
                     AssetMessage.showMessageDialog(null, "保存成功！");
                     dispose();

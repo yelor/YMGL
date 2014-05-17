@@ -55,6 +55,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     private Map kehudanweiIdmap;
     private boolean wait;
     private String sqid;
+    private Map kucunmap;
 
     /**
      * Creates new form ymcrk1
@@ -75,6 +76,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         saledetailIdmap = new HashMap();
         saleIdmap = new HashMap();
         kehudanweiIdmap = new HashMap();
+        kucunmap = new HashMap();
 
         //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
@@ -109,7 +111,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"xiangdanId", "详单编号", "false"}, {"stockpileId", "库存编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
-            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"}, {"stockpilePrice", "单价", "true"}, {"totalPrice", "合价", "true"},
+            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"}, {"yushouPrice", "预售价", "true"}, {"totalPrice", "合价", "true"},
             {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "收货单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
         editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
@@ -127,7 +129,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
-                        java.util.logging.Logger.getLogger(YiMiaoChuKu1JDialog.class.getName()).log(Level.SEVERE, null, ex);
+                        java.util.logging.Logger.getLogger(YiMiaoChuKu2JDialog.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 int selectedColumn = jTableyimiao.getSelectedColumn();
@@ -183,6 +185,15 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     Object totalPrice = sale_detail_tb.get("totalprice");
                     Object kehudanweiName = kehudanwei.get("kehudanweiName");
                     Object duifangjinbangren = kehudanwei.get("kehudanweiConstactperson");
+                    Object stockpileQuantity = stockpile.get("stockpileQuantity");
+                    
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + sale_detail_tb.get("saleDetailId"))) {
+                            AssetMessage.INFO("不可以添加相同的疫苗！", YiMiaoChuKu2JDialog.this);
+                            return;
+                        }
+                    }
 
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
@@ -207,6 +218,8 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     saledetailIdmap.put(xiangdanId, xiangdanId);
                     saleIdmap.put(xiangdanId, saleId);
                     kehudanweiIdmap.put(xiangdanId, kehudanweiId);
+                    //                    保存库存数量
+                    kucunmap.put(xiangdanId, stockpileQuantity);
 
                 }
 
@@ -614,11 +627,15 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             yimiaoliebiao.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
             yimiaoliebiao.setPihao((String) yimiaotable.getValue(i, "pihao"));
             yimiaoliebiao.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
-            yimiaoliebiao.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "stockpilePrice"))));
+            yimiaoliebiao.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yushouPrice"))));
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
             yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
             yimiaoliebiao.setKucunId(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "stockpileId"))));
+            if (Integer.parseInt("" + yimiaotable.getValue(i, "quantity")) > Integer.parseInt(kucunmap.get(jTableyimiao.getValueAt(i, 0)).toString())) {
+                AssetMessage.ERRORSYS(yimiaotable.getValue(i, "yimiaoName").toString() + "销售数量不能大于库存数量:" + Integer.parseInt(kucunmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
+                return null;
+            }
             yimiaoliebiao.setChukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoliebiao.setTotalprice(yimiaoliebiao.getPrice() * yimiaoliebiao.getChukuQuantity());
             yimiaoliebiao.setXiangdanId(Integer.parseInt(saledetailIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
@@ -748,8 +765,8 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
 
     }
 
-      public void chooseYimiao() {
-        String sql = " (sale_id like \"YMXS%\") and is_completed = 1 and status = 0";
+    public void chooseYimiao() {
+        String sql = " sale_id like \"YMXS%\" and is_completed = 1 and status = 0";
         new ChooseTask(sql).execute();
     }
 
@@ -772,7 +789,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         }
 
     }
-    
+
     private class Cancel extends CancelChuKu {
 
         public Cancel(List<SaleyimiaoEntity> zc) {
@@ -793,7 +810,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             yimiaochuku.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaochuku);
         }
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

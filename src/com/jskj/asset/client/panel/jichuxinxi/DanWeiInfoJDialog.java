@@ -5,12 +5,14 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Unit;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -220,8 +222,21 @@ public class DanWeiInfoJDialog extends BaseDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
                     if (!jCheckBoxCont.isSelected()) {
+                        AssetMessage.INFO("提交成功！", DanWeiInfoJDialog.this);
                         dispose();
-                    } 
+                    }  else {
+                        AssetMessage.INFO("提交成功！", DanWeiInfoJDialog.this);
+                        dispose();
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        DanWeiInfoJDialog danWeiInfoJDialog = new DanWeiInfoJDialog(parentPanel);
+                        danWeiInfoJDialog.setLocationRelativeTo(mainFrame);
+                        AssetClientApp.getApplication().show(danWeiInfoJDialog);
+//                        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//                        List<String> source = mode.getSource();
+//                        source.clear();
+//                        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+//                        yimiaoPicture.setModel(newMode);
+                    }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), DanWeiInfoJDialog.this);
                 }

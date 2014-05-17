@@ -20,7 +20,6 @@ public class MyTaskEntity {
     private String owner;
     private String department;
     private String context;
-    private List<YimiaocaigouEntity> list;
 
     /**
      * @return the shenqingdanId
@@ -104,14 +103,6 @@ public class MyTaskEntity {
      */
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public List<YimiaocaigouEntity> getList() {
-        return list;
-    }
-
-    public void setList(List<YimiaocaigouEntity> list) {
-        this.list = list;
     }
 
 }

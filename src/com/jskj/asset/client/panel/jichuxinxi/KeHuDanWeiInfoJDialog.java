@@ -14,6 +14,7 @@ import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.ymgl.*;
 import com.jskj.asset.client.util.PingYinUtil;
+import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -524,8 +525,16 @@ public class KeHuDanWeiInfoJDialog extends BaseDialog {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
                     if (!jCheckBoxCont.isSelected()) {
+                        AssetMessage.INFO("提交成功！", KeHuDanWeiInfoJDialog.this);
                         dispose();
-                    } 
+                    } else {
+                        AssetMessage.INFO("提交成功！", KeHuDanWeiInfoJDialog.this);
+                        dispose();
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        KeHuDanWeiInfoJDialog keHuDanWeiInfoJDialog = new KeHuDanWeiInfoJDialog(parentPanel);
+                        keHuDanWeiInfoJDialog.setLocationRelativeTo(mainFrame);
+                        AssetClientApp.getApplication().show(keHuDanWeiInfoJDialog);
+                    }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), KeHuDanWeiInfoJDialog.this);
                 }
