@@ -254,18 +254,6 @@ public class BindTableHelper<T> {
                     columnBinding
                             .setColumnClass(String.class
                             );
-                    if (bindObject[i].length >= 3) {
-                        String type = bindObject[i][2];
-                        if (type != null && type.equalsIgnoreCase("date")) {
-                            columnBinding.setColumnClass(Date.class);
-                        } else if (type != null && type.equalsIgnoreCase("int")) {
-                            columnBinding.setColumnClass(Integer.class);
-                        } else if (type != null && type.equalsIgnoreCase("double")) {
-                            columnBinding.setColumnClass(Double.class);
-                        } else if (type != null && type.equalsIgnoreCase("float")) {
-                            columnBinding.setColumnClass(Float.class);
-                        }
-                    }
                 }
 
             }
