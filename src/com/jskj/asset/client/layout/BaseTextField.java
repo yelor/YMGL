@@ -5,6 +5,8 @@
  */
 package com.jskj.asset.client.layout;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.util.DateChooser;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -22,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import org.jdesktop.application.Application;
 
 /**
  *
@@ -246,7 +249,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         }
 
 //        Point mousepoint = MouseInfo.getPointerInfo().getLocation();
-        pop = PopupFactory.getSharedInstance().getPopup(this, basePopup, selectedX, selectedY);
+        pop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), basePopup, selectedX, selectedY);
         basePopup.setKey(getText());
         pop.show();
         isShow = true;

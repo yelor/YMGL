@@ -5,6 +5,8 @@
  */
 package com.jskj.asset.client.panel.spcx;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.bean.entity.MyTaskEntity;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
@@ -29,6 +31,7 @@ import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
 
 /**
@@ -354,7 +357,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
             selectedColumnX = selectedColumnX - detailPanel.getWidth();
         }
         
-        pop = PopupFactory.getSharedInstance().getPopup(jTable4, detailPanel, selectedColumnX, selectedColumnY);
+        pop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), detailPanel, selectedColumnX, selectedColumnY);
         detailPanel.setText(context);
         pop.show();
         isShow = true;

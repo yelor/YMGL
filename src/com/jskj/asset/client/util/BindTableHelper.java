@@ -4,6 +4,8 @@
  */
 package com.jskj.asset.client.util;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.layout.BaseTableHeaderPopup;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -48,6 +50,7 @@ import org.jdesktop.beansbinding.Converter;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.jasperreports.engine.JRDataSource;
+import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 
@@ -128,7 +131,7 @@ public class BindTableHelper<T> {
             selectedColumnX = selectedColumnX - baseTableHeaderPopup.getWidth() + jTableFormat.getJtable().getColumnModel().getColumn(selectedColumn).getWidth();
         }
 
-        tableHeaderPop = PopupFactory.getSharedInstance().getPopup(jTableFormat.getJtable(), baseTableHeaderPopup, selectedColumnX, selectedColumnY);
+        tableHeaderPop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), baseTableHeaderPopup, selectedColumnX, selectedColumnY);
         //baseTableHeaderPopup.requestFocusInWindow();
         baseTableHeaderPopup.setSelectedColumn(selectedColumn, savedSearchKey.get(selectedColumn));
         baseTableHeaderPopup.getInputText().requestFocus();
