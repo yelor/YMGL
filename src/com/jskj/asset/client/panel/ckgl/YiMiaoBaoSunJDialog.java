@@ -104,7 +104,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"stockpileId", "库存编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"baosunQuantity", "数量", "true"}, {"price", "单价", "false"}, {"totalprice", "合价", "false"},
-            {"xiaohuiAddr", "销毁地点", "true"}, {"xiaohuiDate", "销毁时间", "true"}, {"xiaohuiType", "销毁方式", "true"}, {"baosunReason", "报损原因", "true"}});
+            {"xiaohuiAddr", "销毁地点", "true"}, {"xiaohuiDate", "销毁时间", "false"}, {"xiaohuiType", "销毁方式", "true"}, {"baosunReason", "报损原因", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -147,7 +147,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
                     Object unit = yimiao.get("unitId");
                     Object price = bindedMap.get("stockpilePrice");
-                    Object youxiaoqi = bindedMap.get("youxiaodate");
+                    String youxiaoqi = (String) bindedMap.get("youxiaodate").toString().substring(0, 10);
                     Object pihao = bindedMap.get("pihao");
 
                     editTable.insertValue(0, kucunId);
@@ -159,7 +159,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
                     editTable.insertValue(6, unit);
                     editTable.insertValue(7, youxiaoqi);
                     editTable.insertValue(9, price);
-                    editTable.insertValue(11, dateformate.format(new Date()).toString());
+                    editTable.insertValue(12, dateformate.format(new Date()).toString());
 
                 }
 

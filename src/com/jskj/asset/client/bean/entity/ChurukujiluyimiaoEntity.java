@@ -5,6 +5,7 @@ package com.jskj.asset.client.bean.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 /**
  *
  * @author tt
@@ -15,6 +16,12 @@ public class ChurukujiluyimiaoEntity {
     private YiMiaotb yimiao;
 
     private Churukudantb churukudan;
+
+    private String wanglaidanwei;
+
+    private String duifangjingbanren;
+
+    private Usertb zhidanren;
 
     private Churukudanyimiaoliebiaotb chukuyimiao;
 
@@ -40,6 +47,30 @@ public class ChurukujiluyimiaoEntity {
 
     public void setChukuyimiao(Churukudanyimiaoliebiaotb chukuyimiao) {
         this.chukuyimiao = chukuyimiao;
+    }
+
+    public String getWanglaidanwei() {
+        return wanglaidanwei;
+    }
+
+    public void setWanglaidanwei(String wanglaidanwei) {
+        this.wanglaidanwei = wanglaidanwei;
+    }
+
+    public String getDuifangjingbanren() {
+        return duifangjingbanren;
+    }
+
+    public void setDuifangjingbanren(String duifangjingbanren) {
+        this.duifangjingbanren = duifangjingbanren;
+    }
+
+    public Usertb getZhidanren() {
+        return zhidanren;
+    }
+
+    public void setZhidanren(Usertb zhidanren) {
+        this.zhidanren = zhidanren;
     }
 
 }
