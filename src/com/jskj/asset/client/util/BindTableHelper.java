@@ -448,8 +448,8 @@ public class BindTableHelper<T> {
                 if (haveValue) {
                     tabCloseButton.setIcon(searchIcon);
                     tabCloseButton.setToolTipText("点击查询");
-                }else{
-                   tabCloseButton.setToolTipText(newValue);
+                } else {
+                    tabCloseButton.setToolTipText(newValue);
                 }
 //                tabCloseButton.setMargin(new Insets(0,0,0,0));
 //                tabCloseButton.setOpaque(false);
