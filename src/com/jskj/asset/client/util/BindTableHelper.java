@@ -254,6 +254,18 @@ public class BindTableHelper<T> {
                     columnBinding
                             .setColumnClass(String.class
                             );
+                    if (bindObject.length >= 3) {
+                        String type = bindObject[i][2];
+                        if (type != null && type.equalsIgnoreCase("date")) {
+                            columnBinding.setColumnClass(Date.class);
+                        } else if (type != null && type.equalsIgnoreCase("int")) {
+                            columnBinding.setColumnClass(Integer.class);
+                        } else if (type != null && type.equalsIgnoreCase("double")) {
+                            columnBinding.setColumnClass(Double.class);
+                        } else if (type != null && type.equalsIgnoreCase("float")) {
+                            columnBinding.setColumnClass(Float.class);
+                        }
+                    }
                 }
 
             }
@@ -448,8 +460,8 @@ public class BindTableHelper<T> {
                 if (haveValue) {
                     tabCloseButton.setIcon(searchIcon);
                     tabCloseButton.setToolTipText("点击查询");
-                }else{
-                   tabCloseButton.setToolTipText(newValue);
+                } else {
+                    tabCloseButton.setToolTipText(newValue);
                 }
 //                tabCloseButton.setMargin(new Insets(0,0,0,0));
 //                tabCloseButton.setOpaque(false);
