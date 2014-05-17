@@ -106,7 +106,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         conditionSql = "";
         yimiaoName = "";
         if (bindTable.getSelectedBean() != null) {
-            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + bindTable.getSelectedBean().getYimiao().getYimiaoName() + "%\"))";
+            conditionSql += "yimiao_id in (select distinct stockpile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + bindTable.getSelectedBean().getYimiao().getYimiaoName() + "%\"))";
             yimiaoName=bindTable.getSelectedBean().getYimiao().getYimiaoName();
         } else {
             conditionSql = "";
