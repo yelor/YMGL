@@ -30,6 +30,7 @@ public class Constants {
     
     /*Global config*/
     public static String WINTITLE = "广安疾控资产管理系统";
+    public static String DANWEINAME = "广安市疾控中心";
     public static int LOGIN_WIDTH = 360;
     public static int LOGIN_HEIGHT = 274;
 

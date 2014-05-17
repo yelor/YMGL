@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.util;
 
+import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.ReportTemplates;
 import java.util.Date;
@@ -17,6 +18,7 @@ import net.sf.dynamicreports.report.builder.barcode.Code128BarcodeBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.Orientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -114,6 +116,8 @@ public class DanHao {
 
     private final static StyleBuilder font10Style = stl.style(ReportTemplates.columnStyle).setFontSize(10);
 
+    private final static StyleBuilder font15Style = stl.style(ReportTemplates.columnStyle).setFontSize(15).setHorizontalAlignment(HorizontalAlignment.CENTER);
+
     public static void printBarCode128(String label, String barcode) {
         try {
             StyleBuilder bold14Style = stl.style(ReportTemplates.boldStyle).setFontSize(14);
@@ -166,16 +170,35 @@ public class DanHao {
                     .setTextStyle(textStyle)
                     .title(
                             cmp.horizontalList(
-                                    createCustomerComponent(returnNotNullValue(0, 0, parameters), returnNotNullValue(0, 1, parameters))),
+                                    createCustomerComponent(Constants.DANWEINAME)),
                             cmp.horizontalList(
-                                    cmp.verticalList(
+                                                    createCellComponentLeft(returnNotNullValue(0, 0, parameters)),
+                                                    createCellComponent(returnNotNullValue(0, 1, parameters))),
+//                            cmp.horizontalList(
+//                                    cmp.verticalList(
+//                                            cmp.horizontalList(
+//                                                    createCellComponent(returnNotNullValue(1, 0, parameters), cmp.text(returnNotNullValue(1, 1, parameters))),
+//                                                    createCellComponent(returnNotNullValue(2, 0, parameters), cmp.text(returnNotNullValue(2, 1, parameters)))),
+//                                            cmp.horizontalList(
+//                                                    createCellComponent(returnNotNullValue(3, 0, parameters), cmp.text(returnNotNullValue(3, 1, parameters))),
+//                                                    createCellComponent(returnNotNullValue(4, 0, parameters), cmp.text(returnNotNullValue(4, 1, parameters)))),
                                             cmp.horizontalList(
-                                                    createCellComponent(returnNotNullValue(1, 0, parameters), cmp.text(returnNotNullValue(1, 1, parameters))),
-                                                    createCellComponent(returnNotNullValue(2, 0, parameters), cmp.text(returnNotNullValue(2, 1, parameters)))),
+                                                    createCellComponentLeft(returnNotNullValue(1, 0, parameters)),
+                                                    createCellComponent(returnNotNullValue(1, 1, parameters))),
                                             cmp.horizontalList(
-                                                    createCellComponent(returnNotNullValue(3, 0, parameters), cmp.text(returnNotNullValue(3, 1, parameters))),
-                                                    createCellComponent(returnNotNullValue(4, 0, parameters), cmp.text(returnNotNullValue(4, 1, parameters)))),
-                                            createCellComponent(returnNotNullValue(5, 0, parameters), cmp.text(returnNotNullValue(5, 1, parameters))))),
+                                                    createCellComponentLeft(returnNotNullValue(2, 0, parameters)),
+                                                    createCellComponent(returnNotNullValue(2, 1, parameters))),
+                                            cmp.horizontalList(
+                                                    createCellComponentLeft(returnNotNullValue(3, 0, parameters)),
+                                                    createCellComponent(returnNotNullValue(3, 1, parameters))),
+                                            cmp.horizontalList(
+                                                    createCellComponentLeft(returnNotNullValue(4, 0, parameters)),
+                                                    createCellComponent(returnNotNullValue(4, 1, parameters))),
+                                            cmp.horizontalList(
+                                                    createCellComponentLeft(returnNotNullValue(5, 0, parameters)),
+                                                    createCellComponent(returnNotNullValue(5, 1, parameters)))
+//                                    ))
+                            ,
                             createCellComponent(labelAndbarcode[0], shippingContainerCode)).print(false);
             AssetMessage.INFO("打印完成.");
         } catch (Exception e) {
@@ -209,6 +232,12 @@ public class DanHao {
         return createCellComponent(label, contentBuilder);
     }
 
+    private static ComponentBuilder<?, ?> createCustomerComponent(String content) {
+        VerticalListBuilder contentBuilder = cmp.verticalList(
+                cmp.text(content).setStyle(font15Style));
+        return createCellComponent(contentBuilder);
+    }
+
     private static ComponentBuilder<?, ?> createCellComponent(String label, ComponentBuilder<?, ?> content) {
         VerticalListBuilder cell = cmp.verticalList(
                 cmp.text(label).setStyle(font10Style),
@@ -216,6 +245,30 @@ public class DanHao {
                         cmp.horizontalGap(5),
                         content,
                         cmp.horizontalGap(5)));
+        cell.setStyle(stl.style(stl.pen2Point()));
+        return cell;
+    }
+
+    private static ComponentBuilder<?, ?> createCellComponent(ComponentBuilder<?, ?> content) {
+        VerticalListBuilder cell = cmp.verticalList(
+                cmp.horizontalList(
+                        cmp.horizontalGap(5),
+                        content,
+                        cmp.horizontalGap(5)));
+        cell.setStyle(stl.style(stl.pen2Point()));
+        return cell;
+    }
+
+    private static ComponentBuilder<?, ?> createCellComponentLeft(String label) {
+        VerticalListBuilder cell = cmp.verticalList(
+                cmp.text(label).setStyle(font10Style)).setFixedWidth(50);
+        cell.setStyle(stl.style(stl.pen2Point()));
+        return cell;
+    }
+
+    private static ComponentBuilder<?, ?> createCellComponent(String label) {
+        VerticalListBuilder cell = cmp.verticalList(
+                cmp.text(label).setStyle(font10Style));
         cell.setStyle(stl.style(stl.pen2Point()));
         return cell;
     }
