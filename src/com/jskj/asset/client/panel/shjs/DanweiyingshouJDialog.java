@@ -5,18 +5,25 @@
  */
 package com.jskj.asset.client.panel.shjs;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yingfukuandanjutb;
+import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.shjs.task.YingfuliebiaoFindTask;
+import com.jskj.asset.client.panel.ymgl.YiMiaoXiaoShouJDialog;
+import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
 import com.jskj.asset.client.util.BindTableHelper;
+import com.jskj.asset.client.util.DanHao;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JFrame;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
@@ -139,11 +146,10 @@ public class DanweiyingshouJDialog extends BaseDialog {
         jToolBar1.setOpaque(false);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(DanweiyingshouJDialog.class, this);
-        jButton1.setAction(actionMap.get("submitForm")); // NOI18N
+        jButton1.setAction(actionMap.get("detail")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
-        jButton1.setEnabled(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setName("jButton1"); // NOI18N
@@ -364,6 +370,57 @@ public class DanweiyingshouJDialog extends BaseDialog {
 //        });
     }
 
+     @Action
+    public void detail(){
+        int n = jTable1.getSelectedRow();
+        if(n < 0){
+            AssetMessage.showMessageDialog(this, "请选择某个申请单!");
+            return;
+        }
+        Yingfukuandanjutb sksqdan = currentPageData.get(n);
+        if(sksqdan.getYuandantype().equals("期初应付")){
+            AssetMessage.showMessageDialog(this, "请选择某个申请单!");
+            return;
+        }
+        if(sksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOXS)){
+            new DetailTask(sksqdan.getYuandanId()).execute();
+        }
+        
+        this.setVisible(false);
+    }
+    
+     private class DetailTask extends YimiaoXiaoshouXiangdanTask{
+
+        public DetailTask(String id) {
+            super(id);
+        }
+        
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            if(object == null){
+                AssetMessage.showMessageDialog(null, "未获取到申请单详细信息。");
+                return;
+            }
+            XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntiy = (XiaoshoushenpixiangdanEntity) object;
+            openShenqingdan(yimiaoxiaoshouxiangdanEntiy);
+        }
+        
+    }
+     public void openShenqingdan( XiaoshoushenpixiangdanEntity yimiaoxiaoshouxiangdanEntiy) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        if (yimiaoxiaoshouxiangdanEntiy.getSaletb().getSaleId().contains(DanHao.TYPE_YIMIAOXS)) {
+            YiMiaoXiaoShouJDialog yimiaoxiaoshouJDialog = new YiMiaoXiaoShouJDialog(this, yimiaoxiaoshouxiangdanEntiy);
+            yimiaoxiaoshouJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoxiaoshouJDialog);
+        } 
+    }
+    
     @Action
     public void print() {
         try {

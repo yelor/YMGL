@@ -209,6 +209,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 if (bindedMap != null) {
                     Object yimiaomap = bindedMap.get("yimiaoAll");
                     HashMap yimiaoAll = (HashMap) yimiaomap;
+                    Object shenqingdanmap = bindedMap.get("shenqingdan");
+                    HashMap shenqingdan = (HashMap) shenqingdanmap;
                     Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
                     HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
                     Object yimiaodengjimap = bindedMap.get("yimiaodengji");
@@ -228,6 +230,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                         pihao = null;
                     }
 
+                    Object supplierId = shenqingdan.get("supplierId");
+                    yimiaoyanshou.setSupplierId(Integer.parseInt(""+supplierId));
                     Object piqianfaNo = yimiaodengji.get("piqianfahegezhenno");
                     Object youxiaoqi = yimiaodengji.get("youxiaoqi").toString().subSequence(0, 10);
                     Object unit = yimiaoAll.get("unitId");

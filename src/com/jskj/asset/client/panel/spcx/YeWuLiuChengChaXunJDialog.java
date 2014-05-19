@@ -61,7 +61,7 @@ public class YeWuLiuChengChaXunJDialog extends BaseDialog {
         {"bumen", "部门"}, {"zhidanren", "制单人"}, {"jiner", "金额"}, {"comments", "描述"}});
         bindTable.setColumnType(Date.class, 2);
         bindTable.setColumnType(Float.class, 7);
-        bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 150}, new int[]{2, 150}).setRowHeight(25);
+        bindTable.bind().setColumnWidth(new int[]{0, 120}, new int[]{1, 100}, new int[]{2, 100}).setRowHeight(25);
 
         Dimension dimension = new Dimension();
         dimension.setSize(800, 600);
