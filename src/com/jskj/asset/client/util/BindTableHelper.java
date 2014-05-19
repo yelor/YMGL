@@ -6,6 +6,7 @@ package com.jskj.asset.client.util;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.AssetClientView;
+import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BaseTableHeaderPopup;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.layout.IPopupBuilder;
@@ -40,14 +41,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.xml.crypto.Data;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.col;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 import org.apache.log4j.Logger;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Converter;
 
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
+import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.jasperreports.engine.JRDataSource;
 import org.jdesktop.application.Application;
@@ -675,12 +680,16 @@ public class BindTableHelper<T> {
                     itemColumns[i] = itemColumn;
                 }
             }
+            HorizontalListBuilder subHbuilder = cmp.horizontalList().setStyle(stl.style(10)).setGap(50);
+            subHbuilder.newRow().add(
+                    cmp.text("单位:" + Constants.DANWEINAME).setHorizontalAlignment(HorizontalAlignment.RIGHT));
+
             viewer(report().setTemplate(ReportTemplates.reportTemplate)
                     .columns(itemColumns)
                     .title(ReportTemplates.createTitleComponent(reportName))
                     .pageFooter(ReportTemplates.footerComponent)
                     //.sortBy(asc(itemColumn), desc(unitPriceColumn))
-                    .setDataSource(dataSource));
+                    .setDataSource(dataSource).summary(subHbuilder));
 
             logger.debug("show report:" + reportName);
 
