@@ -597,7 +597,7 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
                     {"部门", jTextFielddepartment.getText()},
                     {"供应单位", jTextFieldSupplierName.getText()},
                     {"联系人", jTextFieldConstactperson.getText()},
-                    {"备注", jTextAreaRemark.getText()}},
+                    {"备注", jTextAreaRemark.getText(),"single"}},
                     jTableyimiao,
                     new String[][]{{"制单人", jTextFieldzhidanren.getText()}});
         } catch (DRException ex) {

@@ -55,7 +55,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (!isShow && openWhenClick) {
+                if (!isShow && openWhenClick &&isEnabled()) {
                     showPanel();
                 }
             }

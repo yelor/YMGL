@@ -518,7 +518,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"申请人", jTextFieldshenqingren.getText()},
                     {"申请部门", jTextFielddepartment.getText()},
-                    {"备注", jTextAreaRemark.getText()}},
+                    {"备注", jTextAreaRemark.getText(),"single"}},
                     jTableyimiao,
                     new String[][]{{"制单人", jTextFieldzhidanren.getText()}});
         } catch (DRException ex) {

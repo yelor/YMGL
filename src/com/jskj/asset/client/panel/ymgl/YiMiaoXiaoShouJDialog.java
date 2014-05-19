@@ -768,7 +768,7 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                     {"收货电话", jTextFieldTel.getText()},
                     {"经办人", jTextFieldjingbanren.getText()},
                     {"部门", jTextFielddepartment.getText()},
-                    {"备注", jTextArea1.getText()}},
+                    {"备注", jTextArea1.getText(),"single"}},
                     jTableyimiao,
                     new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
         } catch (DRException ex) {

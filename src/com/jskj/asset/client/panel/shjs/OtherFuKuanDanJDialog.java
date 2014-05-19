@@ -543,7 +543,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
                     {"制单日期", fukuandanDate.getText()},
                     {"供应单位", supplier.getText()},
                     {"结算账户", accountNum.getText()},
-                    {"备注", shenqingdanRemark.getText()}}, 
+                    {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{{"经办人", jingbanren.getText()}
                     });
