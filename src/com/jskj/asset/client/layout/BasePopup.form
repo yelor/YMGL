@@ -48,7 +48,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jScrollPane1" alignment="1" pref="0" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="1" pref="542" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -97,9 +97,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabelTotal" min="-2" pref="354" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                  <Component id="jToolBar1" pref="106" max="32767" attributes="0"/>
+                  <Component id="jLabelTotal" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="prepPageBubtton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="nextPageButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -107,7 +109,13 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jLabelTotal" max="32767" attributes="0"/>
-              <Component id="jToolBar1" alignment="1" pref="0" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="nextPageButton" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="prepPageBubtton" alignment="0" min="-2" pref="14" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -121,60 +129,52 @@
             <Property name="name" type="java.lang.String" value="jLabelTotal" noResource="true"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JToolBar" name="jToolBar1">
+        <Component class="javax.swing.JButton" name="nextPageButton">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.layout.BasePopup" id="pageNext" methodName="pageNext"/>
             </Property>
-            <Property name="floatable" type="boolean" value="false"/>
-            <Property name="rollover" type="boolean" value="true"/>
+            <Property name="background" type="java.awt.Color" resourceKey="nextPageButton.background"/>
+            <Property name="font" type="java.awt.Font" resourceKey="nextPageButton.font"/>
+            <Property name="foreground" type="java.awt.Color" resourceKey="nextPageButton.foreground"/>
+            <Property name="text" type="java.lang.String" resourceKey="nextPageButton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="nextPageButton.toolTipText"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
+                <CompoundBorder/>
+              </Border>
+            </Property>
             <Property name="borderPainted" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="jToolBar1" noResource="true"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="name" type="java.lang.String" value="nextPageButton" noResource="true"/>
             <Property name="opaque" type="boolean" value="false"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="prepPageBubtton">
-              <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.layout.BasePopup" id="pagePrev" methodName="pagePrev"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" resourceKey="prepPageBubtton.font"/>
-                <Property name="foreground" type="java.awt.Color" resourceKey="prepPageBubtton.foreground"/>
-                <Property name="text" type="java.lang.String" resourceKey="prepPageBubtton.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="prepPageBubtton" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="nextPageButton">
-              <Properties>
-                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="com.jskj.asset.client.layout.BasePopup" id="pageNext" methodName="pageNext"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" resourceKey="nextPageButton.font"/>
-                <Property name="foreground" type="java.awt.Color" resourceKey="nextPageButton.foreground"/>
-                <Property name="text" type="java.lang.String" resourceKey="nextPageButton.text"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="name" type="java.lang.String" value="nextPageButton" noResource="true"/>
-                <Property name="opaque" type="boolean" value="false"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
+        </Component>
+        <Component class="javax.swing.JButton" name="prepPageBubtton">
+          <Properties>
+            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+              <action class="com.jskj.asset.client.layout.BasePopup" id="pagePrev" methodName="pagePrev"/>
+            </Property>
+            <Property name="background" type="java.awt.Color" resourceKey="prepPageBubtton.background"/>
+            <Property name="font" type="java.awt.Font" resourceKey="prepPageBubtton.font"/>
+            <Property name="foreground" type="java.awt.Color" resourceKey="prepPageBubtton.foreground"/>
+            <Property name="text" type="java.lang.String" resourceKey="prepPageBubtton.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="prepPageBubtton.toolTipText"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
+                <CompoundBorder/>
+              </Border>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="name" type="java.lang.String" value="prepPageBubtton" noResource="true"/>
+            <Property name="opaque" type="boolean" value="false"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

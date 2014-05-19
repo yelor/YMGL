@@ -883,7 +883,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     jTable1,
                     new String[][]{
                     {"制单人", jingbanren.getText()}
-                    });
+                    },"领用人签字");
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);

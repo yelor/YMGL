@@ -143,8 +143,7 @@ public class ReportTemplates {
     public static ComponentBuilder<?, ?> createTitleComponent(String label) {
         return cmp.horizontalList()
                 .add(
-                        dynamicReportsComponent,
-                        cmp.text(label).setStyle(bold14CenteredStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
+                        cmp.text(label).setStyle(bold14CenteredStyle).setHorizontalAlignment(HorizontalAlignment.CENTER))
                 .newRow()
                 .add(cmp.line())
                 .newRow()
@@ -200,7 +199,7 @@ public class ReportTemplates {
                     return null;
                 }
                 jasperViewer.setIconImage(Constants.logoIcon.getImage());
-                jasperViewer.setTitle("报表预览");
+                jasperViewer.setTitle("打印预览");
                 jasperViewer.setVisible(true);
 
                 return null;

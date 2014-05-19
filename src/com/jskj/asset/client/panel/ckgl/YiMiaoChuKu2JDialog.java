@@ -703,7 +703,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     {"仓库", jTextFieldkufang.getText()},
                     {"备注", jTextArea1.getText()}},
                     jTableyimiao,
-                    new String[][]{{"", ""},});
+                    new String[][]{{"", ""},},"收苗人签字");
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);

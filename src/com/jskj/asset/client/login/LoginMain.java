@@ -16,6 +16,7 @@ import com.jskj.asset.client.panel.message.MessagePanel;
 import com.jskj.asset.client.util.XMLHelper;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -274,6 +275,12 @@ public class LoginMain extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel6MouseExited(evt);
+            }
         });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -316,11 +323,11 @@ public class LoginMain extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(passwordFiled, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(loginButton)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addComponent(jLabel6))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -395,6 +402,14 @@ public class LoginMain extends javax.swing.JFrame {
             displayNetPanel(false);
         }
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
+        jLabel6.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_jLabel6MouseEntered
+
+    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
+        jLabel6.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_jLabel6MouseExited
 
     /**
      * @param args the command line arguments
@@ -510,14 +525,14 @@ public class LoginMain extends javax.swing.JFrame {
     }
 
     private void drawProgress(double toX) {
-        if (clearThread!=null&&clearThread.isAlive()) {
+        if (clearThread != null && clearThread.isAlive()) {
             clearThread.interrupt();
         }
         setColorAndDrawGraphics(warningMsg.getGraphics(), toX);
     }
 
     public void setColorAndDrawGraphics(Graphics g, double toX) {
-        g.setColor(new Color(122,163,204));
+        g.setColor(new Color(122, 163, 204));
         g.setFont(new Font(g.getFont().getFontName(), Font.BOLD, 14));
         double per = toX / 100;
         int width = warningMsg.getWidth();
