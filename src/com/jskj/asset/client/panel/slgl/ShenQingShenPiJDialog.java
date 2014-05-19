@@ -16,6 +16,7 @@ import com.jskj.asset.client.bean.entity.ShenPiEntity;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.bean.entity.Zichanshenpiliuchengtb;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.RowRender;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
@@ -33,7 +34,7 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author tt
  */
-public class ShenQingShenPiJDialog extends javax.swing.JDialog {
+public class ShenQingShenPiJDialog extends BaseDialog {
 
     private int pageIndex;
 

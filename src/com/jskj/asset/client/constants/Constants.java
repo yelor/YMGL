@@ -27,6 +27,8 @@ public class Constants {
     public final static Font GLOBAL_FONT = new Font("微软雅黑", Font.PLAIN, 14 );
     public final static Font TREE_FONT = new Font("微软雅黑", Font.PLAIN, 18 );
     public final static Font FONT_12 = new Font("微软雅黑", Font.PLAIN, 12 );
+    public final static Font FONT_12B = new Font("微软雅黑", Font.BOLD, 12 );
+    public final static Font FONT_14B = new Font("微软雅黑", Font.BOLD, 14 );
     
     /*Global config*/
     public static String WINTITLE = "广安疾控资产管理系统";

@@ -5,6 +5,7 @@
 package com.jskj.asset.client.layout;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.panel.DisplayCellPane;
 import com.jskj.asset.client.util.RightItem;
 import com.jskj.asset.client.util.RightMouseAdapter;
@@ -35,6 +36,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
 
 /**
  *
@@ -216,7 +218,7 @@ public class BaseTable extends JTable {
                 selectedColumnX = selectedColumnX - basePopup.getPreferredSize().width;
             }
 
-            pop = PopupFactory.getSharedInstance().getPopup(table, basePopup, selectedColumnX, selectedColumnY);
+            pop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), basePopup, selectedColumnX, selectedColumnY);
             basePopup.setKey(table.getValueAt(table.getSelectedRow(), selectedColumn).toString());
             basePopup.requestFocusInWindow();
             pop.show();

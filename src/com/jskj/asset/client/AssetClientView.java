@@ -59,8 +59,8 @@ public final class AssetClientView extends FrameView {
         taskMessagePanel.setBackground(resourceMap.getColor("taskMessagePanel.background")); // NOI18N
         taskMessagePanel.setName("taskMessagePanel"); // NOI18N
 
-        messageLabel.setFont(new java.awt.Font("宋体", 1, 12)); // NOI18N
-        messageLabel.setForeground(new java.awt.Color(0, 102, 204));
+        messageLabel.setFont(Constants.FONT_14B);
+        messageLabel.setForeground(new java.awt.Color(255, 255, 255));
         messageLabel.setName("messageLabel"); // NOI18N
 
         org.jdesktop.layout.GroupLayout taskMessagePanelLayout = new org.jdesktop.layout.GroupLayout(taskMessagePanel);

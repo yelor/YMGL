@@ -654,7 +654,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
                     {"制单日期", shenqingdanDate.getText()},
                     {"供应单位", supplier.getText()},
                     {"申请人", jingbanren.getText()},
-                    {"备注", shenqingdanRemark.getText()}}, 
+                    {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{{"", ""},
                     {"总金额", totalprice.getText()}

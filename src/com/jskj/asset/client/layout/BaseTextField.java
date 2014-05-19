@@ -5,7 +5,11 @@
  */
 package com.jskj.asset.client.layout;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.util.DateChooser;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -17,11 +21,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import org.jdesktop.application.Application;
 
 /**
  *
@@ -35,7 +44,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
     private boolean isShow;
     private BasePopup basePopup;
     private boolean hasRegister;
-    
+
     private boolean openWhenClick;
 
     public BaseTextField() {
@@ -46,8 +55,20 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (!isShow && openWhenClick) {
+                if (!isShow && openWhenClick &&isEnabled()) {
                     showPanel();
+                }
+            }
+
+            public void mouseEntered(MouseEvent me) {
+                if (isEnabled()) {
+                    setCursor(new Cursor(Cursor.HAND_CURSOR));
+                }
+            }
+
+            public void mouseExited(MouseEvent me) {
+                if (isEnabled()) {
+                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             }
         });
@@ -78,6 +99,12 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         }
         Insets insets = new Insets(0, 20, 0, 0);
         this.setMargin(insets);
+
+        Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
+        Border empty = new EmptyBorder(0, 20, 0, 0);
+        CompoundBorder border = new CompoundBorder(line, empty);
+        setBorder(border);
+
         hasRegister = true;
     }
 
@@ -104,6 +131,11 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         }
         Insets insets = new Insets(0, 20, 0, 0);
         this.setMargin(insets);
+
+        Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
+        Border empty = new EmptyBorder(0, 20, 0, 0);
+        CompoundBorder border = new CompoundBorder(line, empty);
+        setBorder(border);
         hasRegister = true;
     }
 
@@ -126,6 +158,10 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
         Insets insets = new Insets(0, 20, 0, 0);
         this.setMargin(insets);
+        Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
+        Border empty = new EmptyBorder(0, 20, 0, 0);
+        CompoundBorder border = new CompoundBorder(line, empty);
+        setBorder(border);
 
         addKeyListener(this);
         addFocusListener(this);
@@ -246,7 +282,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         }
 
 //        Point mousepoint = MouseInfo.getPointerInfo().getLocation();
-        pop = PopupFactory.getSharedInstance().getPopup(this, basePopup, selectedX, selectedY);
+        pop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), basePopup, selectedX, selectedY);
         basePopup.setKey(getText());
         pop.show();
         isShow = true;

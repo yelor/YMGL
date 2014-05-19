@@ -1408,7 +1408,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     {"行驶公里", jTextFieldzhidanDate.getText()},
                     {"收苗单位", jTextFielddepartment.getText()},
                     {"收苗人", ""},
-                    {"备注", ""}},
+                    {"备注", jTextArea2.getText(),"single"}},
                     jTableyimiao,
                     new String[][]{{"", ""},
                     {"", ""}
