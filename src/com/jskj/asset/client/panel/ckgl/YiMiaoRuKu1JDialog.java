@@ -713,7 +713,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"经办人", jTextFieldjingbanren.getText()},
                     {"仓库", jTextFieldkufang.getText()},
-                    {"备注", jTextArea1.getText()}},
+                    {"备注", jTextArea1.getText(),"single"}},
                     jTableyimiao,
                     new String[][]{{"", ""},});
         } catch (DRException ex) {

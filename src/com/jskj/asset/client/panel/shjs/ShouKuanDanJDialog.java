@@ -639,7 +639,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
                     {"结算账户", accountNum.getText()},
                     {"收款金额", fukuan.getText()},
                     {"优惠", youhui.getText()},
-                    {"备注", shenqingdanRemark.getText()}}, 
+                    {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{{"制单人", shenqingren.getText()},
                     {"应收总金额", yingfu.getText()}

@@ -63,8 +63,8 @@ public class YimiaochukujiluPanel extends BasePanel {
             {"churukudan.zhidandate", "日期", "false"}, {"churukudan.churukuId", "单据编号", "false"}, {"yimiao.yimiaoName", "疫苗名称", "false"}, {"chukuyimiao.rukuQuantity", "入库数(支)", "false"}, {"chukuyimiao.chukuQuantity", "出库数(支)", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
             {"chukuyimiao.pihao", "批号", "false"}, {"chukuyimiao.youxiaoqi", "有效期", "false"}, {"yimiao.unitId", "单位", "false"}, {"chukuyimiao.piqianfahegeno", "批签发合格证编号", "false"}, {"yimiao.yimiaoPizhunwenhao", "批准文号", "true"},
             //            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, 
-            {"churukudan.gongyingdanwei", "往来单位", "true"}, {"chukuyimiao.price", "价格(元)", "true"},
-            {"churukudan.zhidanren", "经办人", "true"}, {"churukudan.zhidanren", "对方经办人", "true"}, {"churukudan.zhidanren", "累计库存(支)", "true"}});
+            {"wanglaidanwei", "往来单位", "false"}, {"chukuyimiao.price", "价格(元)", "true"},
+            {"zhidanren.userName", "经办人", "true"}, {"duifangjingbanren", "对方经办人", "false"}, {"churukudan.zhidanren", "累计库存(支)", "true"}});
         bindTable.setColumnType(Date.class, 1, 10);
         bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 180}, new int[]{2, 150}, new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 80}, new int[]{6, 80}).setRowHeight(25);
 

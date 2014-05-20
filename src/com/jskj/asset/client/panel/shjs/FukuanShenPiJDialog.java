@@ -11,6 +11,7 @@ import com.jskj.asset.client.bean.entity.Fukuanshenpiliuchengtb;
 import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.layout.AssetMessage;
+import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.shjs.task.FindDaifukuanTask;
@@ -33,7 +34,7 @@ import org.jdesktop.beansbinding.BindingGroup;
  *
  * @author tt
  */
-public class FukuanShenPiJDialog extends javax.swing.JDialog {
+public class FukuanShenPiJDialog extends BaseDialog {
 
     private int pageIndex;
 

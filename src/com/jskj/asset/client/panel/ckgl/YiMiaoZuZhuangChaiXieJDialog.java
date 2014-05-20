@@ -808,7 +808,7 @@ public class YiMiaoZuZhuangChaiXieJDialog extends BaseDialog {
                     {"部门", jTextFieldbumen.getText()},
                     {"组装费用", jTextFieldzuzhuangfeiyong.getText()},
                     {"费用类型", jTextFieldfeiyongType.getText()},
-                    {"备注", jTextAreaRemark.getText()}},
+                    {"备注", jTextAreaRemark.getText(),"single"}},
                     new javax.swing.JTable[]{jTableyimiao1,jTableyimiao2},  
                     new String[][]{{"制单人", jTextFieldzhidanren.getText()},});
         } catch (DRException ex) {

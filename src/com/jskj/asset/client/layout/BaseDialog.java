@@ -6,6 +6,7 @@
 package com.jskj.asset.client.layout;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.constants.Constants;
 import static com.jskj.asset.client.layout.ReportTemplates.viewer;
 import java.awt.Component;
 import java.awt.Container;
@@ -37,6 +38,7 @@ import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.SubreportBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -53,6 +55,10 @@ public abstract class BaseDialog extends JDialog {
 
     public BaseDialog() {
         super(AssetClientApp.getApplication().getMainFrame());
+    }
+
+    public BaseDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
     }
 
     private Object getObject(String paramater, Object bean) throws Exception {
@@ -454,13 +460,32 @@ public abstract class BaseDialog extends JDialog {
     }
 
     protected void print(String title, String[][] topDisplayColumns, JTable[] table, String[][] bottomDisplayColumns) throws DRException {
+        this.print(title, topDisplayColumns, table, bottomDisplayColumns, null);
+    }
 
+    protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns) throws DRException {
+        this.print(title, topDisplayColumns, table, bottomDisplayColumns, null);
+    }
+
+    protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns, String sign) throws DRException {
+        this.print(title, topDisplayColumns, new JTable[]{table}, bottomDisplayColumns, sign);
+    }
+
+    protected void print(String title, String[][] topDisplayColumns, JTable[] table, String[][] bottomDisplayColumns, String sign) throws DRException {
         List<String[]> leftArray = new ArrayList();
         List<String[]> rightArray = new ArrayList();
         List<String[]> bottomleftArray = new ArrayList();
         List<String[]> bottomrightArray = new ArrayList();
+        List<String[]> singleRowArray = new ArrayList();
         if (topDisplayColumns != null) {
             for (int i = 1; i <= topDisplayColumns.length; i++) {
+                if (topDisplayColumns[i - 1].length >= 3) {
+                    String type = topDisplayColumns[i - 1][2];
+                    if (type.equalsIgnoreCase("single")) {
+                        singleRowArray.add(topDisplayColumns[i - 1]);
+                        continue;
+                    }
+                }
                 if (i % 2 == 0) {
                     rightArray.add(topDisplayColumns[i - 1]);
                 } else {
@@ -471,6 +496,13 @@ public abstract class BaseDialog extends JDialog {
 
         if (bottomDisplayColumns != null) {
             for (int i = 1; i <= bottomDisplayColumns.length; i++) {
+                if (bottomDisplayColumns[i - 1].length >= 3) {
+                    String type = bottomDisplayColumns[i - 1][2];
+                    if (type.equalsIgnoreCase("single")) {
+                        singleRowArray.add(bottomDisplayColumns[i - 1]);
+                        continue;
+                    }
+                }
                 if (i % 2 == 0) {
                     bottomrightArray.add(bottomDisplayColumns[i - 1]);
                 } else {
@@ -479,10 +511,26 @@ public abstract class BaseDialog extends JDialog {
             }
         }
 
+        HorizontalListBuilder subHbuilder = cmp.horizontalList().setStyle(stl.style(10)).setGap(50);
+
+        HorizontalListBuilder bhuilder = subHbuilder.add(
+                cmp.hListCell(createCustomerComponent(bottomleftArray)).heightFixedOnTop(),
+                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop());
+
+        if (singleRowArray.size() > 0) {
+            subHbuilder.newRow().add(createCustomerComponent(singleRowArray));
+        }
+        
+        if (sign != null && !sign.equals("")) {
+            bhuilder.newRow().add(
+                    cmp.text(sign + ":_____________").setHorizontalAlignment(HorizontalAlignment.RIGHT));
+        }
+        bhuilder.newRow().add(
+                cmp.text("单位:" + Constants.DANWEINAME).setHorizontalAlignment(HorizontalAlignment.RIGHT));
+
         SubreportBuilder subreport = cmp.subreport(new SubreportExpression(table))
                 .setDataSource(new SubreportDataSourceExpression(table));
 
-        
         viewer(report().setTemplate(ReportTemplates.reportTemplate)
                 .title(ReportTemplates.createTitleComponent(title),
                         cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
@@ -493,53 +541,7 @@ public abstract class BaseDialog extends JDialog {
                 .pageFooter(ReportTemplates.footerComponent)
                 //.sortBy(asc(itemColumn), desc(unitPriceColumn))
                 .setDataSource(new JREmptyDataSource(table.length))
-                .summary(cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
-                                cmp.hListCell(createCustomerComponent(bottomleftArray)).heightFixedOnTop(),
-                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop())));
-    }
-
-    protected void print(String title, String[][] topDisplayColumns, JTable table, String[][] bottomDisplayColumns) throws DRException {
-        int columnCount = table==null?1:table.getColumnCount();
-        TextColumnBuilder[] itemColumns = new TextColumnBuilder[columnCount];
-        DRDataSource dataSource = getDatasourceByTable(table, itemColumns);
-
-        List<String[]> leftArray = new ArrayList();
-        List<String[]> rightArray = new ArrayList();
-        List<String[]> bottomleftArray = new ArrayList();
-        List<String[]> bottomrightArray = new ArrayList();
-        if (topDisplayColumns != null) {
-            for (int i = 1; i <= topDisplayColumns.length; i++) {
-                if (i % 2 == 0) {
-                    rightArray.add(topDisplayColumns[i - 1]);
-                } else {
-                    leftArray.add(topDisplayColumns[i - 1]);
-                }
-            }
-        }
-
-        if (bottomDisplayColumns != null) {
-            for (int i = 1; i <= bottomDisplayColumns.length; i++) {
-                if (i % 2 == 0) {
-                    bottomrightArray.add(bottomDisplayColumns[i - 1]);
-                } else {
-                    bottomleftArray.add(bottomDisplayColumns[i - 1]);
-                }
-            }
-        }
-
-        viewer(report().setTemplate(ReportTemplates.reportTemplate)
-                .columns(itemColumns)
-                .title(ReportTemplates.createTitleComponent(title),
-                        cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
-                                cmp.hListCell(createCustomerComponent(leftArray)).heightFixedOnTop(),
-                                cmp.hListCell(createCustomerComponent(rightArray)).heightFixedOnTop()),
-                        cmp.verticalGap(10))
-                .pageFooter(ReportTemplates.footerComponent)
-                //.sortBy(asc(itemColumn), desc(unitPriceColumn))
-                .setDataSource(dataSource)
-                .summary(cmp.horizontalList().setStyle(stl.style(10)).setGap(50).add(
-                                cmp.hListCell(createCustomerComponent(bottomleftArray)).heightFixedOnTop(),
-                                cmp.hListCell(createCustomerComponent(bottomrightArray)).heightFixedOnTop())));
+                .summary(bhuilder));
     }
 
     private ComponentBuilder<?, ?> createCustomerComponent(List<String[]> array) {

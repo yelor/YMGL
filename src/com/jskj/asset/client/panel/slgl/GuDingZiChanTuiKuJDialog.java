@@ -716,7 +716,7 @@ public class GuDingZiChanTuiKuJDialog extends BaseDialog{
                     {"制单日期", shenqingdanDate.getText()},
                     {"制单人", jingbanren.getText()},
                     {"仓库", cangku.getText()},
-                    {"备注", shenqingdanRemark.getText()}}, 
+                    {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{
                     });

@@ -13,9 +13,9 @@ package com.jskj.asset.client.panel.baobiao.kucun;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.panel.user.*;
-import com.jskj.asset.client.bean.entity.StockpiletbAll;
 import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
 import com.jskj.asset.client.bean.entity.UsertbFindEntity;
+import com.jskj.asset.client.bean.entity.YimiaopicichaxunAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -23,11 +23,14 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.BaseTreePane;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.baobiao.caigou.ReportCaiGouFindTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import net.sf.cglib.beans.BeanCopier;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -46,9 +49,9 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     private int count;
     private String conditionSql;
 
-    private List<StockpiletbAll> stockpile;
+    private List<YimiaopicichaxunAll> yimiaopicichaxunList = new ArrayList<YimiaopicichaxunAll>();
 
-    private final BindTableHelper<StockpiletbAll> bindTable;
+    private final BindTableHelper<YimiaopicichaxunAll> bindTable;
 
     /**
      * Creates new form NoFoundPane
@@ -63,12 +66,12 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jComboBoxShengchanqiye.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("生产企业")));
 //        conditionSql = "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id)";
         count = 0;
-        bindTable = new BindTableHelper<StockpiletbAll>(jTableStockpile, new ArrayList<StockpiletbAll>());
+        bindTable = new BindTableHelper<YimiaopicichaxunAll>(jTableStockpile, new ArrayList<YimiaopicichaxunAll>());
         bindTable.createTable(new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoType", "疫苗类型"}, {"yimiao.yimiaoJixing", "剂型"},
-        {"yimiao.yimiaoGuige", "疫苗规格"}, {"yimiao.yimiaoJiliang", "剂量"}, {"yimiao.jiliangdanwei", "剂量单位"}, {"yimiao.yimiaoShengchanqiye", "生产企业"}, {"yimiao.yimiaoPizhunwenhao", "批准文号"},
+        {"yimiao.yimiaoGuige", "疫苗规格"}, {"jiliang", "剂量"}, {"yimiao.yimiaoShengchanqiye", "生产企业"}, {"yimiao.yimiaoPizhunwenhao", "批准文号"},
         {"yimiao.unitId", "单位"}, {"youxiaodate", "有效期至"}, {"kufang", "库房"}, {"pihao", "批号"}, {"piqianfano", "批签发合格证编号"}, {"source", "进口/国产"}, {"jinkoutongguanno", "进口通关单号"}, {"stockpileQuantity", "库存数量"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
-        bindTable.setColumnType(Date.class, 12);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 150}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}).setRowHeight(30);
+        bindTable.setColumnType(Date.class, 11);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 150}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}, new int[]{11, 100}).setRowHeight(30);
 
         ((BaseTextField) jTextFieldYimiaoName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -106,12 +109,12 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     public Task picichaxunAction() {
         conditionSql = "";
         if (!jTextFieldYimiaoName.getText().trim().equals("") && !jComboBoxShengchanqiye.getSelectedItem().toString().equals("")) {
-            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\") "
+            conditionSql += "yimiao_id in (select distinct stockpile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\") "
                     + "and (yimiao.yimiao_shengchanqiye like \"%" + jComboBoxShengchanqiye.getSelectedItem().toString() + "%\"))";
         } else if (!jTextFieldYimiaoName.getText().trim().equals("") && jComboBoxShengchanqiye.getSelectedItem().toString().equals("")) {
-            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\"))";
+            conditionSql += "yimiao_id in (select distinct stockpile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\"))";
         } else if (jTextFieldYimiaoName.getText().trim().equals("") && !jComboBoxShengchanqiye.getSelectedItem().toString().equals("")) {
-            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_shengchanqiye like \"%" + jComboBoxShengchanqiye.getSelectedItem().toString() + "%\"))";
+            conditionSql += "yimiao_id in (select distinct stockpile.yimiao_id from stockpile,yimiao where yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_shengchanqiye like \"%" + jComboBoxShengchanqiye.getSelectedItem().toString() + "%\"))";
         } else {
             conditionSql = "";
         }
@@ -179,8 +182,26 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                 logger.debug("total:" + count + ",get user size:" + stockpileEntiy.getResult().size());
 
                 //存下所有的数据
-                stockpile = stockpileEntiy.getResult();
-                bindTable.refreshData(stockpile);
+                for (int i = 0; i < stockpileEntiy.getResult().size(); i++) {
+                    YimiaopicichaxunAll yimiaopicichaxun = new YimiaopicichaxunAll();
+                    yimiaopicichaxun.setJiliang("" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoJiliang() + stockpileEntiy.getResult().get(i).getYimiao().getJiliangdanwei());
+                    yimiaopicichaxun.setYimiao(stockpileEntiy.getResult().get(i).getYimiao());
+                    yimiaopicichaxun.setJinkoutongguanno(stockpileEntiy.getResult().get(i).getJinkoutongguanno());
+                    yimiaopicichaxun.setKufang(stockpileEntiy.getResult().get(i).getKufang());
+                    yimiaopicichaxun.setPihao(stockpileEntiy.getResult().get(i).getPihao());
+                    yimiaopicichaxun.setPiqianfano(stockpileEntiy.getResult().get(i).getPiqianfano());
+                    yimiaopicichaxun.setSource(stockpileEntiy.getResult().get(i).getSource());
+                    yimiaopicichaxun.setStockpileDate(stockpileEntiy.getResult().get(i).getStockpileDate());
+                    yimiaopicichaxun.setStockpileId(stockpileEntiy.getResult().get(i).getStockpileId());
+                    yimiaopicichaxun.setStockpilePrice(stockpileEntiy.getResult().get(i).getStockpilePrice());
+                    yimiaopicichaxun.setStockpileQuantity(stockpileEntiy.getResult().get(i).getStockpileQuantity());
+                    yimiaopicichaxun.setStockpileTotalprice(stockpileEntiy.getResult().get(i).getStockpileTotalprice());
+                    yimiaopicichaxun.setYimiaoId(stockpileEntiy.getResult().get(i).getYimiaoId());
+                    yimiaopicichaxun.setYimiaoyushoujia(stockpileEntiy.getResult().get(i).getYimiaoyushoujia());
+                    yimiaopicichaxun.setYouxiaodate(stockpileEntiy.getResult().get(i).getYouxiaodate());
+                    yimiaopicichaxunList.add(yimiaopicichaxun);
+                }
+                bindTable.refreshData(yimiaopicichaxunList);
 
             }
         }
@@ -206,6 +227,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jButton2 = new javax.swing.JButton();
         jTextFieldYimiaoName = new BaseTextField();
         jComboBoxShengchanqiye = new javax.swing.JComboBox();
+        jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStockpile = new BaseTable(null);
 
@@ -270,6 +292,10 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
         jComboBoxShengchanqiye.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxShengchanqiye.setName("jComboBoxShengchanqiye"); // NOI18N
 
+        jButton5.setAction(actionMap.get("print")); // NOI18N
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setName("jButton5"); // NOI18N
+
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
         ctrlPane.setLayout(ctrlPaneLayout);
         ctrlPaneLayout.setHorizontalGroup(
@@ -284,16 +310,17 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctrlPaneLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addContainerGap())
-                    .addGroup(ctrlPaneLayout.createSequentialGroup()
-                        .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ctrlPaneLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,7 +339,8 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton5))
                 .addContainerGap())
         );
 
@@ -367,26 +395,62 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
 
     @Action
     public Task print() {
-        Task printData = new UserTask(0, count) {
+
+        YimiaoPicichaxunEntityTask printData = new YimiaoPicichaxunEntityTask(pageIndex, pageSize, conditionSql) {
             @Override
             public void onSucceeded(Object object) {
+
                 if (object instanceof Exception) {
                     Exception e = (Exception) object;
                     AssetMessage.ERRORSYS(e.getMessage());
                     logger.error(e);
                     return;
                 }
-                UsertbFindEntity usertbs = (UsertbFindEntity) object;
-                if (usertbs != null) {
-                    bindTable.createPrinter("职员信息", usertbs.getResult()).buildInBackgound().execute();
-                } else {
-                    bindTable.createPrinter("职员信息").buildInBackgound().execute();
+
+                StockpiletbFindEntity stockpileEntiy = (StockpiletbFindEntity) object;
+                yimiaopicichaxunList = new ArrayList<YimiaopicichaxunAll>();
+                for (int i = 0; i < stockpileEntiy.getResult().size(); i++) {
+                    YimiaopicichaxunAll yimiaopicichaxun = new YimiaopicichaxunAll();
+                    yimiaopicichaxun.setJiliang("" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoJiliang() + stockpileEntiy.getResult().get(i).getYimiao().getJiliangdanwei());
+                    yimiaopicichaxun.setYimiao(stockpileEntiy.getResult().get(i).getYimiao());
+                    yimiaopicichaxun.setJinkoutongguanno(stockpileEntiy.getResult().get(i).getJinkoutongguanno());
+                    yimiaopicichaxun.setKufang(stockpileEntiy.getResult().get(i).getKufang());
+                    yimiaopicichaxun.setPihao(stockpileEntiy.getResult().get(i).getPihao());
+                    yimiaopicichaxun.setPiqianfano(stockpileEntiy.getResult().get(i).getPiqianfano());
+                    yimiaopicichaxun.setSource(stockpileEntiy.getResult().get(i).getSource());
+                    yimiaopicichaxun.setStockpileDate(stockpileEntiy.getResult().get(i).getStockpileDate());
+                    yimiaopicichaxun.setStockpileId(stockpileEntiy.getResult().get(i).getStockpileId());
+                    yimiaopicichaxun.setStockpilePrice(stockpileEntiy.getResult().get(i).getStockpilePrice());
+                    yimiaopicichaxun.setStockpileQuantity(stockpileEntiy.getResult().get(i).getStockpileQuantity());
+                    yimiaopicichaxun.setStockpileTotalprice(stockpileEntiy.getResult().get(i).getStockpileTotalprice());
+                    yimiaopicichaxun.setYimiaoId(stockpileEntiy.getResult().get(i).getYimiaoId());
+                    yimiaopicichaxun.setYimiaoyushoujia(stockpileEntiy.getResult().get(i).getYimiaoyushoujia());
+                    yimiaopicichaxun.setYouxiaodate(stockpileEntiy.getResult().get(i).getYouxiaodate());
+                    yimiaopicichaxunList.add(yimiaopicichaxun);
                 }
-
+                bindTable.createPrinter("疫苗批次查询表", yimiaopicichaxunList).buildInBackgound().execute();
             }
-
         };
         return printData;
+    }
+
+    private class PrintTask extends org.jdesktop.application.Task<Object, Void> {
+        PrintTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to PrintTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     @Action
@@ -403,6 +467,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBoxShengchanqiye;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

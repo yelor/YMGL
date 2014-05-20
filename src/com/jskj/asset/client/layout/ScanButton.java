@@ -5,6 +5,8 @@
  */
 package com.jskj.asset.client.layout;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -13,6 +15,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import org.jdesktop.application.Application;
 
 /**
  *
@@ -73,7 +76,7 @@ public class ScanButton extends JButton implements ActionListener {
             selectedX = p.x - scanBarPanel.getWidth();
         }
 
-        pop = PopupFactory.getSharedInstance().getPopup(this, scanBarPanel, selectedX, selectedY);
+        pop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), scanBarPanel, selectedX, selectedY);
         pop.show();
         isShow = true;
     }

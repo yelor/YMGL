@@ -13,12 +13,13 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.login.LoginMain;
 import com.jskj.asset.client.panel.message.MessagePanel;
 import java.awt.Font;
+import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -38,15 +39,13 @@ public class AssetClientApp extends SingleFrameApplication {
     public static String[] DEFAULT_FONT = new String[]{
         "Table.font", "TableHeader.font", "CheckBox.font", "Tree.font", "Viewport.font", "ProgressBar.font",
         "RadioButtonMenuItem.font", "ToolBar.font", "ColorChooser.font", "ToggleButton.font", "Panel.font",
-        "TextArea.font", "Menu.font", "TableHeader.font" // ,"TextField.font"
-        , "OptionPane.font", "MenuBar.font", "Button.font", "Label.font",
+        "TextArea.font", "Menu.font", "TableHeader.font", "TextField.font", "OptionPane.font", "MenuBar.font", "Button.font", "Label.font",
         "PasswordField.font", "ScrollPane.font", "MenuItem.font",
         "ToolTip.font", "List.font", "EditorPane.font", "Table.font",
         "TabbedPane.font", "RadioButton.font", "CheckBoxMenuItem.font",
         "TextPane.font", "PopupMenu.font", "TitledBorder.font", "ComboBox.font"
     };
-    
-    
+
     /**
      * @return the sessionMap
      */
@@ -162,7 +161,6 @@ public class AssetClientApp extends SingleFrameApplication {
             System.err.println("session is null, please re-login.");
             return;
         }
-
         AssetClientView view = new AssetClientView(this);
 
         show(view);
@@ -206,6 +204,18 @@ public class AssetClientApp extends SingleFrameApplication {
         });
     }
 
+    private static void InitGlobalFont(Font font) {
+        FontUIResource fontRes = new FontUIResource(font);
+        for (Enumeration<Object> keys = UIManager.getDefaults().keys();
+                keys.hasMoreElements();) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof FontUIResource) {
+                UIManager.put(key, fontRes);
+            }
+        }
+    }
+
     /**
      * This method is to initialize the specified window by injecting resources.
      * Windows shown in our application come fully initialized from the GUI
@@ -218,10 +228,11 @@ public class AssetClientApp extends SingleFrameApplication {
         try {
             //ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png"));
             root.setIconImage(Constants.logoIcon.getImage());
-            Font font = Constants.GLOBAL_FONT;
-            for (String DEFAULT_FONT1 : AssetClientApp.DEFAULT_FONT) {
-                UIManager.put(DEFAULT_FONT1, font);
-            }
+            
+            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+           // Font font = Constants.GLOBAL_FONT;
+            InitGlobalFont(Constants.GLOBAL_FONT);
+
             // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
         } catch (Exception e) {
             logger.error(e);

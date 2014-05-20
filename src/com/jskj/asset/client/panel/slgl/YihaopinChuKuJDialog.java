@@ -862,11 +862,11 @@ public class YihaopinChuKuJDialog extends BaseDialog {
             super.print(this.getTitle(),
                     new String[][]{{"单据编号", cgsqId.getText()},
                     {"制单日期", shenqingdanDate.getText()},
-                    {"备注", shenqingdanRemark.getText()}}, 
+                    {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{
                     {"制单人", jingbanren.getText()}
-                    });
+                    },"领用人签字");
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);

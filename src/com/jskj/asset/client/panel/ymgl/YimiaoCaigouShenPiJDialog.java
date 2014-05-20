@@ -56,7 +56,7 @@ public class YimiaoCaigouShenPiJDialog extends BaseDialog {
      * @param modal
      */
     public YimiaoCaigouShenPiJDialog(java.awt.Frame parent, boolean modal) {
-        super();
+        super(parent,modal);
         initComponents();
         pageIndex = 1;
         count = 0;

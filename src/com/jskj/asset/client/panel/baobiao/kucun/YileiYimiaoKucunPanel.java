@@ -106,7 +106,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         conditionSql = "";
         yimiaoName = "";
         if (bindTable.getSelectedBean() != null) {
-            conditionSql += "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + bindTable.getSelectedBean().getYimiao().getYimiaoName() + "%\"))";
+            conditionSql += "yimiao_id in (select distinct stockpile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + bindTable.getSelectedBean().getYimiao().getYimiaoName() + "%\"))";
             yimiaoName=bindTable.getSelectedBean().getYimiao().getYimiaoName();
         } else {
             conditionSql = "";
@@ -199,6 +199,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jToolBar3 = new javax.swing.JToolBar();
+        jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -255,6 +256,14 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         jToolBar3.setRollover(true);
         jToolBar3.setName("jToolBar3"); // NOI18N
 
+        jButton5.setAction(actionMap.get("print")); // NOI18N
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setName("jButton5"); // NOI18N
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar3.add(jButton5);
+
         jButton1.setAction(actionMap.get("picichaxunAction")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setBorderPainted(false);
@@ -281,9 +290,11 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
                 .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ctrlPaneLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 434, Short.MAX_VALUE)
                         .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
+                    .addGroup(ctrlPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ctrlPaneLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -360,28 +371,45 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         new RefureTask(pageIndex, pageSize).execute();
     }
 
-    @Action
+      @Action
     public Task print() {
-        Task printData = new UserTask(0, count) {
+
+        StockpiletbAllFindEntityTask printData = new StockpiletbAllFindEntityTask(pageIndex, pageSize, conditionSql) {
             @Override
             public void onSucceeded(Object object) {
+
                 if (object instanceof Exception) {
                     Exception e = (Exception) object;
                     AssetMessage.ERRORSYS(e.getMessage());
                     logger.error(e);
                     return;
                 }
-                UsertbFindEntity usertbs = (UsertbFindEntity) object;
-                if (usertbs != null) {
-                    bindTable.createPrinter("职员信息", usertbs.getResult()).buildInBackgound().execute();
-                } else {
-                    bindTable.createPrinter("职员信息").buildInBackgound().execute();
-                }
 
+                StockpiletbFindEntity stockpileEntiy = (StockpiletbFindEntity) object;
+                stockpile = stockpileEntiy.getResult();
+                bindTable.createPrinter("Ⅰ类疫苗库存状况表", stockpile).buildInBackgound().execute();
             }
-
         };
         return printData;
+    }
+
+    private class PrintTask extends org.jdesktop.application.Task<Object, Void> {
+        PrintTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to PrintTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -390,6 +418,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelTotal;

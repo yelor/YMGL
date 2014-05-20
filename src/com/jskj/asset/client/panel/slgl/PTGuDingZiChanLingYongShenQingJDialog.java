@@ -670,7 +670,7 @@ public class PTGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
                     {"制单日期", shenqingdanDate.getText()},
                     {"申请人", jingbanren.getText()},
                     {"部门", dept.getText()},
-                    {"备注", shenqingdanRemark.getText()}}, 
+                    {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{{"", ""},
                     {"总金额", totalprice.getText()}

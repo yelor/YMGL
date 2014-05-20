@@ -587,7 +587,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
                     {"制单日期", jTextField2.getText()},
                     {"退库人", jTextFieldShenqingren.getText()},
                     {"部门", jTextFieldDept.getText()},
-                    {"备注", jTextArea1.getText()}}, 
+                    {"备注", jTextArea1.getText(),"single"}}, 
                     jTable1,
                     new String[][]{{"", ""},
                     {"总金额", totalprice.getText()}

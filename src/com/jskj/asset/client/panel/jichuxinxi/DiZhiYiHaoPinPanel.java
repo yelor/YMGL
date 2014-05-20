@@ -170,7 +170,6 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         jButton10 = new javax.swing.JButton();
@@ -195,7 +194,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(DiZhiYiHaoPinPanel.class);
         jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setBorder(null);
+        jButton6.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jButton6.setBorderPainted(false);
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -206,7 +205,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton7.setAction(actionMap.get("updateDiZhiYiHaoPin")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setBorder(null);
+        jButton7.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -217,7 +216,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton8.setAction(actionMap.get("delete")); // NOI18N
         jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
-        jButton8.setBorder(null);
+        jButton8.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jButton8.setBorderPainted(false);
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -228,7 +227,7 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton4.setAction(actionMap.get("reload")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setBorder(null);
+        jButton4.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -236,21 +235,10 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
         jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
-        jButton5.setAction(actionMap.get("print")); // NOI18N
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton5.setName("jButton5"); // NOI18N
-        jButton5.setOpaque(false);
-        jToolBar1.add(jButton5);
-
         jButton3.setAction(actionMap.get("print")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setBorder(null);
+        jButton3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jButton3.setBorderPainted(false);
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -504,7 +492,6 @@ public class DiZhiYiHaoPinPanel extends BasePanel {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
