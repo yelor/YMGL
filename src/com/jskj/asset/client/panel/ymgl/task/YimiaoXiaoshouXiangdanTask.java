@@ -55,11 +55,6 @@ public class YimiaoXiaoshouXiangdanTask extends BaseTask {
                 return yimiaobaosunEntiy;
             } else if (xiangdanID.contains(DanHao.TYPE_YIMIAOTJ)) {
                 yimiaoxiaotiaojiaEntiy = restTemplate.getForObject(YMTJ_URI + "?xiangdanID=" + xiangdanID, YimiaotiaojiaxiangdanEntity.class);
-                logger.debug("调价人员是：" + yimiaoxiaotiaojiaEntiy.getUserAll().getUserName());
-                logger.debug("调价单据编号是：" + yimiaoxiaotiaojiaEntiy.getYimiaotiaojiatb().getTiaojiaId());
-                logger.debug("调价库存疫苗编号是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getStockpileYimiao().getStockpileId());
-                logger.debug("调价库存疫苗名称是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getYimiaoAll().getYimiaoName());
-                logger.debug("调价详单ID是：" + yimiaoxiaotiaojiaEntiy.getResult().get(0).getYimiaotiaojia_detail_tb().getTiaojiaId());
 
                 return yimiaoxiaotiaojiaEntiy;
             }

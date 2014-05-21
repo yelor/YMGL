@@ -102,7 +102,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"stockpileId", "库存编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"stockpileId", "库存编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoType", "疫苗类型", "false"},{"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"baosunQuantity", "数量", "true"}, {"price", "单价", "false"}, {"totalprice", "合价", "false"},
             {"xiaohuiAddr", "销毁地点", "true"}, {"xiaohuiDate", "销毁时间", "false"}, {"xiaohuiType", "销毁方式", "true"}, {"baosunReason", "报损原因", "true"}});
 
@@ -129,7 +129,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
 
             public String[][] displayColumns() {
                 return new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"pihao", "批号"},
-                {"youxiaodate", "有效期"}, {"stockpileQuantity", "库存数量"}};
+                {"yimiao.yimiaoType", "疫苗类型"},{"youxiaodate", "有效期"}, {"stockpileQuantity", "库存数量"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
@@ -142,6 +142,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
                     HashMap yimiao = (HashMap) yimiaomap;
                     Object kucunId = bindedMap.get("stockpileId");
                     Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoType = yimiao.get("yimiaoType");
                     Object yimiaoGuige = yimiao.get("yimiaoGuige");
                     Object yimiaoJixing = yimiao.get("yimiaoJixing");
                     Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
@@ -152,14 +153,15 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
 
                     editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
-                    editTable.insertValue(2, yimiaoGuige);
-                    editTable.insertValue(3, yimiaoJixing);
-                    editTable.insertValue(4, shengchanqiye);
-                    editTable.insertValue(5, pihao);
-                    editTable.insertValue(6, unit);
-                    editTable.insertValue(7, youxiaoqi);
-                    editTable.insertValue(9, price);
-                    editTable.insertValue(12, dateformate.format(new Date()).toString());
+                    editTable.insertValue(2, yimiaoType);
+                    editTable.insertValue(3, yimiaoGuige);
+                    editTable.insertValue(4, yimiaoJixing);
+                    editTable.insertValue(5, shengchanqiye);
+                    editTable.insertValue(6, pihao);
+                    editTable.insertValue(7, unit);
+                    editTable.insertValue(8, youxiaoqi);
+                    editTable.insertValue(10, price);
+                    editTable.insertValue(13, dateformate.format(new Date()).toString());
 
                 }
 
@@ -172,13 +174,13 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
                 int col = selectedColumn;
                 int row = selectedRow;
 
-                if (col == 8) {
-                    if ((!(("" + jTableyimiao.getValueAt(row, 8)).equals("")))
-                            && (!(("" + jTableyimiao.getValueAt(row, 9)).equals("")))) {
+                if (col == 9) {
+                    if ((!(("" + jTableyimiao.getValueAt(row, 9)).equals("")))
+                            && (!(("" + jTableyimiao.getValueAt(row, 10)).equals("")))) {
                         try {
-                            int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 8));
-                            float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 9));
-                            jTableyimiao.setValueAt(price * count, row, 10);
+                            int count = Integer.parseInt("" + jTableyimiao.getValueAt(row, 9));
+                            float price = Float.parseFloat("" + jTableyimiao.getValueAt(row, 10));
+                            jTableyimiao.setValueAt(price * count, row, 11);
                         } catch (NumberFormatException e) {
                             AssetMessage.ERRORSYS("第" + (row + 1) + "个疫苗报损数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
                             return;
@@ -187,8 +189,8 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
                     int rows = jTableyimiao.getRowCount();
                     total = 0;
                     for (int i = 0; i < rows; i++) {
-                        if (!(("" + jTableyimiao.getValueAt(i, 10)).equals(""))) {
-                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 10));
+                        if (!(("" + jTableyimiao.getValueAt(i, 11)).equals(""))) {
+                            total += Float.parseFloat("" + jTableyimiao.getValueAt(i, 11));
                         }
                     }
                     totalPrice.setText(total + "元");
