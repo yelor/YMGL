@@ -7,8 +7,6 @@
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
           <action class="com.jskj.asset.client.panel.ymgl.selecteInvoiceJDialog2" id="yimiaotiaojiaAction" methodName="yimiaotiaojiaAction"/>
         </Property>
-        <Property name="icon" type="javax.swing.Icon" resourceKey="jButton5.icon"/>
-        <Property name="text" type="java.lang.String" resourceKey="jButton5.text"/>
         <Property name="name" type="java.lang.String" value="jButton5" noResource="true"/>
       </Properties>
     </Component>
