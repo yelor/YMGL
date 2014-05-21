@@ -51,6 +51,8 @@ public class BaseMainPanel extends BasePanel {
     private selecteInvoiceJDialog selecteInvoiceJDialog;
     private selecteInvoiceJDialog2 selecteInvoiceJDialog2;
     private selecteInvoiceJDialog3 selecteInvoiceJDialog3;
+    private selecteInvoiceJDialog4 selecteInvoiceJDialog4;
+    private selecteInvoiceJDialog5 selecteInvoiceJDialog5;
 
     /*仓库管理*/
     private SelectYiMiaoZuZhuangChaiXieJDialog ymzzcx;
@@ -348,7 +350,34 @@ public class BaseMainPanel extends BasePanel {
         });
     }
 
+    @Action
+    public void selecteInvoice4Action() { //疫苗领购
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (selecteInvoiceJDialog4 == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selecteInvoiceJDialog4 = new selecteInvoiceJDialog4(new javax.swing.JFrame(), true);
+                    selecteInvoiceJDialog4.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selecteInvoiceJDialog4);
+            }
+        });
+    }
 
+    @Action
+    public void selecteInvoice5Action() { //疫苗调价、付款
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                if (selecteInvoiceJDialog5 == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    selecteInvoiceJDialog5 = new selecteInvoiceJDialog5(new javax.swing.JFrame(), true);
+                    selecteInvoiceJDialog5.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(selecteInvoiceJDialog4);
+            }
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_bottomleft;
     private javax.swing.JButton jButton_bottomright;
@@ -538,7 +567,7 @@ public class BaseMainPanel extends BasePanel {
     }
 
     @Action
-    public void selecteInvoice5Action() {
+    public void selectePDDAction() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 if (selectePDDJDialog == null) {
