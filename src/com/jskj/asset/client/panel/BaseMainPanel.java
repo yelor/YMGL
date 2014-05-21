@@ -567,7 +567,7 @@ public class BaseMainPanel extends BasePanel {
     }
 
     @Action
-    public void selecteInvoice5Action() {
+    public void selectePDDAction() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 if (selectePDDJDialog == null) {
