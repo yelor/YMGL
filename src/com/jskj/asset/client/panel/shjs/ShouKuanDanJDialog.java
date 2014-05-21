@@ -237,10 +237,10 @@ public class ShouKuanDanJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入本次收款金额！", this);
             return null;
         }
-        if (youhui.getText().isEmpty()) {
-            AssetMessage.ERRORSYS("请输入优惠金额！", this);
-            return null;
-        }
+//        if (youhui.getText().isEmpty()) {
+//            AssetMessage.ERRORSYS("请输入优惠金额！", this);
+//            return null;
+//        }
         ShoukuanDetailEntity detail = new ShoukuanDetailEntity();
         Shoukuandantb fkd = new Shoukuandantb();
         super.copyToBean(fkd, jPanel1);
@@ -249,9 +249,24 @@ public class ShouKuanDanJDialog extends BaseDialog {
         fkd.setIsCompleted(0);
         fkd.setKehudanweiId(supplierId);
         fkd.setZhidanrenId(userId);
-        fkd.setShoukuan(Float.parseFloat(fukuan.getText()));
+        try{
+            fkd.setShoukuan(Float.parseFloat(fukuan.getText()));
+        }catch(NumberFormatException e){
+            AssetMessage.ERRORSYS("请输入正确的收款金额！", this);
+            return null;
+        }
         fkd.setYingshou(Float.parseFloat(yingfu.getText()));
-        fkd.setYouhui(Float.parseFloat(youhui.getText()));
+        if (!youhui.getText().isEmpty()) {
+            try {
+                fkd.setYouhui(Float.parseFloat(youhui.getText()));
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("请输入正确的优惠金额！", this);
+                return null;
+            }
+        } else {
+            fkd.setYouhui(0.0f);
+        }
+        
         fkd.setIsPaid(0);
         
         if (fkd.getShoukuan() + fkd.getYouhui() > fkd.getYingshou()) {
@@ -263,25 +278,6 @@ public class ShouKuanDanJDialog extends BaseDialog {
         detail.setYsklist(currentPageData);
         
         return new SaveTask(detail);
-    }
-
-    private class SubmitFormTask extends org.jdesktop.application.Task<Object, Void> {
-        SubmitFormTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to SubmitFormTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
     }
 
     private class SaveTask extends ShoukuandanTask {
