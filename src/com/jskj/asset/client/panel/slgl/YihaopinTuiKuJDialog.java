@@ -436,13 +436,12 @@ public class YihaopinTuiKuJDialog extends BaseDialog {
         jLabel6 = new javax.swing.JLabel();
         totalpricelabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YihaopinTuiKuJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel2.setMinimumSize(null);
         jPanel2.setName("jPanel2"); // NOI18N
 
         middlePanel.setName("middlePanel"); // NOI18N

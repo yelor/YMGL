@@ -8,7 +8,7 @@ package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Qitashoukuandantb;
-import com.jskj.asset.client.bean.entity.QitashoukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.ShoukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.QitashoukuanDetailEntity;
 import com.jskj.asset.client.bean.entity.Qitashoukuanliebiaotb;
 import com.jskj.asset.client.constants.Constants;
@@ -107,7 +107,7 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
 
     }
 
-    public OtherShouKuanDanJDialog(final JDialog parent,QitashoukuanshenqingDetailEntity detail){
+    public OtherShouKuanDanJDialog(final JDialog parent,ShoukuanshenqingDetailEntity detail){
         super();
         initComponents();
         
@@ -141,12 +141,12 @@ public class OtherShouKuanDanJDialog extends BaseDialog {
         super.bind(detail, jPanel1);
         jButton1.setEnabled(false);
         shoukuandanId.setEditable(false);
-        fukuandanDate.setText(DateHelper.format(detail.getFukuandanDate(), "yyyy-MM-dd"));
+        fukuandanDate.setText(DateHelper.format(detail.getShoukuandanDate(), "yyyy-MM-dd"));
         supplier.setEditable(false);
         accountNum.setEditable(false);
         shenqingdanRemark.setEditable(false);
         
-        setListTable(detail.getList());
+        setListTable(detail.getQtlist());
     }
     
     public void setListTable(List<Qitashoukuanliebiaotb> zclist){

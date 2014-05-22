@@ -6,6 +6,7 @@
 package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.bean.entity.ShoukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yingfukuandanjutb;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -13,6 +14,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
+import com.jskj.asset.client.panel.shjs.task.SkShenqingDetailTask;
 import com.jskj.asset.client.panel.shjs.task.YingfuliebiaoFindTask;
 import com.jskj.asset.client.panel.ymgl.YiMiaoXiaoShouJDialog;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
@@ -358,7 +360,7 @@ public class DanweiyingshouJDialog extends BaseDialog {
 //        /* Create and display the dialog */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                FuKuanDanJDialog dialog = new FuKuanDanJDialog(new javax.swing.JFrame(), true);
+//                ShouKuanDanJDialog dialog = new ShouKuanDanJDialog(new javax.swing.JFrame(), true);
 //                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 //                    @Override
 //                    public void windowClosing(java.awt.event.WindowEvent e) {
@@ -378,15 +380,53 @@ public class DanweiyingshouJDialog extends BaseDialog {
             return;
         }
         Yingfukuandanjutb sksqdan = currentPageData.get(n);
-        if(sksqdan.getYuandantype().equals("期初应付")){
+        if(sksqdan.getYuandantype().equals("期初应收")){
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return;
         }
         if(sksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOXS)){
             new DetailTask(sksqdan.getYuandanId()).execute();
+        }else if(sksqdan.getYuandanId().contains(DanHao.TYPE_SKDJ) || sksqdan.getYuandanId().contains(DanHao.TYPE_QTSK)){
+            new SKDetailTask(sksqdan.getYuandanId()).execute();
         }
         
         this.setVisible(false);
+    }
+    
+    private class SKDetailTask extends SkShenqingDetailTask{
+
+        public SKDetailTask(String id) {
+            super(id);
+        }
+        
+        @Override
+        public void onSucceeded(Object object) {
+            if (object instanceof Exception) {
+                Exception e = (Exception) object;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            if(object == null){
+                AssetMessage.showMessageDialog(null, "未获取到申请单详细信息。");
+                return;
+            }
+            ShoukuanshenqingDetailEntity cgsq = (ShoukuanshenqingDetailEntity)object;
+            openSKShenqingdan(cgsq);
+        }
+    }
+    
+    public void openSKShenqingdan(ShoukuanshenqingDetailEntity sksq) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        if(sksq.getShoukuandanId().contains(DanHao.TYPE_SKDJ)){
+            ShouKuanDanJDialog fkdJDialog = new ShouKuanDanJDialog(this, sksq);
+            fkdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(fkdJDialog);
+        }else if(sksq.getShoukuandanId().contains(DanHao.TYPE_QTSK)){
+            OtherShouKuanDanJDialog fkdJDialog = new OtherShouKuanDanJDialog(this, sksq);
+            fkdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(fkdJDialog);
+        }
     }
     
      private class DetailTask extends YimiaoXiaoshouXiangdanTask{

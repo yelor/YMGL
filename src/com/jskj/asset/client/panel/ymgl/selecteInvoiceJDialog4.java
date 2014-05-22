@@ -14,12 +14,12 @@ import org.jdesktop.application.Action;
  *
  * @author huiqi
  */
-public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
+public class selecteInvoiceJDialog4 extends javax.swing.JDialog {
 
     /**
      * Creates new form selecteInvoiceJDialog
      */
-    public selecteInvoiceJDialog2(java.awt.Frame parent, boolean modal) {
+    public selecteInvoiceJDialog4(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -39,14 +39,12 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteInvoiceJDialog2.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(selecteInvoiceJDialog4.class, this);
         jButton5.setAction(actionMap.get("yimiaotiaojiaAction")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(selecteInvoiceJDialog2.class);
-        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(selecteInvoiceJDialog4.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -120,20 +118,20 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(selecteInvoiceJDialog2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteInvoiceJDialog4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(selecteInvoiceJDialog2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteInvoiceJDialog4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(selecteInvoiceJDialog2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteInvoiceJDialog4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(selecteInvoiceJDialog2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(selecteInvoiceJDialog4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                selecteInvoiceJDialog2 dialog = new selecteInvoiceJDialog2(new javax.swing.JFrame(), true);
+                selecteInvoiceJDialog4 dialog = new selecteInvoiceJDialog4(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -160,35 +158,6 @@ public class selecteInvoiceJDialog2 extends javax.swing.JDialog {
         });
     }
 
-    @Action
-    public void yimiaodengjiAction2() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoDengJi2JDialog yiMiaoDengJi2JDialog = new YiMiaoDengJi2JDialog();
-                yiMiaoDengJi2JDialog.setLocationRelativeTo(mainFrame);
-                yiMiaoDengJi2JDialog.setNew();
-                AssetClientApp.getApplication().show(yiMiaoDengJi2JDialog);
-            }
-        });
-    }
-
-    @Action
-    public void yimiaotiaojiaAction() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoTiaoJiaJDialog yiMiaoTiaoJiaJDialog = new YiMiaoTiaoJiaJDialog();
-                yiMiaoTiaoJiaJDialog.setLocationRelativeTo(mainFrame);
-                yiMiaoTiaoJiaJDialog.setAddOrUpdate(true);
-                AssetClientApp.getApplication().show(yiMiaoTiaoJiaJDialog);
-            }
-        });
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

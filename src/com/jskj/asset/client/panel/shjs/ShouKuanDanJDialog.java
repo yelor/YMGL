@@ -6,7 +6,7 @@
 package com.jskj.asset.client.panel.shjs;
 
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.ShoukuanshenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.ShoukuanDetailEntity;
 import com.jskj.asset.client.bean.entity.Shoukuandantb;
 import com.jskj.asset.client.bean.entity.Yingfukuandanjutb;
@@ -67,7 +67,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
 
         shoukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_SKDJ));
         shoukuandanDate.setText(dateformate.format(new Date()).toString());
-        yingfu.setText("0.0");
+        yingshou.setText("0.0");
         shenqingren.setText(userName);
         
         conditionSql = "";
@@ -119,7 +119,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
         bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 150}, new int[]{2, 100}).setRowHeight(25);
     }
 
-    public ShouKuanDanJDialog(final JDialog parent, FukuanshenqingDetailEntity detail) {
+    public ShouKuanDanJDialog(final JDialog parent, ShoukuanshenqingDetailEntity detail) {
         super();
         initComponents();
 
@@ -160,14 +160,14 @@ public class ShouKuanDanJDialog extends BaseDialog {
         super.bind(detail, jPanel1);
         jButton1.setEnabled(false);
         shoukuandanId.setEditable(false);
-        shoukuandanDate.setText(DateHelper.format(detail.getFukuandanDate(), "yyyy-MM-dd"));
+        shoukuandanDate.setText(DateHelper.format(detail.getShoukuandanDate(), "yyyy-MM-dd"));
         supplier.setEditable(false);
         accountNum.setEditable(false);
         shenqingdanRemark.setEditable(false);
-        fukuan.setEditable(false);
+        shoukuan.setEditable(false);
         youhui.setEditable(false);
 
-        setListTable(detail.getYfklist());
+        setListTable(detail.getYsklist());
     }
 
     public void setListTable(List<Yingfukuandanjutb> zclist) {
@@ -221,7 +221,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
                             currentPageData.get(i).getYingfu());
                 }
             }
-            yingfu.setText("" + total);
+            yingshou.setText("" + total);
             bindTable.refreshData(currentPageData);
         }
         
@@ -233,14 +233,14 @@ public class ShouKuanDanJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入客户单位！", this);
             return null;
         }
-        if (fukuan.getText().isEmpty()) {
+        if (shoukuan.getText().isEmpty()) {
             AssetMessage.ERRORSYS("请输入本次收款金额！", this);
             return null;
         }
-        if (youhui.getText().isEmpty()) {
-            AssetMessage.ERRORSYS("请输入优惠金额！", this);
-            return null;
-        }
+//        if (youhui.getText().isEmpty()) {
+//            AssetMessage.ERRORSYS("请输入优惠金额！", this);
+//            return null;
+//        }
         ShoukuanDetailEntity detail = new ShoukuanDetailEntity();
         Shoukuandantb fkd = new Shoukuandantb();
         super.copyToBean(fkd, jPanel1);
@@ -249,9 +249,24 @@ public class ShouKuanDanJDialog extends BaseDialog {
         fkd.setIsCompleted(0);
         fkd.setKehudanweiId(supplierId);
         fkd.setZhidanrenId(userId);
-        fkd.setShoukuan(Float.parseFloat(fukuan.getText()));
-        fkd.setYingshou(Float.parseFloat(yingfu.getText()));
-        fkd.setYouhui(Float.parseFloat(youhui.getText()));
+        try{
+            fkd.setShoukuan(Float.parseFloat(shoukuan.getText()));
+        }catch(NumberFormatException e){
+            AssetMessage.ERRORSYS("请输入正确的收款金额！", this);
+            return null;
+        }
+        fkd.setYingshou(Float.parseFloat(yingshou.getText()));
+        if (!youhui.getText().isEmpty()) {
+            try {
+                fkd.setYouhui(Float.parseFloat(youhui.getText()));
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("请输入正确的优惠金额！", this);
+                return null;
+            }
+        } else {
+            fkd.setYouhui(0.0f);
+        }
+        
         fkd.setIsPaid(0);
         
         if (fkd.getShoukuan() + fkd.getYouhui() > fkd.getYingshou()) {
@@ -263,25 +278,6 @@ public class ShouKuanDanJDialog extends BaseDialog {
         detail.setYsklist(currentPageData);
         
         return new SaveTask(detail);
-    }
-
-    private class SubmitFormTask extends org.jdesktop.application.Task<Object, Void> {
-        SubmitFormTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to SubmitFormTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
     }
 
     private class SaveTask extends ShoukuandanTask {
@@ -326,12 +322,12 @@ public class ShouKuanDanJDialog extends BaseDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
-        fukuan = new BaseTextField();
+        shoukuan = new BaseTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         youhui = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        yingfu = new BaseTextField();
+        yingshou = new BaseTextField();
         jLabel8 = new javax.swing.JLabel();
         shenqingren = new BaseTextField();
 
@@ -475,7 +471,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
         );
 
-        fukuan.setName("fukuan"); // NOI18N
+        shoukuan.setName("shoukuan"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
@@ -488,8 +484,8 @@ public class ShouKuanDanJDialog extends BaseDialog {
         jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
         jLabel7.setName("jLabel7"); // NOI18N
 
-        yingfu.setEditable(false);
-        yingfu.setName("yingfu"); // NOI18N
+        yingshou.setEditable(false);
+        yingshou.setName("yingshou"); // NOI18N
 
         jLabel8.setText(resourceMap.getString("jLabel8.text")); // NOI18N
         jLabel8.setName("jLabel8"); // NOI18N
@@ -529,7 +525,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(fukuan, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(shoukuan, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -541,7 +537,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(yingfu, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(yingshou, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -562,7 +558,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(fukuan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(shoukuan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(youhui, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -578,7 +574,7 @@ public class ShouKuanDanJDialog extends BaseDialog {
                         .addComponent(shenqingren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
-                        .addComponent(yingfu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(yingshou, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -637,12 +633,12 @@ public class ShouKuanDanJDialog extends BaseDialog {
                     {"制单日期", shoukuandanDate.getText()},
                     {"客户单位", supplier.getText()},
                     {"结算账户", accountNum.getText()},
-                    {"收款金额", fukuan.getText()},
+                    {"收款金额", shoukuan.getText()},
                     {"优惠", youhui.getText()},
                     {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{{"制单人", shenqingren.getText()},
-                    {"应收总金额", yingfu.getText()}
+                    {"应收总金额", yingshou.getText()}
                     });
         } catch (DRException ex) {
             ex.printStackTrace();
@@ -652,7 +648,6 @@ public class ShouKuanDanJDialog extends BaseDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField accountNum;
-    private javax.swing.JTextField fukuan;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
@@ -673,10 +668,11 @@ public class ShouKuanDanJDialog extends BaseDialog {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextArea shenqingdanRemark;
     private javax.swing.JTextField shenqingren;
+    private javax.swing.JTextField shoukuan;
     private javax.swing.JTextField shoukuandanDate;
     private javax.swing.JTextField shoukuandanId;
     private javax.swing.JTextField supplier;
-    private javax.swing.JTextField yingfu;
+    private javax.swing.JTextField yingshou;
     private javax.swing.JTextField youhui;
     // End of variables declaration//GEN-END:variables
 }

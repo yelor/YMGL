@@ -240,10 +240,10 @@ public class FuKuanDanJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入本次付款金额！", this);
             return null;
         }
-        if (youhui.getText().isEmpty()) {
-            AssetMessage.ERRORSYS("请输入优惠金额！", this);
-            return null;
-        }
+//        if (youhui.getText().isEmpty()) {
+//            AssetMessage.ERRORSYS("请输入优惠金额！", this);
+//            return null;
+//        }
         FukuanDetailEntity detail = new FukuanDetailEntity();
         Fukuandantb fkd = new Fukuandantb();
         super.copyToBean(fkd, jPanel1);
@@ -252,9 +252,23 @@ public class FuKuanDanJDialog extends BaseDialog {
         fkd.setIsCompleted(0);
         fkd.setSupplierId(supplierId);
         fkd.setZhidanrenId(userId);
-        fkd.setFukuan(Float.parseFloat(fukuan.getText()));
+        try{
+            fkd.setFukuan(Float.parseFloat(fukuan.getText()));
+        }catch(NumberFormatException e){
+            AssetMessage.ERRORSYS("请输入正确的付款金额！", this);
+            return null;
+        }
         fkd.setYingfu(Float.parseFloat(yingfu.getText()));
-        fkd.setYouhui(Float.parseFloat(youhui.getText()));
+        if (!youhui.getText().isEmpty()) {
+            try {
+                fkd.setYouhui(Float.parseFloat(youhui.getText()));
+            } catch (NumberFormatException e) {
+                AssetMessage.ERRORSYS("请输入正确的优惠金额！", this);
+                return null;
+            }
+        } else {
+            fkd.setYouhui(0.0f);
+        }
         fkd.setIsPaid(0);
         
         if (fkd.getFukuan() + fkd.getYouhui() > fkd.getYingfu()) {

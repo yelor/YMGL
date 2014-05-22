@@ -125,10 +125,10 @@ public class DanweiyingfuJDialog extends BaseDialog {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return;
         }
-        if(fksqdan.getYuandanId().contains("FKDJ") || fksqdan.getYuandanId().contains("QTFK")){
+        if(fksqdan.getYuandanId().contains(DanHao.TYPE_FKDJ) || fksqdan.getYuandanId().contains(DanHao.TYPE_QTFK)){
             new FKDetailTask(fksqdan.getYuandanId()).execute();
-        } else if(fksqdan.getYuandanId().contains("GDZC") || fksqdan.getYuandanId().contains("YHCG") 
-                || fksqdan.getYuandanId().contains("YMSG")){
+        } else if(fksqdan.getYuandanId().contains(DanHao.TYPE_GDZC) || fksqdan.getYuandanId().contains(DanHao.TYPE_YHCG) 
+                || fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCG)){
             new DetailTask(fksqdan.getYuandanId()).execute();
         }
         

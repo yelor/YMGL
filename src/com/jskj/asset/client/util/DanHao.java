@@ -114,9 +114,13 @@ public class DanHao {
 
     }
 
+    private final static StyleBuilder font4Style = stl.style(ReportTemplates.columnStyle).setFontSize(4);
+
     private final static StyleBuilder font10Style = stl.style(ReportTemplates.columnStyle).setFontSize(10);
 
     private final static StyleBuilder font15Style = stl.style(ReportTemplates.columnStyle).setFontSize(15).setHorizontalAlignment(HorizontalAlignment.CENTER);
+
+    private final static StyleBuilder font12Style = stl.style(ReportTemplates.columnStyle).setFontSize(12).setHorizontalAlignment(HorizontalAlignment.CENTER);
 
     public static void printBarCode128(String label, String barcode) {
         try {
@@ -164,13 +168,14 @@ public class DanHao {
 
             Code128BarcodeBuilder shippingContainerCode = bcode.code128(labelAndbarcode[1])
                     .setModuleWidth(1d)
-                    .setStyle(textStyle);
-            report().setTemplate(template().setBarcodeWidth(179).setBarcodeHeight(50).setPrintOrder(Orientation.HORIZONTAL))
-                    .setPageFormat(PageType.B5).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
+                    .setStyle(font10Style);
+            report().setTemplate(template().setBarcodeWidth(130).setBarcodeHeight(35).setPrintOrder(Orientation.HORIZONTAL))
+                    .setPageFormat(PageType.C7).setIgnorePageWidth(Boolean.TRUE).setIgnorePagination(Boolean.TRUE)
                     .setTextStyle(textStyle)
                     .title(
                             cmp.horizontalList(
-                                    createCustomerComponent(Constants.DANWEINAME)),
+                                    createCustomerComponent(Constants.DANWEINAME),
+                                    createCellComponent( shippingContainerCode)),
                             cmp.horizontalList(
                                                     createCellComponentLeft(returnNotNullValue(0, 0, parameters)),
                                                     createCellComponent(returnNotNullValue(0, 1, parameters))),
@@ -198,8 +203,7 @@ public class DanHao {
                                                     createCellComponentLeft(returnNotNullValue(5, 0, parameters)),
                                                     createCellComponent(returnNotNullValue(5, 1, parameters)))
 //                                    ))
-                            ,
-                            createCellComponent(labelAndbarcode[0], shippingContainerCode)).print(false);
+                            ).show(false);
             AssetMessage.INFO("打印完成.");
         } catch (Exception e) {
             logger.error(e);
@@ -234,28 +238,30 @@ public class DanHao {
 
     private static ComponentBuilder<?, ?> createCustomerComponent(String content) {
         VerticalListBuilder contentBuilder = cmp.verticalList(
-                cmp.text(content).setStyle(font15Style));
+                cmp.text(content).setStyle(font12Style).setFixedWidth(100));
         return createCellComponent(contentBuilder);
     }
 
     private static ComponentBuilder<?, ?> createCellComponent(String label, ComponentBuilder<?, ?> content) {
         VerticalListBuilder cell = cmp.verticalList(
-                cmp.text(label).setStyle(font10Style),
+                cmp.text(label).setStyle(font4Style),
                 cmp.horizontalList(
-                        cmp.horizontalGap(5),
-                        content,
-                        cmp.horizontalGap(5)));
-        cell.setStyle(stl.style(stl.pen2Point()));
+//                        cmp.horizontalGap(5),
+                        content
+//                        ,cmp.horizontalGap(5)
+                ));
+//        cell.setStyle(stl.style(stl.pen2Point()));
         return cell;
     }
 
     private static ComponentBuilder<?, ?> createCellComponent(ComponentBuilder<?, ?> content) {
         VerticalListBuilder cell = cmp.verticalList(
                 cmp.horizontalList(
-                        cmp.horizontalGap(5),
-                        content,
-                        cmp.horizontalGap(5)));
-        cell.setStyle(stl.style(stl.pen2Point()));
+//                        cmp.horizontalGap(5),
+                        content
+//                        ,cmp.horizontalGap(10)
+                ));
+//        cell.setStyle(stl.style(stl.pen2Point()));
         return cell;
     }
 
