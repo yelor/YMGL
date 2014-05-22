@@ -5,12 +5,14 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Danjuleixingtb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
+import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -213,9 +215,15 @@ public class DanJuLeiXingInfoJDialog extends BaseDialog {
             public void responseResult(ComResponse<Danjuleixingtb> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
-                    if (!jCheckBoxCont.isSelected()) {
-                        dispose();
-                    } 
+                    dispose();
+                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    if (jCheckBoxCont.isSelected()) {
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        DanJuLeiXingInfoJDialog childDialog = new DanJuLeiXingInfoJDialog(parentPanel);
+                        childDialog.setLocationRelativeTo(mainFrame);
+                        childDialog.setUpdatedData(new Danjuleixingtb());
+                        AssetClientApp.getApplication().show(childDialog);
+                    }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), DanJuLeiXingInfoJDialog.this);
                 }

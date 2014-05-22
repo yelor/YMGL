@@ -110,7 +110,7 @@ public class ITGuDingZiChanLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"gdzcId", "资产ID"}, {"gdzcName", "资产名称"},{"kucun.pihao", "条码"}};
+                return new String[][]{{"gdzcId", "资产ID"}, {"gdzcName", "资产名称"},{"kucun.quantity", "库存数"},{"kucun.pihao", "条码"}};
             }
 
             @Override

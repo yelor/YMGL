@@ -161,7 +161,7 @@ public class selecteTongJiInvoiceJDialog extends javax.swing.JDialog {
             @Override
             public void run() {
                 dispose();
-                new OpenTabTask("报表-单位应收应付", new DanweiyingshouyingfuPanel(), false).execute();
+                new OpenTabTask("报表-单位应收应付", new DanweiyingshouyingfuPanel(), true).execute();
             }
         });
     }
