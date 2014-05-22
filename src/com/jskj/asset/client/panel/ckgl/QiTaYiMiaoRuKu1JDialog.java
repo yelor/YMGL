@@ -44,7 +44,7 @@ import org.jdesktop.application.Task;
  *
  * @author Administrator
  */
-public class YiMiaoRuKu2JDialog extends BaseDialog {
+public class QiTaYiMiaoRuKu1JDialog extends BaseDialog {
 
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
@@ -58,9 +58,9 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
     private String sqid;
 
     /**
-     * Creates new form YiMiaoRuKu2JDialog
+     * Creates new form ymcrk1
      */
-    public YiMiaoRuKu2JDialog() {
+    public QiTaYiMiaoRuKu1JDialog() {
         super();
         initComponents();
         this.addWindowListener(new WindowListener() {
@@ -97,7 +97,6 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         });
 
         churukudan = new Churukudantb();
-
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMRK"));
         jTextFielddanjuNo.setEditable(false);
         jTextFieldzhidanDate.setText(dateformate.format(new Date()));
@@ -106,7 +105,6 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         xiangdanIdmap = new HashMap();
         shenqingdanIdmap = new HashMap();
         supplierIdmap = new HashMap();
-
         //库房的popup
         ((BaseTextField) jTextFieldkufang).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -139,11 +137,12 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"xaingdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"},
+            {"xiangdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, 
             {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
-            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "false"}, {"price", "单价", "false"}, {"totalPrice", "合价", "false"},
+            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "false"},
             {"jingbanren", "经办人", "false"}, {"gongyingdanwei", "供应单位", "false"}, {"duifangjingbanren", "对方经办人", "false"}});
+
         editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -160,14 +159,14 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
-                        java.util.logging.Logger.getLogger(YiMiaoRuKu2JDialog.class.getName()).log(Level.SEVERE, null, ex);
+                        java.util.logging.Logger.getLogger(QiTaYiMiaoRuKu1JDialog.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 int selectedColumn = jTableyimiao.getSelectedColumn();
                 int selectedRow = jTableyimiao.getSelectedRow();
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql = " shenqingdan_id like \"YMSG%\" and is_completed = 1 and status = 2"
+                sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2"
                         + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=1 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and yimiao_id in ( select yimiao_id  from yimiao where yimiao_name like \"%" + newColumnObj.toString() + "%\""
@@ -245,9 +244,6 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     } catch (Exception e) {
                         userName = "";
                     }
-                    Object buyprice = yimiaoshenqingdan.get("buyprice");
-                    Object totalprice = yimiaoshenqingdan.get("totalprice");
-
                     Object supplierId = gongyingdanwei.get("supplierId");
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
@@ -270,18 +266,14 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     editTable.insertValue(11, unit);
                     editTable.insertValue(12, piqianfahegezhenno);
                     editTable.insertValue(13, yimiaoPizhunwenhao);
-                    editTable.insertValue(14, buyprice);
-                    editTable.insertValue(15, totalprice);
-                    editTable.insertValue(16, AssetClientApp.getSessionMap().getUsertb().getUserName());
-                    editTable.insertValue(17, gongyingdanweiName);
-                    editTable.insertValue(18, userName);
+                    editTable.insertValue(14, AssetClientApp.getSessionMap().getUsertb().getUserName());
+                    editTable.insertValue(15, gongyingdanweiName);
+                    editTable.insertValue(16, userName);
 
                 }
 
             }
         });
-
-// 
     }
 
     /**
@@ -293,13 +285,12 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel6 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton7 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldzhidanDate = new javax.swing.JTextField();
@@ -308,17 +299,14 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableyimiao = new BaseTable(null);
         jTextFielddanjuNo = new BaseTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jTextFieldkufang = new BaseTextField();
         jLabel4 = new javax.swing.JLabel();
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoRuKu2JDialog.class);
-        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
-        jLabel6.setName("jLabel6"); // NOI18N
+        jTextFieldkufang = new BaseTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(QiTaYiMiaoRuKu1JDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -329,9 +317,9 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         jToolBar1.setBorderPainted(false);
         jToolBar1.setName("jToolBar1"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoRuKu2JDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(QiTaYiMiaoRuKu1JDialog.class, this);
         jButton7.setAction(actionMap.get("save")); // NOI18N
-        jButton7.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
+        jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setBorderPainted(false);
         jButton7.setFocusable(false);
@@ -348,34 +336,34 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         jButton1.setName("jButton1"); // NOI18N
         jToolBar1.add(jButton1);
 
-        jButton16.setAction(actionMap.get("print")); // NOI18N
-        jButton16.setIcon(resourceMap.getIcon("jButton16.icon")); // NOI18N
-        jButton16.setText(resourceMap.getString("jButton16.text")); // NOI18N
-        jButton16.setBorderPainted(false);
-        jButton16.setFocusable(false);
-        jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton16.setName("jButton16"); // NOI18N
-        jButton16.setOpaque(false);
-        jToolBar1.add(jButton16);
+        jButton8.setAction(actionMap.get("print")); // NOI18N
+        jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
+        jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setBorderPainted(false);
+        jButton8.setFocusable(false);
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton8.setName("jButton8"); // NOI18N
+        jButton8.setOpaque(false);
+        jToolBar1.add(jButton8);
 
-        jButton18.setIcon(resourceMap.getIcon("jButton18.icon")); // NOI18N
-        jButton18.setText(resourceMap.getString("jButton18.text")); // NOI18N
-        jButton18.setBorderPainted(false);
-        jButton18.setFocusable(false);
-        jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton18.setName("jButton18"); // NOI18N
-        jButton18.setOpaque(false);
-        jToolBar1.add(jButton18);
+        jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
+        jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
+        jButton11.setBorderPainted(false);
+        jButton11.setFocusable(false);
+        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton11.setName("jButton11"); // NOI18N
+        jButton11.setOpaque(false);
+        jToolBar1.add(jButton11);
 
-        jButton19.setAction(actionMap.get("exit")); // NOI18N
-        jButton19.setIcon(resourceMap.getIcon("jButton19.icon")); // NOI18N
-        jButton19.setText(resourceMap.getString("jButton19.text")); // NOI18N
-        jButton19.setBorderPainted(false);
-        jButton19.setFocusable(false);
-        jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton19.setName("jButton19"); // NOI18N
-        jButton19.setOpaque(false);
-        jToolBar1.add(jButton19);
+        jButton12.setAction(actionMap.get("exit")); // NOI18N
+        jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
+        jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
+        jButton12.setBorderPainted(false);
+        jButton12.setFocusable(false);
+        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton12.setName("jButton12"); // NOI18N
+        jButton12.setOpaque(false);
+        jToolBar1.add(jButton12);
 
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
@@ -398,23 +386,24 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "日期", "数量", "生产企业", "规格", "剂型", "批号", "有效期至", "批签合格证编号", "批准文号", "供应单位", "单价", "合价", "经办人", "对方单位经办人"
+                "日期", "数量", "生产企业", "规格", "剂型", "批号", "有效期至", "批签合格证编号", "批准文号", "供应单位", "经办人", "对方单位经办人"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -436,18 +425,16 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
             jTableyimiao.getColumnModel().getColumn(7).setHeaderValue(resourceMap.getString("jTableyimiao.columnModel.title7")); // NOI18N
             jTableyimiao.getColumnModel().getColumn(8).setHeaderValue(resourceMap.getString("jTableyimiao.columnModel.title8")); // NOI18N
             jTableyimiao.getColumnModel().getColumn(9).setHeaderValue(resourceMap.getString("jTableyimiao.columnModel.title9")); // NOI18N
-            jTableyimiao.getColumnModel().getColumn(10).setHeaderValue(resourceMap.getString("jTable1.columnModel.title12")); // NOI18N
-            jTableyimiao.getColumnModel().getColumn(11).setHeaderValue(resourceMap.getString("jTable1.columnModel.title13")); // NOI18N
-            jTableyimiao.getColumnModel().getColumn(12).setHeaderValue(resourceMap.getString("jTable1.columnModel.title10")); // NOI18N
-            jTableyimiao.getColumnModel().getColumn(13).setPreferredWidth(100);
-            jTableyimiao.getColumnModel().getColumn(13).setHeaderValue(resourceMap.getString("jTable1.columnModel.title11")); // NOI18N
+            jTableyimiao.getColumnModel().getColumn(10).setHeaderValue(resourceMap.getString("jTableyimiao.columnModel.title10")); // NOI18N
+            jTableyimiao.getColumnModel().getColumn(11).setPreferredWidth(100);
+            jTableyimiao.getColumnModel().getColumn(11).setHeaderValue(resourceMap.getString("jTableyimiao.columnModel.title11")); // NOI18N
         }
 
         jTextFielddanjuNo.setEditable(false);
         jTextFielddanjuNo.setName("jTextFielddanjuNo"); // NOI18N
 
-        jLabel7.setText(resourceMap.getString("jLabel7.text")); // NOI18N
-        jLabel7.setName("jLabel7"); // NOI18N
+        jLabel6.setText(resourceMap.getString("jLabel6.text")); // NOI18N
+        jLabel6.setName("jLabel6"); // NOI18N
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -456,10 +443,10 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         jTextArea1.setName("jTextArea1"); // NOI18N
         jScrollPane2.setViewportView(jTextArea1);
 
-        jTextFieldkufang.setName("jTextFieldkufang"); // NOI18N
-
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
+
+        jTextFieldkufang.setName("jTextFieldkufang"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -469,26 +456,28 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFielddanjuNo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 419, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldjingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldkufang, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFielddanjuNo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldjingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldkufang, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -498,24 +487,28 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFielddanjuNo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFielddanjuNo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(jTextFieldjingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldkufang, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldjingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldkufang, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -536,23 +529,28 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoRuKu2JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QiTaYiMiaoRuKu1JDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoRuKu2JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QiTaYiMiaoRuKu1JDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoRuKu2JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QiTaYiMiaoRuKu1JDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoRuKu2JDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QiTaYiMiaoRuKu1JDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoRuKu2JDialog dialog = new YiMiaoRuKu2JDialog();
+                QiTaYiMiaoRuKu1JDialog dialog = new QiTaYiMiaoRuKu1JDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -620,45 +618,43 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
     public Task save() throws ParseException {
         YimiaochurukuEntity yimiaorukuEntity = new YimiaochurukuEntity();
 
+        churukudan.setChurukuId(jTextFielddanjuNo.getText());
+        churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
+
         if (jTextFieldkufang.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请选择入库库房!");
             return null;
         }
-
-        churukudan.setChurukuId(jTextFielddanjuNo.getText());
-        churukudan.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
         churukudan.setKufang(jTextFieldkufang.getText());
         churukudan.setZhidanren(AssetClientApp.getSessionMap().getUsertb().getUserId());
-
         yimiaorukuEntity.setChurukutb(churukudan);
 
         List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
-            if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
-                AssetMessage.ERRORSYS("请输入入库疫苗!");
-            }
             yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
             yimiaoliebiao.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
-            yimiaoliebiao.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
-            yimiaoliebiao.setPihao((String) yimiaotable.getValue(i, "pihao"));
+            if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
+                AssetMessage.ERRORSYS("请输入入库疫苗!");
+                return null;
+            }
+            yimiaoliebiao.setYimiaoId(Integer.parseInt("" + yimiaotable.getValue(i, "yimiaoId").toString()));
+            yimiaoliebiao.setPihao((String) ("" + yimiaotable.getValue(i, "pihao")));
             yimiaoliebiao.setPiqianfahegeno((String) yimiaotable.getValue(i, "piqianfaNo"));
-            yimiaoliebiao.setRukuQuantity((Integer) yimiaotable.getValue(i, "quantity"));
+            yimiaoliebiao.setRukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
-            yimiaoliebiao.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "price"))));
-            yimiaoliebiao.setTotalprice(Float.parseFloat((String) ("" + yimiaoliebiao.getRukuQuantity() * yimiaoliebiao.getPrice())));
             if (yimiaotable.getValue(i, "youxiaodate").toString().trim().equals("")) {
                 yimiaoliebiao.setYouxiaoqi(null);
             } else {
                 yimiaoliebiao.setYouxiaoqi(riqiformate.parse((String) ("" + yimiaotable.getValue(i, "youxiaodate"))));
             }
+            yimiaoliebiao.setTotalprice(0f);
             yimiaoliebiao.setWanglaidanweiId(Integer.parseInt(supplierIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
             yimiaoliebiao.setXiangdanId(Integer.parseInt(xiangdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
             list.add(yimiaoliebiao);
         }
-
         yimiaorukuEntity.setResult(list);
 
         String serviceId = "yimiaoruku/add";
@@ -670,11 +666,11 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     JOptionPane.showMessageDialog(null, "提交成功！");
                     close();
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    YiMiaoRuKu2JDialog ymrk2 = new YiMiaoRuKu2JDialog();
-                    ymrk2.setLocationRelativeTo(mainFrame);
-                    AssetClientApp.getApplication().show(ymrk2);
+                    QiTaYiMiaoRuKu1JDialog ymrk1 = new QiTaYiMiaoRuKu1JDialog();
+                    ymrk1.setLocationRelativeTo(mainFrame);
+                    AssetClientApp.getApplication().show(ymrk1);
                 } else {
-                    AssetMessage.ERROR(response.getErrorMessage(), YiMiaoRuKu2JDialog.this);
+                    AssetMessage.ERROR(response.getErrorMessage(), QiTaYiMiaoRuKu1JDialog.this);
                 }
             }
 
@@ -733,7 +729,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
             close();
             return;
         }
-        String sql = " shenqingdan_id like \"YMSG%\" and is_completed = 1 and status = 2"
+        String sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2"
                 + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=1 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
         new CloseTask(sql).execute();
     }
@@ -775,7 +771,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     }
                     lb.getYimiaoshenqingdan().setReason("【入库】" + reason);
                 }
-                new YiMiaoRuKu2JDialog.Cancel(list).execute();
+                new QiTaYiMiaoRuKu1JDialog.Cancel(list).execute();
             }
             close();
         }
@@ -783,7 +779,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
     }
 
     public void chooseYimiao() {
-        String sql = "shenqingdan_id like \"YMSG%\" and is_completed = 1 and status = 2";
+        String sql = "shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2";
         new ChooseTask(sql).execute();
     }
 
@@ -823,24 +819,24 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
             }
             close();
             JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-            YiMiaoRuKu2JDialog yimiaoruku = new YiMiaoRuKu2JDialog();
+            QiTaYiMiaoRuKu1JDialog yimiaoruku = new QiTaYiMiaoRuKu1JDialog();
             yimiaoruku.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaoruku);
         }
 
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableyimiao;

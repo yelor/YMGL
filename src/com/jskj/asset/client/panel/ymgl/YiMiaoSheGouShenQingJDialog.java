@@ -107,7 +107,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"xiangdanId", "详单编号"}, {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}, {"buyprice", "进价", "true"}, {"totalprice", "合价", "true"}});
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"quantity", "数量", "quantity"}, {"buyprice", "进价", "quantity"}, {"totalprice", "合价", "quantity"}});
 
         editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {

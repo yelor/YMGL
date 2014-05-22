@@ -102,7 +102,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "库存编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"},
-            {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "单价", "false"}, {"yimiaoHejia", "合价", "false"}});
+            {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "预售价", "false"}, {"yimiaoHejia", "合价", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -160,7 +160,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
                     editTable.insertValue(5, pihao);
                     editTable.insertValue(6, unit);
                     editTable.insertValue(7, youxiaoqi);
-                    editTable.insertValue(9, stockpilePrice);
+                    editTable.insertValue(9, saleprice);
 
                 }
 
@@ -727,8 +727,8 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
                 return null;
             }
             backsale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "tuihuoQuantity").toString()));
-            backsale_detail.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yimiaoYushoujia"))));
-            backsale_detail.setTotalprice(backsale_detail.getQuantity() * backsale_detail.getPrice());
+            backsale_detail.setSaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yimiaoYushoujia"))));
+            backsale_detail.setTotalprice(backsale_detail.getQuantity() * backsale_detail.getSaleprice());
             list.add(backsale_detail);
         }
 

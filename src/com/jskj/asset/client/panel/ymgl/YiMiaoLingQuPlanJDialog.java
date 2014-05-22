@@ -72,7 +72,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
 //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "true"}, {"yimiaoShengchanqiye", "生产企业", "true"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}});
+            {"yimiaoJixing", "剂型", "true"}, {"yimiaoShengchanqiye", "生产企业", "quantity"}, {"unitId", "单位", "false"}, {"quantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {

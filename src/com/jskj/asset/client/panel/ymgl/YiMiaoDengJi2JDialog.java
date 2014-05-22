@@ -16,7 +16,6 @@ import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
-import com.jskj.asset.client.panel.slgl.PTGuDingZiChanDengJiJDialog;
 import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
 import static com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask.logger;
@@ -62,6 +61,8 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         initComponents();
         yimiaodengji = new Yimiaodengjitb();
         isNew = false;
+        jTextFieldtiaoxingma.setText(DanHao.getDanHao("YM"));
+        
         this.addWindowListener(new WindowListener() {
 
             @Override
