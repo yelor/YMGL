@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.user;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Departmenttb;
 import com.jskj.asset.client.bean.entity.DepartmenttbAll;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -12,6 +13,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.util.PingYinUtil;
+import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -297,8 +299,14 @@ public class BuMenInfoJDialog extends BaseDialog {
             public void responseResult(ComResponse<Departmenttb> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parent.reload().execute();
-                    if (!jCheckBoxCont.isSelected()) {
-                        close();
+                    close();
+                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    if (jCheckBoxCont.isSelected()) {
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        BuMenInfoJDialog buMenInfoJDialog = new BuMenInfoJDialog(parent);
+                        buMenInfoJDialog.setLocationRelativeTo(mainFrame);
+                        buMenInfoJDialog.setUpdatedData(new DepartmenttbAll());
+                        AssetClientApp.getApplication().show(buMenInfoJDialog);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), BuMenInfoJDialog.this);

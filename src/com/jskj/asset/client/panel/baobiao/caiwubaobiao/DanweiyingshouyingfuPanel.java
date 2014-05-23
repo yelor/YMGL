@@ -9,20 +9,19 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.DanweiyingshouyingfuEntity;
 import com.jskj.asset.client.bean.entity.DanweiyingshouyingfuFindEntity;
 import com.jskj.asset.client.panel.baobiao.caigou.*;
-import com.jskj.asset.client.bean.report.CaigouReport;
-import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.shjs.SelectDanweiJDialog;
 import com.jskj.asset.client.util.BindTableHelper;
-import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.ImageIcon;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -48,6 +47,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
 
     private final HashMap parameterMap;
     private final String conditionSql;
+    private final SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * Creates new form YimiaocaigoumingxiJDialog
      */
@@ -71,7 +71,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         ((BaseTextField) jTextFieldStart).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         ((BaseTextField) jTextFieldEnd).registerPopup(IPopupBuilder.TYPE_DATE_CLICK, "yyyy-MM-dd HH:mm:ss");
         
-        reload();
+//        reload();
     }
 
     /**
@@ -89,10 +89,6 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         jToolBar2 = new javax.swing.JToolBar();
         jButton12 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jToolBar3 = new javax.swing.JToolBar();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -150,58 +146,15 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         jButton1.setOpaque(false);
         jToolBar2.add(jButton1);
 
-        jToolBar3.setFloatable(false);
-        jToolBar3.setRollover(true);
-        jToolBar3.setBorderPainted(false);
-        jToolBar3.setName("jToolBar3"); // NOI18N
-        jToolBar3.setOpaque(false);
-
-        jButton17.setAction(actionMap.get("pagePrev")); // NOI18N
-        jButton17.setText(resourceMap.getString("jButton17.text")); // NOI18N
-        jButton17.setBorderPainted(false);
-        jButton17.setFocusable(false);
-        jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton17.setMaximumSize(new java.awt.Dimension(60, 25));
-        jButton17.setMinimumSize(new java.awt.Dimension(60, 25));
-        jButton17.setName("jButton17"); // NOI18N
-        jButton17.setOpaque(false);
-        jButton17.setPreferredSize(new java.awt.Dimension(60, 25));
-        jButton17.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar3.add(jButton17);
-
-        jButton18.setAction(actionMap.get("pageNext")); // NOI18N
-        jButton18.setText(resourceMap.getString("jButton18.text")); // NOI18N
-        jButton18.setBorderPainted(false);
-        jButton18.setFocusable(false);
-        jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton18.setMaximumSize(new java.awt.Dimension(60, 25));
-        jButton18.setMinimumSize(new java.awt.Dimension(60, 25));
-        jButton18.setName("jButton18"); // NOI18N
-        jButton18.setOpaque(false);
-        jButton18.setPreferredSize(new java.awt.Dimension(60, 25));
-        jButton18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar3.add(jButton18);
-
-        jLabelTotal.setForeground(resourceMap.getColor("jLabelTotal.foreground")); // NOI18N
-        jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelTotal.setName("jLabelTotal"); // NOI18N
-
         javax.swing.GroupLayout ctrlPaneLayout = new javax.swing.GroupLayout(ctrlPane);
         ctrlPane.setLayout(ctrlPaneLayout);
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -247,14 +200,14 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         jpanel2Layout.setHorizontalGroup(
             jpanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 814, Short.MAX_VALUE)
         );
         jpanel2Layout.setVerticalGroup(
             jpanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel2Layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jpanel2.TabConstraints.tabTitle"), jpanel2); // NOI18N
@@ -364,12 +317,9 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelImg;
-    private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -379,23 +329,32 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     private javax.swing.JTextField jTextFieldStart;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
-    private javax.swing.JToolBar jToolBar3;
     private javax.swing.JPanel jpanel2;
     // End of variables declaration//GEN-END:variables
 
     @Override
     @Action
     public Task reload() {
-        String startDate = jTextFieldStart.getText();
-        String endDate = jTextFieldEnd.getText();
-        if(startDate.isEmpty()) {
-            startDate = null;
+        String start = jTextFieldStart.getText();
+        String end = jTextFieldEnd.getText();
+        Date startDate,endDate;
+        
+        try {
+            if (start.isEmpty()) {
+                startDate = null;
+            } else {
+                startDate = dateformate.parse(start);
+            }
+            if (end.isEmpty()) {
+                endDate = null;
+            } else {
+                endDate = dateformate.parse(end);
+            }
+            parameterMap.put("startDate", startDate);
+            parameterMap.put("endDate", endDate);
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(DanweiyingshouyingfuPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(endDate.isEmpty()) {
-            endDate = null;
-        }
-        parameterMap.put("startDate", startDate);
-        parameterMap.put("endDate", endDate);
         parameterMap.put("pageIndex", pageIndex);
         return new RefreshTask();
     }
@@ -405,20 +364,20 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         return null;
     }
 
-    @Action
-    public Task pagePrev() {
-        pageIndex = pageIndex - 1;
-        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
-        return reload();
-    }
-
-    @Action
-    public Task pageNext() {
-        if (pageSize * (pageIndex) <= count) {
-            pageIndex = pageIndex + 1;
-        }
-        return reload();
-    }
+//    @Action
+//    public Task pagePrev() {
+//        pageIndex = pageIndex - 1;
+//        pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+//        return reload();
+//    }
+//
+//    @Action
+//    public Task pageNext() {
+//        if (pageSize * (pageIndex) <= count) {
+//            pageIndex = pageIndex + 1;
+//        }
+//        return reload();
+//    }
 
     public DanweiyingshouyingfuEntity selectedDataFromTable() {
         if (jTable1.getSelectedRow() >= 0) {
@@ -443,7 +402,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
         public void responseResult(DanweiyingshouyingfuFindEntity response) {
 
             count = response.getCount();
-            jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+//            jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
             logger.debug("total:" + count + ",get current size:" + response.getResult().size());
 
             //存下所有的数据
@@ -476,6 +435,7 @@ public class DanweiyingshouyingfuPanel extends BasePanel {
     public void selecteInvoice1Action() {
         
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 if (selectDanweiJDialog == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();

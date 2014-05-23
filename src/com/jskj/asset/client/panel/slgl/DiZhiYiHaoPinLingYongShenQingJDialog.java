@@ -109,7 +109,7 @@ public class DiZhiYiHaoPinLingYongShenQingJDialog extends BaseDialog {
 
             @Override
             public String[][] displayColumns() {
-                return new String[][]{{"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"},{"kucun.pihao", "条码"}};
+                return new String[][]{{"dzyhpId", "物品ID"}, {"dzyhpName", "物品名称"},{"kucun.quantity", "库存数"},{"kucun.pihao", "条码"}};
             }
 
             @Override

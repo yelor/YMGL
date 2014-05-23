@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.user;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.bean.entity.Usertb;
@@ -17,6 +18,7 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -398,8 +400,14 @@ public class ParamDialog extends BaseDialog {
             public void responseResult(ComResponse<Appparam> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
-                    if (!jCheckBox2.isSelected()) {
-                        close();
+                    close();
+                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    if (jCheckBox2.isSelected()) {
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        ParamDialog childDialog = new ParamDialog(parentPanel);
+                        childDialog.setLocationRelativeTo(mainFrame);
+                        childDialog.setUpdatedData(new Appparam());
+                        AssetClientApp.getApplication().show(childDialog);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), ParamDialog.this);

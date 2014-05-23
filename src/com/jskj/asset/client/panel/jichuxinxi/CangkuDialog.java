@@ -5,6 +5,7 @@
  */
 package com.jskj.asset.client.panel.jichuxinxi;
 
+import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.bean.entity.DepotALL;
 import com.jskj.asset.client.layout.AssetMessage;
@@ -12,6 +13,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.util.PingYinUtil;
+import javax.swing.JFrame;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -292,8 +294,14 @@ public class CangkuDialog extends BaseDialog {
             public void responseResult(ComResponse<DepotALL> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
-                    if (!jCheckBox2.isSelected()) {
-                        close();
+                    close();
+                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    if (jCheckBox2.isSelected()) {
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        CangkuDialog childDialog = new CangkuDialog(parentPanel);
+                        childDialog.setLocationRelativeTo(mainFrame);
+                        childDialog.setUpdatedData(new DepotALL());
+                        AssetClientApp.getApplication().show(childDialog);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), CangkuDialog.this);

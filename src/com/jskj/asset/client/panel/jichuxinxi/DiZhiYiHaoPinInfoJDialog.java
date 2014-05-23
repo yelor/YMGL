@@ -213,6 +213,8 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
             public void responseResult(ComResponse<DizhiyihaopinAll> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
+                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    dispose();
                     if (jCheckBoxCont.isSelected()) {
                         DiZhiYiHaoPinInfoJDialog diZhiYiHaoPinInfoJDialog = new DiZhiYiHaoPinInfoJDialog(parentPanel);
                         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
@@ -220,8 +222,6 @@ public class DiZhiYiHaoPinInfoJDialog extends BaseDialog {
                         diZhiYiHaoPinInfoJDialog.setUpdatedData(new DizhiyihaopinAll());
                         AssetClientApp.getApplication().show(diZhiYiHaoPinInfoJDialog);
                     }
-                    AssetMessage.showMessageDialog(null, "保存成功！");
-                    dispose();
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), DiZhiYiHaoPinInfoJDialog.this);
                 }

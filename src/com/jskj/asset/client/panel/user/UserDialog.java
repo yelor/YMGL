@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -532,8 +533,14 @@ public class UserDialog extends BaseDialog {
             public void responseResult(ComResponse<Usertb> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
-                    if (!jCheckBox1.isSelected()) {
-                         exit();
+                    exit();
+                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    if (jCheckBox1.isSelected()) {
+                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                        UserDialog userDialog = new UserDialog(parentPanel);
+                        userDialog.setLocationRelativeTo(mainFrame);
+                        userDialog.setAddOrUpdate(true);
+                        AssetClientApp.getApplication().show(userDialog);
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), UserDialog.this);

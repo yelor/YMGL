@@ -218,6 +218,8 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
             public void responseResult(ComResponse<GudingzichanAll> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
                     parentPanel.reload().execute();
+                    dispose();
+                    AssetMessage.showMessageDialog(null, "保存成功！");
                     if (jCheckBoxCont.isSelected()) {
                         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                         GuDingZiChanInfoJDialog guDingZhiChanInfoJDialog = new GuDingZiChanInfoJDialog(parentPanel);
@@ -225,8 +227,6 @@ public class GuDingZiChanInfoJDialog extends BaseDialog {
                         guDingZhiChanInfoJDialog.setUpdatedData(new GudingzichanAll());
                         AssetClientApp.getApplication().show(guDingZhiChanInfoJDialog);
                     }
-                    AssetMessage.showMessageDialog(null, "保存成功！");
-                    dispose();
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), GuDingZiChanInfoJDialog.this);
                 }
