@@ -24,6 +24,8 @@ import com.jskj.asset.client.panel.ckgl.task.CancelChuKu;
 import com.jskj.asset.client.panel.ckgl.task.WeiChuKuYimiaoTask;
 import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.util.DanHao;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,7 +60,38 @@ public class YiMiaoChuKu1JDialog extends BaseDialog {
 
     public YiMiaoChuKu1JDialog() {
         super();
-        initComponents();
+        initComponents();this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
         churukudan = new Churukudantb();
 
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMCK"));

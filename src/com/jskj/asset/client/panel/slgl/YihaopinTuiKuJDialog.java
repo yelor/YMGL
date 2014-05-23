@@ -78,7 +78,38 @@ public class YihaopinTuiKuJDialog extends BaseDialog {
     public YihaopinTuiKuJDialog() {
         super();
         initComponents();
-        
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
         zc = new ArrayList<ZiChanLieBiaotb>();
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();

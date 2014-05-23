@@ -49,12 +49,12 @@ public class selecteInvoiceJDialog4 extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jButton3.setAction(actionMap.get("yimiaodengjiAction1")); // NOI18N
+        jButton3.setAction(actionMap.get("Yimiaolingqu")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
-        jButton4.setAction(actionMap.get("yimiaodengjiAction2")); // NOI18N
+        jButton4.setAction(actionMap.get("Yimiaoshegou")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
@@ -143,17 +143,32 @@ public class selecteInvoiceJDialog4 extends javax.swing.JDialog {
         });
     }
 
-    @Action
-    public void yimiaodengjiAction1() {
+   @Action
+    public void Yimiaolingqu() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoDengJi1JDialog yiMiaoDengJi1JDialog = new YiMiaoDengJi1JDialog();
-                yiMiaoDengJi1JDialog.setLocationRelativeTo(mainFrame);
-                yiMiaoDengJi1JDialog.setNew();
-                AssetClientApp.getApplication().show(yiMiaoDengJi1JDialog);
+                YiMiaoLingQuShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingQuShenQingJDialog();
+                lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
+                lingYongShenQingJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(lingYongShenQingJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaoshegou() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoSheGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoSheGouShenQingJDialog();
+                caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
+                caiGouShenQingJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(caiGouShenQingJDialog);
             }
         });
     }

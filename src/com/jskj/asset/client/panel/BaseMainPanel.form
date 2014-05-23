@@ -107,7 +107,7 @@
         <Component class="javax.swing.JButton" name="jButton_topleft">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.ymgl.MainPanel" id="selecteInvoiceAction" methodName="selecteInvoiceAction"/>
+              <action class="com.jskj.asset.client.panel.BaseMainPanel" id="selecteInvoiceAction" methodName="selecteInvoiceAction"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton_topleft.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton_topleft.text"/>
@@ -144,7 +144,7 @@
         <Component class="javax.swing.JButton" name="jButton_bottomleft">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.BaseMainPanel" id="yiMiaoYanShouAction" methodName="yiMiaoYanShouAction"/>
+              <action class="com.jskj.asset.client.panel.BaseMainPanel" id="selecteInvoice4Action" methodName="selecteInvoice4Action"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton_bottomleft.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton_bottomleft.text"/>
@@ -162,7 +162,7 @@
         <Component class="javax.swing.JButton" name="jButton_bottomright">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.BaseMainPanel" id="selectYimiaoShenPiDanAction" methodName="selectYimiaoShenPiDanAction"/>
+              <action class="com.jskj.asset.client.panel.BaseMainPanel" id="selecteInvoice5Action" methodName="selecteInvoice5Action"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton_bottomright.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton_bottomright.text"/>
