@@ -15,7 +15,9 @@ public class Backsale_detail_tb {
 
     private Integer quantity;
 
-    private Float price;
+    private Float buyprice;
+
+    private Float saleprice;
 
     private Float totalprice;
 
@@ -59,12 +61,20 @@ public class Backsale_detail_tb {
         this.quantity = quantity;
     }
 
-    public Float getPrice() {
-        return price;
+    public Float getBuyprice() {
+        return buyprice;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setBuyprice(Float buyprice) {
+        this.buyprice = buyprice;
+    }
+
+    public Float getSaleprice() {
+        return saleprice;
+    }
+
+    public void setSaleprice(Float saleprice) {
+        this.saleprice = saleprice;
     }
 
     public Float getTotalprice() {

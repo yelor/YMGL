@@ -237,7 +237,7 @@ public class BaseMainPanel extends BasePanel {
         jButton_topright.setContentAreaFilled(false);
         jButton_topright.setName("jButton_topright"); // NOI18N
 
-        jButton_bottomleft.setAction(actionMap.get("yiMiaoYanShouAction")); // NOI18N
+        jButton_bottomleft.setAction(actionMap.get("selecteInvoice4Action")); // NOI18N
         jButton_bottomleft.setIcon(resourceMap.getIcon("jButton_bottomleft.icon")); // NOI18N
         jButton_bottomleft.setText(resourceMap.getString("jButton_bottomleft.text")); // NOI18N
         jButton_bottomleft.setBorder(null);
@@ -245,7 +245,7 @@ public class BaseMainPanel extends BasePanel {
         jButton_bottomleft.setContentAreaFilled(false);
         jButton_bottomleft.setName("jButton_bottomleft"); // NOI18N
 
-        jButton_bottomright.setAction(actionMap.get("selectYimiaoShenPiDanAction")); // NOI18N
+        jButton_bottomright.setAction(actionMap.get("selecteInvoice5Action")); // NOI18N
         jButton_bottomright.setIcon(resourceMap.getIcon("jButton_bottomright.icon")); // NOI18N
         jButton_bottomright.setText(resourceMap.getString("jButton_bottomright.text")); // NOI18N
         jButton_bottomright.setBorder(null);
@@ -373,7 +373,7 @@ public class BaseMainPanel extends BasePanel {
                     selecteInvoiceJDialog5 = new selecteInvoiceJDialog5(new javax.swing.JFrame(), true);
                     selecteInvoiceJDialog5.setLocationRelativeTo(mainFrame);
                 }
-                AssetClientApp.getApplication().show(selecteInvoiceJDialog4);
+                AssetClientApp.getApplication().show(selecteInvoiceJDialog5);
             }
         });
     }

@@ -69,7 +69,8 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"stockpileId", "库存编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"}, {"beforebuyPrice", "调前进价", "false"}, {"lastbuyPrice", "调后进价", "true"}, {"beforesalePrice", "调前售价", "false"}, {"lastsalePrice", "调后售价", "true"}});
+            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"unitId", "单位", "false"},
+            {"beforebuyPrice", "调前进价", "false"}, {"lastbuyPrice", "调后进价", "true"}, {"beforesalePrice", "调前售价", "false"}, {"lastsalePrice", "调后售价", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             public int getType() {
@@ -122,6 +123,50 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
                     editTable.insertValue(6, stockpilePrice);
                     editTable.insertValue(8, yushoujia);
 
+                }
+
+            }
+        });
+        
+          ((ScanButton) jButton2).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyimiao";
+            }
+
+            public String getConditionSQL() {
+                return "yimiao_tiaoxingma =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    HashMap yimiao = (HashMap) bindedMap;
+                    Object yimiaoId = yimiao.get("yimiaoId");
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
+                    Object youxiaoqi = bindedMap.get("youxiaodate");
+
+                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
+
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 6, youxiaoqi);
+
+                    editTable.addNewRow();
                 }
 
             }

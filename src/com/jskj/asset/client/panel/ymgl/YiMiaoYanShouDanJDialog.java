@@ -17,6 +17,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.ymgl.task.CancelYimiaoDengji;
 import com.jskj.asset.client.panel.ymgl.task.WeidengjiyimiaoTask;
@@ -157,11 +158,14 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                 }
             }
         });
+        
+        
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"xiangdanId", "详单编号"}, {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
-            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
+            {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"},
+            {"youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
             {"quantity", "数量", "false"}, {"fuheyuan", "复核员", "true"}, {"fahuoyuan", "发货员", "true"}});
 
         editTable.registerPopup(2, new IPopupBuilder() {
@@ -262,17 +266,51 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
 
             }
         });
+        
+        ((ScanButton) jButton3).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
 
-//        jTableyimiao.getModel().addTableModelListener(new TableModelListener(){
-//            @Override
-//            public void tableChanged(TableModelEvent e) {
-//
-//              if(jTextFieldSupplierName.getText().trim().equals("")){
-//                  String danweiSql="and supplier_id in Selecte where shenqingdan";
-//              }
-//            }
-//
-//        });
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyimiao";
+            }
+
+            public String getConditionSQL() {
+                return "yimiao_tiaoxingma =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    HashMap yimiao = (HashMap) bindedMap;
+                    Object yimiaoId = yimiao.get("yimiaoId");
+                    Object yimiaoName = yimiao.get("yimiaoName");
+                    Object yimiaoGuige = yimiao.get("yimiaoGuige");
+                    Object yimiaoJixing = yimiao.get("yimiaoJixing");
+                    Object shengchanqiye = yimiao.get("yimiaoShengchanqiye");
+                    Object unit = yimiao.get("unitId");
+                    Object youxiaoqi = bindedMap.get("youxiaodate");
+
+                    jTableyimiao.getSelectionModel().setSelectionInterval(jTableyimiao.getRowCount() - 1, jTableyimiao.getRowCount() - 1);
+
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 0, yimiaoId);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 1, yimiaoName);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 2, yimiaoGuige);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 3, yimiaoJixing);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 4, shengchanqiye);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 5, unit);
+                    editTable.insertValue(jTableyimiao.getSelectedRow(), 6, youxiaoqi);
+
+                    editTable.addNewRow();
+                }
+
+            }
+        });
+
 
         jTextFieldStarttime.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -429,7 +467,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButton3 = new ScanButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();

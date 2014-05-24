@@ -14,7 +14,6 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.AssetClientView;
 import com.jskj.asset.client.panel.user.*;
 import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
-import com.jskj.asset.client.bean.entity.UsertbFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaopicichaxunAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.BasePanel;
@@ -23,8 +22,6 @@ import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.BaseTreePane;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import com.jskj.asset.client.layout.ws.CommFindEntity;
-import com.jskj.asset.client.panel.baobiao.caigou.ReportCaiGouFindTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +46,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     private int count;
     private String conditionSql;
 
-    private List<YimiaopicichaxunAll> yimiaopicichaxunList = new ArrayList<YimiaopicichaxunAll>();
+    private List<YimiaopicichaxunAll> yimiaopicichaxunList;
 
     private final BindTableHelper<YimiaopicichaxunAll> bindTable;
 
@@ -67,11 +64,12 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
 //        conditionSql = "yimiao_id in (select distinct stockPile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id)";
         count = 0;
         bindTable = new BindTableHelper<YimiaopicichaxunAll>(jTableStockpile, new ArrayList<YimiaopicichaxunAll>());
-        bindTable.createTable(new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoType", "疫苗类型"}, {"yimiao.yimiaoJixing", "剂型"},
-        {"yimiao.yimiaoGuige", "疫苗规格"}, {"jiliang", "剂量"}, {"yimiao.yimiaoShengchanqiye", "生产企业"}, {"yimiao.yimiaoPizhunwenhao", "批准文号"},
-        {"yimiao.unitId", "单位"}, {"youxiaodate", "有效期至"}, {"kufang", "库房"}, {"pihao", "批号"}, {"piqianfano", "批签发合格证编号"}, {"source", "进口/国产"}, {"jinkoutongguanno", "进口通关单号"}, {"stockpileQuantity", "库存数量"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
-        bindTable.setColumnType(Date.class, 11);
-        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 100}, new int[]{3, 150}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}, new int[]{11, 100}).setRowHeight(30);
+        bindTable.createTable(new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoType", "疫苗类型"},
+        {"yimiao.yimiaoJixing", "剂型"}, {"yimiao.yimiaoGuige", "疫苗规格"}, {"jiliang", "剂量"}, {"yimiao.yimiaoShengchanqiye", "生产企业"}, {"yimiao.yimiaoPizhunwenhao", "批准文号"},
+        {"youxiaodate", "有效期至"}, {"kufang", "库房"}, {"pihao", "批号"}, {"piqianfano", "批签发合格证编号"}, {"source", "进口/国产"}, {"jinkoutongguanno", "进口通关单号"}, {"yimiao.unitId", "单位"},
+        {"stockpileQuantity", "库存数量"}, {"danweiguanxi", "单位关系"}, {"fuzhudanwei", "辅助单位"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
+        bindTable.setColumnType(Date.class, 10);
+        bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 150}, new int[]{3, 100}, new int[]{5, 100}, new int[]{6, 100}, new int[]{7, 150}, new int[]{8, 100}, new int[]{11, 100}).setRowHeight(30);
 
         ((BaseTextField) jTextFieldYimiaoName).registerPopup(new IPopupBuilder() {
             public int getType() {
@@ -175,7 +173,7 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
             }
 
             StockpiletbFindEntity stockpileEntiy = (StockpiletbFindEntity) object;
-
+            yimiaopicichaxunList = new ArrayList<YimiaopicichaxunAll>();
             if (stockpileEntiy != null) {
                 count = stockpileEntiy.getCount();
                 jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
@@ -184,6 +182,14 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
                 //存下所有的数据
                 for (int i = 0; i < stockpileEntiy.getResult().size(); i++) {
                     YimiaopicichaxunAll yimiaopicichaxun = new YimiaopicichaxunAll();
+                    if (stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() == 0 | stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() == null) {
+                        yimiaopicichaxun.setDanweiguanxi("");
+                        yimiaopicichaxun.setFuzhudanwei("");
+                    } else {
+                        yimiaopicichaxun.setDanweiguanxi("1" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoFuzhuunit() + "="
+                                + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() + stockpileEntiy.getResult().get(i).getYimiao().getUnitId());
+                        yimiaopicichaxun.setFuzhudanwei(stockpileEntiy.getResult().get(i).getStockpileQuantity().floatValue() / stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv().floatValue() + "" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoFuzhuunit());
+                    }
                     yimiaopicichaxun.setJiliang("" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoJiliang() + stockpileEntiy.getResult().get(i).getYimiao().getJiliangdanwei());
                     yimiaopicichaxun.setYimiao(stockpileEntiy.getResult().get(i).getYimiao());
                     yimiaopicichaxun.setJinkoutongguanno(stockpileEntiy.getResult().get(i).getJinkoutongguanno());
@@ -435,19 +441,24 @@ public final class Yimiaopicichaxun1Panel extends BasePanel {
     }
 
     private class PrintTask extends org.jdesktop.application.Task<Object, Void> {
+
         PrintTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to PrintTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }

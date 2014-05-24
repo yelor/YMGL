@@ -24,6 +24,8 @@ import com.jskj.asset.client.panel.ckgl.task.CancelChuKu;
 import com.jskj.asset.client.panel.ckgl.task.WeiChuKuYimiaoTask;
 import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.util.DanHao;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +68,38 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
     public YiMiaoChuKu2JDialog() {
         super();
         initComponents();
+        this.addWindowListener(new WindowListener() {
 
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
         churukudan = new Churukudantb();
         jTextFielddanjuNo.setText(DanHao.getDanHao("YMCK"));
         jTextFielddanjuNo.setEditable(false);
@@ -109,10 +142,11 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         });
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"xiangdanId", "详单编号", "false"}, {"stockpileId", "库存编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"xiangdanId", "详单编号", "false"}, {"stockpileId", "库存编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"},
+            {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
-            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"}, {"yushouPrice", "预售价", "true"}, {"totalPrice", "合价", "true"},
-            {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "收货单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "false"}, {"yushouPrice", "预售价", "false"}, {"totalPrice", "合价", "false"},
+            {"jingbanren", "经办人", "false"}, {"gongyingdanwei", "收货单位", "false"}, {"duifangjingbanren", "对方经办人", "false"}});
         editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TABLE;
@@ -186,7 +220,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     Object kehudanweiName = kehudanwei.get("kehudanweiName");
                     Object duifangjinbangren = kehudanwei.get("kehudanweiConstactperson");
                     Object stockpileQuantity = stockpile.get("stockpileQuantity");
-                    
+
                     for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
                         BaseTable yimiaotable = ((BaseTable) jTableyimiao);
                         if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + sale_detail_tb.get("saleDetailId"))) {
@@ -556,7 +590,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             return null;
         }
         List<SaleyimiaoEntity> lst = new ArrayList<SaleyimiaoEntity>();
-        for (int i = 0; i < jTableyimiao.getRowCount(); i++) {
+        for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             SaleyimiaoEntity lb = new SaleyimiaoEntity();
             Sale_detail_tb saledetail = new Sale_detail_tb();
             saledetail.setSaleDetailId(Integer.parseInt(saledetailIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
@@ -565,7 +599,7 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
             String reason = "";
             while (reason.isEmpty()) {
                 reason = AssetMessage.showInputDialog(null, "请输入取消出库疫苗【"
-                        + jTableyimiao.getValueAt(i, 1) + "】的理由(必输)：");
+                        + jTableyimiao.getValueAt(i, 2) + "】的理由(必输)：");
                 if (reason == null) {
                     return null;
                 }
@@ -701,9 +735,9 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"经办人", jTextFieldzhidanren.getText()},
                     {"仓库", jTextFieldkufang.getText()},
-                    {"备注", jTextArea1.getText(),"single"}},
+                    {"备注", jTextArea1.getText(), "single"}},
                     jTableyimiao,
-                    new String[][]{{"", ""},},"收苗人签字");
+                    new String[][]{{"", ""},}, "收苗人签字");
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);

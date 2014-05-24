@@ -137,10 +137,11 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"xiangdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"xiangdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, 
+            {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
-            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "true"},
-            {"jingbanren", "经办人", "true"}, {"gongyingdanwei", "供应单位", "true"}, {"duifangjingbanren", "对方经办人", "true"}});
+            {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "false"},
+            {"jingbanren", "经办人", "false"}, {"gongyingdanwei", "供应单位", "false"}, {"duifangjingbanren", "对方经办人", "false"}});
 
         editTable.registerPopup(2, new IPopupBuilder() {
             public int getType() {
@@ -578,7 +579,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             String reason = "";
             while (reason.isEmpty()) {
                 reason = AssetMessage.showInputDialog(null, "请输入取消入库疫苗【"
-                        + jTableyimiao.getValueAt(i, 1) + "】的理由(必输)：");
+                        + jTableyimiao.getValueAt(i, 2) + "】的理由(必输)：");
                 if (reason == null) {
                     return null;
                 }

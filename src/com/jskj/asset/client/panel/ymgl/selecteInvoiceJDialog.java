@@ -58,13 +58,13 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jButton3.setAction(actionMap.get("Yimiaoshenbao")); // NOI18N
+        jButton3.setAction(actionMap.get("YimiaolingquPlan")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton3.setName("jButton3"); // NOI18N
 
-        jButton4.setAction(actionMap.get("Yimiaoshegou")); // NOI18N
+        jButton4.setAction(actionMap.get("YimiaoshegouPlan")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -161,7 +161,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
     }
 
     @Action
-    public void Yimiaoshenbao() {
+    public void YimiaolingquPlan() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -176,7 +176,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
     }
 
     @Action
-    public void Yimiaoshegou() {
+    public void YimiaoshegouPlan() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -190,35 +190,7 @@ public class selecteInvoiceJDialog extends javax.swing.JDialog {
         });
     }
 
-    @Action
-    public void Yimiaolingyong() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoLingQuShenQingJDialog lingYongShenQingJDialog = new YiMiaoLingQuShenQingJDialog();
-                lingYongShenQingJDialog.setLocationRelativeTo(mainFrame);
-                lingYongShenQingJDialog.setAddOrUpdate(true);
-                AssetClientApp.getApplication().show(lingYongShenQingJDialog);
-            }
-        });
-    }
-
-    @Action
-    public void Yimiaocaigou() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoSheGouShenQingJDialog caiGouShenQingJDialog = new YiMiaoSheGouShenQingJDialog();
-                caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
-                caiGouShenQingJDialog.setAddOrUpdate(true);
-                AssetClientApp.getApplication().show(caiGouShenQingJDialog);
-            }
-        });
-    }
+ 
 
     @Action
     public void cancelAction() {

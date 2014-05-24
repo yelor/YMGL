@@ -14,6 +14,7 @@ import com.jskj.asset.client.panel.user.*;
 import com.jskj.asset.client.bean.entity.StockpiletbAll;
 import com.jskj.asset.client.bean.entity.StockpiletbFindEntity;
 import com.jskj.asset.client.bean.entity.UsertbFindEntity;
+import com.jskj.asset.client.bean.entity.YimiaopicichaxunAll;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
@@ -42,8 +43,8 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
     private String yimiaoName;
 
     private List<StockpiletbAll> stockpile;
-
-    private final BindTableHelper<StockpiletbAll> bindTable;
+    private List<YimiaopicichaxunAll> yimiaopicichaxunList;
+    private final BindTableHelper<YimiaopicichaxunAll> bindTable;
 
     /**
      * Creates new form NoFoundPane
@@ -55,9 +56,9 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         pageSize = 20;
         conditionSql = "yimiao_id in (select distinct yimiao_id from yimiao where chengbenjia=0)";
         count = 0;
-        bindTable = new BindTableHelper<StockpiletbAll>(jTableStockpile, new ArrayList<StockpiletbAll>());
+        bindTable = new BindTableHelper<YimiaopicichaxunAll>(jTableStockpile, new ArrayList<YimiaopicichaxunAll>());
         bindTable.createTable(new String[][]{{"stockpileId", "库存编号"}, {"yimiao.yimiaoId", "疫苗编号"}, {"yimiao.yimiaoName", "疫苗名称"}, {"yimiao.yimiaoJixing", "剂型"},
-        {"yimiao.yimiaoGuige", "疫苗规格"}, {"yimiao.unitId", "单位"}, {"stockpileQuantity", "库存数量"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
+        {"yimiao.yimiaoGuige", "疫苗规格"}, {"yimiao.unitId", "单位"}, {"stockpileQuantity", "库存数量"}, {"danweiguanxi", "单位关系"}, {"fuzhudanwei", "辅助单位"}, {"stockpilePrice", "成本均价"}, {"stockpileTotalprice", "库存金额"}});
         bindTable.setColumnType(Integer.class, 1);
         bindTable.bind().setColumnWidth(new int[]{0, 100}, new int[]{1, 100}, new int[]{2, 200}, new int[]{3, 100}, new int[]{5, 150}, new int[]{6, 100}, new int[]{7, 100}, new int[]{8, 150}).setRowHeight(30);
 
@@ -107,12 +108,12 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         yimiaoName = "";
         if (bindTable.getSelectedBean() != null) {
             conditionSql += "yimiao_id in (select distinct stockpile.yimiao_id from stockpile,yimiao where stockpile.stockPile_price=0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + bindTable.getSelectedBean().getYimiao().getYimiaoName() + "%\"))";
-            yimiaoName=bindTable.getSelectedBean().getYimiao().getYimiaoName();
+            yimiaoName = bindTable.getSelectedBean().getYimiao().getYimiaoName();
         } else {
             conditionSql = "";
             yimiaoName = "";
         }
-        return new OpenTabTask("报表-疫苗批次查询", new Yimiaopicichaxun1Panel(conditionSql,yimiaoName), false);
+        return new OpenTabTask("报表-疫苗批次查询", new Yimiaopicichaxun1Panel(conditionSql, yimiaoName), true);
 
     }
 
@@ -169,15 +170,41 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
             }
 
             StockpiletbFindEntity stockpileEntiy = (StockpiletbFindEntity) object;
-
+            yimiaopicichaxunList = new ArrayList<YimiaopicichaxunAll>();
             if (stockpileEntiy != null) {
                 count = stockpileEntiy.getCount();
                 jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
                 logger.debug("total:" + count + ",get user size:" + stockpileEntiy.getResult().size());
 
                 //存下所有的数据
-                stockpile = stockpileEntiy.getResult();
-                bindTable.refreshData(stockpile);
+                for (int i = 0; i < stockpileEntiy.getResult().size(); i++) {
+                    YimiaopicichaxunAll yimiaopicichaxun = new YimiaopicichaxunAll();
+                    if (stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() == 0 | stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() == null) {
+                        yimiaopicichaxun.setDanweiguanxi("");
+                        yimiaopicichaxun.setFuzhudanwei("");
+                    } else {
+                        yimiaopicichaxun.setDanweiguanxi("1" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoFuzhuunit() + "="
+                                + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() + stockpileEntiy.getResult().get(i).getYimiao().getUnitId());
+                        yimiaopicichaxun.setFuzhudanwei(stockpileEntiy.getResult().get(i).getStockpileQuantity().floatValue() / stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv().floatValue() + "" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoFuzhuunit());
+                    }
+                    yimiaopicichaxun.setJiliang("" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoJiliang() + stockpileEntiy.getResult().get(i).getYimiao().getJiliangdanwei());
+                    yimiaopicichaxun.setYimiao(stockpileEntiy.getResult().get(i).getYimiao());
+                    yimiaopicichaxun.setJinkoutongguanno(stockpileEntiy.getResult().get(i).getJinkoutongguanno());
+                    yimiaopicichaxun.setKufang(stockpileEntiy.getResult().get(i).getKufang());
+                    yimiaopicichaxun.setPihao(stockpileEntiy.getResult().get(i).getPihao());
+                    yimiaopicichaxun.setPiqianfano(stockpileEntiy.getResult().get(i).getPiqianfano());
+                    yimiaopicichaxun.setSource(stockpileEntiy.getResult().get(i).getSource());
+                    yimiaopicichaxun.setStockpileDate(stockpileEntiy.getResult().get(i).getStockpileDate());
+                    yimiaopicichaxun.setStockpileId(stockpileEntiy.getResult().get(i).getStockpileId());
+                    yimiaopicichaxun.setStockpilePrice(stockpileEntiy.getResult().get(i).getStockpilePrice());
+                    yimiaopicichaxun.setStockpileQuantity(stockpileEntiy.getResult().get(i).getStockpileQuantity());
+                    yimiaopicichaxun.setStockpileTotalprice(stockpileEntiy.getResult().get(i).getStockpileTotalprice());
+                    yimiaopicichaxun.setYimiaoId(stockpileEntiy.getResult().get(i).getYimiaoId());
+                    yimiaopicichaxun.setYimiaoyushoujia(stockpileEntiy.getResult().get(i).getYimiaoyushoujia());
+                    yimiaopicichaxun.setYouxiaodate(stockpileEntiy.getResult().get(i).getYouxiaodate());
+                    yimiaopicichaxunList.add(yimiaopicichaxun);
+                }
+                bindTable.refreshData(yimiaopicichaxunList);
             }
         }
     }
@@ -371,7 +398,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         new RefureTask(pageIndex, pageSize).execute();
     }
 
-      @Action
+    @Action
     public Task print() {
 
         StockpiletbAllFindEntityTask printData = new StockpiletbAllFindEntityTask(pageIndex, pageSize, conditionSql) {
@@ -386,27 +413,66 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
                 }
 
                 StockpiletbFindEntity stockpileEntiy = (StockpiletbFindEntity) object;
-                stockpile = stockpileEntiy.getResult();
-                bindTable.createPrinter("Ⅰ类疫苗库存状况表", stockpile).buildInBackgound().execute();
+                yimiaopicichaxunList = new ArrayList<YimiaopicichaxunAll>();
+                if (stockpileEntiy != null) {
+                    count = stockpileEntiy.getCount();
+                    jLabelTotal.setText(((pageIndex - 1) * pageSize + 1) + "/" + count);
+                    logger.debug("total:" + count + ",get user size:" + stockpileEntiy.getResult().size());
+
+                    //存下所有的数据
+                    for (int i = 0; i < stockpileEntiy.getResult().size(); i++) {
+                        YimiaopicichaxunAll yimiaopicichaxun = new YimiaopicichaxunAll();
+                        if (stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() == 0 | stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() == null) {
+                            yimiaopicichaxun.setDanweiguanxi("");
+                            yimiaopicichaxun.setFuzhudanwei("");
+                        } else {
+                            yimiaopicichaxun.setDanweiguanxi("1" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoFuzhuunit() + "="
+                                    + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv() + stockpileEntiy.getResult().get(i).getYimiao().getUnitId());
+                            yimiaopicichaxun.setFuzhudanwei(stockpileEntiy.getResult().get(i).getStockpileQuantity().floatValue() / stockpileEntiy.getResult().get(i).getYimiao().getYimiaoHuansuanlv().floatValue() + "" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoFuzhuunit());
+                        }
+                        yimiaopicichaxun.setJiliang("" + stockpileEntiy.getResult().get(i).getYimiao().getYimiaoJiliang() + stockpileEntiy.getResult().get(i).getYimiao().getJiliangdanwei());
+                        yimiaopicichaxun.setYimiao(stockpileEntiy.getResult().get(i).getYimiao());
+                        yimiaopicichaxun.setJinkoutongguanno(stockpileEntiy.getResult().get(i).getJinkoutongguanno());
+                        yimiaopicichaxun.setKufang(stockpileEntiy.getResult().get(i).getKufang());
+                        yimiaopicichaxun.setPihao(stockpileEntiy.getResult().get(i).getPihao());
+                        yimiaopicichaxun.setPiqianfano(stockpileEntiy.getResult().get(i).getPiqianfano());
+                        yimiaopicichaxun.setSource(stockpileEntiy.getResult().get(i).getSource());
+                        yimiaopicichaxun.setStockpileDate(stockpileEntiy.getResult().get(i).getStockpileDate());
+                        yimiaopicichaxun.setStockpileId(stockpileEntiy.getResult().get(i).getStockpileId());
+                        yimiaopicichaxun.setStockpilePrice(stockpileEntiy.getResult().get(i).getStockpilePrice());
+                        yimiaopicichaxun.setStockpileQuantity(stockpileEntiy.getResult().get(i).getStockpileQuantity());
+                        yimiaopicichaxun.setStockpileTotalprice(stockpileEntiy.getResult().get(i).getStockpileTotalprice());
+                        yimiaopicichaxun.setYimiaoId(stockpileEntiy.getResult().get(i).getYimiaoId());
+                        yimiaopicichaxun.setYimiaoyushoujia(stockpileEntiy.getResult().get(i).getYimiaoyushoujia());
+                        yimiaopicichaxun.setYouxiaodate(stockpileEntiy.getResult().get(i).getYouxiaodate());
+                        yimiaopicichaxunList.add(yimiaopicichaxun);
+                    }
+                }
+                bindTable.createPrinter("Ⅰ类疫苗库存状况表", yimiaopicichaxunList).buildInBackgound().execute();
             }
         };
         return printData;
     }
 
     private class PrintTask extends org.jdesktop.application.Task<Object, Void> {
+
         PrintTask(org.jdesktop.application.Application app) {
             // Runs on the EDT.  Copy GUI state that
             // doInBackground() depends on from parameters
             // to PrintTask fields, here.
             super(app);
         }
-        @Override protected Object doInBackground() {
+
+        @Override
+        protected Object doInBackground() {
             // Your Task's code here.  This method runs
             // on a background thread, so don't reference
             // the Swing GUI from here.
             return null;  // return your result
         }
-        @Override protected void succeeded(Object result) {
+
+        @Override
+        protected void succeeded(Object result) {
             // Runs on the EDT.  Update the GUI based on
             // the result computed by doInBackground().
         }

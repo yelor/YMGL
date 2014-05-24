@@ -60,6 +60,7 @@ public final class KucunchaxunPanel extends BasePanel {
         bindTable.createTable(new String[][]{{"id", "物品编号"}, {"name", "物品名称"}, {"type", "类型"}, 
             {"kucunshu", "库存数"},{"danjia", "成本均价"}, {"zongjine", "库存金额"}});
         bindTable.setColumnType(Integer.class, 1);
+        bindTable.setColumnType(float.class, 5);
         bindTable.bind().setColumnWidth(new int[]{0, 200},new int[]{1, 200},new int[]{2, 200},new int[]{3, 200},new int[]{4, 200},new int[]{5, 200}).setRowHeight(30);
         bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
 
