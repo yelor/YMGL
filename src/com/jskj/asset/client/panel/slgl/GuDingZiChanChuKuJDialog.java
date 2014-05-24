@@ -511,6 +511,13 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
+            for(int j = 0; j < i; j++) {
+                int id = Integer.parseInt("" + jTable1.getValueAt(j, 0));
+                if(zclb.getCgzcId() == id) {
+                    AssetMessage.ERRORSYS("第" + (i+1) + "个资产与第" + (j+1) + "个资产ID重复，每张单据单个物品只能出现一次，请删除其中一个！");
+                    return null;
+                }
+            }
             zclb.setCgsqId(yuandanmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
             zclb.setQuantity(Integer.parseInt("" + jTable1.getValueAt(i, 6)));
             int kucun = Integer.parseInt(kcmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString());
@@ -529,7 +536,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
             }
             String xuliehao = jTable1.getValueAt(i, 11).toString();
             if(xuliehao.split(";").length != zclb.getQuantity() ){
-                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产要出库"+ zclb.getQuantity() +"个，请输入"+ zclb.getQuantity() +"个序列号！每个物品的序列号用分号隔开", this);
+                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产要出库"+ zclb.getQuantity() +"个，请输入"+ zclb.getQuantity() +"个序列号！每个物品的序列号用英文标点分号隔开", this);
                 return null;
             }
             zclb.setDidian(jTable1.getValueAt(i, 10).toString());

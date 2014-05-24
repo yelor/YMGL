@@ -1,7 +1,9 @@
 package com.jskj.asset.client.bean.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Zichandiaobodantb {
     private String zcdbId;
 
@@ -11,9 +13,13 @@ public class Zichandiaobodantb {
 
     private Integer yichurenId;
 
+    private String yuanBarcode;
+
     private Integer jieshourenId;
 
-    private String cundangdidian;
+    private String xianBarcode;
+
+    private String cunfangdidian;
 
     private String remark;
 
@@ -49,6 +55,14 @@ public class Zichandiaobodantb {
         this.yichurenId = yichurenId;
     }
 
+    public String getYuanBarcode() {
+        return yuanBarcode;
+    }
+
+    public void setYuanBarcode(String yuanBarcode) {
+        this.yuanBarcode = yuanBarcode == null ? null : yuanBarcode.trim();
+    }
+
     public Integer getJieshourenId() {
         return jieshourenId;
     }
@@ -57,12 +71,20 @@ public class Zichandiaobodantb {
         this.jieshourenId = jieshourenId;
     }
 
-    public String getCundangdidian() {
-        return cundangdidian;
+    public String getXianBarcode() {
+        return xianBarcode;
     }
 
-    public void setCundangdidian(String cundangdidian) {
-        this.cundangdidian = cundangdidian == null ? null : cundangdidian.trim();
+    public void setXianBarcode(String xianBarcode) {
+        this.xianBarcode = xianBarcode == null ? null : xianBarcode.trim();
+    }
+
+    public String getCunfangdidian() {
+        return cunfangdidian;
+    }
+
+    public void setCunfangdidian(String cunfangdidian) {
+        this.cunfangdidian = cunfangdidian == null ? null : cunfangdidian.trim();
     }
 
     public String getRemark() {

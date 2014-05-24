@@ -203,7 +203,7 @@ public class DanHao {
                                                     createCellComponentLeft(returnNotNullValue(5, 0, parameters)),
                                                     createCellComponent(returnNotNullValue(5, 1, parameters)))
 //                                    ))
-                            ).show(false);
+                            ).print(false);
             AssetMessage.INFO("打印完成.");
         } catch (Exception e) {
             logger.error(e);

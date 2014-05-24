@@ -301,6 +301,13 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
                 AssetMessage.ERRORSYS("第" + (i+1) + "个资产的ID不合法，请输入纯数字，不能包含字母或特殊字符！");
                 return null;
             }
+            for(int j = 0; j < i; j++) {
+                int id = Integer.parseInt("" + jTable1.getValueAt(j, 0));
+                if(zclb.getCgzcId() == id) {
+                    AssetMessage.ERRORSYS("第" + (i+1) + "个资产与第" + (j+1) + "个资产ID重复，每张单据单个物品只能出现一次，请删除其中一个！");
+                    return null;
+                }
+            }
             if (jTable1.getValueAt(i, 6).toString().equals("")) {
                 AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的采购数量！", this);
                 return null;
