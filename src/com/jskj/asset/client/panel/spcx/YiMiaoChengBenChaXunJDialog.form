@@ -304,7 +304,6 @@
                 <Property name="horizontalTextPosition" type="int" value="4"/>
                 <Property name="name" type="java.lang.String" value="jButton15" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
-                <Property name="rolloverEnabled" type="boolean" value="true"/>
               </Properties>
             </Component>
           </SubComponents>

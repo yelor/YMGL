@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jskj.asset.client.bean.entity.Departmenttb;
 import com.jskj.asset.client.bean.entity.Depot;
 import com.jskj.asset.client.bean.entity.Kehudanweitb;
+import com.jskj.asset.client.bean.entity.Stockpiletb;
 import com.jskj.asset.client.bean.entity.Usertb;
 import com.jskj.asset.client.bean.entity.YiMiaotb;
 import java.util.Date;
@@ -23,6 +24,8 @@ public class Yimiaoxiaoshoudetail {
     private String saleId;
 
     private YiMiaotb yimiaotb;
+
+    private Stockpiletb stockpiletb;
 
     private Integer quantity;
 
@@ -290,4 +293,12 @@ public class Yimiaoxiaoshoudetail {
         this.isPaid = isPaid;
     }
 
+    public Stockpiletb getStockpiletb() {
+        return stockpiletb;
+    }
+
+    public void setStockpiletb(Stockpiletb stockpiletb) {
+        this.stockpiletb = stockpiletb;
+    }
+    
 }

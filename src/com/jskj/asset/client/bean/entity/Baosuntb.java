@@ -15,6 +15,8 @@ public class Baosuntb {
 
     private Integer zhidanren;
 
+    private Float danjujine;
+
     private Integer isCompleted;
 
     public String getBaosunId() {
@@ -55,6 +57,14 @@ public class Baosuntb {
 
     public void setZhidanren(Integer zhidanren) {
         this.zhidanren = zhidanren;
+    }
+
+    public Float getDanjujine() {
+        return danjujine;
+    }
+
+    public void setDanjujine(Float danjujine) {
+        this.danjujine = danjujine;
     }
 
     public Integer getIsCompleted() {

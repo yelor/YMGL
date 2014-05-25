@@ -13,6 +13,10 @@ public class Yimiaobaosuntb {
 
     private Integer quantity;
 
+    private Float price;
+
+    private Float totalprice;
+
     private String xiaohuiaddr;
 
     private Date xiaohuidate;
@@ -53,6 +57,22 @@ public class Yimiaobaosuntb {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Float getTotalprice() {
+        return totalprice;
+    }
+
+    public void setTotalprice(Float totalprice) {
+        this.totalprice = totalprice;
     }
 
     public String getXiaohuiaddr() {

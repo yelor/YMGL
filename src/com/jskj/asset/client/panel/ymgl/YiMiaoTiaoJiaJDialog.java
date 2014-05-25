@@ -742,6 +742,10 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         jTextFieldzhidanren.setText(yimiaotiaojiaxiangdanEntity.getUserAll().getUserName());
         jTextArea1.setEditable(false);
         jTextArea1.setText("" + yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getTioajiaremark());
+        jTextFieldKemu.setEditable(false);
+        jTextFieldKemu.setText("" + yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getTiaojiakemu());
+        jTextFieldJine.setEditable(false);
+        jTextFieldJine.setText("" + yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getTiaojiajine());
 
         setListTable(yimiaotiaojiaxiangdanEntity.getResult());
     }

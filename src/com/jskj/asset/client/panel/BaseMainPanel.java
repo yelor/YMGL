@@ -34,6 +34,7 @@ import com.jskj.asset.client.panel.slgl.selectYanShouDengJiDanJDialog;
 import com.jskj.asset.client.panel.spcx.JinxiaochaxunJDialog;
 import com.jskj.asset.client.panel.spcx.LiChengZaiXianChaXunJDialog;
 import com.jskj.asset.client.panel.spcx.YeWuLiuChengChaXunJDialog;
+import com.jskj.asset.client.panel.spcx.YiMiaoChengBenChaXunJDialog;
 import com.jskj.asset.client.panel.spcx.selecteTongJiInvoiceJDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -737,7 +738,21 @@ public class BaseMainPanel extends BasePanel {
         });
     }
     
+    @Action
+    public void YiMiaoChengBenChaXunAction() {
+        SwingUtilities.invokeLater(new Runnable() {
+            private YiMiaoChengBenChaXunJDialog yiMiaoChengBenChaXunJDialog;
+            public void run() {
+                if (yiMiaoChengBenChaXunJDialog == null) {
+                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                    yiMiaoChengBenChaXunJDialog = new YiMiaoChengBenChaXunJDialog(new javax.swing.JFrame(), true);
+                    yiMiaoChengBenChaXunJDialog.setLocationRelativeTo(mainFrame);
+                }
+                AssetClientApp.getApplication().show(yiMiaoChengBenChaXunJDialog);
+            }
 
+        });
+    }
 
     @Action
     public void TongJiChaXunAction() {
