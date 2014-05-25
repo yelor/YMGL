@@ -165,22 +165,7 @@ public class JinxiaochaxunJDialog extends javax.swing.JDialog {
         });
     }
 
-    @Action
-    public void YiMiaoChengBenChaXunAction() {
-        SwingUtilities.invokeLater(new Runnable() {
-            private YiMiaoChengBenChaXunJDialog yiMiaoChengBenChaXunJDialog;
-            public void run() {
-                dispose();
-                if (yiMiaoChengBenChaXunJDialog == null) {
-                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    yiMiaoChengBenChaXunJDialog = new YiMiaoChengBenChaXunJDialog(new javax.swing.JFrame(), true);
-                    yiMiaoChengBenChaXunJDialog.setLocationRelativeTo(mainFrame);
-                }
-                AssetClientApp.getApplication().show(yiMiaoChengBenChaXunJDialog);
-            }
 
-        });
-    }
 
     @Action
     public void Yimiaocaigoujihua() {

@@ -70,8 +70,9 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         parameterMap = new HashMap();
         parameterMap.put("conditionSql", "sale_id like 'YMXS%'");
         bindTable = new BindTableHelper<Yimiaoxiaoshoudetail>(jTable4, new ArrayList<Yimiaoxiaoshoudetail>());
-        bindTable.createTable(new String[][]{{"saleId", "单据编号"}, {"saleDate", "制单日期"},
-        {"yimiaotb.yimiaoName", "疫苗名称"}, {"quantity", "数量"}, {"totalprice", "销售总额"}, {"remark", "销售毛利"}, {"yimiaotb.yimiaoYushoujia", "预售价"}, {"price", "进价"}, {"yimiaotb.yimiaoGuige", "规格"}, {"yimiaotb.yimiaoJixing", "剂型"}, {"yimiaotb.yimiaoShengchanqiye", "生产企业"}, {"yimiaotb.yimiaoPizhunwenhao", "批号"}, {"kehudanweitb.kehudanweiName", "客户单位"}, {"zhidanren.userName", "经办人"}, {"depottb.depotName", "仓库"}});
+        bindTable.createTable(new String[][]{{"saleId", "单据编号"}, {"saleDate", "制单日期"},{"yimiaotb.yimiaoName", "疫苗名称"}, {"quantity", "数量"},
+            {"totalprice", "销售总额"}, {"remark", "销售毛利"}, {"yimiaotb.yimiaoYushoujia", "预售价"}, {"price", "进价"}, {"yimiaotb.yimiaoGuige", "规格"},
+            {"yimiaotb.yimiaoJixing", "剂型"}, {"yimiaotb.yimiaoShengchanqiye", "生产企业"}, {"stockpiletb.pihao", "批号"}, {"kehudanweitb.kehudanweiName", "客户单位"}, {"zhidanren.userName", "经办人"}, {"depottb.depotName", "仓库"}});
         bindTable.setColumnType(Date.class, 2);
         //bindTable.setColumnType(Float.class, 8, 9);
         bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 100}, new int[]{2, 150}).setRowHeight(25);
@@ -81,37 +82,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         this.setMinimumSize(dimension);
         this.setMaximumSize(dimension);
 
-//        bindTable.createHeaderFilter(new ITableHeaderPopupBuilder() {
-//
-//            @Override
-//            public int[] getFilterColumnHeader() {
-//                //那些列需要有查询功能，这样就可以点击列头弹出一个popup
-//                return new int[]{3};
-//            }
-//
-//            @Override
-//            public Task filterData(HashMap<Integer, String> searchKeys) {
-//
-//                if (searchKeys.size() > 0) {
-//                    StringBuilder sql = new StringBuilder();
-//                    if (!searchKeys.get(2).trim().equals("")) {
-//                        sql.append("appparam_type like \"%").append(searchKeys.get(2).trim()).append("%\"").append(" and ");
-//                    }
-//                    if (!searchKeys.get(3).trim().equals("")) {
-//                        sql.append("appparam_name like \"%").append(searchKeys.get(3).trim()).append("%\"").append(" and ");
-//                    }
-//                    if (sql.length() > 0) {
-//                        sql.delete(sql.length() - 5, sql.length() - 1);
-//                    }
-//                    conditionSql = sql.toString();
-//                } else {
-//                    conditionSql = "";
-//                }
-//
-//                return reload();
-//            }
-//
-//        });
     }
 
     private class RefreshTask extends Yimiao2leichengbenFindTask {
