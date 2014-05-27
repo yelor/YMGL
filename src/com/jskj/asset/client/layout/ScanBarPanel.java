@@ -121,7 +121,7 @@ public abstract class ScanBarPanel extends BasePanel {
 
                     UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(popBuilder.getWebServiceURI())
                             .queryParam("pagesize", 20).queryParam("pageindex", 1);
-                    String barcode = jTextFieldBarCode.getText();
+                    String barcode = jTextFieldBarCode.getText().substring(0, 17);   //截取前17位
                     String conditionSql = popBuilder.getConditionSQL();
                     if (conditionSql.indexOf("#") >= 0) {
                         conditionSql = conditionSql.replaceAll("#", barcode);
