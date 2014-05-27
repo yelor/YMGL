@@ -21,6 +21,8 @@ public class Yimiaoyanshou_detail_tb {
 
     private Float price;
 
+    private String barcode;
+
     private String fuheyuan;
 
     private String fahuoyuan;
@@ -89,6 +91,14 @@ public class Yimiaoyanshou_detail_tb {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode == null ? null : barcode.trim();
     }
 
     public String getFuheyuan() {

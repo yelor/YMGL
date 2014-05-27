@@ -31,6 +31,8 @@ public class Stockpiletb {
 
     private Float yimiaoyushoujia;
 
+    private String barcode;
+
     public Integer getStockpileId() {
         return stockpileId;
     }
@@ -133,5 +135,13 @@ public class Stockpiletb {
 
     public void setYimiaoyushoujia(Float yimiaoyushoujia) {
         this.yimiaoyushoujia = yimiaoyushoujia;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode == null ? null : barcode.trim();
     }
 }

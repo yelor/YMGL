@@ -643,7 +643,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         yimiaoxiafaTuiku = new XiaoshoutuihuoEntity();
         backsale.setBacksaleId(jTextFieldXiafaId.getText());
         backsale.setBacksaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
-        backsale.setCheckId(AssetClientApp.getSessionMap().getUsertb().getUserId());
+        backsale.setZhidanrenId(AssetClientApp.getSessionMap().getUsertb().getUserId());
         backsale.setRemark(jTextArea1.getText());
 
         List<Backsale_detail_tb> list = new ArrayList<Backsale_detail_tb>();
@@ -651,6 +651,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             backsale_detail = new Backsale_detail_tb();
             backsale_detail.setBacksaleId(jTextFieldXiafaId.getText());
+            backsale_detail.setBacksaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
             backsale_detail.setYouxiaoqi(riqiformate.parse(yimiaotable.getValue(i, "youxiaoqi").toString()));
             backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "tuihuoQuantity").equals("")) {

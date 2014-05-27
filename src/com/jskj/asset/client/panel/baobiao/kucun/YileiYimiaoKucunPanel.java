@@ -20,6 +20,7 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.ITableHeaderPopupBuilder;
 import com.jskj.asset.client.panel.OpenTabTask;
+import com.jskj.asset.client.panel.baobiao.caigou.YimiaochurukujiluPanel;
 import com.jskj.asset.client.util.BindTableHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -300,6 +301,7 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar3.add(jButton1);
 
+        jButton2.setAction(actionMap.get("ymckjl_pop")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.setFocusable(false);
@@ -382,6 +384,30 @@ public final class YileiYimiaoKucunPanel extends BasePanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    @Action
+    public Task ymckjl_pop() {
+        return new OpenTabTask("报表-疫苗出入库记录", new YimiaochurukujiluPanel(), false);
+    }
+
+    private class Ymckjl_popTask extends org.jdesktop.application.Task<Object, Void> {
+        Ymckjl_popTask(org.jdesktop.application.Application app) {
+            // Runs on the EDT.  Copy GUI state that
+            // doInBackground() depends on from parameters
+            // to Ymckjl_popTask fields, here.
+            super(app);
+        }
+        @Override protected Object doInBackground() {
+            // Your Task's code here.  This method runs
+            // on a background thread, so don't reference
+            // the Swing GUI from here.
+            return null;  // return your result
+        }
+        @Override protected void succeeded(Object result) {
+            // Runs on the EDT.  Update the GUI based on
+            // the result computed by doInBackground().
+        }
+    }
 
     @Action
     public void pagePrev() {

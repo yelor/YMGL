@@ -8,7 +8,7 @@ package com.jskj.asset.client.panel.ckgl;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.panel.OpenTabTask;
-import com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel;
+import com.jskj.asset.client.panel.baobiao.caigou.YimiaochurukujiluPanel;
 import com.jskj.asset.client.panel.ymgl.YiMiaoYunShuDanJDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -129,7 +129,7 @@ public class SelectYiMiaochurukujiluJDialog extends BaseDialog {
     @Action
     public Task ymckjl_pop() {
         dispose();
-        return new OpenTabTask("报表-疫苗出入库记录", new YimiaochukujiluPanel(), false);
+        return new OpenTabTask("报表-疫苗出入库记录", new YimiaochurukujiluPanel(), false);
     }
 
     private class Ymckjl_popTask extends org.jdesktop.application.Task<Object, Void> {

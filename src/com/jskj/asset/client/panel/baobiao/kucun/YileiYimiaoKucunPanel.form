@@ -209,6 +209,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="com.jskj.asset.client.panel.baobiao.kucun.YileiYimiaoKucunPanel" id="ymckjl_pop" methodName="ymckjl_pop"/>
+                </Property>
                 <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>

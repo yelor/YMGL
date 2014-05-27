@@ -68,10 +68,10 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         conditionSql = "";
 
         parameterMap = new HashMap();
-        parameterMap.put("conditionSql", "sale_id like 'YMXS%'");
+        parameterMap.put("conditionSql", "sale_id like 'YMXS%' and status=1 and is_completed=1");
         bindTable = new BindTableHelper<Yimiaoxiaoshoudetail>(jTable4, new ArrayList<Yimiaoxiaoshoudetail>());
         bindTable.createTable(new String[][]{{"saleId", "单据编号"}, {"saleDate", "制单日期"},{"yimiaotb.yimiaoName", "疫苗名称"}, {"quantity", "数量"},
-            {"totalprice", "销售总额"}, {"remark", "销售毛利"}, {"yimiaotb.yimiaoYushoujia", "预售价"}, {"price", "进价"}, {"yimiaotb.yimiaoGuige", "规格"},
+            {"totalprice", "销售总额"}, {"remark", "销售毛利"}, {"price", "预售价"}, {"stockpiletb.stockpilePrice", "进价"}, {"yimiaotb.yimiaoGuige", "规格"},
             {"yimiaotb.yimiaoJixing", "剂型"}, {"yimiaotb.yimiaoShengchanqiye", "生产企业"}, {"stockpiletb.pihao", "批号"}, {"kehudanweitb.kehudanweiName", "客户单位"}, {"zhidanren.userName", "经办人"}, {"depottb.depotName", "仓库"}});
         bindTable.setColumnType(Date.class, 2);
         //bindTable.setColumnType(Float.class, 8, 9);
@@ -299,7 +299,6 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
         jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton15.setName("jButton15"); // NOI18N
         jButton15.setOpaque(false);
-        jButton15.setRolloverEnabled(true);
         jToolBar3.add(jButton15);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -400,9 +399,9 @@ public class YiMiaoChengBenChaXunJDialog extends BaseDialog {
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

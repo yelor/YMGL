@@ -9,7 +9,11 @@ public class Backsale_detail_tb {
 
     private String backsaleId;
 
+    private Date backsaleDate;
+
     private Integer stockpileId;
+
+    private Integer yimiaoId;
 
     private Date youxiaoqi;
 
@@ -20,6 +24,8 @@ public class Backsale_detail_tb {
     private Float saleprice;
 
     private Float totalprice;
+
+    private Integer leijikucun;
 
     public Integer getBackDetailId() {
         return backDetailId;
@@ -37,12 +43,28 @@ public class Backsale_detail_tb {
         this.backsaleId = backsaleId == null ? null : backsaleId.trim();
     }
 
+    public Date getBacksaleDate() {
+        return backsaleDate;
+    }
+
+    public void setBacksaleDate(Date backsaleDate) {
+        this.backsaleDate = backsaleDate;
+    }
+
     public Integer getStockpileId() {
         return stockpileId;
     }
 
     public void setStockpileId(Integer stockpileId) {
         this.stockpileId = stockpileId;
+    }
+
+    public Integer getYimiaoId() {
+        return yimiaoId;
+    }
+
+    public void setYimiaoId(Integer yimiaoId) {
+        this.yimiaoId = yimiaoId;
     }
 
     public Date getYouxiaoqi() {
@@ -83,5 +105,13 @@ public class Backsale_detail_tb {
 
     public void setTotalprice(Float totalprice) {
         this.totalprice = totalprice;
+    }
+
+    public Integer getLeijikucun() {
+        return leijikucun;
+    }
+
+    public void setLeijikucun(Integer leijikucun) {
+        this.leijikucun = leijikucun;
     }
 }

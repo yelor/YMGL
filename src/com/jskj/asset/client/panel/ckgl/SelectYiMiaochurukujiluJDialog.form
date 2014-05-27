@@ -52,7 +52,7 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujilu" id="ymckjl_pop" methodName="ymckjl_pop"/>
+          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujiluJDialog" id="ymckjl_pop" methodName="ymckjl_pop"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" resourceKey="jButton2.icon"/>
         <Property name="text" type="java.lang.String" resourceKey="jButton2.text"/>
@@ -62,7 +62,7 @@
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujilu" id="showYimiaoyunshujilu" methodName="showYimiaoyunshujilu"/>
+          <action class="com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujiluJDialog" id="showYimiaoyunshujilu" methodName="showYimiaoyunshujilu"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" resourceKey="jButton3.icon"/>
         <Property name="text" type="java.lang.String" resourceKey="jButton3.text"/>

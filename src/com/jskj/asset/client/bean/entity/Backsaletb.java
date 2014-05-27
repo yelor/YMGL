@@ -13,7 +13,7 @@ public class Backsaletb {
 
     private Integer customerId;
 
-    private Integer checkId;
+    private Integer zhidanrenId;
 
     private String remark;
 
@@ -49,12 +49,12 @@ public class Backsaletb {
         this.customerId = customerId;
     }
 
-    public Integer getCheckId() {
-        return checkId;
+    public Integer getZhidanrenId() {
+        return zhidanrenId;
     }
 
-    public void setCheckId(Integer checkId) {
-        this.checkId = checkId;
+    public void setZhidanrenId(Integer zhidanrenId) {
+        this.zhidanrenId = zhidanrenId;
     }
 
     public String getRemark() {

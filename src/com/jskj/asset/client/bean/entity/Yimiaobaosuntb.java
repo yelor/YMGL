@@ -9,6 +9,8 @@ public class Yimiaobaosuntb {
 
     private String baosunId;
 
+    private Date baosunDate;
+
     private Integer kucunId;
 
     private Integer quantity;
@@ -16,6 +18,8 @@ public class Yimiaobaosuntb {
     private Float price;
 
     private Float totalprice;
+
+    private Integer leijikucun;
 
     private String xiaohuiaddr;
 
@@ -41,6 +45,14 @@ public class Yimiaobaosuntb {
 
     public void setBaosunId(String baosunId) {
         this.baosunId = baosunId == null ? null : baosunId.trim();
+    }
+
+    public Date getBaosunDate() {
+        return baosunDate;
+    }
+
+    public void setBaosunDate(Date baosunDate) {
+        this.baosunDate = baosunDate;
     }
 
     public Integer getKucunId() {
@@ -73,6 +85,14 @@ public class Yimiaobaosuntb {
 
     public void setTotalprice(Float totalprice) {
         this.totalprice = totalprice;
+    }
+
+    public Integer getLeijikucun() {
+        return leijikucun;
+    }
+
+    public void setLeijikucun(Integer leijikucun) {
+        this.leijikucun = leijikucun;
     }
 
     public String getXiaohuiaddr() {

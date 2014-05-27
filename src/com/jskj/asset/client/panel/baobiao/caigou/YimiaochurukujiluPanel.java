@@ -35,9 +35,9 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YimiaochukujiluPanel extends BasePanel {
+public class YimiaochurukujiluPanel extends BasePanel {
 
-    private final static Logger logger = Logger.getLogger(YimiaochukujiluPanel.class);
+    private final static Logger logger = Logger.getLogger(YimiaochurukujiluPanel.class);
     private int pageIndex;
     private final int pageSize;
     private int count;
@@ -52,7 +52,7 @@ public class YimiaochukujiluPanel extends BasePanel {
     /**
      * Creates new form YimiaocaigoumingxiJDialog
      */
-    public YimiaochukujiluPanel() {
+    public YimiaochurukujiluPanel() {
         super();
         initComponents();
         pageIndex = 1;
@@ -63,8 +63,8 @@ public class YimiaochukujiluPanel extends BasePanel {
             {"churukudan.zhidandate", "日期", "false"}, {"churukudan.churukuId", "单据编号", "false"}, {"yimiao.yimiaoName", "疫苗名称", "false"}, {"chukuyimiao.rukuQuantity", "入库数(支)", "false"}, {"chukuyimiao.chukuQuantity", "出库数(支)", "false"}, {"yimiao.yimiaoShengchanqiye", "生产企业", "false"}, {"yimiao.yimiaoGuige", "规格", "false"}, {"yimiao.yimiaoJixing", "剂型", "false"},
             {"chukuyimiao.pihao", "批号", "false"}, {"chukuyimiao.youxiaoqi", "有效期", "false"}, {"yimiao.unitId", "单位", "false"}, {"chukuyimiao.piqianfahegeno", "批签发合格证编号", "false"}, {"yimiao.yimiaoPizhunwenhao", "批准文号", "true"},
             //            {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "true"}, 
-            {"wanglaidanwei", "往来单位", "false"}, {"chukuyimiao.price", "价格(元)", "true"},
-            {"zhidanren.userName", "经办人", "true"}, {"duifangjingbanren", "对方经办人", "false"}, {"churukudan.zhidanren", "累计库存(支)", "true"}});
+            {"wanglaidanwei", "往来单位", "false"}, {"chukuyimiao.price", "价格(元)", "false"},
+            {"zhidanren.userName", "经办人", "false"}, {"duifangjingbanren", "对方经办人", "false"}, {"chukuyimiao.leijikucun", "累计库存(支)", "false"}});
         bindTable.setColumnType(Date.class, 1, 10);
         bindTable.bind().setColumnWidth(new int[]{0, 80}, new int[]{1, 180}, new int[]{2, 150}, new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 80}, new int[]{6, 80}).setRowHeight(25);
 
@@ -163,9 +163,9 @@ public class YimiaochukujiluPanel extends BasePanel {
         jToolBar2.setName("jToolBar2"); // NOI18N
         jToolBar2.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaochukujiluPanel.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YimiaochurukujiluPanel.class, this);
         jButton12.setAction(actionMap.get("print")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaochukujiluPanel.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YimiaochurukujiluPanel.class);
         jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
         jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
         jButton12.setBorderPainted(false);
@@ -411,7 +411,7 @@ public class YimiaochukujiluPanel extends BasePanel {
                 endDate = dateformate.parse(jTextFieldEnd.getText());
                 System.out.println("查找开始的时间是：" + startDate);
             } catch (ParseException ex) {
-                java.util.logging.Logger.getLogger(YimiaochukujiluPanel.class.getName()).log(Level.SEVERE, null, ex);
+                java.util.logging.Logger.getLogger(YimiaochurukujiluPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             parameterMap.put("startDate", startDate);
             parameterMap.put("endDate", endDate);

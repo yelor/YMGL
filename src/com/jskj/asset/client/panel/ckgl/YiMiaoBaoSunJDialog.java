@@ -539,6 +539,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
             yimiaobaosun = new Yimiaobaosuntb();
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
             yimiaobaosun.setBaosunId(jTextFieldBaosunId.getText());
+            yimiaobaosun.setBaosunDate(dateformate.parse(jTextFieldzhidanDate.getText()));
             yimiaobaosun.setKucunId(Integer.parseInt(yimiaotable.getValue(i, "stockpileId").toString()));
             if (yimiaotable.getValue(i, "baosunQuantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗报损数量!");
@@ -548,7 +549,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
                 return null;
             }
             yimiaobaosun.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "baosunQuantity").toString()));            
-            yimiaobaosun.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yushouPrice"))));
+            yimiaobaosun.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "price"))));
             yimiaobaosun.setTotalprice(yimiaobaosun.getQuantity() * yimiaobaosun.getPrice());
             yimiaobaosun.setXiaohuiaddr((String) yimiaotable.getValue(i, "xiaohuiAddr"));
             yimiaobaosun.setXiaohuidate(dateformate.parse(jTextFieldzhidanDate.getText()));
@@ -557,6 +558,7 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
             list.add(yimiaobaosun);
             total += yimiaobaosun.getTotalprice();
         }
+        baosun.setDanjujine(total);
         yimiaobaosunEntity.setBaosun(baosun);
         yimiaobaosunEntity.setResult(list);
         return new SubmitFormTask(yimiaobaosunEntity);
