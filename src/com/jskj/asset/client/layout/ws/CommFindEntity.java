@@ -3,12 +3,14 @@
  */
 package com.jskj.asset.client.layout.ws;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author 305027939
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CommFindEntity<T> {
 
     private int count;
