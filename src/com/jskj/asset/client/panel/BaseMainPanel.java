@@ -17,6 +17,7 @@ import com.jskj.asset.client.layout.CrystalButton;
 import com.jskj.asset.client.panel.baobiao.caigou.YimiaoyunshujiluPanel;
 import com.jskj.asset.client.panel.baobiao.kucun.KucunchaxunPanel;
 import com.jskj.asset.client.panel.ckgl.SelectKucunchaxunJDialog;
+import com.jskj.asset.client.panel.ckgl.SelectQitaChuRuKuJDialog;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoChuRuKuJDialog;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaoZuZhuangChaiXieJDialog;
 import com.jskj.asset.client.panel.ckgl.SelectYiMiaochurukujiluJDialog;
@@ -56,7 +57,7 @@ public class BaseMainPanel extends BasePanel {
     private selecteInvoiceJDialog5 selecteInvoiceJDialog5;
 
     /*仓库管理*/
-    private SelectYiMiaoZuZhuangChaiXieJDialog ymzzcx;
+    private SelectQitaChuRuKuJDialog ymzzcx;
     private SelectYiMiaochurukujiluJDialog ymcrkjl;
     private SelectYiMiaoChuRuKuJDialog ymcrk;
     private SelectebaosunJDialog selectebaosun;
@@ -443,7 +444,7 @@ public class BaseMainPanel extends BasePanel {
             public void run() {
                 if (ymzzcx == null) {
                     JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                    ymzzcx = new SelectYiMiaoZuZhuangChaiXieJDialog(new javax.swing.JFrame(), true);
+                    ymzzcx = new SelectQitaChuRuKuJDialog();
                     ymzzcx.setLocationRelativeTo(mainFrame);
                 }
                 AssetClientApp.getApplication().show(ymzzcx);

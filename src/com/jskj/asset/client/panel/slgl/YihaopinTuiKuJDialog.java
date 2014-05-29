@@ -19,12 +19,10 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.ComResponse;
-import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.slgl.task.CancelDengji;
-import com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask;
-import static com.jskj.asset.client.panel.slgl.task.WeidengjizichanTask.logger;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.event.WindowEvent;
@@ -36,11 +34,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -193,6 +188,68 @@ public class YihaopinTuiKuJDialog extends BaseDialog {
 //                    zc.add(zclb);
                     //保存原单号
                     yuandanmap.put(dzyhpId+pihao, yuandanID);
+                }
+
+            }
+        });
+        
+        ((ScanButton) jButton1).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "yhplb";
+            }
+
+            public String getConditionSQL() {
+                return " pihao =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    Object dzyhpId = bindedMap.get("dzyhpId");
+                    Object dzyhpName = bindedMap.get("dzyhpName");
+                    Object dzyhpType = bindedMap.get("dzyhpType");
+                    Object dzyhpPinpai = bindedMap.get("dzyhpPinpai");
+                    Object dzyhpValue = bindedMap.get("saleprice");
+                    Object dzyhpCount = bindedMap.get("count");
+                    Object dzyhpXinghao = bindedMap.get("dzyhpXinghao");
+                    Object gdzcDanwei = bindedMap.get("unitId");
+
+                    jTable1.getSelectionModel().setSelectionInterval(jTable1.getRowCount() - 1, jTable1.getRowCount() - 1);
+
+                    editTable.insertValue(0, dzyhpId);
+                    editTable.insertValue(1, dzyhpName);
+                    editTable.insertValue(2, dzyhpType);
+                    editTable.insertValue(3, dzyhpPinpai);
+                    editTable.insertValue(4, dzyhpXinghao);
+                    editTable.insertValue(5, gdzcDanwei);
+                    editTable.insertValue(6, dzyhpCount);
+                    editTable.insertValue(7, dzyhpValue);
+
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
+                    
+                    map = (HashMap)bindedMap.get("liebiao");
+                    pihao = (String)map.get("pihao");
+                    totalprice = (Double)map.get("totalprice");
+                    editTable.insertValue(8, totalprice);
+                    editTable.insertValue(9, pihao);
+                    
+//                    ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
+//                    zclb.setCgsqId(cgsqId.getText());
+//                    zclb.setCgzcId((Integer)gdzcId);
+//                    zclb.setQuantity(Integer.parseInt("" + gdzcCount));
+//                    zclb.setCgsqId(yuandanID);
+//                    zc.add(zclb);
+                    //保存原单号
+                    yuandanmap.put(dzyhpId+pihao, yuandanID);
+                    editTable.addNewRow();
                 }
 
             }
@@ -462,7 +519,7 @@ public class YihaopinTuiKuJDialog extends BaseDialog {
         jButton10 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButton1 = new ScanButton();
         jButton15 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         totalpricelabel = new javax.swing.JLabel();
