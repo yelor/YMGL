@@ -241,9 +241,9 @@ public final class PermissionPanel extends BasePanel {
             .addComponent(ctrlPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelMes, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
@@ -416,10 +416,10 @@ public final class PermissionPanel extends BasePanel {
             editColumn.add(3);
             //显示当前角色权限
             jTableObj.setModel(new AssetTableModel(rowDatas, headDatas, true, editColumn));
-            jTableObj.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTableObj.getColumnModel().getColumn(0).setMinWidth(100);
-            jTableObj.getColumnModel().getColumn(1).setMaxWidth(100);
-            jTableObj.getColumnModel().getColumn(1).setMinWidth(100);
+            jTableObj.getColumnModel().getColumn(0).setMaxWidth(140);
+            jTableObj.getColumnModel().getColumn(0).setMinWidth(140);
+            jTableObj.getColumnModel().getColumn(1).setMaxWidth(140);
+            jTableObj.getColumnModel().getColumn(1).setMinWidth(140);
             jTableObj.getColumnModel().getColumn(2).setMaxWidth(140);
             jTableObj.getColumnModel().getColumn(2).setMinWidth(140);
             jTableObj.getColumnModel().getColumn(3).setMaxWidth(120);
@@ -445,10 +445,10 @@ public final class PermissionPanel extends BasePanel {
                         }
                     }
                 }
-            }else if(!jTableObj.getValueAt(selectedR, 1).toString().equals("")){
-                  for (int j = selectedR; j < total; j++) {
+            } else if (!jTableObj.getValueAt(selectedR, 1).toString().equals("")) {
+                for (int j = selectedR; j < total; j++) {
                     if (j + 1 < total) {
-                        if (jTableObj.getValueAt(j + 1, 1).toString().equals("")) {
+                        if (jTableObj.getValueAt(j + 1, 1).toString().equals("") && jTableObj.getValueAt(j + 1, 0).toString().equals("")) {
                             jTableObj.setValueAt(isCheck, j + 1, 3);
                         } else {
                             break;
