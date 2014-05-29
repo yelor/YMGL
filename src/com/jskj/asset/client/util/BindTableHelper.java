@@ -259,9 +259,13 @@ public class BindTableHelper<T> {
                     String name = bindObject[i][1];
                     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${" + temp + "}"));
                     columnBinding.setColumnName(name);
-                    columnBinding
-                            .setColumnClass(String.class
-                            );
+                    columnBinding.setColumnClass(String.class);
+                    if(bindObject[i].length>2){
+                        String type = bindObject[i][2];
+                        if(type.toLowerCase().equalsIgnoreCase("false")){
+                            columnBinding.setEditable(false);
+                        }
+                    }
                 }
 
             }

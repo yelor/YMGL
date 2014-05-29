@@ -5,6 +5,8 @@ package com.jskj.asset.client;
 
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.panel.MainWorkPane;
+import com.jskj.asset.client.util.DateHelper;
+import java.util.Date;
 import org.jdesktop.application.FrameView;
 import javax.swing.JProgressBar;
 import org.apache.log4j.Logger;
@@ -22,6 +24,9 @@ public final class AssetClientView extends FrameView {
     public AssetClientView(Application app) {
         super(app);
         initComponents();
+        progressBar.setForeground(new java.awt.Color(122,163,204));
+        Date date = new Date();
+        jLabelDate.setText(DateHelper.format(date,"yyyy年MM月dd号")+" " +DateHelper.getWeekOfDate(date));
     }
 
     public Task loadMoudule() {
@@ -45,6 +50,7 @@ public final class AssetClientView extends FrameView {
         mainPanel = new javax.swing.JPanel();
         taskMessagePanel = new javax.swing.JPanel();
         messageLabel = new javax.swing.JLabel();
+        jLabelDate = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
@@ -63,18 +69,29 @@ public final class AssetClientView extends FrameView {
         messageLabel.setForeground(new java.awt.Color(255, 255, 255));
         messageLabel.setName("messageLabel"); // NOI18N
 
+        jLabelDate.setFont(Constants.FONT_14B);
+        jLabelDate.setForeground(resourceMap.getColor("jLabelDate.foreground")); // NOI18N
+        jLabelDate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelDate.setText(resourceMap.getString("jLabelDate.text")); // NOI18N
+        jLabelDate.setName("jLabelDate"); // NOI18N
+
         org.jdesktop.layout.GroupLayout taskMessagePanelLayout = new org.jdesktop.layout.GroupLayout(taskMessagePanel);
         taskMessagePanel.setLayout(taskMessagePanelLayout);
         taskMessagePanelLayout.setHorizontalGroup(
             taskMessagePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(taskMessagePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(messageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                .add(messageLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 341, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabelDate, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addContainerGap())
         );
         taskMessagePanelLayout.setVerticalGroup(
             taskMessagePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(messageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+            .add(messageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(taskMessagePanelLayout.createSequentialGroup()
+                .add(jLabelDate, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout mainPanelLayout = new org.jdesktop.layout.GroupLayout(mainPanel);
@@ -87,7 +104,7 @@ public final class AssetClientView extends FrameView {
             mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(mainPanelLayout.createSequentialGroup()
                 .add(taskMessagePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 286, Short.MAX_VALUE))
+                .add(0, 283, Short.MAX_VALUE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -201,6 +218,7 @@ public final class AssetClientView extends FrameView {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelDate;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel messageLabel;

@@ -25,6 +25,7 @@ import com.jskj.asset.client.panel.jichuxinxi.JianShaoFangShiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel;
 import com.jskj.asset.client.panel.user.ParamPanel;
+import com.jskj.asset.client.panel.user.PermissionPanel;
 import com.jskj.asset.client.panel.user.PkPanel;
 import com.jskj.asset.client.panel.user.SelfPanel;
 import com.jskj.asset.client.panel.user.UserPanel;
@@ -103,6 +104,7 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenu jMenuDW = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItemPermession = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemMe = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemZichanGY = new javax.swing.JMenuItem();
 
@@ -159,7 +161,7 @@ public class LoadModule extends BaseTask {
         jMenuItem10.setText(resourceMap.getString("jMenuItem10.text")); // NOI18N
         jMenuItem10.setName("jMenuItem10"); // NOI18N
         jMenu2.add(jMenuItem10);
-        
+
         jMenuItemZichanGY.setAction(actionMap.get("showZichanGongYingDanWei")); // NOI18N
         jMenuItemZichanGY.setText(resourceMap.getString("jMenuItemZichanGY.text")); // NOI18N
         jMenuItemZichanGY.setName("jMenuItemZichanGY"); // NOI18N
@@ -275,6 +277,11 @@ public class LoadModule extends BaseTask {
         jMenuItem4.setName("jMenuItem4"); // NOI18N
         jMenuDW.add(jMenuItem4);
 
+        jMenuItemPermession.setAction(actionMap.get("showPermession")); // NOI18N
+        jMenuItemPermession.setText(resourceMap.getString("jMenuItemPermession.text")); // NOI18N
+        jMenuItemPermession.setName("jMenuItemPermession"); // NOI18N
+        jMenuDW.add(jMenuItemPermession);
+
         menuBar.add(jMenuDW);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
@@ -354,7 +361,7 @@ public class LoadModule extends BaseTask {
     public void onSucceeded(Object object) {
         logger.info("模块加载完成");
     }
-    
+
     /**
      * 日志分析
      */
@@ -500,9 +507,9 @@ public class LoadModule extends BaseTask {
     public Task showYimiaoxiaoshoumingxi() {
         return new OpenTabTask("报表-疫苗销售明细表", new YimiaoSalesMingxiPanel(DanHao.TYPE_YIMIAOXS), false);
     }
-    
+
     @Action
-    public Task showYimiaoxiafamingxi(){
+    public Task showYimiaoxiafamingxi() {
         return new OpenTabTask("报表-疫苗下发明细表", new YimiaoSalesMingxiPanel(DanHao.TYPE_YIMIAOXF), false);
     }
 
@@ -529,5 +536,9 @@ public class LoadModule extends BaseTask {
     @Action
     public Task showSelfBox() {
         return new OpenTabTask("我的密码", new SelfPanel(), false);
+    }
+     @Action
+    public Task showPermession(){
+       return new OpenTabTask("角色权限设置", new PermissionPanel(), false);
     }
 }
