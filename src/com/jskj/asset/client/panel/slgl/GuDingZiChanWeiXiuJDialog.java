@@ -13,6 +13,7 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.util.DanHao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -116,6 +117,59 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
                         jTextFieldDidian.setEditable(false);
                     }
                 }
+            }
+        });
+        
+        ((ScanButton) jButton3).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "gdzclb";
+            }
+
+            public String getConditionSQL() {
+                return " pihao =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldZcid.setText(bindedMap.get("gdzcId") == null ? "" : bindedMap.get("gdzcId").toString());
+                    jTextFieldZctype.setText(bindedMap.get("gdzcType") == null ? "" : bindedMap.get("gdzcType").toString());
+                    jTextFieldName.setText(bindedMap.get("gdzcName") == null ? "" : bindedMap.get("gdzcName").toString());
+                    jTextFieldXinghao.setText(bindedMap.get("gdzcXinghao") == null ? "" : bindedMap.get("gdzcXinghao").toString());
+                    jTextFieldSupplier.setText(bindedMap.get("supplier") == null ? "" : bindedMap.get("supplier").toString());
+                    jTextField5.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
+                    jTextField12.setText(bindedMap.get("gouzhidate") == null ? "" : bindedMap.get("gouzhidate").toString().substring(0, 10));
+                    jTextField5.setEditable(false);
+                    jTextField12.setEditable(false);
+                    zcId = (Integer)bindedMap.get("gdzcId");
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
+                    try{
+                        feiyong = Float.parseFloat(map.get("danjujine").toString());
+                        jTextField15.setText("" + feiyong);
+                        jTextField15.setEditable(false);
+                    }catch(NumberFormatException e){
+                        AssetMessage.ERRORSYS(e.getLocalizedMessage());
+                    }
+                    
+                    map = (HashMap)bindedMap.get("lylb");
+                    if( map != null) {
+                        fuzeren = (String)map.get("fuzeren");
+                        didian = (String)map.get("didian");
+                        jTextFieldFuzeren.setText(fuzeren);
+                        jTextFieldDidian.setText(didian);
+                        jTextFieldFuzeren.setEditable(false);
+                        jTextFieldDidian.setEditable(false);
+                    }
+                }
+
             }
         });
         
@@ -281,7 +335,7 @@ public class GuDingZiChanWeiXiuJDialog extends javax.swing.JDialog {
         jTextFieldFuzeren = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButton3 = new ScanButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

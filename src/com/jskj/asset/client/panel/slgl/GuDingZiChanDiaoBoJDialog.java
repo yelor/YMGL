@@ -113,6 +113,48 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
             }
         });
         
+        ((ScanButton) jButton3).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "zclybybarcode";
+            }
+
+            public String getConditionSQL() {
+                return "";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldZichan.setText(bindedMap.get("gdzcName") == null ? "" : bindedMap.get("gdzcName").toString());
+                    jTextField3.setText(bindedMap.get("gdzcId") == null ? "" : bindedMap.get("gdzcId").toString());
+                    jTextFieldXinghao.setText(bindedMap.get("gdzcXinghao") == null ? "" : bindedMap.get("gdzcXinghao").toString());
+                    jTextFieldGuige.setText(bindedMap.get("gdzcGuige") == null ? "" : bindedMap.get("gdzcGuige").toString());
+                    jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
+                    jTextField4.setText(bindedMap.get("gdzcType") == null ? "" : bindedMap.get("gdzcType").toString());
+                    HashMap map = (HashMap)bindedMap.get("lylb");
+                    if(map != null) {
+                        fuzeren = (String)map.get("fuzeren");
+                        depart = (String)map.get("depart");
+                        oldBarcode = (String)map.get("barcode");
+                        xuliehao = (String)map.get("xuliehao");
+                        jTextFieldYichuren.setText(fuzeren);
+                        jTextFieldYichuren.setEditable(false);
+                        jTextFieldYichubumen.setText(depart);
+                        jTextFieldYichubumen.setEditable(false);
+                    }
+                    
+                    zcId = (Integer)bindedMap.get("gdzcId");
+                }
+            }
+        });
+        
         ((BaseTextField) jTextFieldJieshouren).registerPopup(new IPopupBuilder() {
 
             public int getType() {

@@ -19,6 +19,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.slgl.task.CancelDengji;
@@ -154,6 +155,62 @@ public class GuDingZiChanTuiKuJDialog extends BaseDialog{
 //                    zc.add(zclb);
                     //保存原单号
                     yuandanmap.put(gdzcId+pihao, yuandanID);
+                }
+
+            }
+        });
+        
+        ((ScanButton) jButton1).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "gdzclb";
+            }
+
+            public String getConditionSQL() {
+                return " pihao =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    Object gdzcId = bindedMap.get("gdzcId");
+                    Object gdzcName = bindedMap.get("gdzcName");
+                    Object gdzcType = bindedMap.get("gdzcType");
+                    Object gdzcPinpai = bindedMap.get("gdzcPinpai");
+                    Object gdzcValue = bindedMap.get("saleprice");
+                    Object gdzcCount = bindedMap.get("count");
+                    Object gdzcXinghao = bindedMap.get("gdzcXinghao");
+                    Object gdzcDanwei = bindedMap.get("unitId");
+
+                    jTable1.getSelectionModel().setSelectionInterval(jTable1.getRowCount() - 1, jTable1.getRowCount() - 1);
+
+                    editTable.insertValue(0, gdzcId);
+                    editTable.insertValue(1, gdzcName);
+                    editTable.insertValue(2, gdzcType);
+                    editTable.insertValue(3, gdzcPinpai);
+                    editTable.insertValue(4, gdzcXinghao);
+                    editTable.insertValue(5, gdzcDanwei);
+                    editTable.insertValue(6, gdzcCount);
+                    editTable.insertValue(7, gdzcValue);
+
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
+                    
+                    map = (HashMap)bindedMap.get("liebiao");
+                    pihao = (String)map.get("pihao");
+                    totalprice = (Double)map.get("totalprice");
+                    editTable.insertValue(8, totalprice);
+                    editTable.insertValue(9, pihao);
+                    
+                    //保存原单号
+                    yuandanmap.put(gdzcId+pihao, yuandanID);
+                    editTable.addNewRow();
                 }
 
             }
@@ -423,7 +480,7 @@ public class GuDingZiChanTuiKuJDialog extends BaseDialog{
         jButton10 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButton1 = new ScanButton();
         jButton15 = new javax.swing.JButton();
         totalpricelabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();

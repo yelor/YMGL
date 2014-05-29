@@ -16,6 +16,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseFileChoose;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.panel.FileTask;
 import com.jskj.asset.client.panel.slgl.task.CancelDengji;
@@ -208,6 +209,42 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                 }
             }
         });
+        
+        
+        ((ScanButton) jButton7).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "gdzclb";
+            }
+
+            public String getConditionSQL() {
+                return " pihao =";
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                if (bindedMap != null) {
+                    jTextFieldZichan.setText(bindedMap.get("gdzcName") == null ? "" : bindedMap.get("gdzcName").toString());
+                    jTextFieldXinghao.setText(bindedMap.get("gdzcXinghao") == null ? "" : bindedMap.get("gdzcXinghao").toString());
+                    jTextFieldGuige.setText(bindedMap.get("gdzcGuige") == null ? "" : bindedMap.get("gdzcGuige").toString());
+                    jTextFieldPrice.setText(bindedMap.get("saleprice") == null ? "" : bindedMap.get("saleprice").toString());
+                    jTextFieldUnit.setText(bindedMap.get("unitId") == null ? "" : bindedMap.get("unitId").toString());
+                    jTextFieldQuantity.setText(bindedMap.get("count") == null ? "" : bindedMap.get("count").toString());
+                    jTextFieldQuantity.setEditable(false);
+                    zcid = (Integer)bindedMap.get("gdzcId");
+                    HashMap map = (HashMap)bindedMap.get("shenqingdan");
+                    yuandanID = (String)map.get("shenqingdanId");
+                }
+
+            }
+        });
+
     }
     
     private void init() {
@@ -478,7 +515,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jButton7 = new ScanButton();
         jButton10 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
