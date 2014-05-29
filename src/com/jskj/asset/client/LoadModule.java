@@ -5,6 +5,8 @@
  */
 package com.jskj.asset.client;
 
+import com.jskj.asset.client.bean.UserSessionEntity;
+import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.message.MessagePanel;
 import com.jskj.asset.client.panel.OpenTabTask;
@@ -26,11 +28,14 @@ import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel;
 import com.jskj.asset.client.panel.user.ParamPanel;
 import com.jskj.asset.client.panel.user.PermissionPanel;
+import com.jskj.asset.client.panel.user.PermissionPopup;
 import com.jskj.asset.client.panel.user.PkPanel;
 import com.jskj.asset.client.panel.user.SelfPanel;
 import com.jskj.asset.client.panel.user.UserPanel;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.LogPaneAppender;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -100,6 +105,7 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenuItem jMenuItem5 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemTask = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItemMyPermession = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenuDW = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
@@ -291,6 +297,11 @@ public class LoadModule extends BaseTask {
         jMenuItem5.setText(resourceMap.getString("jMenuItem5.text")); // NOI18N
         jMenuItem5.setName("jMenuItem5"); // NOI18N
         helpMenu.add(jMenuItem5);
+
+        jMenuItemMyPermession.setAction(actionMap.get("showMyPermession")); // NOI18N
+        jMenuItemMyPermession.setText(resourceMap.getString("jMenuItemMyPermession.text")); // NOI18N
+        jMenuItemMyPermession.setName("jMenuItemMyPermession"); // NOI18N
+        helpMenu.add(jMenuItemMyPermession);
 
         jMenuItemMe.setAction(actionMap.get("showSelfBox")); // NOI18N
         jMenuItemMe.setText(resourceMap.getString("jMenuItemMe.text")); // NOI18N
@@ -537,8 +548,31 @@ public class LoadModule extends BaseTask {
     public Task showSelfBox() {
         return new OpenTabTask("我的密码", new SelfPanel(), false);
     }
-     @Action
-    public Task showPermession(){
-       return new OpenTabTask("角色权限设置", new PermissionPanel(), false);
+
+    @Action
+    public Task showPermession() {
+        return new OpenTabTask("角色权限设置", new PermissionPanel(), false);
+    }
+
+    @Action
+    public void showMyPermession() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                UserSessionEntity sessionMap = AssetClientApp.getSessionMap();
+                String roles = sessionMap.getUsertb().getUserRoles();
+                
+                String dep = sessionMap.getDepartment() == null ? "" : sessionMap.getDepartment().getDepartmentName();
+                PermissionPopup pop = new PermissionPopup(dep + ":" + roles, new ArrayList(), AssetClientApp.getAdditionalPermession(), AssetClientApp.getReductionPermession()) {
+                    @Override
+                    public void getChangesValue(List<Appparam> addPermessionArray, List<Appparam> reducePermessionArray) {
+                        //do nothing
+                    }
+                };
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                pop.setLocationRelativeTo(mainFrame);
+                pop.setVisible(true);
+            }
+        });
     }
 }

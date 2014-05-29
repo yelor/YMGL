@@ -10,12 +10,13 @@ import com.jskj.asset.client.bean.entity.DepartmenttbAll;
 import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.AssetTableModel;
+import com.jskj.asset.client.layout.ws.ComResponse;
+import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
 import com.jskj.asset.client.util.BindTableHelper;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -32,6 +33,9 @@ public final class PermissionPanel extends BasePanel {
 
     private final BindTableHelper<DepartmenttbAll> bindTable;
 
+    private List<Appparam> paramIdArray;
+    private List<Appparam> models;
+
     /**
      * Creates new form NoFoundPane
      */
@@ -42,12 +46,34 @@ public final class PermissionPanel extends BasePanel {
         currentPageData = new ArrayList();
         bindTable = new BindTableHelper<DepartmenttbAll>(jTableDep, new ArrayList<DepartmenttbAll>());
         bindTable.createTable(new String[][]{{"departmentName", "部门名称", "false"}});
+        paramIdArray = new ArrayList();
+        models = AssetClientApp.getParamsByType("模块");
 
     }
 
     @Action
     @Override
     public Task reload() {
+        jLabelMes.setText("选择对象:");
+        jTableRoles.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                    {},
+                    {},
+                    {},
+                    {}
+                },
+                new String[]{}
+        ));
+        paramIdArray.clear();
+        jTableObj.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                    {},
+                    {},
+                    {},
+                    {}
+                },
+                new String[]{}
+        ));
         return new RefreshTask();
     }
 
@@ -273,6 +299,7 @@ public final class PermissionPanel extends BasePanel {
         int selectedRow = jTableDep.getSelectedRow();
         if (selectedRow > -1) {
             jTableRoles.clearSelection();
+            paramIdArray.clear();
             jTableObj.setModel(new javax.swing.table.DefaultTableModel(
                     new Object[][]{
                         {},
@@ -310,7 +337,7 @@ public final class PermissionPanel extends BasePanel {
         }
     }//GEN-LAST:event_jTableDepMouseClicked
 
-    private boolean isExist(List<Appparam> levelArray, int pid) {
+    public static boolean isExist(List<Appparam> levelArray, int pid) {
         for (Appparam app : levelArray) {
             if (app.getAppparamId() == pid) {
                 return true;
@@ -318,112 +345,145 @@ public final class PermissionPanel extends BasePanel {
         }
         return false;
     }
+    
+        public static boolean isExist(List<Appparam> levelArray, String name) {
+        for (Appparam app : levelArray) {
+            if (app.getAppparamName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void resetPermessionPanel(List<Appparam> models, JTable jTablePanel, String depRoles, List<Appparam> paramIdArray, List editColumn, List<Appparam> addPermessionArray, List<Appparam> reducePermessionArray) {
+        List<Appparam> firstLevelArray = new ArrayList();
+        List<Appparam> secLevelArray = new ArrayList();
+        List<Appparam> thdLevelArray = new ArrayList();
+
+        if (models != null && models.size() > 0) {
+            for (int i = 0; i < models.size(); i++) {
+                Appparam appparam = models.get(i);
+                if (appparam.getAppparamPid() == null || appparam.getAppparamPid() <= 0) {//第一级
+                    firstLevelArray.add(appparam);
+                }
+            }
+
+            for (int i = 0; i < models.size(); i++) {
+                Appparam appparam = models.get(i);
+                String name = appparam.getAppparamName();
+                if (appparam.getAppparamPid() != null && isExist(firstLevelArray, appparam.getAppparamPid())) {
+                    List parentDB = AssetClientApp.getChildParamNameByParentName(name);
+                    if (parentDB != null && parentDB.size() > 0) {
+                        secLevelArray.add(appparam);
+                    } else {
+                        thdLevelArray.add(appparam);
+                    }
+                }
+            }
+
+            for (int i = 0; i < models.size(); i++) {
+                Appparam appparam = models.get(i);
+                if (appparam.getAppparamPid() != null && isExist(secLevelArray, appparam.getAppparamPid())) { //第三级
+                    thdLevelArray.add(appparam);
+                }
+            }
+        }
+
+        List rowDatas = new ArrayList();
+        List headDatas = new ArrayList();
+        headDatas.add("");
+        headDatas.add("");
+        headDatas.add("");
+        headDatas.add("是否拥有该权限?");
+
+        for (int i = 0; i < firstLevelArray.size(); i++) {
+            List columnDatas1 = new ArrayList();
+            Appparam appparam1 = firstLevelArray.get(i);
+            String desc1 = appparam1.getAppparamDesc();
+            String name = appparam1.getAppparamName();
+            columnDatas1.add(name);
+            columnDatas1.add("");
+            columnDatas1.add("");
+            if (desc1.indexOf(depRoles) >= 0) {
+                columnDatas1.add(!isExist(reducePermessionArray, appparam1.getAppparamId()));
+            } else {
+                columnDatas1.add(isExist(addPermessionArray, appparam1.getAppparamId()));
+            }
+
+            paramIdArray.add(appparam1);
+            rowDatas.add(columnDatas1);
+            for (int j = 0; j < secLevelArray.size(); j++) {
+                Appparam appparam2 = secLevelArray.get(j);
+
+                if (appparam2.getAppparamPid() == appparam1.getAppparamId()) {
+
+                    String name2 = appparam2.getAppparamName();
+                    String desc2 = appparam2.getAppparamDesc();
+
+                    List columnDatas2 = new ArrayList();
+                    columnDatas2.add("");
+                    columnDatas2.add(name2);
+                    columnDatas2.add("");
+                    if (desc2.indexOf(depRoles) >= 0) {
+                        columnDatas2.add(!isExist(reducePermessionArray, appparam2.getAppparamId()));
+                    } else {
+                        columnDatas2.add(isExist(addPermessionArray, appparam2.getAppparamId()));
+                    }
+                    paramIdArray.add(appparam2);
+                    rowDatas.add(columnDatas2);
+                    //第三级
+                    for (int k = 0; k < thdLevelArray.size(); k++) {
+
+                        Appparam appparam3 = thdLevelArray.get(k);
+                        if (appparam3.getAppparamPid() == appparam2.getAppparamId()) {
+                            String name3 = appparam3.getAppparamName();
+                            String desc3 = appparam3.getAppparamDesc();
+                            List columnDatas3 = new ArrayList();
+                            columnDatas3.add("");
+                            columnDatas3.add("");
+                            columnDatas3.add(name3);
+                            if (desc3.indexOf(depRoles) >= 0) {
+                                columnDatas3.add(!isExist(reducePermessionArray, appparam3.getAppparamId()));
+                            } else {
+                                columnDatas3.add(isExist(addPermessionArray, appparam3.getAppparamId()));
+                            }
+                            paramIdArray.add(appparam3);
+                            rowDatas.add(columnDatas3);
+
+                            //thdLevelArray.remove(appparam3);
+                        }
+
+                    }
+                    //secLevelArray.remove(appparam2);
+                }
+
+            }
+
+        }
+        ;
+        //显示当前角色权限
+        jTablePanel.setModel(new AssetTableModel(rowDatas, headDatas, true, editColumn));
+        jTablePanel.getColumnModel().getColumn(0).setMaxWidth(140);
+        jTablePanel.getColumnModel().getColumn(0).setMinWidth(140);
+        jTablePanel.getColumnModel().getColumn(1).setMaxWidth(140);
+        jTablePanel.getColumnModel().getColumn(1).setMinWidth(140);
+        jTablePanel.getColumnModel().getColumn(2).setMaxWidth(140);
+        jTablePanel.getColumnModel().getColumn(2).setMinWidth(140);
+        jTablePanel.getColumnModel().getColumn(3).setMaxWidth(120);
+        jTablePanel.getColumnModel().getColumn(3).setMinWidth(120);
+    }
 
     private void jTableRolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableRolesMouseClicked
         int selectRow = jTableRoles.getSelectedRow();
         if (selectRow > -1) {
             Object depV = jTableDep.getValueAt(jTableDep.getSelectedRow(), 0);
             Object roleV = jTableRoles.getValueAt(selectRow, 0);
+            String depRoles = depV + ":" + roleV;
             jLabelMes.setText("选择对象:【部门】" + depV + " 【角色】" + roleV);
-
-            List<Appparam> models = AssetClientApp.getParamsByType("模块");
-
-            List<Appparam> firstLevelArray = new ArrayList();
-            List<Appparam> secLevelArray = new ArrayList();
-            List<Appparam> thdLevelArray = new ArrayList();
-
-            if (models != null && models.size() > 0) {
-                for (int i = 0; i < models.size(); i++) {
-                    Appparam appparam = models.get(i);
-                    if (appparam.getAppparamPid() == null || appparam.getAppparamPid() <= 0) {//第一级
-                        firstLevelArray.add(appparam);
-                    }
-                }
-
-                for (int i = 0; i < models.size(); i++) {
-                    Appparam appparam = models.get(i);
-                    String name = appparam.getAppparamName();
-                    if (appparam.getAppparamPid() != null && isExist(firstLevelArray, appparam.getAppparamPid())) {
-                        List parentDB = AssetClientApp.getChildParamNameByParentName(name);
-                        if (parentDB != null && parentDB.size() > 0) {
-                            secLevelArray.add(appparam);
-                        } else {
-                            thdLevelArray.add(appparam);
-                        }
-                    }
-                }
-
-                for (int i = 0; i < models.size(); i++) {
-                    Appparam appparam = models.get(i);
-                    if (appparam.getAppparamPid() != null && isExist(secLevelArray, appparam.getAppparamPid())) { //第三级
-                        thdLevelArray.add(appparam);
-                    }
-                }
-            }
-
-            List rowDatas = new ArrayList();
-            List headDatas = new ArrayList();
-            headDatas.add("");
-            headDatas.add("");
-            headDatas.add("");
-            headDatas.add("是否拥有该权限?");
-
-            for (int i = 0; i < firstLevelArray.size(); i++) {
-                List columnDatas1 = new ArrayList();
-                Appparam appparam1 = firstLevelArray.get(i);
-                String name = appparam1.getAppparamName();
-                columnDatas1.add(name);
-                columnDatas1.add("");
-                columnDatas1.add("");
-                columnDatas1.add(false);
-                rowDatas.add(columnDatas1);
-                for (int j = 0; j < secLevelArray.size(); j++) {
-                    Appparam appparam2 = secLevelArray.get(j);
-                    if (appparam2.getAppparamPid() == appparam1.getAppparamId()) {
-                        String name2 = appparam2.getAppparamName();
-
-                        List columnDatas2 = new ArrayList();
-                        columnDatas2.add("");
-                        columnDatas2.add(name2);
-                        columnDatas2.add("");
-                        columnDatas2.add(false);
-                        rowDatas.add(columnDatas2);
-                        //第三级
-                        for (int k = 0; k < thdLevelArray.size(); k++) {
-
-                            Appparam appparam3 = thdLevelArray.get(k);
-                            if (appparam3.getAppparamPid() == appparam2.getAppparamId()) {
-                                String name3 = appparam3.getAppparamName();
-                                List columnDatas3 = new ArrayList();
-                                columnDatas3.add("");
-                                columnDatas3.add("");
-                                columnDatas3.add(name3);
-                                columnDatas3.add(false);
-                                rowDatas.add(columnDatas3);
-
-                                //thdLevelArray.remove(appparam3);
-                            }
-
-                        }
-                        //secLevelArray.remove(appparam2);
-                    }
-
-                }
-
-            }
-
+            paramIdArray.clear();
             List editColumn = new ArrayList();
             editColumn.add(3);
-            //显示当前角色权限
-            jTableObj.setModel(new AssetTableModel(rowDatas, headDatas, true, editColumn));
-            jTableObj.getColumnModel().getColumn(0).setMaxWidth(140);
-            jTableObj.getColumnModel().getColumn(0).setMinWidth(140);
-            jTableObj.getColumnModel().getColumn(1).setMaxWidth(140);
-            jTableObj.getColumnModel().getColumn(1).setMinWidth(140);
-            jTableObj.getColumnModel().getColumn(2).setMaxWidth(140);
-            jTableObj.getColumnModel().getColumn(2).setMinWidth(140);
-            jTableObj.getColumnModel().getColumn(3).setMaxWidth(120);
-            jTableObj.getColumnModel().getColumn(3).setMinWidth(120);
+            resetPermessionPanel(models, jTableObj, depRoles, paramIdArray, editColumn,new ArrayList(),new ArrayList());
 
         }
     }//GEN-LAST:event_jTableRolesMouseClicked
@@ -459,26 +519,71 @@ public final class PermissionPanel extends BasePanel {
         }
     }//GEN-LAST:event_jTableObjMouseClicked
 
+    private void updateLocalParam(Appparam newParam) {
+        for (Appparam oldapp : models) {
+            if (oldapp.getAppparamId() == newParam.getAppparamId()) {
+                oldapp.setAppparamDesc(newParam.getAppparamDesc());
+                break;
+            }
+        }
+    }
+
     @Action
     public void update() {
 
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                Pkgenerator selectedData = selectedDataFromTable();
-//                if (selectedData == null) {
-//                    AssetMessage.ERRORSYS("请选择一条数据!");
-//                    return;
-//                }
-//                if (childDialog == null) {
-//                    JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-//                    childDialog = new PkDialog(PermissionPanel.this);
-//                    childDialog.setLocationRelativeTo(mainFrame);
-//                }
-//                childDialog.setUpdatedData(selectedData);
-//                AssetClientApp.getApplication().show(childDialog);
-//            }
-//        });
+        int selectedR = jTableRoles.getSelectedRow();
+        if (selectedR > -1) {
+            Object depV = jTableDep.getValueAt(jTableDep.getSelectedRow(), 0);
+            Object roleV = jTableRoles.getValueAt(jTableRoles.getSelectedRow(), 0);
+
+            String depRoles = depV + ":" + roleV;
+
+            int i = 0;
+            for (final Appparam one : paramIdArray) {
+                String desc = one.getAppparamDesc();
+
+                Object obj = jTableObj.getValueAt(i, 3);
+                Boolean isCheck = (Boolean) obj;
+
+                if (isCheck == true) {
+                    if (desc.indexOf(depRoles) < 0) {
+                        one.setAppparamDesc(desc.trim().equals("") ? depRoles : (desc + ";" + depRoles));
+                        new CommUpdateTask<Appparam>(one, "appparam/update") {
+                            @Override
+                            public void responseResult(ComResponse<Appparam> response) {
+                                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                                    logger.debug("update parameter successfully for " + one.getAppparamName() + ",desc:" + one.getAppparamDesc());
+                                } else {
+                                    logger.error("update parameter fail for " + one.getAppparamName() + ",desc:" + one.getAppparamDesc());
+                                }
+                            }
+
+                        }.execute();
+                        updateLocalParam(one);
+                    }
+                } else {
+                    if (desc.indexOf(depRoles) >= 0) {
+                        desc = desc.replaceAll(depRoles, "");
+                        one.setAppparamDesc(desc);
+                        new CommUpdateTask<Appparam>(one, "appparam/update") {
+                            @Override
+                            public void responseResult(ComResponse<Appparam> response) {
+                                if (response.getResponseStatus() == ComResponse.STATUS_OK) {
+                                    logger.debug("update parameter successfully for " + one.getAppparamName() + ",desc:" + one.getAppparamDesc());
+                                } else {
+                                    logger.error("update parameter fail for " + one.getAppparamName() + ",desc:" + one.getAppparamDesc());
+                                }
+                            }
+
+                        }.execute();
+                        updateLocalParam(one);
+                    }
+                }
+                i++;
+            }
+
+        }
+
     }
 
 
