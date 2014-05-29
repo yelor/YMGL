@@ -57,10 +57,10 @@ public class YeWuLiuChengChaXunJDialog extends BaseDialog {
 
         parameterMap = new HashMap();
         bindTable = new BindTableHelper<Yewuliuchengdetail>(jTable4, new ArrayList<Yewuliuchengdetail>());
-        bindTable.createTable(new String[][]{{"danjuleixingName", "单据类型"}, {"submitDate", "制单日期"}, {"wanglaidanwei", "往来单位"}, {"fuzeren", "负责人"},
+        bindTable.createTable(new String[][]{{"danjubianhao", "单据编号"},{"danjuleixingName", "单据类型"}, {"submitDate", "制单日期"}, {"wanglaidanwei", "往来单位"}, {"fuzeren", "负责人"},
         {"bumen", "部门"}, {"zhidanren", "制单人"}, {"jiner", "金额"}, {"comments", "描述"}});
-        bindTable.setColumnType(Date.class, 2);
-        bindTable.setColumnType(Float.class, 7);
+        bindTable.setColumnType(Date.class, 3);
+        bindTable.setColumnType(Float.class, 8);
         bindTable.bind().setColumnWidth(new int[]{0, 120}, new int[]{1, 100}, new int[]{2, 100}).setRowHeight(25);
 
         Dimension dimension = new Dimension();

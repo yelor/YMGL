@@ -56,7 +56,7 @@ public class YimiaochurukujiluPanel extends BasePanel {
         super();
         initComponents();
         pageIndex = 1;
-        pageSize = 20;
+        pageSize = 20000;
         count = 0;
         bindTable = new BindTableHelper<ChurukujiluyimiaoEntity>(jTable1, new ArrayList<ChurukujiluyimiaoEntity>());
         bindTable.createTable(new String[][]{

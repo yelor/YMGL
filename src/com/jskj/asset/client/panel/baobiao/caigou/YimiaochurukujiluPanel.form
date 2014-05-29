@@ -414,7 +414,7 @@
         <Component class="javax.swing.JButton" name="jButton15">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel" id="reload" methodName="reload"/>
+              <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochurukujiluPanel" id="reload" methodName="reload"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton15.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton15.text"/>
@@ -431,7 +431,7 @@
         <Component class="javax.swing.JButton" name="jButton16">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochukujiluPanel" id="close" methodName="close"/>
+              <action class="com.jskj.asset.client.panel.baobiao.caigou.YimiaochurukujiluPanel" id="close" methodName="close"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" resourceKey="jButton16.icon"/>
             <Property name="text" type="java.lang.String" resourceKey="jButton16.text"/>
