@@ -26,7 +26,7 @@ public class BaseListModel<T> extends AbstractListModel {
 
     @Override
     public int getSize() {
-        return source.size();
+        return source==null?0:source.size();
     }
 
     @Override

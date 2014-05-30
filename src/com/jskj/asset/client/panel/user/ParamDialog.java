@@ -99,9 +99,12 @@ public class ParamDialog extends BaseDialog {
             jCheckBox2.setSelected(false);
             jCheckBox2.setEnabled(false);
             jTextField1.setText(appParam.getAppparamType());
-            if(paramData.getSystemparam()==0){
-               jTextField1.setEnabled(false);
-               jTextFu.setEnabled(false);
+            if (paramData.getSystemparam() == 0) {
+                jTextField1.setEnabled(false);
+                jTextFu.setEnabled(false);
+            } else {
+                jTextField1.setEnabled(true);
+                jTextFu.setEnabled(true);
             }
             jTextField2.setText(appParam.getAppparamName());
             jTextArea1.setText(appParam.getAppparamDesc());
@@ -399,15 +402,13 @@ public class ParamDialog extends BaseDialog {
             @Override
             public void responseResult(ComResponse<Appparam> response) {
                 if (response.getResponseStatus() == ComResponse.STATUS_OK) {
-                    parentPanel.reload().execute();
-                    close();
-                    AssetMessage.showMessageDialog(null, "保存成功！");
+                    ((ParamPanel) parentPanel).refresh().execute();
+
+                    AssetMessage.showMessageDialog(ParamDialog.this, "保存成功！");
                     if (jCheckBox2.isSelected()) {
-                        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                        ParamDialog childDialog = new ParamDialog(parentPanel);
-                        childDialog.setLocationRelativeTo(mainFrame);
-                        childDialog.setUpdatedData(new Appparam());
-                        AssetClientApp.getApplication().show(childDialog);
+                        jTextField2.setText("");
+                    } else {
+                        close();
                     }
                 } else {
                     AssetMessage.ERROR(response.getErrorMessage(), ParamDialog.this);

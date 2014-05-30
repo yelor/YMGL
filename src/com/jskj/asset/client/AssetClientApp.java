@@ -12,7 +12,9 @@ import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.login.LoginMain;
 import com.jskj.asset.client.panel.message.MessagePanel;
+import com.jskj.asset.client.panel.user.PermissionPanel;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.List;
@@ -45,6 +47,17 @@ public class AssetClientApp extends SingleFrameApplication {
         "TabbedPane.font", "RadioButton.font", "CheckBoxMenuItem.font",
         "TextPane.font", "PopupMenu.font", "TitledBorder.font", "ComboBox.font"
     };
+
+    private static List<Appparam> addMyPermession;
+    private static List<Appparam> reduceMyPermession;
+
+    public static List<Appparam> getAdditionalPermession() {
+        return addMyPermession;
+    }
+
+    public static List<Appparam> getReductionPermession() {
+        return reduceMyPermession;
+    }
 
     /**
      * @return the sessionMap
@@ -85,6 +98,16 @@ public class AssetClientApp extends SingleFrameApplication {
     }
 
     /**
+     * 根据参数ID得到参数
+     *
+     * @param id
+     * @return
+     */
+    public static Appparam getAppparamById(int id) {
+        return ParamSession.getInstance().getAppparamById(id);
+    }
+
+    /**
      * 根据参数类型，得到所有该类型的参数对象
      *
      * @param type
@@ -95,7 +118,16 @@ public class AssetClientApp extends SingleFrameApplication {
     }
 
     public static boolean permissionMoudle(String moudleName) {
-        List<Appparam> appparams = AssetClientApp.getParamsByType("模块权限");
+
+        if (PermissionPanel.isExist(addMyPermession, moudleName)) {
+            return true;
+        }
+
+        if (PermissionPanel.isExist(reduceMyPermession, moudleName)) {
+            return false;
+        }
+
+        List<Appparam> appparams = AssetClientApp.getParamsByType("模块");
         UserSessionEntity session = AssetClientApp.getSessionMap();
         Departmenttb department = session.getDepartment();
         Usertb usertb = session.getUsertb();
@@ -133,8 +165,8 @@ public class AssetClientApp extends SingleFrameApplication {
 
                         }
                     } else {
-                        logger.info(moudleName + "模块: 允许访问");
-                        return true;
+                        logger.info(moudleName + "模块: 限制访问");
+                        return false;
                     }
                     break;
                 }
@@ -163,20 +195,58 @@ public class AssetClientApp extends SingleFrameApplication {
         }
         AssetClientView view = new AssetClientView(this);
 
+        addMyPermession = new ArrayList();
+        reduceMyPermession = new ArrayList();
+
         show(view);
         view.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);;
         view.getFrame().setTitle(Constants.WINTITLE);
 
         StringBuilder message = new StringBuilder();
-        message.append("用户:").append(sessionMap.getUsertb().getUserName());
+        Usertb usertb = sessionMap.getUsertb();
+        message.append("用户:").append(usertb.getUserName());
         if (sessionMap.getUsertb().getUserRoles() != null) {
-            message.append(",角色:[").append(sessionMap.getUsertb().getUserRoles() == null ? "" : sessionMap.getUsertb().getUserRoles()).append("]");
+            message.append(",角色:[").append(usertb.getUserRoles() == null ? "" : usertb.getUserRoles()).append("]");
         }
         if (sessionMap.getDepartment() != null) {
             if (sessionMap.getDepartment().getDepartmentName() != null) {
                 message.append(",所属部门:[").append(sessionMap.getDepartment().getDepartmentName()).append("]");
             }
         }
+
+        String addPStr = usertb.getExt1() == null ? "" : usertb.getExt1();
+        String reducePStr = usertb.getExt2() == null ? "" : usertb.getExt2();
+        if (!addPStr.trim().equals("")) {
+            String[] addArray = addPStr.split(",");
+            for (String addS : addArray) {
+                try {
+                    int id = Integer.parseInt(addS);
+                    Appparam app = AssetClientApp.getAppparamById(id);
+                    if (app != null) {
+                        addMyPermession.add(app);
+                    }
+                } catch (Exception e) {
+                    logger.error(e);
+                }
+            }
+
+        }
+        if (!reducePStr.trim().equals("")) {
+            String[] reduceArray = reducePStr.split(",");
+
+            for (String reS : reduceArray) {
+                try {
+                    int id = Integer.parseInt(reS);
+                    Appparam app = AssetClientApp.getAppparamById(id);
+                    if (app != null) {
+                        reduceMyPermession.add(app);
+                    }
+                } catch (Exception e) {
+                    logger.error(e);
+                }
+            }
+        }
+
         //得到message
         view.setMessage(message.toString());
 
@@ -228,9 +298,9 @@ public class AssetClientApp extends SingleFrameApplication {
         try {
             //ImageIcon icon = new ImageIcon(this.getClass().getResource("/com/jskj/asset/client/resources/icon.png"));
             root.setIconImage(Constants.logoIcon.getImage());
-            
+
             UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-           // Font font = Constants.GLOBAL_FONT;
+            // Font font = Constants.GLOBAL_FONT;
             InitGlobalFont(Constants.GLOBAL_FONT);
 
             // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
