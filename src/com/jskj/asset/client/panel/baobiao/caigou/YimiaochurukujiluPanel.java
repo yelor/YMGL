@@ -88,7 +88,7 @@ public class YimiaochurukujiluPanel extends BasePanel {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql += "(yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\" or zujima like \"%" + jTextFieldYimiaoName.getText().toString().toLowerCase() + "%\"))";
+                    sql += "(yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\" or zujima like \"%" + jTextFieldYimiaoName.getText().toString().toLowerCase() + "%\")";
                 } else {
                     sql += "";
                 }
