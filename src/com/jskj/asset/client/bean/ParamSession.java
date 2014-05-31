@@ -84,6 +84,17 @@ public class ParamSession {
         }
         return result;
     }
+    
+    public Appparam getAppparamById(int id){
+        if (currentPageData != null) {
+            for (Appparam param : currentPageData) {
+                if (id == param.getAppparamId()) {
+                   return param;
+                }
+            }
+        }
+        return null;
+    }
 
     private static class RefreshTask extends ParamFindTask {
 

@@ -5,6 +5,8 @@
  */
 package com.jskj.asset.client;
 
+import com.jskj.asset.client.bean.UserSessionEntity;
+import com.jskj.asset.client.bean.entity.Appparam;
 import com.jskj.asset.client.layout.BaseTask;
 import com.jskj.asset.client.panel.message.MessagePanel;
 import com.jskj.asset.client.panel.OpenTabTask;
@@ -25,11 +27,15 @@ import com.jskj.asset.client.panel.jichuxinxi.JianShaoFangShiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.KeHuDanWeiPanel;
 import com.jskj.asset.client.panel.jichuxinxi.YiMiaoPanel;
 import com.jskj.asset.client.panel.user.ParamPanel;
+import com.jskj.asset.client.panel.user.PermissionPanel;
+import com.jskj.asset.client.panel.user.PermissionPopup;
 import com.jskj.asset.client.panel.user.PkPanel;
 import com.jskj.asset.client.panel.user.SelfPanel;
 import com.jskj.asset.client.panel.user.UserPanel;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.LogPaneAppender;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -99,10 +105,12 @@ public class LoadModule extends BaseTask {
         javax.swing.JMenuItem jMenuItem5 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemTask = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItemMyPermession = new javax.swing.JMenuItem();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenuDW = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItemPermession = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemMe = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItemZichanGY = new javax.swing.JMenuItem();
 
@@ -159,7 +167,7 @@ public class LoadModule extends BaseTask {
         jMenuItem10.setText(resourceMap.getString("jMenuItem10.text")); // NOI18N
         jMenuItem10.setName("jMenuItem10"); // NOI18N
         jMenu2.add(jMenuItem10);
-        
+
         jMenuItemZichanGY.setAction(actionMap.get("showZichanGongYingDanWei")); // NOI18N
         jMenuItemZichanGY.setText(resourceMap.getString("jMenuItemZichanGY.text")); // NOI18N
         jMenuItemZichanGY.setName("jMenuItemZichanGY"); // NOI18N
@@ -275,6 +283,11 @@ public class LoadModule extends BaseTask {
         jMenuItem4.setName("jMenuItem4"); // NOI18N
         jMenuDW.add(jMenuItem4);
 
+        jMenuItemPermession.setAction(actionMap.get("showPermession")); // NOI18N
+        jMenuItemPermession.setText(resourceMap.getString("jMenuItemPermession.text")); // NOI18N
+        jMenuItemPermession.setName("jMenuItemPermession"); // NOI18N
+        jMenuDW.add(jMenuItemPermession);
+
         menuBar.add(jMenuDW);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
@@ -284,6 +297,11 @@ public class LoadModule extends BaseTask {
         jMenuItem5.setText(resourceMap.getString("jMenuItem5.text")); // NOI18N
         jMenuItem5.setName("jMenuItem5"); // NOI18N
         helpMenu.add(jMenuItem5);
+
+        jMenuItemMyPermession.setAction(actionMap.get("showMyPermession")); // NOI18N
+        jMenuItemMyPermession.setText(resourceMap.getString("jMenuItemMyPermession.text")); // NOI18N
+        jMenuItemMyPermession.setName("jMenuItemMyPermession"); // NOI18N
+        helpMenu.add(jMenuItemMyPermession);
 
         jMenuItemMe.setAction(actionMap.get("showSelfBox")); // NOI18N
         jMenuItemMe.setText(resourceMap.getString("jMenuItemMe.text")); // NOI18N
@@ -354,7 +372,7 @@ public class LoadModule extends BaseTask {
     public void onSucceeded(Object object) {
         logger.info("模块加载完成");
     }
-    
+
     /**
      * 日志分析
      */
@@ -500,9 +518,9 @@ public class LoadModule extends BaseTask {
     public Task showYimiaoxiaoshoumingxi() {
         return new OpenTabTask("报表-疫苗销售明细表", new YimiaoSalesMingxiPanel(DanHao.TYPE_YIMIAOXS), false);
     }
-    
+
     @Action
-    public Task showYimiaoxiafamingxi(){
+    public Task showYimiaoxiafamingxi() {
         return new OpenTabTask("报表-疫苗下发明细表", new YimiaoSalesMingxiPanel(DanHao.TYPE_YIMIAOXF), false);
     }
 
@@ -529,5 +547,32 @@ public class LoadModule extends BaseTask {
     @Action
     public Task showSelfBox() {
         return new OpenTabTask("我的密码", new SelfPanel(), false);
+    }
+
+    @Action
+    public Task showPermession() {
+        return new OpenTabTask("角色权限设置", new PermissionPanel(), false);
+    }
+
+    @Action
+    public void showMyPermession() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                UserSessionEntity sessionMap = AssetClientApp.getSessionMap();
+                String roles = sessionMap.getUsertb().getUserRoles();
+                
+                String dep = sessionMap.getDepartment() == null ? "" : sessionMap.getDepartment().getDepartmentName();
+                PermissionPopup pop = new PermissionPopup(dep + ":" + roles, new ArrayList(), AssetClientApp.getAdditionalPermession(), AssetClientApp.getReductionPermession()) {
+                    @Override
+                    public void getChangesValue(List<Appparam> addPermessionArray, List<Appparam> reducePermessionArray) {
+                        //do nothing
+                    }
+                };
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                pop.setLocationRelativeTo(mainFrame);
+                pop.setVisible(true);
+            }
+        });
     }
 }

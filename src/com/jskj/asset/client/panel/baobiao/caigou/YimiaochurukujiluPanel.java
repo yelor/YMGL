@@ -56,7 +56,7 @@ public class YimiaochurukujiluPanel extends BasePanel {
         super();
         initComponents();
         pageIndex = 1;
-        pageSize = 20;
+        pageSize = 20000;
         count = 0;
         bindTable = new BindTableHelper<ChurukujiluyimiaoEntity>(jTable1, new ArrayList<ChurukujiluyimiaoEntity>());
         bindTable.createTable(new String[][]{
@@ -88,7 +88,7 @@ public class YimiaochurukujiluPanel extends BasePanel {
             public String getConditionSQL() {
                 String sql = "";
                 if (!jTextFieldYimiaoName.getText().trim().equals("")) {
-                    sql += "(yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\" or zujima like \"%" + jTextFieldYimiaoName.getText().toString().toLowerCase() + "%\"))";
+                    sql += "(yimiao_name like \"%" + jTextFieldYimiaoName.getText().toString() + "%\" or zujima like \"%" + jTextFieldYimiaoName.getText().toString().toLowerCase() + "%\")";
                 } else {
                     sql += "";
                 }

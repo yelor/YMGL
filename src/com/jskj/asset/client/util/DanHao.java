@@ -44,6 +44,9 @@ public class DanHao {
     public final static String TYPE_YIMIAOCG = "YMSG";
     public final static String TYPE_YIMIAOTJ = "YMTJ";
     public final static String TYPE_YIMIAOBS = "YMBS";
+    public final static String TYPE_YIMIAOXSTH = "YMXSTH";
+    public final static String TYPE_YIMIAOXFTH = "YMXFTH";
+    
 
     //资产相关
     public final static String TYPE_GDZC = "GDZC";

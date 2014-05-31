@@ -1,7 +1,6 @@
 /*
  * 2014 Chengdu JunChen Technology
  */
-
 package com.jskj.asset.client.bean.report;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,24 +12,34 @@ import java.util.Date;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Yewuliuchengdetail {
-    
+
+    private String danjubianhao;
+
     private String danjuleixingName;
-    
+
     private Date submitDate;
-    
+
     private String wanglaidanwei;
-    
+
     private String fuzeren;
-    
+
     private String jinbanren;
-    
+
     private String bumen;
-    
+
     private float jiner;
-    
+
     private String zhidanren;
-    
+
     private String comments;
+
+    public String getDanjubianhao() {
+        return danjubianhao;
+    }
+
+    public void setDanjubianhao(String danjubianhao) {
+        this.danjubianhao = danjubianhao;
+    }
 
     /**
      * @return the danjuleixingName
@@ -157,7 +166,5 @@ public class Yewuliuchengdetail {
     public void setComments(String comments) {
         this.comments = comments;
     }
-    
-    
-    
+
 }

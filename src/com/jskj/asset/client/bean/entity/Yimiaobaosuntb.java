@@ -11,6 +11,8 @@ public class Yimiaobaosuntb {
 
     private Date baosunDate;
 
+    private Integer yimiaoId;
+
     private Integer kucunId;
 
     private Integer quantity;
@@ -53,6 +55,14 @@ public class Yimiaobaosuntb {
 
     public void setBaosunDate(Date baosunDate) {
         this.baosunDate = baosunDate;
+    }
+
+    public Integer getYimiaoId() {
+        return yimiaoId;
+    }
+
+    public void setYimiaoId(Integer yimiaoId) {
+        this.yimiaoId = yimiaoId;
     }
 
     public Integer getKucunId() {

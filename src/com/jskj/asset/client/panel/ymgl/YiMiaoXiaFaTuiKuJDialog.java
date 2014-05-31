@@ -9,6 +9,10 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Backsale_detail_tb;
 import com.jskj.asset.client.bean.entity.XiaoshoutuihuoEntity;
 import com.jskj.asset.client.bean.entity.Backsaletb;
+import com.jskj.asset.client.bean.entity.BacksaleyimiaoEntity;
+import com.jskj.asset.client.bean.entity.Stockpiletb;
+import com.jskj.asset.client.bean.entity.XiaoshoutuihuoxiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaoAll;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
@@ -18,12 +22,16 @@ import com.jskj.asset.client.layout.IPopupBuilder;
 import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.panel.ymgl.task.XiaoshoutuihuoTask;
 import com.jskj.asset.client.util.DanHao;
+import com.jskj.asset.client.util.DateHelper;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.log4j.Logger;
@@ -43,6 +51,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
     private SimpleDateFormat dateformate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private SimpleDateFormat riqiformate = new SimpleDateFormat("yyyy-MM-dd");
     private boolean isNew;
+    private XiaoshoutuihuoxiangdanEntity yimiaoxiaoshoutuihuoxiangdanEntity;
 
     /**
      * Creates new form yimiaoyanshouJDialog
@@ -226,7 +235,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldXiafaId = new javax.swing.JTextField();
-        jTextFieldzhidanDate = regTextField;
+        jTextFieldzhidanDate = new javax.swing.JTextField();
         jTextFieldjingbanren = new javax.swing.JTextField();
         jTextFielddepartment = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -709,6 +718,92 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
             AssetMessage.INFO("提交成功！", YiMiaoXiaFaTuiKuJDialog.this);
             exit();
         }
+    }
+    
+     public YiMiaoXiaFaTuiKuJDialog(final JDialog parent, XiaoshoutuihuoxiangdanEntity yimiaoxiaoshoutuihuoxiangdanEntity) {
+        super();
+        initComponents();
+        this.yimiaoxiaoshoutuihuoxiangdanEntity = yimiaoxiaoshoutuihuoxiangdanEntity;
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
+
+        jButton1.setEnabled(false);
+
+        jTextFieldXiafaId.setEditable(false);
+        jTextFieldXiafaId.setText(yimiaoxiaoshoutuihuoxiangdanEntity.getBacksaletb().getBacksaleId());
+        jTextFieldzhidanDate.setText(DateHelper.format(yimiaoxiaoshoutuihuoxiangdanEntity.getBacksaletb().getBacksaleDate(), "yyyy-MM-dd HH:mm:ss"));
+        jTextFieldXiafadanwei.setEditable(false);
+        jTextFieldXiafadanwei.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getKehudanwei().getKehudanweiName());
+        jTextFieldContactPerson.setEditable(false);
+        jTextFieldContactPerson.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getKehudanwei().getKehudanweiConstactperson());
+        jTextFielddepartment.setEditable(false);
+        jTextFielddepartment.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
+        jTextFieldjingbanren.setEditable(false);
+        jTextFieldjingbanren.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getUserAll().getUserName());
+        jTextFieldzhidanren.setEditable(false);
+        jTextFieldzhidanren.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getUserAll().getUserName());
+        jTextArea1.setEditable(false);
+        jTextArea1.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getBacksaletb().getRemark());
+        
+//        totalPrice.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getBacksaletb().ge + "元");
+
+        setListTable(yimiaoxiaoshoutuihuoxiangdanEntity.getResult());
+    }
+
+    public void setListTable(List<BacksaleyimiaoEntity> backsaleyimiaoEntityList) {
+
+        int size = backsaleyimiaoEntityList.size();
+        Object[][] o = new Object[size][11];
+        for (int i = 0; i < size; i++) {
+            Backsale_detail_tb backsaledetailtb = backsaleyimiaoEntityList.get(i).getBacksale_detail_tb();
+            YimiaoAll yimiaoAll = backsaleyimiaoEntityList.get(i).getYimiaoAll();
+            Stockpiletb stockpile = backsaleyimiaoEntityList.get(i).getStockpile();
+            o[i] = new Object[]{backsaledetailtb.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), stockpile.getPihao(), yimiaoAll.getUnitId(),
+                new SimpleDateFormat("yyyy-MM-dd").format((Date) stockpile.getYouxiaodate()), backsaledetailtb.getQuantity(), backsaledetailtb.getSaleprice(), backsaledetailtb.getTotalprice()};
+        }
+
+        jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "批号", "单位", "有效期", "数量", "售价", "合价"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false, false, false, false, false
+            };
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

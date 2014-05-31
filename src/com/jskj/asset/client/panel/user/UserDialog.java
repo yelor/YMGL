@@ -17,14 +17,13 @@ import com.jskj.asset.client.layout.BasePanel;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
 import com.jskj.asset.client.panel.jichuxinxi.task.BuMenTask;
-import com.jskj.asset.client.util.DateHelper;
 import com.jskj.asset.client.util.IdcardUtils;
 import com.jskj.asset.client.util.PingYinUtil;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -51,15 +50,20 @@ public class UserDialog extends BaseDialog {
         initComponents();
         this.parentPanel = parentPanel;
         isNew = true;
+
     }
 
     public void setAddOrUpdate(boolean isAdd) {
         isNew = isAdd;
-//        jListRoles.setModel(new BaseListModel<String>(new ArrayList(), ""));
+
         //得到部门和角色
         new BumenTask().execute();
         jComboBoxRole.setModel(new javax.swing.DefaultComboBoxModel(AssetClientApp.getParamNamesByType("角色")));
         if (isNew) {
+            List<Appparam> add = new ArrayList();
+            List<Appparam> reduce = new ArrayList();
+            jListAdd.setModel(new BaseListModel<Appparam>(add, "getAppparamName"));
+            jListReduce.setModel(new BaseListModel<Appparam>(reduce, "getAppparamName"));
             this.setTitle("新建用户");
             jTextFieldUserName.setText("");
             jTextFieldPasswd.setText("");
@@ -75,6 +79,7 @@ public class UserDialog extends BaseDialog {
             jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("新建用户")); // NOI18N
         } else {
             this.setTitle("更新用户:10");
+
             jCheckBox1.setEnabled(false);
             jCheckBox1.setSelected(false);
         }
@@ -84,6 +89,10 @@ public class UserDialog extends BaseDialog {
         if (usertb == null) {
             return;
         }
+        List<Appparam> add = new ArrayList();
+        List<Appparam> reduce = new ArrayList();
+        jListAdd.setModel(new BaseListModel<Appparam>(add, "getAppparamName"));
+        jListReduce.setModel(new BaseListModel<Appparam>(reduce, "getAppparamName"));
         this.usertb = usertb;
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("更新用户:" + usertb.getUserId())); // NOI18N
         jTextFieldUserName.setText(usertb.getUserName());
@@ -95,12 +104,39 @@ public class UserDialog extends BaseDialog {
 
         String rolesStr = usertb.getUserRoles();
         jComboBoxRole.setSelectedItem(rolesStr);
-//
-//        if (rolesStr != null && !rolesStr.equals("")) {
-//            String[] rolesArr = rolesStr.split(",");
-//            List arrayList = new ArrayList(Arrays.asList(rolesArr));
-////            jListRoles.setModel(new BaseListModel<String>(arrayList, ""));
-//        }
+
+        String addPStr = usertb.getExt1() == null ? "" : usertb.getExt1();
+        String reducePStr = usertb.getExt2() == null ? "" : usertb.getExt2();
+        if (!addPStr.trim().equals("")) {
+            String[] addArray = addPStr.split(",");
+            for (String addS : addArray) {
+                try {
+                    int id = Integer.parseInt(addS);
+                    Appparam app = AssetClientApp.getAppparamById(id);
+                    if (app != null) {
+                        add.add(app);
+                    }
+                } catch (Exception e) {
+                    logger.error(e);
+                }
+            }
+
+        }
+        if (!reducePStr.trim().equals("")) {
+            String[] reduceArray = reducePStr.split(",");
+
+            for (String reS : reduceArray) {
+                try {
+                    int id = Integer.parseInt(reS);
+                    Appparam app = AssetClientApp.getAppparamById(id);
+                    if (app != null) {
+                        reduce.add(app);
+                    }
+                } catch (Exception e) {
+                    logger.error(e);
+                }
+            }
+        }
 
     }
 
@@ -189,6 +225,12 @@ public class UserDialog extends BaseDialog {
         jLabel10 = new javax.swing.JLabel();
         jComboBoxRole = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListAdd = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jListReduce = new javax.swing.JList();
         jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -324,7 +366,7 @@ public class UserDialog extends BaseDialog {
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel8)
                     .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(UserDialog.class, this);
@@ -354,8 +396,27 @@ public class UserDialog extends BaseDialog {
         jComboBoxRole.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "普通用户", "审核权", "审批权", "管理权" }));
         jComboBoxRole.setName("jComboBoxRole"); // NOI18N
 
+        jButton1.setAction(actionMap.get("setPermession")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
+
+        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
+        jLabel11.setName("jLabel11"); // NOI18N
+
+        jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
+        jLabel12.setName("jLabel12"); // NOI18N
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        jListAdd.setModel(new BaseListModel<Appparam>(new ArrayList<Appparam>(), ""));
+        jListAdd.setName("jListAdd"); // NOI18N
+        jScrollPane3.setViewportView(jListAdd);
+
+        jScrollPane4.setName("jScrollPane4"); // NOI18N
+
+        jListReduce.setModel(new BaseListModel<Appparam>(new ArrayList<Appparam>(), ""));
+        jListReduce.setName("jListReduce"); // NOI18N
+        jScrollPane4.setViewportView(jListReduce);
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -363,17 +424,23 @@ public class UserDialog extends BaseDialog {
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jLabel10)
+                    .add(jLabel9))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 260, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel2Layout.createSequentialGroup()
-                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(jLabel10)
-                            .add(jLabel9))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jComboBoxRole, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 260, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                            .add(jLabel11)
+                            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 125, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel12)
+                            .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 124, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                     .add(jPanel2Layout.createSequentialGroup()
-                        .add(22, 22, 22)
+                        .add(jComboBoxRole, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jButton1)))
                 .addContainerGap())
         );
@@ -386,10 +453,16 @@ public class UserDialog extends BaseDialog {
                 .add(18, 18, 18)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jComboBoxRole, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel10))
+                    .add(jLabel10)
+                    .add(jButton1))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton1)
-                .add(0, 0, Short.MAX_VALUE))
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel11)
+                    .add(jLabel12))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
         jCheckBox1.setText(resourceMap.getString("jCheckBox1.text")); // NOI18N
@@ -399,33 +472,34 @@ public class UserDialog extends BaseDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(layout.createSequentialGroup()
+                        .add(jCheckBox1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jButton4)
+                        .add(18, 18, 18)
+                        .add(jButton3)))
                 .add(0, 0, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jCheckBox1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jButton4)
-                .add(18, 18, 18)
-                .add(jButton3)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jCheckBox1)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jButton3)
-                        .add(jButton4))
-                    .add(jCheckBox1))
+                        .add(jButton4)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -486,7 +560,7 @@ public class UserDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入用户名和密码.");
             return null;
         }
-        
+
         String zujima = PingYinUtil.getFirstSpell(jTextFieldUserName.getText().trim());
         usertb.setZujima(zujima);
 
@@ -494,12 +568,12 @@ public class UserDialog extends BaseDialog {
         if (!idcard.trim().equals("")) {
             if (IdcardUtils.validateCard(idcard)) {
                 usertb.setUserIdentitycard(idcard);
-               // usertb.setUserBirthday(DateHelper.getStringtoDate(IdcardUtils.getBirthByIdCard(idcard), "yyyyMMdd"));
+                // usertb.setUserBirthday(DateHelper.getStringtoDate(IdcardUtils.getBirthByIdCard(idcard), "yyyyMMdd"));
             } else {
                 AssetMessage.ERRORSYS("身份证号码有误，请检查.");
                 return null;
             }
-        } 
+        }
 
         Object selectObj = jListBumen.getSelectedValue();
         if (selectObj != null) {
@@ -520,8 +594,31 @@ public class UserDialog extends BaseDialog {
         }
         usertb.setUserPosition(jTextFieldAddress.getText());
 
-        
         usertb.setUserRoles(jComboBoxRole.getSelectedItem().toString());
+
+        BaseListModel<Appparam> newMode = (BaseListModel<Appparam>) jListAdd.getModel();
+        BaseListModel<Appparam> reduceMode = (BaseListModel<Appparam>) jListReduce.getModel();
+        List<Appparam> addP = newMode.getSource();
+        String ext1 = ""; // 存放参数ID
+        String ext2 = ""; // 存放参数ID
+        for (int i = 0; i < addP.size(); i++) {
+            if (i == (addP.size() - 1)) {
+                ext1 += addP.get(i).getAppparamId();
+            } else {
+                ext1 += addP.get(i).getAppparamId() + ",";
+            }
+        }
+        List<Appparam> reduceP = reduceMode.getSource();
+        for (int i = 0; i < reduceP.size(); i++) {
+            if (i == (reduceP.size() - 1)) {
+                ext2 += reduceP.get(i).getAppparamId();
+            } else {
+                ext2 += reduceP.get(i).getAppparamId() + ",";
+            }
+        }
+
+        usertb.setExt1(ext1);
+        usertb.setExt2(ext2);
 
         String serviceId = "user/add";
         if (usertb.getUserId() != null && usertb.getUserId() > 0) {
@@ -574,7 +671,6 @@ public class UserDialog extends BaseDialog {
 //            }
 //        }
 //    }
-
 //    @Action
 //    public void addRole() {
 //        Object item = jComboBoxRole.getSelectedItem();
@@ -604,6 +700,40 @@ public class UserDialog extends BaseDialog {
 //        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
 //        jListRoles.setModel(newMode);
 //    }
+    @Action
+    public void setPermession() {
+        if (jListBumen.getSelectedValue() == null) {
+            AssetMessage.ERRORSYS("请选择部门.");
+            return;
+        }
+        final String roles = jComboBoxRole.getSelectedItem().toString();
+        final String dep = jListBumen.getSelectedValue().toString();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+
+                List editColumn = new ArrayList();
+                editColumn.add(3);
+                BaseListModel<Appparam> newMode = (BaseListModel<Appparam>) jListAdd.getModel();
+                BaseListModel<Appparam> reduceMode = (BaseListModel<Appparam>) jListReduce.getModel();
+
+                PermissionPopup pop = new PermissionPopup(dep + ":" + roles, editColumn, newMode.getSource(), reduceMode.getSource()) {
+                    @Override
+                    public void getChangesValue(List<Appparam> addPermessionArray, List<Appparam> reducePermessionArray) {
+                        //do nothing
+                        BaseListModel<Appparam> newMode = new BaseListModel<Appparam>(addPermessionArray, "getAppparamName");
+                        jListAdd.setModel(newMode);
+
+                        BaseListModel<Appparam> reduceMode = new BaseListModel<Appparam>(reducePermessionArray, "getAppparamName");
+                        jListReduce.setModel(reduceMode);
+                    }
+                };
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                pop.setLocationRelativeTo(mainFrame);
+                pop.setVisible(true);
+            }
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -615,6 +745,8 @@ public class UserDialog extends BaseDialog {
     private javax.swing.JComboBox jComboBoxRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -623,13 +755,17 @@ public class UserDialog extends BaseDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList jListAdd;
     private javax.swing.JList jListBumen;
+    private javax.swing.JList jListReduce;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextAreaDesc;
     private javax.swing.JTextField jTextFieldAddress;
     private javax.swing.JTextField jTextFieldEmail;

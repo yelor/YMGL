@@ -416,7 +416,7 @@ public final class ParamPanel extends BasePanel {
                 @Override
                 public void responseResult(ComResponse<Appparam> response) {
                     if (response.getResponseStatus() == ComResponse.STATUS_OK) {
-                        reload().execute();
+                        refresh().execute();
                     } else {
                         AssetMessage.ERROR(response.getErrorMessage(), ParamPanel.this);
                     }
