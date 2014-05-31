@@ -14,6 +14,10 @@ import com.jskj.asset.client.panel.shjs.FukuanShenPiJDialog;
 import com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog;
 import com.jskj.asset.client.panel.ymgl.YimiaoCaigouShenPiJDialog;
 import com.jskj.asset.client.util.DanHao;
+import static com.jskj.asset.client.util.DanHao.TYPE_YMFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_YQFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_ZCFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_ZQFK;
 import com.jskj.asset.client.util.DateHelper;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -180,7 +184,8 @@ public abstract class MyTaskFindTask extends BaseTask {
                         if (re.getShenqingdanId().toUpperCase().startsWith("YM")) {
                             //疫苗审批
                             gotoShenpi();
-                        }else if(re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_FKDJ) || re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_QTFK)){//资产审批
+                        }else if(re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_ZCFK) || re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_YMFK)
+                                 || re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_ZQFK) || re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_YQFK)){//资产审批
                             selecteShenpiFukuandanAction();
                         } else {//资产审批
                             selectShenPiDanAction();

@@ -38,9 +38,9 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class OtherFuKuanDanJDialog extends BaseDialog {
+public class YMOtherFuKuanDanJDialog extends BaseDialog {
 
-    private final static Logger logger = Logger.getLogger(OtherFuKuanDanJDialog.class);
+    private final static Logger logger = Logger.getLogger(YMOtherFuKuanDanJDialog.class);
     private int userId;
     private String userName;
     private int supplierId;
@@ -52,7 +52,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
     /**
      * Creates new form FKDJDialog
      */
-    public OtherFuKuanDanJDialog() {
+    public YMOtherFuKuanDanJDialog() {
         super();
         initComponents();
 
@@ -60,7 +60,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
 
-        fukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_ZQFK));
+        fukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_YQFK));
         fukuandanDate.setText(dateformate.format(new Date()).toString());
         jingbanren.setText(userName);
 
@@ -75,7 +75,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
-                String sql = " supplier_type = 1 ";
+                String sql = " supplier_type = 0 ";
                 if (!supplier.getText().trim().equals("")) {
                     sql += "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"%" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
@@ -104,7 +104,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
 
     }
 
-    public OtherFuKuanDanJDialog(final JDialog parent,FukuanshenqingDetailEntity detail){
+    public YMOtherFuKuanDanJDialog(final JDialog parent,FukuanshenqingDetailEntity detail){
         super();
         initComponents();
 
@@ -269,7 +269,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         jingbanren = new BaseTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(OtherFuKuanDanJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YMOtherFuKuanDanJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -281,7 +281,7 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(OtherFuKuanDanJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YMOtherFuKuanDanJDialog.class, this);
         jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -510,13 +510,13 @@ public class OtherFuKuanDanJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YMOtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YMOtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YMOtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YMOtherFuKuanDanJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

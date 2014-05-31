@@ -57,8 +57,12 @@ public class DanHao {
     public final static String TYPE_ITLY = "ITLY";
     public final static String TYPE_YHLY = "YHLY";
     public final static String TYPE_WXSQ = "WXSQ";
-    public final static String TYPE_FKDJ = "FKDJ";
-    public final static String TYPE_QTFK = "QTFK";
+//    public final static String TYPE_FKDJ = "FKDJ";
+    public final static String TYPE_ZCFK = "ZCFK";//资产供应单位付款单
+    public final static String TYPE_YMFK = "YMFK";//疫苗供应单位付款单
+//    public final static String TYPE_QTFK = "QTFK";
+    public final static String TYPE_ZQFK = "ZQFK";//资(Z)产供应单位其(Q)他付(F)款(K)单
+    public final static String TYPE_YQFK = "YQFK";//疫(Y)苗供应单位其(Q)他付(F)款(K)单
 
     /**
      *************其他单号，不需要审批流程的单号*************
@@ -104,10 +108,14 @@ public class DanHao {
             className = "com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinLingYongShenQingJDialog";
         } else if (shenqingdanId.startsWith(TYPE_WXSQ)) {
             className = "com.jskj.asset.client.panel.slgl.GuDingZiChanWeiXiuShenQingJDialog";
-        } else if (shenqingdanId.startsWith(TYPE_FKDJ)) {
+        } else if (shenqingdanId.startsWith(TYPE_ZCFK)) {
             className = "com.jskj.asset.client.panel.shjs.FuKuanDanJDialog";
-        } else if (shenqingdanId.startsWith(TYPE_QTFK)) {
+        } else if (shenqingdanId.startsWith(TYPE_YMFK)) {
+            className = "com.jskj.asset.client.panel.shjs.YMFuKuanDanJDialog";
+        } else if (shenqingdanId.startsWith(TYPE_ZQFK)) {
             className = "com.jskj.asset.client.panel.shjs.OtherFuKuanDanJDialog";
+        } else if (shenqingdanId.startsWith(TYPE_YQFK)) {
+            className = "com.jskj.asset.client.panel.shjs.YMOtherFuKuanDanJDialog";
         }
 
         return className;

@@ -9,7 +9,6 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.FukuanDetailEntity;
 import com.jskj.asset.client.bean.entity.Fukuandantb;
 import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
-import com.jskj.asset.client.bean.entity.ShenqingdanAll;
 import com.jskj.asset.client.bean.entity.Qitafukuanliebiaotb;
 import com.jskj.asset.client.bean.entity.Yingfukuandanjutb;
 import com.jskj.asset.client.constants.Constants;
@@ -69,7 +68,7 @@ public class FuKuanDanJDialog extends BaseDialog {
         userId = AssetClientApp.getSessionMap().getUsertb().getUserId();
         userName = AssetClientApp.getSessionMap().getUsertb().getUserName();
 
-        fukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_FKDJ));
+        fukuandanId.setText(DanHao.getDanHao(DanHao.TYPE_ZCFK));
         fukuandanDate.setText(dateformate.format(new Date()).toString());
         yingfu.setText("0.0");
         shenqingren.setText(userName);
@@ -90,9 +89,9 @@ public class FuKuanDanJDialog extends BaseDialog {
             }
 
             public String getConditionSQL() {
-                String sql = "";
+                String sql = " supplier_type = 1 ";
                 if (!supplier.getText().trim().equals("")) {
-                    sql = "(supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"%" + supplier.getText().trim().toLowerCase() + "%\")";
+                    sql += " and (supplier_name like \"%" + supplier.getText() + "%\"" + " or supplier_zujima like \"%" + supplier.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
@@ -324,7 +323,7 @@ public class FuKuanDanJDialog extends BaseDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new BaseTable(null);
-        fukuan = new BaseTextField();
+        fukuan = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         youhui = new javax.swing.JTextField();
@@ -635,7 +634,7 @@ public class FuKuanDanJDialog extends BaseDialog {
                     {"制单日期", fukuandanDate.getText()},
                     {"供应单位", supplier.getText()},
                     {"结算账户", accountNum.getText()},
-                    {"付款金额", fukuan.getText()},
+                    {"本次付款", fukuan.getText()},
                     {"优惠", youhui.getText()},
                     {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,

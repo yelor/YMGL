@@ -576,9 +576,11 @@ public class GuDingZiChanDiaoBoJDialog extends javax.swing.JDialog {
         jButton4.setAction(actionMap.get("generatorBar")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setBorderPainted(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton4.setName("jButton4"); // NOI18N
+        jButton4.setOpaque(false);
         jToolBar1.add(jButton4);
 
         jButton2.setAction(actionMap.get("exit")); // NOI18N
