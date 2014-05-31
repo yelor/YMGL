@@ -59,10 +59,12 @@ public class selecteInvoiceJDialog4 extends javax.swing.JDialog {
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
+        jButton1.setAction(actionMap.get("Yimiaolingqutuihuo")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 
+        jButton2.setAction(actionMap.get("Yimiaoshegoutuihuo")); // NOI18N
         jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
@@ -169,6 +171,36 @@ public class selecteInvoiceJDialog4 extends javax.swing.JDialog {
                 caiGouShenQingJDialog.setLocationRelativeTo(mainFrame);
                 caiGouShenQingJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(caiGouShenQingJDialog);
+            }
+        });
+    }
+    
+   @Action
+    public void Yimiaolingqutuihuo() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoLingQuTuiHuoJDialog lingqutuihuoJDialog = new YiMiaoLingQuTuiHuoJDialog();
+                lingqutuihuoJDialog.setLocationRelativeTo(mainFrame);
+                lingqutuihuoJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(lingqutuihuoJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void Yimiaoshegoutuihuo() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoLingQuTuiHuoJDialog shengoutuihuoJDialog = new YiMiaoLingQuTuiHuoJDialog();
+                shengoutuihuoJDialog.setLocationRelativeTo(mainFrame);
+                shengoutuihuoJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(shengoutuihuoJDialog);
             }
         });
     }

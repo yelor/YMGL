@@ -9,10 +9,7 @@ import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Backsale_detail_tb;
 import com.jskj.asset.client.bean.entity.Backsaletb;
 import com.jskj.asset.client.bean.entity.BacksaleyimiaoEntity;
-import com.jskj.asset.client.bean.entity.Sale_detail_tb;
-import com.jskj.asset.client.bean.entity.SaleyimiaoEntity;
 import com.jskj.asset.client.bean.entity.Stockpiletb;
-import com.jskj.asset.client.bean.entity.XiaoshoushenpixiangdanEntity;
 import com.jskj.asset.client.bean.entity.XiaoshoutuihuoEntity;
 import com.jskj.asset.client.bean.entity.XiaoshoutuihuoxiangdanEntity;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
@@ -112,7 +109,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"yimiaoId", "库存编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
+            {"kucunId", "库存编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"},
             {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "预售价", "false"}, {"yimiaoHejia", "合价", "false"}});
 
@@ -163,6 +160,14 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
                     Float stockpilePrice = Float.parseFloat("" + bindedMap.get("stockpilePrice"));
                     Object youxiaoqi = bindedMap.get("youxiaodate");
                     Object saleprice = yimiao.get("yimiaoYushoujia");
+                    
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "kucunId").toString().trim().equals("" + bindedMap.get("stockpileId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoXiaoShouTuiHuoJDialog.this);
+                            return;
+                        }
+                    }
 
                     editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
@@ -734,7 +739,7 @@ public class YiMiaoXiaoShouTuiHuoJDialog extends BaseDialog {
             backsale_detail.setBacksaleId(jTextFieldXiaoshouTuihuoId.getText());
             backsale_detail.setBacksaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
             backsale_detail.setYouxiaoqi(riqiformate.parse(yimiaotable.getValue(i, "youxiaoqi").toString()));
-            backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
+            backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "kucunId").toString()));
             if (yimiaotable.getValue(i, "tuihuoQuantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗退货数量!");
                 return null;

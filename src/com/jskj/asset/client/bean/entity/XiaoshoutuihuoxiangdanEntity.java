@@ -12,6 +12,8 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class XiaoshoutuihuoxiangdanEntity{
+    
+    private Supplier gongyingdanwei;
 
     private Kehudanweitb kehudanwei;
 
@@ -20,6 +22,14 @@ public class XiaoshoutuihuoxiangdanEntity{
     private Backsaletb backsaletb;
     
     private List<BacksaleyimiaoEntity> result;
+
+    public Supplier getGongyingdanwei() {
+        return gongyingdanwei;
+    }
+
+    public void setGongyingdanwei(Supplier gongyingdanwei) {
+        this.gongyingdanwei = gongyingdanwei;
+    }    
 
     public Kehudanweitb getKehudanwei() {
         return kehudanwei;

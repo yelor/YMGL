@@ -153,7 +153,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         
         
 
-        //疫苗表中的内容
+//        疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"xiangdanId", "详单编号"}, {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"},
@@ -239,6 +239,14 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     jTextFieldSupplierName.setText((String) gongyingdanwei.get("supplierName"));
                     jTextFieldFamiaoperson.setText(gongyingdanwei.get("supplierConstactperson")== null ? "" : (String) gongyingdanwei.get("supplierConstactperson"));
 
+                     for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + yimiaoshenqingdan.get("xiangdanId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoYanShouDanJDialog.this);
+                            return;
+                        }
+                    }
+                    
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
                     editTable.insertValue(2, yimiaoName);

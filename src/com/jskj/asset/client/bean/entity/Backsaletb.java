@@ -11,6 +11,8 @@ public class Backsaletb {
 
     private Integer deportId;
 
+    private Integer supplierId;
+
     private Integer customerId;
 
     private Integer zhidanrenId;
@@ -39,6 +41,14 @@ public class Backsaletb {
 
     public void setDeportId(Integer deportId) {
         this.deportId = deportId;
+    }
+
+    public Integer getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(Integer supplierId) {
+        this.supplierId = supplierId;
     }
 
     public Integer getCustomerId() {

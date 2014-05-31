@@ -42,6 +42,8 @@ public class DanHao {
     public final static String TYPE_YIMIAOSG = "YMSGJH";
     public final static String TYPE_YIMIAOLY = "YMLQ";
     public final static String TYPE_YIMIAOCG = "YMSG";
+    public final static String TYPE_YIMIAOLYTH = "YMLQTH";
+    public final static String TYPE_YIMIAOCGTH = "YMSGTH";
     public final static String TYPE_YIMIAOTJ = "YMTJ";
     public final static String TYPE_YIMIAOBS = "YMBS";
     public final static String TYPE_YIMIAOXSTH = "YMXSTH";

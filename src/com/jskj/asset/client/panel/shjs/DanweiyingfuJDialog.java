@@ -8,6 +8,8 @@ package com.jskj.asset.client.panel.shjs;
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
 import com.jskj.asset.client.bean.entity.FukuanshenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.XiaoshoutuihuoxiangdanEntity;
+import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yingfukuandanjutb;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
@@ -23,6 +25,13 @@ import com.jskj.asset.client.panel.slgl.GuDingZiChanWeiXiuShenQingJDialog;
 import com.jskj.asset.client.panel.slgl.ITGuDingZiChanLingYongShenQingJDialog;
 import com.jskj.asset.client.panel.slgl.PTGuDingZiChanLingYongShenQingJDialog;
 import com.jskj.asset.client.panel.slgl.task.ShenqingDetailTask;
+import com.jskj.asset.client.panel.ymgl.YiMiaoSheGouShenQingJDialog;
+import com.jskj.asset.client.panel.ymgl.YiMiaoSheGouTuiHuoJDialog;
+import com.jskj.asset.client.panel.ymgl.YiMiaoXiaFaTuiKuJDialog;
+import com.jskj.asset.client.panel.ymgl.YiMiaoXiaoShouTuiHuoJDialog;
+import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouTuihuoXiangdanTask;
+import static com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouTuihuoXiangdanTask.logger;
+import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
 import java.text.SimpleDateFormat;
@@ -47,10 +56,10 @@ public class DanweiyingfuJDialog extends BaseDialog {
     private final BindTableHelper<Yingfukuandanjutb> bindTable;
     private final HashMap parameterMap;
     private final String conditionSql;
-    
 
     /**
      * Creates new form FKDJDialog
+     *
      * @param map
      */
     public DanweiyingfuJDialog(HashMap map) {
@@ -61,7 +70,7 @@ public class DanweiyingfuJDialog extends BaseDialog {
         endDate.setText(dateformate.format(map.get("endDate")).toString());
         supplier.setText(map.get("supplierName").toString());
         yingfu.setText("0.0");
-        
+
         conditionSql = "";
         parameterMap = new HashMap();
         parameterMap.put("conditionSql", conditionSql);
@@ -71,12 +80,11 @@ public class DanweiyingfuJDialog extends BaseDialog {
         parameterMap.put("serviceId", "yflist");
 
         bindTable = new BindTableHelper<Yingfukuandanjutb>(jTable1, new ArrayList<Yingfukuandanjutb>());
-        bindTable.createTable(new String[][]{{"yuandanId", "源单编号"}, {"zhidandate", "制单日期"},{"yuandantype", "源单类型"}
-                , {"danjujine", "单据金额"}, {"increase", "增加金额"}, {"decrease", "减少金额"}, {"yingfu", "应付金额"}, {"remark", "备注"}});
+        bindTable.createTable(new String[][]{{"yuandanId", "源单编号"}, {"zhidandate", "制单日期"}, {"yuandantype", "源单类型"}, {"danjujine", "单据金额"}, {"increase", "增加金额"}, {"decrease", "减少金额"}, {"yingfu", "应付金额"}, {"remark", "备注"}});
         bindTable.setColumnType(Date.class, 2);
         //bindTable.setColumnType(Float.class, 8, 9);
         bindTable.bind().setColumnWidth(new int[]{0, 150}, new int[]{1, 100}, new int[]{2, 100}).setRowHeight(25);
-        
+
         new RefreshTask().execute();
     }
 
@@ -84,8 +92,8 @@ public class DanweiyingfuJDialog extends BaseDialog {
     public void exit() {
         this.dispose();
     }
-    
-    private class RefreshTask extends YingfuliebiaoFindTask{
+
+    private class RefreshTask extends YingfuliebiaoFindTask {
 
         RefreshTask() {
             super(parameterMap);
@@ -93,54 +101,57 @@ public class DanweiyingfuJDialog extends BaseDialog {
 
         @Override
         public void responseResult(CommFindEntity<Yingfukuandanjutb> response) {
-            
+
             logger.debug("get current size:" + response.getResult().size());
 
             //存下所有的数据
             currentPageData = response.getResult();
 
             float total = 0;
-            for(int i = 0; i < currentPageData.size(); i++){
+            for (int i = 0; i < currentPageData.size(); i++) {
                 total += currentPageData.get(i).getYingfu();
-                if(i > 0){
-                    currentPageData.get(i).setYingfu(currentPageData.get(i - 1).getYingfu() +
-                            currentPageData.get(i).getYingfu());
+                if (i > 0) {
+                    currentPageData.get(i).setYingfu(currentPageData.get(i - 1).getYingfu()
+                            + currentPageData.get(i).getYingfu());
                 }
             }
             yingfu.setText("" + total);
             bindTable.refreshData(currentPageData);
         }
-        
+
     }
 
     @Action
-    public void detail(){
+    public void detail() {
         int n = jTable1.getSelectedRow();
-        if(n < 0){
+        if (n < 0) {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return;
         }
         Yingfukuandanjutb fksqdan = currentPageData.get(n);
-        if(fksqdan.getYuandantype().equals("期初应付")){
+        if (fksqdan.getYuandantype().equals("期初应付")) {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return;
         }
-        if(fksqdan.getYuandanId().contains(DanHao.TYPE_FKDJ) || fksqdan.getYuandanId().contains(DanHao.TYPE_QTFK)){
+        if (fksqdan.getYuandanId().contains(DanHao.TYPE_FKDJ) || fksqdan.getYuandanId().contains(DanHao.TYPE_QTFK)) {
             new FKDetailTask(fksqdan.getYuandanId()).execute();
-        } else if(fksqdan.getYuandanId().contains(DanHao.TYPE_GDZC) || fksqdan.getYuandanId().contains(DanHao.TYPE_YHCG) 
-                || fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCG)){
+        } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_GDZC) || fksqdan.getYuandanId().contains(DanHao.TYPE_YHCG)) {
             new DetailTask(fksqdan.getYuandanId()).execute();
+        } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCGTH)) {
+            new YimiaoshegoutuihuoxiangdanTask(fksqdan.getYuandanId()).execute();
+        } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCG)) {
+            new YimiaocaigouxiangdanTask(fksqdan.getYuandanId()).execute();
         }
-        
+
         this.setVisible(false);
     }
-    
-    private class FKDetailTask extends FkShenqingDetailTask{
+
+    private class FKDetailTask extends FkShenqingDetailTask {
 
         public FKDetailTask(String id) {
             super(id);
         }
-        
+
         @Override
         public void onSucceeded(Object object) {
             if (object instanceof Exception) {
@@ -149,34 +160,34 @@ public class DanweiyingfuJDialog extends BaseDialog {
                 logger.error(e);
                 return;
             }
-            if(object == null){
+            if (object == null) {
                 AssetMessage.showMessageDialog(null, "未获取到申请单详细信息。");
                 return;
             }
-            FukuanshenqingDetailEntity cgsq = (FukuanshenqingDetailEntity)object;
+            FukuanshenqingDetailEntity cgsq = (FukuanshenqingDetailEntity) object;
             openFKShenqingdan(cgsq);
         }
     }
-    
+
     public void openFKShenqingdan(FukuanshenqingDetailEntity fksq) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        if(fksq.getFukuandanId().contains(DanHao.TYPE_FKDJ)){
+        if (fksq.getFukuandanId().contains(DanHao.TYPE_FKDJ)) {
             FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog(this, fksq);
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
-        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_QTFK)){
+        } else if (fksq.getFukuandanId().contains(DanHao.TYPE_QTFK)) {
             OtherFuKuanDanJDialog fkdJDialog = new OtherFuKuanDanJDialog(this, fksq);
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
         }
     }
-    
-    private class DetailTask extends ShenqingDetailTask{
+
+    private class DetailTask extends ShenqingDetailTask {
 
         public DetailTask(String id) {
             super(id);
         }
-        
+
         @Override
         public void onSucceeded(Object object) {
             if (object instanceof Exception) {
@@ -185,14 +196,14 @@ public class DanweiyingfuJDialog extends BaseDialog {
                 logger.error(e);
                 return;
             }
-            if(object == null){
+            if (object == null) {
                 AssetMessage.showMessageDialog(null, "未获取到申请单详细信息。");
                 return;
             }
-            CaigoushenqingDetailEntity cgsq = (CaigoushenqingDetailEntity)object;
+            CaigoushenqingDetailEntity cgsq = (CaigoushenqingDetailEntity) object;
             openShenqingdan(cgsq);
         }
-        
+
     }
 
     public void openShenqingdan(CaigoushenqingDetailEntity cgsq) {
@@ -223,7 +234,72 @@ public class DanweiyingfuJDialog extends BaseDialog {
             AssetClientApp.getApplication().show(weixiushenqing);
         }
     }
-    
+
+    //    疫苗赊购退货详单显示部分
+    private class YimiaoshegoutuihuoxiangdanTask extends YimiaoXiaoshouTuihuoXiangdanTask {
+
+        public YimiaoshegoutuihuoxiangdanTask(String xiangdanID) {
+            super(xiangdanID);
+        }
+
+        @Override
+        public void onSucceeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            if (result == null) {
+                AssetMessage.showMessageDialog(null, "未获取到申请单详细信息。");
+                return;
+            }
+            XiaoshoutuihuoxiangdanEntity yimiaoxiaoshoutuihuoxiangdanEntity = (XiaoshoutuihuoxiangdanEntity) result;
+            openYimiashegoutuihuodan(yimiaoxiaoshoutuihuoxiangdanEntity);
+        }
+    }
+
+    public void openYimiashegoutuihuodan(XiaoshoutuihuoxiangdanEntity yimiaoxiaoshoutuihuoEntiy) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        if (yimiaoxiaoshoutuihuoEntiy.getBacksaletb().getBacksaleId().contains(DanHao.TYPE_YIMIAOCGTH)) {
+            YiMiaoSheGouTuiHuoJDialog yimiaoshegoutuihuoJDialog = new YiMiaoSheGouTuiHuoJDialog(this, yimiaoxiaoshoutuihuoEntiy);
+            yimiaoshegoutuihuoJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaoshegoutuihuoJDialog);
+        }
+    }
+
+    private class YimiaocaigouxiangdanTask extends YimiaoXiaoshouXiangdanTask {
+
+        public YimiaocaigouxiangdanTask(String xiangdanID) {
+            super(xiangdanID);
+        }
+
+        @Override
+        public void onSucceeded(Object result) {
+            if (result instanceof Exception) {
+                Exception e = (Exception) result;
+                AssetMessage.ERRORSYS(e.getMessage());
+                logger.error(e);
+                return;
+            }
+            if (result == null) {
+                AssetMessage.showMessageDialog(null, "未获取到申请单详细信息。");
+                return;
+            }
+            YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntiy = (YimiaocaigouxiangdanEntity) result;
+            openYimiashegoudan(yimiaocaigouxiangdanEntiy);
+        }
+    }
+
+    public void openYimiashegoudan(YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
+        JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+        if (yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanId().contains(DanHao.TYPE_YIMIAOCGTH)) {
+            YiMiaoSheGouShenQingJDialog yimiaocaigouJDialog = new YiMiaoSheGouShenQingJDialog(this, yimiaocaigouxiangdanEntity);
+            yimiaocaigouJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(yimiaocaigouJDialog);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -480,13 +556,12 @@ public class DanweiyingfuJDialog extends BaseDialog {
         try {
             super.print(this.getTitle(),
                     new String[][]{
-                    {"供应单位", supplier.getText()},
-                    {"起始日期", startDate.getText()},
-                    {"应付总金额", yingfu.getText()},
-                    {"结束日期", endDate.getText()}}, 
+                        {"供应单位", supplier.getText()},
+                        {"起始日期", startDate.getText()},
+                        {"应付总金额", yingfu.getText()},
+                        {"结束日期", endDate.getText()}},
                     jTable1,
-                    new String[][]{
-                    });
+                    new String[][]{});
         } catch (DRException ex) {
             ex.printStackTrace();
             logger.error(ex);

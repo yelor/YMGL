@@ -19,7 +19,7 @@ import org.springframework.web.client.RestClientException;
 public class YimiaoXiaoshouTuihuoXiangdanTask extends BaseTask {
 
     public static final Logger logger = Logger.getLogger(YimiaoXiaoshouTuihuoXiangdanTask.class);
-    
+
 //  //对应的URL在YimiaoxiangdanxianshiController里
     private final String YMXSTH_URI = Constants.HTTP + Constants.APPID + "yimiaoxiaoshoutuihuoxiangdan";
     private String xiangdanID;
@@ -34,7 +34,8 @@ public class YimiaoXiaoshouTuihuoXiangdanTask extends BaseTask {
     public Object doBackgrounp() {
         try {
             logger.debug("xiangdanID:" + xiangdanID);
-            if (xiangdanID.contains(DanHao.TYPE_YIMIAOXF) | xiangdanID.contains(DanHao.TYPE_YIMIAOXS)) {
+            if (xiangdanID.contains(DanHao.TYPE_YIMIAOXF) | xiangdanID.contains(DanHao.TYPE_YIMIAOXS)
+                    | xiangdanID.contains(DanHao.TYPE_YIMIAOLYTH) | xiangdanID.contains(DanHao.TYPE_YIMIAOCGTH)) {
                 yimiaoxiaoshoutuihuoEntiy = new XiaoshoutuihuoxiangdanEntity();
                 yimiaoxiaoshoutuihuoEntiy = restTemplate.getForObject(YMXSTH_URI + "?xiangdanID=" + xiangdanID, XiaoshoutuihuoxiangdanEntity.class);
                 return yimiaoxiaoshoutuihuoEntiy;
