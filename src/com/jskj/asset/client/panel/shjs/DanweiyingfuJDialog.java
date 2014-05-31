@@ -133,12 +133,11 @@ public class DanweiyingfuJDialog extends BaseDialog {
             AssetMessage.showMessageDialog(this, "请选择某个申请单!");
             return;
         }
-        if(fksqdan.getYuandanId().contains(DanHao.TYPE_ZCFK) || fksqdan.getYuandanId().contains(DanHao.TYPE_ZQFK)
-                 || fksqdan.getYuandanId().contains(DanHao.TYPE_YMFK) || fksqdan.getYuandanId().contains(DanHao.TYPE_YQFK)){
+        if (fksqdan.getYuandanId().contains(DanHao.TYPE_FKDJ) || fksqdan.getYuandanId().contains(DanHao.TYPE_QTFK)) {
             new FKDetailTask(fksqdan.getYuandanId()).execute();
         } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_GDZC) || fksqdan.getYuandanId().contains(DanHao.TYPE_YHCG)) {
             new DetailTask(fksqdan.getYuandanId()).execute();
-        } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCGTH)) {
+        } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOXSTH)) {
             new YimiaoshegoutuihuoxiangdanTask(fksqdan.getYuandanId()).execute();
         } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCG)) {
             new YimiaocaigouxiangdanTask(fksqdan.getYuandanId()).execute();
@@ -172,28 +171,12 @@ public class DanweiyingfuJDialog extends BaseDialog {
 
     public void openFKShenqingdan(FukuanshenqingDetailEntity fksq) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-<<<<<<< HEAD
         if (fksq.getFukuandanId().contains(DanHao.TYPE_FKDJ)) {
-=======
-        if(fksq.getFukuandanId().contains(DanHao.TYPE_ZCFK)){
->>>>>>> origin/master
             FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog(this, fksq);
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
-<<<<<<< HEAD
         } else if (fksq.getFukuandanId().contains(DanHao.TYPE_QTFK)) {
-=======
-        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_ZQFK)){
->>>>>>> origin/master
             OtherFuKuanDanJDialog fkdJDialog = new OtherFuKuanDanJDialog(this, fksq);
-            fkdJDialog.setLocationRelativeTo(mainFrame);
-            AssetClientApp.getApplication().show(fkdJDialog);
-        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_YMFK)){
-            YMFuKuanDanJDialog fkdJDialog = new YMFuKuanDanJDialog(this, fksq);
-            fkdJDialog.setLocationRelativeTo(mainFrame);
-            AssetClientApp.getApplication().show(fkdJDialog);
-        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_YQFK)){
-            YMOtherFuKuanDanJDialog fkdJDialog = new YMOtherFuKuanDanJDialog(this, fksq);
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
         }
