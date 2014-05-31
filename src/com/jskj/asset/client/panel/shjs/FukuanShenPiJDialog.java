@@ -22,6 +22,9 @@ import com.jskj.asset.client.panel.shjs.task.FukuanTask;
 import com.jskj.asset.client.panel.shjs.task.FkShenqingDetailTask;
 import com.jskj.asset.client.util.BindTableHelper;
 import com.jskj.asset.client.util.DanHao;
+import static com.jskj.asset.client.util.DanHao.TYPE_YMFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_YQFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_ZCFK;
 import com.jskj.asset.client.util.DateHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,12 +180,20 @@ public class FukuanShenPiJDialog extends BaseDialog {
     
     public void openShenqingdan(FukuanshenqingDetailEntity fksq) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        if(fksq.getFukuandanId().contains(DanHao.TYPE_FKDJ)){
+        if(fksq.getFukuandanId().contains(DanHao.TYPE_ZCFK)){
             FuKuanDanJDialog fkdJDialog = new FuKuanDanJDialog(this, fksq);
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
-        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_QTFK)){
+        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_ZQFK)){
             OtherFuKuanDanJDialog fkdJDialog = new OtherFuKuanDanJDialog(this, fksq);
+            fkdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(fkdJDialog);
+        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_YMFK)){
+            YMFuKuanDanJDialog fkdJDialog = new YMFuKuanDanJDialog(this, fksq);
+            fkdJDialog.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(fkdJDialog);
+        }else if(fksq.getFukuandanId().contains(DanHao.TYPE_YQFK)){
+            YMOtherFuKuanDanJDialog fkdJDialog = new YMOtherFuKuanDanJDialog(this, fksq);
             fkdJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(fkdJDialog);
         }
@@ -212,25 +223,6 @@ public class FukuanShenPiJDialog extends BaseDialog {
         return new SPTask(fksqdan);
     }
 
-    private class ShenPiYTask extends org.jdesktop.application.Task<Object, Void> {
-        ShenPiYTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to ShenPiYTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-    
     @Action
     public Task shenPiN(){
         int n = jSQTable.getSelectedRow();

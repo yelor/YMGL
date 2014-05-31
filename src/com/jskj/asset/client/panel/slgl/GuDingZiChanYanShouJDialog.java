@@ -430,21 +430,21 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         return new Cancel(list);
     }
     
-    @Action
-    public Task uploadPic() {
-        BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
-        String selectedPath = fileChoose.openDialog();
-        if (!selectedPath.trim().equals("")) {
-            jTextFieldFile.setText(selectedPath);
-            imageUri = selectedPath;
-            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "gudingzhichan") {
-                @Override
-                public void responseResult(String file) {
-                }
-            };
-        }
-        return null;
-    }
+//    @Action
+//    public Task uploadPic() {
+//        BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
+//        String selectedPath = fileChoose.openDialog();
+//        if (!selectedPath.trim().equals("")) {
+//            jTextFieldFile.setText(selectedPath);
+//            imageUri = selectedPath;
+//            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "gudingzhichan") {
+//                @Override
+//                public void responseResult(String file) {
+//                }
+//            };
+//        }
+//        return null;
+//    }
 
     @Action
     public Task submitForm() throws ParseException{
@@ -547,8 +547,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jLabel11 = new javax.swing.JLabel();
         jTextFieldZhidanren = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jTextFieldFile = new javax.swing.JTextField();
         jTextFieldQuantity = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
 
@@ -696,14 +694,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
 
-        jButton2.setAction(actionMap.get("uploadPic")); // NOI18N
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
-
-        jTextFieldFile.setEditable(false);
-        jTextFieldFile.setName("jTextFieldFile"); // NOI18N
-        jTextFieldFile.setPreferredSize(new java.awt.Dimension(0, 30));
-
         jTextFieldQuantity.setName("jTextFieldQuantity"); // NOI18N
         jTextFieldQuantity.setPreferredSize(new java.awt.Dimension(0, 30));
 
@@ -731,12 +721,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                     .addComponent(jLabel25))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldZhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextFieldZhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -822,8 +807,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jTextFieldFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldZhidanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addContainerGap())
@@ -892,7 +875,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
@@ -919,7 +901,6 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldCaigouren;
-    private javax.swing.JTextField jTextFieldFile;
     private javax.swing.JTextField jTextFieldGuige;
     private javax.swing.JTextField jTextFieldJianceren;
     private javax.swing.JTextField jTextFieldPrice;

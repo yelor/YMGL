@@ -17,6 +17,10 @@ import com.jskj.asset.client.panel.slgl.task.ShenqingDetailTask;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
 import com.jskj.asset.client.util.ClassHelper;
 import com.jskj.asset.client.util.DanHao;
+import static com.jskj.asset.client.util.DanHao.TYPE_YMFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_YQFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_ZCFK;
+import static com.jskj.asset.client.util.DanHao.TYPE_ZQFK;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -88,7 +92,8 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
                         }
                     }.execute();
 
-                } else if (!shenqingdan.startsWith(DanHao.TYPE_FKDJ) && !shenqingdan.startsWith(DanHao.TYPE_QTFK)) {//资产相关
+                } else if (!shenqingdan.startsWith(DanHao.TYPE_ZCFK) && !shenqingdan.startsWith(DanHao.TYPE_YMFK)
+                         && !shenqingdan.startsWith(DanHao.TYPE_ZQFK) && !shenqingdan.startsWith(DanHao.TYPE_YQFK)) {//资产相关
                     new ShenqingDetailTask(shenqingdan) {
 
                         @Override
