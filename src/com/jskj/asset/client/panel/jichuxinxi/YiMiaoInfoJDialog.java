@@ -635,6 +635,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
                         YiMiaoInfoJDialog yiMiaoInfoJDialog = new YiMiaoInfoJDialog(parentPanel);
                         yiMiaoInfoJDialog.setLocationRelativeTo(mainFrame);
+                        yiMiaoInfoJDialog.setUpdatedData(new YimiaoAll());
                         AssetClientApp.getApplication().show(yiMiaoInfoJDialog);
 //                        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
 //                        List<String> source = mode.getSource();

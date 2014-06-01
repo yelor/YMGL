@@ -425,7 +425,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                 return null;
             }
         }
-        lb.setReason("【验收】" + reason);
+        lb.setReason("(验收)，原因：" + reason);
         list.add(lb);
         return new Cancel(list);
     }

@@ -479,7 +479,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                     return null;
                 }
             }
-            lb.setReason("【出库】" + reason);
+            lb.setReason("(出库)，原因：" + reason);
             lst.add(lb);
         }
         return new Cancel(lst);

@@ -366,7 +366,7 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
                 return null;
             }
         }
-        lb.setReason("【登记】" + reason);
+        lb.setReason("(登记)，原因：" + reason);
         list.add(lb);
         return new Cancel(list);
     }

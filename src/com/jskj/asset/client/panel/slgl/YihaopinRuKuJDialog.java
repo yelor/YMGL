@@ -559,7 +559,7 @@ public class YihaopinRuKuJDialog extends BaseDialog {
                     return null;
                 }
             }
-            lb.setReason("【入库】" + reason);
+            lb.setReason("(入库)，原因：" + reason);
             lst.add(lb);
         }
         return new Cancel(lst);

@@ -382,7 +382,7 @@ public class GuDingZiChanTuiKuJDialog extends BaseDialog{
                     return null;
                 }
             }
-            lb.setReason("【退库】" + reason);
+            lb.setReason("(退库)，原因：" + reason);
             lst.add(lb);
         }
         return new Cancel(lst);
