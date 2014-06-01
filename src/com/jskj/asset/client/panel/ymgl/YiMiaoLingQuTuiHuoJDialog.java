@@ -42,9 +42,9 @@ import org.jdesktop.application.Task;
  *
  * @author huiqi
  */
-public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
+public class YiMiaoLingQuTuiHuoJDialog extends BaseDialog {
 
-    private static final Logger logger = Logger.getLogger(YiMiaoXiaFaTuiKuJDialog.class);
+    private static final Logger logger = Logger.getLogger(YiMiaoLingQuTuiHuoJDialog.class);
     private XiaoshoutuihuoEntity yimiaoxiafaTuiku;
     private Backsale_detail_tb backsale_detail;
     private Backsaletb backsale;
@@ -56,11 +56,11 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
     /**
      * Creates new form yimiaoyanshouJDialog
      */
-    public YiMiaoXiaFaTuiKuJDialog() {
+    public YiMiaoLingQuTuiHuoJDialog() {
         super();
         init();
         initComponents();
-        jTextFieldXiafaId.setText(DanHao.getDanHao("YMXFTK"));
+        jTextFieldXiafaId.setText(DanHao.getDanHao("YMLQTH"));
         jTextFieldXiafaId.setEditable(false);
 
         jTextFieldzhidanDate.setText(dateformate.format(new Date()).toString());
@@ -68,40 +68,40 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFielddepartment.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
 
-        //        下发单位的popup
-        ((BaseTextField) jTextFieldXiafadanwei).registerPopup(new IPopupBuilder() {
+     //供应单位的popup
+        ((BaseTextField) jTextFieldSupplierName).registerPopup(new IPopupBuilder() {
             public int getType() {
                 return IPopupBuilder.TYPE_POPUP_TEXT;
             }
 
             public String getWebServiceURI() {
-                return Constants.HTTP + Constants.APPID + "kehudanwei";
+                return Constants.HTTP + Constants.APPID + "supplier";
             }
 
             public String getConditionSQL() {
-                String sql = " kehudanwei_type = 0 ";
-                if (!jTextFieldXiafadanwei.getText().trim().equals("")) {
-                    sql += "  and (kehudanwei_name like \"%" + jTextFieldXiafadanwei.getText() + "%\"" + " or kehudanwei_zujima like \"%" + jTextFieldXiafadanwei.getText().toLowerCase() + "%\")";
+                String sql = " supplier_type = 0 ";
+                if (!jTextFieldSupplierName.getText().trim().equals("")) {
+                    sql += "and (supplier_name like \"%" + jTextFieldSupplierName.getText() + "%\"" + " or supplier_zujima like \"%" + jTextFieldSupplierName.getText().trim().toLowerCase() + "%\")";
                 }
                 return sql;
             }
 
             public String[][] displayColumns() {
-                return new String[][]{{"kehudanweiName", "客户单位"}, {"kehudanweiPhone", "电话"}, {"kehudanweiAddr", "地址"}};
+                return new String[][]{{"supplierId", "供应单位编号"}, {"supplierName", "供应单位名称"}, {"supplierConstactperson", "联系人"}};
             }
 
             public void setBindedMap(HashMap bindedMap) {
                 if (bindedMap != null) {
-                    jTextFieldXiafadanwei.setText(bindedMap.get("kehudanweiName") == null ? "" : bindedMap.get("kehudanweiName").toString());
-                    jTextFieldContactPerson.setText(bindedMap.get("kehudanweiConstactperson") == null ? "" : bindedMap.get("kehudanweiConstactperson").toString());
-                    backsale.setCustomerId((Integer) bindedMap.get("kehudanweiId"));
+                    backsale.setSupplierId((Integer) (bindedMap.get("supplierId")));
+                    jTextFieldSupplierName.setText(bindedMap.get("supplierName") == null ? "" : bindedMap.get("supplierName").toString());
+                    jTextFieldConstactperson.setText(bindedMap.get("supplierConstactperson") == null ? "" : bindedMap.get("supplierConstactperson").toString());
                 }
             }
         });
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"kucunId", "库存编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
+            {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"}, {"tuihuoQuantity", "数量", "true"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
@@ -144,14 +144,6 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                     Object unit = yimiao.get("unitId");
                     Object youxiaoqi = bindedMap.get("youxiaodate").toString().subSequence(0, 10);
                     Object pihao = bindedMap.get("pihao");
-                    
-                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
-                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-                        if (yimiaotable.getValue(i, "kucunId").toString().trim().equals("" + bindedMap.get("stockpileId"))) {
-                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoXiaFaTuiKuJDialog.this);
-                            return;
-                        }
-                    }
 
                     editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
@@ -255,9 +247,9 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         jTableyimiao = new BaseTable(null);
         jLabel4 = new javax.swing.JLabel();
         jTextFieldzhidanren = new javax.swing.JTextField();
-        jTextFieldXiafadanwei = new BaseTextField();
+        jTextFieldSupplierName = new BaseTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextFieldContactPerson = new javax.swing.JTextField();
+        jTextFieldConstactperson = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
@@ -309,7 +301,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         jScrollPane4.setViewportView(jTable3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoXiaFaTuiKuJDialog.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(YiMiaoLingQuTuiHuoJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -321,7 +313,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         jToolBar1.setName("jToolBar1"); // NOI18N
         jToolBar1.setOpaque(false);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoXiaFaTuiKuJDialog.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoLingQuTuiHuoJDialog.class, this);
         jButton1.setAction(actionMap.get("submitForm")); // NOI18N
         jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -465,12 +457,12 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         jTextFieldzhidanren.setText(resourceMap.getString("jTextFieldzhidanren.text")); // NOI18N
         jTextFieldzhidanren.setName("jTextFieldzhidanren"); // NOI18N
 
-        jTextFieldXiafadanwei.setName("jTextFieldXiafadanwei"); // NOI18N
+        jTextFieldSupplierName.setName("jTextFieldSupplierName"); // NOI18N
 
         jLabel13.setText(resourceMap.getString("jLabel13.text")); // NOI18N
         jLabel13.setName("jLabel13"); // NOI18N
 
-        jTextFieldContactPerson.setName("jTextFieldContactPerson"); // NOI18N
+        jTextFieldConstactperson.setName("jTextFieldConstactperson"); // NOI18N
 
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
@@ -488,7 +480,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextFieldXiafadanwei, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
@@ -506,7 +498,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                             .addComponent(jTextFielddepartment)
-                            .addComponent(jTextFieldContactPerson)))
+                            .addComponent(jTextFieldConstactperson)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel25)
@@ -530,7 +522,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldXiafadanwei, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -542,7 +534,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                             .addComponent(jTextFieldzhidanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldContactPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldConstactperson, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -601,20 +593,20 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoXiaFaTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuTuiHuoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoXiaFaTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuTuiHuoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoXiaFaTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuTuiHuoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(YiMiaoXiaFaTuiKuJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(YiMiaoLingQuTuiHuoJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YiMiaoXiaFaTuiKuJDialog dialog = new YiMiaoXiaFaTuiKuJDialog();
+                YiMiaoLingQuTuiHuoJDialog dialog = new YiMiaoLingQuTuiHuoJDialog();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -653,7 +645,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         if (jTextFieldzhidanDate.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入制单日期!");
             return null;
-        } else if (jTextFieldXiafadanwei.getText().trim().equals("")) {
+        } else if (jTextFieldSupplierName.getText().trim().equals("")) {
             AssetMessage.ERRORSYS("请输入下发单位!");
             return null;
         }
@@ -670,7 +662,7 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
             backsale_detail.setBacksaleId(jTextFieldXiafaId.getText());
             backsale_detail.setBacksaleDate(dateformate.parse(jTextFieldzhidanDate.getText()));
             backsale_detail.setYouxiaoqi(riqiformate.parse(yimiaotable.getValue(i, "youxiaoqi").toString()));
-            backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "kucunId").toString()));
+            backsale_detail.setStockpileId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             if (yimiaotable.getValue(i, "tuihuoQuantity").equals("")) {
                 AssetMessage.ERRORSYS("请输入疫苗退库数量!");
                 return null;
@@ -691,8 +683,8 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
             super.print(this.getTitle(),
                     new String[][]{{"单据编号", jTextFieldXiafaId.getText()},
                     {"制单日期", jTextFieldzhidanDate.getText()},
-                    {"客户单位", jTextFieldXiafadanwei.getText()},
-                    {"联系人", jTextFieldContactPerson.getText()},
+                    {"客户单位", jTextFieldSupplierName.getText()},
+                    {"联系人", jTextFieldConstactperson.getText()},
                     {"经办人", jTextFieldjingbanren.getText()},
                     {"部门", jTextFielddepartment.getText()},
                     {"备注", jTextArea1.getText(),"single"}},
@@ -723,12 +715,12 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
                 logger.error(e);
                 return;
             }
-            AssetMessage.INFO("提交成功！", YiMiaoXiaFaTuiKuJDialog.this);
+            AssetMessage.INFO("提交成功！", YiMiaoLingQuTuiHuoJDialog.this);
             exit();
         }
     }
     
-     public YiMiaoXiaFaTuiKuJDialog(final JDialog parent, XiaoshoutuihuoxiangdanEntity yimiaoxiaoshoutuihuoxiangdanEntity) {
+     public YiMiaoLingQuTuiHuoJDialog(final JDialog parent, XiaoshoutuihuoxiangdanEntity yimiaoxiaoshoutuihuoxiangdanEntity) {
         super();
         initComponents();
         this.yimiaoxiaoshoutuihuoxiangdanEntity = yimiaoxiaoshoutuihuoxiangdanEntity;
@@ -772,10 +764,10 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
         jTextFieldXiafaId.setEditable(false);
         jTextFieldXiafaId.setText(yimiaoxiaoshoutuihuoxiangdanEntity.getBacksaletb().getBacksaleId());
         jTextFieldzhidanDate.setText(DateHelper.format(yimiaoxiaoshoutuihuoxiangdanEntity.getBacksaletb().getBacksaleDate(), "yyyy-MM-dd HH:mm:ss"));
-        jTextFieldXiafadanwei.setEditable(false);
-        jTextFieldXiafadanwei.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getKehudanwei().getKehudanweiName());
-        jTextFieldContactPerson.setEditable(false);
-        jTextFieldContactPerson.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getKehudanwei().getKehudanweiConstactperson());
+        jTextFieldSupplierName.setEditable(false);
+        jTextFieldSupplierName.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getGongyingdanwei().getSupplierName());
+        jTextFieldConstactperson.setEditable(false);
+        jTextFieldConstactperson.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getGongyingdanwei().getSupplierConstactperson());
         jTextFielddepartment.setEditable(false);
         jTextFielddepartment.setText("" + yimiaoxiaoshoutuihuoxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
         jTextFieldjingbanren.setEditable(false);
@@ -793,19 +785,19 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
     public void setListTable(List<BacksaleyimiaoEntity> backsaleyimiaoEntityList) {
 
         int size = backsaleyimiaoEntityList.size();
-        Object[][] o = new Object[size][11];
+        Object[][] o = new Object[size][9];
         for (int i = 0; i < size; i++) {
             Backsale_detail_tb backsaledetailtb = backsaleyimiaoEntityList.get(i).getBacksale_detail_tb();
             YimiaoAll yimiaoAll = backsaleyimiaoEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = backsaleyimiaoEntityList.get(i).getStockpile();
             o[i] = new Object[]{backsaledetailtb.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), stockpile.getPihao(), yimiaoAll.getUnitId(),
-                new SimpleDateFormat("yyyy-MM-dd").format((Date) stockpile.getYouxiaodate()), backsaledetailtb.getQuantity(), backsaledetailtb.getSaleprice(), backsaledetailtb.getTotalprice()};
+                new SimpleDateFormat("yyyy-MM-dd").format((Date) stockpile.getYouxiaodate()), backsaledetailtb.getQuantity()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "批号", "单位", "有效期", "数量", "售价", "合价"
+                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "批号", "单位", "有效期", "数量"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -839,9 +831,9 @@ public class YiMiaoXiaFaTuiKuJDialog extends BaseDialog {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTableyimiao;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextFieldContactPerson;
+    private javax.swing.JTextField jTextFieldConstactperson;
+    private javax.swing.JTextField jTextFieldSupplierName;
     private javax.swing.JTextField jTextFieldXiafaId;
-    private javax.swing.JTextField jTextFieldXiafadanwei;
     private javax.swing.JTextField jTextFielddepartment;
     private javax.swing.JTextField jTextFieldjingbanren;
     private javax.swing.JTextField jTextFieldzhidanDate;

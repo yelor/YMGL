@@ -13,6 +13,9 @@ import com.jskj.asset.client.panel.slgl.GuDingZiChanTuiKuJDialog;
 import com.jskj.asset.client.panel.slgl.YihaopinChuKuJDialog;
 import com.jskj.asset.client.panel.slgl.YihaopinRuKuJDialog;
 import com.jskj.asset.client.panel.slgl.YihaopinTuiKuJDialog;
+import com.jskj.asset.client.panel.ymgl.YiMiaoLingQuTuiHuoJDialog;
+import com.jskj.asset.client.panel.ymgl.YiMiaoXiaFaTuiKuJDialog;
+import com.jskj.asset.client.panel.ymgl.YiMiaoXiaoShouTuiHuoJDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jdesktop.application.Action;
@@ -57,14 +60,18 @@ public class SelectTuiKuTuiHuoJDialog1 extends BaseDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectTuiKuTuiHuoJDialog1.class, this);
+        jButton3.setAction(actionMap.get("yimiaoxiafatuikuAction")); // NOI18N
         jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
+        jButton4.setAction(actionMap.get("yimiaoxiaoshoutuihuoAction")); // NOI18N
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
 
+        jButton5.setAction(actionMap.get("Yimiaolingqutuihuo")); // NOI18N
         jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
@@ -73,6 +80,7 @@ public class SelectTuiKuTuiHuoJDialog1 extends BaseDialog {
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setName("jButton6"); // NOI18N
 
+        jButton7.setAction(actionMap.get("Yimiaoshegoutuihuo")); // NOI18N
         jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
         jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
         jButton7.setName("jButton7"); // NOI18N
@@ -81,7 +89,6 @@ public class SelectTuiKuTuiHuoJDialog1 extends BaseDialog {
         jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
         jButton8.setName("jButton8"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(SelectTuiKuTuiHuoJDialog1.class, this);
         jButton9.setAction(actionMap.get("zichantuiku_pop")); // NOI18N
         jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
         jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
@@ -178,126 +185,67 @@ public class SelectTuiKuTuiHuoJDialog1 extends BaseDialog {
         });
     }
 
-    @Action
-    public void ck1_pop() {
+      @Action
+    public void Yimiaolingqutuihuo() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu1JDialog ymck1 = new YiMiaoChuKu1JDialog();
-                ymck1.setNew();
-                ymck1.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymck1);
+                YiMiaoLingQuTuiHuoJDialog lingqutuihuoJDialog = new YiMiaoLingQuTuiHuoJDialog();
+                lingqutuihuoJDialog.setLocationRelativeTo(mainFrame);
+                lingqutuihuoJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(lingqutuihuoJDialog);
             }
         });
     }
 
     @Action
-    public void rk1_pop() {
+    public void Yimiaoshegoutuihuo() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu1JDialog ymrk1 = new YiMiaoRuKu1JDialog();
-                ymrk1.setNew();
-                ymrk1.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymrk1);
+                YiMiaoLingQuTuiHuoJDialog shengoutuihuoJDialog = new YiMiaoLingQuTuiHuoJDialog();
+                shengoutuihuoJDialog.setLocationRelativeTo(mainFrame);
+                shengoutuihuoJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(shengoutuihuoJDialog);
+            }
+        });
+    }
+    
+      @Action
+    public void yimiaoxiafatuikuAction() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoXiaFaTuiKuJDialog yiMiaoXiaFaTuiKuJDialog = new YiMiaoXiaFaTuiKuJDialog();
+                yiMiaoXiaFaTuiKuJDialog.setLocationRelativeTo(mainFrame);
+                yiMiaoXiaFaTuiKuJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(yiMiaoXiaFaTuiKuJDialog);
             }
         });
     }
 
     @Action
-    public void ck2_pop() {
+    public void yimiaoxiaoshoutuihuoAction() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoChuKu2JDialog ymck2 = new YiMiaoChuKu2JDialog();
-                ymck2.setNew();
-                ymck2.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymck2);
-            }
-        });
-    }
-
-    @Action
-    public void rk2_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoRuKu2JDialog ymrk2 = new YiMiaoRuKu2JDialog();
-                ymrk2.setNew();
-                ymrk2.setLocationRelativeTo(mainFrame);
-                AssetClientApp.getApplication().show(ymrk2);
+                YiMiaoXiaoShouTuiHuoJDialog yiMiaoXiaoShouTuiHuoJDialog = new YiMiaoXiaoShouTuiHuoJDialog();
+                yiMiaoXiaoShouTuiHuoJDialog.setLocationRelativeTo(mainFrame);
+                yiMiaoXiaoShouTuiHuoJDialog.setAddOrUpdate(true);
+                AssetClientApp.getApplication().show(yiMiaoXiaoShouTuiHuoJDialog);
             }
         });
     }
     
-    @Action
-    public void zichanruku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanRuKuJDialog zichanruku = new GuDingZiChanRuKuJDialog();
-                zichanruku.setLocationRelativeTo(mainFrame);
-                zichanruku.setNew();
-                AssetClientApp.getApplication().show(zichanruku);
-            }
-        });
-    }
-    
-    @Action
-    public void zichanchuku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                GuDingZiChanChuKuJDialog zichanchuku = new GuDingZiChanChuKuJDialog();
-                zichanchuku.setLocationRelativeTo(mainFrame);
-                zichanchuku.setNew();
-                AssetClientApp.getApplication().show(zichanchuku);
-            }
-        });
-    }
-    
-    @Action
-    public void yihaopinruku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YihaopinRuKuJDialog zichanruku = new YihaopinRuKuJDialog();
-                zichanruku.setLocationRelativeTo(mainFrame);
-                zichanruku.setNew();
-                AssetClientApp.getApplication().show(zichanruku);
-            }
-        });
-    }
-    
-    @Action
-    public void yihaopinchuku_pop() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                dispose();
-                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YihaopinChuKuJDialog zichanchuku = new YihaopinChuKuJDialog(new javax.swing.JFrame(), true);
-                zichanchuku.setLocationRelativeTo(mainFrame);
-                zichanchuku.setNew();
-                AssetClientApp.getApplication().show(zichanchuku);
-            }
-        });
-    }
-    
+   
     @Action
     public void zichantuiku_pop() {
         SwingUtilities.invokeLater(new Runnable() {

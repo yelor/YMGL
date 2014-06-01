@@ -11,20 +11,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class YanshouyimiaoEntity extends DengjiyimiaoEntity {
-    private Supplier gongyingdanwei;
 
     private Yimiaoyanshoutb yimiaoyanshou;
 
-    private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;
-
-    public Supplier getGongyingdanwei() {
-        return gongyingdanwei;
-    }
-
-    public void setGongyingdanwei(Supplier gongyingdanwei) {
-        this.gongyingdanwei = gongyingdanwei;
-    } 
-    
+    private Yimiaoyanshou_detail_tb yimiaoyanshou_detail;    
 
     public Yimiaoyanshoutb getYimiaoyanshou() {
         return yimiaoyanshou;
