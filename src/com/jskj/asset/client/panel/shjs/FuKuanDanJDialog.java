@@ -168,6 +168,9 @@ public class FuKuanDanJDialog extends BaseDialog {
         shenqingdanRemark.setEditable(false);
         fukuan.setEditable(false);
         youhui.setEditable(false);
+        if(detail.getIsPaid() == 1 && detail.getIsCompleted() ==1){
+            jButton4.setEnabled(true);
+        }
 
         setListTable(detail.getYfklist());
     }
@@ -360,6 +363,7 @@ public class FuKuanDanJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton4.setName("jButton4"); // NOI18N

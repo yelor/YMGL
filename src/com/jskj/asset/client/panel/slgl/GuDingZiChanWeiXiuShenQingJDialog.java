@@ -217,6 +217,9 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         dept.setEditable(false);
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
+        if(detail.getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
 
         setListTable(detail.getResult());
     }
@@ -484,6 +487,7 @@ public class GuDingZiChanWeiXiuShenQingJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);

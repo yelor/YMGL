@@ -32,6 +32,8 @@ public class CaigoushenqingDetailEntity {
     private Float danjujine;
     
     private String dept;
+    
+    private int isCompleted;
 
     private List<ZichanliebiaoDetailEntity> result;
     
@@ -115,6 +117,14 @@ public class CaigoushenqingDetailEntity {
 
     public void setYhplist(List<YihaopinliebiaoEntity> yhplist) {
         this.yhplist = yhplist;
+    }
+
+    public int getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(int isCompleted) {
+        this.isCompleted = isCompleted;
     }
     
 }

@@ -260,6 +260,9 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         supplier.setEditable(false);
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
+        if(detail.getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
 
         setListTable(detail.getYhplist());
     }
@@ -427,7 +430,6 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel1.setMinimumSize(null);
         jPanel1.setName("jPanel1"); // NOI18N
 
         middlePanel.setName("middlePanel"); // NOI18N
@@ -627,6 +629,7 @@ public class DiZhiYiHaoPinCaiGouShenQingJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusPainted(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N

@@ -236,6 +236,9 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         supplier.setEditable(false);
         jingbanren.setEditable(false);
         shenqingdanRemark.setEditable(false);
+        if(detail.getIsCompleted() == 1) {
+            jButton13.setEnabled(true);
+        }
 
         setListTable(detail.getResult());
     }
@@ -541,6 +544,7 @@ public class GuDingZiChanCaiGouShenQingJDialog extends BaseDialog {
         jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
         jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
         jButton13.setBorderPainted(false);
+        jButton13.setEnabled(false);
         jButton13.setFocusable(false);
         jButton13.setName("jButton13"); // NOI18N
         jButton13.setOpaque(false);

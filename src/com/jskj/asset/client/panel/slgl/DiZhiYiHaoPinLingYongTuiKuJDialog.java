@@ -411,6 +411,7 @@ public class DiZhiYiHaoPinLingYongTuiKuJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);

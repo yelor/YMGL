@@ -335,6 +335,7 @@
                 <Property name="icon" type="javax.swing.Icon" resourceKey="jButton13.icon"/>
                 <Property name="text" type="java.lang.String" resourceKey="jButton13.text"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="jButton13" noResource="true"/>
                 <Property name="opaque" type="boolean" value="false"/>
