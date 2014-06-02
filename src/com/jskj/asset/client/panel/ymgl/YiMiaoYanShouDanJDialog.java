@@ -157,7 +157,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"xiangdanId", "详单编号"}, {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"},
             {"yimiaoJixing", "剂型", "false"}, {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"},
-            {"youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"}, {"price", "进价", "false"},
+            {"youxiaoqi", "有效期", "false"}, {"unitId", "单位", "false"}, {"barcode", "条形码", "false"}, {"price", "进价", "false"},
             {"quantity", "数量", "false"}, {"fuheyuan", "复核员", "true"}, {"fahuoyuan", "发货员", "true"}});
 
         editTable.registerPopup(2, new IPopupBuilder() {
@@ -235,13 +235,14 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     Object buyprice = yimiaoshenqingdan.get("buyprice");
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
+                    Object barcode = yimiaodengji.get("barcode");
                     
                     jTextFieldSupplierName.setText((String) gongyingdanwei.get("supplierName"));
                     jTextFieldFamiaoperson.setText(gongyingdanwei.get("supplierConstactperson")== null ? "" : (String) gongyingdanwei.get("supplierConstactperson"));
 
                      for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
                         BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + yimiaoshenqingdan.get("xiangdanId"))) {
+                        if (yimiaotable.getValue(i, "barcode").toString().trim().equals("" + yimiaodengji.get("barcode"))) {
                             AssetMessage.INFO("已经添加了该疫苗！", YiMiaoYanShouDanJDialog.this);
                             return;
                         }
@@ -256,8 +257,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                     editTable.insertValue(6, pihao);
                     editTable.insertValue(7, youxiaoqi);
                     editTable.insertValue(8, unit);
-                    editTable.insertValue(9, buyprice);
-                    editTable.insertValue(10, quantity);
+                    editTable.insertValue(9, barcode);
+                    editTable.insertValue(10, buyprice);
+                    editTable.insertValue(11, quantity);
 
                     xiangdanIdmap.put(xiangdanId, xiangdanId);
                     shenqingdanIdmap.put(xiangdanId, shenqingdanId);
@@ -966,11 +968,11 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldFamiaoperson, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldstarttemp1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel26)
@@ -999,7 +1001,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
                             .addComponent(jLabel5)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
-                        .addGap(8, 8, 8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19)
@@ -1094,7 +1096,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1281,6 +1283,7 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
             yimiaoyanshou_detail.setPrice(yimiaotable.getValue(i, "price") == null ? 0 : Float.parseFloat("" + yimiaotable.getValue(i, "price")));
             yimiaoyanshou_detail.setPiqianfahegeno(piqianfaNomap.get(jTableyimiao.getValueAt(i, 0)).toString());
             yimiaoyanshou_detail.setXiangdanId(Integer.parseInt(xiangdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
+            yimiaoyanshou_detail.setBarcode((String) ("" + yimiaotable.getValue(i, "barcode")));
             list.add(yimiaoyanshou_detail);
         }
         yimiaoyanshouEntity.setYimiaoyanshou(yimiaoyanshou);
@@ -1348,7 +1351,8 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
     }
 
     public void chooseYimiao() {
-        String sql = "(shenqingdan_id like \"YMLQ%\" OR shenqingdan_id like \"YMSG%\") and is_completed = 1 and status = 1";
+//        String sql = "(shenqingdan_id like \"YMLQ%\" OR shenqingdan_id like \"YMSG%\") and is_completed = 1 and status = 1";
+        String sql = "is_completed = 1 and status = 1";
         new ChooseTask(sql).execute();
     }
 

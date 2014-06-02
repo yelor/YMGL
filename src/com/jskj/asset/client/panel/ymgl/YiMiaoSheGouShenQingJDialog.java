@@ -155,6 +155,14 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     Object totalprice = yimiaoshenqingdan.get("totalprice");
 //                    Object saleprice = yimiaoAll.get("yimiaoYushoujia");
 
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + yimiaoshenqingdan.get("xiangdanId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoSheGouShenQingJDialog.this);
+                            return;
+                        }
+                    }
+
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
                     editTable.insertValue(2, yimiaoName);
@@ -224,7 +232,6 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
 //            }
 //
 //        });
-
         ((BaseTable) jTableyimiao).addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -361,6 +368,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
@@ -686,6 +694,9 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            if (yimiaotable.getValue(i, "yimiaoId") == null | yimiaotable.getValue(i, "yimiaoId") == "") {
+                continue;
+            }
             yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setDanjuleixingId(6);
             yimiaoshenqingdan.setStatus(0);
@@ -714,7 +725,7 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
                     {"部门", jTextFielddepartment.getText()},
                     {"供应单位", jTextFieldSupplierName.getText()},
                     {"联系人", jTextFieldConstactperson.getText()},
-                    {"备注", jTextAreaRemark.getText(),"single"}},
+                    {"备注", jTextAreaRemark.getText(), "single"}},
                     jTableyimiao,
                     new String[][]{{"制单人", jTextFieldzhidanren.getText()}});
         } catch (DRException ex) {
@@ -810,6 +821,9 @@ public class YiMiaoSheGouShenQingJDialog extends BaseDialog {
         jTextAreaRemark.setEditable(false);
         jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
         totalPrice.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getDanjujine() + "元");
+        if (yimiaocaigouxiangdanEntity.getShenqingdantb().getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
 
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }

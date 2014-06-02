@@ -147,7 +147,7 @@
                 <Component class="javax.swing.JButton" name="jButton11">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="com.jskj.asset.client.panel.slgl.ShenQingShenPiJDialog" id="shenPiN" methodName="shenPiN"/>
+                      <action class="com.jskj.asset.client.panel.shjs.FukuanShenPiJDialog" id="shenPiN" methodName="shenPiN"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" resourceKey="jButton11.icon"/>
                     <Property name="text" type="java.lang.String" resourceKey="jButton11.text"/>

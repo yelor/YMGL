@@ -17,7 +17,6 @@ import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
-import static com.jskj.asset.client.panel.slgl.task.ShenQingTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoshenqingdanUpdateTask;
 import com.jskj.asset.client.util.DanHao;
 import com.jskj.asset.client.util.DateChooser;
@@ -110,6 +109,14 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
                     Object shengchanqiye = bindedMap.get("yimiaoShengchanqiye");
                     Object unit = bindedMap.get("unitId");
 
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "yimiaoId").toString().trim().equals("" + bindedMap.get("yimiaoId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoLingQuPlanJDialog.this);
+                            return;
+                        }
+                    }
+                    
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
@@ -234,6 +241,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
@@ -491,6 +499,9 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            if(yimiaotable.getValue(i, "yimiaoId")==null|yimiaotable.getValue(i, "yimiaoId")==""){
+                continue;
+            }
             yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshenbaodanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
@@ -609,7 +620,10 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         jTextFielddepartment.setText(yimiaocaigouxiangdanEntity.getUserAll().getDepartment().getDepartmentName());
         jTextAreaRemark.setEditable(false);
         jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
-
+        if (yimiaocaigouxiangdanEntity.getShenqingdantb().getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
+        
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }
 

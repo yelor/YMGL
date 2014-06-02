@@ -109,6 +109,13 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
 
                     Object chengbenjia = bindedMap.get("chengbenjia");
 //                    Object saleprice = bindedMap.get("yimiaoYushoujia");
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "yimiaoId").toString().trim().equals("" + bindedMap.get("yimiaoId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoSheGouPlanJDialog.this);
+                            return;
+                        }
+                    }
 
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
@@ -273,6 +280,7 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
@@ -570,6 +578,9 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            if(yimiaotable.getValue(i, "yimiaoId")==null|yimiaotable.getValue(i, "yimiaoId")==""){
+                continue;
+            }
             yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaoshegoudanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
@@ -698,7 +709,10 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         jTextAreaRemark.setEditable(false);
         jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
         totalPrice.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getDanjujine() + "元");
-
+        if (yimiaocaigouxiangdanEntity.getShenqingdantb().getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
+        
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }
 

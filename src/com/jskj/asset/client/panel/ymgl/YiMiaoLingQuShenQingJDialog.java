@@ -146,6 +146,15 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
                     Object unit = yimiaoAll.get("unitId");
                     Object quantity = yimiaoshenqingdan.get("quantity");
+                    
+                     for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "xiangdanId").toString().trim().equals("" + yimiaoshenqingdan.get("xiangdanId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoLingQuShenQingJDialog.this);
+                            return;
+                        }
+                    }
+
 
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
@@ -281,6 +290,7 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
@@ -570,6 +580,9 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            if(yimiaotable.getValue(i, "yimiaoId")==null|yimiaotable.getValue(i, "yimiaoId")==""){
+                continue;
+            }
             yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(jTextFieldYimiaolingyongdanId.getText());
             System.out.println(yimiaotable.getValue(i, "yimiaoId"));
@@ -692,7 +705,9 @@ public class YiMiaoLingQuShenQingJDialog extends BaseDialog {
         jTextFieldConstactperson.setText(yimiaocaigouxiangdanEntity.getSupplier().getSupplierConstactperson());
         jTextAreaRemark.setEditable(false);
         jTextAreaRemark.setText("" + yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanRemark());
-
+        if (yimiaocaigouxiangdanEntity.getShenqingdantb().getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }
 

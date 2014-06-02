@@ -139,7 +139,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"xiangdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, 
             {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},{"barcode", "条形码", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "false"},
             {"jingbanren", "经办人", "false"}, {"gongyingdanwei", "供应单位", "false"}, {"duifangjingbanren", "对方经办人", "false"}});
 
@@ -247,6 +247,15 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     Object supplierId = gongyingdanwei.get("supplierId");
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
+                    Object barcode = yimiaodengji.get("barcode");
+                    
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "barcode").toString().trim().equals("" + yimiaodengji.get("barcode"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoRuKu1JDialog.this);
+                            return;
+                        }
+                    }
 
                     supplierIdmap.put(xiangdanId, supplierId);
                     xiangdanIdmap.put(xiangdanId, xiangdanId);
@@ -264,11 +273,12 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     editTable.insertValue(9, pihao);
                     editTable.insertValue(10, youxiaoqi);
                     editTable.insertValue(11, unit);
-                    editTable.insertValue(12, piqianfahegezhenno);
-                    editTable.insertValue(13, yimiaoPizhunwenhao);
-                    editTable.insertValue(14, AssetClientApp.getSessionMap().getUsertb().getUserName());
-                    editTable.insertValue(15, gongyingdanweiName);
-                    editTable.insertValue(16, userName);
+                    editTable.insertValue(12, barcode);
+                    editTable.insertValue(13, piqianfahegezhenno);
+                    editTable.insertValue(14, yimiaoPizhunwenhao);
+                    editTable.insertValue(15, AssetClientApp.getSessionMap().getUsertb().getUserName());
+                    editTable.insertValue(16, gongyingdanweiName);
+                    editTable.insertValue(17, userName);
 
                 }
 
