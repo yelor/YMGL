@@ -307,7 +307,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                             return;
                         }
                     }
-                    lb.setReason("【验收】" + reason);
+                    lb.setReason("(验收)，原因：" + reason);
                 }
                 new Cancel(list).execute();
             }
@@ -349,7 +349,7 @@ public class GuDingZiChanYanShouJDialog extends BaseDialog{
                             return;
                         }
                     }
-                    lb.setReason("【验收】" + reason);
+                    lb.setReason("(验收)，原因：" + reason);
                 }
                 new Cancel(list).execute();
             }

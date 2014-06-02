@@ -63,6 +63,10 @@ public class DanHao {
 //    public final static String TYPE_QTFK = "QTFK";
     public final static String TYPE_ZQFK = "ZQFK";//资(Z)产供应单位其(Q)他付(F)款(K)单
     public final static String TYPE_YQFK = "YQFK";//疫(Y)苗供应单位其(Q)他付(F)款(K)单
+    public final static String TYPE_ZCCT = "ZCCT";//固定资(Z)产(C)采(C)购退(T)货申请单
+    public final static String TYPE_YHCT = "YHCT";//易(Y)耗(H)品采(C)购退(T)货申请单
+    public final static String TYPE_ZCTK = "ZCTK";//固定资产领用退库申请单
+    public final static String TYPE_YHTK = "YHTK";//易耗品领用退库申请单
 
     /**
      *************其他单号，不需要审批流程的单号*************
@@ -71,6 +75,8 @@ public class DanHao {
     //资产相关
     public final static String TYPE_SKDJ = "SKDJ";
     public final static String TYPE_QTSK = "QTSK";
+    public final static String TYPE_ZCTH = "ZCTH";//固定资产退货单
+    public final static String TYPE_YHTH = "YHTH";//易耗品退货单
 
     /**
      *
@@ -116,6 +122,14 @@ public class DanHao {
             className = "com.jskj.asset.client.panel.shjs.OtherFuKuanDanJDialog";
         } else if (shenqingdanId.startsWith(TYPE_YQFK)) {
             className = "com.jskj.asset.client.panel.shjs.YMOtherFuKuanDanJDialog";
+        } else if (shenqingdanId.startsWith(TYPE_ZCCT)) {
+            className = "com.jskj.asset.client.panel.slgl.GuDingZiChanTuihuoShenQingJDialog";
+        } else if (shenqingdanId.startsWith(TYPE_YHCT)) {
+            className = "com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinTuihuoShenQingJDialog";
+        } else if (shenqingdanId.startsWith(TYPE_ZCTK)) {
+            className = "com.jskj.asset.client.panel.slgl.GuDingZiChanLingYongTuiKuJDialog";
+        } else if (shenqingdanId.startsWith(TYPE_YHTK)) {
+            className = "com.jskj.asset.client.panel.slgl.DiZhiYiHaoPinLingYongTuiKuJDialog";
         }
 
         return className;

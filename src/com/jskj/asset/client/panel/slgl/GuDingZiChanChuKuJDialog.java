@@ -356,7 +356,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                             return;
                         }
                     }
-                    lb.setReason("【出库】" + reason);
+                    lb.setReason("(出库)，原因：" + reason);
                 }
                 new Cancel(list).execute();
             }
@@ -398,7 +398,7 @@ public class GuDingZiChanChuKuJDialog extends BaseDialog {
                             return;
                         }
                     }
-                    lb.setReason("【出库】" + reason);
+                    lb.setReason("(出库)，原因：" + reason);
                 }
                 new Cancel(list).execute();
             }
