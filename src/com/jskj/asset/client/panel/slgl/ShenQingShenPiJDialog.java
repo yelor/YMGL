@@ -129,7 +129,12 @@ public class ShenQingShenPiJDialog extends BaseDialog {
                         }
 
                         //领用单财务科提示不需要审批
-                        if(liucheng.getDanjuId().contains("LY") && liucheng.getCheckId1() != null){
+                        if ((liucheng.getDanjuId().startsWith(DanHao.TYPE_ITLY)
+                                || liucheng.getDanjuId().startsWith(DanHao.TYPE_PTLY)
+                                || liucheng.getDanjuId().startsWith(DanHao.TYPE_YHLY)
+                                || liucheng.getDanjuId().startsWith(DanHao.TYPE_ZCTK)
+                                || liucheng.getDanjuId().startsWith(DanHao.TYPE_YHTK))
+                                && liucheng.getCheckId1() != null) {
                             liucheng.setCheckId2("本流程无此审批环节");
                         }
                     }
@@ -244,6 +249,22 @@ public class ShenQingShenPiJDialog extends BaseDialog {
             GuDingZiChanWeiXiuShenQingJDialog weixiushenqing = new GuDingZiChanWeiXiuShenQingJDialog(this, cgsq);
             weixiushenqing.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(weixiushenqing);
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_ZCCT)) {
+            GuDingZiChanTuihuoShenQingJDialog shenqing = new GuDingZiChanTuihuoShenQingJDialog(this, cgsq);
+            shenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(shenqing);
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_YHCT)) {
+            DiZhiYiHaoPinTuihuoShenQingJDialog shenqing = new DiZhiYiHaoPinTuihuoShenQingJDialog(this, cgsq);
+            shenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(shenqing);
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_ZCTK)) {
+            GuDingZiChanLingYongTuiKuJDialog shenqing = new GuDingZiChanLingYongTuiKuJDialog(this, cgsq);
+            shenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(shenqing);
+        } else if (cgsq.getCgsqId().contains(DanHao.TYPE_YHTK)) {
+            DiZhiYiHaoPinLingYongTuiKuJDialog shenqing = new DiZhiYiHaoPinLingYongTuiKuJDialog(this, cgsq);
+            shenqing.setLocationRelativeTo(mainFrame);
+            AssetClientApp.getApplication().show(shenqing);
         }
     }
     
@@ -496,7 +517,7 @@ public class ShenQingShenPiJDialog extends BaseDialog {
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -511,11 +532,11 @@ public class ShenQingShenPiJDialog extends BaseDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGap(0, 510, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         pack();

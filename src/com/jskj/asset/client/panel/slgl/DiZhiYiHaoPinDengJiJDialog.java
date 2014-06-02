@@ -239,7 +239,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
                             return;
                         }
                     }
-                    lb.setReason("【登记】" + reason);
+                    lb.setReason("(登记)，原因：" + reason);
                 }
                 new Cancel(list).execute();
             }
@@ -281,7 +281,7 @@ public class DiZhiYiHaoPinDengJiJDialog extends BaseDialog {
                             return;
                         }
                     }
-                    lb.setReason("【登记】" + reason);
+                    lb.setReason("(登记)，原因：" + reason);
                 }
                 new Cancel(list).execute();
             }

@@ -6,17 +6,22 @@
 
 package com.jskj.asset.client.panel.slgl;
 
-import com.jskj.asset.client.panel.slgl.task.LingyongtuikuTask;
 import com.jskj.asset.client.AssetClientApp;
-import com.jskj.asset.client.bean.entity.LingyongtuikuDetailEntity;
+import com.jskj.asset.client.bean.entity.CaigoushenqingDetailEntity;
+import com.jskj.asset.client.bean.entity.ShenQingDetailEntity;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
 import com.jskj.asset.client.bean.entity.ZiChanLieBiaotb;
+import com.jskj.asset.client.bean.entity.ZichanliebiaoDetailEntity;
 import com.jskj.asset.client.constants.Constants;
 import com.jskj.asset.client.layout.AssetMessage;
 import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.panel.slgl.task.ShenQingTask;
 import com.jskj.asset.client.util.DanHao;
+import com.jskj.asset.client.util.DateHelper;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -42,7 +48,7 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
 
     private static final Log logger = LogFactory.getLog(GuDingZiChanLingYongTuiKuJDialog.class);
     
-    private LingyongtuikuDetailEntity lytk;
+    private ShenQingDetailEntity lytk;
     private int userId;
     private String userName;
     private String department;
@@ -65,14 +71,14 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         department = AssetClientApp.getSessionMap().getDepartment().getDepartmentName();
         kucunmap = new HashMap();
         
-        jTextFieldShenqingren.setText(userName);
-        jTextFieldDept.setText(department);
+        jingbanren.setText(userName);
+        dept.setText(department);
         
-        jTextField1.setText(DanHao.getDanHao("ZCTK"));
-        jTextField1.setEditable(false);
+        cgsqId.setText(DanHao.getDanHao(DanHao.TYPE_ZCTK));
+        cgsqId.setEditable(false);
         
-        jTextField2.setText(dateformate.format(new Date()).toString());
-        jTextField2.setEditable(false);
+        shenqingdanDate.setText(dateformate.format(new Date()).toString());
+        shenqingdanDate.setEditable(false);
         
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTable1).createSingleEditModel(new String[][]{
             {"gdzcId", "资产编号"}, {"gdzcName", "资产名称", "true"}, {"gdzcType", "类别"}, {"gdzcPinpai", "品牌", "false"},
@@ -164,6 +170,80 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         });
     }
 
+    public GuDingZiChanLingYongTuiKuJDialog(final JDialog parent, CaigoushenqingDetailEntity detail) {
+        super();
+        initComponents();
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if (parent != null) {
+                    parent.setVisible(true);
+                }
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+        });
+        super.bind(detail, middlePanel);
+        totalprice.setText(detail.getDanjujine() + "元");
+        jButton1.setEnabled(false);
+        cgsqId.setEditable(false);
+        shenqingdanDate.setText(DateHelper.format(detail.getShenqingdanDate(), "yyyy-MM-dd"));
+        shenqingdanDate.setEditable(false);
+        dept.setEditable(false);
+        jingbanren.setEditable(false);
+        shenqingdanRemark.setEditable(false);
+        if(detail.getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
+
+        setListTable(detail.getResult());
+    }
+
+    public void setListTable(List<ZichanliebiaoDetailEntity> zclist) {
+
+        int size = zclist.size();
+        Object[][] o = new Object[size][6];
+        for (int i = 0; i < size; i++) {
+            ZichanliebiaoDetailEntity zclb = zclist.get(i);
+            o[i] = new Object[]{zclb.getGdzcId(), zclb.getGdzcName(), zclb.getGdzcType(), zclb.getGdzcPinpai(),zclb.getGdzcXinghao(), zclb.getUnitId(), zclb.getCount(), zclb.getSaleprice(), zclb.getSaleprice() * zclb.getCount()};
+        }
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "资产编号", "资产名称", "类别", "品牌", "型号", "单位", "数量","采购价", "合价"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false
+            };
+        });
+    }
+    
     @Action
     public void exit() {
         this.dispose();
@@ -177,20 +257,23 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         }
         jTable1.getCellEditor(jTable1.getSelectedRow(),
                 jTable1.getSelectedColumn()).stopCellEditing();
-        lytk = new LingyongtuikuDetailEntity();
+        lytk = new ShenQingDetailEntity();
         Shenqingdantb sqd = new Shenqingdantb();
-        sqd.setShenqingdanId(jTextField1.getText());
-        sqd.setShenqingdanDate(dateformate.parse(jTextField2.getText()));
-        sqd.setShenqingdanRemark(jTextArea1.getText());
+        sqd.setShenqingdanId(cgsqId.getText());
+        sqd.setShenqingdanDate(dateformate.parse(shenqingdanDate.getText()));
+        sqd.setShenqingdanRemark(shenqingdanRemark.getText());
         sqd.setJingbanrenId(userId);
         sqd.setZhidanrenId(userId);
         sqd.setDanjuleixingId(22);
+        sqd.setIsCompleted(0);
+        sqd.setIsPaid(0);
         
+        total = 0;
         zc = new ArrayList<ZiChanLieBiaotb>();
 //        for (int i = 0; i < zc.size(); i++) {
         for (int i = 0; i < jTable1.getRowCount()-1; i++) {
             ZiChanLieBiaotb zclb = new ZiChanLieBiaotb();
-            zclb.setCgsqId(jTextField1.getText());
+            zclb.setCgsqId(cgsqId.getText());
             try{
                 zclb.setCgzcId(Integer.parseInt("" + jTable1.getValueAt(i, 0)));
             }catch(NumberFormatException e){
@@ -204,31 +287,17 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
                     return null;
                 }
             }
-//            if (jTable1.getValueAt(i, 6).toString().equals("")) {
-//                AssetMessage.ERRORSYS("请输入第" + (i + 1) + "个资产的退库数量！", this);
-//                return null;
-//            }
-//            try {
-//                int count = Integer.parseInt("" + jTable1.getValueAt(i, 6));
-//                if (count > Integer.parseInt(kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()).toString())) {
-//                    AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的退库数量大于领取数，"
-//                            + "请输入一个小于" + kucunmap.get(zclb.getCgzcId()+ jTable1.getValueAt(i, 9).toString()) + "的数", this);
-//                    return null;
-//                }
-//                zclb.setQuantity(count);
-//            } catch (NumberFormatException e) {
-//                AssetMessage.ERRORSYS("第" + (i + 1) + "个资产的退库数量输入不合法，请输入纯数字，不能包含字母或特殊字符！");
-//                return null;
-//            }
             float price = Float.parseFloat("" + jTable1.getValueAt(i, 6));
             zclb.setPihao(jTable1.getValueAt(i, 7).toString());
             zclb.setQuantity(1);
             zclb.setSaleprice(price);
             zclb.setTotalprice(price);
-            zclb.setIsCompleted(1);
+            zclb.setIsCompleted(0);
             zclb.setStatus(3);
+            total += zclb.getTotalprice();
             zc.add(zclb);
         }
+        sqd.setDanjujine(total);
         
         lytk.setSqd(sqd);
         lytk.setZc(zc);        
@@ -236,9 +305,9 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         return new submitTask(lytk);
     }
     
-    private class submitTask extends LingyongtuikuTask{
+    private class submitTask extends ShenQingTask{
 
-        public submitTask(LingyongtuikuDetailEntity lytk) {
+        public submitTask(ShenQingDetailEntity lytk) {
             super(lytk);
         }
         
@@ -278,16 +347,16 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         jButton10 = new javax.swing.JButton();
         middlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        cgsqId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        shenqingdanDate = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextFieldDept = new javax.swing.JTextField();
+        dept = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextFieldShenqingren = new javax.swing.JTextField();
+        jingbanren = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        shenqingdanRemark = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(GuDingZiChanLingYongTuiKuJDialog.class);
@@ -422,19 +491,19 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
+        cgsqId.setText(resourceMap.getString("cgsqId.text")); // NOI18N
+        cgsqId.setName("cgsqId"); // NOI18N
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        jTextField2.setName("jTextField2"); // NOI18N
+        shenqingdanDate.setName("shenqingdanDate"); // NOI18N
 
         jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jTextFieldDept.setEditable(false);
-        jTextFieldDept.setName("jTextFieldDept"); // NOI18N
+        dept.setEditable(false);
+        dept.setName("dept"); // NOI18N
 
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
@@ -442,15 +511,15 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
         jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
         jLabel17.setName("jLabel17"); // NOI18N
 
-        jTextFieldShenqingren.setEditable(false);
-        jTextFieldShenqingren.setName("jTextFieldShenqingren"); // NOI18N
+        jingbanren.setEditable(false);
+        jingbanren.setName("jingbanren"); // NOI18N
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(2);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane2.setViewportView(jTextArea1);
+        shenqingdanRemark.setColumns(20);
+        shenqingdanRemark.setRows(2);
+        shenqingdanRemark.setName("shenqingdanRemark"); // NOI18N
+        jScrollPane2.setViewportView(shenqingdanRemark);
 
         javax.swing.GroupLayout middlePanelLayout = new javax.swing.GroupLayout(middlePanel);
         middlePanel.setLayout(middlePanelLayout);
@@ -466,18 +535,18 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(middlePanelLayout.createSequentialGroup()
                         .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextFieldShenqingren, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jingbanren, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, middlePanelLayout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cgsqId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextFieldDept, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(shenqingdanDate)
+                            .addComponent(dept, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -487,15 +556,15 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
                 .addContainerGap()
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cgsqId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(shenqingdanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextFieldDept, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dept, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
-                    .addComponent(jTextFieldShenqingren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jingbanren, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
@@ -571,11 +640,11 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
     public void print() {
         try {
             super.print(this.getTitle(),
-                    new String[][]{{"单据编号", jTextField1.getText()},
-                    {"制单日期", jTextField2.getText()},
-                    {"退库人", jTextFieldShenqingren.getText()},
-                    {"部门", jTextFieldDept.getText()},
-                    {"备注", jTextArea1.getText(),"single"}}, 
+                    new String[][]{{"单据编号", cgsqId.getText()},
+                    {"制单日期", shenqingdanDate.getText()},
+                    {"退库人", jingbanren.getText()},
+                    {"部门", dept.getText()},
+                    {"备注", shenqingdanRemark.getText(),"single"}}, 
                     jTable1,
                     new String[][]{{"", ""},
                     {"总金额", totalprice.getText()}
@@ -587,6 +656,8 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cgsqId;
+    private javax.swing.JTextField dept;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton4;
@@ -600,13 +671,11 @@ public class GuDingZiChanLingYongTuiKuJDialog extends BaseDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextFieldDept;
-    private javax.swing.JTextField jTextFieldShenqingren;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTextField jingbanren;
     private javax.swing.JPanel middlePanel;
+    private javax.swing.JTextField shenqingdanDate;
+    private javax.swing.JTextArea shenqingdanRemark;
     private javax.swing.JLabel totalprice;
     // End of variables declaration//GEN-END:variables
 }

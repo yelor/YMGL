@@ -36,6 +36,8 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
 
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(selectCaiGouDanJDialog.class);
@@ -54,25 +56,45 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
 
+        jButton4.setAction(actionMap.get("gdzcth_pop")); // NOI18N
+        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setName("jButton4"); // NOI18N
+
+        jButton2.setAction(actionMap.get("yihaopinth_pop")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setName("jButton2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(19, 19, 19))
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton2))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,8 +170,38 @@ public class selectCaiGouDanJDialog extends javax.swing.JDialog {
         });
     }
     
+    @Action
+    public void gdzcth_pop() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                GuDingZiChanTuihuoShenQingJDialog guDingZiChanCaiGouSQSHJDialog = new GuDingZiChanTuihuoShenQingJDialog();
+                guDingZiChanCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(guDingZiChanCaiGouSQSHJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void yihaopinth_pop() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                DiZhiYiHaoPinTuihuoShenQingJDialog diZhiYiHaoPinCaiGouSQSHJDialog = new DiZhiYiHaoPinTuihuoShenQingJDialog();
+                diZhiYiHaoPinCaiGouSQSHJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(diZhiYiHaoPinCaiGouSQSHJDialog);
+            }
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,6 +29,8 @@ public class CaigoushenqingDetailEntity {
     
     private String supplier;
     
+    private String contact;
+    
     private Float danjujine;
     
     private String dept;
@@ -85,6 +87,14 @@ public class CaigoushenqingDetailEntity {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public List<ZichanliebiaoDetailEntity> getResult() {
