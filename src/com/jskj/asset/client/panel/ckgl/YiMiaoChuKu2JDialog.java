@@ -591,6 +591,9 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
         }
         List<SaleyimiaoEntity> lst = new ArrayList<SaleyimiaoEntity>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            if(jTableyimiao.getValueAt(i, 2)==null|jTableyimiao.getValueAt(i, 2)==""){
+                continue;
+            }
             SaleyimiaoEntity lb = new SaleyimiaoEntity();
             Sale_detail_tb saledetail = new Sale_detail_tb();
             saledetail.setSaleDetailId(Integer.parseInt(saledetailIdmap.get(jTableyimiao.getValueAt(i, 0)).toString()));
@@ -656,6 +659,9 @@ public class YiMiaoChuKu2JDialog extends BaseDialog {
 
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            if(yimiaotable.getValue(i, "yimiaoName")==null|yimiaotable.getValue(i, "yimiaoName")==""){
+                continue;
+            }
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
             yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
             yimiaoliebiao.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));

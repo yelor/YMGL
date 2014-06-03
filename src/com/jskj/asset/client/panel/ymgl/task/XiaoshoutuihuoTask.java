@@ -39,7 +39,6 @@ public class XiaoshoutuihuoTask extends BaseTask{
     public Object doBackgrounp() {
          try {
             if (actionType == TUIHUOENTITY_SAVE) {
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 restTemplate.postForObject(TUIHUOADD_URI, yimiaotuihuoEntity, XiaoshoutuihuoEntity.class);
             } else if (actionType == TUIHUOENTITY_UPDATE) {
                 restTemplate.postForObject(TUIHUOUPD_URI, yimiaotuihuoEntity, XiaoshoutuihuoEntity.class);
@@ -47,7 +46,6 @@ public class XiaoshoutuihuoTask extends BaseTask{
                 restTemplate.postForLocation(TUIHUOdelete_URI + "/" + yimiaotuihuoEntity.getBacksaletb().getBacksaleId(),null);
             }
         } catch (RestClientException e) {
-            System.out.println("eeeeeeeeeeeeeeeeeeeeeeeee");
             logger.error(e);
             return e;
         }

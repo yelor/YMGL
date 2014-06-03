@@ -621,11 +621,11 @@ public class YiMiaoLingQuTuiHuoJDialog extends BaseDialog {
     public void setAddOrUpdate(boolean b) {
         isNew = b;
         if (isNew) {
-            this.setTitle("Ⅰ类疫苗下发退库单");
+            this.setTitle("Ⅰ类疫苗领取退货单");
             backsale = new Backsaletb();
             
         } else {
-            this.setTitle("Ⅰ类疫苗下发退库单");
+            this.setTitle("Ⅰ类疫苗领取退货单");
         }
     }
 

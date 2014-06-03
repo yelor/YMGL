@@ -581,6 +581,9 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         }
         List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            if(jTableyimiao.getValueAt(i, 2)==null|jTableyimiao.getValueAt(i, 2)==""){
+                continue;
+            }
             YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(shenqingdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString());
@@ -642,6 +645,9 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            if(yimiaotable.getValue(i, "yimiaoName")==null|yimiaotable.getValue(i, "yimiaoName")==""){
+                continue;
+            }
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
             yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
             yimiaoliebiao.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
@@ -655,6 +661,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             yimiaoliebiao.setRukuQuantity(Integer.parseInt((String) ("" + yimiaotable.getValue(i, "quantity"))));
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
+            yimiaoliebiao.setBarcode((String) ("" + yimiaotable.getValue(i, "barcode")));
             if (yimiaotable.getValue(i, "youxiaodate").toString().trim().equals("")) {
                 yimiaoliebiao.setYouxiaoqi(null);
             } else {

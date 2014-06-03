@@ -1187,6 +1187,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         }
         List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            if(jTableyimiao.getValueAt(i, 1)==null|jTableyimiao.getValueAt(i, 1)==""){
+                continue;
+            }
             YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(shenqingdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString());
@@ -1273,6 +1276,9 @@ public class YiMiaoYanShouDanJDialog extends BaseDialog {
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             yimiaoyanshou_detail = new Yimiaoyanshou_detail_tb();
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+            if(yimiaotable.getValue(i, "yimiaoId")==null|yimiaotable.getValue(i, "yimiaoId")==""){
+                continue;
+            }
             yimiaoyanshou_detail.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
             yimiaoyanshou_detail.setYmysId(jTextFieldYimiaoyanshouId.getText());
             yimiaoyanshou_detail.setYouxiaodate(riqi.parse((String) ("" + yimiaotable.getValue(i, "youxiaoqi"))));

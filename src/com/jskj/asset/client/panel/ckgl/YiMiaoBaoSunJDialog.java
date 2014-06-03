@@ -151,6 +151,14 @@ public class YiMiaoBaoSunJDialog extends BaseDialog {
                     Object price = bindedMap.get("stockpilePrice");
                     String youxiaoqi = (String) bindedMap.get("youxiaodate").toString().substring(0, 10);
                     Object pihao = bindedMap.get("pihao");
+                    
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "stockpileId").toString().trim().equals("" + bindedMap.get("stockpileId"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoBaoSunJDialog.this);
+                            return;
+                        }
+                    }
 
                     editTable.insertValue(0, kucunId);
                     editTable.insertValue(1, yimiaoName);
