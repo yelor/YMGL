@@ -194,6 +194,8 @@ public class YMOtherFuKuanDanJDialog extends BaseDialog {
             AssetMessage.ERRORSYS("请输入供应单位！", this);
             return null;
         }
+        jTable1.getCellEditor(jTable1.getSelectedRow(),
+                jTable1.getSelectedColumn()).stopCellEditing();
         QitafukuanDetailEntity detail = new QitafukuanDetailEntity();
         Fukuandantb fkd = new Fukuandantb();
         super.copyToBean(fkd, jPanel1);
@@ -206,7 +208,11 @@ public class YMOtherFuKuanDanJDialog extends BaseDialog {
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             Qitafukuanliebiaotb fslb = new Qitafukuanliebiaotb();
             fslb.setZhichuType("" + jTable1.getValueAt(i, 1));
-            fslb.setPrice(Float.parseFloat("" + jTable1.getValueAt(i, 2)));
+            try{
+                fslb.setPrice(Float.parseFloat("" + jTable1.getValueAt(i, 2)));
+            }catch(NumberFormatException e){
+                AssetMessage.ERRORSYS("第" + (i+1) + "个付款金额不合法，请重新输入！", this);
+            }
             fslb.setRemark("" + jTable1.getValueAt(i, 3));
             fslb.setJingbanren(userName);
             fslb.setFukuandanId(fukuandanId.getText());
