@@ -27,8 +27,6 @@ import com.jskj.asset.client.panel.slgl.PTGuDingZiChanLingYongShenQingJDialog;
 import com.jskj.asset.client.panel.slgl.task.ShenqingDetailTask;
 import com.jskj.asset.client.panel.ymgl.YiMiaoSheGouShenQingJDialog;
 import com.jskj.asset.client.panel.ymgl.YiMiaoSheGouTuiHuoJDialog;
-import com.jskj.asset.client.panel.ymgl.YiMiaoXiaFaTuiKuJDialog;
-import com.jskj.asset.client.panel.ymgl.YiMiaoXiaoShouTuiHuoJDialog;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouTuihuoXiangdanTask;
 import static com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouTuihuoXiangdanTask.logger;
 import com.jskj.asset.client.panel.ymgl.task.YimiaoXiaoshouXiangdanTask;
@@ -138,7 +136,7 @@ public class DanweiyingfuJDialog extends BaseDialog {
             new FKDetailTask(fksqdan.getYuandanId()).execute();
         } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_GDZC) || fksqdan.getYuandanId().contains(DanHao.TYPE_YHCG)) {
             new DetailTask(fksqdan.getYuandanId()).execute();
-        } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOXSTH)) {
+        } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCGTH)) {
             new YimiaoshegoutuihuoxiangdanTask(fksqdan.getYuandanId()).execute();
         } else if (fksqdan.getYuandanId().contains(DanHao.TYPE_YIMIAOCG)) {
             new YimiaocaigouxiangdanTask(fksqdan.getYuandanId()).execute();
@@ -294,7 +292,7 @@ public class DanweiyingfuJDialog extends BaseDialog {
 
     public void openYimiashegoudan(YimiaocaigouxiangdanEntity yimiaocaigouxiangdanEntity) {
         JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-        if (yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanId().contains(DanHao.TYPE_YIMIAOCGTH)) {
+        if (yimiaocaigouxiangdanEntity.getShenqingdantb().getShenqingdanId().contains(DanHao.TYPE_YIMIAOCG)) {
             YiMiaoSheGouShenQingJDialog yimiaocaigouJDialog = new YiMiaoSheGouShenQingJDialog(this, yimiaocaigouxiangdanEntity);
             yimiaocaigouJDialog.setLocationRelativeTo(mainFrame);
             AssetClientApp.getApplication().show(yimiaocaigouJDialog);

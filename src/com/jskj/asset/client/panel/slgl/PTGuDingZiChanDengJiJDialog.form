@@ -482,7 +482,7 @@
         <Component class="javax.swing.JButton" name="jButton7">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanInfoJDialog" id="uploadPic" methodName="uploadPic"/>
+              <action class="com.jskj.asset.client.panel.slgl.PTGuDingZiChanDengJiJDialog" id="uploadPic" methodName="uploadPic"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton7.text"/>
             <Property name="name" type="java.lang.String" value="jButton7" noResource="true"/>
@@ -500,7 +500,7 @@
         <Component class="javax.swing.JButton" name="jButton9">
           <Properties>
             <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-              <action class="com.jskj.asset.client.panel.jichuxinxi.GuDingZiChanInfoJDialog" id="imagePreview" methodName="imagePreview"/>
+              <action class="com.jskj.asset.client.panel.slgl.PTGuDingZiChanDengJiJDialog" id="imagePreview" methodName="imagePreview"/>
             </Property>
             <Property name="text" type="java.lang.String" resourceKey="jButton9.text"/>
             <Property name="name" type="java.lang.String" value="jButton9" noResource="true"/>

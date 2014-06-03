@@ -126,9 +126,9 @@ public class YiMiaoXiaoShouJDialog extends BaseDialog {
                 Object newColumnObj = jTableyimiao.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
-                    sql += "stockpile.stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price>0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\"))";
+                    sql += "stockpile.stockPile_id in (select distinct stockPile.stockpile_id from stockpile,yimiao where stockpile.stockPile_price>0 and stockpile.stockPile_quantity>0 and yimiao.yimiao_id=stockpile.yimiao_id and (yimiao.yimiao_name like \"%" + newColumnObj.toString() + "%\"" + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\"))";
                 } else {
-                    sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0)";
+                    sql += "stockPile_id in (select distinct stockPile_id from stockpile where stockPile_price>0 and stockPile_quantity>0)";
                 }
                 return sql;
             }

@@ -123,9 +123,6 @@ public class YimiaochurukujiluPanel extends BasePanel {
         jToolBar2 = new javax.swing.JToolBar();
         jButton12 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jToolBar3 = new javax.swing.JToolBar();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -186,38 +183,6 @@ public class YimiaochurukujiluPanel extends BasePanel {
         jButton1.setOpaque(false);
         jToolBar2.add(jButton1);
 
-        jToolBar3.setFloatable(false);
-        jToolBar3.setRollover(true);
-        jToolBar3.setBorderPainted(false);
-        jToolBar3.setName("jToolBar3"); // NOI18N
-        jToolBar3.setOpaque(false);
-
-        jButton17.setAction(actionMap.get("pagePrev")); // NOI18N
-        jButton17.setText(resourceMap.getString("jButton17.text")); // NOI18N
-        jButton17.setBorderPainted(false);
-        jButton17.setFocusable(false);
-        jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton17.setMaximumSize(new java.awt.Dimension(60, 25));
-        jButton17.setMinimumSize(new java.awt.Dimension(60, 25));
-        jButton17.setName("jButton17"); // NOI18N
-        jButton17.setOpaque(false);
-        jButton17.setPreferredSize(new java.awt.Dimension(60, 25));
-        jButton17.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar3.add(jButton17);
-
-        jButton18.setAction(actionMap.get("pageNext")); // NOI18N
-        jButton18.setText(resourceMap.getString("jButton18.text")); // NOI18N
-        jButton18.setBorderPainted(false);
-        jButton18.setFocusable(false);
-        jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton18.setMaximumSize(new java.awt.Dimension(60, 25));
-        jButton18.setMinimumSize(new java.awt.Dimension(60, 25));
-        jButton18.setName("jButton18"); // NOI18N
-        jButton18.setOpaque(false);
-        jButton18.setPreferredSize(new java.awt.Dimension(60, 25));
-        jButton18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar3.add(jButton18);
-
         jLabelTotal.setForeground(resourceMap.getColor("jLabelTotal.foreground")); // NOI18N
         jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelTotal.setName("jLabelTotal"); // NOI18N
@@ -227,17 +192,15 @@ public class YimiaochurukujiluPanel extends BasePanel {
         ctrlPaneLayout.setHorizontalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ctrlPaneLayout.createSequentialGroup()
-                .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         ctrlPaneLayout.setVerticalGroup(
             ctrlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
         );
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -290,7 +253,7 @@ public class YimiaochurukujiluPanel extends BasePanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel2Layout.createSequentialGroup()
                 .addComponent(ctrlPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jpanel2.TabConstraints.tabTitle"), jpanel2); // NOI18N
@@ -441,8 +404,6 @@ public class YimiaochurukujiluPanel extends BasePanel {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -457,7 +418,6 @@ public class YimiaochurukujiluPanel extends BasePanel {
     private javax.swing.JTextField jTextFieldStart;
     private javax.swing.JTextField jTextFieldYimiaoName;
     private javax.swing.JToolBar jToolBar2;
-    private javax.swing.JToolBar jToolBar3;
     private javax.swing.JPanel jpanel2;
     // End of variables declaration//GEN-END:variables
 

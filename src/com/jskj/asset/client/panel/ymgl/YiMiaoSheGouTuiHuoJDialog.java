@@ -106,7 +106,7 @@ public class YiMiaoSheGouTuiHuoJDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"yimiaoId", "库存编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
             {"shengchanqiye", "生产企业", "false"},{"pihao", "批号", "false"}, {"unit", "单位", "false"}, {"youxiaoqi", "有效期至", "false"},
-            {"tuihuoQuantity", "数量", "true"}, {"yimiaoYushoujia", "预售价", "false"}, {"yimiaoHejia", "合价", "false"}});
+            {"tuihuoQuantity", "数量", "true"}, {"chengbenjia", "单价", "false"}, {"yimiaoHejia", "合价", "false"}});
 
         editTable.registerPopup(1, new IPopupBuilder() {
             @Override
@@ -164,7 +164,7 @@ public class YiMiaoSheGouTuiHuoJDialog extends BaseDialog {
                     editTable.insertValue(5, pihao);
                     editTable.insertValue(6, unit);
                     editTable.insertValue(7, youxiaoqi);
-                    editTable.insertValue(9, saleprice);
+                    editTable.insertValue(9, stockpilePrice);
 
                 }
 
@@ -683,10 +683,10 @@ public class YiMiaoSheGouTuiHuoJDialog extends BaseDialog {
     public void setAddOrUpdate(boolean b) {
         isNew = b;
         if (isNew) {
-            this.setTitle("Ⅱ类疫苗销售退货单");
+            this.setTitle("Ⅱ类疫苗赊购退货单");
             backsale = new Backsaletb();
         } else {
-            this.setTitle("Ⅱ类疫苗销售退货单");
+            this.setTitle("Ⅱ类疫苗赊购退货单");
         }
     }
 
@@ -732,8 +732,8 @@ public class YiMiaoSheGouTuiHuoJDialog extends BaseDialog {
                 return null;
             }
             backsale_detail.setQuantity(Integer.parseInt(yimiaotable.getValue(i, "tuihuoQuantity").toString()));
-            backsale_detail.setSaleprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "yimiaoYushoujia"))));
-            backsale_detail.setTotalprice(backsale_detail.getQuantity() * backsale_detail.getSaleprice());
+            backsale_detail.setBuyprice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "chengbenjia"))));
+            backsale_detail.setTotalprice(backsale_detail.getQuantity() * backsale_detail.getBuyprice());
             list.add(backsale_detail);
         }
 
@@ -861,13 +861,13 @@ public class YiMiaoSheGouTuiHuoJDialog extends BaseDialog {
             YimiaoAll yimiaoAll = backsaleyimiaoEntityList.get(i).getYimiaoAll();
             Stockpiletb stockpile = backsaleyimiaoEntityList.get(i).getStockpile();
             o[i] = new Object[]{backsaledetailtb.getStockpileId(), yimiaoAll.getYimiaoName(), yimiaoAll.getYimiaoGuige(), yimiaoAll.getYimiaoJixing(), yimiaoAll.getYimiaoShengchanqiye(), stockpile.getPihao(), yimiaoAll.getUnitId(),
-                new SimpleDateFormat("yyyy-MM-dd").format((Date) stockpile.getYouxiaodate()), backsaledetailtb.getQuantity(), backsaledetailtb.getSaleprice(), backsaledetailtb.getTotalprice()};
+                new SimpleDateFormat("yyyy-MM-dd").format((Date) stockpile.getYouxiaodate()), backsaledetailtb.getQuantity(), backsaledetailtb.getBuyprice(), backsaledetailtb.getTotalprice()};
         }
 
         jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
                 o,
                 new String[]{
-                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "批号", "单位", "有效期", "数量", "售价", "合价"
+                    "库存编号", "疫苗名称", "规格", "剂型", "生产企业", "批号", "单位", "有效期", "数量", "单价", "合价"
                 }
         ) {
             boolean[] canEdit = new boolean[]{

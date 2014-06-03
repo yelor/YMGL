@@ -141,7 +141,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
             {"xaingdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"},
             {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"}, {"barcode", "条形码", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "false"}, {"price", "单价", "false"}, {"totalPrice", "合价", "false"},
             {"jingbanren", "经办人", "false"}, {"gongyingdanwei", "供应单位", "false"}, {"duifangjingbanren", "对方经办人", "false"}});
         editTable.registerPopup(2, new IPopupBuilder() {
@@ -201,6 +201,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
                     Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
                     Object unit = yimiaoAll.get("unitId");
+                    Object barcode = yimiaodengji.get("barcode");
                     Object pihao;
                     try {
                         pihao = yimiaodengji.get("pihao");
@@ -256,6 +257,14 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     xiangdanIdmap.put(xiangdanId, xiangdanId);
                     shenqingdanIdmap.put(xiangdanId, shenqingdanId);
 
+                    for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                        BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                        if (yimiaotable.getValue(i, "barcode").toString().trim().equals("" + yimiaodengji.get("barcode"))) {
+                            AssetMessage.INFO("已经添加了该疫苗！", YiMiaoRuKu2JDialog.this);
+                            return;
+                        }
+                    }
+
                     editTable.insertValue(0, xiangdanId);
                     editTable.insertValue(1, yimiaoId);
                     editTable.insertValue(2, yimiaoName);
@@ -268,13 +277,14 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     editTable.insertValue(9, pihao);
                     editTable.insertValue(10, youxiaoqi);
                     editTable.insertValue(11, unit);
-                    editTable.insertValue(12, piqianfahegezhenno);
-                    editTable.insertValue(13, yimiaoPizhunwenhao);
-                    editTable.insertValue(14, buyprice);
-                    editTable.insertValue(15, totalprice);
-                    editTable.insertValue(16, AssetClientApp.getSessionMap().getUsertb().getUserName());
-                    editTable.insertValue(17, gongyingdanweiName);
-                    editTable.insertValue(18, userName);
+                    editTable.insertValue(12, barcode);
+                    editTable.insertValue(13, piqianfahegezhenno);
+                    editTable.insertValue(14, yimiaoPizhunwenhao);
+                    editTable.insertValue(15, buyprice);
+                    editTable.insertValue(16, totalprice);
+                    editTable.insertValue(17, AssetClientApp.getSessionMap().getUsertb().getUserName());
+                    editTable.insertValue(18, gongyingdanweiName);
+                    editTable.insertValue(19, userName);
 
                 }
 
@@ -573,6 +583,9 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         }
         List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+            if(jTableyimiao.getValueAt(i, 2)==null|jTableyimiao.getValueAt(i, 2)==""){
+                continue;
+            }
             YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
             Yimiaoshenqingdantb yimiaoshenqingdan = new Yimiaoshenqingdantb();
             yimiaoshenqingdan.setShenqingdanId(shenqingdanIdmap.get(jTableyimiao.getValueAt(i, 0)).toString());
@@ -635,10 +648,13 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
-            if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
-                AssetMessage.ERRORSYS("请输入入库疫苗!");
+            if(yimiaotable.getValue(i, "yimiaoName")==null|yimiaotable.getValue(i, "yimiaoName")==""){
+                continue;
             }
+            Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
+//            if (yimiaotable.getValue(i, "yimiaoName").toString().trim().equals("")) {
+//                AssetMessage.ERRORSYS("请输入入库疫苗!");
+//            }
             yimiaoliebiao.setChurukuId(jTextFielddanjuNo.getText());
             yimiaoliebiao.setZhidandate(dateformate.parse(jTextFieldzhidanDate.getText()));
             yimiaoliebiao.setYimiaoId(Integer.parseInt(yimiaotable.getValue(i, "yimiaoId").toString()));
@@ -647,6 +663,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
             yimiaoliebiao.setRukuQuantity((Integer) yimiaotable.getValue(i, "quantity"));
             yimiaoliebiao.setSource((String) ("" + yimiaotable.getValue(i, "source")));
             yimiaoliebiao.setTongguandanno((String) ("" + yimiaotable.getValue(i, "tongguandanNo")));
+            yimiaoliebiao.setBarcode((String) ("" + yimiaotable.getValue(i, "barcode")));
             yimiaoliebiao.setPrice(Float.parseFloat((String) ("" + yimiaotable.getValue(i, "price"))));
             yimiaoliebiao.setTotalprice(Float.parseFloat((String) ("" + yimiaoliebiao.getRukuQuantity() * yimiaoliebiao.getPrice())));
             if (yimiaotable.getValue(i, "youxiaodate").toString().trim().equals("")) {
@@ -718,7 +735,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"经办人", jTextFieldjingbanren.getText()},
                     {"仓库", jTextFieldkufang.getText()},
-                    {"备注", jTextArea1.getText(),"single"}},
+                    {"备注", jTextArea1.getText(), "single"}},
                     jTableyimiao,
                     new String[][]{{"", ""},});
         } catch (DRException ex) {

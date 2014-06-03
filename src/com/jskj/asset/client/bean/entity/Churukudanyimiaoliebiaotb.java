@@ -29,6 +29,8 @@ public class Churukudanyimiaoliebiaotb {
 
     private String piqianfahegeno;
 
+    private String barcode;
+
     private Float price;
 
     private Float totalprice;
@@ -133,6 +135,14 @@ public class Churukudanyimiaoliebiaotb {
 
     public void setPiqianfahegeno(String piqianfahegeno) {
         this.piqianfahegeno = piqianfahegeno == null ? null : piqianfahegeno.trim();
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode == null ? null : barcode.trim();
     }
 
     public Float getPrice() {

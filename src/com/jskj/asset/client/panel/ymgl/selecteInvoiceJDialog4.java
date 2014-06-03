@@ -197,7 +197,7 @@ public class selecteInvoiceJDialog4 extends javax.swing.JDialog {
             public void run() {
                 dispose();
                 JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                YiMiaoLingQuTuiHuoJDialog shengoutuihuoJDialog = new YiMiaoLingQuTuiHuoJDialog();
+                YiMiaoSheGouTuiHuoJDialog shengoutuihuoJDialog = new YiMiaoSheGouTuiHuoJDialog();
                 shengoutuihuoJDialog.setLocationRelativeTo(mainFrame);
                 shengoutuihuoJDialog.setAddOrUpdate(true);
                 AssetClientApp.getApplication().show(shengoutuihuoJDialog);
