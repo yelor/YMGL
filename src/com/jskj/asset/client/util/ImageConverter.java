@@ -76,5 +76,8 @@ public class ImageConverter {
         }
     }
     
-//    public static void main()
+//    public static void main(String[] args) throws IOException {
+////        pngToJPG("C:\\Users\\haitao\\Desktop\\1.png","C:\\Users\\haitao\\Desktop\\1.jpg");
+//        bmpToJPG("C:\\Users\\haitao\\Desktop\\1.bmp","C:\\Users\\haitao\\Desktop\\1.jpg");
+//    }
 }

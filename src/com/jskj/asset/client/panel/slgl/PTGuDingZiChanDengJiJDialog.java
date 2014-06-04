@@ -380,7 +380,8 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
             return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "gudingzhichan") {
                 @Override
                 public void responseResult(String file) {
-                    removeObjectFromList("uploading...");
+//                    removeObjectFromList("uploading...");
+                    removeAllObjectFromList();
                     BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();
                     List source = mode.getSource();
                     if (source.contains(file)) {
@@ -413,6 +414,10 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         source.remove(name);
         BaseListModel<String> newMode = new BaseListModel<String>(source, "");
         gdzcPhoto.setModel(newMode);
+    }
+
+    private void removeAllObjectFromList() {
+        gdzcPhoto.setModel(new BaseListModel<String>(new ArrayList(), ""));
     }
 
     @Action
@@ -455,25 +460,6 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         return null;
     }
 
-    private class ImagePreviewTask extends org.jdesktop.application.Task<Object, Void> {
-        ImagePreviewTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to ImagePreviewTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-    
     @Action
     public void fushuliebiao() {
         if (fslb == null) {
