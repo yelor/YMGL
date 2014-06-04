@@ -148,7 +148,7 @@ public class YihaopinTuihuoJDialog extends BaseDialog {
                 int selectedRow = jTable1.getSelectedRow();
                 Object newColumnObj = jTable1.getValueAt(selectedRow, selectedColumn);
                 String sql = "";
-                sql += " cgsq_id like \"" + DanHao.TYPE_YHTH +"%\" and is_completed = 1 and status = 10 ";
+                sql += " cgsq_id like \"" + DanHao.TYPE_YHCT +"%\" and is_completed = 1 and status = 10 ";
                 if (newColumnObj instanceof String && !newColumnObj.toString().trim().equals("")) {
                     sql += (" and cgzc_id in ( select dzyhp_id  from dizhiyihaopin where dzyhp_name like \"%" + newColumnObj.toString() + "%\"" 
                         + " or zujima like \"%" + newColumnObj.toString().toLowerCase() + "%\")");
