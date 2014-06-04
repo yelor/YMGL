@@ -76,8 +76,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel7 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         chengbenjia = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         yimiaoType = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         yimiaoJixing = new javax.swing.JComboBox();
@@ -85,9 +83,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         jLabel19 = new javax.swing.JLabel();
         yimiaoPizhunwenhao = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        yimiaoPicture = new javax.swing.JList();
         jLabel5 = new javax.swing.JLabel();
         yimiaoJiliang = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
@@ -150,15 +145,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         chengbenjia.setName("chengbenjia"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoInfoJDialog.class, this);
-        jButton6.setAction(actionMap.get("deletePic")); // NOI18N
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setName("jButton6"); // NOI18N
-
-        jButton7.setAction(actionMap.get("uploadPic")); // NOI18N
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setName("jButton7"); // NOI18N
-
         yimiaoType.setName("yimiaoType"); // NOI18N
         yimiaoType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,15 +167,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         jLabel14.setText(resourceMap.getString("jLabel14.text")); // NOI18N
         jLabel14.setName("jLabel14"); // NOI18N
-
-        jButton1.setAction(actionMap.get("imagePreview")); // NOI18N
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        yimiaoPicture.setName("yimiaoPicture"); // NOI18N
-        jScrollPane3.setViewportView(yimiaoPicture);
 
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
@@ -226,7 +203,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                     .addComponent(yimiaoName)
                     .addComponent(yimiaoShengchanqiye, 0, 180, Short.MAX_VALUE)
                     .addComponent(chengbenjia))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(92, 92, 92)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel21)
                     .addComponent(jLabel5)
@@ -235,18 +212,11 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(yimiaoYushoujia)
-                    .addComponent(yimiaoType, 0, 180, Short.MAX_VALUE)
+                    .addComponent(yimiaoType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(yimiaoJixing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(yimiaoJiliang))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(yimiaoJiliang, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 14, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
@@ -254,56 +224,47 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jiliangdanwei, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)))
+                            .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(unitId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(yimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(yimiaoType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(yimiaoGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel10)
-                            .addComponent(yimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel19)
-                            .addComponent(yimiaoShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(yimiaoJiliang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel20)
-                            .addComponent(jiliangdanwei, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(chengbenjia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(yimiaoYushoujia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21)
-                            .addComponent(jButton7)
-                            .addComponent(jButton6)
-                            .addComponent(jButton1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(yimiaoName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(yimiaoType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yimiaoPizhunwenhao, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(yimiaoGuige, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel10)
+                    .addComponent(yimiaoJixing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(unitId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(yimiaoShengchanqiye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yimiaoJiliang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel20)
+                    .addComponent(jiliangdanwei, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(chengbenjia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yimiaoYushoujia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel4.border.title"))); // NOI18N
@@ -406,6 +367,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
         jPanel2.setName("jPanel2"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(YiMiaoInfoJDialog.class, this);
         jButton4.setAction(actionMap.get("close")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
@@ -538,7 +500,7 @@ public class YiMiaoInfoJDialog extends BaseDialog {
             return;
         }
 
-        yimiaoPicture.setModel(new BaseListModel<String>(new ArrayList(), ""));
+//        yimiaoPicture.setModel(new BaseListModel<String>(new ArrayList(), ""));
         jTextFieldDepotID.setText("");
         jTextFieldSupplier.setText("");
         //自动帮定所有的值
@@ -564,17 +526,17 @@ public class YiMiaoInfoJDialog extends BaseDialog {
                 }
             }
 
-            String imagePaths = paramData.getYimiaoPicture();
-            if (imagePaths != null && !imagePaths.trim().equals("")) {
-                BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-                List source = mode.getSource();
-                String[] images = imagePaths.split(";");
-                for (String m : images) {
-                    source.add(m);
-                }
-                BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-                yimiaoPicture.setModel(newMode);
-            }
+//            String imagePaths = paramData.getYimiaoPicture();
+//            if (imagePaths != null && !imagePaths.trim().equals("")) {
+//                BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//                List source = mode.getSource();
+//                String[] images = imagePaths.split(";");
+//                for (String m : images) {
+//                    source.add(m);
+//                }
+//                BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+//                yimiaoPicture.setModel(newMode);
+//            }
         }
 
     }
@@ -604,17 +566,17 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         super.copyToBean(appParam, jPanel5);
 
         /*得到图片路径*/
-        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-        List source = mode.getSource();
-        String imgPaths = "";
-        for (int i = 0; i < source.size(); i++) {
-            if (i == (source.size() - 1)) {
-                imgPaths += source.get(i).toString();
-            } else {
-                imgPaths += source.get(i) + ";";
-            }
-        }
-        appParam.setYimiaoPicture(imgPaths);
+//        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//        List source = mode.getSource();
+//        String imgPaths = "";
+//        for (int i = 0; i < source.size(); i++) {
+//            if (i == (source.size() - 1)) {
+//                imgPaths += source.get(i).toString();
+//            } else {
+//                imgPaths += source.get(i) + ";";
+//            }
+//        }
+//        appParam.setYimiaoPicture(imgPaths);
 
         String serviceId = "yimiao/add";
         if (appParam.getYimiaoId() != null && appParam.getYimiaoId() > 0) {
@@ -651,109 +613,109 @@ public class YiMiaoInfoJDialog extends BaseDialog {
         };
     }
 
-    @Action
-    public Task uploadPic() {
-        BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
-        String selectedPath = fileChoose.openDialog();
-        if (!selectedPath.trim().equals("")) {
-            addObjectToList("uploading...");
-            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "yimiao") {
-                @Override
-                public void responseResult(String file) {
-                    removeObjectFromList("uploading...");
-                    BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-                    List source = mode.getSource();
-                    if (source.contains(file)) {
-                        return;
-                    }
-                    source.add(file);
-                    BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-                    yimiaoPicture.setModel(newMode);
-                }
-            };
-        }
-        return null;
-    }
+//    @Action
+//    public Task uploadPic() {
+//        BaseFileChoose fileChoose = new BaseFileChoose(new String[]{"png", "jpg", "gif", "bmp"}, this);
+//        String selectedPath = fileChoose.openDialog();
+//        if (!selectedPath.trim().equals("")) {
+//            addObjectToList("uploading...");
+//            return new FileTask(FileTask.TYPE_UPLOAD, selectedPath, "yimiao") {
+//                @Override
+//                public void responseResult(String file) {
+//                    removeObjectFromList("uploading...");
+//                    BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//                    List source = mode.getSource();
+//                    if (source.contains(file)) {
+//                        return;
+//                    }
+//                    source.add(file);
+//                    BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+//                    yimiaoPicture.setModel(newMode);
+//                }
+//            };
+//        }
+//        return null;
+//    }
 
-    private void addObjectToList(String name) {
-
-        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-        List source = mode.getSource();
-        if (source.contains(name)) {
-            return;
-        }
-        source.add(name);
-        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-        yimiaoPicture.setModel(newMode);
-    }
-
-    private void removeObjectFromList(String name) {
-        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-        List<String> source = mode.getSource();
-        source.remove(name);
-        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
-        yimiaoPicture.setModel(newMode);
-    }
-
-    @Action
-    public Task deletePic() {
-        Object selectedValue = yimiaoPicture.getSelectedValue();
-        if (selectedValue == null) {
-            return null;
-        }
-        removeObjectFromList(selectedValue.toString());
-        if (!selectedValue.toString().equals("")) {
-            return new FileTask(FileTask.TYPE_DELETE, selectedValue.toString(), "yimiao") {
-                @Override
-                public void responseResult(String file) {
-                }
-            };
-        }
-        return null;
-    }
+//    private void addObjectToList(String name) {
+//
+//        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//        List source = mode.getSource();
+//        if (source.contains(name)) {
+//            return;
+//        }
+//        source.add(name);
+//        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+//        yimiaoPicture.setModel(newMode);
+//    }
+//
+//    private void removeObjectFromList(String name) {
+//        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//        List<String> source = mode.getSource();
+//        source.remove(name);
+//        BaseListModel<String> newMode = new BaseListModel<String>(source, "");
+//        yimiaoPicture.setModel(newMode);
+//    }
+//
+//    @Action
+//    public Task deletePic() {
+//        Object selectedValue = yimiaoPicture.getSelectedValue();
+//        if (selectedValue == null) {
+//            return null;
+//        }
+//        removeObjectFromList(selectedValue.toString());
+//        if (!selectedValue.toString().equals("")) {
+//            return new FileTask(FileTask.TYPE_DELETE, selectedValue.toString(), "yimiao") {
+//                @Override
+//                public void responseResult(String file) {
+//                }
+//            };
+//        }
+//        return null;
+//    }
 
     @Action
     public void close() {
         this.dispose();
 
-        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
-        List<String> source = mode.getSource();
-        if (source.size() > 0) {
-            for (int i = 0; i < source.size(); i++) {
-                if (!source.get(i).equals("")) {
-                    FileTask task = new FileTask(FileTask.TYPE_DELETE, source.get(i), "yimiao") {
-                        @Override
-                        public void responseResult(String file) {
-                            removeObjectFromList(file);
-                        }
-                    };
-                    task.execute();
-                }
-            }
-        }
+//        BaseListModel<String> mode = (BaseListModel<String>) yimiaoPicture.getModel();
+//        List<String> source = mode.getSource();
+//        if (source.size() > 0) {
+//            for (int i = 0; i < source.size(); i++) {
+//                if (!source.get(i).equals("")) {
+//                    FileTask task = new FileTask(FileTask.TYPE_DELETE, source.get(i), "yimiao") {
+//                        @Override
+//                        public void responseResult(String file) {
+//                            removeObjectFromList(file);
+//                        }
+//                    };
+//                    task.execute();
+//                }
+//            }
+//        }
     }
 
-    @Action
-    public Task imagePreview() {
-        final Object obj = yimiaoPicture.getSelectedValue();
-        if (obj != null) {
-            return new FileTask(FileTask.TYPE_DOWNLOAD, obj.toString(), "yimiao") {
-                @Override
-                public void responseResult(final String file) {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
-                            ImagePreview imagePreview = new ImagePreview(file, true);
-                            imagePreview.setLocationRelativeTo(mainFrame);
-                            AssetClientApp.getApplication().show(imagePreview);
-                        }
-                    });
-                }
-            };
-        }
-        return null;
-    }
+//    @Action
+//    public Task imagePreview() {
+//        final Object obj = yimiaoPicture.getSelectedValue();
+//        if (obj != null) {
+//            return new FileTask(FileTask.TYPE_DOWNLOAD, obj.toString(), "yimiao") {
+//                @Override
+//                public void responseResult(final String file) {
+//                    SwingUtilities.invokeLater(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+//                            ImagePreview imagePreview = new ImagePreview(file, true);
+//                            imagePreview.setLocationRelativeTo(mainFrame);
+//                            AssetClientApp.getApplication().show(imagePreview);
+//                        }
+//                    });
+//                }
+//            };
+//        }
+//        return null;
+//    }
 
 //   条形码打印功能
 //    
@@ -776,11 +738,8 @@ public class YiMiaoInfoJDialog extends BaseDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chengbenjia;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBoxCont;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -804,7 +763,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextFieldDepotID;
     private javax.swing.JTextField jTextFieldSupplier;
     private javax.swing.JComboBox jiliangdanwei;
@@ -815,7 +773,6 @@ public class YiMiaoInfoJDialog extends BaseDialog {
     private javax.swing.JTextField yimiaoJiliang;
     private javax.swing.JComboBox yimiaoJixing;
     private javax.swing.JTextField yimiaoName;
-    private javax.swing.JList yimiaoPicture;
     private javax.swing.JTextField yimiaoPizhunwenhao;
     private javax.swing.JTextArea yimiaoRemark;
     private javax.swing.JComboBox yimiaoShengchanqiye;
