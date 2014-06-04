@@ -30,6 +30,8 @@ import javax.swing.PopupFactory;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import org.jdesktop.application.Application;
 
 /**
@@ -55,7 +57,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
 
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (!isShow && openWhenClick &&isEnabled()) {
+                if (!isShow && openWhenClick && isEnabled()) {
                     showPanel();
                 }
             }
@@ -70,6 +72,21 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
                 if (isEnabled()) {
                     setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
+            }
+        });
+
+        this.addAncestorListener(new AncestorListener() {
+            public void ancestorAdded(AncestorEvent event) {
+
+            }
+
+            public void ancestorRemoved(AncestorEvent event) {
+                hidePanel();
+            }
+
+            //只要祖先组件一移动,马上就让popup消失  
+            public void ancestorMoved(AncestorEvent event) {
+                hidePanel();
             }
         });
 
@@ -108,6 +125,10 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
         hasRegister = true;
     }
 
+    public void registerIcon(int POPUP_TYPE) {
+        registerIcon(POPUP_TYPE, 20);
+    }
+
     /**
      * 为一个textfiled注册一带有图标的POPUP_TYPE,PARAMETER为扩展参数
      * 1.如果是TYPE_DATE_CLICK：可以用这个参数来表示时间格式"yyyy-MM-dd" 2....
@@ -115,7 +136,7 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
      * @param POPUP_TYPE
      * @param PARAMETER
      */
-    public void registerIcon(int POPUP_TYPE) {
+    public void registerIcon(int POPUP_TYPE, int leftPos) {
         switch (POPUP_TYPE) {
             case IPopupBuilder.TYPE_DATE_CLICK:
                 icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_DATE));
@@ -129,11 +150,11 @@ public class BaseTextField extends JTextField implements KeyListener, FocusListe
             default:
                 icon = new ImageIcon(getClass().getResource(IPopupBuilder.ICON_POPUP_TABLE));
         }
-        Insets insets = new Insets(0, 20, 0, 0);
+        Insets insets = new Insets(0, leftPos, 0, 0);
         this.setMargin(insets);
 
         Border line = BorderFactory.createLineBorder(Color.DARK_GRAY);
-        Border empty = new EmptyBorder(0, 20, 0, 0);
+        Border empty = new EmptyBorder(0, leftPos, 0, 0);
         CompoundBorder border = new CompoundBorder(line, empty);
         setBorder(border);
         hasRegister = true;

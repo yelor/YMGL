@@ -61,7 +61,7 @@ public class YiMiaoDengJi2JDialog extends BaseDialog {
         initComponents();
         yimiaodengji = new Yimiaodengjitb();
         isNew = false;
-        jTextFieldtiaoxingma.setText(DanHao.getDanHao("YM"));
+        jTextFieldtiaoxingma.setText(DanHao.getDanHao("YM2L"));
         
         this.addWindowListener(new WindowListener() {
 

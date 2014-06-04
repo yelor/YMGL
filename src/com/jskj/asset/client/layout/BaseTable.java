@@ -28,6 +28,8 @@ import javax.swing.JTable;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
@@ -90,15 +92,14 @@ public class BaseTable extends JTable {
         }
     }
 
-  
-    public void addCellListener(final BaseCellFocusListener listener){
-       this.getCellEditor(0, 0).addCellEditorListener(new CellEditorListener(){
+    public void addCellListener(final BaseCellFocusListener listener) {
+        this.getCellEditor(0, 0).addCellEditorListener(new CellEditorListener() {
 
             @Override
             public void editingStopped(ChangeEvent e) {
                 int column = BaseTable.this.getSelectedColumn();
                 int row = BaseTable.this.getSelectedRow();
-                listener.editingStopped(row,column);
+                listener.editingStopped(row, column);
             }
 
             @Override
@@ -134,6 +135,21 @@ public class BaseTable extends JTable {
             ActionMap am = table.getActionMap();
             am.getParent().remove("selectNextRowCell");
             table.setActionMap(am);
+
+            table.addAncestorListener(new AncestorListener() {
+                public void ancestorAdded(AncestorEvent event) {
+
+                }
+
+                public void ancestorRemoved(AncestorEvent event) {
+                    hidePanel();
+                }
+
+                //只要祖先组件一移动,马上就让popup消失  
+                public void ancestorMoved(AncestorEvent event) {
+                    hidePanel();
+                }
+            });
         }
 
         public void registerPopup(final int columnPopupIndex, IPopupBuilder popBuilder) {

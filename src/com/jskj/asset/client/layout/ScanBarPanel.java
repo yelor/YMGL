@@ -5,11 +5,15 @@
  */
 package com.jskj.asset.client.layout;
 
+import com.jskj.asset.client.AssetClientApp;
+import com.jskj.asset.client.AssetClientView;
+import static com.jskj.asset.client.layout.AssetMessage.ERROR_MESSAGE;
 import static com.jskj.asset.client.layout.BaseTask.restTemplate;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
 import org.jdesktop.application.Task;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,6 +25,7 @@ public abstract class ScanBarPanel extends BasePanel {
 
     private final static Logger logger = Logger.getLogger(BasePopup.class);
     private final IPopupBuilder popBuilder;
+    AssetClientView clientView = (AssetClientView) Application.getInstance(AssetClientApp.class).getMainView();
 
     /**
      * Creates new form ScanBarPanel
@@ -30,7 +35,7 @@ public abstract class ScanBarPanel extends BasePanel {
     public ScanBarPanel(IPopupBuilder popBuilder) {
         initComponents();
         this.popBuilder = popBuilder;
-        ((BaseTextField) jTextFieldBarCode).registerIcon(popBuilder.getType());
+        ((BaseTextField) jTextFieldBarCode).registerIcon(popBuilder.getType(), 40);
     }
 
     public abstract void closePopup();
@@ -53,6 +58,7 @@ public abstract class ScanBarPanel extends BasePanel {
         setName("Form"); // NOI18N
 
         jTextFieldBarCode.setText(resourceMap.getString("jTextFieldBarCode.text")); // NOI18N
+        jTextFieldBarCode.setFocusCycleRoot(true);
         jTextFieldBarCode.setMaximumSize(new java.awt.Dimension(366, 75));
         jTextFieldBarCode.setMinimumSize(new java.awt.Dimension(366, 75));
         jTextFieldBarCode.setName("jTextFieldBarCode"); // NOI18N
@@ -121,18 +127,22 @@ public abstract class ScanBarPanel extends BasePanel {
 
                     UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(popBuilder.getWebServiceURI())
                             .queryParam("pagesize", 20).queryParam("pageindex", 1);
-                    String barcode = jTextFieldBarCode.getText().substring(0, 17);   //截取前17位
+                    String barcode = jTextFieldBarCode.getText();
+                    if (barcode.length() > 17) {
+                        barcode = jTextFieldBarCode.getText().substring(0, 17);   //截取前17位
+                    }
                     String conditionSql = popBuilder.getConditionSQL();
                     if (conditionSql.indexOf("#") >= 0) {
                         conditionSql = conditionSql.replaceAll("#", barcode);
-                    }else{
-                      conditionSql = popBuilder.getConditionSQL() + "\"" + barcode + "\"";
+                    } else {
+                        conditionSql = popBuilder.getConditionSQL() + "\"" + barcode + "\"";
                     }
                     builder.queryParam("conditionSql", conditionSql);
 
                     HashMap result = restTemplate.getForObject(builder.build().toUri(), HashMap.class);
                     return result;
                 } catch (Exception e) {
+                    e.printStackTrace();
                     return e;
                 }
             }
@@ -156,14 +166,18 @@ public abstract class ScanBarPanel extends BasePanel {
                         if (resultObj instanceof List) {
                             List listResult = (List) resultObj;
                             popBuilder.setBindedMap((HashMap) listResult.get(0));
-                            jTextFieldBarCode.setText("");
+                        }else{
+                           clientView.setStatus("返回数据格式不正确.", ERROR_MESSAGE);
                         }
+                    } else {
+                        clientView.setStatus("没有查询到数据.", ERROR_MESSAGE);
                     }
-
-                    return;
                 }
 
+            } else {
+                clientView.setStatus("远程接口没有返回数据.", ERROR_MESSAGE);
             }
+            jTextFieldBarCode.setText("");
         }
 
     }

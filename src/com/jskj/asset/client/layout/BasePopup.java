@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JTable;
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
@@ -69,6 +71,7 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
 
         });
         jTableResult.setSelectionMode(SINGLE_SELECTION);
+
     }
 
     public void keyTyped(KeyEvent e) {
@@ -321,15 +324,14 @@ public abstract class BasePopup extends BasePanel implements KeyListener {
         setPopValueToParent();
     }//GEN-LAST:event_jTableResultMouseClicked
 
-
-    public void setPopValueToParent(){
+    public void setPopValueToParent() {
         if (bindTable != null) {
             closePopup();
             HashMap map = bindTable.getSelectedBean();
             popBuilder.setBindedMap(map);
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanel1;
