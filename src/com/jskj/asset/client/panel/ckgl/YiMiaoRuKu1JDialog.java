@@ -308,6 +308,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             }
 
             public void setBindedMap(HashMap bindedMap) {
+                editTable.selectMaxIndexForScan();
                 updateTable(bindedMap, editTable, true);
             }
         });

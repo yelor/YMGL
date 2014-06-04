@@ -121,6 +121,17 @@ public class BaseTable extends JTable {
 
         public HashMap<Integer, BasePopup> registerColumn;
 
+        public void selectMaxIndexForScan() {
+            if (table != null) {
+                int rowCount = table.getModel().getRowCount();
+                if (rowCount > 0) {
+                    selectionModel = table.getSelectionModel();
+                    selectionModel.setSelectionInterval(rowCount - 1, rowCount - 1);
+                    selectedRow = rowCount - 1;
+                }
+            }
+        }
+
         public SingleEditRowTable(BaseTable table) {
             this.table = table;
             hasRegister = false;
