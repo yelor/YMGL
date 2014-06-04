@@ -70,7 +70,7 @@ public abstract class DanjuMouseAdapter extends MouseAdapter {
             final String className = DanHao.getUIClassByDanhaoType(shenqingdan);
             if (!className.equals("")) {
 
-                if (shenqingdan.startsWith("YM")) {//疫苗相关
+                if (shenqingdan.startsWith("YM") && !shenqingdan.startsWith(DanHao.TYPE_YMFK)) {//疫苗相关,非疫苗付款
                     new YimiaoXiaoshouXiangdanTask(shenqingdan) {
                         @Override
                         public void onSucceeded(Object result) {
