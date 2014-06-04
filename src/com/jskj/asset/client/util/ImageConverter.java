@@ -34,11 +34,15 @@ public class ImageConverter {
     // BMP格式
     public static final String BMP = "bmp";
  
-    public static void gifTojpg(String source, String result){
-//        convert(source,JPG,)
+    public static void pngToJPG(String source, String result){
+        convert(source,JPG,result);
     }
     
-    public static void bmptojpg(String source, String result) throws FileNotFoundException, IOException{
+    public static void gifToJPG(String source, String result){
+        convert(source,JPG,result);
+    }
+    
+    public static void bmpToJPG(String source, String result) throws FileNotFoundException, IOException{
 
 		RenderedOp src2 = JAI.create("fileload", source);
 		OutputStream os2 = new FileOutputStream(result);
@@ -72,5 +76,8 @@ public class ImageConverter {
         }
     }
     
-    
+//    public static void main(String[] args) throws IOException {
+////        pngToJPG("C:\\Users\\haitao\\Desktop\\1.png","C:\\Users\\haitao\\Desktop\\1.jpg");
+//        bmpToJPG("C:\\Users\\haitao\\Desktop\\1.bmp","C:\\Users\\haitao\\Desktop\\1.jpg");
+//    }
 }

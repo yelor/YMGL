@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -39,7 +41,7 @@ import org.jdesktop.application.Task;
  * @author huiqi
  */
 public class LiChengZaiXianChaXunJDialog extends BaseDialog {
-    
+
     private final static Logger logger = Logger.getLogger(LiChengZaiXianChaXunJDialog.class);
     private final BindTableHelper<MyTaskEntity> bindTable;
     int resultCount = 0;
@@ -58,10 +60,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         jTextFieldEndInit = new BaseTextField();
         jTextFieldStartInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
         jTextFieldEndInit.registerIcon(IPopupBuilder.TYPE_DATE_CLICK);
-        
+
         DateChooser dateChooser1 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser1.register(jTextFieldStartInit);
-        
+
         DateChooser dateChooser2 = DateChooser.getInstance("yyyy-MM-dd HH:mm:ss");
         dateChooser2.register(jTextFieldEndInit);
         initComponents();
@@ -72,24 +74,38 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         bindTable.setDateType(2);
         bindTable.bind().setColumnWidth(new int[]{0, 200}, new int[]{1, 200}).setRowHeight(25);
         detailPanel = new DetailPanel();
-        
-        jTable4.addMouseListener(new DanjuMouseAdapter(true,false){
+
+        jTable4.addMouseListener(new DanjuMouseAdapter(true, false) {
 
             @Override
             public String getShenqingdanID() {
-               MyTaskEntity entity= selectedTaskEntity();
-               if(entity!=null){
-                  return entity.getShenqingdanId();
-               }
-               return null;
+                MyTaskEntity entity = selectedTaskEntity();
+                if (entity != null) {
+                    return entity.getShenqingdanId();
+                }
+                return null;
             }
         });
-        
+
         jTable4.setToolTipText("双击打开单据.");
+        jTable4.addAncestorListener(new AncestorListener() {
+            public void ancestorAdded(AncestorEvent event) {
+
+            }
+
+            public void ancestorRemoved(AncestorEvent event) {
+                hidePanel();
+            }
+
+            //只要祖先组件一移动,马上就让popup消失  
+            public void ancestorMoved(AncestorEvent event) {
+                hidePanel();
+            }
+        });
     }
-    
+
     class JLabelComparator implements Comparator<MyTaskEntity> {
-        
+
         @Override
         public int compare(MyTaskEntity o1, MyTaskEntity o2) {
             long o1Label = o1.getSubmitDate().getTime();
@@ -276,7 +292,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         //</editor-fold>
 
     }
-    
+
     @Action
     public Task findProcess() {
         String startDate = jTextFieldStart.getText();
@@ -284,7 +300,7 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         parameterMap.put("startDate", startDate);
         parameterMap.put("endDate", endDate);
         return new LichengZaixianFindTask(parameterMap) {
-            
+
             @Override
             public void responseResult(CommFindEntity<MyTaskEntity> response) {
                 logger.debug("get current size:" + response.getResult().size());
@@ -294,10 +310,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
                 bindTable.refreshData(resultArray);
 
             }
-            
+
         };
     }
-    
+
     private MyTaskEntity selectedTaskEntity() {
         if (jTable4.getSelectedRow() >= 0) {
             if (resultArray != null) {
@@ -306,10 +322,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
         }
         return null;
     }
-    
+
     @Action
     public void detail() {
-        
+
         if (isShow) {
             hidePanel();
         } else {
@@ -321,10 +337,10 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
             showPanel(entity.getContext());
         }
     }
-    
+
     private Popup pop;
     private boolean isShow;
-    
+
     public void hidePanel() {
         if (pop != null) {
             isShow = false;
@@ -332,31 +348,31 @@ public class LiChengZaiXianChaXunJDialog extends BaseDialog {
             pop = null;
         }
     }
-    
+
     public void showPanel(String context) {
         if (pop != null) {
             pop.hide();
         }
         Point p = jTable4.getLocationOnScreen();
-        
+
         int selectedRow = jTable4.getSelectedRow();
-        
+
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        
+
         int selectedColumnX = p.x;
         int selectedColumnY = p.y + (selectedRow + 1) * jTable4.getRowHeight();
-        
+
         int popHeight = detailPanel.getPreferredSize().height;
         int popWitdh = detailPanel.getPreferredSize().width;
-        
+
         if ((selectedColumnY + popHeight) > size.getHeight()) {
             selectedColumnY = selectedColumnY - detailPanel.getHeight() - jTable4.getRowHeight();
         }
-        
+
         if ((selectedColumnX + popWitdh) > size.getWidth()) {
             selectedColumnX = selectedColumnX - detailPanel.getWidth();
         }
-        
+
         pop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), detailPanel, selectedColumnX, selectedColumnY);
         detailPanel.setText(context);
         pop.show();
