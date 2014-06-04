@@ -600,11 +600,6 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane3 = new javax.swing.JScrollPane();
-        gdzcPhoto = new javax.swing.JList();
-        jButton7 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldZcid = new javax.swing.JTextField();
@@ -643,31 +638,13 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
         jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        gdzcPhoto1 = new javax.swing.JList();
+        gdzcPhoto = new javax.swing.JList();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
 
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        gdzcPhoto.setName("gdzcPhoto"); // NOI18N
-        jScrollPane3.setViewportView(gdzcPhoto);
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(ITGuDingZiChanDengJiJDialog.class, this);
-        jButton7.setAction(actionMap.get("uploadPic")); // NOI18N
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ITGuDingZiChanDengJiJDialog.class);
-        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
-        jButton7.setName("jButton7"); // NOI18N
-
-        jButton9.setAction(actionMap.get("deletePic")); // NOI18N
-        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
-        jButton9.setName("jButton9"); // NOI18N
-
-        jButton10.setAction(actionMap.get("imagePreview")); // NOI18N
-        jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
-        jButton10.setName("jButton10"); // NOI18N
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getResourceMap(ITGuDingZiChanDengJiJDialog.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setName("Form"); // NOI18N
         setResizable(false);
@@ -745,6 +722,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
         jLabel16.setText(resourceMap.getString("jLabel16.text")); // NOI18N
         jLabel16.setName("jLabel16"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(com.jskj.asset.client.AssetClientApp.class).getContext().getActionMap(ITGuDingZiChanDengJiJDialog.class, this);
         jButton3.setAction(actionMap.get("fushuliebiao")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
@@ -806,8 +784,8 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
 
         jScrollPane4.setName("jScrollPane4"); // NOI18N
 
-        gdzcPhoto1.setName("gdzcPhoto1"); // NOI18N
-        jScrollPane4.setViewportView(gdzcPhoto1);
+        gdzcPhoto.setName("gdzcPhoto"); // NOI18N
+        jScrollPane4.setViewportView(gdzcPhoto);
 
         jButton11.setAction(actionMap.get("uploadPic")); // NOI18N
         jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
@@ -1013,9 +991,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList gdzcPhoto;
-    private javax.swing.JList gdzcPhoto1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -1023,9 +999,7 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1042,7 +1016,6 @@ public class ITGuDingZiChanDengJiJDialog extends BaseDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextAreaRemark;
     private javax.swing.JTextField jTextField12;
