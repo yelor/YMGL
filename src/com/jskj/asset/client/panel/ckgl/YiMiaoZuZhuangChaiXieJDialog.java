@@ -59,7 +59,7 @@ public class YiMiaoZuZhuangChaiXieJDialog extends BaseDialog {
         jTextFieldzhidanren.setText(AssetClientApp.getSessionMap().getUsertb().getUserName());
         jTextFieldbumen.setText(AssetClientApp.getSessionMap().getDepartment().getDepartmentName());
 
-        //疫苗表1中的内容
+//      疫苗表1中的内容
         final BaseTable.SingleEditRowTable editTable1 = ((BaseTable) jTableyimiao1).createSingleEditModel(new String[][]{
             {"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称", "true"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"}, {"cangku", "仓库", "true"},
             {"shengchanqiye", "生产企业", "false"}, {"unit", "单位", "false"}, {"quantity", "数量", "true"}, {"remark", "备注", "false"}});

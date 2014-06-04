@@ -17,6 +17,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
@@ -137,9 +138,9 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
 
         //疫苗表中的内容
         final BaseTable.SingleEditRowTable editTable = ((BaseTable) jTableyimiao).createSingleEditModel(new String[][]{
-            {"xiangdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"}, 
+            {"xiangdanId", "详单编号", "false"}, {"yimiaoId", "疫苗编号", "false"}, {"yimiaoName", "疫苗名称", "true"}, {"source", "国产/出口", "false"},
             {"tongguandanNo", "进口通关单编号", "false"}, {"quantity", "数量", "false"}, {"yimiaoGuige", "规格", "false"}, {"yimiaoJixing", "剂型", "false"},
-            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"},{"barcode", "条形码", "false"},
+            {"yimiaoShengchanqiye", "生产企业", "false"}, {"pihao", "批号", "false"}, {"youxiaodate", "有效期", "false"}, {"unitId", "单位", "false"}, {"barcode", "条形码", "false"},
             {"piqianfaNo", "批签发合格证编号", "false"}, {"yimiaoPizhunwenhao", "批准文号", "false"},
             {"jingbanren", "经办人", "false"}, {"gongyingdanwei", "供应单位", "false"}, {"duifangjingbanren", "对方经办人", "false"}});
 
@@ -248,7 +249,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
                     Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
                     Object barcode = yimiaodengji.get("barcode");
-                    
+
                     for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
                         BaseTable yimiaotable = ((BaseTable) jTableyimiao);
                         if (yimiaotable.getValue(i, "barcode").toString().trim().equals("" + yimiaodengji.get("barcode"))) {
@@ -284,6 +285,136 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
 
             }
         });
+
+        ((ScanButton) jButton11).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyanshouyimiao";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                sql = " shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2"
+                        + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=1 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
+                sql += (" and yimiao_id in ( select yimiao_id  from yimiaodengji where barcode = \"#\" )");
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                updateTable(bindedMap, editTable, true);
+            }
+        });
+    }
+
+    private void updateTable(HashMap bindedMap, BaseTable.SingleEditRowTable editTable, boolean insertBlankRow) {
+        if (bindedMap != null) {
+            Object yimiaomap = bindedMap.get("yimiaoAll");
+            HashMap yimiaoAll = (HashMap) yimiaomap;
+            Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
+            HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
+            Object yimiaodengjimap = bindedMap.get("yimiaodengji");
+            HashMap yimiaodengji = (HashMap) yimiaodengjimap;
+            Object gongyingdanweimap = bindedMap.get("gongyingdanwei");
+            HashMap gongyingdanwei = (HashMap) gongyingdanweimap;
+
+            Object yimiaoId = yimiaoAll.get("yimiaoId");
+            Object yimiaoName = yimiaoAll.get("yimiaoName");
+            Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
+            Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
+            Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
+            Object unit = yimiaoAll.get("unitId");
+            Object pihao;
+            try {
+                pihao = yimiaodengji.get("pihao");
+            } catch (Exception e) {
+                pihao = null;
+            }
+            Object source;
+            try {
+                source = yimiaodengji.get("source");
+            } catch (Exception e) {
+                source = null;
+            }
+            Object youxiaoqi;
+            try {
+                youxiaoqi = yimiaodengji.get("youxiaoqi").toString().subSequence(0, 10);
+            } catch (Exception e) {
+                youxiaoqi = "";
+            }
+            Object piqianfahegezhenno;
+            try {
+                piqianfahegezhenno = yimiaodengji.get("piqianfahegezhenno");
+            } catch (Exception e) {
+                piqianfahegezhenno = null;
+            }
+            Object yimiaoPizhunwenhao = yimiaoAll.get("yimiaoPizhunwenhao");
+            Object tongguandanno;
+            try {
+                tongguandanno = yimiaodengji.get("tongguandanno");
+            } catch (Exception e) {
+                tongguandanno = null;
+            }
+            Object quantity = yimiaoshenqingdan.get("quantity");
+            Object gongyingdanweiName;
+            try {
+                gongyingdanweiName = gongyingdanwei.get("supplierName");
+            } catch (Exception e) {
+                gongyingdanweiName = "";
+            }
+            Object userName;
+            try {
+                userName = gongyingdanwei.get("supplierConstactperson");
+            } catch (Exception e) {
+                userName = "";
+            }
+            Object supplierId = gongyingdanwei.get("supplierId");
+            Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
+            Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
+            Object barcode = yimiaodengji.get("barcode");
+
+            for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                if (yimiaotable.getValue(i, "barcode").toString().trim().equals("" + yimiaodengji.get("barcode"))) {
+                    AssetMessage.INFO("已经添加了该疫苗！", YiMiaoRuKu1JDialog.this);
+                    return;
+                }
+            }
+
+            supplierIdmap.put(xiangdanId, supplierId);
+            xiangdanIdmap.put(xiangdanId, xiangdanId);
+            shenqingdanIdmap.put(xiangdanId, shenqingdanId);
+
+            editTable.insertValue(0, xiangdanId);
+            editTable.insertValue(1, yimiaoId);
+            editTable.insertValue(2, yimiaoName);
+            editTable.insertValue(3, source);
+            editTable.insertValue(4, tongguandanno);
+            editTable.insertValue(5, quantity);
+            editTable.insertValue(6, yimiaoGuige);
+            editTable.insertValue(7, yimiaoJixing);
+            editTable.insertValue(8, shengchanqiye);
+            editTable.insertValue(9, pihao);
+            editTable.insertValue(10, youxiaoqi);
+            editTable.insertValue(11, unit);
+            editTable.insertValue(12, barcode);
+            editTable.insertValue(13, piqianfahegezhenno);
+            editTable.insertValue(14, yimiaoPizhunwenhao);
+            editTable.insertValue(15, AssetClientApp.getSessionMap().getUsertb().getUserName());
+            editTable.insertValue(16, gongyingdanweiName);
+            editTable.insertValue(17, userName);
+
+            if (insertBlankRow) {
+                editTable.addNewRow();
+            }
+
+        }
     }
 
     /**
@@ -299,7 +430,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         jButton7 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        jButton11 = new ScanButton();
         jButton12 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -581,7 +712,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         }
         List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
-            if(jTableyimiao.getValueAt(i, 2)==null|jTableyimiao.getValueAt(i, 2)==""){
+            if (jTableyimiao.getValueAt(i, 2) == null | jTableyimiao.getValueAt(i, 2) == "") {
                 continue;
             }
             YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
@@ -601,6 +732,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
             lst.add(lb);
         }
         return new Cancel(lst);
+
     }
 
     private class BuhegeTask extends org.jdesktop.application.Task<Object, Void> {
@@ -645,7 +777,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
         List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            if(yimiaotable.getValue(i, "yimiaoName")==null|yimiaotable.getValue(i, "yimiaoName")==""){
+            if (yimiaotable.getValue(i, "yimiaoName") == null | yimiaotable.getValue(i, "yimiaoName") == "") {
                 continue;
             }
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();
@@ -731,7 +863,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"经办人", jTextFieldjingbanren.getText()},
                     {"仓库", jTextFieldkufang.getText()},
-                    {"备注", jTextArea1.getText(),"single"}},
+                    {"备注", jTextArea1.getText(), "single"}},
                     jTableyimiao,
                     new String[][]{{"", ""},});
         } catch (DRException ex) {
@@ -753,6 +885,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
 
     public void close() {
         this.dispose();
+
     }
 
     private class CloseTask extends WeidengjiyimiaoTask {
@@ -798,6 +931,7 @@ public class YiMiaoRuKu1JDialog extends BaseDialog {
     public void chooseYimiao() {
         String sql = "shenqingdan_id like \"YMLQ%\" and is_completed = 1 and status = 2";
         new ChooseTask(sql).execute();
+
     }
 
     private class ChooseTask extends WeidengjiyimiaoTask {

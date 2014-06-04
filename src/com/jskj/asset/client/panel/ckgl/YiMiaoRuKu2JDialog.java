@@ -17,6 +17,7 @@ import com.jskj.asset.client.layout.BaseDialog;
 import com.jskj.asset.client.layout.BaseTable;
 import com.jskj.asset.client.layout.BaseTextField;
 import com.jskj.asset.client.layout.IPopupBuilder;
+import com.jskj.asset.client.layout.ScanButton;
 import com.jskj.asset.client.layout.ws.ComResponse;
 import com.jskj.asset.client.layout.ws.CommFindEntity;
 import com.jskj.asset.client.layout.ws.CommUpdateTask;
@@ -291,6 +292,140 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
             }
         });
 
+        ((ScanButton) jButton18).registerPopup(new IPopupBuilder() {
+            public int getType() {
+                return IPopupBuilder.TYPE_POPUP_SCAN;
+            }
+
+            public String getWebServiceURI() {
+                return Constants.HTTP + Constants.APPID + "addyanshouyimiao";
+            }
+
+            public String getConditionSQL() {
+                String sql = "";
+                sql = " shenqingdan_id like \"YMSG%\" and is_completed = 1 and status = 2"
+                        + " and shenqingdan_id NOT IN( SELECT shenqingdan_id FROM (SELECT shenqingdan_id,COUNT(*) AS num FROM yimiaoshenqingdan WHERE STATUS=1 GROUP BY shenqingdan_id) AS a WHERE a.num > 0)";
+                sql += (" and yimiao_id in ( select yimiao_id  from yimiaodengji where barcode = \"#\" )");
+                return sql;
+            }
+
+            public String[][] displayColumns() {
+                return null;
+            }
+
+            public void setBindedMap(HashMap bindedMap) {
+                updateTable(bindedMap, editTable, true);
+            }
+        });
+    }
+
+    private void updateTable(HashMap bindedMap, BaseTable.SingleEditRowTable editTable, boolean insertBlankRow) {
+        if (bindedMap != null) {
+            Object yimiaomap = bindedMap.get("yimiaoAll");
+            HashMap yimiaoAll = (HashMap) yimiaomap;
+            Object yimiaoshenqingdanmap = bindedMap.get("yimiaoshenqingtb");
+            HashMap yimiaoshenqingdan = (HashMap) yimiaoshenqingdanmap;
+            Object yimiaodengjimap = bindedMap.get("yimiaodengji");
+            HashMap yimiaodengji = (HashMap) yimiaodengjimap;
+            Object gongyingdanweimap = bindedMap.get("gongyingdanwei");
+            HashMap gongyingdanwei = (HashMap) gongyingdanweimap;
+
+            Object yimiaoId = yimiaoAll.get("yimiaoId");
+            Object yimiaoName = yimiaoAll.get("yimiaoName");
+            Object yimiaoGuige = yimiaoAll.get("yimiaoGuige");
+            Object yimiaoJixing = yimiaoAll.get("yimiaoJixing");
+            Object shengchanqiye = yimiaoAll.get("yimiaoShengchanqiye");
+            Object unit = yimiaoAll.get("unitId");
+            Object barcode = yimiaodengji.get("barcode");
+            Object pihao;
+            try {
+                pihao = yimiaodengji.get("pihao");
+            } catch (Exception e) {
+                pihao = null;
+            }
+            Object source;
+            try {
+                source = yimiaodengji.get("source");
+            } catch (Exception e) {
+                source = null;
+            }
+            Object youxiaoqi;
+            try {
+                youxiaoqi = yimiaodengji.get("youxiaoqi").toString().subSequence(0, 10);
+            } catch (Exception e) {
+                youxiaoqi = "";
+            }
+            Object piqianfahegezhenno;
+            try {
+                piqianfahegezhenno = yimiaodengji.get("piqianfahegezhenno");
+            } catch (Exception e) {
+                piqianfahegezhenno = null;
+            }
+            Object yimiaoPizhunwenhao = yimiaoAll.get("yimiaoPizhunwenhao");
+            Object tongguandanno;
+            try {
+                tongguandanno = yimiaodengji.get("tongguandanno");
+            } catch (Exception e) {
+                tongguandanno = null;
+            }
+            Object quantity = yimiaoshenqingdan.get("quantity");
+            Object gongyingdanweiName;
+            try {
+                gongyingdanweiName = gongyingdanwei.get("supplierName");
+            } catch (Exception e) {
+                gongyingdanweiName = "";
+            }
+            Object userName;
+            try {
+                userName = gongyingdanwei.get("supplierConstactperson");
+            } catch (Exception e) {
+                userName = "";
+            }
+            Object buyprice = yimiaoshenqingdan.get("buyprice");
+            Object totalprice = yimiaoshenqingdan.get("totalprice");
+
+            Object supplierId = gongyingdanwei.get("supplierId");
+            Object xiangdanId = yimiaoshenqingdan.get("xiangdanId");
+            Object shenqingdanId = yimiaoshenqingdan.get("shenqingdanId");
+
+            supplierIdmap.put(xiangdanId, supplierId);
+            xiangdanIdmap.put(xiangdanId, xiangdanId);
+            shenqingdanIdmap.put(xiangdanId, shenqingdanId);
+
+            for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
+                BaseTable yimiaotable = ((BaseTable) jTableyimiao);
+                if (yimiaotable.getValue(i, "barcode").toString().trim().equals("" + yimiaodengji.get("barcode"))) {
+                    AssetMessage.INFO("已经添加了该疫苗！", YiMiaoRuKu2JDialog.this);
+                    return;
+                }
+            }
+
+            editTable.insertValue(0, xiangdanId);
+            editTable.insertValue(1, yimiaoId);
+            editTable.insertValue(2, yimiaoName);
+            editTable.insertValue(3, source);
+            editTable.insertValue(4, tongguandanno);
+            editTable.insertValue(5, quantity);
+            editTable.insertValue(6, yimiaoGuige);
+            editTable.insertValue(7, yimiaoJixing);
+            editTable.insertValue(8, shengchanqiye);
+            editTable.insertValue(9, pihao);
+            editTable.insertValue(10, youxiaoqi);
+            editTable.insertValue(11, unit);
+            editTable.insertValue(12, barcode);
+            editTable.insertValue(13, piqianfahegezhenno);
+            editTable.insertValue(14, yimiaoPizhunwenhao);
+            editTable.insertValue(15, buyprice);
+            editTable.insertValue(16, totalprice);
+            editTable.insertValue(17, AssetClientApp.getSessionMap().getUsertb().getUserName());
+            editTable.insertValue(18, gongyingdanweiName);
+            editTable.insertValue(19, userName);
+
+            if (insertBlankRow) {
+                editTable.addNewRow();
+            }
+
+        }
 // 
     }
 
@@ -308,7 +443,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         jButton7 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
+        jButton18 = new ScanButton();
         jButton19 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -583,7 +718,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         }
         List<YimiaoshenqingliebiaoEntity> lst = new ArrayList<YimiaoshenqingliebiaoEntity>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
-            if(jTableyimiao.getValueAt(i, 2)==null|jTableyimiao.getValueAt(i, 2)==""){
+            if (jTableyimiao.getValueAt(i, 2) == null | jTableyimiao.getValueAt(i, 2) == "") {
                 continue;
             }
             YimiaoshenqingliebiaoEntity lb = new YimiaoshenqingliebiaoEntity();
@@ -648,7 +783,7 @@ public class YiMiaoRuKu2JDialog extends BaseDialog {
         List<Churukudanyimiaoliebiaotb> list = new ArrayList<Churukudanyimiaoliebiaotb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            if(yimiaotable.getValue(i, "yimiaoName")==null|yimiaotable.getValue(i, "yimiaoName")==""){
+            if (yimiaotable.getValue(i, "yimiaoName") == null | yimiaotable.getValue(i, "yimiaoName") == "") {
                 continue;
             }
             Churukudanyimiaoliebiaotb yimiaoliebiao = new Churukudanyimiaoliebiaotb();

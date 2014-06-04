@@ -295,6 +295,7 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setBorderPainted(false);
+        jButton4.setEnabled(false);
         jButton4.setFocusable(false);
         jButton4.setName("jButton4"); // NOI18N
         jButton4.setOpaque(false);
@@ -746,7 +747,10 @@ public class YiMiaoTiaoJiaJDialog extends BaseDialog {
         jTextFieldKemu.setText("" + yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getTiaojiakemu());
         jTextFieldJine.setEditable(false);
         jTextFieldJine.setText("" + yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getTiaojiajine());
-
+        if (yimiaotiaojiaxiangdanEntity.getYimiaotiaojiatb().getIsCompleted() == 1) {
+            jButton4.setEnabled(true);
+        }
+        
         setListTable(yimiaotiaojiaxiangdanEntity.getResult());
     }
 
