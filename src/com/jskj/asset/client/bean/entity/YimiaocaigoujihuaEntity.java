@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class YimiaocaigoujihuaEntity {
+    private YiMiaotb yimiao;
+    
     private Integer yimiaoId;
 
     private String yimiaoName;
@@ -31,6 +33,14 @@ public class YimiaocaigoujihuaEntity {
     private Integer jihuaQuantity;
     
     private Integer tuijianQuantity;
+
+    public YiMiaotb getYimiao() {
+        return yimiao;
+    }
+
+    public void setYimiao(YiMiaotb yimiao) {
+        this.yimiao = yimiao;
+    }
 
     public Integer getYimiaoId() {
         return yimiaoId;

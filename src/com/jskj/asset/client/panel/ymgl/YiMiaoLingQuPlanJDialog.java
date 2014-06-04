@@ -7,8 +7,11 @@ package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
+import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
+import com.jskj.asset.client.bean.entity.YimiaoCaigoujihuaFindEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigouEntity;
+import com.jskj.asset.client.bean.entity.YimiaocaigoujihuaEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
@@ -116,7 +119,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
                             return;
                         }
                     }
-                    
+
                     editTable.insertValue(0, yimiaoId);
                     editTable.insertValue(1, yimiaoName);
                     editTable.insertValue(2, yimiaoGuige);
@@ -475,6 +478,35 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         }
     }
 
+    public void TableSetEntity(List<YimiaocaigoujihuaEntity> list) {
+        
+         int size = list.size();
+        Object[][] o = new Object[size][7];
+        for (int i = 0; i < size; i++) {
+            YiMiaotb yimiao = list.get(i).getYimiao();
+            o[i] = new Object[]{yimiao.getYimiaoId(), yimiao.getYimiaoName(), yimiao.getYimiaoGuige(), yimiao.getYimiaoJixing(), yimiao.getYimiaoShengchanqiye(), yimiao.getUnitId(),0};
+        }
+
+        jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "数量"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, true
+            };
+        });
+//        for (int i = 0; i < list.size(); i++) {
+//            jTableyimiao.setValueAt(list.get(i).getYimiaoId(), i, 0);
+//            jTableyimiao.setValueAt(list.get(i).getYimiaoName(), i, 0);
+//            jTableyimiao.setValueAt(list.get(i).getYimiaoJixing(), i, 0);
+//            jTableyimiao.setValueAt(list.get(i).getYimiaoJixing(), i, 0);
+//            jTableyimiao.setValueAt(list.get(i).getUnit(), i, 0);
+//        }
+
+    }
+
     public void setUpdatedData(Yimiaoshenqingdantb yimiaoshenqingdan) {
         if (yimiaoshenqingdan == null) {
             return;
@@ -499,7 +531,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         List<Yimiaoshenqingdantb> list = new ArrayList<Yimiaoshenqingdantb>();
         for (int i = 0; i < jTableyimiao.getRowCount() - 1; i++) {
             BaseTable yimiaotable = ((BaseTable) jTableyimiao);
-            if(yimiaotable.getValue(i, "yimiaoId")==null|yimiaotable.getValue(i, "yimiaoId")==""){
+            if (yimiaotable.getValue(i, "yimiaoId") == null | yimiaotable.getValue(i, "yimiaoId") == "") {
                 continue;
             }
             yimiaoshenqingdan = new Yimiaoshenqingdantb();
@@ -529,7 +561,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
                     {"制单日期", jTextFieldzhidanDate.getText()},
                     {"申请人", jTextFieldshenqingren.getText()},
                     {"申请部门", jTextFielddepartment.getText()},
-                    {"备注", jTextAreaRemark.getText(),"single"}},
+                    {"备注", jTextAreaRemark.getText(), "single"}},
                     jTableyimiao,
                     new String[][]{{"制单人", jTextFieldzhidanren.getText()}});
         } catch (DRException ex) {
@@ -623,7 +655,7 @@ public class YiMiaoLingQuPlanJDialog extends BaseDialog {
         if (yimiaocaigouxiangdanEntity.getShenqingdantb().getIsCompleted() == 1) {
             jButton4.setEnabled(true);
         }
-        
+
         setListTable(yimiaocaigouxiangdanEntity.getResult());
     }
 

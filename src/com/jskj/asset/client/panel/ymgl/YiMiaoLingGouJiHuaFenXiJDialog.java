@@ -35,6 +35,8 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
 
     private List<YimiaocaigoujihuaEntity> yimiaocaigoujihuas;
 
+    private List<YimiaocaigoujihuaEntity> lingquyimiaoList;
+
     private final BindTableHelper<YimiaocaigoujihuaEntity> bindTable;
 
     /**
@@ -46,10 +48,10 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         pageIndex = 1;
         count = 0;
         bindTable = new BindTableHelper<YimiaocaigoujihuaEntity>(jTableYimiao, new ArrayList<YimiaocaigoujihuaEntity>());
-        bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"},
+        bindTable.createTable(new String[][]{{"yimiaoId", "疫苗编号"}, {"yimiaoName", "疫苗名称"}, {"yimiao.yimiaoType", "疫苗类别"}, {"yimiaoGuige", "规格"}, {"yimiaoJixing", "剂型"},
         {"unit", "单位"}, {"kucunQuantity", "库存数量"}, {"kucunXiaxian", "库存下限"}, {"kucunShangxian", "库存上限"}, {"jihuaQuantity", "计划采购数量"}, {"tuijianQuantity", "推荐采购数量"}});
-        bindTable.setIntegerType(1, 6, 7, 8, 9, 10);
-        bindTable.bind().setColumnWidth(new int[]{1, 200},new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 60}, new int[]{6, 60}).setRowHeight(30);
+        bindTable.setIntegerType(1, 7, 8, 9, 10, 11);
+        bindTable.bind().setColumnWidth(new int[]{1, 200}, new int[]{3, 80}, new int[]{4, 80}, new int[]{5, 60}, new int[]{6, 60}).setRowHeight(30);
         new RefureTask(0).execute();
     }
 
@@ -232,6 +234,7 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         jButton7.setOpaque(false);
         jToolBar1.add(jButton7);
 
+        jButton3.setAction(actionMap.get("Shengchengyimiaolingqudan")); // NOI18N
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -239,6 +242,7 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton3);
 
+        jButton6.setAction(actionMap.get("ShengchengErleiyimiaoshegoudan")); // NOI18N
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -282,7 +286,7 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -313,8 +317,8 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -340,8 +344,8 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
         );
@@ -388,12 +392,11 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
 
     }
 
-     @Action
-     public void reload(){
-         new RefureTask(0).execute();
-     }
-     
-    
+    @Action
+    public void reload() {
+        new RefureTask(0).execute();
+    }
+
     @Action
     public void print() {
         try {
@@ -410,7 +413,53 @@ public class YiMiaoLingGouJiHuaFenXiJDialog extends BaseDialog {
             logger.error(ex);
         }
     }
-    
+
+    @Action
+    public void ShengchengYileiyimiaolingqudan() {
+        lingquyimiaoList = new ArrayList<YimiaocaigoujihuaEntity>();
+        for (int i = 0; i < jTableYimiao.getRowCount() - 1; i++) {
+            if (yimiaocaigoujihuas.get(i).getYimiao().getYimiaoType().equals("Ⅰ类疫苗")) {
+                lingquyimiaoList.add(yimiaocaigoujihuas.get(i));
+            }
+        }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoLingQuPlanJDialog yimiaolingquJDialog = new YiMiaoLingQuPlanJDialog();
+                yimiaolingquJDialog.setAddOrUpdate(true);
+                yimiaolingquJDialog.TableSetEntity(lingquyimiaoList);
+                yimiaolingquJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(yimiaolingquJDialog);
+            }
+        });
+    }
+
+    @Action
+    public void ShengchengErleiyimiaoshegoudan() {
+        lingquyimiaoList = new ArrayList<YimiaocaigoujihuaEntity>();
+        for (int i = 0; i < jTableYimiao.getRowCount() - 1; i++) {
+            if (yimiaocaigoujihuas.get(i).getYimiao().getYimiaoType().equals("Ⅱ类疫苗")) {
+                lingquyimiaoList.add(yimiaocaigoujihuas.get(i));
+            }
+        }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+                JFrame mainFrame = AssetClientApp.getApplication().getMainFrame();
+                YiMiaoSheGouPlanJDialog yimiaoshegouJDialog = new YiMiaoSheGouPlanJDialog();
+                yimiaoshegouJDialog.setAddOrUpdate(true);
+                yimiaoshegouJDialog.TableSetEntity(lingquyimiaoList);
+                yimiaoshegouJDialog.setLocationRelativeTo(mainFrame);
+                AssetClientApp.getApplication().show(yimiaoshegouJDialog);
+            }
+        });
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

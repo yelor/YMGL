@@ -10,11 +10,15 @@ import com.jskj.asset.client.AssetClientView;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import org.jdesktop.application.Application;
 
 /**
@@ -44,6 +48,20 @@ public class ScanButton extends JButton implements ActionListener {
         };
         hasRegister = true;
         addActionListener(this);
+        addAncestorListener(new AncestorListener() {
+            public void ancestorAdded(AncestorEvent event) {
+
+            }
+
+            public void ancestorRemoved(AncestorEvent event) {
+                hidePanel();
+            }
+
+            //只要祖先组件一移动,马上就让popup消失  
+            public void ancestorMoved(AncestorEvent event) {
+                hidePanel();
+            }
+        });
     }
 
     private void hidePanel() {
@@ -77,6 +95,11 @@ public class ScanButton extends JButton implements ActionListener {
         }
 
         pop = PopupFactory.getSharedInstance().getPopup(((AssetClientView) Application.getInstance(AssetClientApp.class).getMainView()).getFrame(), scanBarPanel, selectedX, selectedY);
+        Window window = SwingUtilities.windowForComponent(scanBarPanel);
+
+        if (window != null) {
+            window.setFocusableWindowState(true);
+        }
         pop.show();
         isShow = true;
     }

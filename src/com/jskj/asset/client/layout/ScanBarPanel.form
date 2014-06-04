@@ -52,6 +52,7 @@
     <Component class="javax.swing.JTextField" name="jTextFieldBarCode">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="jTextFieldBarCode.text"/>
+        <Property name="focusCycleRoot" type="boolean" value="true"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[366, 75]"/>
         </Property>
