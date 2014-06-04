@@ -395,25 +395,6 @@ public class PTGuDingZiChanDengJiJDialog extends BaseDialog {
         return null;
     }
 
-    private class UploadPicTask extends org.jdesktop.application.Task<Object, Void> {
-        UploadPicTask(org.jdesktop.application.Application app) {
-            // Runs on the EDT.  Copy GUI state that
-            // doInBackground() depends on from parameters
-            // to UploadPicTask fields, here.
-            super(app);
-        }
-        @Override protected Object doInBackground() {
-            // Your Task's code here.  This method runs
-            // on a background thread, so don't reference
-            // the Swing GUI from here.
-            return null;  // return your result
-        }
-        @Override protected void succeeded(Object result) {
-            // Runs on the EDT.  Update the GUI based on
-            // the result computed by doInBackground().
-        }
-    }
-
     private void addObjectToList(String name) {
 
         BaseListModel<String> mode = (BaseListModel<String>) gdzcPhoto.getModel();

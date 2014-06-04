@@ -181,7 +181,7 @@ public abstract class MyTaskFindTask extends BaseTask {
                     @Override
                     public void mouseReleased(MouseEvent e) {
 
-                        if (re.getShenqingdanId().toUpperCase().startsWith("YM")) {
+                        if (re.getShenqingdanId().toUpperCase().startsWith("YM") && !re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_YMFK)) {
                             //疫苗审批
                             gotoShenpi();
                         }else if(re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_ZCFK) || re.getShenqingdanId().toUpperCase().startsWith(DanHao.TYPE_YMFK)

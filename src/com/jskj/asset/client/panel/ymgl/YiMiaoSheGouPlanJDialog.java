@@ -7,8 +7,10 @@ package com.jskj.asset.client.panel.ymgl;
 
 import com.jskj.asset.client.AssetClientApp;
 import com.jskj.asset.client.bean.entity.Shenqingdantb;
+import com.jskj.asset.client.bean.entity.YiMiaotb;
 import com.jskj.asset.client.bean.entity.YimiaoAll;
 import com.jskj.asset.client.bean.entity.YimiaocaigouEntity;
+import com.jskj.asset.client.bean.entity.YimiaocaigoujihuaEntity;
 import com.jskj.asset.client.bean.entity.YimiaocaigouxiangdanEntity;
 import com.jskj.asset.client.bean.entity.Yimiaoshenqingdantb;
 import com.jskj.asset.client.bean.entity.YimiaoshenqingdantbFindEntity;
@@ -559,6 +561,29 @@ public class YiMiaoSheGouPlanJDialog extends BaseDialog {
         }
         this.yimiaoshenqingdan = yimiaoshenqingdan;
         jTextFieldYimiaoshegoudanId.setText((yimiaoshenqingdan.getShenqingdanId()).toString());
+
+    }
+    
+     public void TableSetEntity(List<YimiaocaigoujihuaEntity> list) {
+        
+         int size = list.size();
+        Object[][] o = new Object[size][9];
+        for (int i = 0; i < size; i++) {
+            YiMiaotb yimiao = list.get(i).getYimiao();
+            o[i] = new Object[]{yimiao.getYimiaoId(), yimiao.getYimiaoName(), yimiao.getYimiaoGuige(), yimiao.getYimiaoJixing(), 
+                yimiao.getYimiaoShengchanqiye(), yimiao.getUnitId(),0, yimiao.getChengbenjia(),0};
+        }
+
+        jTableyimiao.setModel(new javax.swing.table.DefaultTableModel(
+                o,
+                new String[]{
+                    "疫苗编号", "疫苗名称", "规格", "剂型", "生产企业", "单位", "数量", "单价", "合价"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false,  true, false, false
+            };
+        });
 
     }
 
